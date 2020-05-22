@@ -1,0 +1,22 @@
+language: crystal
+dist: xenial
+sudo: false
+
+crystal:
+  - latest
+  - nightly
+
+install: shards install
+
+script:
+  - crystal spec
+  # - crystal tool format --check
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - crystal: nightly
+
+cache:
+  directories:
+    - lib

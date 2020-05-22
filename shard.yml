@@ -1,0 +1,11 @@
+name: shield
+version: 0.1.0
+description: Enhanced security for Lucky apps
+
+authors:
+  - GrottoPress <info@grottopress.com>
+  - N Atta Kusi Adusei <attakusiadusei@gmail.com>
+
+license: MIT
+
+crystal: 0.34.0

@@ -1,0 +1,5 @@
+# Our security address
+Contact: mailto:admin@grottopress.com
+
+# Our PGP key
+Encryption: https://www.grottopress.com/.well-known/admin-pgp-key.txt
