@@ -1,7 +1,7 @@
 class Shield::NotAuthorizedError < Exception
-  getter record : Model
   getter user : User
   getter action : AuthorizedAction
+  getter record : Model
 
   def initialize(
     @user,
