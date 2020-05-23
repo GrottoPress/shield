@@ -1,5 +1,7 @@
 module Shield::SavePasswordReset
   macro included
+    getter? guest_email = false
+
     @token : String = ""
 
     attribute user_email : String
@@ -13,9 +15,11 @@ module Shield::SavePasswordReset
       set_user_id
       set_token
       set_ip_address
+
+      send_guest_email
     end
 
-    after_commit send_mail
+    after_commit send_email
 
     private def downcase_user_email
       user_email.value.try { |value| user_email.value = value.downcase }
@@ -44,8 +48,15 @@ module Shield::SavePasswordReset
       ip_address.value = nil unless user_id.value
     end
 
-    private def send_mail(password_reset : PasswordReset)
-      mail PasswordResetRequestEmail, password_reset, password_reset.url(@token)
+    private def send_guest_email
+      if user_id.value.nil? && user_email.valid?
+        @guest_email = true
+        mail GuestPasswordResetRequestEmail, self
+      end
+    end
+
+    private def send_email(password_reset : PasswordReset)
+      mail PasswordResetRequestEmail, password_reset, @token
     end
   end
 end
