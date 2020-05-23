@@ -9,7 +9,8 @@ module Shield::Action
     before :disable_caching
     before :remember_login
     before :require_logged_in
-    before :require_authorization
+
+    after :require_authorization
 
     private def remote_ip : Socket::IPAddress?
       Socket::IPAddress.parse(request.remote_address.to_s)
