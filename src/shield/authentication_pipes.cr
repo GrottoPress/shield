@@ -32,6 +32,7 @@ module Shield::AuthenticationPipes
 
     private def remember_login
       Login.set_session(session, cookies)
+      continue
     end
   end
 end
