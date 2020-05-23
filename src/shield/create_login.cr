@@ -34,7 +34,7 @@ module Shield::CreateLogin
 
     private def failure_action(operation)
       flash.failure = "Invalid email or password"
-      html NewPage #, save_login: operation
+      html NewPage, operation: operation
     end
   end
 end

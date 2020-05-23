@@ -24,7 +24,7 @@ module Shield::CreateCurrentUser
 
     private def failure_action(operation)
       flash.failure = "Could not add user"
-      html NewPage, save_user: operation
+      html NewPage, operation: operation
     end
   end
 end

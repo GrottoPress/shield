@@ -30,7 +30,7 @@ module Shield::CreatePasswordReset
 
     private def failure_action(operation)
       flash.failure = "Password reset request failed"
-      html NewPage, save_password_reset: operation
+      html NewPage, operation: operation
     end
 
     private def email_not_found_action(operation)

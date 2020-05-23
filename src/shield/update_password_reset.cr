@@ -30,7 +30,7 @@ module Shield::UpdatePasswordReset
 
     private def failure_action(operation, user)
       flash.failure = "Could not change password"
-      html EditPage, reset_password: operation
+      html EditPage, operation: operation
     end
   end
 end
