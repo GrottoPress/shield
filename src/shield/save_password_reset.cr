@@ -14,7 +14,6 @@ module Shield::SavePasswordReset
 
       set_user_id
       set_token
-      set_ip_address
 
       send_guest_email
     end
@@ -38,14 +37,8 @@ module Shield::SavePasswordReset
     end
 
     private def set_token
-      if user_id.value
-        @token = Random::Secure.urlsafe_base64(32)
-        token_hash.value = Login.hash(@token).to_s
-      end
-    end
-
-    private def set_ip_address
-      ip_address.value = nil unless user_id.value
+      @token = Random::Secure.urlsafe_base64(32)
+      token_hash.value = Login.hash(@token).to_s
     end
 
     private def send_guest_email
