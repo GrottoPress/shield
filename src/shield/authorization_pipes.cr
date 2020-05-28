@@ -4,7 +4,9 @@ module Shield::AuthorizationPipes
       if logged_out? || @authorized
         continue
       else
-        raise "Authorization not performed for '#{self.class}' action"
+        raise Shield::AuthorizationNotPerformedError.new(
+          "Authorization not performed for '#{self.class}' action"
+        )
       end
     end
   end
