@@ -30,7 +30,7 @@ module Shield::SavePassword
     private def notify_password_change(user : User)
       return unless Shield.settings.password_notify_change
 
-      if password_hash.changed?
+      if user.updated_at > user.created_at && password_hash.changed?
         mail PasswordChangeNotificationEmail, user
       end
     end
