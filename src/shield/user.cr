@@ -6,6 +6,10 @@ module Shield::User
     column email : String
     column password_hash : String
 
+    def self.from_email!(address : String) : self
+      from_email(address).not_nil!
+    end
+
     def self.from_email(address : String) : self?
       UserQuery.new.email(address.downcase).first?
     end
