@@ -2,19 +2,21 @@ module Shield::Login
   macro included
     skip_default_columns
 
-    avram_enum Status do
-      Inactive
-      Active
-    end
-
     belongs_to user : User
 
     primary_key id : Int64
 
-    column status : Login::Status
     column ip_address : Socket::IPAddress?
     column started_at : Time
     column ended_at : Time?
+
+    def active? : Bool
+      ended_at.nil? || ended_at.not_nil! > Time.utc
+    end
+
+    def inactive? : Bool
+      !active?
+    end
 
     def self.authenticate(email : String, password : String) : User?
       return unless user = User.from_email(email)

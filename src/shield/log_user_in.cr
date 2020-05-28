@@ -12,7 +12,6 @@ module Shield::LogUserIn
 
       validate_credentials
 
-      set_status
       set_started_at
       set_ended_at
     end
@@ -31,10 +30,6 @@ module Shield::LogUserIn
         email.add_error "may be incorrect"
         password.add_error "may be incorrect"
       end
-    end
-
-    private def set_status
-      status.value = Login::Status.new(:active)
     end
 
     private def set_started_at
