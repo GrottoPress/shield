@@ -2,15 +2,25 @@ module Shield::AuthorizationHelpers
   macro included
     @authorized = false
 
-    private def authorize(action, record)
+    private def authorize(
+      action : Shield::AuthorizedAction,
+      record : Shield::Model | Shield::Model.class
+    )
       authorize(current_user, action, record)
     end
 
-    private def authorize!(action, record)
+    private def authorize!(
+      action : Shield::AuthorizedAction,
+      record : Shield::Model | Shield::Model.class
+    )
       authorize!(current_user, action, record)
     end
 
-    private def authorize(user, action, record)
+    private def authorize(
+      user : Shield::User?,
+      action : Shield::AuthorizedAction,
+      record : Shield::Model | Shield::Model.class
+    )
       authorize!(user, action, record)
     rescue error : Shield::NotAuthorizedError
       notauthorized_action(error.user, error.action, error.record)
