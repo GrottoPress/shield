@@ -1,6 +1,6 @@
 require "./shield/version"
 require "./config"
 require "./charms"
-require "./shield/error"
-require "./shield/authorized_action"
+require "./shield/errors/error"
+require "./shield/authorization/authorized_action"
 require "./shield/**"
