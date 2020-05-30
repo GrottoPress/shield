@@ -19,6 +19,7 @@ module Shield::SavePassword
       require_lowercase
       require_uppercase
       require_number
+      require_special_char
     end
 
     private def set_password_hash
@@ -59,6 +60,15 @@ module Shield::SavePassword
 
         value.each_char { |char| return if char.ascii_number? }
         password.add_error("must contain a number")
+      end
+    end
+
+    private def require_special_char
+      password.value.try do |value|
+        return unless Shield.settings.password_require_special_char
+
+        value.each_char { |char| return unless char.ascii_alphanumeric? }
+        password.add_error("must contain a special character")
       end
     end
   end
