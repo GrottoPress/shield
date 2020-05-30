@@ -40,7 +40,7 @@ module Shield::SavePassword
         return unless Shield.settings.password_require_lowercase
 
         unless value =~ /^.*[a-z].*$/
-          password.add_error("must contain at least one lowercase letter")
+          password.add_error("must contain a lowercase letter")
         end
       end
     end
@@ -50,7 +50,7 @@ module Shield::SavePassword
         return unless Shield.settings.password_require_uppercase
 
         unless value =~ /^.*[A-Z].*$/
-          password.add_error("must contain at least one uppercase letter")
+          password.add_error("must contain an uppercase letter")
         end
       end
     end
@@ -60,7 +60,7 @@ module Shield::SavePassword
         return unless Shield.settings.password_require_number
 
         unless value =~ /^.*[0-9].*$/
-          password.add_error("must contain at least one number")
+          password.add_error("must contain a number")
         end
       end
     end
