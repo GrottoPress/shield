@@ -6,12 +6,29 @@ module Shield::User
     column email : String
     column password_hash : String
 
-    def self.from_email!(address : String) : self
-      from_email(address).not_nil!
+    def self.from_email!(
+      address : String,
+      *,
+      preload_logins = false,
+      preload_password_resets = false
+    ) : self
+      from_email(
+        address,
+        preload_logins: preload_logins,
+        preload_password_resets: preload_password_resets
+      ).not_nil!
     end
 
-    def self.from_email(address : String) : self?
-      UserQuery.new.email(address.downcase).first?
+    def self.from_email(
+      address : String,
+      *,
+      preload_logins = false,
+      preload_password_resets = false
+    ) : self?
+      query = UserQuery.new
+      query.preload_logins if preload_logins
+      query.preload_password_resets if preload_password_resets
+      query.email(address.downcase).first?
     end
 
     def can?(

@@ -9,14 +9,26 @@ module Shield::PasswordReset
       PasswordResets::Index.url(id: id, token: token)
     end
 
-    def self.from_session!(session : Lucky::Session, *, delete = false) : self?
-      from_session(session, delete: delete).not_nil!
+    def self.from_session!(
+      session : Lucky::Session,
+      *,
+      delete = false,
+      preload_user = false
+    ) : self?
+      from_session(session, delete: delete, preload_user: preload_user).not_nil!
     end
 
-    def self.from_session(session : Lucky::Session, *, delete = false) : self?
+    def self.from_session(
+      session : Lucky::Session,
+      *,
+      delete = false,
+      preload_user = false
+    ) : self?
       session.get?(:password_reset).try do |id|
         session.delete(:password_reset) if delete
-        PasswordResetQuery.find(id.to_i64)
+        query = PasswordResetQuery.new
+        query.preload_user if preload_user
+        query.find(id.to_i64)
       end
     end
 

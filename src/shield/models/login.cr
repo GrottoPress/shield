@@ -24,12 +24,24 @@ module Shield::Login
       user
     end
 
-    def self.from_session!(session : Lucky::Session) : self
-      from_session(session).not_nil!
+    def self.from_session!(
+      session : Lucky::Session,
+      *,
+      preload_user = false
+    ) : self
+      from_session(session, preload_user: preload_user).not_nil!
     end
 
-    def self.from_session(session : Lucky::Session) : self?
-      session.get?(:login).try { |id| LoginQuery.find(id.to_i64) }
+    def self.from_session(
+      session : Lucky::Session,
+      *,
+      preload_user = false
+    ) : self?
+      session.get?(:login).try do |id|
+        query = LoginQuery.new
+        query.preload_user if preload_user
+        query.find(id.to_i64)
+      end
     end
 
     def set_session(session : Lucky::Session) : Nil
