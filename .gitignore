@@ -1,7 +1,8 @@
 *.dwarf
-/.env*
+.env*
 /shard.lock
 /.shards/
 /bin/
 /docs/
 /lib/
+/tmp/

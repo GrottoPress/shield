@@ -9,3 +9,14 @@ authors:
 license: MIT
 
 crystal: 0.34.0
+
+development_dependencies:
+  carbon:
+    github: luckyframework/carbon
+    version: ~> 0.1.0
+  envy:
+    github: GrottoPress/envy
+    version: ~> 0.2.0
+  lucky:
+    github: luckyframework/lucky
+    version: ~> 0.21.0
