@@ -9,7 +9,9 @@ module Shield::IndexPasswordReset
   # - https://twitter.com/HusseiN98D/status/1254888748216655872
   # - https://github.com/thoughtbot/clearance/pull/707
   macro included
+    skip :require_authorization
     skip :require_logged_in
+
     before :require_logged_out
     before :set_no_referrer_policy # <= SECURITY!
 

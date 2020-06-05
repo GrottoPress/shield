@@ -4,7 +4,9 @@ module Shield::CreateCurrentUser
     #   save_current_user
     # end
 
+    skip :require_authorization
     skip :require_logged_in
+
     before :require_logged_out
 
     private def save_current_user

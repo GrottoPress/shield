@@ -4,7 +4,9 @@ module Shield::CreateLogin
     #   log_user_in
     # end
 
+    skip :require_authorization
     skip :require_logged_in
+
     before :require_logged_out
 
     private def log_user_in

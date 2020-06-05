@@ -1,6 +1,8 @@
 module Shield::EditPasswordReset
   macro included
+    skip :require_authorization
     skip :require_logged_in
+
     before :require_logged_out
     before :set_no_referrer_policy
 

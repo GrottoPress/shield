@@ -1,7 +1,7 @@
 module Shield::AuthorizationPipes
   macro included
     private def require_authorization
-      if @authorized || logged_out?
+      if @authorized
         continue
       else
         raise Shield::AuthorizationNotPerformedError.new(
