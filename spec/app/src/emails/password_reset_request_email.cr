@@ -6,7 +6,7 @@ class PasswordResetRequestEmail < BaseEmail
   end
 
   private def receivers
-    @password_reset.user
+    @password_reset.user!
   end
 
   private def heading
