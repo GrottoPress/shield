@@ -1,5 +1,5 @@
 class PasswordChangeNotificationEmail < BaseEmail
-  def initialize(@user : User) : Nil
+  def initialize(@operation : User::SaveOperation, @user : User) : Nil
   end
 
   private def receivers

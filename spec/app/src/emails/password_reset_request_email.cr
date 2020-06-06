@@ -1,5 +1,8 @@
 class PasswordResetRequestEmail < BaseEmail
-  def initialize(@password_reset : PasswordReset, @token : String) : Nil
+  def initialize(
+    @operation : SavePasswordReset,
+    @password_reset : PasswordReset
+  ) : Nil
   end
 
   private def receivers

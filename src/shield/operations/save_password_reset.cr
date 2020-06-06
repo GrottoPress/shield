@@ -49,7 +49,7 @@ module Shield::SavePasswordReset
     end
 
     private def send_email(password_reset : PasswordReset)
-      mail PasswordResetRequestEmail, password_reset, @token
+      mail PasswordResetRequestEmail, self, password_reset
     end
   end
 end
