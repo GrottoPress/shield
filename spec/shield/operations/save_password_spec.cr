@@ -187,25 +187,24 @@ describe Shield::SavePassword do
     Shield.temp_config(password_notify_change: true) do
       password = "pass)word1Apassword"
 
-      params = {
+      user = SaveCurrentUser.create!(
         email: "user@example.tld",
         password: password,
         password_confirmation: password
-      }
+      )
 
-      SaveCurrentUser.create(**params) do |operation, user|
-        user.should be_a(User)
+      new_password = "ass)word1Apassword"
 
-        password = "ass)word1Apassword"
+      SaveCurrentUser.update(
+        user,
+        password: new_password,
+        password_confirmation: new_password
+      ) do |operation, updated_user|
+        operation.saved?.should be_true
 
-        SaveCurrentUser.update(
-          user.not_nil!,
-          password: password,
-          password_confirmation: password
-        ) do |operation, updated_user|
-          operation.saved?.should be_true
-          PasswordChangeNotificationEmail.new(updated_user).should be_delivered
-        end
+        PasswordChangeNotificationEmail
+          .new(operation, updated_user)
+          .should(be_delivered)
       end
     end
   end
@@ -213,45 +212,36 @@ describe Shield::SavePassword do
   it "does not send password change notification" do
     password = "pass)word1Apassword"
 
-    params = {
+    user = SaveCurrentUser.create!(
       email: "user@example.tld",
       password: password,
       password_confirmation: password
-    }
+    )
 
-    SaveCurrentUser.create(**params) do |operation, user|
-      user.should be_a(User)
+    new_password = "ass)word1Apassword"
 
-      password = "ass)word1Apassword"
-
-      SaveCurrentUser.update(
-        user.not_nil!,
-        password: password,
-        password_confirmation: password
-      ) do |operation, updated_user|
-        operation.saved?.should be_true
-
-        PasswordChangeNotificationEmail
-          .new(updated_user)
-          .should_not(be_delivered)
-      end
+    SaveCurrentUser.update(
+      user,
+      password: new_password,
+      password_confirmation: new_password
+    ) do |operation, updated_user|
+      operation.saved?.should be_true
+      PasswordChangeNotificationEmail
+        .new(operation, updated_user)
+        .should_not(be_delivered)
     end
   end
 
   it "does not send password change notification for a newly created user" do
     password = "password1=Apassword"
 
-    params = {
+    SaveCurrentUser.create(
       email: "user@example.tld",
       password: password,
       password_confirmation: password
-    }
-
-    SaveCurrentUser.create(**params) do |operation, user|
-      user.should be_a(User)
-
+    ) do |operation, user|
       PasswordChangeNotificationEmail
-        .new(user.not_nil!)
+        .new(operation, user.not_nil!)
         .should_not(be_delivered)
     end
   end
