@@ -1,6 +1,5 @@
 class SaveUser < User::SaveOperation
-  include Shield::SaveEmail
-  include Shield::SavePassword
+  include Shield::SaveUser
 
   permit_columns :level
 end
