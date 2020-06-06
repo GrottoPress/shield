@@ -1,8 +1,7 @@
 module Shield::SavePasswordReset
   macro included
+    getter token = ""
     getter? guest_email = false
-
-    @token : String = ""
 
     attribute user_email : String
 
