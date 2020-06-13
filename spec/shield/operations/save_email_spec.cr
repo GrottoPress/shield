@@ -30,9 +30,7 @@ describe Shield::SaveEmail do
       password_confirmation: password
     }
 
-    SaveCurrentUser.create(**params) do |operation, user|
-      user.should be_a(User)
-    end
+    user = SaveCurrentUser.create!(**params)
 
     SaveCurrentUser.create(**params) do |operation, user|
       user.should be_nil
