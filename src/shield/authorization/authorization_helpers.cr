@@ -23,7 +23,7 @@ module Shield::AuthorizationHelpers
     )
       authorize!(user, action, record)
     rescue error : Shield::NotAuthorizedError
-      notauthorized_action(error.user, error.action, error.record)
+      not_authorized_action(error.user, error.action, error.record)
     end
 
     private def authorize!(
@@ -40,7 +40,7 @@ module Shield::AuthorizationHelpers
       end
     end
 
-    private def notauthorized_action(user, action, record)
+    private def not_authorized_action(user, action, record)
       flash.failure = "You are not allowed to perform this action!"
       redirect to: Home::Index
     end
