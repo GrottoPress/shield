@@ -4,7 +4,7 @@ module Shield::AuthorizationPipes
       if @authorized
         continue
       else
-        raise Shield::AuthorizationNotPerformedError.new(
+        raise Shield::NoAuthorizationError.new(
           "Authorization not performed for '#{self.class}' action"
         )
       end

@@ -19,7 +19,7 @@ describe Shield::AuthorizationPipes do
 
     client.headers("Cookie": response.headers["Set-Cookie"])
 
-    expect_raises(Shield::AuthorizationNotPerformedError) do
+    expect_raises(Shield::NoAuthorizationError) do
       response = client.exec(Users::Show.with(user_id: user.id))
     end
   end
