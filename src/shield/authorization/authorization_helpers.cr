@@ -42,7 +42,7 @@ module Shield::AuthorizationHelpers
 
     private def not_authorized_action(user, action, record)
       flash.failure = "You are not allowed to perform this action!"
-      redirect to: Home::Index
+      redirect to: CurrentUser::Show
     end
   end
 end

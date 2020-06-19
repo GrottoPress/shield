@@ -40,7 +40,7 @@ module Shield::AuthenticationPipes
 
     private def require_logged_out_action
       flash.info = "You are already logged in"
-      redirect to: Home::Index # TODO: Redirect to previous page?
+      redirect to: CurrentUser::Show # TODO: Redirect to previous page?
     end
   end
 end

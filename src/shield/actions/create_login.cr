@@ -30,7 +30,7 @@ module Shield::CreateLogin
       if dest = Login.return_path(session, delete: true)
         redirect to: dest
       else
-        redirect to: Home::Index
+        redirect to: CurrentUser::Show
       end
     end
 

@@ -25,7 +25,7 @@ module Shield::DestroyLogin
 
     private def failure_action(operation, updated_login)
       flash.failure = "Something went wrong"
-      redirect to: Home::Index #CurrentUser::Show
+      redirect to: CurrentUser::Show
     end
   end
 end
