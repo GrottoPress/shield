@@ -63,14 +63,10 @@ module Shield::Login
       cookies.delete(:remember_login)
     end
 
-    def remember(cookies : Lucky::CookieJar, params : Avram::Paramable) : Nil
-      if params.get?(:remember_login)
-        cookies.set(:remember_login, id.to_s)
-
-        cookies
-          .get_raw(:remember_login)
-          .expires(Shield.settings.login_expiry.from_now)
-      end
+    def remember(cookies : Lucky::CookieJar) : Nil
+      cookies.set(:remember_login, id.to_s).expires(
+        Shield.settings.login_expiry.from_now
+      )
     end
 
     def self.set_return_path(session : Lucky::Session, path : String) : Nil
