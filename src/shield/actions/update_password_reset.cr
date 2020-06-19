@@ -10,7 +10,11 @@ module Shield::UpdatePasswordReset
     # end
 
     private def reset_password
-      password_reset = PasswordReset.from_session!(session, delete: true)
+      password_reset = PasswordReset.from_session!(
+        session,
+        delete: true,
+        preload_user: true
+      )
 
       ResetPassword.update(
         password_reset.user,
