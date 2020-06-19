@@ -6,7 +6,6 @@ module Shield::ResetPassword
 
     before_save do
       validate_required password
-      validate_required password_confirmation
     end
 
     after_save delete_password_reset_token
