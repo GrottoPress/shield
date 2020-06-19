@@ -4,9 +4,8 @@ module Shield::AuthenticationPipes
       if logged_in?
         continue
       else
-        flash.failure = "You are not logged in"
         Login.set_return_path(session, request.resource)
-        redirect to: Logins::New
+        require_logged_in_action
       end
     end
 
@@ -14,8 +13,7 @@ module Shield::AuthenticationPipes
       if logged_out?
         continue
       else
-        flash.info = "You are already logged in"
-        redirect to: Home::Index # TODO: Redirect to previous page?
+        require_logged_out_action
       end
     end
 
@@ -33,6 +31,16 @@ module Shield::AuthenticationPipes
     private def remember_login
       Login.set_session(session, cookies)
       continue
+    end
+
+    private def require_logged_in_action
+      flash.failure = "You are not logged in"
+      redirect to: Logins::New
+    end
+
+    private def require_logged_out_action
+      flash.info = "You are already logged in"
+      redirect to: Home::Index # TODO: Redirect to previous page?
     end
   end
 end
