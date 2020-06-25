@@ -1,6 +1,24 @@
 require "../../spec_helper"
 
 describe Shield::SavePassword do
+  it "requires password" do
+    params = {
+      email: "user@example.tld",
+      password: "",
+      password_confirmation: ""
+    }
+
+    SaveCurrentUser.create(**params) do |operation, user|
+      user.should be_nil
+
+      operation
+        .password_hash
+        .errors
+        .find(&.includes? " required")
+        .should_not(be_nil)
+    end
+  end
+
   it "rejects short passwords" do
     password = "pAssword1!"
 
