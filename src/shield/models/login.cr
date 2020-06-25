@@ -69,17 +69,6 @@ module Shield::Login
       )
     end
 
-    def self.set_return_path(session : Lucky::Session, path : String) : Nil
-      session.set(:return_path, path)
-    end
-
-    def self.return_path(session : Lucky::Session, *, delete = false) : String?
-      session.get?(:return_path).try do |path|
-        session.delete(:return_path) if delete
-        path
-      end
-    end
-
     def self.hash(plaintext : String) : Crypto::Bcrypt::Password
       Crypto::Bcrypt::Password.create(plaintext)
     end

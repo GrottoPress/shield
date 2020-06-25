@@ -26,12 +26,7 @@ module Shield::CreateLogin
 
     private def success_action(operation, login)
       flash.success = "Successfully logged in"
-
-      if dest = Login.return_path(session, delete: true)
-        redirect to: dest
-      else
-        redirect to: CurrentUser::Show
-      end
+      redirect_back fallback: CurrentUser::Show
     end
 
     private def failure_action(operation)

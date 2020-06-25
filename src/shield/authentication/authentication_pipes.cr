@@ -4,7 +4,6 @@ module Shield::AuthenticationPipes
       if logged_in?
         continue
       else
-        Login.set_return_path(session, request.resource)
         require_logged_in_action
       end
     end
@@ -40,7 +39,7 @@ module Shield::AuthenticationPipes
 
     private def require_logged_out_action
       flash.info = "You are already logged in"
-      redirect to: CurrentUser::Show # TODO: Redirect to previous page?
+      redirect_back fallback: CurrentUser::Show
     end
   end
 end

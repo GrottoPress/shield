@@ -1,8 +1,10 @@
 module Shield::Action
   macro included
+    include Shield::ActionHelpers
     include Shield::AuthenticationHelpers
     include Shield::AuthorizationHelpers
 
+    include Shield::ActionPipes
     include Shield::AuthenticationPipes
     include Shield::AuthorizationPipes
 
@@ -11,11 +13,6 @@ module Shield::Action
     before :require_logged_in
 
     after :require_authorization
-
-    private def remote_ip : Socket::IPAddress?
-      Socket::IPAddress.parse(request.remote_address.to_s)
-    rescue
-      nil
-    end
+    after :set_previous_page
   end
 end
