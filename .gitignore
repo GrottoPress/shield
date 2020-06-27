@@ -1,7 +1,9 @@
 *.dwarf
-/.env*
+.env*
+/.crystal-version
 /shard.lock
 /.shards/
 /bin/
 /docs/
 /lib/
+/tmp/
