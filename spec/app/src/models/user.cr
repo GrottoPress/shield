@@ -16,11 +16,7 @@ class User < BaseModel
     user.level.admin?
   end
 
-  authorize :create, :update do |user, record|
-    user.level.admin? || user.id == record.try(&.id)
-  end
-
-  authorize :read do |user, record|
+  authorize :create, :read, :update do |user, record|
     user.level.admin? || user.id == record.try(&.id)
   end
 
