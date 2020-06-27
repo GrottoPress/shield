@@ -17,7 +17,9 @@ describe Shield::AuthenticationPipes do
       SaveCurrentUser.create!(
         email: email,
         password: password,
-        password_confirmation: password
+        password_confirmation: password,
+        login_notify: true,
+        password_notify: true
       )
 
       client = AppClient.new

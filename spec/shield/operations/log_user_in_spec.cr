@@ -8,7 +8,9 @@ describe Shield::LogUserIn do
     SaveCurrentUser.create!(
       email: email,
       password: password,
-      password_confirmation: password
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
     )
 
     session = Lucky::Session.new
@@ -34,7 +36,9 @@ describe Shield::LogUserIn do
     SaveCurrentUser.create!(
       email: "user@example.tld",
       password: password,
-      password_confirmation: password
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
     )
 
     LogUserIn.create(
@@ -60,7 +64,9 @@ describe Shield::LogUserIn do
     SaveCurrentUser.create!(
       email: email,
       password: password,
-      password_confirmation: password
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
     )
 
     LogUserIn.create(
@@ -76,6 +82,56 @@ describe Shield::LogUserIn do
         .errors
         .find(&.includes? " incorrect")
         .should_not(be_nil)
+    end
+  end
+
+  it "sends login notification" do
+    password = "pass)word1Apassword"
+    email = "user@example.tld"
+
+    user = SaveCurrentUser.create!(
+      email: email,
+      password: password,
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
+    )
+
+    LogUserIn.create(
+      email: email,
+      password: password,
+      session: Lucky::Session.new,
+      cookies: Lucky::CookieJar.empty_jar
+    ) do |operation, login|
+      operation.saved?.should be_true
+
+      LoginNotificationEmail.new(operation, login.not_nil!).should(be_delivered)
+    end
+  end
+
+  it "does not send login notification" do
+    password = "pass)word1Apassword"
+    email = "user@example.tld"
+
+    user = SaveCurrentUser.create!(
+      email: email,
+      password: password,
+      password_confirmation: password,
+      login_notify: false,
+      password_notify: true
+    )
+
+    LogUserIn.create(
+      email: email,
+      password: password,
+      session: Lucky::Session.new,
+      cookies: Lucky::CookieJar.empty_jar
+    ) do |operation, login|
+      operation.saved?.should be_true
+
+      LoginNotificationEmail
+        .new(operation, login.not_nil!)
+        .should_not(be_delivered)
     end
   end
 end

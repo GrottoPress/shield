@@ -3,6 +3,8 @@ module Shield::User
     has_many logins : Login
     has_many password_resets : PasswordReset
 
+    has_one options : UserOptions
+
     column email : String
     column password_hash : String
 
@@ -10,12 +12,14 @@ module Shield::User
       address : String,
       *,
       preload_logins = false,
-      preload_password_resets = false
+      preload_password_resets = false,
+      preload_options = false
     ) : self
       from_email(
         address,
         preload_logins: preload_logins,
-        preload_password_resets: preload_password_resets
+        preload_password_resets: preload_password_resets,
+        preload_options: preload_options
       ).not_nil!
     end
 
@@ -23,11 +27,13 @@ module Shield::User
       address : String,
       *,
       preload_logins = false,
-      preload_password_resets = false
+      preload_password_resets = false,
+      preload_options = false
     ) : self?
       query = UserQuery.new
       query.preload_logins if preload_logins
       query.preload_password_resets if preload_password_resets
+      query.preload_options if preload_options
       query.email(address.downcase).first?
     end
 

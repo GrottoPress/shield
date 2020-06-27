@@ -2,13 +2,13 @@ require "../../spec_helper"
 
 describe Shield::SavePassword do
   it "requires password" do
-    params = {
+    SaveCurrentUser.create(
       email: "user@example.tld",
       password: "",
-      password_confirmation: ""
-    }
-
-    SaveCurrentUser.create(**params) do |operation, user|
+      password_confirmation: "",
+      login_notify: true,
+      password_notify: true
+    ) do |operation, user|
       user.should be_nil
 
       operation
@@ -22,13 +22,13 @@ describe Shield::SavePassword do
   it "rejects short passwords" do
     password = "pAssword1!"
 
-    params = {
+    SaveCurrentUser.create(
       email: "user@example.tld",
       password: password,
-      password_confirmation: password
-    }
-
-    SaveCurrentUser.create(**params) do |operation, user|
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
+    ) do |operation, user|
       user.should be_nil
 
       operation
@@ -40,13 +40,13 @@ describe Shield::SavePassword do
   end
 
   it "rejects mismatched passwords" do
-    params = {
+    SaveCurrentUser.create(
       email: "user@example.tld",
       password: "password1APASSWORD?",
-      password_confirmation: "PASSWORD1Apassword?"
-    }
-
-    SaveCurrentUser.create(**params) do |operation, user|
+      password_confirmation: "PASSWORD1Apassword?",
+      login_notify: true,
+      password_notify: true
+    ) do |operation, user|
       user.should be_nil
 
       operation
@@ -60,13 +60,13 @@ describe Shield::SavePassword do
   it "enforces number in password" do
     password = "passwordAPASSWORD-"
 
-    params = {
+    SaveCurrentUser.create(
       email: "user@example.tld",
       password: password,
-      password_confirmation: password
-    }
-
-    SaveCurrentUser.create(**params) do |operation, user|
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
+    ) do |operation, user|
       user.should be_nil
 
       operation
@@ -81,13 +81,13 @@ describe Shield::SavePassword do
     Shield.temp_config(password_require_number: false) do
       password = "passwordAPASSWORD-"
 
-      params = {
+      SaveCurrentUser.create(
         email: "user@example.tld",
         password: password,
-        password_confirmation: password
-      }
-
-      SaveCurrentUser.create(**params) do |operation, user|
+        password_confirmation: password,
+        login_notify: true,
+        password_notify: true
+      ) do |operation, user|
         user.should be_a(User)
       end
     end
@@ -96,13 +96,13 @@ describe Shield::SavePassword do
   it "enforces lowercase letter in password" do
     password = "PASSWORD1AP%ASSWORD"
 
-    params = {
+    SaveCurrentUser.create(
       email: "user@example.tld",
       password: password,
-      password_confirmation: password
-    }
-
-    SaveCurrentUser.create(**params) do |operation, user|
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
+    ) do |operation, user|
       user.should be_nil
 
       operation
@@ -117,13 +117,14 @@ describe Shield::SavePassword do
     Shield.temp_config(password_require_lowercase: false) do
       password = "PASSWORD1AP%ASSWORD"
 
-      params = {
+      SaveCurrentUser.create(
         email: "user@example.tld",
         password: password,
-        password_confirmation: password
-      }
+        password_confirmation: password,
+        login_notify: true,
+        password_notify: true
 
-      SaveCurrentUser.create(**params) do |operation, user|
+      ) do |operation, user|
         user.should be_a(User)
       end
     end
@@ -132,13 +133,13 @@ describe Shield::SavePassword do
   it "enforces uppercase letter in password" do
     password = "pa(ssword1apassword"
 
-    params = {
+    SaveCurrentUser.create(
       email: "user@example.tld",
       password: password,
-      password_confirmation: password
-    }
-
-    SaveCurrentUser.create(**params) do |operation, user|
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
+    ) do |operation, user|
       user.should be_nil
 
       operation
@@ -153,13 +154,13 @@ describe Shield::SavePassword do
     Shield.temp_config(password_require_uppercase: false) do
       password = "pa(ssword1apassword"
 
-      params = {
+      SaveCurrentUser.create(
         email: "user@example.tld",
         password: password,
-        password_confirmation: password
-      }
-
-      SaveCurrentUser.create(**params) do |operation, user|
+        password_confirmation: password,
+        login_notify: true,
+        password_notify: true
+      ) do |operation, user|
         user.should be_a(User)
       end
     end
@@ -168,13 +169,13 @@ describe Shield::SavePassword do
   it "enforces special character in password" do
     password = "password1Apassword"
 
-    params = {
+    SaveCurrentUser.create(
       email: "user@example.tld",
       password: password,
-      password_confirmation: password
-    }
-
-    SaveCurrentUser.create(**params) do |operation, user|
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
+    ) do |operation, user|
       user.should be_nil
 
       operation
@@ -189,41 +190,41 @@ describe Shield::SavePassword do
     Shield.temp_config(password_require_special_char: false) do
       password = "password1Apassword"
 
-      params = {
+      SaveCurrentUser.create(
         email: "user@example.tld",
         password: password,
-        password_confirmation: password
-      }
-
-      SaveCurrentUser.create(**params) do |operation, user|
+        password_confirmation: password,
+        login_notify: true,
+        password_notify: true
+      ) do |operation, user|
         user.should be_a(User)
       end
     end
   end
 
   it "sends password change notification" do
-    Shield.temp_config(password_notify_change: true) do
-      password = "pass)word1Apassword"
+    password = "pass)word1Apassword"
 
-      user = SaveCurrentUser.create!(
-        email: "user@example.tld",
-        password: password,
-        password_confirmation: password
-      )
+    user = SaveCurrentUser.create!(
+      email: "user@example.tld",
+      password: password,
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
+    )
 
-      new_password = "ass)word1Apassword"
+    new_password = "ass)word1Apassword"
 
-      SaveCurrentUser.update(
-        user,
-        password: new_password,
-        password_confirmation: new_password
-      ) do |operation, updated_user|
-        operation.saved?.should be_true
+    SaveCurrentUser.update(
+      user,
+      password: new_password,
+      password_confirmation: new_password
+    ) do |operation, updated_user|
+      operation.saved?.should be_true
 
-        PasswordChangeNotificationEmail
-          .new(operation, updated_user)
-          .should(be_delivered)
-      end
+      PasswordChangeNotificationEmail
+        .new(operation, updated_user)
+        .should(be_delivered)
     end
   end
 
@@ -233,7 +234,9 @@ describe Shield::SavePassword do
     user = SaveCurrentUser.create!(
       email: "user@example.tld",
       password: password,
-      password_confirmation: password
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: false
     )
 
     new_password = "ass)word1Apassword"
@@ -256,7 +259,9 @@ describe Shield::SavePassword do
     SaveCurrentUser.create(
       email: "user@example.tld",
       password: password,
-      password_confirmation: password
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
     ) do |operation, user|
       PasswordChangeNotificationEmail
         .new(operation, user.not_nil!)

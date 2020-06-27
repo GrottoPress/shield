@@ -8,7 +8,9 @@ describe Shield::AuthorizationPipes do
       params = {
         email: "user@example.tld",
         password: password,
-        password_confirmation: password
+        password_confirmation: password,
+        login_notify: true,
+        password_notify: true
       }
 
       user = SaveCurrentUser.create!(**params)

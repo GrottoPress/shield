@@ -11,7 +11,9 @@ describe Shield::LogUserOut do
     user = SaveCurrentUser.create!(
       email: email,
       password: password,
-      password_confirmation: password
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
     )
 
     LogUserIn.create!(

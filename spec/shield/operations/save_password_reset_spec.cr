@@ -8,7 +8,9 @@ describe Shield::SavePasswordReset do
     user = SaveCurrentUser.create!(
       email: email,
       password: password,
-      password_confirmation: password
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
     )
 
     SavePasswordReset.create(user_email: email) do |operation, password_reset|
@@ -47,7 +49,9 @@ describe Shield::SavePasswordReset do
     user = SaveCurrentUser.create!(
       email: email,
       password: password,
-      password_confirmation: password
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
     )
 
     SavePasswordReset.create(user_email: email) do |operation, password_reset|

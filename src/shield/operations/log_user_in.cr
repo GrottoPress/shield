@@ -18,6 +18,7 @@ module Shield::LogUserIn
 
     after_commit set_session
     after_commit remember_login
+    after_commit notify_login
 
     private def downcase_email
       email.value.try { |value| email.value = value.downcase }
@@ -46,6 +47,11 @@ module Shield::LogUserIn
 
     private def remember_login(login : Login)
       login.remember(cookies) if remember_login.value
+    end
+
+    private def notify_login(login : Login)
+      return unless login.user!.options!.login_notify
+      mail LoginNotificationEmail, self, login
     end
   end
 end
