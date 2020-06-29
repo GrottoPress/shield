@@ -13,12 +13,12 @@ module Shield::UserSaveUserOptions
     after_save create_user_options
 
     private def require_login_notify
-      return unless new_record? && login_notify.value.nil?
+      return unless new_record?
       validate_required login_notify
     end
 
     private def require_password_notify
-      return unless new_record? && password_notify.value.nil?
+      return unless new_record?
       validate_required password_notify
     end
 
