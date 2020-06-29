@@ -16,7 +16,7 @@ services:
       SERVER_HOST: "0.0.0.0"
       SERVER_PORT: "5000"
       SKIP_CREATE_DB: "yes"
-    image: crystallang/crystal:0.34.0-alpine
+    image: crystallang/crystal:0.35.1-alpine
     volumes:
       - ..:/var/www/html
     working_dir: /var/www/html
