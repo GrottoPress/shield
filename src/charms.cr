@@ -44,8 +44,86 @@ module Lucky
   end
 end
 
-class Avram::Operation
-  include MailHelpers
+module Avram
+  class Operation
+    include MailHelpers
+  end
+
+  module NeedyInitializerAndSaveMethods
+    # Monkey patching to add `#new_record?`
+    #
+    # `#persisted?` returns `true`, always, in `after_save` (and
+    # `after_commit`), so it is not a viable method for checking
+    # whether or not we did a create (vs. update) operation.
+    #
+    # Ref: https://github.com/luckyframework/avram/blob/3fe881faee2da2bc63ae0fed49ecccca1876b0dc/src/avram/needy_initializer_and_save_methods.cr#L162
+    macro generate_initializer(attribute_method_args, attribute_params)
+      {% needs_method_args = "" %}
+      {% for type_declaration in OPERATION_NEEDS %}
+        {% needs_method_args = needs_method_args + "@#{type_declaration},\n" %}
+      {% end %}
+
+      getter? new_record : Bool
+
+      def initialize(
+          @record : T,
+          @params : Avram::Paramable,
+          {{ needs_method_args.id }}
+          {{ attribute_method_args.id }}
+        )
+
+        @new_record = false
+        set_attributes({{ attribute_params.id }})
+      end
+
+      def initialize(
+          @params : Avram::Paramable,
+          {{ needs_method_args.id }}
+          {{ attribute_method_args.id }}
+      )
+        @record = nil
+        @new_record = true
+        set_attributes({{ attribute_params.id }})
+      end
+
+      def initialize(
+          @record : T,
+          {{ needs_method_args.id }}
+          {{ attribute_method_args.id }}
+      )
+        @params = Avram::Params.new
+        @new_record = false
+        set_attributes({{ attribute_params.id }})
+      end
+
+      def initialize(
+          {{ needs_method_args.id }}
+          {{ attribute_method_args.id }}
+      )
+        @record = nil
+        @params = Avram::Params.new
+        @new_record = true
+        set_attributes({{ attribute_params.id }})
+      end
+
+      def set_attributes({{ attribute_method_args.id }})
+        {% if @type.constant :COLUMN_ATTRIBUTES %}
+          {% for attribute in COLUMN_ATTRIBUTES.uniq %}
+            unless {{ attribute[:name] }}.is_a? Nothing
+              self.{{ attribute[:name] }}.value = {{ attribute[:name] }}
+            end
+          {% end %}
+        {% end %}
+
+        {% for attribute in ATTRIBUTES %}
+          unless {{ attribute.var }}.is_a? Nothing
+            self.{{ attribute.var }}.value = {{ attribute.var }}
+          end
+        {% end %}
+        extract_changes_from_params
+      end
+    end
+  end
 end
 
 macro avram_enum(enum_name, &block)
