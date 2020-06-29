@@ -253,6 +253,31 @@ describe Shield::SavePassword do
     end
   end
 
+  it "does not send password change notification if password did not change" do
+    password = "pass)word1Apassword"
+
+    user = SaveCurrentUser.create!(
+      email: "user@example.tld",
+      password: password,
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
+    )
+
+    SaveCurrentUser.update(
+      user,
+      email: "user2@example.tld",
+      password: password,
+      password_confirmation: password
+    ) do |operation, updated_user|
+      operation.saved?.should be_true
+
+      PasswordChangeNotificationEmail
+        .new(operation, updated_user)
+        .should_not(be_delivered)
+    end
+  end
+
   it "does not send password change notification for a newly created user" do
     password = "password1=Apassword"
 

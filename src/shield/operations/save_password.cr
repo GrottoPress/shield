@@ -24,6 +24,7 @@ module Shield::SavePassword
 
     private def set_password_hash
       password.value.try do |value|
+        return if Login.verify?(value, password_hash.original_value.to_s)
         password_hash.value = Login.hash(value).to_s unless value.empty?
       end
     end
