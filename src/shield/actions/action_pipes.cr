@@ -17,23 +17,11 @@ module Shield::ActionPipes
       redirect_back fallback: fallback, status: status.value
     end
 
-    private def redirect_back(*, fallback : Lucky::Action.class, status = 302)
-      redirect_back fallback: fallback.route, status: status
-    end
-
     private def redirect_back(
       *,
       fallback : Lucky::RouteHelper,
       status : HTTP::Status
     )
-      redirect_back fallback: fallback, status: status.value
-    end
-
-    private def redirect_back(*, fallback : Lucky::RouteHelper, status = 302)
-      redirect_back fallback: fallback.path, status: status
-    end
-
-    private def redirect_back(*, fallback : String, status : HTTP::Status)
       redirect_back fallback: fallback, status: status.value
     end
 
