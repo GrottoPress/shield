@@ -1,22 +1,12 @@
-language: crystal
-dist: xenial
+language: minimal
+dist: bionic
 sudo: false
 
-crystal:
-  - latest
-  - nightly
+services:
+  - docker
 
-install: shards install
+install:
+  - docker-compose -f spec/docker-compose.yml run --rm shards
 
 script:
-  - crystal spec
-  # - crystal tool format --check
-
-matrix:
-  fast_finish: true
-  allow_failures:
-    - crystal: nightly
-
-cache:
-  directories:
-    - lib
+  - docker-compose -f spec/docker-compose.yml run --rm spec
