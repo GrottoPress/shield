@@ -1,5 +1,3 @@
-Envy.from_file "./spec/app/.env.yml"
-
 module Lucky::Env
   extend self
 

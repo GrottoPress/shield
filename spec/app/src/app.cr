@@ -1,6 +1,5 @@
 require "crypto/bcrypt/password"
 
-require "envy"
 require "lucky"
 require "carbon"
 require "../../../src/shield"
