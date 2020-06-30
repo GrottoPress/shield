@@ -13,12 +13,12 @@ module Shield::UserSaveUserOptions
     after_save create_user_options
 
     private def require_login_notify
-      return if persisted? || !login_notify.value.nil?
+      return unless new_record?
       validate_required login_notify
     end
 
     private def require_password_notify
-      return if persisted? || !password_notify.value.nil?
+      return unless new_record?
       validate_required password_notify
     end
 
@@ -33,7 +33,7 @@ module Shield::UserSaveUserOptions
     # runs, because those 2 are not actual db table columns (they are
     # virtual columns)
     private def update_user_options
-      return unless persisted?
+      return if new_record?
 
       SaveUserOptions.update(
         record.not_nil!.options!,
@@ -48,16 +48,9 @@ module Shield::UserSaveUserOptions
       end
     end
 
-    # Create user options when creating user
-    #
-    # Why are we `rescue`ing?:
-    #
-    # `#persisted?` returns `true`, always, in `after_save` (and
-    # `after_commit`), so it is not a viable method for checking
-    # whether or not we did a create (vs. update) operation here.
     private def create_user_options(user : User)
-      user.options!
-    rescue Avram::RecordNotFoundError
+      return unless new_record?
+
       SaveUserOptions.create!(
         user_id: user.id,
         login_notify: login_notify.value.not_nil!,

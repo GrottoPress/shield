@@ -202,6 +202,27 @@ describe Shield::SavePassword do
     end
   end
 
+  it "does not update password if new password empty" do
+    password = "pass)word1Apassword"
+
+    user = SaveCurrentUser.create!(
+      email: "user@example.tld",
+      password: password,
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
+    )
+
+    SaveCurrentUser.update(
+      user,
+      password: "",
+      password_confirmation: ""
+    ) do |operation, updated_user|
+      operation.saved?.should be_true
+      updated_user.password_hash.should eq(user.password_hash)
+    end
+  end
+
   it "sends password change notification" do
     password = "pass)word1Apassword"
 
@@ -247,6 +268,31 @@ describe Shield::SavePassword do
       password_confirmation: new_password
     ) do |operation, updated_user|
       operation.saved?.should be_true
+      PasswordChangeNotificationEmail
+        .new(operation, updated_user)
+        .should_not(be_delivered)
+    end
+  end
+
+  it "does not send password change notification if password did not change" do
+    password = "pass)word1Apassword"
+
+    user = SaveCurrentUser.create!(
+      email: "user@example.tld",
+      password: password,
+      password_confirmation: password,
+      login_notify: true,
+      password_notify: true
+    )
+
+    SaveCurrentUser.update(
+      user,
+      email: "user2@example.tld",
+      password: password,
+      password_confirmation: password
+    ) do |operation, updated_user|
+      operation.saved?.should be_true
+
       PasswordChangeNotificationEmail
         .new(operation, updated_user)
         .should_not(be_delivered)

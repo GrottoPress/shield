@@ -24,14 +24,16 @@ module Shield::SavePassword
 
     private def set_password_hash
       password.value.try do |value|
-        password_hash.value = Login.hash(value).to_s unless value.empty?
+        return if Login.verify?(value, password_hash.original_value.to_s)
+        password_hash.value = Login.hash(value).to_s
       end
     end
 
     private def notify_password_change(user : User)
+      return if new_record?
       return unless user.options!.password_notify
 
-      unless password_hash.changed?(from: nil)
+      if password_hash.changed?
         mail PasswordChangeNotificationEmail, self, user
       end
     end
