@@ -5,12 +5,10 @@ describe Shield::DeletePasswordResetToken do
     email = "user@example.tld"
     password = "password12U password"
 
-    SaveCurrentUser.create!(
+    create_current_user!(
       email: email,
       password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
+      password_confirmation: password
     )
 
     password_reset = SavePasswordReset.create!(user_email: email)

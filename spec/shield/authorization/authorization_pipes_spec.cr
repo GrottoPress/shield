@@ -3,17 +3,7 @@ require "../../spec_helper"
 describe Shield::AuthorizationPipes do
   describe "#require_authorization" do
     pending "enforces authorization" do
-      password = "password4APASSWORD<"
-
-      params = {
-        email: "user@example.tld",
-        password: password,
-        password_confirmation: password,
-        login_notify: true,
-        password_notify: true
-      }
-
-      user = SaveCurrentUser.create!(**params)
+      user = create_current_user!
 
       client = AppClient.new
 

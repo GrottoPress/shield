@@ -6,12 +6,10 @@ describe Shield::ResetPassword do
     password = "password12U\\password"
     new_password = "assword12U\\passwor"
 
-    SaveCurrentUser.create!(
+    create_current_user!(
       email: email,
       password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
+      password_confirmation: password
     )
 
     password_reset = SavePasswordReset.create!(user_email: email)
@@ -34,12 +32,10 @@ describe Shield::ResetPassword do
     password = "password12U\\password"
     new_password = ""
 
-    SaveCurrentUser.create!(
+    create_current_user!(
       email: email,
       password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
+      password_confirmation: password
     )
 
     password_reset = SavePasswordReset.create!(user_email: email)
@@ -60,17 +56,15 @@ describe Shield::ResetPassword do
     end
   end
 
-  it "deletes password reset token when new password equals old" do
+  it "deletes password reset token even if new password equals old" do
     email = "user@example.tld"
     password = "password12U\\password"
     new_password = password
 
-    SaveCurrentUser.create!(
+    create_current_user!(
       email: email,
       password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
+      password_confirmation: password
     )
 
     password_reset = SavePasswordReset.create!(user_email: email)

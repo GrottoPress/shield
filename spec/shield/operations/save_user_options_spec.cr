@@ -17,18 +17,7 @@ describe Shield::SaveUserOptions do
   end
 
   it "requires login notification option" do
-    password = "password1@Upassword"
-
-    user = SaveCurrentUser.create!(
-      email: "user@example.tld",
-      password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
-    )
-
     SaveUserOptions.create(
-      user_id: user.id,
       password_notify: true
     ) do |operation, user_options|
       user_options.should be_nil
@@ -42,18 +31,7 @@ describe Shield::SaveUserOptions do
   end
 
   it "requires password notification option" do
-    password = "password1@Upassword"
-
-    user = SaveCurrentUser.create!(
-      email: "user@example.tld",
-      password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
-    )
-
     SaveUserOptions.create(
-      user_id: user.id,
       login_notify: true
     ) do |operation, user_options|
       user_options.should be_nil

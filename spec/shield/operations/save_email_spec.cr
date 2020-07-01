@@ -7,9 +7,7 @@ describe Shield::SaveEmail do
     SaveCurrentUser.create(
       email: "",
       password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
+      password_confirmation: password
     ) do |operation, user|
       user.should be_nil
 
@@ -27,9 +25,7 @@ describe Shield::SaveEmail do
     SaveCurrentUser.create(
       email: "user",
       password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
+      password_confirmation: password
     ) do |operation, user|
       user.should be_nil
 
@@ -47,12 +43,10 @@ describe Shield::SaveEmail do
     params = {
       email: "user@example.tld",
       password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
+      password_confirmation: password
     }
 
-    user = SaveCurrentUser.create!(**params)
+    create_current_user!(**params)
 
     SaveCurrentUser.create(**params) do |operation, user|
       user.should be_nil
