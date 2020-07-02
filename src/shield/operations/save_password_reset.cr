@@ -43,12 +43,12 @@ module Shield::SavePasswordReset
     private def send_guest_email
       if user_id.value.nil? && user_email.valid?
         @guest_email = true
-        mail GuestPasswordResetRequestEmail, self
+        mail_later GuestPasswordResetRequestEmail, self
       end
     end
 
     private def send_email(password_reset : PasswordReset)
-      mail PasswordResetRequestEmail, self, password_reset
+      mail_later PasswordResetRequestEmail, self, password_reset
     end
   end
 end
