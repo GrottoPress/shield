@@ -4,7 +4,7 @@ services:
       - postgres
     environment:
       APP_DOMAIN: http://localhost:5000
-      DATABASE_URL: postgres://username:password@db:5432/shield_spec
+      DATABASE_URL: postgres://username:password@postgres:5432/shield_spec
       SECRET_KEY_BASE: XeqAgSy5QQ+dWe8ruOBUMrz9XPbPZ7chPVtz2ecDGss=
       SERVER_HOST: "0.0.0.0"
       SERVER_PORT: "5000"
