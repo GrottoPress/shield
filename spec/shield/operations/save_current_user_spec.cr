@@ -28,7 +28,6 @@ describe Shield::SaveCurrentUser do
     user = create_current_user!(login_notify: true, password_notify: false)
 
     user_options = user.options!
-
     user_options.login_notify.should be_true
     user_options.password_notify.should be_false
   end
@@ -38,14 +37,44 @@ describe Shield::SaveCurrentUser do
 
     params = Avram::Params.new({
       "login_notify" => "false",
-      "password_notify" => "true"
+      "password_notify" => "true",
+      "user_id" => "2222",
     })
 
     SaveCurrentUser.update(user, params) do |operation, updated_user|
       user_options = updated_user.options!
 
+      user_options.user_id.should eq(user.id)
       user_options.login_notify.should be_false
       user_options.password_notify.should be_true
+    end
+  end
+
+  it "forwards nested attribute errors" do
+    user = create_current_user!(login_notify: true, password_notify: true)
+
+    SaveCurrentUser2.update(
+      user,
+      login_notify: false,
+      password_notify: false,
+    ) do |operation, updated_user|
+      operation.saved?.should be_false
+
+      user_options = updated_user.options!
+      user_options.login_notify.should be_true
+      user_options.password_notify.should be_true
+
+      operation
+        .login_notify
+        .errors
+        .find(&.includes? " failed")
+        .should_not(be_nil)
+
+      operation
+        .password_notify
+        .errors
+        .find(&.includes? " failed")
+        .should_not(be_nil)
     end
   end
 end

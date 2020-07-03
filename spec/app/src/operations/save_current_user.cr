@@ -1,3 +1,5 @@
+require "./save_user_options"
+
 class SaveCurrentUser < User::SaveOperation
   include Shield::SaveCurrentUser
 
