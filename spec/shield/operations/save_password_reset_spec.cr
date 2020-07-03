@@ -3,15 +3,8 @@ require "../../spec_helper"
 describe Shield::SavePasswordReset do
   it "saves password reset" do
     email = "user@example.tld"
-    password = "password12U password"
 
-    user = SaveCurrentUser.create!(
-      email: email,
-      password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
-    )
+    user = create_current_user!(email: email)
 
     SavePasswordReset.create(user_email: email) do |operation, password_reset|
       password_reset.should be_a(PasswordReset)
@@ -44,15 +37,8 @@ describe Shield::SavePasswordReset do
 
   it "sends password reset request email" do
     email = "user@example.tld"
-    password = "password12U password"
 
-    user = SaveCurrentUser.create!(
-      email: email,
-      password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
-    )
+    create_current_user!(email: email)
 
     SavePasswordReset.create(user_email: email) do |operation, password_reset|
       GuestPasswordResetRequestEmail.new(operation).should_not be_delivered

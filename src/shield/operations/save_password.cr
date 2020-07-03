@@ -34,7 +34,7 @@ module Shield::SavePassword
       return unless user.options!.password_notify
 
       if password_hash.changed?
-        mail PasswordChangeNotificationEmail, self, user
+        mail_later PasswordChangeNotificationEmail, self, user
       end
     end
 

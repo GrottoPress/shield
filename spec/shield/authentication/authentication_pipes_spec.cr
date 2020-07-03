@@ -14,12 +14,10 @@ describe Shield::AuthenticationPipes do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      SaveCurrentUser.create!(
+      create_current_user!(
         email: email,
         password: password,
-        password_confirmation: password,
-        login_notify: true,
-        password_notify: true
+        password_confirmation: password
       )
 
       client = AppClient.new

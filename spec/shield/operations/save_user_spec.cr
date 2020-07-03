@@ -1,74 +1,22 @@
 require "../../spec_helper"
 
 describe Shield::SaveUser do
-  it "requires login notification option" do
-    password = "password1@Upassword"
-
-    SaveUser.create(
-      email: "user@example.tld",
-      password: password,
-      password_confirmation: password,
-      level: User::Level.new(:editor),
-      password_notify: true
-    ) do |operation, user|
-      user.should be_nil
-
-      operation
-        .login_notify
-        .errors
-        .find(&.includes? " required")
-        .should_not(be_nil)
-    end
-  end
-
-  it "requires password notification option" do
-    password = "password1@Upassword"
-
-    SaveUser.create(
-      email: "user@example.tld",
-      password: password,
-      password_confirmation: password,
-      level: User::Level.new(:editor),
-      login_notify: true
-    ) do |operation, user|
-      user.should be_nil
-
-      operation
-        .password_notify
-        .errors
-        .find(&.includes? " required")
-        .should_not(be_nil)
-    end
-  end
-
   it "saves new user" do
     password = "password12U password"
 
-    SaveUser.create(
+    create_user(
       email: "user@example.tld",
       password: password,
       password_confirmation: password,
-      level: User::Level.new(:editor),
-      login_notify: false,
-      password_notify: false
+      level: User::Level.new(:editor)
     ) do |operation, user|
       user.should be_a(User)
     end
   end
 
   it "updates existing user" do
-    password = "password12U password"
-
-    user = SaveUser.create!(
-      email: "user@example.tld",
-      password: password,
-      password_confirmation: password,
-      level: User::Level.new(:editor),
-      login_notify: false,
-      password_notify: false
-    )
-
     new_email = "newuser@example.tld"
+    user = create_user!(email: "user@example.tld")
 
     SaveUser.update(user, email: new_email) do |operation, updated_user|
       operation.saved?.should be_true
@@ -77,16 +25,7 @@ describe Shield::SaveUser do
   end
 
   it "saves user options" do
-    password = "password12U>password"
-
-    user = SaveUser.create!(
-      email: "user@example.tld",
-      password: password,
-      password_confirmation: password,
-      level: User::Level.new(:editor),
-      login_notify: true,
-      password_notify: false
-    )
+    user = create_user!(login_notify: true, password_notify: false)
 
     user_options = user.options!
 
@@ -95,22 +34,14 @@ describe Shield::SaveUser do
   end
 
   it "updates user options" do
-    password = "password12U.password"
+    user = create_user!(login_notify: true, password_notify: false)
 
-    user = SaveUser.create!(
-      email: "user@example.tld",
-      password: password,
-      password_confirmation: password,
-      level: User::Level.new(:editor),
-      login_notify: true,
-      password_notify: false
-    )
+    params = Avram::Params.new({
+      "login_notify" => "false",
+      "password_notify" => "true"
+    })
 
-    SaveUser.update(
-      user,
-      login_notify: false,
-      password_notify: true
-    ) do |operation, updated_user|
+    SaveUser.update(user, params) do |operation, updated_user|
       user_options = updated_user.options!
 
       user_options.login_notify.should be_false

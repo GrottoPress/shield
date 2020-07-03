@@ -1,26 +1,30 @@
 services:
-  db:
+  crystal: &crystal
+    depends_on:
+      - postgres
+    environment:
+      APP_DOMAIN: http://localhost:5000
+      DATABASE_URL: postgres://username:password@postgres:5432/shield_spec
+      SECRET_KEY_BASE: XeqAgSy5QQ+dWe8ruOBUMrz9XPbPZ7chPVtz2ecDGss=
+      SERVER_HOST: "0.0.0.0"
+      SERVER_PORT: "5000"
+      SKIP_CREATE_DB: "yes"
+    image: crystallang/crystal:0.35.1-alpine
+    volumes:
+      - ..:/var/www/html
+    working_dir: /var/www/html
+  postgres:
     environment:
       POSTGRES_DB: shield_spec
       POSTGRES_PASSWORD: password
       POSTGRES_USER: username
     image: postgres:12.3-alpine
-  shards: &crystal
-    command: 'sh -c "cd /var/www/html && shards update"'
-    image: crystallang/crystal:0.35.1-alpine
-    volumes:
-      - ..:/var/www/html
-    working_dir: /var/www/html
+  shards:
+    <<: *crystal
+    command: 'sh -c "shards update"'
+    depends_on: []
+    environment: {}
   spec:
     <<: *crystal
-    command: 'sh -c "cd /var/www/html && crystal spec"'
-    depends_on:
-      - db
-    environment:
-      APP_DOMAIN: http://localhost:5000
-      DATABASE_URL: postgres://username:password@db:5432/shield_spec
-      SECRET_KEY_BASE: XeqAgSy5QQ+dWe8ruOBUMrz9XPbPZ7chPVtz2ecDGss=
-      SERVER_HOST: "0.0.0.0"
-      SERVER_PORT: "5000"
-      SKIP_CREATE_DB: "yes"
+    command: 'sh -c "crystal spec"'
 version: "2.4"

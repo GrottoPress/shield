@@ -51,7 +51,8 @@ module Shield::LogUserIn
 
     private def notify_login(login : Login)
       return unless login.user!.options!.login_notify
-      mail LoginNotificationEmail, self, login
+
+      mail_later LoginNotificationEmail, self, login
     end
   end
 end

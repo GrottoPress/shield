@@ -5,12 +5,10 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "password12U password"
 
-    SaveCurrentUser.create!(
+    create_current_user!(
       email: email,
       password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
+      password_confirmation: password
     )
 
     session = Lucky::Session.new
@@ -33,13 +31,7 @@ describe Shield::LogUserIn do
   it "rejects incorrect email" do
     password = "password12U~password"
 
-    SaveCurrentUser.create!(
-      email: "user@example.tld",
-      password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
-    )
+    create_current_user!(password: password, password_confirmation: password)
 
     LogUserIn.create(
       email: "incorrect@example.tld",
@@ -61,12 +53,10 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "password12U~password"
 
-    SaveCurrentUser.create!(
+    create_current_user!(
       email: email,
       password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
+      password_confirmation: password
     )
 
     LogUserIn.create(
@@ -86,15 +76,14 @@ describe Shield::LogUserIn do
   end
 
   it "sends login notification" do
-    password = "pass)word1Apassword"
     email = "user@example.tld"
+    password = "pass)word1Apassword"
 
-    user = SaveCurrentUser.create!(
+    user = create_current_user!(
       email: email,
       password: password,
       password_confirmation: password,
-      login_notify: true,
-      password_notify: true
+      login_notify: true
     )
 
     LogUserIn.create(
@@ -113,12 +102,11 @@ describe Shield::LogUserIn do
     password = "pass)word1Apassword"
     email = "user@example.tld"
 
-    user = SaveCurrentUser.create!(
+    user = create_current_user!(
       email: email,
       password: password,
       password_confirmation: password,
-      login_notify: false,
-      password_notify: true
+      login_notify: false
     )
 
     LogUserIn.create(

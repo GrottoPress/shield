@@ -5,16 +5,14 @@ describe Shield::LogUserOut do
     email = "user@example.tld"
     password = "password12U//password"
 
-    session = Lucky::Session.new
-    cookies = Lucky::CookieJar.empty_jar
-
-    user = SaveCurrentUser.create!(
+    create_current_user!(
       email: email,
       password: password,
-      password_confirmation: password,
-      login_notify: true,
-      password_notify: true
+      password_confirmation: password
     )
+
+    session = Lucky::Session.new
+    cookies = Lucky::CookieJar.empty_jar
 
     LogUserIn.create!(
       email: email,
