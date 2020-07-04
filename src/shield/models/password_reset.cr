@@ -48,7 +48,7 @@ module Shield::PasswordReset
 
     def token_expired? : Bool
       token_hash.to_s.empty? ||
-        (Time.utc - created_at >= Shield.settings.reset_token_expiry)
+        (Time.utc - created_at >= Shield.settings.password_reset_token_expiry)
     end
   end
 end
