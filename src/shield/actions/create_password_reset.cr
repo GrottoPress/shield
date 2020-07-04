@@ -14,8 +14,8 @@ module Shield::CreatePasswordReset
         params,
         ip_address: remote_ip
       ) do |operation, password_reset|
-        if password_reset || operation.guest_email?
-          success_action(operation, password_reset)
+        if password_reset
+          success_action(operation, password_reset.not_nil!)
         else
           failure_action(operation)
         end
@@ -23,13 +23,21 @@ module Shield::CreatePasswordReset
     end
 
     private def success_action(operation, password_reset)
-      flash.success = "Done! Check your email for further instructions."
-      redirect to: Logins::New
+      success_action
     end
 
     private def failure_action(operation)
-      flash.failure = "Password reset request failed"
-      html NewPage, operation: operation
+      if operation.guest_email?
+        success_action
+      else
+        flash.failure = "Password reset request failed"
+        html NewPage, operation: operation
+      end
+    end
+
+    private def success_action
+      flash.success = "Done! Check your email for further instructions."
+      redirect to: Logins::New
     end
   end
 end
