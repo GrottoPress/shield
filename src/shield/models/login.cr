@@ -52,21 +52,34 @@ module Shield::Login
       session : Lucky::Session,
       cookies : Lucky::CookieJar
     ) : Nil
-      cookies.get?(:remember_login).try { |id| session.set(:login, id) }
+      return if expired?(cookies)
+      cookies.get?(:login).try { |id| session.set(:login, id) }
     end
 
     def self.delete_session(
       session : Lucky::Session,
-      cookies : Lucky::CookieJar
+      cookies : Lucky::CookieJar? = nil
     ) : Nil
       session.delete(:login)
-      cookies.delete(:remember_login)
+      delete_cookie(cookies.not_nil!) unless cookies.nil?
+    end
+
+    def self.delete_cookie(cookies : Lucky::CookieJar) : Nil
+      cookies.delete(:login)
     end
 
     def remember(cookies : Lucky::CookieJar) : Nil
-      cookies.set(:remember_login, id.to_s).expires(
+      cookies.set(:login, id.to_s).expires(
         Shield.settings.login_expiry.from_now
       )
+    end
+
+    def self.expired?(cookies : Lucky::CookieJar) : Bool
+      cookies.deleted?(:login)
+    end
+
+    def expired? : Bool
+      (Time.utc - started_at) > Shield.settings.login_expiry
     end
 
     def self.hash(plaintext : String) : Crypto::Bcrypt::Password

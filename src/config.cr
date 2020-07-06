@@ -6,6 +6,6 @@ module Shield
     setting password_require_uppercase : Bool = true
     setting password_require_number : Bool = true
     setting password_require_special_char : Bool = true
-    setting reset_token_expiry : Time::Span = 30.minutes
+    setting password_reset_token_expiry : Time::Span = 30.minutes
   end
 end

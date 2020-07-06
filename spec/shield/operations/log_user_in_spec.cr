@@ -24,7 +24,35 @@ describe Shield::LogUserIn do
       login.should be_a(Login)
 
       session.get?(:login).should eq("#{login.try(&.id)}")
-      cookies.get?(:remember_login).should eq("#{login.try(&.id)}")
+      cookies.get?(:login).should eq("#{login.try(&.id)}")
+    end
+  end
+
+  it "forgets login" do
+    Shield.temp_config(login_expiry: 2.seconds) do
+      email = "user@example.tld"
+      password = "password12U/password"
+
+      create_current_user!(
+        email: email,
+        password: password,
+        password_confirmation: password
+      )
+
+      session = Lucky::Session.new
+      cookies = Lucky::CookieJar.empty_jar
+
+      LogUserIn.create!(
+        email: email,
+        password: password,
+        remember_login: true,
+        session: session,
+        cookies: cookies
+      )
+
+      cookies.get_raw(:login).expired?.should be_false
+      sleep 3
+      cookies.get_raw(:login).expired?.should be_true
     end
   end
 
