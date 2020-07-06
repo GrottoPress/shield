@@ -28,7 +28,12 @@ module Shield::AuthenticationPipes
     end
 
     private def remember_login
-      Login.set_session(session, cookies)
+      if Login.from_session(session).try &.expired?
+        Login.delete_cookie(cookies)
+      else
+        Login.set_session(session, cookies)
+      end
+
       continue
     end
 
