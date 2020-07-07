@@ -78,9 +78,9 @@ module Shield::Login
     end
 
     def self.authenticate(id : Int64, token : String) : self?
-      return unless login = LoginQuery.new.id(id).first?
-      return unless login.authenticate?(token)
-      login
+      LoginQuery.new.id(id).first?.try do |login|
+        login if login.authenticate?(token)
+      end
     end
 
     def authenticate?(token : String) : Bool

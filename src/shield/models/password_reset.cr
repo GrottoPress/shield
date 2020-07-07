@@ -37,9 +37,9 @@ module Shield::PasswordReset
     end
 
     def self.authenticate(id : Int64, token : String) : self?
-      return unless reset = PasswordResetQuery.new.id(id).first?
-      return unless reset.authenticate?(token)
-      reset
+      PasswordResetQuery.new.id(id).first?.try do |password_reset|
+        password_reset if password_reset.authenticate?(token)
+      end
     end
 
     def authenticate?(token : String) : Bool
