@@ -26,7 +26,6 @@ module Shield::Login
     def self.from_session(session : Lucky::Session) : self?
       session.get?(:login).try do |id|
         return unless token = session.get?(:login_token)
-
         authenticate(id.to_i64, token.to_s)
       end
     end
