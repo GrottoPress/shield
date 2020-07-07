@@ -63,7 +63,7 @@ module Shield::Login
       cookies.delete(:login_token)
     end
 
-    def remember(cookies : Lucky::CookieJar) : Nil
+    def set_cookie(cookies : Lucky::CookieJar) : Nil
       cookies.set(:login, id.to_s).expires(
         Shield.settings.login_expiry.from_now
       )

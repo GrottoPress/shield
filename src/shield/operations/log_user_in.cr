@@ -51,7 +51,7 @@ module Shield::LogUserIn
     end
 
     private def remember_login(login : Login)
-      login.remember(cookies) if remember_login.value
+      login.set_cookie(cookies) if remember_login.value
     end
 
     private def notify_login(login : Login)
