@@ -44,6 +44,12 @@ module Shield::User
       record.allow?(self, action)
     end
 
+    def self.authenticate(email : String, password : String) : self?
+      return unless user = from_email(email)
+      return unless user.authenticate?(password)
+      user
+    end
+
     def authenticate?(password : String) : Bool
       Login.verify?(password, password_hash)
     end

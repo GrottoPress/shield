@@ -41,7 +41,7 @@ module Shield::SavePasswordReset
     end
 
     private def set_token
-      @token = Random::Secure.urlsafe_base64(32)
+      @token = Login.generate_token
       token_hash.value = Login.hash(@token).to_s
     end
 

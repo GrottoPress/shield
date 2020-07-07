@@ -14,6 +14,7 @@ module Shield::LogUserIn
 
       set_started_at
       set_ended_at
+      set_token
     end
 
     after_commit set_session
@@ -25,7 +26,7 @@ module Shield::LogUserIn
     end
 
     private def validate_credentials
-      if user = Login.authenticate(email.value.to_s, password.value.to_s)
+      if user = User.authenticate(email.value.to_s, password.value.to_s)
         user_id.value = user.not_nil!.id
       else
         email.add_error "may be incorrect"
@@ -41,12 +42,16 @@ module Shield::LogUserIn
       ended_at.value = nil
     end
 
+    private def set_token
+      token.value = Login.generate_token
+    end
+
     private def set_session(login : Login)
       login.set_session(session)
     end
 
     private def remember_login(login : Login)
-      login.remember(cookies) if remember_login.value
+      login.set_cookie(cookies) if remember_login.value
     end
 
     private def notify_login(login : Login)

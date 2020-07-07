@@ -25,6 +25,11 @@ describe Shield::LogUserIn do
 
       session.get?(:login).should eq("#{login.try(&.id)}")
       cookies.get?(:login).should eq("#{login.try(&.id)}")
+
+      session.get?(:login_token).to_s.should_not be_empty
+      cookies.get?(:login_token).to_s.should_not be_empty
+
+      session.get?(:login_token).should eq(cookies.get? :login_token)
     end
   end
 
@@ -51,8 +56,12 @@ describe Shield::LogUserIn do
       )
 
       cookies.get_raw(:login).expired?.should be_false
+      cookies.get_raw(:login_token).expired?.should be_false
+
       sleep 3
+
       cookies.get_raw(:login).expired?.should be_true
+      cookies.get_raw(:login_token).expired?.should be_true
     end
   end
 
