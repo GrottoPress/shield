@@ -14,9 +14,7 @@ module Shield::AuthenticationHelpers
 
     @[Memoize]
     private def current_user : User?
-      Login.from_session(session, preload_user: true).try do |login|
-        login.user if login.active?
-      end
+      Login.from_session(session).try &.user!
     end
   end
 end
