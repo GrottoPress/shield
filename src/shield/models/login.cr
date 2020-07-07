@@ -63,13 +63,10 @@ module Shield::Login
     end
 
     def set_cookie(cookies : Lucky::CookieJar) : Nil
-      cookies.set(:login, id.to_s).expires(
-        Shield.settings.login_expiry.from_now
-      )
+      expiry = Shield.settings.login_expiry.from_now
 
-      cookies.set(:login_token, token).expires(
-        Shield.settings.login_expiry.from_now
-      )
+      cookies.set(:login, id.to_s).expires(expiry)
+      cookies.set(:login_token, token).expires(expiry)
     end
 
     def self.expired?(cookies : Lucky::CookieJar) : Bool
