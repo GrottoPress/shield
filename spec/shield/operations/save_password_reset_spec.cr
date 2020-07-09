@@ -48,4 +48,19 @@ describe Shield::SavePasswordReset do
         .should(be_delivered)
     end
   end
+
+  it "saves IP address" do
+    email = "user@example.tld"
+
+    create_current_user!(email: email)
+
+    ip = Socket::IPAddress.new("127.0.0.1", 12345)
+
+    password_reset = SavePasswordReset.create!(
+      user_email: email,
+      ip_address: ip
+    )
+
+    password_reset.ip_address.should eq(ip)
+  end
 end

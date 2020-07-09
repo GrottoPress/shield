@@ -159,4 +159,27 @@ describe Shield::LogUserIn do
         .should_not(be_delivered)
     end
   end
+
+  it "saves IP address" do
+    password = "pass)word1Apassword"
+    email = "user@example.tld"
+
+    create_current_user!(
+      email: email,
+      password: password,
+      password_confirmation: password
+    )
+
+    ip = Socket::IPAddress.new("127.0.0.1", 12345)
+
+    login = LogUserIn.create!(
+      email: email,
+      password: password,
+      ip_address: ip,
+      session: Lucky::Session.new,
+      cookies: Lucky::CookieJar.empty_jar
+    )
+
+    login.ip_address.should eq(ip)
+  end
 end

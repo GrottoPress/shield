@@ -249,25 +249,14 @@ struct Socket::IPAddress
 
     include Avram::Type
 
-    def from_db!(value : String)
-      port = value.match /[^:\]]*$/
-      address = value.rchop port.to_s
-
-      IPAddress.new(address, port.try(&.[0].to_i) || 0)
-    end
-
     def parse(value : IPAddress)
       SuccessfulCast(IPAddress).new(value)
     end
 
     def parse(value : String)
-      SuccessfulCast(IPAddress).new(IPAddress.parse(value))
+      SuccessfulCast(IPAddress).new(IPAddress.parse "//#{value}")
     rescue
       FailedCast.new
-    end
-
-    def to_db(value : String)
-      value
     end
 
     def to_db(value : IPAddress)
