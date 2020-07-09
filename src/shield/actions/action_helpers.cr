@@ -1,7 +1,7 @@
 module Shield::ActionHelpers
   macro included
     private def remote_ip : Socket::IPAddress?
-      Socket::IPAddress.parse(request.remote_address.to_s)
+      request.remote_address.as(Socket::IPAddress)
     rescue
       nil
     end
