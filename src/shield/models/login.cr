@@ -26,7 +26,6 @@ module Shield::Login
     def self.from_session(session : Lucky::Session) : self?
       session.get?(:login).try do |id|
         return unless token = session.get?(:login_token)
-
         authenticate(id.to_i64, token.to_s)
       end
     end
@@ -64,13 +63,10 @@ module Shield::Login
     end
 
     def set_cookie(cookies : Lucky::CookieJar) : Nil
-      cookies.set(:login, id.to_s).expires(
-        Shield.settings.login_expiry.from_now
-      )
+      expiry = Shield.settings.login_expiry.from_now
 
-      cookies.set(:login_token, token).expires(
-        Shield.settings.login_expiry.from_now
-      )
+      cookies.set(:login, id.to_s).expires(expiry)
+      cookies.set(:login_token, token).expires(expiry)
     end
 
     def self.expired?(cookies : Lucky::CookieJar) : Bool
@@ -82,9 +78,9 @@ module Shield::Login
     end
 
     def self.authenticate(id : Int64, token : String) : self?
-      return unless login = LoginQuery.new.id(id).first?
-      return unless login.authenticate?(token)
-      login
+      LoginQuery.new.id(id).first?.try do |login|
+        login if login.authenticate?(token)
+      end
     end
 
     def authenticate?(token : String) : Bool

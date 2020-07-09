@@ -45,9 +45,7 @@ module Shield::User
     end
 
     def self.authenticate(email : String, password : String) : self?
-      return unless user = from_email(email)
-      return unless user.authenticate?(password)
-      user
+      from_email(email).try { |user| user if user.authenticate?(password) }
     end
 
     def authenticate?(password : String) : Bool
