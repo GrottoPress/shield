@@ -19,7 +19,7 @@ module Shield::IndexPasswordReset
     # param token : String
 
     # get "/password-resets" do
-    #   authenticate
+    #   verify_token
     # end
 
     private def verify_token

@@ -7,7 +7,7 @@ module Shield::EditPasswordReset
     before :set_no_referrer_policy
 
     # get "/password-resets/edit" do
-    #   edit_password_reset
+    #   verify_token
     # end
 
     private def verify_token

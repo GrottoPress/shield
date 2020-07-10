@@ -5,6 +5,6 @@ class PasswordResets::Index < ApiAction
   param token : String
 
   get "/password-resets" do
-    authenticate
+    verify_token
   end
 end
