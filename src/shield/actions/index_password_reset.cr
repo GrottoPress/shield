@@ -22,7 +22,7 @@ module Shield::IndexPasswordReset
     #   authenticate
     # end
 
-    private def authenticate
+    private def verify_token
       if password_reset = PasswordReset.authenticate(id, token)
         success_action(password_reset.not_nil!)
       else

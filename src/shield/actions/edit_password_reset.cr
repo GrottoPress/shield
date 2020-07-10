@@ -10,7 +10,7 @@ module Shield::EditPasswordReset
     #   edit_password_reset
     # end
 
-    private def edit_password_reset
+    private def verify_token
       if password_reset = PasswordReset.from_session(session)
         success_action(password_reset.not_nil!)
       else
