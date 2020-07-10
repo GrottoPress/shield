@@ -1,5 +1,5 @@
 module Shield::IndexPasswordReset
-  # SECURITY!
+  # IMPORTANT!
   #
   # Ensure tokens are not leaked in HTTP Referer header
   #
@@ -13,7 +13,7 @@ module Shield::IndexPasswordReset
     skip :require_logged_in
 
     before :require_logged_out
-    before :set_no_referrer_policy # <= SECURITY!
+    before :set_no_referrer_policy # <= IMPORTANT!
 
     # param id : Int64
     # param token : String
@@ -32,7 +32,7 @@ module Shield::IndexPasswordReset
 
     private def success_action(password_reset)
       password_reset.set_session(session)
-      redirect to: Edit # <= SECURITY!
+      redirect to: Edit # <= IMPORTANT!
     end
 
     private def failure_action
