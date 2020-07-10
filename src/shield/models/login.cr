@@ -26,7 +26,7 @@ module Shield::Login
     def self.from_session(session : Lucky::Session) : self?
       session.get?(:login).try do |id|
         return unless token = session.get?(:login_token)
-        authenticate(id.to_i64, token.to_s)
+        authenticate(id, token.to_s)
       end
     end
 
@@ -77,8 +77,8 @@ module Shield::Login
       (Time.utc - started_at) > Shield.settings.login_expiry
     end
 
-    def self.authenticate(id : Int64, token : String) : self?
-      LoginQuery.new.id(id).first?.try do |login|
+    def self.authenticate(id, token : String) : self?
+      LoginQuery.new.id(id.to_i64).first?.try do |login|
         login if login.authenticate?(token)
       end
     end
