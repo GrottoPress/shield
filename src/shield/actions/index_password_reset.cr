@@ -36,8 +36,7 @@ module Shield::IndexPasswordReset
     end
 
     private def failure_action
-      flash.failure = "Invalid token"
-      redirect to: New
+      redirect to: Edit # <= IMPORTANT!
     end
   end
 end
