@@ -19,23 +19,11 @@ module Shield::ShowPasswordReset
     # param token : String
 
     # get "/password-resets" do
-    #   verify_token
+    #   set_session
     # end
 
-    private def verify_token
-      if password_reset = PasswordReset.authenticate(id, token)
-        password_reset.set_session(session)
-        success_action(password_reset.not_nil!)
-      else
-        failure_action
-      end
-    end
-
-    private def success_action(password_reset)
-      redirect to: Edit # <= IMPORTANT!
-    end
-
-    private def failure_action
+    private def set_session
+      PasswordReset.set_session(session, params)
       redirect to: Edit # <= IMPORTANT!
     end
   end
