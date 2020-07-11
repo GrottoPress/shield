@@ -1,4 +1,4 @@
-module Shield::IndexPasswordReset
+module Shield::ShowPasswordReset
   # IMPORTANT!
   #
   # Ensure tokens are not leaked in HTTP Referer header
@@ -24,6 +24,7 @@ module Shield::IndexPasswordReset
 
     private def verify_token
       if password_reset = PasswordReset.authenticate(id, token)
+        password_reset.set_session(session)
         success_action(password_reset.not_nil!)
       else
         failure_action
@@ -31,7 +32,6 @@ module Shield::IndexPasswordReset
     end
 
     private def success_action(password_reset)
-      password_reset.set_session(session)
       redirect to: Edit # <= IMPORTANT!
     end
 

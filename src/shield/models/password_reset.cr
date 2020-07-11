@@ -6,7 +6,7 @@ module Shield::PasswordReset
     column token_hash : String?
 
     def url(token : String) : String
-      PasswordResets::Index.url(id: id, token: token)
+      PasswordResets::Show.url(id: id, token: token)
     end
 
     def self.from_session!(
