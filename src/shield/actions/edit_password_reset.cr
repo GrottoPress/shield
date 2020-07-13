@@ -7,10 +7,10 @@ module Shield::EditPasswordReset
     before :set_no_referrer_policy
 
     # get "/password-resets/edit" do
-    #   verify_token
+    #   verify_password_reset
     # end
 
-    private def verify_token
+    private def verify_password_reset
       if password_reset = PasswordReset.from_session(session)
         success_action(password_reset.not_nil!)
       else
