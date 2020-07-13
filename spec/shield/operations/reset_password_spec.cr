@@ -12,7 +12,7 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = SavePasswordReset.create!(user_email: email)
+    password_reset = StartPasswordReset.create!(user_email: email)
 
     ResetPassword.update(
       password_reset.user!,
@@ -27,7 +27,7 @@ describe Shield::ResetPassword do
         updated_user.password_hash
       ).should be_true
 
-      PasswordResetQuery.find(password_reset.id).token_hash.should be_nil
+      PasswordResetQuery.find(password_reset.id).active?.should be_false
     end
   end
 
@@ -42,7 +42,7 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = SavePasswordReset.create!(user_email: email)
+    password_reset = StartPasswordReset.create!(user_email: email)
 
     ResetPassword.update(
       password_reset.user!,
@@ -71,7 +71,7 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = SavePasswordReset.create!(user_email: email)
+    password_reset = StartPasswordReset.create!(user_email: email)
 
     ResetPassword.update(
       password_reset.user!,
@@ -81,7 +81,7 @@ describe Shield::ResetPassword do
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
-      PasswordResetQuery.find(password_reset.id).token_hash.should be_nil
+      PasswordResetQuery.find(password_reset.id).active?.should be_false
     end
   end
 end

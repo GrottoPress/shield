@@ -1,4 +1,4 @@
-module Shield::SavePasswordReset
+module Shield::StartPasswordReset
   macro included
     getter token = ""
     getter? guest_email = false
@@ -11,6 +11,8 @@ module Shield::SavePasswordReset
       validate_user_email
       validate_required user_email
 
+      set_started_at
+      set_ended_at
       set_user_id
       set_guest_email
       set_token
@@ -38,6 +40,14 @@ module Shield::SavePasswordReset
 
     private def set_guest_email
       @guest_email = user_id.value.nil? && user_email.valid?
+    end
+
+    private def set_started_at
+      started_at.value = Time.utc
+    end
+
+    private def set_ended_at
+      ended_at.value = nil
     end
 
     private def set_token

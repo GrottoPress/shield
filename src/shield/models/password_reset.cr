@@ -1,9 +1,23 @@
 module Shield::PasswordReset
   macro included
+    skip_default_columns
+
     belongs_to user : User
 
+    primary_key id : Int64
+
+    column token_hash : String
     column ip_address : Socket::IPAddress?
-    column token_hash : String?
+    column started_at : Time
+    column ended_at : Time?
+
+    def active? : Bool
+      ended_at.nil? || ended_at.not_nil! > Time.utc
+    end
+
+    def inactive? : Bool
+      !active?
+    end
 
     def url(token : String) : String
       PasswordResets::Show.url(id: id, token: token)
@@ -37,12 +51,11 @@ module Shield::PasswordReset
     end
 
     def authenticate?(token : String) : Bool
-      !token_expired? && Login.verify_sha256?(token, token_hash.to_s)
+      active? && !expired? && Login.verify_sha256?(token, token_hash.to_s)
     end
 
-    def token_expired? : Bool
-      token_hash.to_s.empty? ||
-        (Time.utc - created_at >= Shield.settings.password_reset_token_expiry)
+    def expired? : Bool
+      (Time.utc - started_at) > Shield.settings.password_reset_token_expiry
     end
   end
 end
