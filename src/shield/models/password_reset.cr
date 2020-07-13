@@ -55,7 +55,7 @@ module Shield::PasswordReset
     end
 
     def expired? : Bool
-      (Time.utc - started_at) > Shield.settings.password_reset_token_expiry
+      (Time.utc - started_at) > Shield.settings.password_reset_expiry
     end
   end
 end
