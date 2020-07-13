@@ -6,7 +6,7 @@ module Shield::Login
 
     primary_key id : Int64
 
-    column token : String
+    column token_hash : String
     column ip_address : Socket::IPAddress?
     column started_at : Time
     column ended_at : Time?
@@ -30,7 +30,7 @@ module Shield::Login
       end
     end
 
-    def set_session(session : Lucky::Session) : Nil
+    def set_session(session : Lucky::Session, token : String) : Nil
       session.set(:login, id.to_s)
       session.set(:login_token, token)
     end
@@ -62,7 +62,7 @@ module Shield::Login
       cookies.delete(:login_token)
     end
 
-    def set_cookie(cookies : Lucky::CookieJar) : Nil
+    def set_cookie(cookies : Lucky::CookieJar, token : String) : Nil
       expiry = Shield.settings.login_expiry.from_now
 
       cookies.set(:login, id.to_s).expires(expiry)
@@ -84,7 +84,7 @@ module Shield::Login
     end
 
     def authenticate?(token : String) : Bool
-      active? && self.token == token
+      active? && self.class.verify_sha256?(token, token_hash)
     end
 
     def self.hash_bcrypt(plaintext : String) : String

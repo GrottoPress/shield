@@ -1,5 +1,7 @@
 module Shield::LogUserIn
   macro included
+    getter token = ""
+
     attribute email : String
     attribute password : String
     attribute remember_login : Bool
@@ -43,15 +45,16 @@ module Shield::LogUserIn
     end
 
     private def set_token
-      token.value = Login.generate_token
+      @token = Login.generate_token
+      token_hash.value = Login.hash_sha256(@token)
     end
 
     private def set_session(login : Login)
-      login.set_session(session)
+      login.set_session(session, token)
     end
 
     private def remember_login(login : Login)
-      login.set_cookie(cookies) if remember_login.value
+      login.set_cookie(cookies, token) if remember_login.value
     end
 
     private def notify_login(login : Login)
