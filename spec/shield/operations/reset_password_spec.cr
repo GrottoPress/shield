@@ -22,7 +22,11 @@ describe Shield::ResetPassword do
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
-      Login.verify?(new_password, updated_user.password_hash).should be_true
+      Login.verify_bcrypt?(
+        new_password,
+        updated_user.password_hash
+      ).should be_true
+
       PasswordResetQuery.find(password_reset.id).token_hash.should be_nil
     end
   end

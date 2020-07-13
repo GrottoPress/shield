@@ -49,7 +49,7 @@ module Shield::User
     end
 
     def authenticate?(password : String) : Bool
-      Login.verify?(password, password_hash)
+      Login.verify_bcrypt?(password, password_hash)
     end
   end
 end

@@ -87,14 +87,24 @@ module Shield::Login
       active? && self.token == token
     end
 
-    def self.hash(plaintext : String) : Crypto::Bcrypt::Password
-      Crypto::Bcrypt::Password.create(plaintext)
+    def self.hash_bcrypt(plaintext : String) : String
+      Crypto::Bcrypt::Password.create(plaintext).to_s
     end
 
-    def self.verify?(plaintext : String, hash : String) : Bool
+    def self.verify_bcrypt?(plaintext : String, hash : String) : Bool
       Crypto::Bcrypt::Password.new(hash).verify(plaintext)
     rescue
       false
+    end
+
+    def self.hash_sha256(plaintext : String) : String
+      digest = OpenSSL::Digest.new("SHA256")
+      digest << plaintext
+      digest.final.hexstring
+    end
+
+    def self.verify_sha256?(plaintext : String, hash : String) : Bool
+      hash_sha256(plaintext) == hash
     end
 
     def self.generate_token(size : Int32 = 32) : String

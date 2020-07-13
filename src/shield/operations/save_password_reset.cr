@@ -42,7 +42,7 @@ module Shield::SavePasswordReset
 
     private def set_token
       @token = Login.generate_token
-      token_hash.value = Login.hash(@token).to_s
+      token_hash.value = Login.hash_sha256(@token)
     end
 
     private def send_guest_email
