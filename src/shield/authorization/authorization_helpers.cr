@@ -6,37 +6,20 @@ module Shield::AuthorizationHelpers
       action : Shield::AuthorizedAction,
       record : Shield::Model | Shield::Model.class
     )
-      authorize(current_user, action, record)
-    end
-
-    private def authorize!(
-      action : Shield::AuthorizedAction,
-      record : Shield::Model | Shield::Model.class
-    )
-      authorize!(current_user, action, record)
-    end
-
-    private def authorize(
-      user : Shield::User?,
-      action : Shield::AuthorizedAction,
-      record : Shield::Model | Shield::Model.class
-    )
-      authorize!(user, action, record)
+      authorize!(action, record)
     rescue error : Shield::NotAuthorizedError
       not_authorized_action(error.user, error.action, error.record)
     end
 
     private def authorize!(
-      user : Shield::User?,
       action : Shield::AuthorizedAction,
       record : Shield::Model | Shield::Model.class
     )
       @authorized = true
+      return if logged_out?
 
-      if user
-        unless user.not_nil!.can?(action, record)
-          raise Shield::NotAuthorizedError.new(user, action, record)
-        end
+      unless current_user!.can?(action, record)
+        raise Shield::NotAuthorizedError.new(current_user!, action, record)
       end
     end
 
