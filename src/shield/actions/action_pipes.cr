@@ -9,23 +9,7 @@ module Shield::ActionPipes
       session.get?(:previous_page)
     end
 
-    private def redirect_back(
-      *,
-      fallback : Lucky::Action.class,
-      status : HTTP::Status
-    )
-      redirect_back fallback: fallback, status: status.value
-    end
-
-    private def redirect_back(
-      *,
-      fallback : Lucky::RouteHelper,
-      status : HTTP::Status
-    )
-      redirect_back fallback: fallback, status: status.value
-    end
-
-    private def redirect_back(*, fallback : String, status : Int32 = 302)
+    def redirect_back(*, fallback : String, status : Int32 = 302)
       redirect to: (previous_page || fallback), status: status
     end
   end

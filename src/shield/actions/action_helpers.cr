@@ -5,5 +5,21 @@ module Shield::ActionHelpers
     rescue
       nil
     end
+
+    def redirect_back(
+      *,
+      fallback : Lucky::Action.class,
+      status : HTTP::Status
+    )
+      redirect_back fallback: fallback, status: status.value
+    end
+
+    def redirect_back(
+      *,
+      fallback : Lucky::RouteHelper,
+      status : HTTP::Status
+    )
+      redirect_back fallback: fallback, status: status.value
+    end
   end
 end
