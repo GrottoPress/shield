@@ -18,12 +18,12 @@ module Shield::DestroyLogin
       end
     end
 
-    private def success_action(operation, updated_login)
+    private def success_action(operation, login)
       flash.info = "Logged out. See ya!"
       redirect to: New
     end
 
-    private def failure_action(operation, updated_login)
+    private def failure_action(operation, login)
       flash.failure = "Something went wrong"
       redirect to: CurrentUser::Show
     end
