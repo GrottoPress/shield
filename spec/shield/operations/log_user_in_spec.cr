@@ -49,7 +49,7 @@ describe Shield::LogUserIn do
       session = Lucky::Session.new
       cookies = Lucky::CookieJar.empty_jar
 
-      LogUserIn.create!(
+      login = LogUserIn.create!(
         email: email,
         password: password,
         remember_login: true,
@@ -59,11 +59,13 @@ describe Shield::LogUserIn do
 
       cookies.get_raw(:login).expired?.should be_false
       cookies.get_raw(:login_token).expired?.should be_false
+      login.expired?.should be_false
 
       sleep 3
 
       cookies.get_raw(:login).expired?.should be_true
       cookies.get_raw(:login_token).expired?.should be_true
+      login.expired?.should be_true
     end
   end
 
