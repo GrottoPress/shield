@@ -51,7 +51,11 @@ module Shield::PasswordReset
     end
 
     def authenticate?(token : String) : Bool
-      active? && !expired? && Login.verify_sha256?(token, token_hash)
+      return false unless active?
+      return !EndPasswordReset.update!(self) if expired?
+      Login.verify_sha256?(token, token_hash)
+    rescue
+      false
     end
 
     def expired? : Bool
