@@ -10,7 +10,10 @@ module Shield::CreateCurrentUser
     before :require_logged_out
 
     private def save_current_user
-      SaveCurrentUser.create(params) do |operation, user|
+      SaveCurrentUser.create(
+        params,
+        current_login: current_login
+      ) do |operation, user|
         if user
           success_action(operation, user.not_nil!)
         else

@@ -18,7 +18,8 @@ describe Shield::ResetPassword do
       password_reset.user!,
       password: new_password,
       password_confirmation: new_password,
-      password_reset: password_reset
+      password_reset: password_reset,
+      current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
@@ -48,7 +49,8 @@ describe Shield::ResetPassword do
       password_reset.user!,
       password: new_password,
       password_confirmation: new_password,
-      password_reset: password_reset
+      password_reset: password_reset,
+      current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_false
 
@@ -77,7 +79,8 @@ describe Shield::ResetPassword do
       password_reset.user!,
       password: new_password,
       password_confirmation: new_password,
-      password_reset: password_reset
+      password_reset: password_reset,
+      current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
 

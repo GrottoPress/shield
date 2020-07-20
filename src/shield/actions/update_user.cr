@@ -6,7 +6,11 @@ module Shield::UpdateUser
     # end
 
     private def save_user
-      SaveUser.update(user, params) do |operation, updated_user|
+      SaveUser.update(
+        user,
+        params,
+        current_login: current_login
+      ) do |operation, updated_user|
         if operation.saved?
           success_action(operation, updated_user)
         else

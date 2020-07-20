@@ -31,7 +31,7 @@ def create_user(
     "password_notify" => password_notify.to_s,
   })
 
-  SaveUser.create(params) do |operation, user|
+  SaveUser.create(params, current_login: nil) do |operation, user|
     yield operation, user
   end
 end
@@ -54,7 +54,7 @@ def create_user!(
     "password_notify" => password_notify.to_s,
   })
 
-  SaveUser.create!(params)
+  SaveUser.create!(params, current_login: nil)
 end
 
 def create_current_user(
@@ -73,7 +73,7 @@ def create_current_user(
     "password_notify" => password_notify.to_s,
   })
 
-  SaveCurrentUser.create(params) do |operation, user|
+  SaveCurrentUser.create(params, current_login: nil) do |operation, user|
     yield operation, user
   end
 end
@@ -94,7 +94,7 @@ def create_current_user!(
     "password_notify" => password_notify.to_s,
   })
 
-  SaveCurrentUser.create!(params)
+  SaveCurrentUser.create!(params, current_login: nil)
 end
 
 Avram::Migrator::Runner.new.ensure_migrated!

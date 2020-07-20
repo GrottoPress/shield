@@ -174,7 +174,8 @@ describe Shield::SavePassword do
     SaveCurrentUser.update(
       user,
       password: "",
-      password_confirmation: ""
+      password_confirmation: "",
+      current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
       updated_user.password_hash.should eq(user.password_hash)
@@ -194,7 +195,8 @@ describe Shield::SavePassword do
     SaveCurrentUser.update(
       user,
       password: new_password,
-      password_confirmation: new_password
+      password_confirmation: new_password,
+      current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
@@ -217,7 +219,8 @@ describe Shield::SavePassword do
     SaveCurrentUser.update(
       user,
       password: new_password,
-      password_confirmation: new_password
+      password_confirmation: new_password,
+      current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
       PasswordChangeNotificationEmail
@@ -239,7 +242,8 @@ describe Shield::SavePassword do
       user,
       email: "user2@example.tld",
       password: password,
-      password_confirmation: password
+      password_confirmation: password,
+      current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
@@ -257,5 +261,97 @@ describe Shield::SavePassword do
         .new(operation, user.not_nil!)
         .should_not(be_delivered)
     end
+  end
+
+  it "logs out everywhere when password changes" do
+    email = "user@example.tld"
+    password = "password12U-password"
+    new_password = "assword12U-passwor"
+
+    user = create_current_user!(
+      email: email,
+      password: password,
+      password_confirmation: password
+    )
+
+    login_1 = LogUserIn.create!(
+      email: email,
+      password: password,
+      remember_login: true,
+      session: Lucky::Session.new,
+      cookies: Lucky::CookieJar.empty_jar
+    )
+
+    login_2 = LogUserIn.create!(
+      email: email,
+      password: password,
+      remember_login: true,
+      session: Lucky::Session.new,
+      cookies: Lucky::CookieJar.empty_jar
+    )
+
+    login_1.active?.should be_true
+    login_2.active?.should be_true
+
+    SaveCurrentUser.update!(
+      user,
+      password: new_password,
+      password_confirmation: new_password,
+      current_login: nil
+    )
+
+    login_1.reload.active?.should be_false
+    login_2.reload.active?.should be_false
+  end
+
+  it "retains current login when password changes" do
+    email = "user@example.tld"
+    password = "password12U-password"
+    new_password = "assword12U-passwor"
+
+    user = create_current_user!(
+      email: email,
+      password: password,
+      password_confirmation: password
+    )
+
+    login_1 = LogUserIn.create!(
+      email: email,
+      password: password,
+      remember_login: true,
+      session: Lucky::Session.new,
+      cookies: Lucky::CookieJar.empty_jar
+    )
+
+    login_2 = LogUserIn.create!(
+      email: email,
+      password: password,
+      remember_login: true,
+      session: Lucky::Session.new,
+      cookies: Lucky::CookieJar.empty_jar
+    )
+
+    current_login = LogUserIn.create!(
+      email: email,
+      password: password,
+      remember_login: true,
+      session: Lucky::Session.new,
+      cookies: Lucky::CookieJar.empty_jar
+    )
+
+    login_1.active?.should be_true
+    login_2.active?.should be_true
+    current_login.active?.should be_true
+
+    SaveCurrentUser.update!(
+      user,
+      password: new_password,
+      password_confirmation: new_password,
+      current_login: current_login
+    )
+
+    login_1.reload.active?.should be_false
+    login_2.reload.active?.should be_false
+    current_login.reload.active?.should be_true
   end
 end

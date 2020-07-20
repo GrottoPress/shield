@@ -15,7 +15,8 @@ module Shield::UpdatePasswordReset
       ResetPassword.update(
         password_reset.user!,
         params,
-        password_reset: password_reset
+        password_reset: password_reset,
+        current_login: current_login
       ) do |operation, updated_user|
         if operation.saved?
           success_action(operation, updated_user)
