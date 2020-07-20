@@ -48,6 +48,7 @@ module Shield::Login
 
     def authenticate?(token : String) : Bool
       return false unless active?
+      return !DeactivateLogin.update!(self) if expired?
       self.class.verify_sha256?(token, token_hash)
     rescue
       false

@@ -105,6 +105,7 @@ end
 
 #### Operations
 
+- `DeactivateLogin`
 - `EndPasswordReset`
 - `LogUserIn`
 - `LogUserOut`
@@ -517,6 +518,19 @@ Then `require` this alias file wherever the compiler yells about a missing type.
    ```
 
    `Shield::LogUserOut` deletes session values related to the login, and updates the relevant columns in the database to mark the login as inactive.
+
+   ---
+   ```crystal
+   # ->>> src/operations/deactivate_login.cr
+
+   class DeactivateLogin < Login::SaveOperation
+     # ...
+     include Shield::DeactivateLogin
+     # ...
+   end
+   ```
+
+   `Shield::DeactivateLogin` is similar to `Shield::LogUserOut`, but does not delete session values.
 
 1. Set up actions:
 
