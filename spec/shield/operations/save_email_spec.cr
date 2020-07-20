@@ -1,6 +1,13 @@
 require "../../spec_helper"
 
 describe Shield::SaveEmail do
+  it "saves email" do
+    email = "user@example.tld"
+    user = create_current_user!(email: email)
+
+    user.email.should eq(email)
+  end
+
   it "requires email" do
     password = "password1@Upassword"
 
