@@ -23,6 +23,8 @@ describe Shield::LogUserIn do
     ) do |operation, login|
       login.should be_a(Login)
 
+      login.try &.active?.should be_true
+
       session.get?(:login).should eq("#{login.try(&.id)}")
       cookies.get?(:login).should eq("#{login.try(&.id)}")
 
