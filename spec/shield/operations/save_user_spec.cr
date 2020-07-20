@@ -18,7 +18,11 @@ describe Shield::SaveUser do
     new_email = "newuser@example.tld"
     user = create_user!(email: "user@example.tld")
 
-    SaveUser.update(user, email: new_email) do |operation, updated_user|
+    SaveUser.update(
+      user,
+      email: new_email,
+      current_login: nil
+    ) do |operation, updated_user|
       operation.saved?.should be_true
       updated_user.email.should eq(new_email)
     end
@@ -41,7 +45,11 @@ describe Shield::SaveUser do
       "password_notify" => "true"
     })
 
-    SaveUser.update(user, params) do |operation, updated_user|
+    SaveUser.update(
+      user,
+      params,
+      current_login: nil
+    ) do |operation, updated_user|
       user_options = updated_user.options!
 
       user_options.login_notify.should be_false

@@ -27,16 +27,6 @@ module Shield::AuthenticationPipes
       continue
     end
 
-    private def remember_login
-      if Login.from_session(session).try &.expired?
-        Login.delete_cookie(cookies)
-      else
-        Login.set_session(session, cookies)
-      end
-
-      continue
-    end
-
     private def require_logged_in_action
       flash.failure = "You are not logged in"
       redirect to: Logins::New

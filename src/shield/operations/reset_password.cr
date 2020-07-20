@@ -8,16 +8,16 @@ module Shield::ResetPassword
       validate_required password
     end
 
-    after_save delete_password_reset_token
+    after_save end_password_reset
 
     private def set_password_hash
       password.value.try do |value|
-        password_hash.value = Login.hash(value).to_s
+        password_hash.value = Login.hash_bcrypt(value)
       end
     end
 
-    private def delete_password_reset_token(user : User)
-      DeletePasswordResetToken.update!(password_reset)
+    private def end_password_reset(user : User)
+      EndPasswordReset.update!(password_reset)
     end
   end
 end

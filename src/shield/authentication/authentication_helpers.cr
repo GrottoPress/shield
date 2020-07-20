@@ -14,7 +14,16 @@ module Shield::AuthenticationHelpers
 
     @[Memoize]
     private def current_user : User?
-      Login.from_session(session).try &.user!
+      current_login.try &.user!
+    end
+
+    private def current_login! : Login
+      current_login.not_nil!
+    end
+
+    @[Memoize]
+    private def current_login : Login?
+      Login.from_session(session)
     end
   end
 end

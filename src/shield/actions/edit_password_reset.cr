@@ -4,13 +4,12 @@ module Shield::EditPasswordReset
     skip :require_logged_in
 
     before :require_logged_out
-    before :set_no_referrer_policy
 
     # get "/password-resets/edit" do
-    #   edit_password_reset
+    #   verify_password_reset
     # end
 
-    private def edit_password_reset
+    private def verify_password_reset
       if password_reset = PasswordReset.from_session(session)
         success_action(password_reset.not_nil!)
       else

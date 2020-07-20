@@ -6,7 +6,7 @@ module Shield::Login
 
     primary_key id : Int64
 
-    column token : String
+    column token_hash : String
     column ip_address : Socket::IPAddress?
     column started_at : Time
     column ended_at : Time?
@@ -26,75 +26,56 @@ module Shield::Login
     def self.from_session(session : Lucky::Session) : self?
       session.get?(:login).try do |id|
         return unless token = session.get?(:login_token)
-        authenticate(id.to_i64, token.to_s)
+        authenticate(id, token.to_s)
       end
     end
 
-    def set_session(session : Lucky::Session) : Nil
+    def set_session(session : Lucky::Session, token : String) : Nil
       session.set(:login, id.to_s)
       session.set(:login_token, token)
     end
 
-    def self.set_session(
-      session : Lucky::Session,
-      cookies : Lucky::CookieJar
-    ) : Nil
-      return if expired?(cookies)
+    def self.delete_session(session : Lucky::Session) : Nil
+      session.delete(:login)
+      session.delete(:login_token)
+    end
 
-      cookies.get?(:login).try { |id| session.set(:login, id) }
-      cookies.get?(:login_token).try do |token|
-        session.set(:login_token, token)
+    def self.authenticate(id, token : String) : self?
+      LoginQuery.new.id(id.to_i64).first?.try do |login|
+        login if login.authenticate?(token)
       end
     end
 
-    def self.delete_session(
-      session : Lucky::Session,
-      cookies : Lucky::CookieJar? = nil
-    ) : Nil
-      session.delete(:login)
-      session.delete(:login_token)
-
-      delete_cookie(cookies.not_nil!) unless cookies.nil?
-    end
-
-    def self.delete_cookie(cookies : Lucky::CookieJar) : Nil
-      cookies.delete(:login)
-      cookies.delete(:login_token)
-    end
-
-    def set_cookie(cookies : Lucky::CookieJar) : Nil
-      expiry = Shield.settings.login_expiry.from_now
-
-      cookies.set(:login, id.to_s).expires(expiry)
-      cookies.set(:login_token, token).expires(expiry)
-    end
-
-    def self.expired?(cookies : Lucky::CookieJar) : Bool
-      cookies.deleted?(:login) || cookies.deleted?(:login_token)
+    def authenticate?(token : String) : Bool
+      return false unless active?
+      return !DeactivateLogin.update!(self) if expired?
+      self.class.verify_sha256?(token, token_hash)
+    rescue
+      false
     end
 
     def expired? : Bool
       (Time.utc - started_at) > Shield.settings.login_expiry
     end
 
-    def self.authenticate(id : Int64, token : String) : self?
-      LoginQuery.new.id(id).first?.try do |login|
-        login if login.authenticate?(token)
-      end
+    def self.hash_bcrypt(plaintext : String) : String
+      Crypto::Bcrypt::Password.create(plaintext).to_s
     end
 
-    def authenticate?(token : String) : Bool
-      active? && self.token == token
-    end
-
-    def self.hash(plaintext : String) : Crypto::Bcrypt::Password
-      Crypto::Bcrypt::Password.create(plaintext)
-    end
-
-    def self.verify?(plaintext : String, hash : String) : Bool
+    def self.verify_bcrypt?(plaintext : String, hash : String) : Bool
       Crypto::Bcrypt::Password.new(hash).verify(plaintext)
     rescue
       false
+    end
+
+    def self.hash_sha256(plaintext : String) : String
+      digest = OpenSSL::Digest.new("SHA256")
+      digest << plaintext
+      digest.final.hexstring
+    end
+
+    def self.verify_sha256?(plaintext : String, hash : String) : Bool
+      hash_sha256(plaintext) == hash
     end
 
     def self.generate_token(size : Int32 = 32) : String

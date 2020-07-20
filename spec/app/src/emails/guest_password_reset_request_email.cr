@@ -1,5 +1,5 @@
 class GuestPasswordResetRequestEmail < BaseEmail
-  def initialize(@operation : SavePasswordReset) : Nil
+  def initialize(@operation : StartPasswordReset) : Nil
   end
 
   private def receivers

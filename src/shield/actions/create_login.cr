@@ -13,7 +13,6 @@ module Shield::CreateLogin
       LogUserIn.create(
         params,
         session: session,
-        cookies: cookies,
         ip_address: remote_ip
       ) do |operation, login|
         if login

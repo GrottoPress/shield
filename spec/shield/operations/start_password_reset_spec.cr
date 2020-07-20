@@ -1,21 +1,25 @@
 require "../../spec_helper"
 
-describe Shield::SavePasswordReset do
+describe Shield::StartPasswordReset do
   it "saves password reset" do
     email = "user@example.tld"
 
     user = create_current_user!(email: email)
 
-    SavePasswordReset.create(user_email: email) do |operation, password_reset|
+    StartPasswordReset.create(user_email: email) do |operation, password_reset|
       password_reset.should be_a(PasswordReset)
       operation.token.should_not be_empty
-      password_reset.try &.token_hash.should_not(be_nil)
+
+      password_reset.try &.ended_at.should be_nil
+      password_reset.try &.token_hash.should_not(be_empty)
       password_reset.try &.user_id.should(eq user.id)
     end
   end
 
   it "rejects invalid email" do
-    SavePasswordReset.create(user_email: "email") do |operation, password_reset|
+    StartPasswordReset.create(
+      user_email: "email"
+    ) do |operation, password_reset|
       password_reset.should be_nil
 
       operation
@@ -27,7 +31,7 @@ describe Shield::SavePasswordReset do
   end
 
   it "sends guest email" do
-    SavePasswordReset.create(
+    StartPasswordReset.create(
       user_email: "user@example.tld"
     ) do |operation, password_reset|
       password_reset.should be_nil
@@ -40,7 +44,7 @@ describe Shield::SavePasswordReset do
 
     create_current_user!(email: email)
 
-    SavePasswordReset.create(user_email: email) do |operation, password_reset|
+    StartPasswordReset.create(user_email: email) do |operation, password_reset|
       GuestPasswordResetRequestEmail.new(operation).should_not be_delivered
 
       PasswordResetRequestEmail
@@ -56,7 +60,7 @@ describe Shield::SavePasswordReset do
 
     ip = Socket::IPAddress.new("127.0.0.1", 12345)
 
-    password_reset = SavePasswordReset.create!(
+    password_reset = StartPasswordReset.create!(
       user_email: email,
       ip_address: ip
     )

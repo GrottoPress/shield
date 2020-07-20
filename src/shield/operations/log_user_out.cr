@@ -1,20 +1,13 @@
 module Shield::LogUserOut
   macro included
-    needs session : Lucky::Session
-    needs cookies : Lucky::CookieJar
+    include Shield::DeactivateLogin
 
-    before_save do
-      set_ended_at
-    end
+    needs session : Lucky::Session
 
     after_commit delete_session
 
-    private def set_ended_at
-      ended_at.value = Time.utc
-    end
-
     private def delete_session(login : Login)
-      Login.delete_session(session, cookies)
+      Login.delete_session(session)
     end
   end
 end

@@ -12,24 +12,18 @@ describe Shield::LogUserIn do
     )
 
     session = Lucky::Session.new
-    cookies = Lucky::CookieJar.empty_jar
 
     LogUserIn.create(
       email: email,
       password: password,
-      remember_login: true,
-      session: session,
-      cookies: cookies
+      session: session
     ) do |operation, login|
       login.should be_a(Login)
 
+      login.try &.active?.should be_true
+
       session.get?(:login).should eq("#{login.try(&.id)}")
-      cookies.get?(:login).should eq("#{login.try(&.id)}")
-
       session.get?(:login_token).to_s.should_not be_empty
-      cookies.get?(:login_token).to_s.should_not be_empty
-
-      session.get?(:login_token).should eq(cookies.get? :login_token)
     end
   end
 
@@ -45,23 +39,16 @@ describe Shield::LogUserIn do
       )
 
       session = Lucky::Session.new
-      cookies = Lucky::CookieJar.empty_jar
 
-      LogUserIn.create!(
+      login = LogUserIn.create!(
         email: email,
         password: password,
-        remember_login: true,
-        session: session,
-        cookies: cookies
+        session: session
       )
 
-      cookies.get_raw(:login).expired?.should be_false
-      cookies.get_raw(:login_token).expired?.should be_false
-
+      login.expired?.should be_false
       sleep 3
-
-      cookies.get_raw(:login).expired?.should be_true
-      cookies.get_raw(:login_token).expired?.should be_true
+      login.expired?.should be_true
     end
   end
 
@@ -73,8 +60,7 @@ describe Shield::LogUserIn do
     LogUserIn.create(
       email: "incorrect@example.tld",
       password: password,
-      session: Lucky::Session.new,
-      cookies: Lucky::CookieJar.empty_jar
+      session: Lucky::Session.new
     ) do |operation, login|
       login.should be_nil
 
@@ -99,8 +85,7 @@ describe Shield::LogUserIn do
     LogUserIn.create(
       email: email,
       password: "assword12U~passwor",
-      session: Lucky::Session.new,
-      cookies: Lucky::CookieJar.empty_jar
+      session: Lucky::Session.new
     ) do |operation, login|
       login.should be_nil
 
@@ -126,8 +111,7 @@ describe Shield::LogUserIn do
     LogUserIn.create(
       email: email,
       password: password,
-      session: Lucky::Session.new,
-      cookies: Lucky::CookieJar.empty_jar
+      session: Lucky::Session.new
     ) do |operation, login|
       operation.saved?.should be_true
 
@@ -149,8 +133,7 @@ describe Shield::LogUserIn do
     LogUserIn.create(
       email: email,
       password: password,
-      session: Lucky::Session.new,
-      cookies: Lucky::CookieJar.empty_jar
+      session: Lucky::Session.new
     ) do |operation, login|
       operation.saved?.should be_true
 
@@ -176,8 +159,7 @@ describe Shield::LogUserIn do
       email: email,
       password: password,
       ip_address: ip,
-      session: Lucky::Session.new,
-      cookies: Lucky::CookieJar.empty_jar
+      session: Lucky::Session.new
     )
 
     login.ip_address.should eq(ip)

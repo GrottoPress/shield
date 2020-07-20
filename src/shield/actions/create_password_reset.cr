@@ -6,11 +6,11 @@ module Shield::CreatePasswordReset
     before :require_logged_out
 
     # post "/password-resets" do
-    #   save_password_reset
+    #   start_password_reset
     # end
 
-    private def save_password_reset
-      SavePasswordReset.create(
+    private def start_password_reset
+      StartPasswordReset.create(
         params,
         ip_address: remote_ip
       ) do |operation, password_reset|

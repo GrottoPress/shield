@@ -8,33 +8,12 @@ module Shield::User
     column email : String
     column password_hash : String
 
-    def self.from_email!(
-      address : String,
-      *,
-      preload_logins = false,
-      preload_password_resets = false,
-      preload_options = false
-    ) : self
-      from_email(
-        address,
-        preload_logins: preload_logins,
-        preload_password_resets: preload_password_resets,
-        preload_options: preload_options
-      ).not_nil!
+    def self.from_email!(address : String) : self
+      from_email(address).not_nil!
     end
 
-    def self.from_email(
-      address : String,
-      *,
-      preload_logins = false,
-      preload_password_resets = false,
-      preload_options = false
-    ) : self?
-      query = UserQuery.new
-      query.preload_logins if preload_logins
-      query.preload_password_resets if preload_password_resets
-      query.preload_options if preload_options
-      query.email(address.downcase).first?
+    def self.from_email(address : String) : self?
+      query = UserQuery.new.email(address.downcase).first?
     end
 
     def can?(
@@ -49,7 +28,7 @@ module Shield::User
     end
 
     def authenticate?(password : String) : Bool
-      Login.verify?(password, password_hash)
+      Login.verify_bcrypt?(password, password_hash)
     end
   end
 end

@@ -7,8 +7,7 @@ module Shield::DestroyLogin
     private def log_user_out
       LogUserOut.update(
         Login.from_session!(session),
-        session: session,
-        cookies: cookies
+        session: session
       ) do |operation, updated_login|
         if operation.saved?
           success_action(operation, updated_login)
@@ -18,12 +17,12 @@ module Shield::DestroyLogin
       end
     end
 
-    private def success_action(operation, updated_login)
+    private def success_action(operation, login)
       flash.info = "Logged out. See ya!"
       redirect to: New
     end
 
-    private def failure_action(operation, updated_login)
+    private def failure_action(operation, login)
       flash.failure = "Something went wrong"
       redirect to: CurrentUser::Show
     end

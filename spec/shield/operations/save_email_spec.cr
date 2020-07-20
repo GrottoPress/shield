@@ -1,13 +1,21 @@
 require "../../spec_helper"
 
 describe Shield::SaveEmail do
+  it "saves email" do
+    email = "user@example.tld"
+    user = create_current_user!(email: email)
+
+    user.email.should eq(email)
+  end
+
   it "requires email" do
     password = "password1@Upassword"
 
     SaveCurrentUser.create(
       email: "",
       password: password,
-      password_confirmation: password
+      password_confirmation: password,
+      current_login: nil
     ) do |operation, user|
       user.should be_nil
 
@@ -25,7 +33,8 @@ describe Shield::SaveEmail do
     SaveCurrentUser.create(
       email: "user",
       password: password,
-      password_confirmation: password
+      password_confirmation: password,
+      current_login: nil
     ) do |operation, user|
       user.should be_nil
 
@@ -48,7 +57,7 @@ describe Shield::SaveEmail do
 
     create_current_user!(**params)
 
-    SaveCurrentUser.create(**params) do |operation, user|
+    SaveCurrentUser.create(**params, current_login: nil) do |operation, user|
       user.should be_nil
 
       operation

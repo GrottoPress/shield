@@ -12,18 +12,23 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = SavePasswordReset.create!(user_email: email)
+    password_reset = StartPasswordReset.create!(user_email: email)
 
     ResetPassword.update(
       password_reset.user!,
       password: new_password,
       password_confirmation: new_password,
-      password_reset: password_reset
+      password_reset: password_reset,
+      current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
-      Login.verify?(new_password, updated_user.password_hash).should be_true
-      PasswordResetQuery.find(password_reset.id).token_hash.should be_nil
+      Login.verify_bcrypt?(
+        new_password,
+        updated_user.password_hash
+      ).should be_true
+
+      PasswordResetQuery.find(password_reset.id).active?.should be_false
     end
   end
 
@@ -38,13 +43,14 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = SavePasswordReset.create!(user_email: email)
+    password_reset = StartPasswordReset.create!(user_email: email)
 
     ResetPassword.update(
       password_reset.user!,
       password: new_password,
       password_confirmation: new_password,
-      password_reset: password_reset
+      password_reset: password_reset,
+      current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_false
 
@@ -67,17 +73,18 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = SavePasswordReset.create!(user_email: email)
+    password_reset = StartPasswordReset.create!(user_email: email)
 
     ResetPassword.update(
       password_reset.user!,
       password: new_password,
       password_confirmation: new_password,
-      password_reset: password_reset
+      password_reset: password_reset,
+      current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
-      PasswordResetQuery.find(password_reset.id).token_hash.should be_nil
+      PasswordResetQuery.find(password_reset.id).active?.should be_false
     end
   end
 end

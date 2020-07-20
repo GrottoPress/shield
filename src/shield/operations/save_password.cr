@@ -3,6 +3,8 @@ module Shield::SavePassword
     attribute password : String
     attribute password_confirmation : String
 
+    needs current_login : Login?
+
     before_save do
       validate_password
       validate_size_of password,
@@ -12,6 +14,8 @@ module Shield::SavePassword
 
       set_password_hash
     end
+
+    after_save log_out_everywhere
 
     after_commit notify_password_change
 
@@ -24,9 +28,19 @@ module Shield::SavePassword
 
     private def set_password_hash
       password.value.try do |value|
-        return if Login.verify?(value, password_hash.original_value.to_s)
-        password_hash.value = Login.hash(value).to_s
+        return if Login.verify_bcrypt?(value, password_hash.original_value.to_s)
+        password_hash.value = Login.hash_bcrypt(value)
       end
+    end
+
+    private def log_out_everywhere(user : User)
+      return if new_record?
+      return unless password_hash.changed?
+
+      LoginQuery.new
+        .ended_at.is_nil
+        .id.not.eq(current_login.try(&.id) || 0_i64)
+        .update(ended_at: Time.utc)
     end
 
     private def notify_password_change(user : User)

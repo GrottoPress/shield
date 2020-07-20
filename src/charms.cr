@@ -27,18 +27,6 @@ class String
 end
 
 module Lucky
-  module MountComponent
-    def mount(component : Lucky::BaseComponent.class, *args, **kwargs) : Nil
-      mount component.new(*args, **kwargs)
-    end
-
-    def mount(component : Lucky::BaseComponent.class, *args, **kwargs) : Nil
-      mount component.new(*args, **kwargs) do |*yield_args|
-        yield *yield_args
-      end
-    end
-  end
-
   abstract class Action
     include MailHelpers
   end
