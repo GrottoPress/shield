@@ -1,6 +1,18 @@
 require "../../spec_helper"
 
 describe Shield::SavePassword do
+  it "saves password" do
+    password = "password12U-password"
+
+    user = create_current_user!(
+      email: "user@example.tld",
+      password: password,
+      password_confirmation: password
+    )
+
+    Login.verify_bcrypt?(password, user.password_hash).should be_true
+  end
+
   it "requires password" do
     create_current_user(
       password: "",
