@@ -4,7 +4,6 @@
 
 - User registrations
 - Logins and logouts
-- Remember logins
 - Login notifications (per-user setting)
 - Password change notifications (per-user setting)
 - Password resets
@@ -56,8 +55,8 @@ require "shield"
 # ->>> config/shield.cr
 
 Shield.configure do |settings|
-  # How long login should be remebered?
-  settings.login_expiry = 30.days
+  # How long should a login last before it expires?
+  settings.login_expiry = 24.hours
 
   # Required minimum length of password
   settings.password_min_length = 12
@@ -502,7 +501,7 @@ Then `require` this alias file wherever the compiler yells about a missing type.
    end
    ```
 
-   `Shield::LogUserIn` receives `email`, `password` and `remember_login` parameters, and creates a login entry with a unique ID and hashed token in the database.
+   `Shield::LogUserIn` receives `email` and `password` parameters, and creates a login entry with a unique ID and hashed token in the database.
 
    For a client to be considered logged in, it must present a matching login ID and token from session.
 
@@ -517,7 +516,7 @@ Then `require` this alias file wherever the compiler yells about a missing type.
    end
    ```
 
-   `Shield::LogUserOut` deletes session and cookie values related to the login, and updates the relevant columns in the database to mark the login as inactive.
+   `Shield::LogUserOut` deletes session values related to the login, and updates the relevant columns in the database to mark the login as inactive.
 
 1. Set up actions:
 
@@ -541,7 +540,6 @@ Then `require` this alias file wherever the compiler yells about a missing type.
 
    - `email : String`
    - `password : String`
-   - `remember_login : Bool`
 
    You may skip this action if building an API.
 

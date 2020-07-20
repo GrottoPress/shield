@@ -9,7 +9,6 @@ module Shield::Action
     include Shield::AuthorizationPipes
 
     before :disable_caching
-    before :remember_login
     before :require_logged_in
 
     after :require_authorization

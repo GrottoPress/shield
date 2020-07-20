@@ -7,8 +7,7 @@ module Shield::DestroyLogin
     private def log_user_out
       LogUserOut.update(
         Login.from_session!(session),
-        session: session,
-        cookies: cookies
+        session: session
       ) do |operation, updated_login|
         if operation.saved?
           success_action(operation, updated_login)

@@ -1,7 +1,6 @@
 module Shield::LogUserOut
   macro included
     needs session : Lucky::Session
-    needs cookies : Lucky::CookieJar
 
     before_save do
       set_ended_at
@@ -14,7 +13,7 @@ module Shield::LogUserOut
     end
 
     private def delete_session(login : Login)
-      Login.delete_session(session, cookies)
+      Login.delete_session(session)
     end
   end
 end

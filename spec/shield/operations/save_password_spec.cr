@@ -289,17 +289,13 @@ describe Shield::SavePassword do
     login_1 = LogUserIn.create!(
       email: email,
       password: password,
-      remember_login: true,
-      session: Lucky::Session.new,
-      cookies: Lucky::CookieJar.empty_jar
+      session: Lucky::Session.new
     )
 
     login_2 = LogUserIn.create!(
       email: email,
       password: password,
-      remember_login: true,
-      session: Lucky::Session.new,
-      cookies: Lucky::CookieJar.empty_jar
+      session: Lucky::Session.new
     )
 
     login_1.active?.should be_true
@@ -330,25 +326,19 @@ describe Shield::SavePassword do
     login_1 = LogUserIn.create!(
       email: email,
       password: password,
-      remember_login: true,
-      session: Lucky::Session.new,
-      cookies: Lucky::CookieJar.empty_jar
+      session: Lucky::Session.new
     )
 
     login_2 = LogUserIn.create!(
       email: email,
       password: password,
-      remember_login: true,
-      session: Lucky::Session.new,
-      cookies: Lucky::CookieJar.empty_jar
+      session: Lucky::Session.new
     )
 
     current_login = LogUserIn.create!(
       email: email,
       password: password,
-      remember_login: true,
-      session: Lucky::Session.new,
-      cookies: Lucky::CookieJar.empty_jar
+      session: Lucky::Session.new
     )
 
     login_1.active?.should be_true

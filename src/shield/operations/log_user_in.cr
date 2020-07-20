@@ -4,10 +4,8 @@ module Shield::LogUserIn
 
     attribute email : String
     attribute password : String
-    attribute remember_login : Bool
 
     needs session : Lucky::Session
-    needs cookies : Lucky::CookieJar
 
     before_save do
       downcase_email
@@ -20,7 +18,6 @@ module Shield::LogUserIn
     end
 
     after_commit set_session
-    after_commit remember_login
     after_commit notify_login
 
     private def downcase_email
@@ -51,10 +48,6 @@ module Shield::LogUserIn
 
     private def set_session(login : Login)
       login.set_session(session, token)
-    end
-
-    private def remember_login(login : Login)
-      login.set_cookie(cookies, token) if remember_login.value
     end
 
     private def notify_login(login : Login)
