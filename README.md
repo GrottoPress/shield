@@ -1165,6 +1165,10 @@ The following `module`s are available for inclusion in their respective actions,
 
     Returns the current login, or `nil` if the user is not logged in.
 
+- `#current_login!`:
+
+    Equivalent to `current_login.not_nil!`.
+
 - `#current_user`:
 
     Returns the current logged-in user, or `nil` if the user is not logged in.
