@@ -6,7 +6,7 @@ class Logins::Create < ApiAction
   end
 
   private def success_action(operation, login)
-    json({login: login.id, session: session.get(:login)})
+    json({login: login.id, session: session.get(:login_id)})
   end
 
   private def failure_action(operation)

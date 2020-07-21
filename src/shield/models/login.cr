@@ -24,19 +24,19 @@ module Shield::Login
     end
 
     def self.from_session(session : Lucky::Session) : self?
-      session.get?(:login).try do |id|
+      session.get?(:login_id).try do |id|
         return unless token = session.get?(:login_token)
         authenticate(id, token.to_s)
       end
     end
 
     def set_session(session : Lucky::Session, token : String) : Nil
-      session.set(:login, id.to_s)
+      session.set(:login_id, id.to_s)
       session.set(:login_token, token)
     end
 
     def self.delete_session(session : Lucky::Session) : Nil
-      session.delete(:login)
+      session.delete(:login_id)
       session.delete(:login_token)
     end
 

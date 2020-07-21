@@ -24,7 +24,7 @@ describe Shield::ShowPasswordReset do
       cookies = Lucky::CookieJar.from_request_cookies(response.cookies)
       session = Lucky::Session.from_cookie_jar(cookies)
 
-      session.get?(:password_reset).should eq(password_reset.id.to_s)
+      session.get?(:password_reset_id).should eq(password_reset.id.to_s)
       session.get?(:password_reset_token).should eq(operation.token)
     end
   end

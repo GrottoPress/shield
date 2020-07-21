@@ -22,7 +22,7 @@ describe Shield::LogUserIn do
 
       login.try &.active?.should be_true
 
-      session.get?(:login).should eq("#{login.try(&.id)}")
+      session.get?(:login_id).should eq("#{login.try(&.id)}")
       session.get?(:login_token).to_s.should_not be_empty
     end
   end

@@ -25,7 +25,7 @@ describe Shield::LogUserOut do
     ) do |operation, updated_login|
       operation.saved?.should be_true
       updated_login.ended_at.should be_a(Time)
-      session.get?(:login).should be_nil
+      session.get?(:login_id).should be_nil
     end
   end
 end

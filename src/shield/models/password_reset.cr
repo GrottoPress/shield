@@ -28,17 +28,17 @@ module Shield::PasswordReset
     end
 
     def self.from_session(session : Lucky::Session, *, delete = false) : self?
-      session.get?(:password_reset).try do |id|
+      session.get?(:password_reset_id).try do |id|
         return unless token = session.get?(:password_reset_token)
 
-        session.delete(:password_reset) if delete
+        session.delete(:password_reset_id) if delete
         session.delete(:password_reset_token) if delete
         authenticate(id, token.to_s)
       end
     end
 
     def self.set_session(session : Lucky::Session, params : Lucky::Params) : Nil
-      params.get?(:id).try { |id| session.set(:password_reset, id) }
+      params.get?(:id).try { |id| session.set(:password_reset_id, id) }
       params.get?(:token).try do |token|
         session.set(:password_reset_token, token)
       end
