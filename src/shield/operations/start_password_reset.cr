@@ -1,5 +1,7 @@
 module Shield::StartPasswordReset
   macro included
+    include Shield::RequireIPAddress
+
     getter token = ""
     getter? guest_email = false
 

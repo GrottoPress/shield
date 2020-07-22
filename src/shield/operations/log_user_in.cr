@@ -1,5 +1,7 @@
 module Shield::LogUserIn
   macro included
+    include Shield::RequireIPAddress
+
     getter token = ""
 
     attribute email : String

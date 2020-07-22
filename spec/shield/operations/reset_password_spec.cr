@@ -12,7 +12,10 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = StartPasswordReset.create!(user_email: email)
+    password_reset = StartPasswordReset.create!(
+      user_email: email,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    )
 
     ResetPassword.update(
       password_reset.user!,
@@ -43,7 +46,10 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = StartPasswordReset.create!(user_email: email)
+    password_reset = StartPasswordReset.create!(
+      user_email: email,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    )
 
     ResetPassword.update(
       password_reset.user!,
@@ -73,7 +79,10 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = StartPasswordReset.create!(user_email: email)
+    password_reset = StartPasswordReset.create!(
+      user_email: email,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    )
 
     ResetPassword.update(
       password_reset.user!,

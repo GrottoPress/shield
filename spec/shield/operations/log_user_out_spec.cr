@@ -16,7 +16,8 @@ describe Shield::LogUserOut do
     LogUserIn.create!(
       email: email,
       password: password,
-      session: session
+      session: session,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
     LogUserOut.update(

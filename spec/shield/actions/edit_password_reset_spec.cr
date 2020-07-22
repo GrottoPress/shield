@@ -11,7 +11,10 @@ describe Shield::EditPasswordReset do
       password_confirmation: password
     )
 
-    StartPasswordReset.create(user_email: email) do |operation, password_reset|
+    StartPasswordReset.create(
+      user_email: email,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    ) do |operation, password_reset|
       password_reset = password_reset.not_nil!
 
       response = AppClient.exec(PasswordResets::Show.with(

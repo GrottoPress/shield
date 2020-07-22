@@ -16,7 +16,8 @@ describe Shield::Login do
         login = LogUserIn.create!(
           email: email,
           password: password,
-          session: Lucky::Session.new
+          session: Lucky::Session.new,
+          remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
         )
 
         sleep 3

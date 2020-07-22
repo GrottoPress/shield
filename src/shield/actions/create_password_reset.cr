@@ -12,7 +12,7 @@ module Shield::CreatePasswordReset
     private def start_password_reset
       StartPasswordReset.create(
         params,
-        ip_address: remote_ip
+        remote_ip: remote_ip
       ) do |operation, password_reset|
         if password_reset
           success_action(operation, password_reset.not_nil!)

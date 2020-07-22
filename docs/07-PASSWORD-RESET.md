@@ -19,7 +19,7 @@
    `Shield::PasswordReset` adds the following columns:
    
    - `ended_at : Time?`
-   - `ip_address : Socket::IPAddress?`
+   - `ip_address : Socket::IPAddress`
    - `started_at : Time`
    - `token_hash : String`
    
@@ -43,7 +43,7 @@
          add_belongs_to user : User, on_delete: :cascade
 
          add token_hash : String
-         add ip_address : String?
+         add ip_address : String
          add started_at : Time
          add ended_at : Time?
          # ...

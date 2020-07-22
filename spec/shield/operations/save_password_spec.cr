@@ -289,13 +289,15 @@ describe Shield::SavePassword do
     login_1 = LogUserIn.create!(
       email: email,
       password: password,
-      session: Lucky::Session.new
+      session: Lucky::Session.new,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
     login_2 = LogUserIn.create!(
       email: email,
       password: password,
-      session: Lucky::Session.new
+      session: Lucky::Session.new,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
     login_1.active?.should be_true
@@ -326,19 +328,22 @@ describe Shield::SavePassword do
     login_1 = LogUserIn.create!(
       email: email,
       password: password,
-      session: Lucky::Session.new
+      session: Lucky::Session.new,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
     login_2 = LogUserIn.create!(
       email: email,
       password: password,
-      session: Lucky::Session.new
+      session: Lucky::Session.new,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
     current_login = LogUserIn.create!(
       email: email,
       password: password,
-      session: Lucky::Session.new
+      session: Lucky::Session.new,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
     login_1.active?.should be_true

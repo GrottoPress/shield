@@ -13,7 +13,7 @@ module Shield::CreateLogin
       LogUserIn.create(
         params,
         session: session,
-        ip_address: remote_ip
+        remote_ip: remote_ip
       ) do |operation, login|
         if login
           success_action(operation, login.not_nil!)
