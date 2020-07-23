@@ -1,18 +1,9 @@
 module Shield::Login
   macro included
+    include Shield::AuthenticationColumns
     include Shield::AuthenticationStatus
 
-    skip_default_columns
-
-    belongs_to user : User
-
-    primary_key id : Int64
-
-    column token_hash : String
-    column ip_address : Socket::IPAddress
     column status : Login::Status
-    column started_at : Time
-    column ended_at : Time?
 
     def self.from_session!(session : Lucky::Session) : self
       from_session(session).not_nil!
