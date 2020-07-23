@@ -22,7 +22,7 @@ describe Shield::LogUserIn do
     ) do |operation, login|
       login.should be_a(Login)
 
-      login.try(&.active?).should be_true
+      login.try(&.status.started?).should be_true
       login.try(&.ip_address).should eq(ip_address)
 
       session.get?(:login_id).should eq("#{login.try(&.id)}")

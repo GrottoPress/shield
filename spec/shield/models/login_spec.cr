@@ -22,9 +22,9 @@ describe Shield::Login do
 
         sleep 3
 
-        login.active?.should be_true
+        login.status.started?.should be_true
         login.authenticate?("abc")
-        login.reload.active?.should be_false
+        login.reload.status.started?.should be_false
       end
     end
   end

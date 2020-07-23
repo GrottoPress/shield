@@ -1,5 +1,7 @@
 module Shield::Login
   macro included
+    include Shield::AuthenticationStatus
+
     skip_default_columns
 
     belongs_to user : User
@@ -8,16 +10,9 @@ module Shield::Login
 
     column token_hash : String
     column ip_address : Socket::IPAddress
+    column status : Login::Status
     column started_at : Time
     column ended_at : Time?
-
-    def active? : Bool
-      ended_at.nil? || ended_at.not_nil! > Time.utc
-    end
-
-    def inactive? : Bool
-      !active?
-    end
 
     def self.from_session!(session : Lucky::Session) : self
       from_session(session).not_nil!
@@ -47,8 +42,12 @@ module Shield::Login
     end
 
     def authenticate?(token : String) : Bool
-      return false unless active?
-      return !DeactivateLogin.update!(self) if expired?
+      return false unless status.started?
+      return !DeactivateLogin.update!(
+        self,
+        status: Status.new(:expired)
+      ) if expired?
+
       self.class.verify_sha256?(token, token_hash)
     rescue
       false

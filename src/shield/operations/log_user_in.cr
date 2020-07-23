@@ -16,6 +16,7 @@ module Shield::LogUserIn
 
       set_started_at
       set_ended_at
+      set_status
       set_token
     end
 
@@ -41,6 +42,10 @@ module Shield::LogUserIn
 
     private def set_ended_at
       ended_at.value = nil
+    end
+
+    private def set_status
+      status.value = Login::Status.new(:started)
     end
 
     private def set_token

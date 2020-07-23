@@ -21,6 +21,7 @@
    - `ended_at : Time?`
    - `ip_address : Socket::IPAddress`
    - `started_at : Time`
+   - `status : PasswordReset::Status`
    - `token_hash : String`
    
    ...and sets up a one-to-many association with the `User` model.
@@ -44,6 +45,7 @@
 
          add token_hash : String
          add ip_address : String
+         add status : String
          add started_at : Time
          add ended_at : Time?
          # ...

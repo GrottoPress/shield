@@ -38,9 +38,9 @@ module Shield::SavePassword
       return unless password_hash.changed?
 
       LoginQuery.new
-        .ended_at.is_nil
+        .status(Login::Status.new :started)
         .id.not.eq(current_login.try(&.id) || 0_i64)
-        .update(ended_at: Time.utc)
+        .update(ended_at: Time.utc, status: Login::Status.new(:ended))
     end
 
     private def notify_password_change(user : User)

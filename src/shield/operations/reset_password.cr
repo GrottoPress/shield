@@ -17,7 +17,10 @@ module Shield::ResetPassword
     end
 
     private def end_password_reset(user : User)
-      EndPasswordReset.update!(password_reset)
+      EndPasswordReset.update!(
+        password_reset,
+        status: PasswordReset::Status.new(:ended)
+      )
     end
   end
 end

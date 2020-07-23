@@ -1,5 +1,7 @@
 module Shield::PasswordReset
   macro included
+    include Shield::AuthenticationStatus
+
     skip_default_columns
 
     belongs_to user : User
@@ -8,16 +10,9 @@ module Shield::PasswordReset
 
     column token_hash : String
     column ip_address : Socket::IPAddress
+    column status : PasswordReset::Status
     column started_at : Time
     column ended_at : Time?
-
-    def active? : Bool
-      ended_at.nil? || ended_at.not_nil! > Time.utc
-    end
-
-    def inactive? : Bool
-      !active?
-    end
 
     def url(token : String) : String
       PasswordResets::Show.url(id: id, token: token)
@@ -51,8 +46,12 @@ module Shield::PasswordReset
     end
 
     def authenticate?(token : String) : Bool
-      return false unless active?
-      return !EndPasswordReset.update!(self) if expired?
+      return false unless status.started?
+      return !EndPasswordReset.update!(
+        self,
+        status: Status.new(:expired)
+      ) if expired?
+
       Login.verify_sha256?(token, token_hash)
     rescue
       false

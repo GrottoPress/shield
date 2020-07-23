@@ -20,9 +20,9 @@ describe Shield::PasswordReset do
 
         sleep 3
 
-        password_reset.active?.should be_true
+        password_reset.status.started?.should be_true
         password_reset.authenticate?("abc")
-        password_reset.reload.active?.should be_false
+        password_reset.reload.status.started?.should be_false
       end
     end
   end

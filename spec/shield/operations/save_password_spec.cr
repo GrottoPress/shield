@@ -300,8 +300,8 @@ describe Shield::SavePassword do
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
-    login_1.active?.should be_true
-    login_2.active?.should be_true
+    login_1.status.started?.should be_true
+    login_2.status.started?.should be_true
 
     SaveCurrentUser.update!(
       user,
@@ -310,8 +310,8 @@ describe Shield::SavePassword do
       current_login: nil
     )
 
-    login_1.reload.active?.should be_false
-    login_2.reload.active?.should be_false
+    login_1.reload.status.started?.should be_false
+    login_2.reload.status.started?.should be_false
   end
 
   it "retains current login when password changes" do
@@ -346,9 +346,9 @@ describe Shield::SavePassword do
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
-    login_1.active?.should be_true
-    login_2.active?.should be_true
-    current_login.active?.should be_true
+    login_1.status.started?.should be_true
+    login_2.status.started?.should be_true
+    current_login.status.started?.should be_true
 
     SaveCurrentUser.update!(
       user,
@@ -357,8 +357,8 @@ describe Shield::SavePassword do
       current_login: current_login
     )
 
-    login_1.reload.active?.should be_false
-    login_2.reload.active?.should be_false
-    current_login.reload.active?.should be_true
+    login_1.reload.status.started?.should be_false
+    login_2.reload.status.started?.should be_false
+    current_login.reload.status.started?.should be_true
   end
 end

@@ -31,7 +31,7 @@ describe Shield::ResetPassword do
         updated_user.password_hash
       ).should be_true
 
-      PasswordResetQuery.find(password_reset.id).active?.should be_false
+      PasswordResetQuery.find(password_reset.id).status.started?.should be_false
     end
   end
 
@@ -93,7 +93,7 @@ describe Shield::ResetPassword do
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
-      PasswordResetQuery.find(password_reset.id).active?.should be_false
+      PasswordResetQuery.find(password_reset.id).status.started?.should be_false
     end
   end
 end

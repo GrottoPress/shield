@@ -17,6 +17,7 @@ module Shield::StartPasswordReset
       set_ended_at
       set_user_id
       set_guest_email
+      set_status
       set_token
 
       send_guest_email
@@ -50,6 +51,10 @@ module Shield::StartPasswordReset
 
     private def set_ended_at
       ended_at.value = nil
+    end
+
+    private def set_status
+      status.value = PasswordReset::Status.new(:started)
     end
 
     private def set_token
