@@ -17,10 +17,14 @@ describe Shield::EndPasswordReset do
     )
 
     EndPasswordReset.update(
-      password_reset
+      password_reset,
+      Avram::Params.new({"status" => "Started"}),
+      status: PasswordReset::Status.new(:expired)
     ) do |operation, updated_password_reset|
       operation.saved?.should be_true
+
       updated_password_reset.ended_at.should_not be_nil
+      updated_password_reset.status.expired?.should be_true
     end
   end
 end

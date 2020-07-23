@@ -20,12 +20,19 @@ describe Shield::LogUserOut do
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
+    session.get?(:login_id).should_not be_nil
+
     LogUserOut.update(
       Login.from_session!(session),
+      Avram::Params.new({"status" => "Expired"}),
+      status: Login::Status.new(:started),
       session: session
     ) do |operation, updated_login|
       operation.saved?.should be_true
+
       updated_login.ended_at.should be_a(Time)
+      updated_login.status.ended?.should be_true
+
       session.get?(:login_id).should be_nil
     end
   end
