@@ -13,7 +13,7 @@ module Shield::User
     end
 
     def self.from_email(address : String) : self?
-      query = UserQuery.new.email(address.downcase).first?
+      UserQuery.new.email(address.downcase).first?
     end
 
     def can?(
