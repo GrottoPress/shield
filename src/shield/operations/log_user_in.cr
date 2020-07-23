@@ -1,9 +1,5 @@
 module Shield::LogUserIn
   macro included
-    include Shield::RequireIPAddress
-
-    getter token = ""
-
     attribute email : String
     attribute password : String
 
@@ -13,15 +9,12 @@ module Shield::LogUserIn
       downcase_email
 
       validate_credentials
-
-      set_started_at
-      set_ended_at
-      set_status
-      set_token
     end
 
     after_commit set_session
     after_commit notify_login
+
+    include Shield::StartAuthentication(Login)
 
     private def downcase_email
       email.value.try { |value| email.value = value.downcase }
@@ -34,23 +27,6 @@ module Shield::LogUserIn
         email.add_error "may be incorrect"
         password.add_error "may be incorrect"
       end
-    end
-
-    private def set_started_at
-      started_at.value = Time.utc
-    end
-
-    private def set_ended_at
-      ended_at.value = nil
-    end
-
-    private def set_status
-      status.value = Login::Status.new(:started)
-    end
-
-    private def set_token
-      @token = Login.generate_token
-      token_hash.value = Login.hash_sha256(@token)
     end
 
     private def set_session(login : Login)
