@@ -238,17 +238,17 @@ struct Socket::IPAddress
     include Avram::Type
 
     def parse(value : IPAddress)
-      SuccessfulCast(IPAddress).new(value)
+      SuccessfulCast(IPAddress).new(IPAddress.new value.address, 0)
     end
 
     def parse(value : String)
-      SuccessfulCast(IPAddress).new(IPAddress.parse "//#{value}")
+      SuccessfulCast(IPAddress).new(IPAddress.parse "//#{value}:0")
     rescue
       FailedCast.new
     end
 
     def to_db(value : IPAddress)
-      value.to_s
+      value.address
     end
 
     class Criteria(T, V) < String::Lucky::Criteria(T, V)

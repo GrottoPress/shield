@@ -5,7 +5,7 @@ describe Shield::StartPasswordReset do
     email = "user@example.tld"
 
     user = create_current_user!(email: email)
-    ip_address = Socket::IPAddress.new("0.0.0.0", 0)
+    ip_address = Socket::IPAddress.new("127.0.0.1", 5555)
 
     StartPasswordReset.create(
       user_email: email,
@@ -15,7 +15,7 @@ describe Shield::StartPasswordReset do
       operation.token.should_not be_empty
 
       password_reset.try &.ended_at.should be_nil
-      password_reset.try &.ip_address.should(eq ip_address)
+      password_reset.try &.ip_address.address.should(eq ip_address.address)
       password_reset.try &.token_hash.should_not(be_empty)
       password_reset.try &.user_id.should(eq user.id)
     end

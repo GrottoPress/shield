@@ -12,7 +12,7 @@ describe Shield::LogUserIn do
     )
 
     session = Lucky::Session.new
-    ip_address = Socket::IPAddress.new("0.0.0.0", 0)
+    ip_address = Socket::IPAddress.new("127.0.0.1", 5555)
 
     LogUserIn.create(
       email: email,
@@ -23,7 +23,7 @@ describe Shield::LogUserIn do
       login.should be_a(Login)
 
       login.try(&.status.started?).should be_true
-      login.try(&.ip_address).should eq(ip_address)
+      login.try(&.ip_address.address).should eq(ip_address.address)
 
       session.get?(:login_id).should eq("#{login.try(&.id)}")
       session.get?(:login_token).to_s.should_not be_empty
