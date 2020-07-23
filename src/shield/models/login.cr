@@ -1,9 +1,6 @@
 module Shield::Login
   macro included
-    include Shield::AuthenticationColumns
-    include Shield::AuthenticationStatus
-
-    column status : Login::Status
+    include Shield::AuthenticationColumns(Login)
 
     def self.from_session!(session : Lucky::Session) : self
       from_session(session).not_nil!

@@ -1,9 +1,6 @@
 module Shield::PasswordReset
   macro included
-    include Shield::AuthenticationColumns
-    include Shield::AuthenticationStatus
-
-    column status : PasswordReset::Status
+    include Shield::AuthenticationColumns(PasswordReset)
 
     def url(token : String) : String
       PasswordResets::Show.url(id: id, token: token)
