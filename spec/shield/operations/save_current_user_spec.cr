@@ -58,7 +58,7 @@ describe Shield::SaveCurrentUser do
     end
   end
 
-  it "forwards nested attribute errors" do
+  it "fails when nested operation fails" do
     user = create_current_user!(login_notify: true, password_notify: true)
 
     SaveCurrentUser2.update(
@@ -72,18 +72,6 @@ describe Shield::SaveCurrentUser do
       user_options = updated_user.options!
       user_options.login_notify.should be_true
       user_options.password_notify.should be_true
-
-      operation
-        .login_notify
-        .errors
-        .find(&.includes? " failed")
-        .should_not(be_nil)
-
-      operation
-        .password_notify
-        .errors
-        .find(&.includes? " failed")
-        .should_not(be_nil)
     end
   end
 end

@@ -41,6 +41,17 @@ module Avram
     def record!
       record.not_nil!
     end
+
+    # Ensure callbacks run for update operations even if no
+    # column attributes changed.
+    def save : Bool
+      if valid? && persisted? && changes.empty?
+        after_save(record!)
+        after_commit(record!)
+      end
+
+      previous_def
+    end
   end
 
   # Avram's implementation errors in an update operation:
@@ -75,45 +86,10 @@ module Avram
         attribute {{ nested_column[:name].id }} : {{ nested_column[:type].id }}
       {% end %}
 
-      before_save update_nested_{{ name }}
       after_save create_nested_{{ name }}
+      after_save update_nested_{{ name }}
 
-      def update_nested_{{ name }}
-        return if new_record?
-
-        nested = {{ type }}.new(
-          record!.{{ assoc_name.id }}!,
-          params,
-          {% for nested_attribute in nested_attributes %}
-            {{ nested_attribute.var }}: {{ nested_attribute.var }}.value.nil? ?
-              Nothing.new :
-              {{ nested_attribute.var }}.value.not_nil!,
-          {% end %}
-          {% for nested_column in nested_columns %}
-            {{ nested_column[:name].id }}: {{ nested_column[:name].id }}.value.nil? ?
-              Nothing.new :
-              {{ nested_column[:name].id }}.value.not_nil!,
-          {% end %}
-        )
-
-        NESTED_SAVE_OPERATIONS << nested
-
-        unless nested.save
-          {% for nested_attribute in nested_attributes %}
-            nested.{{ nested_attribute.var }}.errors.each do |error|
-              {{ nested_attribute.var }}.add_error(error)
-            end
-          {% end %}
-
-          {% for nested_column in nested_columns %}
-            nested.{{ nested_column[:name].id }}.errors.each do |error|
-              {{ nested_column[:name].id }}.add_error(error)
-            end
-          {% end %}
-        end
-      end
-
-      def create_nested_{{ name }}(record)
+      def create_nested_{{ name }}(saved_record)
         return unless new_record?
 
         nested = {{ type }}.new(
@@ -130,7 +106,33 @@ module Avram
           {% end %}
         )
 
-        nested.{{ @type.constant(:FOREIGN_KEY).id }}.value = record.id
+        nested.{{ @type.constant(:FOREIGN_KEY).id }}.value = saved_record.id
+
+        NESTED_SAVE_OPERATIONS << nested
+
+        unless nested.save
+          NESTED_SAVE_OPERATIONS.each &.mark_as_failed
+          database.rollback
+        end
+      end
+
+      def update_nested_{{ name }}(saved_record)
+        return if new_record?
+
+        nested = {{ type }}.new(
+          saved_record.{{ assoc_name.id }}!,
+          params,
+          {% for nested_attribute in nested_attributes %}
+            {{ nested_attribute.var }}: {{ nested_attribute.var }}.value.nil? ?
+              Nothing.new :
+              {{ nested_attribute.var }}.value.not_nil!,
+          {% end %}
+          {% for nested_column in nested_columns %}
+            {{ nested_column[:name].id }}: {{ nested_column[:name].id }}.value.nil? ?
+              Nothing.new :
+              {{ nested_column[:name].id }}.value.not_nil!,
+          {% end %}
+        )
 
         NESTED_SAVE_OPERATIONS << nested
 
