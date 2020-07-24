@@ -68,7 +68,7 @@ describe Shield::ResetPassword do
     end
   end
 
-  it "deletes password reset token even if new password equals old" do
+  it "ends password reset even if new password equals old" do
     email = "user@example.tld"
     password = "password12U\\password"
     new_password = password
