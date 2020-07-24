@@ -266,20 +266,20 @@ end
 #
 # `__enum` saves enum members as `String` instead.
 macro __enum(enum_name, &block)
-  enum Raw{{enum_name}}
-    {{block.body}}
+  enum Raw{{ enum_name }}
+    {{ block.body }}
   end
 
-  struct {{enum_name}}
+  struct {{ enum_name }}
     def self.adapter
       Lucky
     end
 
-    def initialize(@raw : Raw{{enum_name}})
+    def initialize(@raw : Raw{{ enum_name }})
     end
 
     def initialize(value : String)
-      @raw = Raw{{enum_name}}.parse(value)
+      @raw = Raw{{ enum_name }}.parse(value)
     end
 
     delegate :to_s, to: @raw
@@ -290,17 +290,17 @@ macro __enum(enum_name, &block)
 
       include Avram::Type
 
-      def parse(value : {{enum_name}})
-        SuccessfulCast({{enum_name}}).new(value)
+      def parse(value : {{ enum_name }})
+        SuccessfulCast({{ enum_name }}).new(value)
       end
 
       def parse(value : String)
-        SuccessfulCast({{enum_name}}).new {{enum_name}}.new(value)
+        SuccessfulCast({{ enum_name }}).new {{ enum_name }}.new(value)
       rescue
         FailedCast.new
       end
 
-      def to_db(value : {{enum_name}})
+      def to_db(value : {{ enum_name }})
         value.to_s
       end
 
