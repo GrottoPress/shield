@@ -26,7 +26,7 @@ module Shield::StartPasswordReset
 
     private def validate_user_email
       user_email.value.try do |value|
-        user_email.add_error("format invalid") unless value.email?
+        user_email.add_error("format is invalid") unless value.email?
       end
     end
 

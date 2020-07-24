@@ -41,7 +41,7 @@ describe Shield::SaveEmail do
       operation
         .email
         .errors
-        .find(&.includes? "format invalid")
+        .find(&.includes? "format is invalid")
         .should_not(be_nil)
     end
   end

@@ -15,7 +15,7 @@ module Shield::SaveEmail
 
     private def validate_email
       email.value.try do |value|
-        email.add_error("format invalid") unless value.email?
+        email.add_error("format is invalid") unless value.email?
       end
     end
   end
