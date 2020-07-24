@@ -10,9 +10,8 @@ module Shield::EndAuthentication(T)
     end
 
     private def set_status
-      if status.value.nil? || status.value == T::Status.new(:started)
-        status.value = T::Status.new(:ended)
-      end
+      return unless status.value.in?({nil, T::Status.new(:started)})
+      status.value = T::Status.new(:ended)
     end
   end
 end
