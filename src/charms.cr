@@ -390,6 +390,10 @@ macro __enum(enum_name, &block)
       @raw = Raw{{ enum_name }}.parse(value)
     end
 
+    def initialize(value : Symbol)
+      @raw = initialize(value.to_s)
+    end
+
     delegate :to_s, to: @raw
     forward_missing_to @raw
 
@@ -406,6 +410,10 @@ macro __enum(enum_name, &block)
         SuccessfulCast({{ enum_name }}).new {{ enum_name }}.new(value)
       rescue
         FailedCast.new
+      end
+
+      def parse(value : Symbol)
+        parse value.to_s
       end
 
       def to_db(value : {{ enum_name }})
