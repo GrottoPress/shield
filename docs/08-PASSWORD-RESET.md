@@ -72,7 +72,7 @@
    end
    ```
 
-   `Shield::StartPasswordReset` receives a `user_email` parameter, generates a token, sends email, and saves the relevant values in the database.
+   `Shield::StartPasswordReset` receives a `email` parameter, generates a token, sends email, and saves the relevant values in the database.
 
    ---
    ```crystal
@@ -120,7 +120,7 @@
 
    The form should be `POST`ed to `PasswordResets::Create`, with the following parameters:
 
-   - `user_email : String`
+   - `email : String`
 
    You may skip this action if building an API.
 

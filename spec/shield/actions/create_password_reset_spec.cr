@@ -12,7 +12,7 @@ describe Shield::CreatePasswordReset do
     )
 
     response = AppClient.exec(PasswordResets::Create, password_reset: {
-      user_email: email
+      email: email
     })
 
     body(response)["status"]?.should eq(0)
@@ -39,7 +39,7 @@ describe Shield::CreatePasswordReset do
 
     client.headers("Cookie": response.headers["Set-Cookie"])
     response = client.exec(PasswordResets::Create, password_reset: {
-      user_email: email
+      email: email
     })
 
     body(response)["status"]?.should be_nil

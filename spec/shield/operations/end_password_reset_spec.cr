@@ -12,7 +12,7 @@ describe Shield::EndPasswordReset do
     )
 
     password_reset = StartPasswordReset.create!(
-      user_email: email,
+      email: email,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 

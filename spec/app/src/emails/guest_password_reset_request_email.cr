@@ -3,7 +3,7 @@ class GuestPasswordResetRequestEmail < BaseEmail
   end
 
   private def receivers
-    Carbon::Address.new(@operation.user_email.to_s)
+    Carbon::Address.new(@operation.email.to_s)
   end
 
   private def heading

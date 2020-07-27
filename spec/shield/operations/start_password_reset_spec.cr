@@ -8,7 +8,7 @@ describe Shield::StartPasswordReset do
     ip_address = Socket::IPAddress.new("127.0.0.1", 5555)
 
     StartPasswordReset.create(
-      user_email: email,
+      email: email,
       remote_ip: ip_address
     ) do |operation, password_reset|
       password_reset.should be_a(PasswordReset)
@@ -23,7 +23,7 @@ describe Shield::StartPasswordReset do
 
   it "requires valid IP address" do
     StartPasswordReset.create(
-      user_email: "user@example.tld",
+      email: "user@example.tld",
       remote_ip: nil
     ) do |operation, password_reset|
       password_reset.should be_nil
@@ -40,13 +40,13 @@ describe Shield::StartPasswordReset do
 
   it "rejects invalid email" do
     StartPasswordReset.create(
-      user_email: "email",
+      email: "email",
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       password_reset.should be_nil
 
       operation
-        .user_email
+        .email
         .errors
         .find(&.includes? "format is invalid")
         .should_not(be_nil)
@@ -55,7 +55,7 @@ describe Shield::StartPasswordReset do
 
   it "sends guest email" do
     StartPasswordReset.create(
-      user_email: "user@example.tld",
+      email: "user@example.tld",
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       password_reset.should be_nil
@@ -69,7 +69,7 @@ describe Shield::StartPasswordReset do
     create_current_user!(email: email)
 
     StartPasswordReset.create(
-      user_email: email,
+      email: email,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       GuestPasswordResetRequestEmail.new(operation).should_not be_delivered
