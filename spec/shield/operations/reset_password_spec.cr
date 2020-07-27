@@ -26,7 +26,7 @@ describe Shield::ResetPassword do
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
-      Login.verify_bcrypt?(
+      VerifyLogin.verify_bcrypt?(
         new_password,
         updated_user.password_hash
       ).should be_true

@@ -28,8 +28,12 @@ module Shield::SavePassword
 
     private def set_password_hash
       password.value.try do |value|
-        return if Login.verify_bcrypt?(value, password_hash.original_value.to_s)
-        password_hash.value = Login.hash_bcrypt(value)
+        return if VerifyLogin.verify_bcrypt?(
+          value,
+          password_hash.original_value.to_s
+        )
+
+        password_hash.value = VerifyLogin.hash_bcrypt(value)
       end
     end
 

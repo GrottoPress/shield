@@ -102,6 +102,19 @@
 
    `Shield::DeactivateLogin` is similar to `Shield::LogUserOut`, but does not delete session values.
 
+   ---
+    ```crystal
+   # ->>> src/operations/verify_login.cr
+
+   class VerifyLogin < Avram::BasicOperation
+     # ...
+     include Shield::VerifyLogin
+     # ...
+   end
+   ```
+
+   `Shield::VerifyLogin` is a basic (non-database) operation that verifies a login from session. It accepts `session : Lucky::Session`.
+
 1. Set up actions:
 
    ```crystal

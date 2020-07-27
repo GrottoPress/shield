@@ -100,6 +100,19 @@
 
    `Shield::ResetPassword` does the actual work of updating the user's password, after which it defers to `EndPasswordReset`.
 
+   ---
+    ```crystal
+   # ->>> src/operations/verify_password_reset.cr
+
+   class VerifyPasswordReset < Avram::BasicOperation
+     # ...
+     include Shield::VerifyPasswordReset
+     # ...
+   end
+   ```
+
+   `Shield::VerifyPasswordReset` is a basic (non-database) operation that verifies a password reset from session. It accepts `session : Lucky::Session`.
+
 1. Set up actions:
 
    ```crystal
@@ -201,13 +214,13 @@
 
      # What to do if `verify_password_reset` succeeds
      #
-     #private def success_action(password_reset)
+     #private def success_action(operation, password_reset)
      #  html EditPage
      #end
 
      # What to do if `verify_password_reset` fails
      #
-     #private def failure_action
+     #private def failure_action(operation)
      #  flash.failure = "Invalid token"
      #  redirect to: New
      #end

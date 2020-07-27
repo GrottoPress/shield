@@ -19,16 +19,22 @@ module Shield::LogUserIn
     private def validate_credentials
       return unless email.value.to_s.email? && password.value
 
-      if user = User.authenticate(email.value.to_s, password.value.to_s)
-        user_id.value = user.not_nil!.id
-      else
-        email.add_error "may be incorrect"
-        password.add_error "may be incorrect"
+      VerifyUser.new(
+        params,
+        email: email.value.not_nil!,
+        password: password.value.not_nil!
+      ).submit do |operation, user|
+        if user
+          user_id.value = user.not_nil!.id
+        else
+          email.add_error "may be incorrect"
+          password.add_error "may be incorrect"
+        end
       end
     end
 
     private def set_session(login : Login)
-      login.set_session(session, token)
+      VerifyLogin.new(params, session: session).set_session(login.id, token)
     end
 
     private def notify_login(login : Login)

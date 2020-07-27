@@ -70,6 +70,19 @@
 
    `Shield::SaveCurrentUser` saves `email`, `password` and user options. If you added other columns and associations to the model, you may have to add callbacks for dealing with those.
 
+    ---
+    ```crystal
+   # ->>> src/operations/verify_user.cr
+
+   class VerifyUser < Avram::BasicOperation
+     # ...
+     include Shield::VerifyUser
+     # ...
+   end
+   ```
+
+   `Shield::VerifyUser` is a basic (non-database) operation that authenticates a user. It accepts `email : String` and an optional `password : String`.
+
 1. Set up actions:
 
    ```crystal

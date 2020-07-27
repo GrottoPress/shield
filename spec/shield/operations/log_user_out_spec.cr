@@ -23,7 +23,7 @@ describe Shield::LogUserOut do
     session.get?(:login_id).should_not be_nil
 
     LogUserOut.update(
-      Login.from_session!(session),
+      VerifyLogin.new(session: session).login!,
       Avram::Params.new({"status" => "Expired"}),
       status: Login::Status.new(:started),
       session: session

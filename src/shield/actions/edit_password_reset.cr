@@ -10,18 +10,23 @@ module Shield::EditPasswordReset
     # end
 
     private def verify_password_reset
-      if password_reset = PasswordReset.from_session(session)
-        success_action(password_reset.not_nil!)
-      else
-        failure_action
+      VerifyPasswordReset.new(
+        params,
+        session: session
+      ).submit do |operation, password_reset|
+        if password_reset &&= password_reset.not_nil!
+          success_action(operation, password_reset)
+        else
+          failure_action(operation)
+        end
       end
     end
 
-    private def success_action(password_reset)
+    private def success_action(operation, password_reset)
       html EditPage
     end
 
-    private def failure_action
+    private def failure_action(operation)
       flash.failure = "Invalid token"
       redirect to: New
     end

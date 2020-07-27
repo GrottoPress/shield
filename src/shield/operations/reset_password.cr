@@ -12,7 +12,7 @@ module Shield::ResetPassword
 
     private def set_password_hash
       password.value.try do |value|
-        password_hash.value = Login.hash_bcrypt(value)
+        password_hash.value = VerifyLogin.hash_bcrypt(value)
       end
     end
 

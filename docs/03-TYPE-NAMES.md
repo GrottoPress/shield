@@ -34,6 +34,9 @@
 - `SaveUser`
 - `SaveUserOptions`
 - `StartPasswordReset`
+- `VerifyLogin`
+- `VerifyPasswordReset`
+- `VerifyUser`
 
 ### Actions
 
@@ -53,4 +56,3 @@ alias UserQuery = MyUserQuery
 ```
 
 Then `require` this alias file wherever the compiler yells about a missing type.
-

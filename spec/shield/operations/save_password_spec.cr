@@ -10,7 +10,7 @@ describe Shield::SavePassword do
       password_confirmation: password
     )
 
-    Login.verify_bcrypt?(password, user.password_hash).should be_true
+    VerifyLogin.verify_bcrypt?(password, user.password_hash).should be_true
   end
 
   it "requires password" do
