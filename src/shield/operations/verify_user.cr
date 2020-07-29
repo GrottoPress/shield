@@ -18,10 +18,7 @@ module Shield::VerifyUser
     end
 
     def authenticate? : Bool
-      VerifyLogin.verify_bcrypt?(
-        password,
-        user!.password_hash
-      )
+      VerifyLogin.verify_bcrypt?(password, user!.password_hash)
     rescue
       false
     end
