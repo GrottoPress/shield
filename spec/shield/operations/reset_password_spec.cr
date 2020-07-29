@@ -12,7 +12,10 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = StartPasswordReset.create!(user_email: email)
+    password_reset = StartPasswordReset.create!(
+      email: email,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    )
 
     ResetPassword.update(
       password_reset.user!,
@@ -23,12 +26,12 @@ describe Shield::ResetPassword do
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
-      Login.verify_bcrypt?(
+      VerifyLogin.verify_bcrypt?(
         new_password,
         updated_user.password_hash
       ).should be_true
 
-      PasswordResetQuery.find(password_reset.id).active?.should be_false
+      PasswordResetQuery.find(password_reset.id).status.started?.should be_false
     end
   end
 
@@ -43,7 +46,10 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = StartPasswordReset.create!(user_email: email)
+    password_reset = StartPasswordReset.create!(
+      email: email,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    )
 
     ResetPassword.update(
       password_reset.user!,
@@ -62,7 +68,7 @@ describe Shield::ResetPassword do
     end
   end
 
-  it "deletes password reset token even if new password equals old" do
+  it "ends password reset even if new password equals old" do
     email = "user@example.tld"
     password = "password12U\\password"
     new_password = password
@@ -73,7 +79,10 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = StartPasswordReset.create!(user_email: email)
+    password_reset = StartPasswordReset.create!(
+      email: email,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    )
 
     ResetPassword.update(
       password_reset.user!,
@@ -84,7 +93,7 @@ describe Shield::ResetPassword do
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
-      PasswordResetQuery.find(password_reset.id).active?.should be_false
+      PasswordResetQuery.find(password_reset.id).status.started?.should be_false
     end
   end
 end

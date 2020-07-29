@@ -1,53 +1,40 @@
 module Shield::LogUserIn
   macro included
-    getter token = ""
-
     attribute email : String
     attribute password : String
 
     needs session : Lucky::Session
 
     before_save do
-      downcase_email
-
+      validate_required email, password
       validate_credentials
-
-      set_started_at
-      set_ended_at
-      set_token
     end
 
     after_commit set_session
     after_commit notify_login
 
-    private def downcase_email
-      email.value.try { |value| email.value = value.downcase }
-    end
+    include Shield::ValidateEmail
+    include Shield::StartAuthentication(Login)
 
     private def validate_credentials
-      if user = User.authenticate(email.value.to_s, password.value.to_s)
-        user_id.value = user.not_nil!.id
-      else
-        email.add_error "may be incorrect"
-        password.add_error "may be incorrect"
+      return unless email.value.to_s.email? && password.value
+
+      VerifyUser.new(
+        params,
+        email: email.value.not_nil!,
+        password: password.value.not_nil!
+      ).submit do |operation, user|
+        if user
+          user_id.value = user.not_nil!.id
+        else
+          email.add_error "may be incorrect"
+          password.add_error "may be incorrect"
+        end
       end
     end
 
-    private def set_started_at
-      started_at.value = Time.utc
-    end
-
-    private def set_ended_at
-      ended_at.value = nil
-    end
-
-    private def set_token
-      @token = Login.generate_token
-      token_hash.value = Login.hash_sha256(@token)
-    end
-
     private def set_session(login : Login)
-      login.set_session(session, token)
+      VerifyLogin.new(params, session: session).set_session(login.id, token)
     end
 
     private def notify_login(login : Login)

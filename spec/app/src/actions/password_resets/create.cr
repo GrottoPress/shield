@@ -1,5 +1,5 @@
 class PasswordResets::Create < ApiAction
-  include Shield::CreatePasswordReset
+  include Shield::PasswordResets::Create
 
   post "/password-resets" do
     start_password_reset

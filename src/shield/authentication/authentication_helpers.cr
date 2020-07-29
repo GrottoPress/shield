@@ -23,7 +23,7 @@ module Shield::AuthenticationHelpers
 
     @[Memoize]
     private def current_login : Login?
-      Login.from_session(session)
+      VerifyLogin.new(params, session: session).submit
     end
   end
 end

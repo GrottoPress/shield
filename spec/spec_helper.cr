@@ -13,6 +13,20 @@ def body(response)
   JSON.parse(response.body)
 end
 
+# For debugging :-)
+#
+#  ```crystal
+#  body(response) do |body, error|
+#    puts body if body
+#    puts error if error
+#  end
+#  ```
+def body(response)
+  yield JSON.parse(response.body), nil
+rescue e
+  yield(nil, {error: e.message, body: response.body}.to_json)
+end
+
 def create_user(
   *,
   email = "user@domain.tld",
@@ -31,7 +45,7 @@ def create_user(
     "password_notify" => password_notify.to_s,
   })
 
-  SaveUser.create(params, current_login: nil) do |operation, user|
+  RegisterUser.create(params) do |operation, user|
     yield operation, user
   end
 end
@@ -54,7 +68,7 @@ def create_user!(
     "password_notify" => password_notify.to_s,
   })
 
-  SaveUser.create!(params, current_login: nil)
+  RegisterUser.create!(params)
 end
 
 def create_current_user(
@@ -73,7 +87,7 @@ def create_current_user(
     "password_notify" => password_notify.to_s,
   })
 
-  SaveCurrentUser.create(params, current_login: nil) do |operation, user|
+  RegisterCurrentUser.create(params) do |operation, user|
     yield operation, user
   end
 end
@@ -94,7 +108,7 @@ def create_current_user!(
     "password_notify" => password_notify.to_s,
   })
 
-  SaveCurrentUser.create!(params, current_login: nil)
+  RegisterCurrentUser.create!(params)
 end
 
 Avram::Migrator::Runner.new.ensure_migrated!

@@ -12,17 +12,20 @@ describe Shield::LogUserIn do
     )
 
     session = Lucky::Session.new
+    ip_address = Socket::IPAddress.new("127.0.0.1", 5555)
 
     LogUserIn.create(
       email: email,
       password: password,
-      session: session
+      session: session,
+      remote_ip: ip_address
     ) do |operation, login|
       login.should be_a(Login)
 
-      login.try &.active?.should be_true
+      login.try(&.status.started?).should be_true
+      login.try(&.ip_address.address).should eq(ip_address.address)
 
-      session.get?(:login).should eq("#{login.try(&.id)}")
+      session.get?(:login_id).should eq("#{login.try(&.id)}")
       session.get?(:login_token).to_s.should_not be_empty
     end
   end
@@ -38,17 +41,35 @@ describe Shield::LogUserIn do
         password_confirmation: password
       )
 
-      session = Lucky::Session.new
-
       login = LogUserIn.create!(
         email: email,
         password: password,
-        session: session
+        session: Lucky::Session.new,
+        remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
       )
 
       login.expired?.should be_false
       sleep 3
       login.expired?.should be_true
+    end
+  end
+
+  it "requires valid IP address" do
+    LogUserIn.create(
+      email: "incorrect@example.tld",
+      password: "password12U~password",
+      session: Lucky::Session.new,
+      remote_ip: nil
+    ) do |operation, login|
+      login.should be_nil
+
+      operation.ip_address.errors.find(&.includes? " required").should(be_nil)
+
+      operation
+        .ip_address
+        .errors
+        .find(&.includes? "not be determined")
+        .should_not(be_nil)
     end
   end
 
@@ -60,7 +81,8 @@ describe Shield::LogUserIn do
     LogUserIn.create(
       email: "incorrect@example.tld",
       password: password,
-      session: Lucky::Session.new
+      session: Lucky::Session.new,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, login|
       login.should be_nil
 
@@ -85,7 +107,8 @@ describe Shield::LogUserIn do
     LogUserIn.create(
       email: email,
       password: "assword12U~passwor",
-      session: Lucky::Session.new
+      session: Lucky::Session.new,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, login|
       login.should be_nil
 
@@ -111,7 +134,8 @@ describe Shield::LogUserIn do
     LogUserIn.create(
       email: email,
       password: password,
-      session: Lucky::Session.new
+      session: Lucky::Session.new,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, login|
       operation.saved?.should be_true
 
@@ -133,7 +157,8 @@ describe Shield::LogUserIn do
     LogUserIn.create(
       email: email,
       password: password,
-      session: Lucky::Session.new
+      session: Lucky::Session.new,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, login|
       operation.saved?.should be_true
 
@@ -141,27 +166,5 @@ describe Shield::LogUserIn do
         .new(operation, login.not_nil!)
         .should_not(be_delivered)
     end
-  end
-
-  it "saves IP address" do
-    password = "pass)word1Apassword"
-    email = "user@example.tld"
-
-    create_current_user!(
-      email: email,
-      password: password,
-      password_confirmation: password
-    )
-
-    ip = Socket::IPAddress.new("127.0.0.1", 12345)
-
-    login = LogUserIn.create!(
-      email: email,
-      password: password,
-      ip_address: ip,
-      session: Lucky::Session.new
-    )
-
-    login.ip_address.should eq(ip)
   end
 end

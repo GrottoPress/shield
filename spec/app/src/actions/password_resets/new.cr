@@ -1,5 +1,5 @@
 class PasswordResets::New < ApiAction
-  include Shield::NewPasswordReset
+  include Shield::PasswordResets::New
 
   get "/password-resets/new" do
     json({status: 1})

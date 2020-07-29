@@ -1,5 +1,5 @@
 class Logins::Destroy < ApiAction
-  include Shield::DestroyLogin
+  include Shield::Logins::Destroy
 
   delete "/log-out" do
     log_user_out

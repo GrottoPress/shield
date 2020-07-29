@@ -1,5 +1,5 @@
 class Users::Update < ApiAction
-  include Shield::UpdateUser
+  include Shield::Users::Update
 
   skip :require_logged_in
   skip :require_authorization
