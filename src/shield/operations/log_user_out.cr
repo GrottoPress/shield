@@ -1,6 +1,6 @@
 module Shield::LogUserOut
   macro included
-    include Shield::DeactivateLogin
+    include Shield::EndAuthentication(Login)
 
     needs session : Lucky::Session
 

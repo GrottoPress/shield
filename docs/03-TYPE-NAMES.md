@@ -30,10 +30,12 @@
 - `LogUserIn`
 - `LogUserOut`
 - `ResetPassword`
-- `SaveCurrentUser`
-- `SaveUser`
+- `RegisterCurrentUser`
+- `RegisterUser`
 - `SaveUserOptions`
 - `StartPasswordReset`
+- `UpdateCurrentUser`
+- `UpdateUser`
 - `VerifyLogin`
 - `VerifyPasswordReset`
 - `VerifyUser`

@@ -120,7 +120,7 @@
 
    class PasswordResets::New < BrowserAction
      # ...
-     include Shield::NewPasswordReset
+     include Shield::PasswordResets::New
 
      get "/password-resets/new" do
        html NewPage
@@ -143,7 +143,7 @@
 
    class PasswordResets::Create < BrowserAction
      # ...
-     include Shield::CreatePasswordReset
+     include Shield::PasswordResets::Create
 
      post "/password-resets" do
        start_password_reset
@@ -184,7 +184,7 @@
 
    class PasswordResets::Show < BrowserAction
      # ...
-     include Shield::ShowPasswordReset
+     include Shield::PasswordResets::Show
 
      param id : Int64
      param token : String
@@ -196,7 +196,7 @@
    end
    ```
 
-   `Shield::ShowPasswordReset` is just a pass-through to avoid leaking password reset tokens to third parties, via the HTTP referer header.
+   `Shield::PasswordResets::Show` is just a pass-through to avoid leaking password reset tokens to third parties, via the HTTP referer header.
 
    It sets the id and token, retrieved from params, in session, and redirects to the route responsible for actual verification.
 
@@ -206,7 +206,7 @@
 
    class PasswordResets::Edit < BrowserAction
      # ...
-     include Shield::EditPasswordReset
+     include Shield::PasswordResets::Edit
 
      get "/password-resets/edit" do
        verify_password_reset
@@ -243,7 +243,7 @@
 
    class PasswordResets::Update < BrowserAction
      # ...
-     include Shield::UpdatePasswordReset
+     include Shield::PasswordResets::Update
 
      patch "/password-resets" do
        reset_password

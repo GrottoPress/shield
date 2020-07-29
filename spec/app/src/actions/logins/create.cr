@@ -1,5 +1,5 @@
 class Logins::Create < ApiAction
-  include Shield::CreateLogin
+  include Shield::Logins::Create
 
   post "/log-in" do
     log_user_in

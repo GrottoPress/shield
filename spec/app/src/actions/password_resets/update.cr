@@ -1,5 +1,5 @@
 class PasswordResets::Update < ApiAction
-  include Shield::UpdatePasswordReset
+  include Shield::PasswordResets::Update
 
   patch "/password-resets" do
     reset_password

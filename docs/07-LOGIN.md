@@ -122,7 +122,7 @@
 
    class Logins::New < BrowserAction
      # ...
-     include Shield::NewLogin
+     include Shield::Logins::New
 
      get "/sign-in" do
        html NewPage
@@ -146,7 +146,7 @@
 
    class Logins::Create < BrowserAction
      # ...
-     include Shield::CreateLogin
+     include Shield::Logins::Create
 
      post "/sign-in" do
        log_user_in
@@ -175,7 +175,7 @@
 
    class Logins::Destroy < BrowserAction
      # ...
-     include Shield::DestroyLogin
+     include Shield::Logins::Destroy
 
      get "/sign-out" do
        log_user_out

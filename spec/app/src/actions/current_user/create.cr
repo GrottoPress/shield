@@ -1,5 +1,5 @@
 class CurrentUser::Create < ApiAction
-  include Shield::CreateCurrentUser
+  include Shield::CurrentUser::Create
 
   post "/register" do
     save_current_user

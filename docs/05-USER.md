@@ -55,23 +55,38 @@
 1. Set up operations:
 
    ```crystal
-   # ->>> src/operations/save_currrent_user.cr
+   # ->>> src/operations/register_currrent_user.cr
 
-   class SaveCurrentUser < User::SaveOperation
+   class RegisterCurrentUser < User::SaveOperation
      # ...
-     include Shield::SaveCurrentUser
+     include Shield::RegisterCurrentUser
      # ...
    end
    ```
 
-   There's also `Shield::SaveUser`, but that is reserved for saving users in other scenarios, such as an admin adding a new user.
+   There's also `Shield::RegisterUser`, but that is reserved for saving users in other scenarios, such as an admin adding a new user.
 
-   `Shield::SaveCurrentUser` is what should be used for user self-registration.
+   `Shield::RegisterCurrentUser` is what should be used for user self-registration.
 
-   `Shield::SaveCurrentUser` saves `email`, `password` and user options. If you added other columns and associations to the model, you may have to add callbacks for dealing with those.
+   `Shield::RegisterCurrentUser` saves `email`, `password` and user options. If you added other columns and associations to the model, you may have to add callbacks for dealing with those.
 
-    ---
-    ```crystal
+   ---
+   ```crystal
+   # ->>> src/operations/update_currrent_user.cr
+
+   class UpdateCurrentUser < User::SaveOperation
+     # ...
+     include Shield::UpdateCurrentUser
+     # ...
+   end
+   ```
+
+   `Shield::UpdateCurrentUser` is similar to `Shield::RegisterCurrentUser`, except it *updates* an existing user rather than create a new one.
+
+   There's also `Shield::UpdateUser` as the *update* counterpart to `Shield::RegisterUser`
+
+   ---
+   ```crystal
    # ->>> src/operations/verify_user.cr
 
    class VerifyUser < Avram::BasicOperation
@@ -90,7 +105,7 @@
 
    class CurrentUser::New < BrowserAction
      # ...
-     include Shield::NewCurrentUser
+     include Shield::CurrentUser::New
 
      get "/sign-up" do
        html NewPage
@@ -115,7 +130,7 @@
 
    class CurrentUser::Create < BrowserAction
      # ...
-     include Shield::CreateCurrentUser
+     include Shield::CurrentUser::Create
 
      post "/sign-up" do
        save_current_user

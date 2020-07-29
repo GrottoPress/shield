@@ -1,5 +1,5 @@
 class PasswordResets::Show < ApiAction
-  include Shield::ShowPasswordReset
+  include Shield::PasswordResets::Show
 
   param id : Int64
   param token : String

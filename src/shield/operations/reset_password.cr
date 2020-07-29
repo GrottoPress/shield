@@ -1,6 +1,9 @@
 module Shield::ResetPassword
   macro included
-    include Shield::SavePassword
+    include Shield::UpdatePassword
+
+    attribute password : String
+    attribute password_confirmation : String
 
     needs password_reset : PasswordReset
 

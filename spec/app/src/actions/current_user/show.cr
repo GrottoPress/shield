@@ -1,5 +1,5 @@
 class CurrentUser::Show < ApiAction
-  include Shield::ShowCurrentUser
+  include Shield::CurrentUser::Show
 
   get "/profile" do
     authorize(:read, user)

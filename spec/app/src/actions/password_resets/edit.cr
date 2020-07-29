@@ -1,5 +1,5 @@
 class PasswordResets::Edit < ApiAction
-  include Shield::EditPasswordReset
+  include Shield::PasswordResets::Edit
 
   get "/password-resets/edit" do
     verify_password_reset

@@ -1,5 +1,5 @@
 class Users::Show < ApiAction
-  include Shield::ShowUser
+  include Shield::Users::Show
 
   # skip :require_logged_in
 
