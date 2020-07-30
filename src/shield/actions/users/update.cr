@@ -1,8 +1,9 @@
 module Shield::Users::Update
   macro included
     # patch "/users/:user_id" do
-    #   authorize(:update, user)
-    #   save_user
+    #   authorize(:update, user) do
+    #     save_user
+    #   end
     # end
 
     private def save_user

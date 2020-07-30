@@ -1,8 +1,9 @@
 module Shield::CurrentUser::Update
   macro included
     # patch "/profile" do
-    #   authorize(:update, user)
-    #   save_current_user
+    #   authorize(:update, user) do
+    #     save_current_user
+    #   end
     # end
 
     private def save_current_user

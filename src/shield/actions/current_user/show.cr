@@ -1,8 +1,9 @@
 module Shield::CurrentUser::Show
   macro included
     # get "/profile" do
-    #   authorize(:read, user)
-    #   html ShowPage, user: user
+    #   authorize(:read, user) do
+    #     html ShowPage, user: user
+    #   end
     # end
 
     private def user

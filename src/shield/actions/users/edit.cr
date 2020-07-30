@@ -1,8 +1,9 @@
 module Shield::Users::Edit
   macro included
     # get "/users/:user_id/edit" do
-    #   authorize(:update, user)
-    #   html EditPage, user: user
+    #   authorize(:update, user) do
+    #     html EditPage, user: user
+    #   end
     # end
 
     private def user

@@ -57,7 +57,7 @@
 
 1. Set up *Lucky* actions:
 
-   By default, all *Lucky* actions are required to check authorization for the current user, by calling `#authorize`. This should be the first call in the block passed to the route's macro:
+   By default, all *Lucky* actions are required to check authorization for the current user, by calling `#authorize`.
 
    ```crystal
    # ->>> src/actions/posts/show.cr
@@ -65,8 +65,9 @@
    class Posts::Show < BrowserAction
      # ...
      get "/posts/:post_id" do
-       authorize(:read, post) # <=
-       html ShowPage, post: post
+       authorize(:read, post) do
+         html ShowPage, post: post
+       end
      end
 
      private def post
@@ -82,8 +83,9 @@
    class Posts::New < BrowserAction
      # ...
      get "/posts/new" do
-       authorize(:create, Post) # <=
-       html NewPage
+       authorize(:create, Post) do
+         html NewPage
+       end
      end
      # ...
    end

@@ -1,8 +1,9 @@
 module Shield::Users::Create
   macro included
     # post "/users" do
-    #   authorize(:create, user)
-    #   save_user
+    #   authorize(:create, user) do
+    #     save_user
+    #   end
     # end
 
     private def save_user
