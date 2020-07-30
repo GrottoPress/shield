@@ -40,7 +40,7 @@ def create_user(
     "email" => email,
     "password" => password,
     "password_confirmation" => password_confirmation,
-    "level" => level.value.to_s,
+    "level" => level.to_s,
     "login_notify" => login_notify.to_s,
     "password_notify" => password_notify.to_s,
   })
@@ -63,7 +63,7 @@ def create_user!(
     "email" => email,
     "password" => password,
     "password_confirmation" => password_confirmation,
-    "level" => level.value.to_s,
+    "level" => level.to_s,
     "login_notify" => login_notify.to_s,
     "password_notify" => password_notify.to_s,
   })

@@ -2,10 +2,10 @@ class User < BaseModel
   include Shield::User
   include Carbon::Emailable
 
-  avram_enum Level do
+  __enum Level do
     Admin
-    Editor = 10
-    Author = 20
+    Editor
+    Author
   end
 
   table :users do

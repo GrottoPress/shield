@@ -42,8 +42,11 @@ module Avram
       record.not_nil!
     end
 
-    # Ensure callbacks run for update operations even if no
+    # Patched to ensure callbacks run for update operations even if no
     # column attributes changed.
+    #
+    # Also to ensure operation is marked as failed if a nested
+    # operation rolls back a database transaction
     def save : Bool
       if valid? && persisted? && changes.empty?
         after_save(record!)
@@ -51,6 +54,9 @@ module Avram
       end
 
       previous_def
+    rescue Rollback
+      mark_as_failed
+      false
     end
   end
 
