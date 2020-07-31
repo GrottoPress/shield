@@ -26,7 +26,7 @@ module Shield::AuthorizationHelpers
 
     private def not_authorized_action(user, action, record)
       flash.failure = "You are not allowed to perform this action!"
-      redirect to: CurrentUser::Show
+      redirect_back fallback: CurrentUser::Show
     end
   end
 end
