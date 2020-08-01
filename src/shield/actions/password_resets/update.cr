@@ -10,9 +10,8 @@ module Shield::PasswordResets::Update
     # end
 
     private def reset_password
-      operation = VerifyPasswordReset.new(params, session: session)
-      password_reset = operation.submit!
-      operation.delete_session
+      verify_password_reset = VerifyPasswordReset.new(params, session: session)
+      password_reset = verify_password_reset.submit!
 
       ResetPassword.update(
         password_reset.user!,
@@ -21,6 +20,9 @@ module Shield::PasswordResets::Update
         current_login: current_login
       ) do |operation, updated_user|
         if operation.saved?
+          # TODO: Move this into `Shield::ResetPassword`?
+          #       Tried it once, but it complicated the whole thing
+          verify_password_reset.delete_session
           success_action(operation, updated_user)
         else
           failure_action(operation, updated_user)
