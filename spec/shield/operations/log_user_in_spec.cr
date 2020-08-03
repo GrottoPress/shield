@@ -63,11 +63,7 @@ describe Shield::LogUserIn do
     ) do |operation, login|
       login.should be_nil
 
-      operation
-        .ip_address
-        .errors
-        .find(&.includes? "not be determined")
-        .should_not(be_nil)
+      assert_invalid(operation.ip_address, "not be determined")
     end
   end
 
@@ -84,13 +80,9 @@ describe Shield::LogUserIn do
     ) do |operation, login|
       login.should be_nil
 
-      operation.user_id.errors.should be_empty
-
-      operation
-        .email
-        .errors
-        .find(&.includes? " incorrect")
-        .should_not(be_nil)
+      # operation.user_id.errors.should be_empty
+      assert_valid(operation.user_id)
+      assert_invalid(operation.email, " incorrect")
     end
   end
 
@@ -112,11 +104,7 @@ describe Shield::LogUserIn do
     ) do |operation, login|
       login.should be_nil
 
-      operation
-        .password
-        .errors
-        .find(&.includes? " incorrect")
-        .should_not(be_nil)
+      assert_invalid(operation.password, " incorrect")
     end
   end
 

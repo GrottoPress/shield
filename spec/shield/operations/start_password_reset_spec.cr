@@ -28,8 +28,8 @@ describe Shield::StartPasswordReset do
     ) do |operation, password_reset|
       password_reset.should be_nil
 
-      operation.user_id.errors.should be_empty
-      operation.email.errors.find(&.includes? "not exist").should_not(be_nil)
+      assert_valid(operation.user_id)
+      assert_invalid(operation.email, "not exist")
     end
   end
 
@@ -40,11 +40,7 @@ describe Shield::StartPasswordReset do
     ) do |operation, password_reset|
       password_reset.should be_nil
 
-      operation
-        .ip_address
-        .errors
-        .find(&.includes? "not be determined")
-        .should_not(be_nil)
+      assert_invalid(operation.ip_address, "not be determined")
     end
   end
 
@@ -55,11 +51,7 @@ describe Shield::StartPasswordReset do
     ) do |operation, password_reset|
       password_reset.should be_nil
 
-      operation
-        .email
-        .errors
-        .find(&.includes? "format is invalid")
-        .should_not(be_nil)
+      assert_invalid(operation.email, "format is invalid")
     end
   end
 

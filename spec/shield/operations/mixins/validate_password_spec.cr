@@ -10,11 +10,7 @@ describe Shield::ValidatePassword do
     ) do |operation, user|
       user.should be_nil
 
-      operation
-        .password
-        .errors
-        .find(&.includes? "too short")
-        .should_not(be_nil)
+      assert_invalid(operation.password, "too short")
     end
   end
 
@@ -25,11 +21,7 @@ describe Shield::ValidatePassword do
     ) do |operation, user|
       user.should be_nil
 
-      operation
-        .password_confirmation
-        .errors
-        .find(&.includes? "must match")
-        .should_not(be_nil)
+      assert_invalid(operation.password_confirmation, "must match")
     end
   end
 
@@ -42,11 +34,7 @@ describe Shield::ValidatePassword do
     ) do |operation, user|
       user.should be_nil
 
-      operation
-        .password
-        .errors
-        .find(&.includes? " number")
-        .should_not(be_nil)
+      assert_invalid(operation.password, " number")
     end
   end
 
@@ -72,11 +60,7 @@ describe Shield::ValidatePassword do
     ) do |operation, user|
       user.should be_nil
 
-      operation
-        .password
-        .errors
-        .find(&.includes? "lowercase letter")
-        .should_not(be_nil)
+      assert_invalid(operation.password, "lowercase letter")
     end
   end
 
@@ -102,11 +86,7 @@ describe Shield::ValidatePassword do
     ) do |operation, user|
       user.should be_nil
 
-      operation
-        .password
-        .errors
-        .find(&.includes? "uppercase letter")
-        .should_not(be_nil)
+      assert_invalid(operation.password, "uppercase letter")
     end
   end
 
@@ -132,11 +112,7 @@ describe Shield::ValidatePassword do
     ) do |operation, user|
       user.should be_nil
 
-      operation
-        .password
-        .errors
-        .find(&.includes? "special character")
-        .should_not(be_nil)
+      assert_invalid(operation.password, "special character")
     end
   end
 

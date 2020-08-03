@@ -21,17 +21,8 @@ describe Shield::CreatePassword do
     ) do |operation, user|
       user.should be_nil
 
-      operation
-        .password
-        .errors
-        .find(&.includes? " required")
-        .should_not(be_nil)
-
-      operation
-        .password_hash
-        .errors
-        .find(&.includes? " required")
-        .should(be_nil)
+      assert_invalid(operation.password, " required")
+      assert_valid(operation.password_hash, " required")
     end
   end
 

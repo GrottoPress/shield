@@ -60,11 +60,7 @@ describe Shield::ResetPassword do
     ) do |operation, updated_user|
       operation.saved?.should be_false
 
-      operation
-        .password
-        .errors
-        .find(&.includes? " required")
-        .should_not(be_nil)
+      assert_invalid(operation.password, " required")
     end
   end
 
