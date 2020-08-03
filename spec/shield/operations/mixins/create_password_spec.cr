@@ -26,6 +26,12 @@ describe Shield::CreatePassword do
         .errors
         .find(&.includes? " required")
         .should_not(be_nil)
+
+      operation
+        .password_hash
+        .errors
+        .find(&.includes? " required")
+        .should(be_nil)
     end
   end
 

@@ -10,6 +10,8 @@ module Shield::StartPasswordReset
       set_user_id
       set_guest_email
 
+      validate_email_exists
+
       send_guest_email
     end
 
@@ -26,6 +28,10 @@ module Shield::StartPasswordReset
 
     private def set_guest_email
       @guest_email = user_id.value.nil? && email.valid?
+    end
+
+    private def validate_email_exists
+      email.add_error("does not exist") if user_id.value.nil?
     end
 
     private def send_guest_email

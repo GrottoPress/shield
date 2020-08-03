@@ -13,13 +13,8 @@ module Shield::RequireIPAddress
     end
 
     private def set_ip_address
-      if value = remote_ip
-        ip_address.value = value.not_nil!
-      else
-        # So that *Avram*'s `validate_required ip_address` passes.
-        # We've already taken care of this validation with
-        # `require_ip_address`, because we needed a custom error message
-        ip_address.value = Socket::IPAddress.new("0.0.0.0", 0)
+      remote_ip.try do |value|
+        ip_address.value = value
       end
     end
   end

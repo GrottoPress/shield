@@ -11,7 +11,7 @@ describe Shield::SaveUserOptions do
       operation
         .user_id
         .errors
-        .find(&.includes? " required")
+        .find(&.includes? "not exist")
         .should_not(be_nil)
     end
   end

@@ -63,8 +63,6 @@ describe Shield::LogUserIn do
     ) do |operation, login|
       login.should be_nil
 
-      operation.ip_address.errors.find(&.includes? " required").should(be_nil)
-
       operation
         .ip_address
         .errors
@@ -85,6 +83,8 @@ describe Shield::LogUserIn do
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, login|
       login.should be_nil
+
+      operation.user_id.errors.should be_empty
 
       operation
         .email

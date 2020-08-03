@@ -58,6 +58,17 @@ module Avram
       mark_as_failed
       false
     end
+
+    # Getting rid of default validations in Avram
+    #
+    # See https://github.com/luckyframework/lucky/discussions/1209#discussioncomment-46030
+    #
+    # All operations are expected to explicitly define any validations
+    # needed
+    def valid? : Bool
+      before_save
+      attributes.all? &.valid?
+    end
   end
 
   # Avram's implementation errors in an update operation:
