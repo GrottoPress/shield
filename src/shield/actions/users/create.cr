@@ -6,7 +6,7 @@ module Shield::Users::Create
     #   end
     # end
 
-    private def save_user
+    def save_user
       RegisterUser.create(params) do |operation, user|
         if user
           success_action(operation, user.not_nil!)
@@ -16,12 +16,12 @@ module Shield::Users::Create
       end
     end
 
-    private def success_action(operation, user)
+    def success_action(operation, user)
       flash.success = "User added successfully"
       redirect to: New
     end
 
-    private def failure_action(operation)
+    def failure_action(operation)
       flash.failure = "Could not add user"
       html NewPage, operation: operation
     end

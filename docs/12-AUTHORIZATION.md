@@ -70,7 +70,7 @@
        end
      end
 
-     private def post
+     def post
        PostQuery.find(post_id)
      end
      # ...

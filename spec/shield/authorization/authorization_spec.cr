@@ -7,7 +7,7 @@ describe Shield::Authorization do
       created_at: Time.utc,
       email: "user@example.tld",
       level: User::Level.new(:admin).to_s,
-      password_hash: VerifyLogin.hash_bcrypt("password_1Apassword"),
+      password_hash: CryptoHelper.hash_bcrypt("password_1Apassword"),
       updated_at: Time.utc
     )
 
@@ -16,7 +16,7 @@ describe Shield::Authorization do
       created_at: Time.utc,
       email: "user_2@example.tld",
       level: User::Level.new(:editor).to_s,
-      password_hash: VerifyLogin.hash_bcrypt("password_1Apassword"),
+      password_hash: CryptoHelper.hash_bcrypt("password_1Apassword"),
       updated_at: Time.utc
     )
 
@@ -43,7 +43,7 @@ describe Shield::Authorization do
       created_at: Time.utc,
       email: "user@example.tld",
       level: User::Level.new(:author).to_s,
-      password_hash: VerifyLogin.hash_bcrypt("password_1Apassword"),
+      password_hash: CryptoHelper.hash_bcrypt("password_1Apassword"),
       updated_at: Time.utc
     )
 
@@ -52,7 +52,7 @@ describe Shield::Authorization do
       created_at: Time.utc,
       email: "user_2@example.tld",
       level: User::Level.new(:editor).to_s,
-      password_hash: VerifyLogin.hash_bcrypt("password_1Apassword"),
+      password_hash: CryptoHelper.hash_bcrypt("password_1Apassword"),
       updated_at: Time.utc
     )
 

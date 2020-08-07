@@ -2,7 +2,7 @@ module Shield::AuthorizationHelpers
   macro included
     @authorized = false
 
-    private def authorize(
+    def authorize(
       action : Shield::AuthorizedAction,
       record : Shield::Model | Shield::Model.class
     )
@@ -11,7 +11,7 @@ module Shield::AuthorizationHelpers
       not_authorized_action(error.user, error.action, error.record)
     end
 
-    private def authorize!(
+    def authorize!(
       action : Shield::AuthorizedAction,
       record : Shield::Model | Shield::Model.class
     )
@@ -24,7 +24,7 @@ module Shield::AuthorizationHelpers
       end
     end
 
-    private def not_authorized_action(user, action, record)
+    def not_authorized_action(user, action, record)
       flash.failure = "You are not allowed to perform this action!"
       redirect_back fallback: CurrentUser::Show
     end

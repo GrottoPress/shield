@@ -7,7 +7,7 @@ module Shield::LogUserOut
     after_commit delete_session
 
     private def delete_session(login : Login)
-      VerifyLogin.new(params, session: session).delete_session
+      LoginSession.new(session).delete
     end
   end
 end

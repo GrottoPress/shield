@@ -8,11 +8,11 @@ class Users::Update < ApiAction
     save_user
   end
 
-  private def success_action(operation, user)
+  def success_action(operation, user)
     json({user: user.id})
   end
 
-  private def failure_action(operation, user)
+  def failure_action(operation, user)
     json({user: user.id, errors: operation.errors})
   end
 end

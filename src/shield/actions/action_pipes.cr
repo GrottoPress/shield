@@ -1,11 +1,11 @@
 module Shield::ActionPipes
   macro included
-    private def set_previous_page
+    def set_previous_page
       session.set(:previous_page, request.resource) if request.method == "GET"
       continue
     end
 
-    private def previous_page
+    def previous_page
       session.get?(:previous_page)
     end
 

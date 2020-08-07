@@ -9,7 +9,7 @@ module Shield::PasswordResets::Create
     #   start_password_reset
     # end
 
-    private def start_password_reset
+    def start_password_reset
       StartPasswordReset.create(
         params,
         remote_ip: remote_ip
@@ -22,11 +22,11 @@ module Shield::PasswordResets::Create
       end
     end
 
-    private def success_action(operation, password_reset)
+    def success_action(operation, password_reset)
       success_action
     end
 
-    private def failure_action(operation)
+    def failure_action(operation)
       if operation.guest_email?
         success_action
       else

@@ -29,16 +29,11 @@
 - `EndPasswordReset`
 - `LogUserIn`
 - `LogUserOut`
-- `ResetPassword`
-- `RegisterCurrentUser`
 - `RegisterUser`
+- `ResetPassword`
 - `SaveUserOptions`
 - `StartPasswordReset`
-- `UpdateCurrentUser`
 - `UpdateUser`
-- `VerifyLogin`
-- `VerifyPasswordReset`
-- `VerifyUser`
 
 ### Actions
 
@@ -47,7 +42,19 @@
 - `PasswordResets::Edit`
 - `PasswordResets::Show`
 
-If you would rather name your types differently, set aliases for your own types to these ones, thus:
+### Utilities
+
+- `LoginSession`
+- `PasswordResetSession`
+
+### Helpers
+
+- `CryptoHelper`
+- `LoginHelper`
+- `PasswordResetHelper`
+- `UserHelper`
+
+If you would rather name your types differently, set aliases for them, thus:
 
 ```crystal
 # ->>> config/types.cr

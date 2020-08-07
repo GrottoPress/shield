@@ -6,7 +6,7 @@ module Shield::Users::Edit
     #   end
     # end
 
-    private def user
+    def user
       UserQuery.find(user_id)
     end
   end

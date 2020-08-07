@@ -98,20 +98,7 @@
    end
    ```
 
-   `Shield::ResetPassword` does the actual work of updating the user's password, after which it defers to `EndPasswordReset`.
-
-   ---
-    ```crystal
-   # ->>> src/operations/verify_password_reset.cr
-
-   class VerifyPasswordReset < Avram::BasicOperation
-     # ...
-     include Shield::VerifyPasswordReset
-     # ...
-   end
-   ```
-
-   `Shield::VerifyPasswordReset` is a basic (non-database) operation that verifies a password reset from session. It accepts `session : Lucky::Session`.
+   `Shield::ResetPassword` does the actual work of updating a user's password, after which it deactivates all active password resets for that user.
 
 1. Set up actions:
 
@@ -135,6 +122,8 @@
 
    - `email : String`
 
+   It is advisable to skip showing operation errors on this form. You do not want to leak information as to whether or not the given email is registered to your application.
+
    You may skip this action if building an API.
 
    ---
@@ -151,13 +140,13 @@
 
      # What to do if `start_password_reset` succeeds
      #
-     #private def success_action(operation, login)
+     #def success_action(operation, login)
      #  success_action
      #end
 
      # What to do if `start_password_reset` fails
      #
-     #private def failure_action(operation)
+     #def failure_action(operation)
      #  if operation.guest_email?
      #     success_action
      #   else
@@ -214,13 +203,13 @@
 
      # What to do if `verify_password_reset` succeeds
      #
-     #private def success_action(operation, password_reset)
+     #def success_action(operation, password_reset)
      #  html EditPage
      #end
 
      # What to do if `verify_password_reset` fails
      #
-     #private def failure_action(operation)
+     #def failure_action(operation)
      #  flash.failure = "Invalid token"
      #  redirect to: New
      #end
@@ -251,14 +240,14 @@
 
      # What to do if `reset_password` succeeds
      #
-     #private def success_action(operation, user)
+     #def success_action(operation, user)
      #  flash.success = "Password changed successfully"
      #  redirect to: Logins::New
      #end
 
      # What to do if `reset_password` fails
      #
-     #private def failure_action(operation, user)
+     #def failure_action(operation, user)
      #  flash.failure = "Could not change password"
      #  html EditPage, operation: operation, user: user
      #end

@@ -9,7 +9,7 @@ class PasswordResets::Edit < ApiAction
     json({status: 0})
   end
 
-  private def failure_action(operation)
+  def failure_action(operation)
     json({status: 1})
   end
 end

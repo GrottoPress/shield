@@ -289,6 +289,16 @@ module Avram
 
   abstract class BasicOperation < Operation
     include NeedyInitializer
+
+    def self.submit!(*args, **named_args)
+      submit(*args, **named_args) { |_, result| return result.not_nil! }
+    end
+
+    def self.submit(*args, **named_args)
+      new(*args, **named_args).submit do |operation, result|
+        yield operation, result
+      end
+    end
   end
 end
 

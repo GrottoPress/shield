@@ -17,9 +17,9 @@ describe Shield::PasswordResets::Show do
     ) do |operation, password_reset|
       password_reset = password_reset.not_nil!
 
-      response = AppClient.exec(PasswordResets::Show.with(
-        id: password_reset.id,
-        token: operation.token
+      response = AppClient.get(PasswordResetHelper.password_reset_url(
+        operation,
+        password_reset
       ))
 
       response.status.should eq(HTTP::Status::FOUND)
@@ -27,8 +27,15 @@ describe Shield::PasswordResets::Show do
       cookies = Lucky::CookieJar.from_request_cookies(response.cookies)
       session = Lucky::Session.from_cookie_jar(cookies)
 
-      session.get?(:password_reset_id).should eq(password_reset.id.to_s)
-      session.get?(:password_reset_token).should eq(operation.token)
+      PasswordResetSession
+        .new(session)
+        .password_reset_id
+        .should eq(password_reset.id)
+
+      PasswordResetSession
+        .new(session)
+        .password_reset_token
+        .should eq(operation.token)
     end
   end
 
@@ -52,8 +59,11 @@ describe Shield::PasswordResets::Show do
     body(response)["session"]?.should_not be_nil
 
     client.headers("Cookie": response.headers["Set-Cookie"])
-    response = client.exec(PasswordResets::Show.with id: 1_i64, token: "abcdef")
+    response = client.get(PasswordResetHelper.password_reset_url(
+      1_i64,
+      "abcdef"
+    ))
 
-    body(response)["status"]?.should be_nil
+    body(response)["logged_in"]?.should be_true
   end
 end

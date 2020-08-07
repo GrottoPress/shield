@@ -6,7 +6,7 @@ module Shield::CurrentUser::Edit
     #   end
     # end
 
-    private def user
+    def user
       current_user!
     end
   end

@@ -9,20 +9,24 @@ module Shield::PasswordResets::Update
     #   reset_password
     # end
 
-    private def reset_password
-      verify_password_reset = VerifyPasswordReset.new(params, session: session)
-      password_reset = verify_password_reset.submit!
+    def reset_password
+      PasswordResetSession.new(session).verify do |utility, password_reset|
+        if password_reset
+          reset_password(password_reset.not_nil!)
+        else
+          Edit.new(context, Hash(String, String).new).failure_action(utility)
+        end
+      end
+    end
 
+    private def reset_password(password_reset)
       ResetPassword.update(
         password_reset.user!,
         params,
-        password_reset: password_reset,
+        session: session,
         current_login: current_login
       ) do |operation, updated_user|
         if operation.saved?
-          # TODO: Move this into `Shield::ResetPassword`?
-          #       Tried it once, but it complicated the whole thing
-          verify_password_reset.delete_session
           success_action(operation, updated_user)
         else
           failure_action(operation, updated_user)
@@ -30,12 +34,12 @@ module Shield::PasswordResets::Update
       end
     end
 
-    private def success_action(operation, user)
+    def success_action(operation, user)
       flash.success = "Password changed successfully"
       redirect to: Logins::New
     end
 
-    private def failure_action(operation, user)
+    def failure_action(operation, user)
       flash.failure = "Could not change password"
       html EditPage, operation: operation, user: user
     end

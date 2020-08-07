@@ -6,7 +6,7 @@ module Shield::Users::Update
     #   end
     # end
 
-    private def save_user
+    def save_user
       UpdateUser.update(
         user,
         params,
@@ -20,16 +20,16 @@ module Shield::Users::Update
       end
     end
 
-    private def user
+    def user
       UserQuery.find(user_id)
     end
 
-    private def success_action(operation, user)
+    def success_action(operation, user)
       flash.success = "User updated successfully"
       redirect to: Show
     end
 
-    private def failure_action(operation, user)
+    def failure_action(operation, user)
       flash.failure = "Could not update user"
       html EditPage, operation: operation, user: user
     end

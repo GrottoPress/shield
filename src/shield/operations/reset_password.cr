@@ -5,25 +5,31 @@ module Shield::ResetPassword
     attribute password : String
     attribute password_confirmation : String
 
-    needs password_reset : PasswordReset
+    needs session : Lucky::Session
 
     before_save do
       validate_required password
     end
 
-    after_save end_password_reset
+    after_save end_password_resets
+
+    after_commit delete_session
 
     private def set_password_hash
       password.value.try do |value|
-        password_hash.value = VerifyLogin.hash_bcrypt(value)
+        password_hash.value = CryptoHelper.hash_bcrypt(value)
       end
     end
 
-    private def end_password_reset(user : User)
-      EndPasswordReset.update!(
-        password_reset,
-        status: PasswordReset::Status.new(:ended)
-      )
+    private def end_password_resets(user : User)
+      PasswordResetQuery.new
+        .user_id(user.id)
+        .status(PasswordReset::Status.new :started)
+        .update(ended_at: Time.utc, status: PasswordReset::Status.new(:ended))
+    end
+
+    private def delete_session(user : User)
+      PasswordResetSession.new(session).delete
     end
   end
 end

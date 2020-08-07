@@ -59,16 +59,12 @@
 
    class RegisterCurrentUser < User::SaveOperation
      # ...
-     include Shield::RegisterCurrentUser
+     include Shield::RegisterUser
      # ...
    end
    ```
 
-   There's also `Shield::RegisterUser`, but that is reserved for saving users in other scenarios, such as an admin adding a new user.
-
-   `Shield::RegisterCurrentUser` is what should be used for user self-registration.
-
-   `Shield::RegisterCurrentUser` saves `email`, `password` and user options. If you added other columns and associations to the model, you may have to add callbacks for dealing with those.
+   `Shield::RegisterUser` saves `email`, `password` and user options. If you added other columns and associations to the model, you may have to add callbacks for dealing with those.
 
    ---
    ```crystal
@@ -76,27 +72,12 @@
 
    class UpdateCurrentUser < User::SaveOperation
      # ...
-     include Shield::UpdateCurrentUser
+     include Shield::UpdateUser
      # ...
    end
    ```
 
-   `Shield::UpdateCurrentUser` is similar to `Shield::RegisterCurrentUser`, except it *updates* an existing user rather than create a new one.
-
-   There's also `Shield::UpdateUser` as the *update* counterpart to `Shield::RegisterUser`
-
-   ---
-   ```crystal
-   # ->>> src/operations/verify_user.cr
-
-   class VerifyUser < Avram::BasicOperation
-     # ...
-     include Shield::VerifyUser
-     # ...
-   end
-   ```
-
-   `Shield::VerifyUser` is a basic (non-database) operation that authenticates a user. It accepts `email : String` and an optional `password : String`.
+   `Shield::UpdateUser` is similar to `Shield::RegisterUser`, except it *updates* an existing user rather than create a new one.
 
 1. Set up actions:
 
@@ -138,14 +119,14 @@
 
      # What to do if `save_current_user` succeeds
      #
-     #private def success_action(operation, user)
+     #def success_action(operation, user)
      #  flash.success = "User added successfully"
      #  redirect to: New
      #end
 
      # What to do if `save_current_user` fails
      #
-     #private def failure_action(operation)
+     #def failure_action(operation)
      #  flash.failure = "Could not add user"
      #  html NewPage, operation: operation
      #end

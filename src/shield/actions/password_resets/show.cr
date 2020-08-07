@@ -22,8 +22,8 @@ module Shield::PasswordResets::Show
     #   set_session
     # end
 
-    private def set_session
-      VerifyPasswordReset.new(params, session: session).set_session
+    def set_session
+      PasswordResetSession.new(session).set(id, token)
       redirect to: Edit # <= IMPORTANT!
     end
   end

@@ -1,6 +1,6 @@
 module Shield::AuthenticationPipes
   macro included
-    private def require_logged_in
+    def require_logged_in
       if logged_in?
         continue
       else
@@ -8,7 +8,7 @@ module Shield::AuthenticationPipes
       end
     end
 
-    private def require_logged_out
+    def require_logged_out
       if logged_out?
         continue
       else
@@ -16,23 +16,23 @@ module Shield::AuthenticationPipes
       end
     end
 
-    private def set_no_referrer_policy
+    def set_no_referrer_policy
       response.headers["Referrer-Policy"] = "no-referrer"
       continue
     end
 
-    private def disable_caching
+    def disable_caching
       response.headers["Cache-Control"] = "no-store"
       response.headers["Expires"] = Time::UNIX_EPOCH.to_s
       continue
     end
 
-    private def require_logged_in_action
+    def require_logged_in_action
       flash.failure = "You are not logged in"
       redirect to: Logins::New
     end
 
-    private def require_logged_out_action
+    def require_logged_out_action
       flash.info = "You are already logged in"
       redirect_back fallback: CurrentUser::Show
     end

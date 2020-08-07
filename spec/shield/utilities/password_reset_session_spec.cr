@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-describe Shield::VerifyPasswordReset do
+describe PasswordResetSession do
   it "deactivates password reset when expired but active" do
     Shield.temp_config(password_reset_expiry: 2.seconds) do
       email = "user@example.tld"
@@ -18,14 +18,15 @@ describe Shield::VerifyPasswordReset do
         email: email,
         remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
       )
+      password_reset.status.started?.should be_true
 
-      session.set(:password_reset_id, password_reset.id.to_s)
+      password_reset_session = PasswordResetSession.new(session)
+      password_reset_session.set(password_reset.id, "abcdef")
 
       sleep 3
 
-      password_reset.status.started?.should be_true
-      VerifyPasswordReset.new(session: session).submit
-      password_reset.reload.status.started?.should be_false
+      password_reset_session.verify
+      password_reset.reload.status.expired?.should be_true
     end
   end
 end

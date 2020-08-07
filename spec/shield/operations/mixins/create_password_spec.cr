@@ -10,7 +10,7 @@ describe Shield::CreatePassword do
       password_confirmation: password
     )
 
-    VerifyLogin.verify_bcrypt?(password, user.password_hash).should be_true
+    CryptoHelper.verify_bcrypt?(password, user.password_hash).should be_true
   end
 
   it "requires password" do

@@ -1,6 +1,6 @@
 module Shield::AuthorizationPipes
   macro included
-    private def require_authorization
+    def require_authorization
       if @authorized
         continue
       else

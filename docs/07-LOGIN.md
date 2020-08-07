@@ -102,19 +102,6 @@
 
    `Shield::DeactivateLogin` is similar to `Shield::LogUserOut`, but does not delete session values.
 
-   ---
-    ```crystal
-   # ->>> src/operations/verify_login.cr
-
-   class VerifyLogin < Avram::BasicOperation
-     # ...
-     include Shield::VerifyLogin
-     # ...
-   end
-   ```
-
-   `Shield::VerifyLogin` is a basic (non-database) operation that verifies a login from session. It accepts `session : Lucky::Session`.
-
 1. Set up actions:
 
    ```crystal
@@ -138,6 +125,8 @@
    - `email : String`
    - `password : String`
 
+   If you choose to show operation errors on this page, skip `email` and `password` errors. You do not want to leak information as to which of the supplied credentials were incorrect.
+
    You may skip this action if building an API.
 
    ---
@@ -154,14 +143,14 @@
 
      # What to do if `log_user_in` succeeds
      #
-     #private def success_action(operation, login)
+     #def success_action(operation, login)
      #  flash.success = "Successfully logged in"
      #  redirect_back fallback: CurrentUser::Show
      #end
 
      # What to do if `log_user_in` fails
      #
-     #private def failure_action(operation)
+     #def failure_action(operation)
      #  flash.failure = "Invalid email or password"
      #  html NewPage, operation: operation
      #end
@@ -183,14 +172,14 @@
 
      # What to do if `log_user_out` succeeds
      #
-     #private def success_action(operation, login)
+     #def success_action(operation, login)
      #  flash.info = "Logged out. See ya!"
      #  redirect to: New
      #end
 
      # What to do if `log_user_out` fails
      #
-     #private def failure_action(operation, login)
+     #def failure_action(operation, login)
      #  flash.failure = "Something went wrong"
      #  redirect to: CurrentUser::Show
      #end

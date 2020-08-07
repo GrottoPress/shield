@@ -8,7 +8,7 @@ class Logins::Create < ApiAction
   private def success_action(operation, login)
     json({
       login: login.id,
-      session: session.get(:login_id),
+      session: LoginSession.new(session).login_id!,
       current_login: current_login!.id,
       current_user: current_user!.id
     })

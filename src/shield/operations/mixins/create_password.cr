@@ -10,7 +10,7 @@ module Shield::CreatePassword
 
     private def set_password_hash
       password.value.try do |value|
-        password_hash.value = VerifyLogin.hash_bcrypt(value)
+        password_hash.value = CryptoHelper.hash_bcrypt(value)
       end
     end
   end

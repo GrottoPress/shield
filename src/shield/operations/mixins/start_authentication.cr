@@ -24,8 +24,8 @@ module Shield::StartAuthentication(T)
     end
 
     private def set_token
-      @token = VerifyLogin.generate_token
-      token_hash.value = VerifyLogin.hash_sha256(token)
+      @token = CryptoHelper.generate_token
+      token_hash.value = CryptoHelper.hash_sha256(token)
     end
   end
 end
