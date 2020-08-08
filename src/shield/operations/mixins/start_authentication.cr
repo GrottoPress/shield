@@ -1,4 +1,4 @@
-module Shield::StartAuthentication(T)
+module Shield::StartAuthentication(M)
   macro included
     include Shield::RequirIpAddress
 
@@ -20,7 +20,7 @@ module Shield::StartAuthentication(T)
     end
 
     private def set_status
-      status.value = T::Status.new(:started)
+      status.value = M::Status.new(:started)
     end
 
     private def set_token
