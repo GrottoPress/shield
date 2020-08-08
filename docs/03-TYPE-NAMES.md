@@ -25,7 +25,6 @@
 
 ### Operations
 
-- `DeactivateLogin`
 - `EndPasswordReset`
 - `LogUserIn`
 - `LogUserOut`

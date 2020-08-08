@@ -24,7 +24,11 @@ module Shield::LoginSession
     end
 
     private def expire
-      LoginHelper.expire_login!(login!)
+      LogUserOut.update!(
+        login!,
+        status: Login::Status.new(:expired),
+        session: @session
+      )
     rescue
       true
     end

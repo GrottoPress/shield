@@ -27,7 +27,11 @@ module Shield::PasswordResetSession
     end
 
     private def expire
-      PasswordResetHelper.expire_password_reset!(password_reset!)
+      EndPasswordReset.update!(
+        password_reset!,
+        status: PasswordReset::Status.new(:expired),
+        session: @session
+      )
     rescue
       true
     end

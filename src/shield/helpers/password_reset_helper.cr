@@ -17,12 +17,5 @@ module Shield::PasswordResetHelper
       (Time.utc - password_reset.started_at) >
         Shield.settings.password_reset_expiry
     end
-
-    def expire_password_reset!(password_reset : PasswordReset) : PasswordReset
-      EndPasswordReset.update!(
-        password_reset,
-        status: PasswordReset::Status.new(:expired)
-      )
-    end
   end
 end

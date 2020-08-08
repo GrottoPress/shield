@@ -33,7 +33,7 @@ module Shield::AuthenticationPipes
         password_reset.not_nil!.ip_address.address == remote_ip.try &.address
         continue
       else
-        EndPasswordReset.update!(password_reset.not_nil!)
+        EndPasswordReset.update!(password_reset.not_nil!, session: session)
         do_pin_password_reset_to_ip_address_failed
       end
     end
