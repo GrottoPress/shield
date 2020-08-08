@@ -1,4 +1,4 @@
-module Shield::AuthenticationColumns(M)
+module Shield::AuthenticationColumns(T)
   macro included
     include Shield::AuthenticationStatus
 
@@ -10,7 +10,7 @@ module Shield::AuthenticationColumns(M)
 
     column token_hash : String
     column ip_address : Socket::IPAddress
-    column status : M::Status
+    column status : T::Status
     column started_at : Time
     column ended_at : Time?
   end

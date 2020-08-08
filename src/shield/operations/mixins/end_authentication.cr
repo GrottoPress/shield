@@ -1,4 +1,4 @@
-module Shield::EndAuthentication(M)
+module Shield::EndAuthentication(T)
   macro included
     before_save do
       set_ended_at
@@ -10,8 +10,8 @@ module Shield::EndAuthentication(M)
     end
 
     private def set_status
-      return unless status.value.in?({nil, M::Status.new(:started)})
-      status.value = M::Status.new(:ended)
+      return unless status.value.in?({nil, T::Status.new(:started)})
+      status.value = T::Status.new(:ended)
     end
   end
 end
