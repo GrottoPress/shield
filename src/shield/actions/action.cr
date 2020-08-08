@@ -13,6 +13,6 @@ module Shield::Action
     before :require_logged_out
     before :check_authorization
 
-    after :set_previous_page
+    after :set_previous_page_url
   end
 end
