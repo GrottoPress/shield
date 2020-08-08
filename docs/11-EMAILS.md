@@ -111,7 +111,7 @@
 
        To proceed with the password reset process, click the link below:
 
-       #{@password_reset.url(@operation.token)}
+       #{PasswordResetHelper.password_reset_url(@operation, @password_reset)}
 
        This password reset link will expire in #{Shield.settings.password_reset_expiry.total_minutes.to_i} minutes.
 

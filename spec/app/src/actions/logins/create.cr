@@ -2,19 +2,23 @@ class Logins::Create < ApiAction
   include Shield::Logins::Create
 
   post "/log-in" do
-    log_user_in
+    run_operation
   end
 
-  private def success_action(operation, login)
+  def do_run_operation_succeeded(operation, login)
     json({
       login: login.id,
-      session: session.get(:login_id),
+      session: LoginSession.new(session).login_id!,
       current_login: current_login!.id,
       current_user: current_user!.id
     })
   end
 
-  private def failure_action(operation)
+  def do_run_operation_failed(operation)
     json({errors: operation.errors})
+  end
+
+  def remote_ip : Socket::IPAddress?
+    Socket::IPAddress.new("128.0.0.2", 5000)
   end
 end

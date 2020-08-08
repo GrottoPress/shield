@@ -2,14 +2,18 @@ class PasswordResets::Edit < ApiAction
   include Shield::PasswordResets::Edit
 
   get "/password-resets/edit" do
-    verify_password_reset
+    run_operation
   end
 
-  private def success_action(operation, password_reset)
+  def do_run_operation_succeeded(operation, password_reset)
     json({status: 0})
   end
 
-  private def failure_action(operation)
+  def do_run_operation_failed(operation)
     json({status: 1})
+  end
+
+  def remote_ip : Socket::IPAddress?
+    Socket::IPAddress.new("128.0.0.2", 5000)
   end
 end

@@ -2,14 +2,14 @@ class CurrentUser::Create < ApiAction
   include Shield::CurrentUser::Create
 
   post "/register" do
-    save_current_user
+    run_operation
   end
 
-  private def success_action(operation, user)
+  def do_run_operation_succeeded(operation, user)
     json({user: user.id})
   end
 
-  private def failure_action(operation)
+  def do_run_operation_failed(operation)
     json({errors: operation.errors})
   end
 end

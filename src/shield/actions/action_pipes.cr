@@ -1,16 +1,19 @@
 module Shield::ActionPipes
   macro included
-    private def set_previous_page
-      session.set(:previous_page, request.resource) if request.method == "GET"
+    def set_previous_page_url
+      if request.method.in?({"GET", "HEAD"})
+        PreviousPageSession.new(session).set(request.resource)
+      end
+
       continue
     end
 
-    private def previous_page
-      session.get?(:previous_page)
+    def previous_page_url
+      PreviousPageSession.new(session).previous_page_url
     end
 
     def redirect_back(*, fallback : String, status : Int32 = 302)
-      redirect to: (previous_page || fallback), status: status
+      redirect to: (previous_page_url || fallback), status: status
     end
   end
 end

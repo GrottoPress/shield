@@ -24,7 +24,7 @@
      # What to do if user is **not** logged in
      # but the action requires user to be logged in.
      #
-     #private def require_logged_in_action
+     #def do_require_logged_in_failed
      #  flash.failure = "You are not logged in"
      #  redirect to: Logins::New
      #end
@@ -32,16 +32,34 @@
      # What to do if user is logged in but the action
      # requires user to **not** be logged in.
      #
-     #private def require_logged_out_action
+     #def do_require_logged_out_failed
      #  flash.info = "You are already logged in"
      #  redirect_back fallback: CurrentUser::Show
      #end
 
      # What to do if user is not allowed to perform action
      #
-     #private def not_authorized_action(user, action, record)
+     #def do_check_authorization_failed
      #  flash.failure = "You are not allowed to perform this action!"
      #  redirect to: CurrentUser::Show
+     #end
+
+     # What to do when a logged in user's IP address changes, if the
+     # action requires the user's IP to match the IP they used to
+     # log in.
+     #
+     #def do_pin_login_to_ip_address_failed
+     #  flash.failure = "Your IP address has changed. Please log in again."
+     #  redirect to: Logins::New
+     #end
+
+     # What to do when a user's IP address changes in a password reset, if the
+     # action requires the user's IP to match the IP with which they requested
+     # the password reset.
+     #
+     #def do_pin_password_reset_to_ip_address_failed
+     #  flash.failure = "Your IP address has changed. Please try again."
+     #  redirect to: PasswordResets::New
      #end
      # ...
    end
@@ -58,7 +76,7 @@
      # What to do if user is **not** logged in
      # but the action requires user to be logged in.
      #
-     #private def require_logged_in_action
+     #def do_require_logged_in_failed
      #  flash.failure = "You are not logged in"
      #  redirect to: Logins::New
      #end
@@ -66,14 +84,14 @@
      # What to do if user is logged in but the action
      # requires user to **not** be logged in.
      #
-     #private def require_logged_out_action
+     #def do_require_logged_out_failed
      #  flash.info = "You are already logged in"
      #  redirect_back fallback: CurrentUser::Show
      #end
 
      # What to do if a user is not allowed to perform action
      #
-     #private def not_authorized_action(user, action, record)
+     #def do_check_authorization_failed
      #  flash.failure = "You are not allowed to perform this action!"
      #  redirect to: CurrentUser::Show
      #end

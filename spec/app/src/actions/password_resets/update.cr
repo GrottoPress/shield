@@ -2,14 +2,18 @@ class PasswordResets::Update < ApiAction
   include Shield::PasswordResets::Update
 
   patch "/password-resets" do
-    reset_password
+    run_operation
   end
 
-  private def success_action(operation, user)
+  def do_run_operation_succeeded(operation, user)
     json({a: ""})
   end
 
-  private def failure_action(operation, user)
+  def do_run_operation_failed(operation, user)
     json({a: ""})
+  end
+
+  def remote_ip : Socket::IPAddress?
+    Socket::IPAddress.new("127.0.0.1", 6000)
   end
 end

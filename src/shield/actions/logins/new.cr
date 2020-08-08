@@ -1,12 +1,9 @@
 module Shield::Logins::New
   macro included
+    skip :require_logged_in
+
     # get "/log-in" do
     #   html NewPage
     # end
-
-    skip :require_authorization
-    skip :require_logged_in
-
-    before :require_logged_out
   end
 end

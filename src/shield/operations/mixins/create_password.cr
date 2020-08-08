@@ -1,6 +1,17 @@
 module Shield::CreatePassword
   macro included
     include Shield::ValidatePassword
-    include Shield::SetPasswordHash
+
+    before_save do
+      validate_required password
+
+      set_password_hash
+    end
+
+    private def set_password_hash
+      password.value.try do |value|
+        password_hash.value = CryptoHelper.hash_bcrypt(value)
+      end
+    end
   end
 end

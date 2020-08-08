@@ -12,26 +12,30 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
-    password_reset = StartPasswordReset.create!(
+    session = Lucky::Session.new
+
+    StartPasswordReset.create(
       email: email,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    )
+    ) do |operation, password_reset|
+      password_reset = password_reset.not_nil!
 
-    ResetPassword.update(
-      password_reset.user!,
-      password: new_password,
-      password_confirmation: new_password,
-      password_reset: password_reset,
-      current_login: nil
-    ) do |operation, updated_user|
-      operation.saved?.should be_true
+      PasswordResetSession.new(session).set(password_reset.id, operation.token)
 
-      VerifyLogin.verify_bcrypt?(
-        new_password,
-        updated_user.password_hash
-      ).should be_true
+      ResetPassword.update(
+        PasswordResetSession.new(session).verify!.user!,
+        password: new_password,
+        password_confirmation: new_password,
+        session: session,
+        current_login: nil
+      ) do |operation, updated_user|
+        operation.saved?.should be_true
 
-      PasswordResetQuery.find(password_reset.id).status.started?.should be_false
+        UserHelper.verify_user?(updated_user, new_password).should be_true
+        password_reset.reload.status.ended?.should be_true
+        PasswordResetSession.new(session).password_reset_id.should be_nil
+        PasswordResetSession.new(session).password_reset_token.should be_nil
+      end
     end
   end
 
@@ -46,6 +50,8 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
+    session = Lucky::Session.new
+
     password_reset = StartPasswordReset.create!(
       email: email,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
@@ -55,16 +61,12 @@ describe Shield::ResetPassword do
       password_reset.user!,
       password: new_password,
       password_confirmation: new_password,
-      password_reset: password_reset,
+      session: session,
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_false
 
-      operation
-        .password
-        .errors
-        .find(&.includes? " required")
-        .should_not(be_nil)
+      assert_invalid(operation.password, " required")
     end
   end
 
@@ -79,6 +81,8 @@ describe Shield::ResetPassword do
       password_confirmation: password
     )
 
+    session = Lucky::Session.new
+
     password_reset = StartPasswordReset.create!(
       email: email,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
@@ -88,12 +92,50 @@ describe Shield::ResetPassword do
       password_reset.user!,
       password: new_password,
       password_confirmation: new_password,
-      password_reset: password_reset,
+      session: session,
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
-      PasswordResetQuery.find(password_reset.id).status.started?.should be_false
+      password_reset.reload.status.started?.should be_false
     end
+  end
+
+  it "ends all active password resets for user" do
+    email = "user@example.tld"
+    password = "password12U-password"
+    new_password = "assword12U-passwor"
+
+    user = create_current_user!(
+      email: email,
+      password: password,
+      password_confirmation: password
+    )
+
+    session = Lucky::Session.new
+
+    password_reset_1 = StartPasswordReset.create!(
+      email: email,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    )
+
+    password_reset_2 = StartPasswordReset.create!(
+      email: email,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    )
+
+    password_reset_1.status.started?.should be_true
+    password_reset_2.status.started?.should be_true
+
+    ResetPassword.update!(
+      password_reset_1.user!,
+      password: new_password,
+      password_confirmation: new_password,
+      session: session,
+      current_login: nil
+    )
+
+    password_reset_1.reload.status.started?.should be_false
+    password_reset_2.reload.status.started?.should be_false
   end
 end

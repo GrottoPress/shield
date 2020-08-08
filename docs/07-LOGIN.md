@@ -89,32 +89,6 @@
 
    `Shield::LogUserOut` deletes session values related to the login, and updates the relevant columns in the database to mark the login as inactive.
 
-   ---
-   ```crystal
-   # ->>> src/operations/deactivate_login.cr
-
-   class DeactivateLogin < Login::SaveOperation
-     # ...
-     include Shield::DeactivateLogin
-     # ...
-   end
-   ```
-
-   `Shield::DeactivateLogin` is similar to `Shield::LogUserOut`, but does not delete session values.
-
-   ---
-    ```crystal
-   # ->>> src/operations/verify_login.cr
-
-   class VerifyLogin < Avram::BasicOperation
-     # ...
-     include Shield::VerifyLogin
-     # ...
-   end
-   ```
-
-   `Shield::VerifyLogin` is a basic (non-database) operation that verifies a login from session. It accepts `session : Lucky::Session`.
-
 1. Set up actions:
 
    ```crystal
@@ -138,6 +112,8 @@
    - `email : String`
    - `password : String`
 
+   If you choose to show operation errors on this page, skip `email` and `password` errors. You do not want to leak information as to which of the supplied credentials were incorrect.
+
    You may skip this action if building an API.
 
    ---
@@ -149,19 +125,19 @@
      include Shield::Logins::Create
 
      post "/sign-in" do
-       log_user_in
+       run_operation
      end
 
-     # What to do if `log_user_in` succeeds
+     # What to do if `run_operation` succeeds
      #
-     #private def success_action(operation, login)
+     #def do_run_operation_succeeded(operation, login)
      #  flash.success = "Successfully logged in"
      #  redirect_back fallback: CurrentUser::Show
      #end
 
-     # What to do if `log_user_in` fails
+     # What to do if `run_operation` fails
      #
-     #private def failure_action(operation)
+     #def do_run_operation_failed(operation)
      #  flash.failure = "Invalid email or password"
      #  html NewPage, operation: operation
      #end
@@ -178,19 +154,19 @@
      include Shield::Logins::Destroy
 
      get "/sign-out" do
-       log_user_out
+       run_operation
      end
 
-     # What to do if `log_user_out` succeeds
+     # What to do if `run_operation` succeeds
      #
-     #private def success_action(operation, login)
+     #def do_run_operation_succeeded(operation, login)
      #  flash.info = "Logged out. See ya!"
      #  redirect to: New
      #end
 
-     # What to do if `log_user_out` fails
+     # What to do if `run_operation` fails
      #
-     #private def failure_action(operation, login)
+     #def do_run_operation_failed(operation, login)
      #  flash.failure = "Something went wrong"
      #  redirect to: CurrentUser::Show
      #end

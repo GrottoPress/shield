@@ -1,29 +1,29 @@
 module Shield::AuthenticationHelpers
   macro included
-    private def logged_in? : Bool
+    def logged_in? : Bool
       !logged_out?
     end
 
-    private def logged_out? : Bool
+    def logged_out? : Bool
       current_user.nil?
     end
 
-    private def current_user! : User
+    def current_user! : User
       current_user.not_nil!
     end
 
     @[Memoize]
-    private def current_user : User?
+    def current_user : User?
       current_login.try &.user!
     end
 
-    private def current_login! : Login
+    def current_login! : Login
       current_login.not_nil!
     end
 
     @[Memoize]
-    private def current_login : Login?
-      VerifyLogin.new(params, session: session).submit
+    def current_login : Login?
+      LoginSession.new(session).verify
     end
   end
 end

@@ -5,6 +5,6 @@ class PasswordResets::Show < ApiAction
   param token : String
 
   get "/password-resets" do
-    set_session
+    run_operation
   end
 end

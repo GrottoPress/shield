@@ -2,17 +2,17 @@ class Users::Update < ApiAction
   include Shield::Users::Update
 
   skip :require_logged_in
-  skip :require_authorization
+  skip :require_logged_out
 
   patch "/users/:user_id" do
-    save_user
+    run_operation
   end
 
-  private def success_action(operation, user)
+  def do_run_operation_succeeded(operation, user)
     json({user: user.id})
   end
 
-  private def failure_action(operation, user)
+  def do_run_operation_failed(operation, user)
     json({user: user.id, errors: operation.errors})
   end
 end

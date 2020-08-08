@@ -10,7 +10,7 @@ describe Shield::UpdatePassword do
       password_confirmation: password
     )
 
-    VerifyLogin.verify_bcrypt?(password, user.password_hash).should be_true
+    CryptoHelper.verify_bcrypt?(password, user.password_hash).should be_true
   end
 
   it "does not update password if new password empty" do

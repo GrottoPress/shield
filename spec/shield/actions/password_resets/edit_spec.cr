@@ -1,7 +1,7 @@
 require "../../../spec_helper"
 
 describe Shield::PasswordResets::Edit do
-  it "succeeds" do
+  it "works" do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
@@ -17,9 +17,9 @@ describe Shield::PasswordResets::Edit do
     ) do |operation, password_reset|
       password_reset = password_reset.not_nil!
 
-      response = AppClient.exec(PasswordResets::Show.with(
-        id: password_reset.id,
-        token: operation.token
+      response = AppClient.get(PasswordResetHelper.password_reset_url(
+        operation,
+        password_reset
       ))
 
       response.status.should eq(HTTP::Status::FOUND)
@@ -27,8 +27,15 @@ describe Shield::PasswordResets::Edit do
       cookies = Lucky::CookieJar.from_request_cookies(response.cookies)
       session = Lucky::Session.from_cookie_jar(cookies)
 
-      session.get?(:password_reset_id).should eq(password_reset.id.to_s)
-      session.get?(:password_reset_token).should eq(operation.token)
+      PasswordResetSession
+        .new(session)
+        .password_reset_id
+        .should eq(password_reset.id)
+
+      PasswordResetSession
+        .new(session)
+        .password_reset_token
+        .should eq(operation.token)
     end
   end
 

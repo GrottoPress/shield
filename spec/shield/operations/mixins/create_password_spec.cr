@@ -10,7 +10,20 @@ describe Shield::CreatePassword do
       password_confirmation: password
     )
 
-    VerifyLogin.verify_bcrypt?(password, user.password_hash).should be_true
+    CryptoHelper.verify_bcrypt?(password, user.password_hash).should be_true
+  end
+
+  it "requires password" do
+    create_current_user(
+      email: "",
+      password: "",
+      password_confirmation: ""
+    ) do |operation, user|
+      user.should be_nil
+
+      assert_invalid(operation.password, " required")
+      assert_valid(operation.password_hash, " required")
+    end
   end
 
   it "does not send password change notification" do

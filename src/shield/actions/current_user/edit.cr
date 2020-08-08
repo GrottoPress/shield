@@ -1,12 +1,17 @@
 module Shield::CurrentUser::Edit
   macro included
+    skip :require_logged_out
+
     # get "/profile/edit" do
-    #   authorize(:update, user)
     #   html EditPage, user: user
     # end
 
-    private def user
+    def user
       current_user!
+    end
+
+    def authorize? : Bool
+      true
     end
   end
 end

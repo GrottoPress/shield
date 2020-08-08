@@ -1,32 +1,28 @@
 module Shield::PasswordResets::Edit
   macro included
-    skip :require_authorization
     skip :require_logged_in
 
-    before :require_logged_out
+    before :pin_password_reset_to_ip_address
 
     # get "/password-resets/edit" do
-    #   verify_password_reset
+    #   run_operation
     # end
 
-    private def verify_password_reset
-      VerifyPasswordReset.new(
-        params,
-        session: session
-      ).submit do |operation, password_reset|
-        if password_reset &&= password_reset.not_nil!
-          success_action(operation, password_reset)
+    def run_operation
+      PasswordResetSession.new(session).verify do |utility, password_reset|
+        if password_reset
+          do_run_operation_succeeded(utility, password_reset.not_nil!)
         else
-          failure_action(operation)
+          do_run_operation_failed(utility)
         end
       end
     end
 
-    private def success_action(operation, password_reset)
+    def do_run_operation_succeeded(utility, password_reset)
       html EditPage
     end
 
-    private def failure_action(operation)
+    def do_run_operation_failed(utility)
       flash.failure = "Invalid token"
       redirect to: New
     end

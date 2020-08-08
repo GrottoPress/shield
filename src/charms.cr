@@ -42,8 +42,11 @@ module Avram
       record.not_nil!
     end
 
-    # Ensure callbacks run for update operations even if no
+    # Patched to ensure callbacks run for update operations even if no
     # column attributes changed.
+    #
+    # Also to ensure operation is marked as failed if a nested
+    # operation rolls back a database transaction
     def save : Bool
       if valid? && persisted? && changes.empty?
         after_save(record!)
@@ -51,6 +54,20 @@ module Avram
       end
 
       previous_def
+    rescue Rollback
+      mark_as_failed
+      false
+    end
+
+    # Getting rid of default validations in Avram
+    #
+    # See https://github.com/luckyframework/lucky/discussions/1209#discussioncomment-46030
+    #
+    # All operations are expected to explicitly define any validations
+    # needed
+    def valid? : Bool
+      before_save
+      attributes.all? &.valid?
     end
   end
 
@@ -272,6 +289,16 @@ module Avram
 
   abstract class BasicOperation < Operation
     include NeedyInitializer
+
+    def self.submit!(*args, **named_args)
+      submit(*args, **named_args) { |_, result| return result.not_nil! }
+    end
+
+    def self.submit(*args, **named_args)
+      new(*args, **named_args).submit do |operation, result|
+        yield operation, result
+      end
+    end
   end
 end
 

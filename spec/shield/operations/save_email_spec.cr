@@ -18,11 +18,7 @@ describe Shield::SaveEmail do
     ) do |operation, user|
       user.should be_nil
 
-      operation
-        .email
-        .errors
-        .find(&.includes? " required")
-        .should_not(be_nil)
+      assert_invalid(operation.email, " required")
     end
   end
 
@@ -36,11 +32,7 @@ describe Shield::SaveEmail do
     ) do |operation, user|
       user.should be_nil
 
-      operation
-        .email
-        .errors
-        .find(&.includes? "format is invalid")
-        .should_not(be_nil)
+      assert_invalid(operation.email, "format is invalid")
     end
   end
 
@@ -58,11 +50,7 @@ describe Shield::SaveEmail do
     RegisterCurrentUser.create(**params) do |operation, user|
       user.should be_nil
 
-      operation
-        .email
-        .errors
-        .find(&.includes? "already taken")
-        .should_not(be_nil)
+      assert_invalid(operation.email, "already taken")
     end
   end
 end

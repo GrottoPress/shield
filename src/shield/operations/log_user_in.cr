@@ -7,7 +7,7 @@ module Shield::LogUserIn
 
     before_save do
       validate_required email, password
-      validate_credentials
+      verify_login
     end
 
     after_commit set_session
@@ -16,25 +16,22 @@ module Shield::LogUserIn
     include Shield::ValidateEmail
     include Shield::StartAuthentication(Login)
 
-    private def validate_credentials
+    private def verify_login
       return unless email.value.to_s.email? && password.value
 
-      VerifyUser.new(
-        params,
-        email: email.value.not_nil!,
-        password: password.value.not_nil!
-      ).submit do |operation, user|
-        if user
-          user_id.value = user.not_nil!.id
-        else
-          email.add_error "may be incorrect"
-          password.add_error "may be incorrect"
-        end
+      if user = UserHelper.verify_user(
+        email.value.not_nil!,
+        password.value.not_nil!
+      )
+        user_id.value = user.not_nil!.id
+      else
+        email.add_error "may be incorrect"
+        password.add_error "may be incorrect"
       end
     end
 
     private def set_session(login : Login)
-      VerifyLogin.new(params, session: session).set_session(login.id, token)
+      LoginSession.new(session).set(login.id, token)
     end
 
     private def notify_login(login : Login)

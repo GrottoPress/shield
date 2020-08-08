@@ -16,11 +16,18 @@ describe Shield::UpdateUser do
   end
 
   it "updates user options" do
-    user = create_user!(login_notify: true, password_notify: false)
+    new_email = "user@example.com"
+
+    user = create_user!(
+      email: "user@domain.tld",
+      login_notify: true,
+      password_notify: false
+    )
 
     params = Avram::Params.new({
       "login_notify" => "false",
-      "password_notify" => "true"
+      "password_notify" => "true",
+      "email" => new_email
     })
 
     UpdateUser.update(
@@ -28,8 +35,11 @@ describe Shield::UpdateUser do
       params,
       current_login: nil
     ) do |operation, updated_user|
-      user_options = updated_user.options!
+      operation.saved?.should be_true
 
+      updated_user.email.should eq(new_email)
+
+      user_options = updated_user.options!
       user_options.login_notify.should be_false
       user_options.password_notify.should be_true
     end
@@ -46,6 +56,31 @@ describe Shield::UpdateUser do
     ) do |operation, updated_user|
       operation.saved?.should be_false
 
+      user_options = updated_user.options!
+      user_options.login_notify.should be_true
+      user_options.password_notify.should be_true
+    end
+  end
+
+  it "fails when attributes change and nested operation fails" do
+    email = "user@domain.tld"
+
+    user = create_current_user!(
+      email: email,
+      login_notify: true,
+      password_notify: true
+    )
+
+    UpdateCurrentUser2.update(
+      user,
+      email: "user@example.com",
+      login_notify: false,
+      password_notify: false,
+      current_login: nil
+    ) do |operation, updated_user|
+      operation.saved?.should be_false
+
+      updated_user.email = email
       user_options = updated_user.options!
       user_options.login_notify.should be_true
       user_options.password_notify.should be_true
