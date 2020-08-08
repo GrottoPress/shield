@@ -40,6 +40,7 @@
 - `CurrentUser::Show`
 - `Logins::New`
 - `PasswordResets::Edit`
+- `PasswordResets::New`
 - `PasswordResets::Show`
 
 ### Utilities

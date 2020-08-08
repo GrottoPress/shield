@@ -17,4 +17,8 @@ class Logins::Create < ApiAction
   def do_run_operation_failed(operation)
     json({errors: operation.errors})
   end
+
+  def remote_ip : Socket::IPAddress?
+    Socket::IPAddress.new("128.0.0.2", 5000)
+  end
 end

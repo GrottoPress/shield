@@ -12,4 +12,8 @@ class PasswordResets::Update < ApiAction
   def do_run_operation_failed(operation, user)
     json({a: ""})
   end
+
+  def remote_ip : Socket::IPAddress?
+    Socket::IPAddress.new("127.0.0.1", 6000)
+  end
 end

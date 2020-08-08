@@ -43,6 +43,24 @@
      #  flash.failure = "You are not allowed to perform this action!"
      #  redirect to: CurrentUser::Show
      #end
+
+     # What to do when a logged in user's IP address changes, if the
+     # action requires the user's IP to match the IP they used to
+     # log in.
+     #
+     #def do_pin_login_to_ip_address_failed
+     #  flash.failure = "Your IP address has changed. Please log in again."
+     #  redirect to: Logins::New
+     #end
+
+     # What to do when a user's IP address changes in a password reset, if the
+     # action requires the user's IP to match the IP with which they requested
+     # the password reset.
+     #
+     #def do_pin_password_reset_to_ip_address_failed
+     #  flash.failure = "Your IP address has changed. Please try again."
+     #  redirect to: PasswordResets::New
+     #end
      # ...
    end
    ```

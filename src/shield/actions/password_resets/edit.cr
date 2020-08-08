@@ -2,6 +2,8 @@ module Shield::PasswordResets::Edit
   macro included
     skip :require_logged_in
 
+    before :pin_password_reset_to_ip_address
+
     # get "/password-resets/edit" do
     #   run_operation
     # end

@@ -15,6 +15,14 @@ abstract class ApiAction < Lucky::Action
     json({authorized: false})
   end
 
+  def do_pin_login_to_ip_address_failed
+    json({ip_address_changed: true})
+  end
+
+  def do_pin_password_reset_to_ip_address_failed
+    json({ip_address_changed: true})
+  end
+
   def authorize? : Bool
     current_user!.level.admin?
   end
