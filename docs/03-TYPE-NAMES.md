@@ -46,6 +46,7 @@
 
 - `LoginSession`
 - `PasswordResetSession`
+- `PreviousPageSession`
 
 ### Helpers
 
