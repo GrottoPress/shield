@@ -3,27 +3,27 @@ module Shield::PasswordResets::Create
     skip :require_logged_in
 
     # post "/password-resets" do
-    #   start_password_reset
+    #   run_operation
     # end
 
-    def start_password_reset
+    def run_operation
       StartPasswordReset.create(
         params,
         remote_ip: remote_ip
       ) do |operation, password_reset|
         if password_reset
-          success_action(operation, password_reset.not_nil!)
+          do_run_operation_succeeded(operation, password_reset.not_nil!)
         else
-          failure_action(operation)
+          do_run_operation_failed(operation)
         end
       end
     end
 
-    def success_action(operation, password_reset)
+    def do_run_operation_succeeded(operation, password_reset)
       success_action
     end
 
-    def failure_action(operation)
+    def do_run_operation_failed(operation)
       if operation.guest_email?
         success_action
       else

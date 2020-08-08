@@ -4,7 +4,7 @@ module Shield::AuthenticationPipes
       if logged_in?
         continue
       else
-        require_logged_in_action
+        do_require_logged_in_failed
       end
     end
 
@@ -12,7 +12,7 @@ module Shield::AuthenticationPipes
       if logged_out?
         continue
       else
-        require_logged_out_action
+        do_require_logged_out_failed
       end
     end
 
@@ -27,12 +27,12 @@ module Shield::AuthenticationPipes
       continue
     end
 
-    def require_logged_in_action
+    def do_require_logged_in_failed
       flash.failure = "You are not logged in"
       redirect to: Logins::New
     end
 
-    def require_logged_out_action
+    def do_require_logged_out_failed
       flash.info = "You are already logged in"
       redirect_back fallback: CurrentUser::Show
     end

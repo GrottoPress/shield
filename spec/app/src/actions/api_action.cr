@@ -3,15 +3,15 @@ abstract class ApiAction < Lucky::Action
 
   accepted_formats [:json]
 
-  private def require_logged_in_action
+  def do_require_logged_in_failed
     json({logged_in: false})
   end
 
-  private def require_logged_out_action
+  def do_require_logged_out_failed
     json({logged_in: true})
   end
 
-  def not_authorized_action
+  def do_check_authorization_failed
     json({authorized: false})
   end
 

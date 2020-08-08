@@ -24,7 +24,7 @@
      # What to do if user is **not** logged in
      # but the action requires user to be logged in.
      #
-     #def require_logged_in_action
+     #def do_require_logged_in_failed
      #  flash.failure = "You are not logged in"
      #  redirect to: Logins::New
      #end
@@ -32,14 +32,14 @@
      # What to do if user is logged in but the action
      # requires user to **not** be logged in.
      #
-     #def require_logged_out_action
+     #def do_require_logged_out_failed
      #  flash.info = "You are already logged in"
      #  redirect_back fallback: CurrentUser::Show
      #end
 
      # What to do if user is not allowed to perform action
      #
-     #def not_authorized_action(user, action, record)
+     #def do_check_authorization_failed
      #  flash.failure = "You are not allowed to perform this action!"
      #  redirect to: CurrentUser::Show
      #end
@@ -58,7 +58,7 @@
      # What to do if user is **not** logged in
      # but the action requires user to be logged in.
      #
-     #def require_logged_in_action
+     #def do_require_logged_in_failed
      #  flash.failure = "You are not logged in"
      #  redirect to: Logins::New
      #end
@@ -66,14 +66,14 @@
      # What to do if user is logged in but the action
      # requires user to **not** be logged in.
      #
-     #def require_logged_out_action
+     #def do_require_logged_out_failed
      #  flash.info = "You are already logged in"
      #  redirect_back fallback: CurrentUser::Show
      #end
 
      # What to do if a user is not allowed to perform action
      #
-     #def not_authorized_action(user, action, record)
+     #def do_check_authorization_failed
      #  flash.failure = "You are not allowed to perform this action!"
      #  redirect to: CurrentUser::Show
      #end

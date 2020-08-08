@@ -2,14 +2,14 @@ class PasswordResets::Update < ApiAction
   include Shield::PasswordResets::Update
 
   patch "/password-resets" do
-    reset_password
+    run_operation
   end
 
-  private def success_action(operation, user)
+  def do_run_operation_succeeded(operation, user)
     json({a: ""})
   end
 
-  private def failure_action(operation, user)
+  def do_run_operation_failed(operation, user)
     json({a: ""})
   end
 end

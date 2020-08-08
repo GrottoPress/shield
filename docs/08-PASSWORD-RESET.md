@@ -135,18 +135,18 @@
      include Shield::PasswordResets::Create
 
      post "/password-resets" do
-       start_password_reset
+       run_operation
      end
 
-     # What to do if `start_password_reset` succeeds
+     # What to do if `run_operation` succeeds
      #
-     #def success_action(operation, login)
+     #def do_run_operation_succeeded(operation, login)
      #  success_action
      #end
 
-     # What to do if `start_password_reset` fails
+     # What to do if `run_operation` fails
      #
-     #def failure_action(operation)
+     #def do_run_operation_failed(operation)
      #  if operation.guest_email?
      #     success_action
      #   else
@@ -179,7 +179,7 @@
      param token : String
 
      get "/password-resets" do
-       set_session
+       run_operation
      end
      # ...
    end
@@ -198,18 +198,18 @@
      include Shield::PasswordResets::Edit
 
      get "/password-resets/edit" do
-       verify_password_reset
+       run_operation
      end
 
-     # What to do if `verify_password_reset` succeeds
+     # What to do if `run_operation` succeeds
      #
-     #def success_action(operation, password_reset)
+     #def do_run_operation_succeeded(operation, password_reset)
      #  html EditPage
      #end
 
-     # What to do if `verify_password_reset` fails
+     # What to do if `run_operation` fails
      #
-     #def failure_action(operation)
+     #def do_run_operation_failed(operation)
      #  flash.failure = "Invalid token"
      #  redirect to: New
      #end
@@ -235,19 +235,19 @@
      include Shield::PasswordResets::Update
 
      patch "/password-resets" do
-       reset_password
+       run_operation
      end
 
-     # What to do if `reset_password` succeeds
+     # What to do if `run_operation` succeeds
      #
-     #def success_action(operation, user)
+     #def do_run_operation_succeeded(operation, user)
      #  flash.success = "Password changed successfully"
      #  redirect to: Logins::New
      #end
 
-     # What to do if `reset_password` fails
+     # What to do if `run_operation` fails
      #
-     #def failure_action(operation, user)
+     #def do_run_operation_failed(operation, user)
      #  flash.failure = "Could not change password"
      #  html EditPage, operation: operation, user: user
      #end

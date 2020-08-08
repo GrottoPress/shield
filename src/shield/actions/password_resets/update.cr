@@ -3,15 +3,15 @@ module Shield::PasswordResets::Update
     skip :require_logged_in
 
     # patch "/password-resets" do
-    #   reset_password
+    #   run_operation
     # end
 
-    def reset_password
+    def run_operation
       PasswordResetSession.new(session).verify do |utility, password_reset|
         if password_reset
           reset_password(password_reset.not_nil!)
         else
-          Edit.new(context, Hash(String, String).new).failure_action(utility)
+          Edit.new(context, Hash(String, String).new).do_run_operation_failed(utility)
         end
       end
     end
@@ -24,19 +24,19 @@ module Shield::PasswordResets::Update
         current_login: current_login
       ) do |operation, updated_user|
         if operation.saved?
-          success_action(operation, updated_user)
+          do_run_operation_succeeded(operation, updated_user)
         else
-          failure_action(operation, updated_user)
+          do_run_operation_failed(operation, updated_user)
         end
       end
     end
 
-    def success_action(operation, user)
+    def do_run_operation_succeeded(operation, user)
       flash.success = "Password changed successfully"
       redirect to: Logins::New
     end
 
-    def failure_action(operation, user)
+    def do_run_operation_failed(operation, user)
       flash.failure = "Could not change password"
       html EditPage, operation: operation, user: user
     end

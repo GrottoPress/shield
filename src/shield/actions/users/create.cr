@@ -3,25 +3,25 @@ module Shield::Users::Create
     skip :require_logged_out
 
     # post "/users" do
-    #   save_user
+    #   run_operation
     # end
 
-    def save_user
+    def run_operation
       RegisterUser.create(params) do |operation, user|
         if user
-          success_action(operation, user.not_nil!)
+          do_run_operation_succeeded(operation, user.not_nil!)
         else
-          failure_action(operation)
+          do_run_operation_failed(operation)
         end
       end
     end
 
-    def success_action(operation, user)
+    def do_run_operation_succeeded(operation, user)
       flash.success = "User added successfully"
       redirect to: New
     end
 
-    def failure_action(operation)
+    def do_run_operation_failed(operation)
       flash.failure = "Could not add user"
       html NewPage, operation: operation
     end

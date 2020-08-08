@@ -3,28 +3,28 @@ module Shield::Logins::Destroy
     skip :require_logged_out
 
     # delete "/log-out" do
-    #   log_user_out
+    #   run_operation
     # end
 
-    def log_user_out
+    def run_operation
       LogUserOut.update(
         LoginSession.new(session).login!,
         session: session
       ) do |operation, updated_login|
         if operation.saved?
-          success_action(operation, updated_login)
+          do_run_operation_succeeded(operation, updated_login)
         else
-          failure_action(operation, updated_login)
+          do_run_operation_failed(operation, updated_login)
         end
       end
     end
 
-    def success_action(operation, login)
+    def do_run_operation_succeeded(operation, login)
       flash.info = "Logged out. See ya!"
       redirect to: New
     end
 
-    def failure_action(operation, login)
+    def do_run_operation_failed(operation, login)
       flash.failure = "Something went wrong"
       redirect to: CurrentUser::Show
     end

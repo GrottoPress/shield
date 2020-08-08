@@ -28,7 +28,7 @@ class Posts::Update < BrowserAction
 end
 ```
 
-If authorization is denied, `#not_authorized_action` (which you set up in the base actions) is called.
+If authorization is denied, `#do_check_authorization_failed` (which you set up in the base actions) is called.
 
 Authorization is always skipped if the current user is not logged in. If you wish to deny access for such a user, there's the `before :require_logged_in` pipe.
 

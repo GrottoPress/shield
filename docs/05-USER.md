@@ -114,19 +114,19 @@
      include Shield::CurrentUser::Create
 
      post "/sign-up" do
-       save_current_user
+       run_operation
      end
 
-     # What to do if `save_current_user` succeeds
+     # What to do if `run_operation` succeeds
      #
-     #def success_action(operation, user)
+     #def do_run_operation_succeeded(operation, user)
      #  flash.success = "User added successfully"
      #  redirect to: New
      #end
 
-     # What to do if `save_current_user` fails
+     # What to do if `run_operation` fails
      #
-     #def failure_action(operation)
+     #def do_run_operation_failed(operation)
      #  flash.failure = "Could not add user"
      #  html NewPage, operation: operation
      #end

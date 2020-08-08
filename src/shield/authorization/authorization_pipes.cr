@@ -4,7 +4,7 @@ module Shield::AuthorizationPipes
       if logged_out? || authorize?
         continue
       else
-        not_authorized_action
+        do_check_authorization_failed
       end
     end
 
@@ -12,7 +12,7 @@ module Shield::AuthorizationPipes
       false
     end
 
-    def not_authorized_action
+    def do_check_authorization_failed
       flash.failure = "You are not allowed to perform this action!"
       redirect_back fallback: CurrentUser::Show
     end

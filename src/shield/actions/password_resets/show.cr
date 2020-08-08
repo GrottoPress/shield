@@ -17,10 +17,10 @@ module Shield::PasswordResets::Show
     # param token : String
 
     # get "/password-resets" do
-    #   set_session
+    #   run_operation
     # end
 
-    def set_session
+    def run_operation
       PasswordResetSession.new(session).set(id, token)
       redirect to: Edit # <= IMPORTANT!
     end

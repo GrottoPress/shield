@@ -2,10 +2,10 @@ class Logins::Create < ApiAction
   include Shield::Logins::Create
 
   post "/log-in" do
-    log_user_in
+    run_operation
   end
 
-  private def success_action(operation, login)
+  def do_run_operation_succeeded(operation, login)
     json({
       login: login.id,
       session: LoginSession.new(session).login_id!,
@@ -14,7 +14,7 @@ class Logins::Create < ApiAction
     })
   end
 
-  private def failure_action(operation)
+  def do_run_operation_failed(operation)
     json({errors: operation.errors})
   end
 end

@@ -3,19 +3,19 @@ module Shield::Users::Update
     skip :require_logged_out
 
     # patch "/users/:user_id" do
-    #   save_user
+    #   run_operation
     # end
 
-    def save_user
+    def run_operation
       UpdateUser.update(
         user,
         params,
         current_login: current_login
       ) do |operation, updated_user|
         if operation.saved?
-          success_action(operation, updated_user)
+          do_run_operation_succeeded(operation, updated_user)
         else
-          failure_action(operation, updated_user)
+          do_run_operation_failed(operation, updated_user)
         end
       end
     end
@@ -25,12 +25,12 @@ module Shield::Users::Update
       UserQuery.find(user_id)
     end
 
-    def success_action(operation, user)
+    def do_run_operation_succeeded(operation, user)
       flash.success = "User updated successfully"
       redirect to: Show
     end
 
-    def failure_action(operation, user)
+    def do_run_operation_failed(operation, user)
       flash.failure = "Could not update user"
       html EditPage, operation: operation, user: user
     end

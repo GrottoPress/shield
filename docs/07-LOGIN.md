@@ -138,19 +138,19 @@
      include Shield::Logins::Create
 
      post "/sign-in" do
-       log_user_in
+       run_operation
      end
 
-     # What to do if `log_user_in` succeeds
+     # What to do if `run_operation` succeeds
      #
-     #def success_action(operation, login)
+     #def do_run_operation_succeeded(operation, login)
      #  flash.success = "Successfully logged in"
      #  redirect_back fallback: CurrentUser::Show
      #end
 
-     # What to do if `log_user_in` fails
+     # What to do if `run_operation` fails
      #
-     #def failure_action(operation)
+     #def do_run_operation_failed(operation)
      #  flash.failure = "Invalid email or password"
      #  html NewPage, operation: operation
      #end
@@ -167,19 +167,19 @@
      include Shield::Logins::Destroy
 
      get "/sign-out" do
-       log_user_out
+       run_operation
      end
 
-     # What to do if `log_user_out` succeeds
+     # What to do if `run_operation` succeeds
      #
-     #def success_action(operation, login)
+     #def do_run_operation_succeeded(operation, login)
      #  flash.info = "Logged out. See ya!"
      #  redirect to: New
      #end
 
-     # What to do if `log_user_out` fails
+     # What to do if `run_operation` fails
      #
-     #def failure_action(operation, login)
+     #def do_run_operation_failed(operation, login)
      #  flash.failure = "Something went wrong"
      #  redirect to: CurrentUser::Show
      #end
