@@ -1,4 +1,4 @@
-module Shield::RequireIPAddress
+module Shield::RequirIpAddress
   macro included
     needs remote_ip : Socket::IPAddress?
 
