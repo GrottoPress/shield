@@ -10,8 +10,9 @@ module Shield::Action
 
     before :disable_caching
     before :require_logged_in
+    before :require_logged_out
+    before :check_authorization
 
-    after :require_authorization
     after :set_previous_page
   end
 end

@@ -12,14 +12,6 @@ class User < BaseModel
     column level : User::Level
   end
 
-  authorize :delete do |user, record|
-    user.level.admin?
-  end
-
-  authorize :create, :read, :update do |user, record|
-    user.level.admin? || user.id == record.try(&.id)
-  end
-
   def emailable : Carbon::Address
     Carbon::Address.new(email)
   end

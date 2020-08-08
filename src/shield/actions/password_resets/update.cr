@@ -1,9 +1,6 @@
 module Shield::PasswordResets::Update
   macro included
-    skip :require_authorization
     skip :require_logged_in
-
-    before :require_logged_out
 
     # patch "/password-resets" do
     #   reset_password

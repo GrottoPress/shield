@@ -1,9 +1,9 @@
 module Shield::Users::Index
   macro included
+    skip :require_logged_out
+
     # get "/users" do
-    #   authorize(:read, User) do
-    #     html IndexPage
-    #   end
+    #   html IndexPage
     # end
   end
 end

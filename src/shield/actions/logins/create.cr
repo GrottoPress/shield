@@ -1,13 +1,10 @@
 module Shield::Logins::Create
   macro included
+    skip :require_logged_in
+
     # post "/log-in" do
     #   log_user_in
     # end
-
-    skip :require_authorization
-    skip :require_logged_in
-
-    before :require_logged_out
 
     def log_user_in
       LogUserIn.create(

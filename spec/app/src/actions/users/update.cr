@@ -2,7 +2,7 @@ class Users::Update < ApiAction
   include Shield::Users::Update
 
   skip :require_logged_in
-  skip :require_authorization
+  skip :require_logged_out
 
   patch "/users/:user_id" do
     save_user

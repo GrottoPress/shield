@@ -1,9 +1,9 @@
 module Shield::Users::Create
   macro included
+    skip :require_logged_out
+
     # post "/users" do
-    #   authorize(:create, user) do
-    #     save_user
-    #   end
+    #   save_user
     # end
 
     def save_user

@@ -1,11 +1,12 @@
 module Shield::Users::Edit
   macro included
+    skip :require_logged_out
+
     # get "/users/:user_id/edit" do
-    #   authorize(:update, user) do
-    #     html EditPage, user: user
-    #   end
+    #   html EditPage, user: user
     # end
 
+    @[Memoize]
     def user
       UserQuery.find(user_id)
     end

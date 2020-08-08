@@ -1,9 +1,9 @@
 module Shield::Users::Update
   macro included
+    skip :require_logged_out
+
     # patch "/users/:user_id" do
-    #   authorize(:update, user) do
-    #     save_user
-    #   end
+    #   save_user
     # end
 
     def save_user
@@ -20,6 +20,7 @@ module Shield::Users::Update
       end
     end
 
+    @[Memoize]
     def user
       UserQuery.find(user_id)
     end

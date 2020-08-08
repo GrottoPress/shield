@@ -1,9 +1,9 @@
 module Shield::CurrentUser::Update
   macro included
+    skip :require_logged_out
+
     # patch "/profile" do
-    #   authorize(:update, user) do
-    #     save_current_user
-    #   end
+    #   save_current_user
     # end
 
     def save_current_user
@@ -32,6 +32,10 @@ module Shield::CurrentUser::Update
     def failure_action(operation, user)
       flash.failure = "Could not update user"
       html EditPage, operation: operation, user: user
+    end
+
+    def authorize? : Bool
+      true
     end
   end
 end

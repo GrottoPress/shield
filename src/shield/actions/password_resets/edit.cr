@@ -1,9 +1,6 @@
 module Shield::PasswordResets::Edit
   macro included
-    skip :require_authorization
     skip :require_logged_in
-
-    before :require_logged_out
 
     # get "/password-resets/edit" do
     #   verify_password_reset

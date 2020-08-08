@@ -2,14 +2,6 @@
 
 `Shield::Action` adds in the following helpers:
 
-- `#authorize`:
-
-    Checks if the current user is allowed to perform the requested action on the given model or record.
-
-- `#authorize!`:
-
-    Like `#authorize`, but raises `Shield::NotAuthorizedError` if current user is not allowed to perform the requested action.
-
 - `#current_login`:
 
     Returns the current login, or `nil` if the user is not logged in.

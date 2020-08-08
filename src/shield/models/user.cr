@@ -7,12 +7,5 @@ module Shield::User
 
     column email : String
     column password_hash : String
-
-    def can?(
-      action : Shield::AuthorizedAction,
-      record : Shield::Model | Shield::Model.class
-    ) : Bool
-      record.allow?(self, action)
-    end
   end
 end

@@ -1,9 +1,6 @@
 module Shield::PasswordResets::Create
   macro included
-    skip :require_authorization
     skip :require_logged_in
-
-    before :require_logged_out
 
     # post "/password-resets" do
     #   start_password_reset

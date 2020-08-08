@@ -10,4 +10,12 @@ abstract class ApiAction < Lucky::Action
   private def require_logged_out_action
     json({logged_in: true})
   end
+
+  def not_authorized_action
+    json({authorized: false})
+  end
+
+  def authorize? : Bool
+    current_user!.level.admin?
+  end
 end

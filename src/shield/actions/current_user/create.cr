@@ -1,13 +1,10 @@
 module Shield::CurrentUser::Create
   macro included
+    skip :require_logged_in
+
     # post "/register" do
     #   save_current_user
     # end
-
-    skip :require_authorization
-    skip :require_logged_in
-
-    before :require_logged_out
 
     def save_current_user
       RegisterCurrentUser.create(params) do |operation, user|

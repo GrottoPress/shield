@@ -1,9 +1,9 @@
 module Shield::Users::New
   macro included
+    skip :require_logged_out
+
     # get "/users/new" do
-    #   authorize(:create, User) do
-    #     html NewPage
-    #   end
+    #   html NewPage
     # end
   end
 end

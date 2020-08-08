@@ -1,5 +1,7 @@
 module Shield::Logins::Destroy
   macro included
+    skip :require_logged_out
+
     # delete "/log-out" do
     #   log_user_out
     # end
@@ -25,6 +27,10 @@ module Shield::Logins::Destroy
     def failure_action(operation, login)
       flash.failure = "Something went wrong"
       redirect to: CurrentUser::Show
+    end
+
+    def authorize? : Bool
+      true
     end
   end
 end
