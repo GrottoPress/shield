@@ -12,8 +12,8 @@ module Shield::PasswordResetSession
     end
 
     def verify : PasswordReset?
-      return unless password_reset.try &.status.started?
-      expire && return nil if expired?
+      return hash unless password_reset.try &.status.started?
+      expire && return hash if expired?
       password_reset! if verify?
     rescue
     end
@@ -34,6 +34,12 @@ module Shield::PasswordResetSession
       )
     rescue
       true
+    end
+
+    # To mitigate timing attacks
+    private def hash : Nil
+      CryptoHelper.hash_sha256(password_reset_token!)
+    rescue
     end
 
     def expired? : Bool?

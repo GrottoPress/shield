@@ -3,13 +3,14 @@ module Shield::UserHelper
     extend self
 
     def verify_user(email : String, password : String) : User?
-      user_from_email(email).try do |user|
-        return user if verify_user?(user, password)
+      if user = user_from_email(email)
+        user = user.not_nil!
+        user if verify_user?(user, password)
+      else
+        # To mitigate timing attacks
+        CryptoHelper.hash_bcrypt(password)
+        nil
       end
-
-      # To mitigate timing attacks
-      CryptoHelper.hash_bcrypt(password)
-      nil
     end
 
     def verify_user?(user : User, password : String) : Bool

@@ -12,8 +12,8 @@ module Shield::LoginSession
     end
 
     def verify : Login?
-      return unless login.try &.status.started?
-      expire && return nil if expired?
+      return hash unless login.try &.status.started?
+      expire && return hash if expired?
       login! if verify?
     rescue
     end
@@ -31,6 +31,12 @@ module Shield::LoginSession
       )
     rescue
       true
+    end
+
+    # To mitigate timing attacks
+    private def hash : Nil
+      CryptoHelper.hash_sha256(login_token!)
+    rescue
     end
 
     def expired? : Bool?
