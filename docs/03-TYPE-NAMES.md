@@ -28,10 +28,12 @@
 - `EndPasswordReset`
 - `LogUserIn`
 - `LogUserOut`
+- `RegisterCurrentUser`
 - `RegisterUser`
 - `ResetPassword`
 - `SaveUserOptions`
 - `StartPasswordReset`
+- `UpdateCurrentUser`
 - `UpdateUser`
 
 ### Actions
