@@ -18,8 +18,8 @@ describe Shield::PasswordResets::Show do
       password_reset = password_reset.not_nil!
 
       response = AppClient.get(PasswordResetHelper.password_reset_url(
-        operation,
-        password_reset
+        password_reset,
+        operation
       ))
 
       response.status.should eq(HTTP::Status::FOUND)
