@@ -30,6 +30,7 @@ module Shield::AuthenticationPipes
       password_reset = PasswordResetSession.new(session).password_reset
 
       if password_reset.nil? ||
+        !password_reset.not_nil!.status.started? ||
         password_reset.not_nil!.ip_address.address == remote_ip.try &.address
         continue
       else
