@@ -20,7 +20,7 @@ module Shield::LoginSession
 
     def verify? : Bool?
       CryptoHelper.verify_sha256?(login_token!, login!.token_hash)
-    rescue NilAssertionError
+    rescue
     end
 
     private def expire
@@ -41,7 +41,7 @@ module Shield::LoginSession
 
     def expired? : Bool?
       LoginHelper.login_expired?(login!)
-    rescue NilAssertionError
+    rescue
     end
 
     def login! : Login
@@ -63,6 +63,7 @@ module Shield::LoginSession
 
     def login_id : Int64?
       @session.get?(:login_id).try { |id| id.to_i64 }
+    rescue
     end
 
     def login_token : String?

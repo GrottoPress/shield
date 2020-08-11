@@ -23,7 +23,7 @@ module Shield::PasswordResetSession
         password_reset_token!,
         password_reset!.token_hash
       )
-    rescue NilAssertionError
+    rescue
     end
 
     private def expire
@@ -44,7 +44,7 @@ module Shield::PasswordResetSession
 
     def expired? : Bool?
       PasswordResetHelper.password_reset_expired?(password_reset!)
-    rescue NilAssertionError
+    rescue
     end
 
     def password_reset! : PasswordReset
@@ -66,6 +66,7 @@ module Shield::PasswordResetSession
 
     def password_reset_id : Int64?
       @session.get?(:password_reset_id).try { |id| id.to_i64 }
+    rescue
     end
 
     def password_reset_token : String?

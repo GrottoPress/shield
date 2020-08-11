@@ -3,7 +3,6 @@ module Shield::ActionHelpers
     def remote_ip : Socket::IPAddress?
       request.remote_address.as(Socket::IPAddress)
     rescue
-      nil
     end
 
     def redirect_back(
