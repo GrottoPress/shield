@@ -19,7 +19,7 @@
    `Shield::PasswordReset` adds the following columns:
    
    - `ended_at : Time?`
-   - `ip_address : Socket::IPAddress`
+   - `ip_address : String`
    - `started_at : Time`
    - `status : PasswordReset::Status`
    - `token_hash : String`

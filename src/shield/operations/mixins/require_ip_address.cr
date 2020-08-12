@@ -9,8 +9,8 @@ module Shield::RequirIpAddress
     end
 
     private def set_ip_address
-      remote_ip.try do |value|
-        ip_address.value = value
+      remote_ip.try do |ip|
+        ip_address.value = ip.address
       end
     end
   end
