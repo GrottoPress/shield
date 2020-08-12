@@ -122,8 +122,6 @@
 
    - `email : String`
 
-   It is advisable to skip showing operation errors on this form. You do not want to leak information as to whether or not the given email is registered to your application.
-
    You may skip this action if building an API.
 
    ---
