@@ -1,18 +1,12 @@
 # Shield
 
-*Shield* is a comprehensive security solution for [*Lucky* framework](https://luckyframework.org). It features robust authentication and authorization, including:
+*Shield* is a comprehensive security solution for [*Lucky* framework](https://luckyframework.org). It features robust authentication and authorization, including user registrations, logins and logouts, password resets and more.
 
-- User registrations
-- Logins and logouts
-- Login notifications (per-user setting)
-- Password change notifications (per-user setting)
-- Password resets
+*Shield* is secure by default, and exploits defence-in-depth strategies, including pinning an authentication session to the IP address that started it -- the session is invalidated if the IP address changes.
 
-...and more
+User IDs are never saved in session. Instead, each authentication gets a unique ID and token, which is saved in session, and checked against corresponding values (hashed) in the database.
 
-*Shield* securely hashes password reset and login tokens, before saving them to the database.
-
-User IDs are never saved in session. Instead, each password reset or login gets a unique ID and token, which is saved in session, and checked against corresponding values in the database.
+*Shield* is designed to be resilient against critical application vulnerabilities, including brute force, user enumeration, denial of service and timing attacks.
 
 On top of these, *Shield* offers seamless integration with your application. For the most part, `include` a bunch of `module`s in the appropriate `class`es, and you are good to go!
 
