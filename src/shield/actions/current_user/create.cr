@@ -17,12 +17,12 @@ module Shield::CurrentUser::Create
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.success = "User added successfully"
-      redirect to: New
+      flash.success = "Congratulations! Log in to access your account..."
+      redirect to: Logins::New
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = "Could not add user"
+      flash.failure = "Could not create your account"
       html NewPage, operation: operation
     end
   end
