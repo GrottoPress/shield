@@ -65,7 +65,7 @@ module Shield::PasswordResetSession
     end
 
     def password_reset_id : Int64?
-      @session.get?(:password_reset_id).try { |id| id.to_i64 }
+      @session.get?(:password_reset_id).try &.to_i64
     rescue
     end
 

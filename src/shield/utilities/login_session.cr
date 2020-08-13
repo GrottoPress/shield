@@ -59,7 +59,7 @@ module Shield::LoginSession
     end
 
     def login_id : Int64?
-      @session.get?(:login_id).try { |id| id.to_i64 }
+      @session.get?(:login_id).try &.to_i64
     rescue
     end
 
