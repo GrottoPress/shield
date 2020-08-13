@@ -108,8 +108,8 @@ describe Shield::AuthenticationPipes do
         client = AppClient.new
 
         response = client.get(PasswordResetHelper.password_reset_url(
-          password_reset.id,
-          operation.token
+          password_reset,
+          operation
         ))
 
         client.headers("Cookie": response.headers["Set-Cookie"])
@@ -138,8 +138,8 @@ describe Shield::AuthenticationPipes do
         client = AppClient.new
 
         response = client.get(PasswordResetHelper.password_reset_url(
-          password_reset.id,
-          operation.token
+          password_reset,
+          operation
         ))
 
         client.headers("Cookie": response.headers["Set-Cookie"])
