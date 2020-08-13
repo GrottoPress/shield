@@ -14,16 +14,21 @@ module Shield::PasswordResetSession
     def verify : PasswordReset?
       return hash unless password_reset.try &.status.started?
       expire && return hash if expired?
-      password_reset! if verify?
-    rescue
+      password_reset if verify?
     end
 
     def verify? : Bool?
+      return unless password_reset && password_reset_token
+
       CryptoHelper.verify_sha256?(
         password_reset_token!,
         password_reset!.token_hash
       )
-    rescue
+    end
+
+    # To mitigate timing attacks
+    private def hash : Nil
+      password_reset_token.try { |token| CryptoHelper.hash_sha256(token) }
     end
 
     private def expire
@@ -36,15 +41,10 @@ module Shield::PasswordResetSession
       true
     end
 
-    # To mitigate timing attacks
-    private def hash : Nil
-      CryptoHelper.hash_sha256(password_reset_token!)
-    rescue
-    end
-
     def expired? : Bool?
-      PasswordResetHelper.password_reset_expired?(password_reset!)
-    rescue
+      password_reset.try do |password_reset|
+        PasswordResetHelper.password_reset_expired?(password_reset)
+      end
     end
 
     def password_reset! : PasswordReset
