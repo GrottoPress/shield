@@ -302,43 +302,6 @@ module Avram
   end
 end
 
-struct Socket::IPAddress
-  def self.adapter
-    Lucky
-  end
-
-  def ip4? : Bool
-    ip4? address
-  end
-
-  def ip6? : Bool
-    ip6? address
-  end
-
-  module Lucky
-    alias ColumnType = String
-
-    include Avram::Type
-
-    def parse(value : IPAddress)
-      SuccessfulCast(IPAddress).new(IPAddress.new value.address, 0)
-    end
-
-    def parse(value : String)
-      SuccessfulCast(IPAddress).new(IPAddress.parse "//#{value}:0")
-    rescue
-      FailedCast.new
-    end
-
-    def to_db(value : IPAddress)
-      value.address
-    end
-
-    class Criteria(T, V) < String::Lucky::Criteria(T, V)
-    end
-  end
-end
-
 # There's `avram_enum`, but that saves the enum value as
 # `Int32` in the database. The problem is, enum member values are
 # order-dependent -- the values change when the member ordering

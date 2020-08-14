@@ -18,7 +18,7 @@ module Shield::AuthenticationPipes
 
     def pin_login_to_ip_address
       if logged_out? ||
-        current_login!.ip_address.address == remote_ip.try &.address
+        current_login!.ip_address == remote_ip.try &.address
         continue
       else
         LogUserOut.update!(current_login!, session: session)
@@ -30,7 +30,8 @@ module Shield::AuthenticationPipes
       password_reset = PasswordResetSession.new(session).password_reset
 
       if password_reset.nil? ||
-        password_reset.not_nil!.ip_address.address == remote_ip.try &.address
+        !password_reset.not_nil!.status.started? ||
+        password_reset.not_nil!.ip_address == remote_ip.try &.address
         continue
       else
         EndPasswordReset.update!(password_reset.not_nil!, session: session)

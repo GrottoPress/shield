@@ -31,7 +31,7 @@ module Shield::StartPasswordReset
     end
 
     private def validate_email_exists
-      email.add_error("does not exist") if user_id.value.nil?
+      email.add_error("does not exist") if guest_email?
     end
 
     private def send_guest_email

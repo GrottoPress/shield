@@ -3,8 +3,8 @@ module Shield::PasswordResetHelper
     extend self
 
     def password_reset_url(
-      operation : StartPasswordReset,
-      password_reset : PasswordReset
+      password_reset : PasswordReset,
+      operation : StartPasswordReset
     ) : String
       password_reset_url(password_reset.id, operation.token)
     end

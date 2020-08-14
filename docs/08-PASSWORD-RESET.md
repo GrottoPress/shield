@@ -19,7 +19,7 @@
    `Shield::PasswordReset` adds the following columns:
    
    - `ended_at : Time?`
-   - `ip_address : Socket::IPAddress`
+   - `ip_address : String`
    - `started_at : Time`
    - `status : PasswordReset::Status`
    - `token_hash : String`
@@ -121,8 +121,6 @@
    The form should be `POST`ed to `PasswordResets::Create`, with the following parameters:
 
    - `email : String`
-
-   It is advisable to skip showing operation errors on this form. You do not want to leak information as to whether or not the given email is registered to your application.
 
    You may skip this action if building an API.
 

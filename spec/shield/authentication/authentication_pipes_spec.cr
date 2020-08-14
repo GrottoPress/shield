@@ -89,7 +89,7 @@ describe Shield::AuthenticationPipes do
   end
 
   describe "#pin_password_reset_to_ip_address" do
-    it "accepts login from same IP" do
+    it "accepts password reset from same IP" do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
@@ -108,8 +108,8 @@ describe Shield::AuthenticationPipes do
         client = AppClient.new
 
         response = client.get(PasswordResetHelper.password_reset_url(
-          password_reset.id,
-          operation.token
+          password_reset,
+          operation
         ))
 
         client.headers("Cookie": response.headers["Set-Cookie"])
@@ -119,7 +119,7 @@ describe Shield::AuthenticationPipes do
       end
     end
 
-    it "rejects login from different IP" do
+    it "rejects password reset from different IP" do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
@@ -138,8 +138,8 @@ describe Shield::AuthenticationPipes do
         client = AppClient.new
 
         response = client.get(PasswordResetHelper.password_reset_url(
-          password_reset.id,
-          operation.token
+          password_reset,
+          operation
         ))
 
         client.headers("Cookie": response.headers["Set-Cookie"])

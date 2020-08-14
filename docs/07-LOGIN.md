@@ -19,7 +19,7 @@
    `Shield::Login` adds the following columns:
    
    - `ended_at : Time?`
-   - `ip_address : Socket::IPAddress`
+   - `ip_address : String`
    - `started_at : Time`
    - `status : Login::Status`
    - `token_hash : String`

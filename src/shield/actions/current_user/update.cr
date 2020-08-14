@@ -25,12 +25,12 @@ module Shield::CurrentUser::Update
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.success = "User updated successfully"
+      flash.success = "Account updated successfully"
       redirect to: Show
     end
 
     def do_run_operation_failed(operation, user)
-      flash.failure = "Could not update user"
+      flash.failure = "Could not update your account"
       html EditPage, operation: operation, user: user
     end
 

@@ -13,7 +13,10 @@ module Shield::PasswordResets::Update
         if password_reset
           reset_password(password_reset.not_nil!)
         else
-          Edit.new(context, Hash(String, String).new).do_run_operation_failed(utility)
+          Edit.new(
+            context,
+            Hash(String, String).new
+          ).do_run_operation_failed(utility)
         end
       end
     end

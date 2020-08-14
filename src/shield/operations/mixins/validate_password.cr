@@ -8,6 +8,7 @@ module Shield::ValidatePassword
       validate_confirmation_of password, with: password_confirmation
       validate_size_of password,
         min: Shield.settings.password_min_length,
+        max: 64,
         allow_nil: true
     end
 

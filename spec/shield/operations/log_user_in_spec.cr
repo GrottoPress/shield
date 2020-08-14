@@ -22,7 +22,7 @@ describe Shield::LogUserIn do
     )
 
     login.status.started?.should be_true
-    login.ip_address.address.should eq(ip_address.address)
+    login.ip_address.should eq(ip_address.address)
 
     LoginSession.new(session).login_id!.should eq(login.id)
     LoginSession.new(session).login_token!.should_not be_empty
