@@ -32,6 +32,6 @@
 
 - `#set_previous_page_url`:
 
-  Sets the current URL in session as the previous page URL to be used by the next page. This URL is used by `#redirect_back`, instead of the value from the HTTP referrer header that Lucky uses.
+  Sets the current URL in session as the previous page URL to be used by the next action. *Shield* overrides `#redirect_back` to use this URL, instead of the value from the HTTP referrer header that Lucky uses.
 
 Because `#require_logged_in` and `#require_logged_out` are active at the same time, you are required to explicitly skip at least one of them in your actions.

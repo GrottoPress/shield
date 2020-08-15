@@ -217,7 +217,7 @@
 
    You may need to add `PasswordResets::EditPage` in `src/pages/password_resets/edit_page.cr`, containing your password edit form.
 
-   The form should be `PATCHED`ed to `PasswordResets::Update`, with the following parameters:
+   The form should be `PATCH`ed to `PasswordResets::Update`, with the following parameters:
 
    - `password : String`
    - `password_confirmation : String`

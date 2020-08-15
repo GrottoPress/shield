@@ -168,7 +168,7 @@
      #
      #def do_run_operation_failed(operation, login)
      #  flash.failure = "Something went wrong"
-     #  redirect to: CurrentUser::Show
+     #  redirect_back fallback: CurrentUser::Show
      #end
      # ...
    end
