@@ -41,18 +41,19 @@ Update the file with your own details. Then run tests with `source .env.sh && cr
 - [x] Password change notifications
 - [x] Pin authentication session to its IP address
 - [x] Authorization
-- [ ] Email confirmation (verification)
+- [x] Email confirmation (verification)
 - [ ] Anti-spam
 - [ ] Web Application Firewall (WAF)
 - [ ] Multi-factor authentication
 
 ## Contributing
 
-1. [Fork it](https://github.com/your-github-user/shield/fork)
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Create a new Pull Request
+1. [Fork it](https://github.com/GrottoPress/shield/fork)
+1. Create your feature branch: `git checkout -b my-new-feature`
+1. Make your changes, updating changelog and documentation as appropriate.
+1. Commit your changes: `git commit`
+1. Push to the branch: `git push origin my-new-feature`
+1. Submit a new *Pull Request* against the `GrottoPress:dev` branch.
 
 ## Security
 
