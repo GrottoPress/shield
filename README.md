@@ -21,7 +21,7 @@ Run tests with `docker-compose -f spec/docker-compose.yml run --rm spec`. If you
 If you would rather run tests on your local machine (ie, without docker), create a `.env.sh` file:
 
 ```bash
-#!bin/bash
+#!/bin/bash
 
 export APP_DOMAIN=http://localhost:5000
 export DATABASE_URL='postgres://postgres:password@localhost:5432/shield_spec'
