@@ -41,7 +41,7 @@ Update the file with your own details. Then run tests with `source .env.sh && cr
 - [x] Password change notifications
 - [x] Pin authentication session to its IP address
 - [x] Authorization
-- [x] Email confirmation (verification)
+- [ ] Email confirmation (verification)
 - [ ] Anti-spam
 - [ ] Web Application Firewall (WAF)
 - [ ] Multi-factor authentication
