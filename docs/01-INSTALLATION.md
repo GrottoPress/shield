@@ -1,7 +1,5 @@
 ## Installation
 
-*Shield* requires [*Lucky*](https://luckyframework.org) version **0.23.0** or newer.
-
 1. Add the dependency to your `shard.yml`:
 
    ```yaml
