@@ -1,6 +1,6 @@
 ## Action Pipes
 
-*Shield* ships with the following pipes, active, by default, on the relevant actions:
+*Shield* ships with the following pipes active, by default, on the relevant actions:
 
 - `#check_authorization`:
 
