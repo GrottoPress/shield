@@ -6,6 +6,8 @@
 
 User IDs are never saved in session. Instead, each authentication gets a unique ID and token, which is saved in session, and checked against corresponding values (hashed) in the database.
 
+When a user changes their password, *Shield* logs out the user on all devices (except the current one), to ensure that an attacker no longer has access to a compromised account.
+
 *Shield* is designed to be resilient against critical application vulnerabilities, including brute force, user enumeration, denial of service and timing attacks.
 
 On top of these, *Shield* offers seamless integration with your application. For the most part, `include` a bunch of `module`s in the appropriate `class`es, and you are good to go!
@@ -13,24 +15,6 @@ On top of these, *Shield* offers seamless integration with your application. For
 ## Documentation
 
 Find the complete documentation of *Shield* in the `docs/` directory of this repository.
-
-## Development
-
-Run tests with `docker-compose -f spec/docker-compose.yml run --rm spec`. If you need to update shards before that, run `docker-compose -f spec/docker-compose.yml run --rm shards`.
-
-If you would rather run tests on your local machine (ie, without docker), create a `.env.sh` file:
-
-```bash
-#!bin/bash
-
-export APP_DOMAIN=http://localhost:5000
-export DATABASE_URL='postgres://postgres:password@localhost:5432/shield_spec'
-export SECRET_KEY_BASE='XeqAgSy5QQ+dWe8ruOBUMrz9XPbPZ7chPVtz2ecDGss='
-export SERVER_HOST='0.0.0.0'
-export SERVER_PORT=5000
-```
-
-Update the file with your own details. Then run tests with `source .env.sh && crystal spec`.
 
 ## Todo
 
@@ -45,6 +29,24 @@ Update the file with your own details. Then run tests with `source .env.sh && cr
 - [ ] Anti-spam
 - [ ] Web Application Firewall (WAF)
 - [ ] Multi-factor authentication
+
+## Development
+
+Run tests with `docker-compose -f spec/docker-compose.yml run --rm spec`. If you need to update shards before that, run `docker-compose -f spec/docker-compose.yml run --rm shards`.
+
+If you would rather run tests on your local machine (ie, without docker), create a `.env.sh` file:
+
+```bash
+#!/bin/bash
+
+export APP_DOMAIN=http://localhost:5000
+export DATABASE_URL='postgres://postgres:password@localhost:5432/shield_spec'
+export SECRET_KEY_BASE='XeqAgSy5QQ+dWe8ruOBUMrz9XPbPZ7chPVtz2ecDGss='
+export SERVER_HOST='0.0.0.0'
+export SERVER_PORT=5000
+```
+
+Update the file with your own details. Then run tests with `source .env.sh && crystal spec`.
 
 ## Contributing
 
