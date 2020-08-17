@@ -14,6 +14,20 @@ On top of these, *Shield* offers seamless integration with your application. For
 
 Find the complete documentation of *Shield* in the `docs/` directory of this repository.
 
+## Todo
+
+- [x] User registrations
+- [x] Logins and logouts
+- [x] Password resets
+- [x] Login notifications
+- [x] Password change notifications
+- [x] Pin authentication session to its IP address
+- [x] Authorization
+- [ ] Email confirmation (verification)
+- [ ] Anti-spam
+- [ ] Web Application Firewall (WAF)
+- [ ] Multi-factor authentication
+
 ## Development
 
 Run tests with `docker-compose -f spec/docker-compose.yml run --rm spec`. If you need to update shards before that, run `docker-compose -f spec/docker-compose.yml run --rm shards`.
@@ -31,20 +45,6 @@ export SERVER_PORT=5000
 ```
 
 Update the file with your own details. Then run tests with `source .env.sh && crystal spec`.
-
-## Todo
-
-- [x] User registrations
-- [x] Logins and logouts
-- [x] Password resets
-- [x] Login notifications
-- [x] Password change notifications
-- [x] Pin authentication session to its IP address
-- [x] Authorization
-- [ ] Email confirmation (verification)
-- [ ] Anti-spam
-- [ ] Web Application Firewall (WAF)
-- [ ] Multi-factor authentication
 
 ## Contributing
 
