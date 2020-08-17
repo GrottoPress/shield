@@ -6,6 +6,8 @@
 
 User IDs are never saved in session. Instead, each authentication gets a unique ID and token, which is saved in session, and checked against corresponding values (hashed) in the database.
 
+When a user changes their password, *Shield* logs out the user on all devices (except the current one), to ensure that an attacker no longer has access to a compromised account.
+
 *Shield* is designed to be resilient against critical application vulnerabilities, including brute force, user enumeration, denial of service and timing attacks.
 
 On top of these, *Shield* offers seamless integration with your application. For the most part, `include` a bunch of `module`s in the appropriate `class`es, and you are good to go!
