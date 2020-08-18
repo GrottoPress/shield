@@ -1,6 +1,6 @@
 module Shield::StartAuthentication(T)
   macro included
-    include Shield::RequirIpAddress
+    include Shield::RequireIpAddress
 
     getter token = ""
 
