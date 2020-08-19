@@ -1,8 +1,5 @@
 module Shield::PasswordResetSession
   macro included
-    def initialize(@session : Lucky::Session)
-    end
-
     def verify!
       verify.not_nil!
     end

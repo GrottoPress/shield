@@ -1,8 +1,5 @@
 module Shield::PreviousPageSession
   macro included
-    def initialize(@session : Lucky::Session)
-    end
-
     def previous_page_url! : String
       previous_page_url.not_nil!
     end
