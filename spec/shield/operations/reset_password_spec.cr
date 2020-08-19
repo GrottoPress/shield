@@ -15,7 +15,7 @@ describe Shield::ResetPassword do
     session = Lucky::Session.new
 
     StartPasswordReset.create(
-      email: email,
+      params(email: email),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       password_reset = password_reset.not_nil!
@@ -24,8 +24,7 @@ describe Shield::ResetPassword do
 
       ResetPassword.update(
         PasswordResetSession.new(session).verify!.user!,
-        password: new_password,
-        password_confirmation: new_password,
+        params(password: new_password, password_confirmation: new_password),
         session: session,
         current_login: nil
       ) do |operation, updated_user|
@@ -53,14 +52,13 @@ describe Shield::ResetPassword do
     session = Lucky::Session.new
 
     password_reset = StartPasswordReset.create!(
-      email: email,
+      params(email: email),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
     ResetPassword.update(
       password_reset.user!,
-      password: new_password,
-      password_confirmation: new_password,
+      params(password: new_password, password_confirmation: new_password),
       session: session,
       current_login: nil
     ) do |operation, updated_user|
@@ -84,14 +82,13 @@ describe Shield::ResetPassword do
     session = Lucky::Session.new
 
     password_reset = StartPasswordReset.create!(
-      email: email,
+      params(email: email),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
     ResetPassword.update(
       password_reset.user!,
-      password: new_password,
-      password_confirmation: new_password,
+      params(password: new_password, password_confirmation: new_password),
       session: session,
       current_login: nil
     ) do |operation, updated_user|
@@ -115,12 +112,12 @@ describe Shield::ResetPassword do
     session = Lucky::Session.new
 
     password_reset_1 = StartPasswordReset.create!(
-      email: email,
+      params(email: email),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
     password_reset_2 = StartPasswordReset.create!(
-      email: email,
+      params(email: email),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
@@ -129,8 +126,7 @@ describe Shield::ResetPassword do
 
     ResetPassword.update!(
       password_reset_1.user!,
-      password: new_password,
-      password_confirmation: new_password,
+      params(password: new_password, password_confirmation: new_password),
       session: session,
       current_login: nil
     )

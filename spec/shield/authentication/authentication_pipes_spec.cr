@@ -100,7 +100,7 @@ describe Shield::AuthenticationPipes do
       )
 
       StartPasswordReset.create(
-        email: email,
+        params(email: email),
         remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
@@ -130,7 +130,7 @@ describe Shield::AuthenticationPipes do
       )
 
       StartPasswordReset.create(
-        email: email,
+        params(email: email),
         remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!

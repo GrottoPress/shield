@@ -2,10 +2,10 @@ require "../../spec_helper"
 
 describe Shield::SaveUserOptions do
   it "requires user id" do
-    SaveUserOptions.create(
+    SaveUserOptions.create(params(
       login_notify: true,
       password_notify: true
-    ) do |operation, user_options|
+    )) do |operation, user_options|
       user_options.should be_nil
 
       assert_invalid(operation.user_id, "not exist")
@@ -13,9 +13,9 @@ describe Shield::SaveUserOptions do
   end
 
   it "requires login notification option" do
-    SaveUserOptions.create(
+    SaveUserOptions.create(params(
       password_notify: true
-    ) do |operation, user_options|
+    )) do |operation, user_options|
       user_options.should be_nil
 
       assert_invalid(operation.login_notify, " required")
@@ -23,9 +23,9 @@ describe Shield::SaveUserOptions do
   end
 
   it "requires password notification option" do
-    SaveUserOptions.create(
+    SaveUserOptions.create(params(
       login_notify: true
-    ) do |operation, user_options|
+    )) do |operation, user_options|
       user_options.should be_nil
 
       assert_invalid(operation.password_notify, " required")

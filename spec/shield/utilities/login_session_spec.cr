@@ -15,8 +15,7 @@ describe LoginSession do
       session = Lucky::Session.new
 
       login = LogUserIn.create!(
-        email: email,
-        password: password,
+        params(email: email, password: password),
         session: session,
         remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
       )

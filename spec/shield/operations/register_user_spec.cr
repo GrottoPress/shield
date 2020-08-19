@@ -26,13 +26,13 @@ describe Shield::RegisterUser do
   it "fails when nested operation fails" do
     password = "password12U password"
 
-    RegisterCurrentUser2.create(
+    RegisterCurrentUser2.create(params(
       email: "user@example.tld",
       password: password,
       password_confirmation: password,
       login_notify: false,
-      password_notify: false,
-    ) do |operation, user|
+      password_notify: false
+    )) do |operation, user|
       operation.saved?.should be_false
     end
   end

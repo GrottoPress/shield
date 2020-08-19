@@ -14,7 +14,7 @@ describe Shield::EndPasswordReset do
     session = Lucky::Session.new
 
     StartPasswordReset.create(
-      email: email,
+      params(email: email),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       password_reset =  password_reset.not_nil!
@@ -23,7 +23,7 @@ describe Shield::EndPasswordReset do
 
       EndPasswordReset.update(
         password_reset,
-        Avram::Params.new({"status" => "Started"}),
+        params(status: "Started"),
         status: PasswordReset::Status.new(:expired),
         session: session
       ) do |operation, updated_password_reset|

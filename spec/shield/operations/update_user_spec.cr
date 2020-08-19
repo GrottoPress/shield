@@ -7,7 +7,7 @@ describe Shield::UpdateUser do
 
     UpdateUser.update(
       user,
-      email: new_email,
+      params(email: new_email),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -24,15 +24,9 @@ describe Shield::UpdateUser do
       password_notify: false
     )
 
-    params = Avram::Params.new({
-      "login_notify" => "false",
-      "password_notify" => "true",
-      "email" => new_email
-    })
-
     UpdateUser.update(
       user,
-      params,
+      params(login_notify: "false", password_notify: "true", email: new_email),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -50,8 +44,7 @@ describe Shield::UpdateUser do
 
     UpdateCurrentUser2.update(
       user,
-      login_notify: false,
-      password_notify: false,
+      params(login_notify: false, password_notify: false),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_false
@@ -73,9 +66,11 @@ describe Shield::UpdateUser do
 
     UpdateCurrentUser2.update(
       user,
-      email: "user@example.com",
-      login_notify: false,
-      password_notify: false,
+      params(
+        email: "user@example.com",
+        login_notify: false,
+        password_notify: false
+      ),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_false
