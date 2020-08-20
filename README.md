@@ -25,7 +25,7 @@ Find the complete documentation of *Shield* in the `docs/` directory of this rep
 - [x] Password change notifications
 - [x] Pin authentication session to its IP address
 - [x] Authorization
-- [ ] Email confirmation (verification)
+- [ ] Email confirmation
 - [ ] Anti-spam
 - [ ] Web Application Firewall (WAF)
 - [ ] Multi-factor authentication
