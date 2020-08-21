@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Introduce `Shield::Session` as base type for all session wrappers
+- Add `allow_external` parameter to `#redirect_back` in actions
 
 ## [0.1.0] - 2020-08-15
 
