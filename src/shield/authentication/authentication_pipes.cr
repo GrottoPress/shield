@@ -46,7 +46,7 @@ module Shield::AuthenticationPipes
 
     def disable_caching
       response.headers["Cache-Control"] = "no-store"
-      response.headers["Expires"] = Time::UNIX_EPOCH.to_s
+      response.headers["Expires"] = "Sun, 16 Aug 1987 07:00:00 GMT"
       continue
     end
 

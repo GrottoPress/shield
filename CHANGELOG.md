@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Fix `#redirect_back` redirecting to login page
+- Fix invalid HTTP date format for "Expires" header in `#disable_cache` action pipe
 
 ## [0.1.0] - 2020-08-15
 
