@@ -26,7 +26,7 @@
 
     Returns true if current user is **not** logged in. It is the inverse of `#logged_in?`
 
-- `#previous_page_url`:
+- `#previous_page_path`:
 
     Returns the previous page URL, retrieved from session rather than from request headers.
 

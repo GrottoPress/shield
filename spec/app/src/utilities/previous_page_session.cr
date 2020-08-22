@@ -1,3 +1,3 @@
-struct PreviousPageSession < BaseSession
-  include Shield::PreviousPageSession
+struct PagePathSession < BaseSession
+  include Shield::PagePathSession
 end

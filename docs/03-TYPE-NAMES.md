@@ -47,8 +47,8 @@
 ### Utilities
 
 - `LoginSession`
+- `PagePathSession`
 - `PasswordResetSession`
-- `PreviousPageSession`
 
 ### Helpers
 
