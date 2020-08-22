@@ -44,6 +44,14 @@
 - `PasswordResets::New`
 - `PasswordResets::Show`
 
+### Pages
+
+- `CurrentUser::EditPage`
+- `CurrentUser::NewPage`
+- `Logins::NewPage`
+- `PasswordResets::EditPage`
+- `PasswordResets::NewPage`
+
 ### Utilities
 
 - `LoginSession`
