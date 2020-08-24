@@ -4,7 +4,10 @@ abstract class ApiAction < Lucky::Action
   accepted_formats [:json]
 
   def do_require_logged_in_failed
-    json({logged_in: false})
+    json({
+      logged_in: false,
+      return_url: ReturnUrlSession.new(session).return_url
+    })
   end
 
   def do_require_logged_out_failed

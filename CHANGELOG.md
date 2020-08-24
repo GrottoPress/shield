@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased] - 
 
+### Added
+- Add support for return URL (a session value to redirect back to)
+
 ### Changed
 - Introduce `Shield::Session` as base type for all session wrappers
-- Add `allow_external` parameter to `#redirect_back` in actions
 - Improve previous page determination
 
 ### Fixed

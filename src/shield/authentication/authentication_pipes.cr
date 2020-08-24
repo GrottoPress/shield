@@ -4,6 +4,7 @@ module Shield::AuthenticationPipes
       if logged_in?
         continue
       else
+        ReturnUrlSession.new(session).set(request)
         do_require_logged_in_failed
       end
     end

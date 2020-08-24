@@ -40,18 +40,16 @@ describe Shield::ActionPipes do
       response.headers["Location"].should eq(Home::Index.path)
     end
 
-    it "redirects back to external URL" do
+    it "does not use the referrer URL" do
       client = AppClient.new
 
       response = client.exec(Home::Index)
       body(response)["page"].should eq("Home::Index")
 
-      referrer = "http://abc.def/gh"
-
       client.headers("Cookie": response.headers["Set-Cookie"]?)
-      client.headers("Referer": referrer)
+      client.headers("Referer": "http://abc.def/gh")
       response = client.exec(Home::Edit)
-      response.headers["Location"].should eq(referrer)
+      response.headers["Location"].should eq(Home::Index.path)
     end
   end
 end

@@ -6,6 +6,7 @@ describe Shield::AuthenticationPipes do
       response = body(AppClient.exec(Logins::Destroy))
 
       response["logged_in"]?.should be_false
+      response["return_url"]?.should eq(Logins::Destroy.path)
     end
   end
 

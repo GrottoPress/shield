@@ -9,15 +9,19 @@ module Shield::ActionPipes
       PageUrlSession.new(session).previous_page_url
     end
 
+    def return_url
+      ReturnUrlSession.new(session).return_url
+    end
+
     def redirect_back(
       *,
       fallback : String,
       status : Int32 = 302,
       allow_external = false
     )
-      # TODO: Pass `allow_external` to `super` in Lucky 0.24.0
-      return super(fallback: fallback, status: status) if allow_external
-      redirect to: (previous_page_url || fallback), status: status
+      url = return_url || previous_page_url || fallback
+      ReturnUrlSession.new(session).delete
+      redirect to: url, status: status
     end
   end
 end
