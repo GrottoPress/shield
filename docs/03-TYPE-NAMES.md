@@ -55,7 +55,7 @@
 ### Utilities
 
 - `LoginSession`
-- `PagePathSession`
+- `PageUrlSession`
 - `PasswordResetSession`
 
 ### Helpers

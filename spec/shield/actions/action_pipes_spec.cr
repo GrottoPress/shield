@@ -1,8 +1,8 @@
 require "../../spec_helper"
 
 describe Shield::ActionPipes do
-  describe "#set_previous_page_path" do
-    it "sets previous page path" do
+  describe "#set_previous_page_url" do
+    it "sets previous page URL" do
       client = AppClient.new
 
       response = client.exec(Home::Index)

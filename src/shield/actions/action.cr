@@ -8,7 +8,7 @@ module Shield::Action
     include Shield::AuthenticationPipes
     include Shield::AuthorizationPipes
 
-    before :set_previous_page_path
+    before :set_previous_page_url
     before :disable_caching
     before :require_logged_in
     before :require_logged_out

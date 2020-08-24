@@ -44,16 +44,16 @@
 
    `Shield::PasswordResetSession` is a wrapper around *Lucky* sessions that deals with session keys and values for password resets, and handles verification of password reset tokens retrieved from session.
 
-1. `PagePathSession`:
+1. `PageUrlSession`:
 
    ```crystal
    # ->>> src/utilities/previous_page_session.cr
 
-   class PagePathSession < BaseSession # Or `struct ...`
+   class PageUrlSession < BaseSession # Or `struct ...`
      # ...
-     include Shield::PagePathSession
+     include Shield::PageUrlSession
      # ...
    end
    ```
 
-   `Shield::PagePathSession` is a wrapper around *Lucky* sessions that deals with session keys and values for the page previous to the current page.
+   `Shield::PageUrlSession` is a wrapper around *Lucky* sessions that deals with session keys and values for the page previous to the current page.
