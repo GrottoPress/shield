@@ -138,7 +138,7 @@
 
      # What to do if `run_operation` succeeds
      #
-     #def do_run_operation_succeeded(operation, login)
+     #def do_run_operation_succeeded(operation, password_reset)
      #  success_action
      #end
 
