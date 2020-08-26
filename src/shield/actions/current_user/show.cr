@@ -2,7 +2,7 @@ module Shield::CurrentUser::Show
   macro included
     skip :require_logged_out
 
-    # get "/profile" do
+    # get "/account" do
     #   html ShowPage, user: user
     # end
 

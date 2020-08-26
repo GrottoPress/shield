@@ -98,7 +98,7 @@
      # ...
      include Shield::Logins::New
 
-     get "/sign-in" do
+     get "/log-in" do
        html NewPage
      end
      # ...
@@ -124,7 +124,7 @@
      # ...
      include Shield::Logins::Create
 
-     post "/sign-in" do
+     post "/log-in" do
        run_operation
      end
 
@@ -153,7 +153,7 @@
      # ...
      include Shield::Logins::Destroy
 
-     get "/sign-out" do
+     get "/log-out" do
        run_operation
      end
 
