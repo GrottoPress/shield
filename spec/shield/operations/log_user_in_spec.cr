@@ -12,7 +12,7 @@ describe Shield::LogUserIn do
     )
 
     session = Lucky::Session.new
-    ip_address = Socket::IPAddress.new("127.0.0.1", 5555)
+    ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
 
     login = LogUserIn.create!(
       params(email: email, password: password),

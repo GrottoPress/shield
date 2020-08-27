@@ -5,7 +5,7 @@ describe Shield::StartPasswordReset do
     email = "user@example.tld"
 
     user = create_current_user!(email: email)
-    ip_address = Socket::IPAddress.new("127.0.0.1", 5555)
+    ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
 
     StartPasswordReset.create(
       params(email: email),
