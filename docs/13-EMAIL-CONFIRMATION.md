@@ -225,7 +225,7 @@ This is particularly important, since email addresses are usually the only means
 
    class CurrentUser::Create < BrowserAction
      # ...
-     include EmailConfirmationCurrentUser::Create
+     include Shield::EmailConfirmationCurrentUser::Create
 
      post "/register" do
        run_operation
@@ -256,7 +256,7 @@ This is particularly important, since email addresses are usually the only means
 
    class CurrentUser::Show < BrowserAction
      # ...
-     include EmailConfirmationCurrentUser::Show
+     include Shield::EmailConfirmationCurrentUser::Show
 
      get "/account" do
        html ShowPage, user: user
@@ -273,7 +273,7 @@ This is particularly important, since email addresses are usually the only means
 
    class CurrentUser::Edit < BrowserAction
      # ...
-     include EmailConfirmationCurrentUser::Edit
+     include Shield::EmailConfirmationCurrentUser::Edit
 
      get "/account/edit" do
        html EditPage, user: user
@@ -300,7 +300,7 @@ This is particularly important, since email addresses are usually the only means
 
    class CurrentUser::Update < BrowserAction
      # ...
-     include EmailConfirmationCurrentUser::Update
+     include Shield::EmailConfirmationCurrentUser::Update
 
      patch "/account" do
        run_operation
