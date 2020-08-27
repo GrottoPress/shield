@@ -18,10 +18,12 @@
 
 ### Emails
 
+- `EmailConfirmationRequestEmail`
 - `GuestPasswordResetRequestEmail`
 - `LoginNotificationEmail`
 - `PasswordChangeNotificationEmail`
 - `PasswordResetRequestEmail`
+- `UserEmailConfirmationRequestEmail`
 
 ### Operations
 
@@ -29,16 +31,25 @@
 - `LogUserIn`
 - `LogUserOut`
 - `RegisterCurrentUser`
+- `RegisterEmailConfirmationCurrentUser`
 - `RegisterUser`
 - `ResetPassword`
 - `SaveUserOptions`
+- `StartEmailConfirmation`
 - `StartPasswordReset`
+- `UpdateConfirmedEmail`
 - `UpdateCurrentUser`
+- `UpdateEmailConfirmationCurrentUser`
 - `UpdateUser`
 
 ### Actions
 
+- `CurrentUser::New`
 - `CurrentUser::Show`
+- `EmailConfirmations::Create`
+- `EmailConfirmations::New`
+- `EmailConfirmations::Show`
+- `EmailConfirmations::Update`
 - `Logins::New`
 - `PasswordResets::Edit`
 - `PasswordResets::New`
@@ -48,12 +59,15 @@
 
 - `CurrentUser::EditPage`
 - `CurrentUser::NewPage`
+- `EmailConfirmations::NewPage`
 - `Logins::NewPage`
 - `PasswordResets::EditPage`
 - `PasswordResets::NewPage`
 
 ### Utilities
 
+- `EmailConfirmation`
+- `EmailConfirmationSession`
 - `LoginSession`
 - `PageUrlSession`
 - `PasswordResetSession`

@@ -14,6 +14,10 @@
 
   Logs out the current user if their IP address changed from the one they originally used to log in.
 
+- `#pin_email_confirmation_to_ip_address`:
+
+  Invalidates email confirmation if the requester's IP address differs from the one they originally used to start the request.
+
 - `#pin_password_reset_to_ip_address`:
 
   Invalidates a password reset if the requester's IP address differs from the one they originally used to request the password reset.

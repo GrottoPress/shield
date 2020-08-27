@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - 
 
 ### Added
+- Add email confirmation
 - Add support for return URL (a session value to redirect back to)
 
 ### Changed
