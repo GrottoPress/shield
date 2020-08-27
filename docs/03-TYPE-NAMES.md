@@ -32,7 +32,6 @@
 - `LogUserOut`
 - `RegisterCurrentUser`
 - `RegisterEmailConfirmationCurrentUser`
-- `RegisterUser`
 - `ResetPassword`
 - `SaveUserOptions`
 - `StartEmailConfirmation`
@@ -40,20 +39,26 @@
 - `UpdateConfirmedEmail`
 - `UpdateCurrentUser`
 - `UpdateEmailConfirmationCurrentUser`
-- `UpdateUser`
 
 ### Actions
 
+- `CurrentUser::Create`
+- `CurrentUser::Edit`
 - `CurrentUser::New`
 - `CurrentUser::Show`
+- `CurrentUser::Update`
 - `EmailConfirmations::Create`
 - `EmailConfirmations::New`
 - `EmailConfirmations::Show`
 - `EmailConfirmations::Update`
+- `Logins::Create`
+- `Logins::Destroy`
 - `Logins::New`
+- `PasswordResets::Create`
 - `PasswordResets::Edit`
 - `PasswordResets::New`
 - `PasswordResets::Show`
+- `PasswordResets::Update`
 
 ### Pages
 
@@ -71,6 +76,7 @@
 - `LoginSession`
 - `PageUrlSession`
 - `PasswordResetSession`
+- `ReturnUrlSession`
 
 ### Helpers
 
