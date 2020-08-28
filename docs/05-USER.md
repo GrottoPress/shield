@@ -19,7 +19,7 @@
    `Shield::User` adds the following columns:
    
    - `email : String`
-   - `password_hash : String`
+   - `password_digest : String`
    
    ...and sets up the relevant associations with other *Shield* models.
 
@@ -39,7 +39,7 @@
          add_timestamps
 
          add email : String, unique: true
-         add password_hash : String
+         add password_digest : String
          # ...
        end
      end

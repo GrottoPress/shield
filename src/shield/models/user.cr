@@ -6,6 +6,6 @@ module Shield::User
     has_one options : UserOptions
 
     column email : String
-    column password_hash : String
+    column password_digest : String
   end
 end

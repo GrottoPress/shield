@@ -8,7 +8,7 @@ module Shield::AuthenticationColumns(T)
 
     primary_key id : Int64
 
-    column token_hash : String
+    column token_digest : String
     column ip_address : String
     column status : T::Status
     column started_at : Time

@@ -19,7 +19,7 @@ module Shield::PasswordResetSession
 
       CryptoHelper.verify_sha256?(
         password_reset_token!,
-        password_reset!.token_hash
+        password_reset!.token_digest
       )
     end
 

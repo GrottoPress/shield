@@ -25,7 +25,7 @@ module Shield::StartAuthentication(T)
 
     private def set_token
       @token = CryptoHelper.generate_token
-      token_hash.value = CryptoHelper.hash_sha256(token)
+      token_digest.value = CryptoHelper.hash_sha256(token)
     end
   end
 end

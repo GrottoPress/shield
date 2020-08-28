@@ -16,7 +16,7 @@ module Shield::LoginSession
 
     def verify? : Bool?
       return unless login && login_token
-      CryptoHelper.verify_sha256?(login_token!, login!.token_hash)
+      CryptoHelper.verify_sha256?(login_token!, login!.token_digest)
     end
 
     # To mitigate timing attacks

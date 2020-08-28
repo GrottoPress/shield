@@ -10,7 +10,7 @@ describe Shield::UpdatePassword do
       password_confirmation: password
     )
 
-    CryptoHelper.verify_bcrypt?(password, user.password_hash).should be_true
+    CryptoHelper.verify_bcrypt?(password, user.password_digest).should be_true
   end
 
   it "does not update password if new password empty" do
@@ -22,7 +22,7 @@ describe Shield::UpdatePassword do
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
-      updated_user.password_hash.should eq(user.password_hash)
+      updated_user.password_digest.should eq(user.password_digest)
     end
   end
 

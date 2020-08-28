@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Introduce `Shield::Session` as base type for all session wrappers
 - Improve previous page determination
+- Rename `*_hash` columns to `*_digest`.
 
 ### Fixed
 - Fix `#redirect_back` redirecting to login page

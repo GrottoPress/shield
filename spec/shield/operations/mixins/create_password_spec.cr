@@ -10,7 +10,7 @@ describe Shield::CreatePassword do
       password_confirmation: password
     )
 
-    CryptoHelper.verify_bcrypt?(password, user.password_hash).should be_true
+    CryptoHelper.verify_bcrypt?(password, user.password_digest).should be_true
   end
 
   it "requires password" do
@@ -22,7 +22,7 @@ describe Shield::CreatePassword do
       user.should be_nil
 
       assert_invalid(operation.password, " required")
-      assert_valid(operation.password_hash, " required")
+      assert_valid(operation.password_digest, " required")
     end
   end
 

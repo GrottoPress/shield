@@ -10,22 +10,22 @@ module Shield::UpdatePassword
     after_commit notify_password_change
 
     before_save do
-      set_password_hash
+      set_password_digest
     end
 
-    private def set_password_hash
+    private def set_password_digest
       password.value.try do |value|
         return if CryptoHelper.verify_bcrypt?(
           value,
-          password_hash.original_value.to_s
+          password_digest.original_value.to_s
         )
 
-        password_hash.value = CryptoHelper.hash_bcrypt(value)
+        password_digest.value = CryptoHelper.hash_bcrypt(value)
       end
     end
 
     private def log_out_everywhere(user : User)
-      return unless password_hash.changed?
+      return unless password_digest.changed?
 
       LoginQuery.new
         .status(Login::Status.new :started)
@@ -34,7 +34,7 @@ module Shield::UpdatePassword
     end
 
     private def notify_password_change(user : User)
-      return unless password_hash.changed?
+      return unless password_digest.changed?
       return unless user.options!.password_notify
 
       mail_later PasswordChangeNotificationEmail, self, user
