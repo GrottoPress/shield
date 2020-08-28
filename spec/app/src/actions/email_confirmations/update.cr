@@ -15,8 +15,4 @@ class EmailConfirmations::Update < ApiAction
   def do_run_operation_failed(operation, user)
     json({status: 1})
   end
-
-  def authorize? : Bool
-    true
-  end
 end

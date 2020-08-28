@@ -10,7 +10,7 @@ class EmailConfirmationRequestEmail < BaseEmail
   end
 
   private def heading
-    "Reset your password"
+    "Confirm your email"
   end
 
   private def text_message : String
