@@ -159,6 +159,10 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
      # ...
      include Shield::EmailConfirmations::Update
 
+     # If you are worried about users on mobile, you may want
+     # to disable pinning an email confirmation to its IP address
+     #skip :pin_email_confirmation_to_ip_address
+
      patch "/email-confirmations" do
        run_operation
      end
@@ -189,6 +193,10 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
    class CurrentUser::New < BrowserAction
      # ...
      include Shield::EmailConfirmationCurrentUser::New
+
+     # If you are worried about users on mobile, you may want
+     # to disable pinning an email confirmation to its IP address
+     #skip :pin_email_confirmation_to_ip_address
 
      get "/register" do
        run_operation
@@ -228,6 +236,10 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
    class CurrentUser::Create < BrowserAction
      # ...
      include Shield::EmailConfirmationCurrentUser::Create
+
+     # If you are worried about users on mobile, you may want
+     # to disable pinning an email confirmation to its IP address
+     #skip :pin_email_confirmation_to_ip_address
 
      post "/register" do
        run_operation

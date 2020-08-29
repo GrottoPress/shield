@@ -195,6 +195,10 @@
      # ...
      include Shield::PasswordResets::Edit
 
+     # If you are worried about users on mobile, you may want
+     # to disable pinning a password reset to its IP address
+     #skip :pin_password_reset_to_ip_address
+
      get "/password-resets/edit" do
        run_operation
      end
@@ -231,6 +235,10 @@
    class PasswordResets::Update < BrowserAction
      # ...
      include Shield::PasswordResets::Update
+
+     # If you are worried about users on mobile, you may want
+     # to disable pinning a password reset to its IP address
+     #skip :pin_password_reset_to_ip_address
 
      patch "/password-resets" do
        run_operation
