@@ -6,6 +6,8 @@ Email confirmation provides very little, if any, security benefits. It, however,
 
 This is particularly important, since email addresses are usually the only means to reset passwords. If a user supplied the wrong email address, and lost their password, they are out of luck.
 
+Further, email confirmation is the only way within *Shield* to prevent user enumeration **during user registration**. If the given address is already registered, *Shield* sends an email anyway, without disclosing this fact.
+
 [Read this](https://www.forbes.com/sites/ianmorris/2017/08/01/when-companies-dont-verify-email-addresses-this-is-what-happens/) for more reasons why email confirmation may be important.
 
 1. Set up operations:
