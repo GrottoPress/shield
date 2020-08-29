@@ -15,7 +15,7 @@ describe PasswordResetSession do
       session = Lucky::Session.new
 
       password_reset = StartPasswordReset.create!(
-        email: email,
+        params(email: email),
         remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
       )
       password_reset.status.started?.should be_true

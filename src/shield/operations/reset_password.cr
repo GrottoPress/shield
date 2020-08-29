@@ -15,9 +15,9 @@ module Shield::ResetPassword
 
     after_commit delete_session
 
-    private def set_password_hash
+    private def set_password_digest
       password.value.try do |value|
-        password_hash.value = CryptoHelper.hash_bcrypt(value)
+        password_digest.value = CryptoHelper.hash_bcrypt(value)
       end
     end
 

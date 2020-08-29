@@ -10,7 +10,7 @@ describe Shield::UpdatePassword do
       password_confirmation: password
     )
 
-    CryptoHelper.verify_bcrypt?(password, user.password_hash).should be_true
+    CryptoHelper.verify_bcrypt?(password, user.password_digest).should be_true
   end
 
   it "does not update password if new password empty" do
@@ -18,12 +18,11 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update(
       user,
-      password: "",
-      password_confirmation: "",
+      params(password: "", password_confirmation: ""),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
-      updated_user.password_hash.should eq(user.password_hash)
+      updated_user.password_digest.should eq(user.password_digest)
     end
   end
 
@@ -39,8 +38,7 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update(
       user,
-      password: new_password,
-      password_confirmation: new_password,
+      params(password: new_password, password_confirmation: new_password),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -63,8 +61,7 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update(
       user,
-      password: new_password,
-      password_confirmation: new_password,
+      params(password: new_password, password_confirmation: new_password),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -85,9 +82,11 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update(
       user,
-      email: "user2@example.tld",
-      password: password,
-      password_confirmation: password,
+      params(
+        email: "user2@example.tld",
+        password: password,
+        password_confirmation: password
+      ),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -110,15 +109,13 @@ describe Shield::UpdatePassword do
     )
 
     login_1 = LogUserIn.create!(
-      email: email,
-      password: password,
+      params(email: email, password: password),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
     login_2 = LogUserIn.create!(
-      email: email,
-      password: password,
+      params(email: email, password: password),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
@@ -128,8 +125,7 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update!(
       user,
-      password: new_password,
-      password_confirmation: new_password,
+      params(password: new_password, password_confirmation: new_password),
       current_login: nil
     )
 
@@ -149,22 +145,19 @@ describe Shield::UpdatePassword do
     )
 
     login_1 = LogUserIn.create!(
-      email: email,
-      password: password,
+      params(email: email, password: password),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
     login_2 = LogUserIn.create!(
-      email: email,
-      password: password,
+      params(email: email, password: password),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
     current_login = LogUserIn.create!(
-      email: email,
-      password: password,
+      params(email: email, password: password),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
@@ -175,8 +168,7 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update!(
       user,
-      password: new_password,
-      password_confirmation: new_password,
+      params(password: new_password, password_confirmation: new_password),
       current_login: current_login
     )
 

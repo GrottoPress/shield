@@ -6,6 +6,7 @@ describe Shield::AuthenticationPipes do
       response = body(AppClient.exec(Logins::Destroy))
 
       response["logged_in"]?.should be_false
+      response["return_url"]?.should eq(Logins::Destroy.path)
     end
   end
 
@@ -100,7 +101,7 @@ describe Shield::AuthenticationPipes do
       )
 
       StartPasswordReset.create(
-        email: email,
+        params(email: email),
         remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
@@ -130,7 +131,7 @@ describe Shield::AuthenticationPipes do
       )
 
       StartPasswordReset.create(
-        email: email,
+        params(email: email),
         remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
@@ -144,6 +145,44 @@ describe Shield::AuthenticationPipes do
 
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(PasswordResets::Update)
+
+        body(response)["ip_address_changed"]?.should be_true
+      end
+    end
+  end
+
+  describe "#pin_email_confirmation_to_ip_address" do
+    it "accepts email confirmation from same IP" do
+      StartEmailConfirmation.submit(
+        params(email: "user@example.tld"),
+        remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
+      ) do |operation, email_confirmation|
+        email_confirmation = email_confirmation.not_nil!
+
+        client = AppClient.new
+
+        response = client.get(email_confirmation.url(operation))
+
+        client.headers("Cookie": response.headers["Set-Cookie"])
+        response = client.exec(CurrentUser::New)
+
+        body(response)["ip_address_changed"]?.should be_nil
+      end
+    end
+
+    it "rejects email confirmation from different IP" do
+      StartEmailConfirmation.submit(
+        params(email: "user@example.tld"),
+        remote_ip: Socket::IPAddress.new("129.0.0.3", 9000)
+      ) do |operation, email_confirmation|
+        email_confirmation = email_confirmation.not_nil!
+
+        client = AppClient.new
+
+        response = client.get(email_confirmation.url(operation))
+
+        client.headers("Cookie": response.headers["Set-Cookie"])
+        response = client.exec(CurrentUser::New)
 
         body(response)["ip_address_changed"]?.should be_true
       end

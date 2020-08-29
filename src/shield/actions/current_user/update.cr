@@ -2,7 +2,7 @@ module Shield::CurrentUser::Update
   macro included
     skip :require_logged_out
 
-    # patch "/profile" do
+    # patch "/account" do
     #   run_operation
     # end
 

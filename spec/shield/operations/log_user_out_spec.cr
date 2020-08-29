@@ -14,8 +14,7 @@ describe Shield::LogUserOut do
     session = Lucky::Session.new
 
     LogUserIn.create!(
-      email: email,
-      password: password,
+      params(email: email, password: password),
       session: session,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
@@ -24,7 +23,7 @@ describe Shield::LogUserOut do
 
     LogUserOut.update(
       LoginSession.new(session).login!,
-      Avram::Params.new({"status" => "Expired"}),
+      params(status: "Expired"),
       status: Login::Status.new(:started),
       session: session
     ) do |operation, updated_login|

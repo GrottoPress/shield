@@ -2,7 +2,7 @@ module Shield::CurrentUser::Edit
   macro included
     skip :require_logged_out
 
-    # get "/profile/edit" do
+    # get "/account/edit" do
     #   html EditPage, user: user
     # end
 

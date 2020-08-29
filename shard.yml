@@ -1,6 +1,6 @@
 name: shield
-version: 0.1.0
-description: Comprehensive security for *Lucky* apps
+version: 0.2.0
+description: Comprehensive security for Lucky framework
 
 authors:
   - GrottoPress <info@grottopress.com>

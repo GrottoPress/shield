@@ -19,7 +19,7 @@
    `Shield::User` adds the following columns:
    
    - `email : String`
-   - `password_hash : String`
+   - `password_digest : String`
    
    ...and sets up the relevant associations with other *Shield* models.
 
@@ -39,7 +39,7 @@
          add_timestamps
 
          add email : String, unique: true
-         add password_hash : String
+         add password_digest : String
          # ...
        end
      end
@@ -88,7 +88,7 @@
      # ...
      include Shield::CurrentUser::New
 
-     get "/sign-up" do
+     get "/register" do
        html NewPage
      end
      # ...
@@ -113,7 +113,7 @@
      # ...
      include Shield::CurrentUser::Create
 
-     post "/sign-up" do
+     post "/register" do
        run_operation
      end
 
@@ -129,6 +129,75 @@
      #def do_run_operation_failed(operation)
      #  flash.failure = "Could not create your account"
      #  html NewPage, operation: operation
+     #end
+     # ...
+   end
+   ```
+
+   ---
+   ```crystal
+   # ->>> src/actions/current_user/show.cr
+
+   class CurrentUser::Show < BrowserAction
+     # ...
+     include Shield::CurrentUser::Show
+
+     get "/account" do
+       html ShowPage, user: user
+     end
+     # ...
+   end
+   ```
+
+   ---
+   ```crystal
+   # ->>> src/actions/current_user/edit.cr
+
+   class CurrentUser::Show < BrowserAction
+     # ...
+     include Shield::CurrentUser::Show
+
+     get "/account/edit" do
+       html EditPage, user: user
+     end
+     # ...
+   end
+   ```
+
+   You may need to add `CurrentUser::EditPage` in `src/pages/current_user/edit_page.cr`, containing your user edit form.
+
+   The form should be `PATCH`ed to `CurrentUser::Update`, with the following parameters:
+
+   - `email : String`
+   - `password : String`
+   - `password_confirmation : String`
+
+   You may skip this action if building an API.
+
+   ---
+   ```crystal
+   # ->>> src/actions/current_user/update.cr
+
+   class CurrentUser::Update < BrowserAction
+     # ...
+     include Shield::CurrentUser::Update
+
+     patch "/account" do
+       run_operation
+     end
+
+     # What to do if `run_operation` succeeds
+     #
+     #def do_run_operation_succeeded(operation, user)
+     #  flash.success = "Account updated successfully"
+     #  redirect to: Show
+     #end
+
+     # What to do if `run_operation` fails
+     #
+     #def do_run_operation_failed(operation)
+     #  flash.failure = "Could not update your account"
+     #  html EditPage, operation: operation, user: user
      #end
      # ...
    end

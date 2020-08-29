@@ -292,6 +292,8 @@ module Avram
 
     def self.submit!(*args, **named_args)
       submit(*args, **named_args) { |_, result| return result.not_nil! }
+    rescue
+      raise Avram::Rollback.new
     end
 
     def self.submit(*args, **named_args)

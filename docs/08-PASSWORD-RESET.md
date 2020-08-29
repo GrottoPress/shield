@@ -22,7 +22,7 @@
    - `ip_address : String`
    - `started_at : Time`
    - `status : PasswordReset::Status`
-   - `token_hash : String`
+   - `token_digest : String`
    
    ...and sets up a one-to-many association with the `User` model.
 
@@ -43,7 +43,7 @@
 
          add_belongs_to user : User, on_delete: :cascade
 
-         add token_hash : String
+         add token_digest : String
          add ip_address : String
          add status : String
          add started_at : Time
@@ -138,7 +138,7 @@
 
      # What to do if `run_operation` succeeds
      #
-     #def do_run_operation_succeeded(operation, login)
+     #def do_run_operation_succeeded(operation, password_reset)
      #  success_action
      #end
 
@@ -195,6 +195,10 @@
      # ...
      include Shield::PasswordResets::Edit
 
+     # If you are worried about users on mobile, you may want
+     # to disable pinning a password reset to its IP address
+     #skip :pin_password_reset_to_ip_address
+
      get "/password-resets/edit" do
        run_operation
      end
@@ -231,6 +235,10 @@
    class PasswordResets::Update < BrowserAction
      # ...
      include Shield::PasswordResets::Update
+
+     # If you are worried about users on mobile, you may want
+     # to disable pinning a password reset to its IP address
+     #skip :pin_password_reset_to_ip_address
 
      patch "/password-resets" do
        run_operation

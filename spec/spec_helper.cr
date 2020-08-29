@@ -25,6 +25,12 @@ def assert_invalid(attribute, text)
   attribute.errors.select(&.includes? text).size.should eq(1)
 end
 
+def params(**named_args)
+  Avram::Params.new named_args.to_h
+    .transform_keys(&.to_s)
+    .transform_values &.to_s
+end
+
 def body(response)
   JSON.parse(response.body)
 end
@@ -52,16 +58,14 @@ def create_user(
   login_notify = true,
   password_notify = true
 )
-  params = Avram::Params.new({
-    "email" => email,
-    "password" => password,
-    "password_confirmation" => password_confirmation,
-    "level" => level.to_s,
-    "login_notify" => login_notify.to_s,
-    "password_notify" => password_notify.to_s,
-  })
-
-  RegisterUser.create(params) do |operation, user|
+  RegisterUser.create(params(
+    email: email,
+    password: password,
+    password_confirmation: password_confirmation,
+    level: level.to_s,
+    login_notify: login_notify.to_s,
+    password_notify: password_notify.to_s,
+  )) do |operation, user|
     yield operation, user
   end
 end
@@ -75,16 +79,14 @@ def create_user!(
   login_notify = true,
   password_notify = true
 )
-  params = Avram::Params.new({
-    "email" => email,
-    "password" => password,
-    "password_confirmation" => password_confirmation,
-    "level" => level.to_s,
-    "login_notify" => login_notify.to_s,
-    "password_notify" => password_notify.to_s,
-  })
-
-  RegisterUser.create!(params)
+  RegisterUser.create!(params(
+    email: email,
+    password: password,
+    password_confirmation: password_confirmation,
+    level: level.to_s,
+    login_notify: login_notify.to_s,
+    password_notify: password_notify.to_s,
+  ))
 end
 
 def create_current_user(
@@ -95,15 +97,13 @@ def create_current_user(
   login_notify = true,
   password_notify = true
 )
-  params = Avram::Params.new({
-    "email" => email,
-    "password" => password,
-    "password_confirmation" => password_confirmation,
-    "login_notify" => login_notify.to_s,
-    "password_notify" => password_notify.to_s,
-  })
-
-  RegisterCurrentUser.create(params) do |operation, user|
+  RegisterCurrentUser.create(params(
+    email: email,
+    password: password,
+    password_confirmation: password_confirmation,
+    login_notify: login_notify.to_s,
+    password_notify: password_notify.to_s,
+  )) do |operation, user|
     yield operation, user
   end
 end
@@ -116,15 +116,13 @@ def create_current_user!(
   login_notify = true,
   password_notify = true
 )
-  params = Avram::Params.new({
-    "email" => email,
-    "password" => password,
-    "password_confirmation" => password_confirmation,
-    "login_notify" => login_notify.to_s,
-    "password_notify" => password_notify.to_s,
-  })
-
-  RegisterCurrentUser.create!(params)
+  RegisterCurrentUser.create!(params(
+    email: email,
+    password: password,
+    password_confirmation: password_confirmation,
+    login_notify: login_notify.to_s,
+    password_notify: password_notify.to_s,
+  ))
 end
 
 Avram::Migrator::Runner.new.ensure_migrated!

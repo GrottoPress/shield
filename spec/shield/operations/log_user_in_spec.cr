@@ -12,11 +12,10 @@ describe Shield::LogUserIn do
     )
 
     session = Lucky::Session.new
-    ip_address = Socket::IPAddress.new("127.0.0.1", 5555)
+    ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
 
     login = LogUserIn.create!(
-      email: email,
-      password: password,
+      params(email: email, password: password),
       session: session,
       remote_ip: ip_address
     )
@@ -30,8 +29,7 @@ describe Shield::LogUserIn do
 
   it "requires valid IP address" do
     LogUserIn.create(
-      email: "incorrect@example.tld",
-      password: "password12U~password",
+      params(email: "incorrect@example.tld", password: "password12U~password"),
       session: Lucky::Session.new,
       remote_ip: nil
     ) do |operation, login|
@@ -47,8 +45,7 @@ describe Shield::LogUserIn do
     create_current_user!(password: password, password_confirmation: password)
 
     LogUserIn.create(
-      email: "incorrect@example.tld",
-      password: password,
+      params(email: "incorrect@example.tld", password: password),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, login|
@@ -71,8 +68,7 @@ describe Shield::LogUserIn do
     )
 
     LogUserIn.create(
-      email: email,
-      password: "assword12U~passwor",
+      params(email: email, password: "assword12U~passwor"),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, login|
@@ -94,8 +90,7 @@ describe Shield::LogUserIn do
     )
 
     LogUserIn.create(
-      email: email,
-      password: password,
+      params(email: email, password: password),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, login|
@@ -117,8 +112,7 @@ describe Shield::LogUserIn do
     )
 
     LogUserIn.create(
-      email: email,
-      password: password,
+      params(email: email, password: password),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, login|

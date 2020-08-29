@@ -14,7 +14,7 @@ module Shield::UserHelper
     end
 
     def verify_user?(user : User, password : String) : Bool
-      CryptoHelper.verify_bcrypt?(password, user.password_hash)
+      CryptoHelper.verify_bcrypt?(password, user.password_digest)
     end
 
     def user_from_email(email : String) : User?

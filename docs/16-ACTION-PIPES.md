@@ -14,6 +14,10 @@
 
   Logs out the current user if their IP address changed from the one they originally used to log in.
 
+- `#pin_email_confirmation_to_ip_address`:
+
+  Invalidates email confirmation if the requester's IP address differs from the one they originally used to start the request.
+
 - `#pin_password_reset_to_ip_address`:
 
   Invalidates a password reset if the requester's IP address differs from the one they originally used to request the password reset.
@@ -32,6 +36,6 @@
 
 - `#set_previous_page_url`:
 
-  Sets the current URL in session as the previous page URL to be used by the next action. *Shield* overrides `#redirect_back` to use this URL, instead of the value from the HTTP referrer header that Lucky uses.
+  Sets the current URL in session as the previous page URL to be used by the next action. *Shield* overrides `#redirect_back` to use this URL, instead of the value from the HTTP referrer header that *Lucky* uses.
 
 Because `#require_logged_in` and `#require_logged_out` are active at the same time, you are required to explicitly skip at least one of them in your actions.

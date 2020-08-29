@@ -5,10 +5,10 @@ describe Shield::StartPasswordReset do
     email = "user@example.tld"
 
     user = create_current_user!(email: email)
-    ip_address = Socket::IPAddress.new("127.0.0.1", 5555)
+    ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
 
     StartPasswordReset.create(
-      email: email,
+      params(email: email),
       remote_ip: ip_address
     ) do |operation, password_reset|
       password_reset.should be_a(PasswordReset)
@@ -16,14 +16,14 @@ describe Shield::StartPasswordReset do
 
       password_reset.try &.ended_at.should be_nil
       password_reset.try &.ip_address.should(eq ip_address.address)
-      password_reset.try &.token_hash.should_not(be_empty)
+      password_reset.try &.token_digest.should_not(be_empty)
       password_reset.try &.user_id.should(eq user.id)
     end
   end
 
   it "requires existing email" do
     StartPasswordReset.create(
-      email: "user@example.tld",
+      params(email: "user@example.tld"),
       remote_ip: nil
     ) do |operation, password_reset|
       password_reset.should be_nil
@@ -35,7 +35,7 @@ describe Shield::StartPasswordReset do
 
   it "requires valid IP address" do
     StartPasswordReset.create(
-      email: "user@example.tld",
+      params(email: "user@example.tld"),
       remote_ip: nil
     ) do |operation, password_reset|
       password_reset.should be_nil
@@ -46,7 +46,7 @@ describe Shield::StartPasswordReset do
 
   it "rejects invalid email" do
     StartPasswordReset.create(
-      email: "email",
+      params(email: "email"),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       password_reset.should be_nil
@@ -57,7 +57,7 @@ describe Shield::StartPasswordReset do
 
   it "sends guest email" do
     StartPasswordReset.create(
-      email: "user@example.tld",
+      params(email: "user@example.tld"),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       password_reset.should be_nil
@@ -71,7 +71,7 @@ describe Shield::StartPasswordReset do
     create_current_user!(email: email)
 
     StartPasswordReset.create(
-      email: email,
+      params(email: email),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       GuestPasswordResetRequestEmail.new(operation).should_not be_delivered

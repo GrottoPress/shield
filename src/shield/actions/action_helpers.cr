@@ -8,17 +8,23 @@ module Shield::ActionHelpers
     def redirect_back(
       *,
       fallback : Lucky::Action.class,
-      status : HTTP::Status
+      status : HTTP::Status,
+      allow_external = false
     )
-      redirect_back fallback: fallback, status: status.value
+      redirect_back fallback: fallback.path,
+        status: status.value,
+        allow_external: allow_external
     end
 
     def redirect_back(
       *,
       fallback : Lucky::RouteHelper,
-      status : HTTP::Status
+      status : HTTP::Status,
+      allow_external = false
     )
-      redirect_back fallback: fallback, status: status.value
+      redirect_back fallback: fallback.path,
+        status: status.value,
+        allow_external: allow_external
     end
   end
 end

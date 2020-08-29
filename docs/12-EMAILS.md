@@ -128,7 +128,7 @@
 
 1. `GuestPasswordResetRequestEmail`:
 
-   This email sent to a valid email address that requested a password reset, but the email did not belong to any registered user of your application.
+   This email is sent to a valid email address that requested a password reset, but the email did not belong to any registered user of your application.
 
    ```crystal
    # ->>> src/emails/guest_password_reset_request_email.cr

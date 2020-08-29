@@ -11,11 +11,11 @@ describe Shield::SaveEmail do
   it "requires email" do
     password = "password1@Upassword"
 
-    RegisterCurrentUser.create(
+    RegisterCurrentUser.create(params(
       email: "",
       password: password,
       password_confirmation: password
-    ) do |operation, user|
+    )) do |operation, user|
       user.should be_nil
 
       assert_invalid(operation.email, " required")
@@ -25,11 +25,11 @@ describe Shield::SaveEmail do
   it "rejects invalid email" do
     password = "password1+Upassword"
 
-    RegisterCurrentUser.create(
+    RegisterCurrentUser.create(params(
       email: "user",
       password: password,
       password_confirmation: password
-    ) do |operation, user|
+    )) do |operation, user|
       user.should be_nil
 
       assert_invalid(operation.email, "format is invalid")
@@ -47,7 +47,7 @@ describe Shield::SaveEmail do
 
     create_current_user!(**params)
 
-    RegisterCurrentUser.create(**params) do |operation, user|
+    RegisterCurrentUser.create(params(**params)) do |operation, user|
       user.should be_nil
 
       assert_invalid(operation.email, "already taken")

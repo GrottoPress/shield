@@ -1,8 +1,5 @@
 module Shield::PasswordResetSession
   macro included
-    def initialize(@session : Lucky::Session)
-    end
-
     def verify!
       verify.not_nil!
     end
@@ -22,7 +19,7 @@ module Shield::PasswordResetSession
 
       CryptoHelper.verify_sha256?(
         password_reset_token!,
-        password_reset!.token_hash
+        password_reset!.token_digest
       )
     end
 

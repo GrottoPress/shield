@@ -25,7 +25,7 @@ Find the complete documentation of *Shield* in the `docs/` directory of this rep
 - [x] Password change notifications
 - [x] Pin authentication session to its IP address
 - [x] Authorization
-- [ ] Email confirmation (verification)
+- [x] Email confirmation
 - [ ] Anti-spam
 - [ ] Web Application Firewall (WAF)
 - [ ] Multi-factor authentication
@@ -51,6 +51,7 @@ Update the file with your own details. Then run tests with `source .env.sh && cr
 ## Contributing
 
 1. [Fork it](https://github.com/GrottoPress/shield/fork)
+1. Switch to the `dev` branch: `git checkout dev`
 1. Create your feature branch: `git checkout -b my-new-feature`
 1. Make your changes, updating changelog and documentation as appropriate.
 1. Commit your changes: `git commit`

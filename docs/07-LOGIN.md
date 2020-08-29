@@ -22,7 +22,7 @@
    - `ip_address : String`
    - `started_at : Time`
    - `status : Login::Status`
-   - `token_hash : String`
+   - `token_digest : String`
    
    ...and sets up a one-to-many association with the `User` model.
 
@@ -43,7 +43,7 @@
 
          add_belongs_to user : User, on_delete: :cascade
 
-         add token_hash : String
+         add token_digest : String
          add ip_address : String
          add status : String
          add started_at : Time
@@ -98,7 +98,7 @@
      # ...
      include Shield::Logins::New
 
-     get "/sign-in" do
+     get "/log-in" do
        html NewPage
      end
      # ...
@@ -124,7 +124,7 @@
      # ...
      include Shield::Logins::Create
 
-     post "/sign-in" do
+     post "/log-in" do
        run_operation
      end
 
@@ -153,7 +153,7 @@
      # ...
      include Shield::Logins::Destroy
 
-     get "/sign-out" do
+     get "/log-out" do
        run_operation
      end
 

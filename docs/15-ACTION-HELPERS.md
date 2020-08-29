@@ -33,3 +33,7 @@
 - `#remote_ip`:
 
     Returns the client's IP address as `Socket::IPAddress?`.
+
+- `#return_url`:
+
+    Returns the URL to redirect back to, retrieved from session.

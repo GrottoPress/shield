@@ -4,6 +4,7 @@ module Shield::AuthenticationPipes
       if logged_in?
         continue
       else
+        ReturnUrlSession.new(session).set(request)
         do_require_logged_in_failed
       end
     end
@@ -39,6 +40,19 @@ module Shield::AuthenticationPipes
       end
     end
 
+    def pin_email_confirmation_to_ip_address
+      email_confirmation_session = EmailConfirmationSession.new(session)
+      email_confirmation = email_confirmation_session.email_confirmation
+
+      if email_confirmation.nil? ||
+        email_confirmation.not_nil!.ip_address == remote_ip.try &.address
+        continue
+      else
+        email_confirmation_session.delete
+        do_pin_email_confirmation_to_ip_address_failed
+      end
+    end
+
     def set_no_referrer_policy
       response.headers["Referrer-Policy"] = "no-referrer"
       continue
@@ -46,7 +60,7 @@ module Shield::AuthenticationPipes
 
     def disable_caching
       response.headers["Cache-Control"] = "no-store"
-      response.headers["Expires"] = Time::UNIX_EPOCH.to_s
+      response.headers["Expires"] = "Sun, 16 Aug 1987 07:00:00 GMT"
       continue
     end
 
@@ -68,6 +82,11 @@ module Shield::AuthenticationPipes
     def do_pin_password_reset_to_ip_address_failed
       flash.failure = "Your IP address has changed. Please try again."
       redirect to: PasswordResets::New
+    end
+
+    def do_pin_email_confirmation_to_ip_address_failed
+      flash.failure = "Your IP address has changed. Please try again."
+      redirect to: EmailConfirmations::New
     end
   end
 end
