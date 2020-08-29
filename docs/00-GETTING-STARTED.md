@@ -1,5 +1,11 @@
 ## Getting Started
 
+*Shield*'s core philosophy is to **deny by default**. It locks everything down, without regard to the security policies, or user experience, of the consumer application.
+
+It is up to the consumer application to explicitly disable features it finds an overkill for its specific use case. In *Shield*, most features can be disabled by `skip`ping the relevant action pipes.
+
+This posture makes it difficult for an application to be *insecure by accident*.
+
 ### Requirements
 
 - *Crystal* **0.35.1**: Learn to install *Crystal* [here &raquo;](https://crystal-lang.org/install/)
