@@ -1,4 +1,12 @@
 module Shield::PasswordResets::Create
+  # IMPORTANT!
+  #
+  # Prevent user enumeration by showing the same response
+  # even if the email address is not registered.
+  #
+  # REFERENCES:
+  #
+  # - https://www.troyhunt.com/everything-you-ever-wanted-to-know/
   macro included
     skip :require_logged_in
 
@@ -25,7 +33,7 @@ module Shield::PasswordResets::Create
 
     def do_run_operation_failed(operation)
       if operation.guest_email?
-        success_action
+        success_action # <= IMPORTANT!
       else
         flash.failure = "Password reset request failed"
         html NewPage, operation: operation
