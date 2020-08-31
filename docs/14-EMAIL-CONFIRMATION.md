@@ -452,7 +452,9 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
        The attempted action has failed, so there is nothing you should
        worry about.
 
-       If you have lost your password, however, try a password reset instead.
+       If you have lost your password, however, you may reset your password here:
+       
+       #{PasswordResets::New.url}
 
        Regards,
        <app name here>.
