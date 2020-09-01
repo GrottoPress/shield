@@ -44,7 +44,9 @@ module Shield::StartEmailConfirmation
 
     private def set_user_email
       email.value.try do |value|
-        @user_email = !!UserHelper.user_from_email(value)
+        @user_email = !!UserQuery.new
+          .id.not.eq(user_id.value || 0)
+          .email(value).first?
       end
     end
 
