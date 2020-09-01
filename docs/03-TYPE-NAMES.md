@@ -33,14 +33,12 @@
 - `LogUserIn`
 - `LogUserOut`
 - `RegisterCurrentUser`
-- `RegisterEmailConfirmationCurrentUser`
 - `ResetPassword`
 - `SaveUserOptions`
 - `StartEmailConfirmation`
 - `StartPasswordReset`
 - `UpdateConfirmedEmail`
 - `UpdateCurrentUser`
-- `UpdateEmailConfirmationCurrentUser`
 
 ### Actions
 

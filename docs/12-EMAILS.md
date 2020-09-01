@@ -176,7 +176,7 @@
 
    This is the email sent to the email address of a newly registered user of your application.
    
-   This email is sent if you included `Shield::SendWelcomeEmail` in `RegisterCurrentUser` or `RegisterEmailConfirmationCurrentUser`.
+   This email is sent if you included `Shield::SendWelcomeEmail` in `RegisterCurrentUser`.
 
    ```crystal
    # ->>> src/emails/welcome_email.cr
@@ -220,7 +220,7 @@
 
    This is the email sent to the email address of an existing user, after someone tries to register a new account with said user's email.
    
-   This email is sent if you included `Shield::SendWelcomeEmail` in `RegisterCurrentUser` or `RegisterEmailConfirmationCurrentUser`.
+   This email is sent if you included `Shield::SendWelcomeEmail` in `RegisterCurrentUser`.
 
    ```crystal
    # ->>> src/emails/user_welcome_email.cr

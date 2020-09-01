@@ -7,7 +7,7 @@ module Shield::EmailConfirmationCurrentUser::Update
     # end
 
     def run_operation
-      UpdateEmailConfirmationCurrentUser.update(
+      UpdateCurrentUser.update(
         user,
         params,
         current_login: current_login

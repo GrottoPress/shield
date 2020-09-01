@@ -24,7 +24,7 @@ module Shield::EmailConfirmationCurrentUser::Create
     end
 
     private def register_user(email_confirmation)
-      RegisterEmailConfirmationCurrentUser.create(
+      RegisterCurrentUser.create(
         params,
         email: email_confirmation.email,
         session: session,

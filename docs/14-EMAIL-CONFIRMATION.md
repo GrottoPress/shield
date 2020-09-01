@@ -24,9 +24,9 @@ This is particularly important, since email addresses are usually the only means
 
    ---
    ```crystal
-   # ->>> src/operations/register_email_confirmation_currrent_user.cr
+   # ->>> src/operations/register_currrent_user.cr
 
-   class RegisterEmailConfirmationCurrentUser < User::SaveOperation
+   class RegisterCurrentUser < User::SaveOperation
      # ...
      include Shield::RegisterEmailConfirmationUser
      include Shield::SendWelcomeEmail
@@ -34,13 +34,13 @@ This is particularly important, since email addresses are usually the only means
    end
    ```
 
-   `Shield::RegisterEmailConfirmationUser` creates a new user after they have verified their email address.
+   `Shield::RegisterEmailConfirmationUser` creates a new user after they have verified their email address. Include this module, instead of `Shield::RegisterUser`, if you use email confirmations in your app.
 
    ---
    ```crystal
-   # ->>> src/operations/update_email_confirmation_currrent_user.cr
+   # ->>> src/operations/update_currrent_user.cr
 
-   class UpdateEmailConfirmationCurrentUser < User::SaveOperation
+   class UpdateCurrentUser < User::SaveOperation
      # ...
      include Shield::UpdateEmailConfirmationUser
      # ...
@@ -48,6 +48,8 @@ This is particularly important, since email addresses are usually the only means
    ```
 
    `Shield::UpdateEmailConfirmationUser` updates an existing user, but does not save the new email. It starts a new email confirmation for the user if their email changed.
+
+   Include this module, instead of `Shield::UpdateUser`, if you use email confirmations in your app.
 
    ---
    ```crystal
