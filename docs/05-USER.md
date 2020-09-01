@@ -60,6 +60,7 @@
    class RegisterCurrentUser < User::SaveOperation
      # ...
      include Shield::RegisterUser
+     include Shield::SendWelcomeEmail
      # ...
    end
    ```
@@ -120,15 +121,25 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.success = "Congratulations! Log in to access your account..."
-     #  redirect to: Logins::New
+     #  success_action
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.failure = "Could not create your account"
-     #  html NewPage, operation: operation
+     #  # This assumes you are sending welcome emails.
+     #  if operation.user_email?
+     #    success_action
+     #  else
+     #    flash.failure = "Could not create your account"
+     #    html NewPage, operation: operation
+     #  end
+     #end
+
+     # This assumes you are sending welcome emails.
+     #private def success_action
+     #  flash.success = "Done! Check your email for further instructions."
+     #  redirect to: Logins::New
      #end
      # ...
    end

@@ -2,6 +2,7 @@ require "./save_user_options"
 
 class RegisterEmailConfirmationCurrentUser < User::SaveOperation
   include Shield::RegisterEmailConfirmationUser
+  # include Shield::SendWelcomeEmail
 
   before_save set_level
 

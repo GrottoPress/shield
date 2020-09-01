@@ -1,4 +1,4 @@
-require "../../spec_helper"
+require "../../../spec_helper"
 
 describe Shield::SaveEmail do
   it "saves email" do
@@ -50,6 +50,7 @@ describe Shield::SaveEmail do
     RegisterCurrentUser.create(params(**params)) do |operation, user|
       user.should be_nil
 
+      operation.user_email?.should be_true
       assert_invalid(operation.email, "already taken")
     end
   end

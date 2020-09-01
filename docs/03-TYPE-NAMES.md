@@ -24,6 +24,8 @@
 - `PasswordChangeNotificationEmail`
 - `PasswordResetRequestEmail`
 - `UserEmailConfirmationRequestEmail`
+- `UserWelcomeEmail`
+- `WelcomeEmail`
 
 ### Operations
 
