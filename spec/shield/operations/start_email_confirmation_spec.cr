@@ -65,7 +65,7 @@ describe Shield::StartEmailConfirmation do
     ) do |operation, email_confirmation|
       email_confirmation.should be_nil
 
-      assert_invalid(operation.email, "already registered")
+      assert_invalid(operation.email, "already taken")
     end
   end
 

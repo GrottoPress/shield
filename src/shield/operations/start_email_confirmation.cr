@@ -76,7 +76,7 @@ module Shield::StartEmailConfirmation
 
     private def validate_email_unique
       email.value.try do |value|
-        email.add_error("is already registered") if user_email?
+        email.add_error("is already taken") if user_email?
       end
     end
 
