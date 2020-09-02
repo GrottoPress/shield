@@ -5,13 +5,13 @@ module Shield::UpdatePassword
 
     needs current_login : Login?
 
-    after_save log_out_everywhere
-
-    after_commit notify_password_change
-
     before_save do
       set_password_digest
     end
+
+    after_save log_out_everywhere
+
+    after_commit notify_password_change
 
     private def set_password_digest
       password.value.try do |value|
