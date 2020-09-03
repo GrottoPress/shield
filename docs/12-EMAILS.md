@@ -29,6 +29,11 @@
        This is to let you know that your <app name here> account has just been
        accessed.
 
+       =====
+       Date: #{@login.started_at.to_s("%d %B, %Y, %l:%M %P")}
+       IP Address: #{@login.ip_address}
+       =====
+
        If you did not log in yourself, let us know immediately in your reply
        to this message. Otherwise, you may safely ignore this email.
 
