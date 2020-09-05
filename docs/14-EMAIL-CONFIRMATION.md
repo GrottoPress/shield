@@ -179,7 +179,7 @@ This is particularly important, since email addresses are usually the only means
      #
      #def do_run_operation_failed(operation, user)
      #  flash.failure = "Could not change email"
-     #  html EditPage, operation: operation, user: user
+     #  html CurrentUser::EditPage, operation: operation, user: user
      #end
      # ...
    end
