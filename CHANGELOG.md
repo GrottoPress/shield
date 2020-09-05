@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Add `cost` parameter to `Shield::CryptoHelper#hash_bcrypt`
+- Add `salt_size` parameter to `Shield::CryptoHelper#hash_sha256`
 
 ### Removed
 - Remove required `RegisterEmailConfirmationCurrentUser` and `UpdateEmailConfirmationCurrentUser`

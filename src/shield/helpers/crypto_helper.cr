@@ -12,14 +12,18 @@ module Shield::CryptoHelper
       false
     end
 
-    def hash_sha256(plaintext : String) : String
+    def hash_sha256(plaintext : String, salt_size = 16) : String
       digest = OpenSSL::Digest.new("SHA256")
-      digest << plaintext
-      digest.final.hexstring
+      salt = salt_size > 0 ? Random::Secure.hex(salt_size) : ""
+      digest << salt << plaintext
+      "#{salt}#{digest.final.hexstring}"
     end
 
     def verify_sha256?(plaintext : String, digest : String) : Bool
-      hash_sha256(plaintext) == digest
+      raw_digest = digest[-64..]
+      salt = digest.rchop(raw_digest)
+
+      hash_sha256("#{salt}#{plaintext}", salt_size: 0) == raw_digest
     end
 
     def generate_token(size : Int32 = 32) : String
