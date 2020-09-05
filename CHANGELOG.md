@@ -10,7 +10,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Allow sending welcome emails
 - Add `Shield::Users::Destroy` action
-- Add `Shield::Users::Index#users` method
 
 ### Changed
 - Add `cost` parameter to `Shield::CryptoHelper#hash_bcrypt`

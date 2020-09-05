@@ -2,13 +2,11 @@ module Shield::Users::Index
   macro included
     skip :require_logged_out
 
-    # get "/users" do
-    #   html IndexPage, users: users
-    # end
+    # param page : Int32 = 1
 
-    @[Memoize]
-    def users
-      UserQuery.all.to_a
-    end
+    # get "/users" do
+    #   pages, users = paginate(UserQuery.new)
+    #   html IndexPages, users: users, pages: pages
+    # end
   end
 end

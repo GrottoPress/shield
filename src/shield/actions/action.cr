@@ -1,5 +1,7 @@
 module Shield::Action
   macro included
+    include Lucky::Paginator::BackendHelpers
+
     include Shield::ActionHelpers
     include Shield::AuthenticationHelpers
     include Shield::AuthorizationHelpers
