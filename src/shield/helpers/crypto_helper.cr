@@ -2,8 +2,8 @@ module Shield::CryptoHelper
   macro extended
     extend self
 
-    def hash_bcrypt(plaintext : String) : String
-      Crypto::Bcrypt::Password.create(plaintext).to_s
+    def hash_bcrypt(plaintext : String, cost = 11) : String
+      Crypto::Bcrypt::Password.create(plaintext, cost).to_s
     end
 
     def verify_bcrypt?(plaintext : String, digest : String) : Bool

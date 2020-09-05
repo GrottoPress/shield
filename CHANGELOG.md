@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Allow sending welcome emails
 - Add `Shield::Users::Destroy` action
 
+### Changed
+- Add `cost` parameter to `Shield::CryptoHelper#hash_bcrypt`
+
 ### Removed
 - Remove required `RegisterEmailConfirmationCurrentUser` and `UpdateEmailConfirmationCurrentUser`
 
