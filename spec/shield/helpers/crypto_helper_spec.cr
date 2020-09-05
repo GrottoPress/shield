@@ -2,7 +2,7 @@ require "../../spec_helper"
 
 describe Shield::CryptoHelper do
   describe ".verify_and_decrypt" do
-    it "verifies and decrypts ciphertext plaintext" do
+    it "verifies and decrypts ciphertext" do
       plaintext = "abcdef"
 
       ciphertext = CryptoHelper.encrypt_and_sign(plaintext)
@@ -11,7 +11,7 @@ describe Shield::CryptoHelper do
       decrypted[0].should eq(plaintext)
     end
 
-    it "verifies and decrypts ciphertext multiple plaintexts" do
+    it "verifies and decrypts ciphertext generated from multiple plaintexts" do
       plaintext = "abcdef"
       plaintext_2 = "123456"
 
