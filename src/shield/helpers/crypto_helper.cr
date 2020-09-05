@@ -6,8 +6,8 @@ module Shield::CryptoHelper
       Crypto::Bcrypt::Password.create(plaintext).to_s
     end
 
-    def verify_bcrypt?(plaintext : String, hash : String) : Bool
-      Crypto::Bcrypt::Password.new(hash).verify(plaintext)
+    def verify_bcrypt?(plaintext : String, digest : String) : Bool
+      Crypto::Bcrypt::Password.new(digest).verify(plaintext)
     rescue
       false
     end
@@ -18,8 +18,8 @@ module Shield::CryptoHelper
       digest.final.hexstring
     end
 
-    def verify_sha256?(plaintext : String, hash : String) : Bool
-      hash_sha256(plaintext) == hash
+    def verify_sha256?(plaintext : String, digest : String) : Bool
+      hash_sha256(plaintext) == digest
     end
 
     def generate_token(size : Int32 = 32) : String
