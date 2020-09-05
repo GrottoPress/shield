@@ -6,7 +6,7 @@ module Shield::Users::Index
 
     # get "/users" do
     #   pages, users = paginate(UserQuery.new)
-    #   html IndexPages, users: users, pages: pages
+    #   html IndexPage, users: users, pages: pages
     # end
   end
 end
