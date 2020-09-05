@@ -205,13 +205,13 @@
 
      # What to do if `run_operation` succeeds
      #
-     #def do_run_operation_succeeded(operation, password_reset)
-     #  html EditPage
+     #def do_run_operation_succeeded(utility, password_reset)
+     #  html EditPage, user: utility.password_reset!.user!
      #end
 
      # What to do if `run_operation` fails
      #
-     #def do_run_operation_failed(operation)
+     #def do_run_operation_failed(utility)
      #  flash.failure = "Invalid token"
      #  redirect to: New
      #end

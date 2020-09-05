@@ -206,7 +206,7 @@ This is particularly important, since email addresses are usually the only means
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(utility, email_confirmation)
-     #  html NewPage, email_confirmation: email_confirmation
+     #  html NewPage, email: email_confirmation.email
      #end
 
      # What to do if `run_operation` fails
@@ -256,8 +256,12 @@ This is particularly important, since email addresses are usually the only means
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.failure = "Could not create your account"
-     #  html NewPage, operation: operation
+     #  if operation.user_email?
+     #    success_action
+     #  else
+     #    flash.failure = "Could not create your account"
+     #    html NewPage, operation: operation, email: operation.email.value.to_s
+     #  end
      #end
      # ...
    end
@@ -324,8 +328,13 @@ This is particularly important, since email addresses are usually the only means
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.success = "Account updated successfully"
-     #  redirect to: Show
+     #  if operation.new_email
+     #    flash.success = "Account updated successfully. Check '#{
+     #      operation.new_email}' for further instructions."
+     #  else
+     #    flash.success = "Account updated successfully"
+     #    redirect to: Show
+     #  end
      #end
 
      # What to do if `run_operation` fails
