@@ -399,8 +399,8 @@ This is particularly important, since email addresses are usually the only means
        Hi,
 
        You (or someone else) entered this email address while
-       registering for a new <app name here> account, or update the email
-       of an existing user.
+       registering for a new <app name here> account, or updating their email
+       address.
 
        To proceed to confirm your email, click the link below:
 
@@ -408,8 +408,7 @@ This is particularly important, since email addresses are usually the only means
 
        This email confirmation link will expire in #{Shield.settings.email_confirmation_expiry.total_minutes.to_i} minutes.
 
-       If you did not initiate this request, ignore this email or reply
-       to let us know.
+       If you did not initiate this request, ignore this email.
 
        Regards,
        <app name here>.
