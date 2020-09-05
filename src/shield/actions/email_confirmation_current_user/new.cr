@@ -21,7 +21,7 @@ module Shield::EmailConfirmationCurrentUser::New
     end
 
     def do_run_operation_succeeded(utility, email_confirmation)
-      html NewPage, email_confirmation: email_confirmation
+      html NewPage, email: email_confirmation.email
     end
 
     def do_run_operation_failed(utility)
