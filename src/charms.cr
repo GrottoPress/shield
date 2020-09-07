@@ -171,7 +171,7 @@ module Avram
       after_save save_{{ nested_name }}
 
       def save_{{ nested_name }}(saved_record)
-        nested = {{ nested_name }}(saved_record)
+        nested = {{ nested_name }}
 
         NESTED_SAVE_OPERATIONS << nested
 
@@ -182,9 +182,9 @@ module Avram
         end
       end
 
-      def {{ nested_name }}(record)
+      def {{ nested_name }}
         {{ nested_type }}.new(
-          record.{{ assoc_name.id }}!,
+          record!.{{ assoc_name.id }}!,
           params,
           {% for nested_attribute in nested_attributes %}
             {{ nested_attribute.var }}: {{ nested_attribute.var }}.value.nil? ?

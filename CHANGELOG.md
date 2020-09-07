@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 - Remove required `RegisterEmailConfirmationCurrentUser` and `UpdateEmailConfirmationCurrentUser`
+- Remove `record` parameter from the generated nested operation method in `Avram::NestedSaveOperation.has_one_update`
 
 ### Fixed
 - Fix user enumeration during user registration
