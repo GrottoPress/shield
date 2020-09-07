@@ -77,6 +77,10 @@
      # ...
      include Shield::Action
 
+     # If you are worried about users on mobile, you may want
+     # to disable pinning a login to its IP address
+     #skip :pin_login_to_ip_address
+
      # What to do if user is **not** logged in
      # but the action requires user to be logged in.
      #
