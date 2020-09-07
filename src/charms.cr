@@ -112,6 +112,7 @@ module Avram
         NESTED_SAVE_OPERATIONS << nested
 
         unless nested.save
+          forward_nested_{{ name }}_errors(nested)
           NESTED_SAVE_OPERATIONS.each &.mark_as_failed
           database.rollback
         end
@@ -131,6 +132,20 @@ module Avram
               {{ nested_column[:name].id }}.value.not_nil!,
           {% end %}
         )
+      end
+
+      private def forward_nested_{{ name }}_errors(nested)
+        {% for nested_attribute in nested_attributes %}
+          nested.{{ nested_attribute.var }}.errors.each do |error|
+            {{ nested_attribute.var }}.add_error(error)
+          end
+        {% end %}
+
+        {% for nested_column in nested_columns %}
+          nested.{{ nested_column[:name].id }}.errors.each do |error|
+            {{ nested_column[:name].id }}.add_error(error)
+          end
+        {% end %}
       end
     end
 
@@ -161,6 +176,7 @@ module Avram
         NESTED_SAVE_OPERATIONS << nested
 
         unless nested.save
+          forward_nested_{{ name }}_errors(nested)
           NESTED_SAVE_OPERATIONS.each &.mark_as_failed
           database.rollback
         end
@@ -181,6 +197,20 @@ module Avram
               {{ nested_column[:name].id }}.value.not_nil!,
           {% end %}
         )
+      end
+
+      private def forward_nested_{{ name }}_errors(nested)
+        {% for nested_attribute in nested_attributes %}
+          nested.{{ nested_attribute.var }}.errors.each do |error|
+            {{ nested_attribute.var }}.add_error(error)
+          end
+        {% end %}
+
+        {% for nested_column in nested_columns %}
+          nested.{{ nested_column[:name].id }}.errors.each do |error|
+            {{ nested_column[:name].id }}.add_error(error)
+          end
+        {% end %}
       end
     end
   end

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Allow sending welcome emails
 - Add `Shield::Users::Destroy` action
+- Forward nested save operation errors to the parent operation
 
 ### Changed
 - Add `cost` parameter to `Shield::CryptoHelper#hash_bcrypt`
