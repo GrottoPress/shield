@@ -103,16 +103,16 @@ module Avram
         attribute {{ nested_column[:name].id }} : {{ nested_column[:type].id }}
       {% end %}
 
-      after_save create_nested_{{ nested_name }}
+      after_save save_{{ nested_name }}
 
-      def create_nested_{{ nested_name }}(saved_record)
+      def save_{{ nested_name }}(saved_record)
         nested = {{ nested_name }}
         nested.{{ @type.constant(:FOREIGN_KEY).id }}.value = saved_record.id
 
         NESTED_SAVE_OPERATIONS << nested
 
         unless nested.save
-          forward_nested_{{ nested_name }}_errors(nested)
+          forward_{{ nested_name }}_errors(nested)
           NESTED_SAVE_OPERATIONS.each &.mark_as_failed
           database.rollback
         end
@@ -134,7 +134,7 @@ module Avram
         )
       end
 
-      private def forward_nested_{{ nested_name }}_errors(nested)
+      private def forward_{{ nested_name }}_errors(nested)
         {% for nested_attribute in nested_attributes %}
           nested.{{ nested_attribute.var }}.errors.each do |error|
             {{ nested_attribute.var }}.add_error(error)
@@ -168,15 +168,15 @@ module Avram
         attribute {{ nested_column[:name].id }} : {{ nested_column[:type].id }}
       {% end %}
 
-      after_save update_nested_{{ nested_name }}
+      after_save save_{{ nested_name }}
 
-      def update_nested_{{ nested_name }}(saved_record)
+      def save_{{ nested_name }}(saved_record)
         nested = {{ nested_name }}(saved_record)
 
         NESTED_SAVE_OPERATIONS << nested
 
         unless nested.save
-          forward_nested_{{ nested_name }}_errors(nested)
+          forward_{{ nested_name }}_errors(nested)
           NESTED_SAVE_OPERATIONS.each &.mark_as_failed
           database.rollback
         end
@@ -199,7 +199,7 @@ module Avram
         )
       end
 
-      private def forward_nested_{{ nested_name }}_errors(nested)
+      private def forward_{{ nested_name }}_errors(nested)
         {% for nested_attribute in nested_attributes %}
           nested.{{ nested_attribute.var }}.errors.each do |error|
             {{ nested_attribute.var }}.add_error(error)
