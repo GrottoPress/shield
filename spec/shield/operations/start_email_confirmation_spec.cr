@@ -21,8 +21,8 @@ describe Shield::StartEmailConfirmation do
     user = create_current_user!(email: "user@example.tld")
 
     StartEmailConfirmation.submit(
+      params(email: "user@domain.tld"),
       user_id: user.id,
-      email: "user@domain.tld",
       remote_ip: ip_address
     ) do |operation, email_confirmation|
       email_confirmation.should be_a(EmailConfirmation)
