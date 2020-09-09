@@ -26,7 +26,7 @@ describe Shield::CryptoHelper do
   describe ".verify_sha256?" do
     it "verifies unsalted SHA256" do
       plaintext = "abcdef"
-      digest = CryptoHelper.hash_sha256(plaintext, salt_size: 0)
+      digest = CryptoHelper.hash_sha256(plaintext, salt: false)
 
       CryptoHelper.verify_sha256?("123456", digest).should be_false
       CryptoHelper.verify_sha256?(plaintext, digest).should be_true
@@ -34,7 +34,7 @@ describe Shield::CryptoHelper do
 
     it "verifies salted SHA256" do
       plaintext = "abcdef"
-      digest = CryptoHelper.hash_sha256(plaintext, salt_size: 10)
+      digest = CryptoHelper.hash_sha256(plaintext)
 
       CryptoHelper.verify_sha256?("123456", digest).should be_false
       CryptoHelper.verify_sha256?(plaintext, digest).should be_true
