@@ -33,7 +33,7 @@ describe Shield::EmailConfirmations::Update do
       cookies.set(Lucky::Session.settings.key, session.to_json)
       headers = cookies.updated.add_response_headers(HTTP::Headers.new)
 
-      client = AppClient.new
+      client = ApiClient.new
 
       client.headers("Cookie": headers["Set-Cookie"])
       response = client.exec(EmailConfirmations::Update)
@@ -45,7 +45,7 @@ describe Shield::EmailConfirmations::Update do
   end
 
   it "requires logged in" do
-    response = AppClient.exec(EmailConfirmations::Update)
+    response = ApiClient.exec(EmailConfirmations::Update)
 
     body(response)["logged_in"]?.should be_false
   end

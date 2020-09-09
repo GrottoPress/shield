@@ -17,7 +17,7 @@ describe Shield::PasswordResets::Edit do
     ) do |operation, password_reset|
       password_reset = password_reset.not_nil!
 
-      response = AppClient.get(PasswordResetHelper.password_reset_url(
+      response = ApiClient.get(PasswordResetHelper.password_reset_url(
         password_reset,
         operation
       ))
@@ -49,7 +49,7 @@ describe Shield::PasswordResets::Edit do
       password_confirmation: password
     )
 
-    client = AppClient.new
+    client = ApiClient.new
 
     response = client.exec(Logins::Create, login: {
       email: email,

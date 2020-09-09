@@ -11,7 +11,7 @@ describe Shield::PasswordResets::Create do
       password_confirmation: password
     )
 
-    response = AppClient.exec(PasswordResets::Create, password_reset: {
+    response = ApiClient.exec(PasswordResets::Create, password_reset: {
       email: email
     })
 
@@ -28,7 +28,7 @@ describe Shield::PasswordResets::Create do
       password_confirmation: password
     )
 
-    client = AppClient.new
+    client = ApiClient.new
 
     response = client.exec(Logins::Create, login: {
       email: email,

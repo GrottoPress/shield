@@ -3,6 +3,6 @@ class Home::Edit < ApiAction
   skip :require_logged_out
 
   get "/edit" do
-    redirect_back fallback: Home::Index, status: :found, allow_external: true
+    redirect_back fallback: Home::Index, allow_external: true
   end
 end

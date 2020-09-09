@@ -51,6 +51,11 @@ module Avram
       if valid? && persisted? && changes.empty?
         after_save(record!)
         after_commit(record!)
+
+        Avram::Events::SaveSuccessEvent.publish(
+          operation_class: self.class.name,
+          attributes: generic_attributes
+        )
       end
 
       previous_def

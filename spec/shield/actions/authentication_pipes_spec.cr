@@ -3,7 +3,7 @@ require "../../spec_helper"
 describe Shield::AuthenticationPipes do
   describe "#require_logged_in" do
     it "requires logged in" do
-      response = body(AppClient.exec(Logins::Destroy))
+      response = body(ApiClient.exec(Logins::Destroy))
 
       response["logged_in"]?.should be_false
       response["return_url"]?.should eq(Logins::Destroy.path)
@@ -21,7 +21,7 @@ describe Shield::AuthenticationPipes do
         password_confirmation: password
       )
 
-      client = AppClient.new
+      client = ApiClient.new
 
       response = client.exec(Logins::Create, login: {
         email: email,
@@ -48,7 +48,7 @@ describe Shield::AuthenticationPipes do
         password_confirmation: password
       )
 
-      client = AppClient.new
+      client = ApiClient.new
 
       response = client.exec(Logins::Create, login: {
         email: email,
@@ -73,7 +73,7 @@ describe Shield::AuthenticationPipes do
         password_confirmation: password
       )
 
-      client = AppClient.new
+      client = ApiClient.new
 
       response = client.exec(Logins::Create, login: {
         email: email,
@@ -106,7 +106,7 @@ describe Shield::AuthenticationPipes do
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
 
-        client = AppClient.new
+        client = ApiClient.new
 
         response = client.get(PasswordResetHelper.password_reset_url(
           password_reset,
@@ -136,7 +136,7 @@ describe Shield::AuthenticationPipes do
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
 
-        client = AppClient.new
+        client = ApiClient.new
 
         response = client.get(PasswordResetHelper.password_reset_url(
           password_reset,
@@ -159,7 +159,7 @@ describe Shield::AuthenticationPipes do
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!
 
-        client = AppClient.new
+        client = ApiClient.new
 
         response = client.get(email_confirmation.url(operation))
 
@@ -177,7 +177,7 @@ describe Shield::AuthenticationPipes do
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!
 
-        client = AppClient.new
+        client = ApiClient.new
 
         response = client.get(email_confirmation.url(operation))
 

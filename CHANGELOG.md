@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - 
 
 ### Added
+- Add support for *Lucky* v0.24.0
 - Allow sending welcome emails
 - Add `Shield::Users::Destroy` action
 - Forward nested save operation errors to the parent operation
@@ -18,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Rename the generated methods in `Avram::NestedSaveOperation`'s *has one* macros
 
 ### Removed
+- Drop support for *Lucky* versions lower than v0.24.0
 - Remove required `RegisterEmailConfirmationCurrentUser` and `UpdateEmailConfirmationCurrentUser`
 - Remove `record` parameter from the generated nested operation method in `Avram::NestedSaveOperation.has_one_update`
 

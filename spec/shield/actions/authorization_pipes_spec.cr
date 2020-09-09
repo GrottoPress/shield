@@ -10,7 +10,7 @@ describe Shield::AuthorizationPipes do
         password_confirmation: password
       )
 
-      client = AppClient.new
+      client = ApiClient.new
 
       response = client.exec(Logins::Create, login: {
         email: user.email,
@@ -34,7 +34,7 @@ describe Shield::AuthorizationPipes do
         level: User::Level.new(:admin)
       )
 
-      client = AppClient.new
+      client = ApiClient.new
 
       response = client.exec(Logins::Create, login: {
         email: user.email,

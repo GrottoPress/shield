@@ -21,7 +21,7 @@ describe Shield::AuthenticationHelpers do
         password_confirmation: password_2
       )
 
-      client = AppClient.new
+      client = ApiClient.new
 
       response = client.exec(Logins::Create, login: {
         email: email,

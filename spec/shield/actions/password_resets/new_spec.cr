@@ -2,7 +2,7 @@ require "../../../spec_helper"
 
 describe Shield::PasswordResets::New do
   it "works" do
-    response = AppClient.exec(PasswordResets::New)
+    response = ApiClient.exec(PasswordResets::New)
 
     body(response)["status"]?.should eq(1)
   end
@@ -17,7 +17,7 @@ describe Shield::PasswordResets::New do
       password_confirmation: password
     )
 
-    client = AppClient.new
+    client = ApiClient.new
 
     response = client.exec(Logins::Create, login: {
       email: email,

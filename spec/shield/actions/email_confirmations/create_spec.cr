@@ -2,7 +2,7 @@ require "../../../spec_helper"
 
 describe Shield::EmailConfirmations::Create do
   it "works" do
-    response = AppClient.exec(EmailConfirmations::Create, email_confirmation: {
+    response = ApiClient.exec(EmailConfirmations::Create, email_confirmation: {
       email: "user@domain.tld"
     })
 
@@ -19,7 +19,7 @@ describe Shield::EmailConfirmations::Create do
       password_confirmation: password
     )
 
-    client = AppClient.new
+    client = ApiClient.new
 
     response = client.exec(Logins::Create, login: {
       email: email,
