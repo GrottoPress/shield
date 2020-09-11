@@ -35,20 +35,6 @@ def body(response)
   JSON.parse(response.body)
 end
 
-# For debugging :-)
-#
-#  ```crystal
-#  body(response) do |body, error|
-#    puts body if body
-#    puts error if error
-#  end
-#  ```
-def body(response)
-  yield JSON.parse(response.body), nil
-rescue e
-  yield(nil, {error: e.message, body: response.body}.to_json)
-end
-
 Avram::Migrator::Runner.new.ensure_migrated!
 Avram::SchemaEnforcer.ensure_correct_column_mappings!
 Habitat.raise_if_missing_settings!
