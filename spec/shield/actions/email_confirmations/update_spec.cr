@@ -7,11 +7,8 @@ describe Shield::EmailConfirmations::Update do
     password = "password4APASSWORD<"
     ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-    user = create_current_user!(
-      email: email,
-      password: password,
-      password_confirmation: password
-    )
+    user = UserBox.create &.email(email)
+      .password_digest(CryptoHelper.hash_bcrypt(password, 4))
 
     StartEmailConfirmation.submit(
       params(user_id: user.id, email: new_email),

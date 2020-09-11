@@ -9,17 +9,11 @@ describe Shield::AuthenticationHelpers do
       email_2 = "user@domain.tld"
       password_2 = "assword4A,PASSWOR"
 
-      user = create_current_user!(
-        email: email,
-        password: password,
-        password_confirmation: password
-      )
+      user = UserBox.create &.email(email)
+        .password_digest(CryptoHelper.hash_bcrypt(password, 4))
 
-      user_2 = create_current_user!(
-        email: email_2,
-        password: password_2,
-        password_confirmation: password_2
-      )
+      user_2 = UserBox.create &.email(email_2)
+        .password_digest(CryptoHelper.hash_bcrypt(password_2, 4))
 
       client = ApiClient.new
 

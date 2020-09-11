@@ -18,7 +18,7 @@ describe Shield::StartEmailConfirmation do
   it "starts email confirmation for existing user" do
     ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-    user = create_current_user!(email: "user@example.tld")
+    user = UserBox.create &.email("user@example.tld")
 
     StartEmailConfirmation.submit(
       params(email: "user@domain.tld"),
@@ -57,7 +57,7 @@ describe Shield::StartEmailConfirmation do
   it "rejects existing email" do
     email = "user@example.tld"
 
-    create_current_user!(email: email)
+    UserBox.create &.email(email)
 
     StartEmailConfirmation.submit(
       params(email: email),
@@ -96,7 +96,7 @@ describe Shield::StartEmailConfirmation do
   it "sends email even if email exists" do
     email = "user@example.tld"
 
-    create_current_user!(email: email)
+    UserBox.create &.email(email)
 
     StartEmailConfirmation.submit(
       params(email: email),

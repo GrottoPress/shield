@@ -5,9 +5,8 @@ describe Shield::AuthorizationPipes do
     it "denies authorization" do
       password = "password_1Apassword"
 
-      user = create_current_user!(
-        password: password,
-        password_confirmation: password
+      user = UserBox.create &.password_digest(
+        CryptoHelper.hash_bcrypt(password, 4)
       )
 
       client = ApiClient.new
@@ -28,11 +27,8 @@ describe Shield::AuthorizationPipes do
     it "grants authorization" do
       password = "password_1Apassword"
 
-      user = create_user!(
-        password: password,
-        password_confirmation: password,
-        level: User::Level.new(:admin)
-      )
+      user = UserBox.create &.level(User::Level.new(:admin))
+        .password_digest(CryptoHelper.hash_bcrypt(password, 4))
 
       client = ApiClient.new
 

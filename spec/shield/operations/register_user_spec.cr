@@ -4,18 +4,29 @@ describe Shield::RegisterUser do
   it "creates user" do
     password = "password12U password"
 
-    create_user(
+    RegisterUser.create(params(
       email: "user@example.tld",
       password: password,
       password_confirmation: password,
-      level: User::Level.new(:editor)
-    ) do |operation, user|
+      level: User::Level.new(:editor),
+      login_notify: true,
+      password_notify: true
+    )) do |operation, user|
       user.should be_a(User)
     end
   end
 
   it "creates user options" do
-    user = create_user!(login_notify: true, password_notify: false)
+    password = "password12U/password"
+
+    user = RegisterUser.create!(params(
+      email: "user@example.tld",
+      password: password,
+      password_confirmation: password,
+      level: User::Level.new(:editor),
+      login_notify: true,
+      password_notify: false
+    ))
 
     user_options = user.options!
 
