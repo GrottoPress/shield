@@ -69,14 +69,23 @@ module Avram
     end
 
     macro setup_nested_attributes(nested_name, nested_operation)
-      def nested_attributes
+      def {{ nested_name }}_attributes
         {% attributes = nested_operation.resolve.constant(:COLUMN_ATTRIBUTES) %}
-
         {
           {% for attribute in attributes %}
             {{ attribute[:name] }}: {{ nested_name }}.operation.{{ attribute[:name] }}.value,
           {% end %}
         }
+      end
+
+      def nested_attributes
+        {% attributes = nested_operation.resolve.constant(:COLUMN_ATTRIBUTES) %}
+
+        {% if @type.methods.map(&.name).includes?(:nested_attributes.id) %}
+          previous_def.merge({{ nested_name }}_attributes)
+        {% else %}
+          {{ nested_name }}_attributes
+        {% end %}
       end
     end
 
@@ -85,7 +94,11 @@ module Avram
         {% foreign_key =
           operation.resolve.subclasses.first.constant(:FOREIGN_KEY).id %}
 
-        record = super
+        {% if @type.methods.map(&.name).includes?(:create.id) %}
+          record = previous_def
+        {% else %}
+          record = super
+        {% end %}
 
         {{ nested_name }}.{{ foreign_key }}(record.id)
         {{ nested_name }}.create
