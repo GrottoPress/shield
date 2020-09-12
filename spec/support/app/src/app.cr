@@ -2,7 +2,7 @@ require "crypto/bcrypt/password"
 
 require "lucky"
 require "carbon"
-require "../../../src/shield"
+require "../../../../src/shield"
 
 require "./app_database"
 require "./models/base_model"

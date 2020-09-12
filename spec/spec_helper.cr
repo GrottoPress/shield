@@ -2,8 +2,7 @@ ENV["LUCKY_ENV"] = "test"
 
 require "spec"
 
-require "./app/src/app"
-require "./support/**"
+require "./support/boot"
 require "./setup/**"
 
 include Carbon::Expectations
