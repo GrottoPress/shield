@@ -57,12 +57,14 @@ describe Shield::UpdatePassword do
     password = "pass)word1Apassword"
     new_password = "ass)word1Apassword"
 
-    user = UserBox.create &.password_notify(false)
-      .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+    user = UserBox.create &.password_digest(
+      CryptoHelper.hash_bcrypt(password, 4)
+    )
 
     UpdateCurrentUser.update(
       user,
       params(password: new_password, password_confirmation: new_password),
+      password_notify: false,
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
