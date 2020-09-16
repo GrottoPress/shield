@@ -138,6 +138,7 @@
 
      # This assumes you are sending welcome emails.
      #private def success_action
+     #  flash.keep
      #  flash.success = "Done! Check your email for further instructions."
      #  redirect to: Logins::New
      #end
@@ -200,6 +201,7 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
+     #  flash.keep
      #  flash.success = "Account updated successfully"
      #  redirect to: Show
      #end

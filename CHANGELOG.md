@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Fix user enumeration during user registration
+- Fix flash messages not showing after a redirect
 
 ## [0.2.0] - 2020-08-29
 

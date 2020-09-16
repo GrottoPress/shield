@@ -23,6 +23,7 @@ module Shield::PasswordResets::Edit
     end
 
     def do_run_operation_failed(utility)
+      flash.keep
       flash.failure = "Invalid token"
       redirect to: New
     end

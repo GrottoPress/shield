@@ -51,6 +51,7 @@ module Shield::EmailConfirmations::Update
     end
 
     def do_run_operation_succeeded(operation, user)
+      flash.keep
       flash.success = "Email changed successfully"
       redirect to: CurrentUser::Show
     end

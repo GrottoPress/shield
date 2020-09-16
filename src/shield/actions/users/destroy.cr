@@ -12,6 +12,7 @@ module Shield::Users::Destroy
     end
 
     def do_run_operation_succeeded
+      flash.keep
       flash.success = "User deleted successfully"
       redirect to: Index
     end

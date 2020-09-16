@@ -25,6 +25,7 @@ module Shield::CurrentUser::Update
     end
 
     def do_run_operation_succeeded(operation, user)
+      flash.keep
       flash.success = "Account updated successfully"
       redirect to: Show
     end
