@@ -30,10 +30,6 @@ def params(**named_args)
     .transform_values &.to_s
 end
 
-def body(response)
-  JSON.parse(response.body)
-end
-
 Avram::Migrator::Runner.new.ensure_migrated!
 Avram::SchemaEnforcer.ensure_correct_column_mappings!
 Habitat.raise_if_missing_settings!

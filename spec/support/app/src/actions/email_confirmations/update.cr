@@ -9,10 +9,10 @@ class EmailConfirmations::Update < ApiAction
   end
 
   def do_run_operation_succeeded(operation, user)
-    json({status: 0})
+    json({exit: 0})
   end
 
   def do_run_operation_failed(operation, user)
-    json({status: 1})
+    json({exit: 1})
   end
 end

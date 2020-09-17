@@ -50,7 +50,7 @@ describe Shield::PasswordResets::Show do
       password: password
     })
 
-    body(response)["session"]?.should_not be_nil
+    response.should send_json(200, session: 1)
 
     client.headers("Cookie": response.headers["Set-Cookie"])
     response = client.get(PasswordResetHelper.password_reset_url(
@@ -58,6 +58,6 @@ describe Shield::PasswordResets::Show do
       "abcdef"
     ))
 
-    body(response)["logged_in"]?.should be_true
+    response.should send_json(200, logged_in: true)
   end
 end

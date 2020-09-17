@@ -2,15 +2,15 @@ class CurrentUser::New < ApiAction
   include Shield::EmailConfirmationCurrentUser::New
 
   get "/register" do
-    json({status: 0})
+    run_operation
   end
 
   def do_run_operation_succeeded(utility, email_confirmation)
-    json({status: 0})
+    json({exit: 0})
   end
 
   def do_run_operation_failed(utility)
-    json({status: 1})
+    json({exit: 1})
   end
 
   def remote_ip : Socket::IPAddress?

@@ -6,11 +6,11 @@ class PasswordResets::Edit < ApiAction
   end
 
   def do_run_operation_succeeded(operation, password_reset)
-    json({status: 0})
+    json({exit: 0})
   end
 
   def do_run_operation_failed(operation)
-    json({status: 1})
+    json({exit: 1})
   end
 
   def remote_ip : Socket::IPAddress?

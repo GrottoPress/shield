@@ -6,7 +6,7 @@ describe Shield::EmailConfirmations::Create do
       email: "user@domain.tld"
     })
 
-    body(response)["status"]?.should eq(0)
+    response.should send_json(200, exit: 0)
   end
 
   it "requires logged out" do
@@ -23,13 +23,13 @@ describe Shield::EmailConfirmations::Create do
       password: password
     })
 
-    body(response)["session"]?.should_not be_nil
+    response.should send_json(200, session: 1)
 
     client.headers("Cookie": response.headers["Set-Cookie"])
     response = client.exec(EmailConfirmations::Create, email_confirmation: {
       email: "user@domain.tld"
     })
 
-    body(response)["status"]?.should be_nil
+    response.should send_json(200, logged_in: true)
   end
 end

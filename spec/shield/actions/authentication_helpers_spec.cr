@@ -27,8 +27,8 @@ describe Shield::AuthenticationHelpers do
         password: password_2
       })
 
-      body(response)["current_user"]?.should eq(user.id)
-      body(response_2)["current_user"]?.should eq(user_2.id)
+      response.should send_json(200, current_user: user.id)
+      response_2.should send_json(200, current_user: user_2.id)
     end
   end
 end

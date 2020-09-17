@@ -35,7 +35,7 @@ describe Shield::EmailConfirmations::Update do
       client.headers("Cookie": headers["Set-Cookie"])
       response = client.exec(EmailConfirmations::Update)
 
-      body(response)["status"]?.should eq(0)
+      response.should send_json(200, exit: 0)
     end
 
     user.reload.email.should eq(new_email)
@@ -44,6 +44,6 @@ describe Shield::EmailConfirmations::Update do
   it "requires logged in" do
     response = ApiClient.exec(EmailConfirmations::Update)
 
-    body(response)["logged_in"]?.should be_false
+    response.should send_json(200, logged_in: false)
   end
 end

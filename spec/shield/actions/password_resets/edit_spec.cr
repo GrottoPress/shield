@@ -50,11 +50,11 @@ describe Shield::PasswordResets::Edit do
       password: password
     })
 
-    body(response)["session"]?.should_not be_nil
+    response.should send_json(200, session: 1)
 
     client.headers("Cookie": response.headers["Set-Cookie"])
     response = client.exec(PasswordResets::Edit)
 
-    body(response)["status"]?.should be_nil
+    response.should send_json(200, logged_in: true)
   end
 end

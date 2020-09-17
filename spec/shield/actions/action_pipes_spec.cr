@@ -6,25 +6,25 @@ describe Shield::ActionPipes do
       client = ApiClient.new
 
       response = client.exec(Home::Index)
-      body(response)["page"].should eq("Home::Index")
+      response.should send_json(200, page: "Home::Index")
 
       client.headers("Cookie": response.headers["Set-Cookie"]?)
       response = client.exec(About::Index)
-      body(response)["page"].should eq("About::Index")
+      response.should send_json(200, page: "About::Index")
 
       client.headers("Cookie": response.headers["Set-Cookie"]?)
       response = client.exec(Home::Create)
-      body(response)["page"].should eq("Home::Create")
+      response.should send_json(200, page: "Home::Create")
 
       client.headers("Cookie": response.headers["Set-Cookie"]?)
       response = client.exec(Home::Index)
-      body(response)["page"].should eq("Home::Index")
+      response.should send_json(200, page: "Home::Index")
 
       client.headers("Cookie": response.headers["Set-Cookie"]?)
       response = client.exec(Home::Index)
-      body(response)["page"].should eq("Home::Index")
+      response.should send_json(200, page: "Home::Index")
 
-      body(response)["previous_page"].should eq(About::Index.path)
+      response.should send_json(200, previous_page: About::Index.path)
     end
   end
 
@@ -33,7 +33,7 @@ describe Shield::ActionPipes do
       client = ApiClient.new
 
       response = client.exec(Home::Index)
-      body(response)["page"].should eq("Home::Index")
+      response.should send_json(200, page: "Home::Index")
 
       client.headers("Cookie": response.headers["Set-Cookie"]?)
       response = client.exec(Home::Show)
@@ -44,7 +44,7 @@ describe Shield::ActionPipes do
       client = ApiClient.new
 
       response = client.exec(Home::Index)
-      body(response)["page"].should eq("Home::Index")
+      response.should send_json(200, page: "Home::Index")
 
       client.headers("Cookie": response.headers["Set-Cookie"]?)
       client.headers("Referer": "http://abc.def/gh")
