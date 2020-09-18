@@ -6,7 +6,7 @@ describe Shield::LogUserIn do
     password = "password12U password"
 
     UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+      .password_digest(CryptoHelper.hash_bcrypt(password))
 
     session = Lucky::Session.new
     ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
@@ -39,7 +39,7 @@ describe Shield::LogUserIn do
   it "rejects incorrect email" do
     password = "password12U~password"
 
-    UserBox.create &.password_digest(CryptoHelper.hash_bcrypt(password, 4))
+    UserBox.create &.password_digest(CryptoHelper.hash_bcrypt(password))
 
     LogUserIn.create(
       params(email: "incorrect@example.tld", password: password),
@@ -59,7 +59,7 @@ describe Shield::LogUserIn do
     password = "password12U~password"
 
     UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+      .password_digest(CryptoHelper.hash_bcrypt(password))
 
     LogUserIn.create(
       params(email: email, password: "assword12U~passwor"),
@@ -77,7 +77,7 @@ describe Shield::LogUserIn do
     password = "pass)word1Apassword"
 
     UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+      .password_digest(CryptoHelper.hash_bcrypt(password))
       .login_notify(true)
 
     LogUserIn.create(
@@ -96,7 +96,7 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
 
     UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+      .password_digest(CryptoHelper.hash_bcrypt(password))
       .login_notify(false)
 
     LogUserIn.create(

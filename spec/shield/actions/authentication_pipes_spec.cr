@@ -16,7 +16,7 @@ describe Shield::AuthenticationPipes do
       password = "password4APASSWORD<"
 
       UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
       client = ApiClient.new
 
@@ -40,7 +40,7 @@ describe Shield::AuthenticationPipes do
       password = "password4APASSWORD<"
 
       user = UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
       client = ApiClient.new
 
@@ -62,7 +62,7 @@ describe Shield::AuthenticationPipes do
       password = "password4APASSWORD<"
 
       user = UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
       client = ApiClient.new
 
@@ -86,7 +86,7 @@ describe Shield::AuthenticationPipes do
       password = "password4APASSWORD<"
 
       UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
       StartPasswordReset.create(
         params(email: email),
@@ -113,7 +113,7 @@ describe Shield::AuthenticationPipes do
       password = "password4APASSWORD<"
 
       UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
       StartPasswordReset.create(
         params(email: email),

@@ -11,7 +11,7 @@ describe Shield::PasswordResets::New do
     password = "password4APASSWORD<"
 
     UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+      .password_digest(CryptoHelper.hash_bcrypt(password))
 
     client = ApiClient.new
 

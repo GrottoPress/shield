@@ -62,7 +62,7 @@ describe Shield::UpdateEmailConfirmationUser do
 
     user = UserBox.create &.login_notify(true)
       .password_notify(true)
-      .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+      .password_digest(CryptoHelper.hash_bcrypt(password))
 
     UpdateEmailConfirmationCurrentUser2.update(
       user,

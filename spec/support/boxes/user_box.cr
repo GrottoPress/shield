@@ -10,6 +10,6 @@ class UserBox < Avram::Box
   private def set_defaults
     email "user@domain.tld"
     level User::Level.new(:author)
-    password_digest CryptoHelper.hash_bcrypt("password12U~password", 4)
+    password_digest CryptoHelper.hash_bcrypt("password12U~password")
   end
 end

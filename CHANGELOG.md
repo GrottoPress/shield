@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Forward nested save operation errors to the parent operation
 
 ### Changed
-- Add `cost` parameter to `Shield::CryptoHelper#hash_bcrypt`
+- Add global `bcryp_cost` setting; defaults to `12`
 - Add `salt : Bool` parameter to `Shield::CryptoHelper#hash_sha256`
 - Rename the generated methods in `Avram::NestedSaveOperation`'s *has one* macros
 

@@ -6,7 +6,7 @@ describe Shield::LogUserOut do
     password = "password12U//password"
 
     UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password, 4))
+      .password_digest(CryptoHelper.hash_bcrypt(password))
 
     session = Lucky::Session.new
 

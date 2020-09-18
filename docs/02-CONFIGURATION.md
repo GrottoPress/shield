@@ -6,6 +6,9 @@
 # ->>> config/shield.cr
 
 Shield.configure do |settings|
+  # The cost to apply to bcrypt hashes
+  settings.bcrypt_cost = Lucky::Env.production? ? 12 : 4
+
   # How long should email confirmation last before it expires?
   settings.email_confirmation_expiry = 1.hour
 
