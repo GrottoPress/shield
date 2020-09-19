@@ -31,3 +31,5 @@ The following types are available for use, if needed:
 - `Shield::Users::New` (for `Users::New`)
 - `Shield::Users::Show` (for `Users::Show`)
 - `Shield::Users::Update` (for `Users::Update`)
+
+`Shield::Users::*` actions are reserved for situations where admins would like to perform certain operations on other registered users.
