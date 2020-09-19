@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Add support for *Lucky* v0.24.0
 - Allow sending welcome emails
+- Add `Shield::DeleteUser` operation
 - Add `Shield::Users::Destroy` action
 - Forward nested save operation errors to the parent operation
 

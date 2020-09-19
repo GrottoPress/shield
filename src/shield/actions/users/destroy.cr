@@ -7,13 +7,27 @@ module Shield::Users::Destroy
     # end
 
     def run_operation
-      UserQuery.new.id(user_id).delete
-      do_run_operation_succeeded
+      DeleteUser.submit(
+        params,
+        current_user: current_user
+      ) do |operation, deleted_user|
+        if deleted_user
+          do_run_operation_succeeded(operation, deleted_user.not_nil!)
+        else
+          do_run_operation_failed(operation)
+        end
+      end
     end
 
-    def do_run_operation_succeeded
+    def do_run_operation_succeeded(operation, user)
       flash.keep
       flash.success = "User deleted successfully"
+      redirect to: Index
+    end
+
+    def do_run_operation_failed(operation)
+      flash.keep
+      flash.success = "Could not delete user"
       redirect to: Index
     end
   end
