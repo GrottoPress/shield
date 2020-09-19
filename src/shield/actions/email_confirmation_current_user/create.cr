@@ -1,4 +1,10 @@
 module Shield::EmailConfirmationCurrentUser::Create
+  # IMPORTANT!
+  #
+  # Prevent user enumeration by showing the same response
+  # even if the email address is already registered.
+  #
+  # This assumes we're sending welcome emails.
   macro included
     include Shield::CurrentUser::Create
 
@@ -24,7 +30,7 @@ module Shield::EmailConfirmationCurrentUser::Create
     end
 
     private def register_user(email_confirmation)
-      RegisterEmailConfirmationCurrentUser.create(
+      RegisterCurrentUser.create(
         params,
         email: email_confirmation.email,
         session: session,
@@ -34,6 +40,15 @@ module Shield::EmailConfirmationCurrentUser::Create
         else
           do_run_operation_failed(operation)
         end
+      end
+    end
+
+    def do_run_operation_failed(operation)
+      if operation.user_email?
+        success_action # <= IMPORTANT!
+      else
+        flash.failure = "Could not create your account"
+        html NewPage, operation: operation, email: operation.email.value.to_s
       end
     end
   end

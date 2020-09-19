@@ -3,10 +3,10 @@ require "../../spec_helper"
 describe Shield::AuthenticationPipes do
   describe "#require_logged_in" do
     it "requires logged in" do
-      response = body(AppClient.exec(Logins::Destroy))
+      response = ApiClient.exec(Logins::Destroy)
 
-      response["logged_in"]?.should be_false
-      response["return_url"]?.should eq(Logins::Destroy.path)
+      response.should send_json(200, logged_in: false)
+      response.should send_json(200, return_url: Logins::Destroy.path)
     end
   end
 
@@ -15,25 +15,22 @@ describe Shield::AuthenticationPipes do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      create_current_user!(
-        email: email,
-        password: password,
-        password_confirmation: password
-      )
+      UserBox.create &.email(email)
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
-      client = AppClient.new
+      client = ApiClient.new
 
       response = client.exec(Logins::Create, login: {
         email: email,
         password: password
       })
 
-      body(response)["session"]?.should_not be_nil
+      response.should send_json(200, session: 1)
 
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Logins::Create)
 
-      body(response)["logged_in"]?.should be_true
+      response.should send_json(200, logged_in: true)
     end
   end
 
@@ -42,50 +39,44 @@ describe Shield::AuthenticationPipes do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      user = create_current_user!(
-        email: email,
-        password: password,
-        password_confirmation: password
-      )
+      user = UserBox.create &.email(email)
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
-      client = AppClient.new
+      client = ApiClient.new
 
       response = client.exec(Logins::Create, login: {
         email: email,
         password: password
       })
 
-      body(response)["session"]?.should_not be_nil
+      response.should send_json(200, session: 1)
 
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Show.with(user_id: user.id))
 
-      body(response)["ip_address_changed"]?.should be_nil
+      response.should_not send_json(200, ip_address_changed: true)
     end
 
     it "rejects login from different IP" do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      user = create_current_user!(
-        email: email,
-        password: password,
-        password_confirmation: password
-      )
+      user = UserBox.create &.email(email)
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
-      client = AppClient.new
+      client = ApiClient.new
 
       response = client.exec(Logins::Create, login: {
         email: email,
         password: password
       })
 
-      body(response)["session"]?.should_not be_nil
+      response.should send_json(200, session: 1)
 
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Edit.with(user_id: user.id))
 
-      body(response)["ip_address_changed"]?.should be_true
+      response.should send_json(200, ip_address_changed: true)
     end
   end
 
@@ -94,11 +85,8 @@ describe Shield::AuthenticationPipes do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      create_current_user!(
-        email: email,
-        password: password,
-        password_confirmation: password
-      )
+      UserBox.create &.email(email)
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
       StartPasswordReset.create(
         params(email: email),
@@ -106,7 +94,7 @@ describe Shield::AuthenticationPipes do
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
 
-        client = AppClient.new
+        client = ApiClient.new
 
         response = client.get(PasswordResetHelper.password_reset_url(
           password_reset,
@@ -116,7 +104,7 @@ describe Shield::AuthenticationPipes do
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(PasswordResets::Edit)
 
-        body(response)["ip_address_changed"]?.should be_nil
+        response.should_not send_json(200, ip_address_changed: true)
       end
     end
 
@@ -124,11 +112,8 @@ describe Shield::AuthenticationPipes do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      create_current_user!(
-        email: email,
-        password: password,
-        password_confirmation: password
-      )
+      UserBox.create &.email(email)
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
       StartPasswordReset.create(
         params(email: email),
@@ -136,7 +121,7 @@ describe Shield::AuthenticationPipes do
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
 
-        client = AppClient.new
+        client = ApiClient.new
 
         response = client.get(PasswordResetHelper.password_reset_url(
           password_reset,
@@ -146,7 +131,7 @@ describe Shield::AuthenticationPipes do
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(PasswordResets::Update)
 
-        body(response)["ip_address_changed"]?.should be_true
+        response.should send_json(200, ip_address_changed: true)
       end
     end
   end
@@ -159,14 +144,14 @@ describe Shield::AuthenticationPipes do
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!
 
-        client = AppClient.new
+        client = ApiClient.new
 
         response = client.get(email_confirmation.url(operation))
 
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(CurrentUser::New)
 
-        body(response)["ip_address_changed"]?.should be_nil
+        response.should_not send_json(200, ip_address_changed: true)
       end
     end
 
@@ -177,14 +162,14 @@ describe Shield::AuthenticationPipes do
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!
 
-        client = AppClient.new
+        client = ApiClient.new
 
         response = client.get(email_confirmation.url(operation))
 
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(CurrentUser::New)
 
-        body(response)["ip_address_changed"]?.should be_true
+        response.should send_json(200, ip_address_changed: true)
       end
     end
   end

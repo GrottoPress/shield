@@ -24,7 +24,7 @@ module Shield::StartEmailConfirmation
       set_email_confirmation
       set_token
 
-      validate_email_not_exist
+      validate_email_unique
       validate_required ip_address, message: "could not be determined"
 
       send_user_email
@@ -44,7 +44,9 @@ module Shield::StartEmailConfirmation
 
     private def set_user_email
       email.value.try do |value|
-        @user_email = !!UserHelper.user_from_email(value)
+        @user_email = !!UserQuery.new
+          .id.not.eq(user_id.value || 0)
+          .email(value).first?
       end
     end
 
@@ -74,9 +76,9 @@ module Shield::StartEmailConfirmation
       end
     end
 
-    private def validate_email_not_exist
+    private def validate_email_unique
       email.value.try do |value|
-        email.add_error("is already registered") if user_email?
+        email.add_error("is already taken") if user_email?
       end
     end
 

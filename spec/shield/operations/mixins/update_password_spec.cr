@@ -1,20 +1,27 @@
 require "../../../spec_helper"
 
 describe Shield::UpdatePassword do
-  it "saves password" do
+  it "updates password" do
     password = "password12U-password"
+    new_password = "assword12U-passwor"
 
-    user = create_current_user!(
-      email: "user@example.tld",
-      password: password,
-      password_confirmation: password
+    user = UserBox.create &.password_digest(
+      CryptoHelper.hash_bcrypt(password)
     )
 
-    CryptoHelper.verify_bcrypt?(password, user.password_digest).should be_true
+    UpdateCurrentUser.update!(
+      user,
+      params(password: new_password, password_confirmation: new_password),
+      current_login: nil
+    )
+
+    CryptoHelper
+      .verify_bcrypt?(new_password, user.reload.password_digest)
+      .should(be_true)
   end
 
   it "does not update password if new password empty" do
-    user = create_current_user!
+    user = UserBox.create
 
     UpdateCurrentUser.update(
       user,
@@ -30,11 +37,8 @@ describe Shield::UpdatePassword do
     password = "pass)word1Apassword"
     new_password = "ass)word1Apasswor"
 
-    user = create_current_user!(
-      password: password,
-      password_confirmation: password,
-      password_notify: "1"
-    )
+    user = UserBox.create &.password_notify(true)
+      .password_digest(CryptoHelper.hash_bcrypt(password))
 
     UpdateCurrentUser.update(
       user,
@@ -53,15 +57,14 @@ describe Shield::UpdatePassword do
     password = "pass)word1Apassword"
     new_password = "ass)word1Apassword"
 
-    user = create_current_user!(
-      password: password,
-      password_confirmation: password,
-      password_notify: "0"
+    user = UserBox.create &.password_digest(
+      CryptoHelper.hash_bcrypt(password)
     )
 
     UpdateCurrentUser.update(
       user,
       params(password: new_password, password_confirmation: new_password),
+      password_notify: false,
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -74,11 +77,8 @@ describe Shield::UpdatePassword do
   it "does not send password change notification if password did not change" do
     password = "pass)word1Apassword"
 
-    user = create_current_user!(
-      password: password,
-      password_confirmation: password,
-      password_notify: "1"
-    )
+    user = UserBox.create &.password_notify(true)
+      .password_digest(CryptoHelper.hash_bcrypt(password))
 
     UpdateCurrentUser.update(
       user,
@@ -102,11 +102,8 @@ describe Shield::UpdatePassword do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    user = create_current_user!(
-      email: email,
-      password: password,
-      password_confirmation: password
-    )
+    user = UserBox.create &.email(email)
+      .password_digest(CryptoHelper.hash_bcrypt(password))
 
     login_1 = LogUserIn.create!(
       params(email: email, password: password),
@@ -138,11 +135,8 @@ describe Shield::UpdatePassword do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    user = create_current_user!(
-      email: email,
-      password: password,
-      password_confirmation: password
-    )
+    user = UserBox.create &.email(email)
+      .password_digest(CryptoHelper.hash_bcrypt(password))
 
     login_1 = LogUserIn.create!(
       params(email: email, password: password),

@@ -3,13 +3,8 @@ require "../../spec_helper"
 describe Shield::EndPasswordReset do
   it "ends password reset" do
     email = "user@example.tld"
-    password = "password12U password"
 
-    create_current_user!(
-      email: email,
-      password: password,
-      password_confirmation: password
-    )
+    UserBox.create &.email(email)
 
     session = Lucky::Session.new
 

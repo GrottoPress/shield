@@ -7,10 +7,11 @@ module Shield::EmailConfirmationCurrentUser::Update
     # end
 
     def run_operation
-      UpdateEmailConfirmationCurrentUser.update(
+      UpdateCurrentUser.update(
         user,
         params,
-        current_login: current_login
+        current_login: current_login,
+        remote_ip: remote_ip
       ) do |operation, updated_user|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)
@@ -22,12 +23,14 @@ module Shield::EmailConfirmationCurrentUser::Update
 
     def do_run_operation_succeeded(operation, user)
       if operation.new_email
-        flash.success = "Account updated successfully. Check '#{
+        notice = "Account updated successfully. Check '#{
           operation.new_email}' for further instructions."
       else
-        flash.success = "Account updated successfully"
+        notice = "Account updated successfully"
       end
 
+      flash.keep
+      flash.success = notice
       redirect to: Show
     end
   end

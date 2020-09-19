@@ -5,11 +5,8 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "password12U password"
 
-    create_current_user!(
-      email: email,
-      password: password,
-      password_confirmation: password
-    )
+    UserBox.create &.email(email)
+      .password_digest(CryptoHelper.hash_bcrypt(password))
 
     session = Lucky::Session.new
     ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
@@ -42,7 +39,7 @@ describe Shield::LogUserIn do
   it "rejects incorrect email" do
     password = "password12U~password"
 
-    create_current_user!(password: password, password_confirmation: password)
+    UserBox.create &.password_digest(CryptoHelper.hash_bcrypt(password))
 
     LogUserIn.create(
       params(email: "incorrect@example.tld", password: password),
@@ -61,11 +58,8 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "password12U~password"
 
-    create_current_user!(
-      email: email,
-      password: password,
-      password_confirmation: password
-    )
+    UserBox.create &.email(email)
+      .password_digest(CryptoHelper.hash_bcrypt(password))
 
     LogUserIn.create(
       params(email: email, password: "assword12U~passwor"),
@@ -82,12 +76,9 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "pass)word1Apassword"
 
-    user = create_current_user!(
-      email: email,
-      password: password,
-      password_confirmation: password,
-      login_notify: true
-    )
+    UserBox.create &.email(email)
+      .password_digest(CryptoHelper.hash_bcrypt(password))
+      .login_notify(true)
 
     LogUserIn.create(
       params(email: email, password: password),
@@ -104,12 +95,9 @@ describe Shield::LogUserIn do
     password = "pass)word1Apassword"
     email = "user@example.tld"
 
-    user = create_current_user!(
-      email: email,
-      password: password,
-      password_confirmation: password,
-      login_notify: false
-    )
+    UserBox.create &.email(email)
+      .password_digest(CryptoHelper.hash_bcrypt(password))
+      .login_notify(false)
 
     LogUserIn.create(
       params(email: email, password: password),

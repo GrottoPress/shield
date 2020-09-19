@@ -6,11 +6,8 @@ describe LoginSession do
       email = "user@example.tld"
       password = "password12U password"
 
-      create_current_user!(
-        email: email,
-        password: password,
-        password_confirmation: password
-      )
+      UserBox.create &.email(email)
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
       session = Lucky::Session.new
 

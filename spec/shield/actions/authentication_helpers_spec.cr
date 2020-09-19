@@ -9,19 +9,13 @@ describe Shield::AuthenticationHelpers do
       email_2 = "user@domain.tld"
       password_2 = "assword4A,PASSWOR"
 
-      user = create_current_user!(
-        email: email,
-        password: password,
-        password_confirmation: password
-      )
+      user = UserBox.create &.email(email)
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
-      user_2 = create_current_user!(
-        email: email_2,
-        password: password_2,
-        password_confirmation: password_2
-      )
+      user_2 = UserBox.create &.email(email_2)
+        .password_digest(CryptoHelper.hash_bcrypt(password_2))
 
-      client = AppClient.new
+      client = ApiClient.new
 
       response = client.exec(Logins::Create, login: {
         email: email,
@@ -33,8 +27,8 @@ describe Shield::AuthenticationHelpers do
         password: password_2
       })
 
-      body(response)["current_user"]?.should eq(user.id)
-      body(response_2)["current_user"]?.should eq(user_2.id)
+      response.should send_json(200, current_user: user.id)
+      response_2.should send_json(200, current_user: user_2.id)
     end
   end
 end

@@ -7,11 +7,8 @@ describe Shield::EmailConfirmations::Update do
     password = "password4APASSWORD<"
     ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-    user = create_current_user!(
-      email: email,
-      password: password,
-      password_confirmation: password
-    )
+    user = UserBox.create &.email(email)
+      .password_digest(CryptoHelper.hash_bcrypt(password))
 
     StartEmailConfirmation.submit(
       params(user_id: user.id, email: new_email),
@@ -33,20 +30,20 @@ describe Shield::EmailConfirmations::Update do
       cookies.set(Lucky::Session.settings.key, session.to_json)
       headers = cookies.updated.add_response_headers(HTTP::Headers.new)
 
-      client = AppClient.new
+      client = ApiClient.new
 
       client.headers("Cookie": headers["Set-Cookie"])
       response = client.exec(EmailConfirmations::Update)
 
-      body(response)["status"]?.should eq(0)
+      response.should send_json(200, exit: 0)
     end
 
     user.reload.email.should eq(new_email)
   end
 
   it "requires logged in" do
-    response = AppClient.exec(EmailConfirmations::Update)
+    response = ApiClient.exec(EmailConfirmations::Update)
 
-    body(response)["logged_in"]?.should be_false
+    response.should send_json(200, logged_in: false)
   end
 end

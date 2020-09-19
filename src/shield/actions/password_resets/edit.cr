@@ -19,10 +19,11 @@ module Shield::PasswordResets::Edit
     end
 
     def do_run_operation_succeeded(utility, password_reset)
-      html EditPage
+      html EditPage, user: utility.password_reset!.user!
     end
 
     def do_run_operation_failed(utility)
+      flash.keep
       flash.failure = "Invalid token"
       redirect to: New
     end

@@ -65,26 +65,31 @@ module Shield::AuthenticationPipes
     end
 
     def do_require_logged_in_failed
+      flash.keep
       flash.failure = "You are not logged in"
       redirect to: Logins::New
     end
 
     def do_require_logged_out_failed
+      flash.keep
       flash.info = "You are already logged in"
       redirect_back fallback: CurrentUser::Show
     end
 
     def do_pin_login_to_ip_address_failed
+      flash.keep
       flash.failure = "Your IP address has changed. Please log in again."
       redirect to: Logins::New
     end
 
     def do_pin_password_reset_to_ip_address_failed
+      flash.keep
       flash.failure = "Your IP address has changed. Please try again."
       redirect to: PasswordResets::New
     end
 
     def do_pin_email_confirmation_to_ip_address_failed
+      flash.keep
       flash.failure = "Your IP address has changed. Please try again."
       redirect to: EmailConfirmations::New
     end

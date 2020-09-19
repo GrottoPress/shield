@@ -4,11 +4,9 @@ module Shield::UserHelper
 
     def verify_user(email : String, password : String) : User?
       if user = user_from_email(email)
-        user = user.not_nil!
-        user if verify_user?(user, password)
+        user if verify_user?(user.not_nil!, password)
       else
-        # To mitigate timing attacks
-        CryptoHelper.hash_bcrypt(password)
+        CryptoHelper.hash_bcrypt(password) # To mitigate timing attacks
         nil
       end
     end

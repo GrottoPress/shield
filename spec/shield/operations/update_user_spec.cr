@@ -3,7 +3,7 @@ require "../../spec_helper"
 describe Shield::UpdateUser do
   it "updates user" do
     new_email = "newuser@example.tld"
-    user = create_user!(email: "user@example.tld")
+    user = UserBox.create &.email("user@example.tld")
 
     UpdateUser.update(
       user,
@@ -18,11 +18,9 @@ describe Shield::UpdateUser do
   it "updates user options" do
     new_email = "user@example.com"
 
-    user = create_user!(
-      email: "user@domain.tld",
-      login_notify: true,
-      password_notify: false
-    )
+    user = UserBox.create &.email("user@domain.tld")
+      .login_notify(true)
+      .password_notify(false)
 
     UpdateUser.update(
       user,
@@ -40,7 +38,7 @@ describe Shield::UpdateUser do
   end
 
   it "fails when nested operation fails" do
-    user = create_current_user!(login_notify: true, password_notify: true)
+    user = UserBox.create &.login_notify(true).password_notify(true)
 
     UpdateCurrentUser2.update(
       user,
@@ -58,11 +56,9 @@ describe Shield::UpdateUser do
   it "fails when attributes change and nested operation fails" do
     email = "user@domain.tld"
 
-    user = create_current_user!(
-      email: email,
-      login_notify: true,
-      password_notify: true
-    )
+    user = UserBox.create &.email(email)
+      .login_notify(true)
+      .password_notify(true)
 
     UpdateCurrentUser2.update(
       user,

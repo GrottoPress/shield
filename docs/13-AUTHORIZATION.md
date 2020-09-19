@@ -10,7 +10,7 @@ Each action may define an authorization rule by overriding it's `#authorize?` me
 class BrowserAction < Lucky::Action
   # ...
   def authorize? : Bool
-    current_user!.level.admin?
+    !!current_user.try(&.level.admin?)
   end
   # ...
 end

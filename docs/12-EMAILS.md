@@ -29,6 +29,11 @@
        This is to let you know that your <app name here> account has just been
        accessed.
 
+       =====
+       Date: #{@login.started_at.to_s("%d %B, %Y, %l:%M %P")}
+       IP Address: #{@login.ip_address}
+       =====
+
        If you did not log in yourself, let us know immediately in your reply
        to this message. Otherwise, you may safely ignore this email.
 
@@ -163,6 +168,96 @@
        registered your account.
 
        If you are not a <app name here> user, ignore this email.
+
+       Regards,
+       <app name here>.
+       MESSAGE
+     end
+     # ...
+   end
+   ```
+
+1. `WelcomeEmail`:
+
+   This is the email sent to the email address of a newly registered user of your application.
+   
+   This email is sent if you included `Shield::SendWelcomeEmail` in `RegisterCurrentUser`.
+
+   ```crystal
+   # ->>> src/emails/welcome_email.cr
+   
+   class WelcomeEmail < BaseEmail
+     # ...
+     def initialize(@operation : RegisterCurrentUser, @user : User)
+     end
+     # ...
+   end
+   ```
+
+   *Sample Message*:
+
+   ```crystal
+   # ->>> src/emails/welcome_email.cr
+   
+   class WelcomeEmail < BaseEmail
+     # ...
+     def text_body
+       <<-MESSAGE
+       Hi User ##{@user.id},
+
+       You have successfully completed your registration for your <app name here> account.
+
+       To access your account, log in via the following link:
+
+       #{Logins::New.url}
+
+       If you did not register this account, kindly reply to let us know.
+
+       Regards,
+       <app name here>.
+       MESSAGE
+     end
+     # ...
+   end
+   ```
+
+1. `UserWelcomeEmail`:
+
+   This is the email sent to the email address of an existing user, after someone tries to register a new account with said user's email.
+   
+   This email is sent if you included `Shield::SendWelcomeEmail` in `RegisterCurrentUser`.
+
+   ```crystal
+   # ->>> src/emails/user_welcome_email.cr
+   
+   class UserWelcomeEmail < BaseEmail
+     # ...
+     def initialize(@operation : RegisterCurrentUser)
+     end
+     # ...
+   end
+   ```
+
+   *Sample Message*:
+
+   ```crystal
+   # ->>> src/emails/user_welcome_email.cr
+   
+   class UserWelcomeEmail < BaseEmail
+     # ...
+     def text_body
+       <<-MESSAGE
+       Hi,
+
+       You (or someone else) entered this email address while trying to
+       register for a new <app name here> account.
+
+       The attempted action has failed, so there is nothing you should
+       worry about.
+
+       If you have lost your password, however, you may reset your password here:
+       
+       #{PasswordResets::New.url}
 
        Regards,
        <app name here>.

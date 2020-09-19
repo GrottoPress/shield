@@ -1,4 +1,8 @@
 module Shield::EmailConfirmations::Create
+  # IMPORTANT!
+  #
+  # Prevent user enumeration by showing the same response
+  # even if the email address is already registered.
   macro included
     skip :require_logged_in
 
@@ -25,7 +29,7 @@ module Shield::EmailConfirmations::Create
 
     def do_run_operation_failed(operation)
       if operation.user_email?
-        success_action
+        success_action # <= IMPORTANT!
       else
         flash.failure = "Email confirmation request failed"
         html NewPage, operation: operation
@@ -33,6 +37,7 @@ module Shield::EmailConfirmations::Create
     end
 
     private def success_action
+      flash.keep
       flash.success = "Done! Check your email for further instructions."
       redirect to: Logins::New
     end

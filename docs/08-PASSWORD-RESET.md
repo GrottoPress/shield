@@ -154,6 +154,7 @@
      #end
 
      #private def success_action
+     #  flash.keep
      #  flash.success = "Done! Check your email for further instructions."
      #  redirect to: Logins::New
      #end
@@ -205,13 +206,14 @@
 
      # What to do if `run_operation` succeeds
      #
-     #def do_run_operation_succeeded(operation, password_reset)
-     #  html EditPage
+     #def do_run_operation_succeeded(utility, password_reset)
+     #  html EditPage, user: utility.password_reset!.user!
      #end
 
      # What to do if `run_operation` fails
      #
-     #def do_run_operation_failed(operation)
+     #def do_run_operation_failed(utility)
+     #  flash.keep
      #  flash.failure = "Invalid token"
      #  redirect to: New
      #end
@@ -247,6 +249,7 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
+     #  flash.keep
      #  flash.success = "Password changed successfully"
      #  redirect to: Logins::New
      #end

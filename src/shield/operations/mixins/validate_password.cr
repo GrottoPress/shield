@@ -1,4 +1,7 @@
 module Shield::ValidatePassword
+  # References:
+  #
+  # - https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
   macro included
     before_save do
       require_lowercase
@@ -8,7 +11,7 @@ module Shield::ValidatePassword
       validate_confirmation_of password, with: password_confirmation
       validate_size_of password,
         min: Shield.settings.password_min_length,
-        max: 64,
+        max: 64, # To mitigate DOS. Also cuz bcrypt has a max length
         allow_nil: true
     end
 

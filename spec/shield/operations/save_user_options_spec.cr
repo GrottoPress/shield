@@ -1,6 +1,16 @@
 require "../../spec_helper"
 
 describe Shield::SaveUserOptions do
+  it "updates user options" do
+    SaveUserOptions.update(
+      UserBox.create.options!,
+      params(login_notify: false, password_notify: true)
+    ) do |operation, updated_user_options|
+      updated_user_options.login_notify.should be_false
+      updated_user_options.password_notify.should be_true
+    end
+  end
+
   it "requires user id" do
     SaveUserOptions.create(params(
       login_notify: true,

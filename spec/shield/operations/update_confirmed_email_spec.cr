@@ -4,7 +4,7 @@ describe Shield::UpdateConfirmedEmail do
   it "updates confirmed email" do
     new_email = "user@example.tld"
 
-    user = create_current_user!(email: "user@domain.com")
+    user = UserBox.create &.email("user@domain.com")
 
     session = Lucky::Session.new
 

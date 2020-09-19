@@ -6,8 +6,6 @@ Email confirmation provides very little, if any, security benefits. It, however,
 
 This is particularly important, since email addresses are usually the only means to reset passwords. If a user supplied the wrong email address, and lost their password, they are out of luck.
 
-Further, email confirmation is the only way within *Shield* to prevent user enumeration **during user registration**. If the given address is already registered, *Shield* sends an email anyway, without disclosing this fact.
-
 [Read this](https://www.forbes.com/sites/ianmorris/2017/08/01/when-companies-dont-verify-email-addresses-this-is-what-happens/) for more reasons why email confirmation may be important.
 
 1. Set up operations:
@@ -26,22 +24,23 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
 
    ---
    ```crystal
-   # ->>> src/operations/register_email_confirmation_currrent_user.cr
+   # ->>> src/operations/register_currrent_user.cr
 
-   class RegisterEmailConfirmationCurrentUser < User::SaveOperation
+   class RegisterCurrentUser < User::SaveOperation
      # ...
      include Shield::RegisterEmailConfirmationUser
+     include Shield::SendWelcomeEmail
      # ...
    end
    ```
 
-   `Shield::RegisterEmailConfirmationUser` creates a new user after they have verified their email address.
+   `Shield::RegisterEmailConfirmationUser` creates a new user after they have verified their email address. Include this module, instead of `Shield::RegisterUser`, if you use email confirmations in your app.
 
    ---
    ```crystal
-   # ->>> src/operations/update_email_confirmation_currrent_user.cr
+   # ->>> src/operations/update_currrent_user.cr
 
-   class UpdateEmailConfirmationCurrentUser < User::SaveOperation
+   class UpdateCurrentUser < User::SaveOperation
      # ...
      include Shield::UpdateEmailConfirmationUser
      # ...
@@ -49,6 +48,8 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
    ```
 
    `Shield::UpdateEmailConfirmationUser` updates an existing user, but does not save the new email. It starts a new email confirmation for the user if their email changed.
+
+   Include this module, instead of `Shield::UpdateUser`, if you use email confirmations in your app.
 
    ---
    ```crystal
@@ -119,6 +120,7 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
      #end
 
      #private def success_action
+     #  flash.keep
      #  flash.success = "Done! Check your email for further instructions."
      #  redirect to: Logins::New
      #end
@@ -170,6 +172,7 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
+     #  flash.keep
      #  flash.success = "Email changed successfully"
      #  redirect to: CurrentUser::Show
      #end
@@ -178,7 +181,7 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
      #
      #def do_run_operation_failed(operation, user)
      #  flash.failure = "Could not change email"
-     #  html EditPage, operation: operation, user: user
+     #  html CurrentUser::EditPage, operation: operation, user: user
      #end
      # ...
    end
@@ -205,12 +208,13 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(utility, email_confirmation)
-     #  html NewPage, email_confirmation: email_confirmation
+     #  html NewPage, email: email_confirmation.email
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(utility)
+     #  flash.keep
      #  flash.failure = "Invalid token"
      #  redirect to: EmailConfirmations::New
      #end
@@ -248,6 +252,7 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
+     #  flash.keep
      #  flash.success = "Congratulations! Log in to access your account..."
      #  redirect to: Logins::New
      #end
@@ -255,8 +260,12 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.failure = "Could not create your account"
-     #  html NewPage, operation: operation
+     #  if operation.user_email?
+     #    success_action
+     #  else
+     #    flash.failure = "Could not create your account"
+     #    html NewPage, operation: operation, email: operation.email.value.to_s
+     #  end
      #end
      # ...
    end
@@ -323,7 +332,15 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.success = "Account updated successfully"
+     #  if operation.new_email
+     #    notice = "Account updated successfully. Check '#{
+     #      operation.new_email}' for further instructions."
+     #  else
+     #    notice = "Account updated successfully"
+     #  end
+     #
+     #  flash.keep
+     #  flash.success = notice
      #  redirect to: Show
      #end
 
@@ -398,8 +415,8 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
        Hi,
 
        You (or someone else) entered this email address while
-       registering for a new <app name here> account, or update the email
-       of an existing user.
+       registering for a new <app name here> account, or updating their email
+       address.
 
        To proceed to confirm your email, click the link below:
 
@@ -407,8 +424,7 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
 
        This email confirmation link will expire in #{Shield.settings.email_confirmation_expiry.total_minutes.to_i} minutes.
 
-       If you did not initiate this request, ignore this email or reply
-       to let us know.
+       If you did not initiate this request, ignore this email.
 
        Regards,
        <app name here>.
@@ -452,7 +468,9 @@ Further, email confirmation is the only way within *Shield* to prevent user enum
        The attempted action has failed, so there is nothing you should
        worry about.
 
-       If you have lost your password, however, try a password reset instead.
+       If you have lost your password, however, you may reset your password here:
+       
+       #{PasswordResets::New.url}
 
        Regards,
        <app name here>.

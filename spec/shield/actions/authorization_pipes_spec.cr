@@ -5,48 +5,44 @@ describe Shield::AuthorizationPipes do
     it "denies authorization" do
       password = "password_1Apassword"
 
-      user = create_current_user!(
-        password: password,
-        password_confirmation: password
+      user = UserBox.create &.password_digest(
+        CryptoHelper.hash_bcrypt(password)
       )
 
-      client = AppClient.new
+      client = ApiClient.new
 
       response = client.exec(Logins::Create, login: {
         email: user.email,
         password: password
       })
 
-      body(response)["session"]?.should_not be_nil
+      response.should send_json(200, session: 1)
 
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Show.with(user_id: user.id))
 
-      body(response)["authorized"]?.should be_false
+      response.should send_json(200, authorized: false)
     end
 
     it "grants authorization" do
       password = "password_1Apassword"
 
-      user = create_user!(
-        password: password,
-        password_confirmation: password,
-        level: User::Level.new(:admin)
-      )
+      user = UserBox.create &.level(User::Level.new(:admin))
+        .password_digest(CryptoHelper.hash_bcrypt(password))
 
-      client = AppClient.new
+      client = ApiClient.new
 
       response = client.exec(Logins::Create, login: {
         email: user.email,
         password: password
       })
 
-      body(response)["session"]?.should_not be_nil
+      response.should send_json(200, session: 1)
 
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Show.with(user_id: user.id))
 
-      body(response)["authorized"]?.should be_nil
+      response.should_not send_json(200, authorized: false)
     end
   end
 end
