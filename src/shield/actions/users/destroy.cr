@@ -27,7 +27,7 @@ module Shield::Users::Destroy
 
     def do_run_operation_failed(operation)
       flash.keep
-      flash.success = "Could not delete user"
+      flash.failure = "Could not delete user"
       redirect to: Index
     end
   end
