@@ -8,12 +8,12 @@ module Shield::DeleteUser
 
     def submit
       validate_required user_id
-      validate_not_self
+      validate_not_current_user
 
       yield self, delete_user
     end
 
-    private def validate_not_self
+    private def validate_not_current_user
       user_id.value.try do |value|
         user_id.add_error("is current user") if value == current_user.try &.id
       end
