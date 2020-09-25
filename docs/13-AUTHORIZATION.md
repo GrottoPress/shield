@@ -35,3 +35,38 @@ Authorization is always skipped if the current user is not logged in. If you wis
 The `:check_authorization` pipe is for authorizing a **logged in** user to perform an *action* on the action's resource, based on the user's role and capabilities, relative to the resource.
 
 It should not be used for any other type of authorization. For instance, if you need to restrict access based on IP address, you should define a new pipe for that.
+
+### Integration with third-party authorization shards
+
+If you need to, you may use *Shield* with an authorization shard, such as [*LuckyCan*](https://github.com/confact/lucky_can) or [*Praetorian*](https://github.com/ilanusse/praetorian).
+
+In this case, define your authorization policies as usual:
+
+```crystal
+# ->>> src/policies/post_policy.cr
+
+# This example uses *LuckyCan*
+class PostPolicy < LuckyCan::BasePolicy
+  can update, post, current_user do
+    current_user.level.admin? || post.user_id == current_user.id
+  end
+end
+```
+
+In the relevant action, call the relevant authorization shard helper:
+
+```crystal
+# ->>> src/actions/posts/update.cr
+
+# This example uses *LuckyCan*
+class Posts::Update < BrowserAction
+  # ...
+  def authorize? : Bool
+    # Call the shard's helper here. MUST return `Bool`
+    PostPolicy.update?(post, current_user!)
+  end
+  # ...
+end
+```
+
+That's it! *Shield* takes care of the rest.
