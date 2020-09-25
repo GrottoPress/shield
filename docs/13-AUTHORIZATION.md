@@ -7,7 +7,7 @@ Each action may define an authorization rule by overriding it's `#authorize?` me
 ```crystal
 # ->>> src/actions/browser_action.cr
 
-class BrowserAction < Lucky::Action
+abstract class BrowserAction < Lucky::Action
   # ...
   def authorize? : Bool
     !!current_user.try(&.level.admin?)
