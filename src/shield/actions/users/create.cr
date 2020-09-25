@@ -17,8 +17,7 @@ module Shield::Users::Create
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.keep
-      flash.success = "User added successfully"
+      flash.keep.success = "User added successfully"
       redirect to: New
     end
 

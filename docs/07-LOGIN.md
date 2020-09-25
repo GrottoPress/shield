@@ -131,8 +131,7 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, login)
-     #  flash.keep
-     #  flash.success = "Successfully logged in"
+     #  flash.keep.success = "Successfully logged in"
      #  redirect_back fallback: CurrentUser::Show
      #end
 
@@ -161,16 +160,14 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, login)
-     #  flash.keep
-     #  flash.info = "Logged out. See ya!"
+     #  flash.keep.info = "Logged out. See ya!"
      #  redirect to: New
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation, login)
-     #  flash.keep
-     #  flash.failure = "Something went wrong"
+     #  flash.keep.failure = "Something went wrong"
      #  redirect_back fallback: CurrentUser::Show
      #end
      # ...

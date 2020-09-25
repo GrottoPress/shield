@@ -120,8 +120,7 @@ This is particularly important, since email addresses are usually the only means
      #end
 
      #private def success_action
-     #  flash.keep
-     #  flash.success = "Done! Check your email for further instructions."
+     #  flash.keep.success = "Done! Check your email for further instructions."
      #  redirect to: Logins::New
      #end
      # ...
@@ -172,8 +171,7 @@ This is particularly important, since email addresses are usually the only means
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.keep
-     #  flash.success = "Email changed successfully"
+     #  flash.keep.success = "Email changed successfully"
      #  redirect to: CurrentUser::Show
      #end
 
@@ -214,8 +212,7 @@ This is particularly important, since email addresses are usually the only means
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(utility)
-     #  flash.keep
-     #  flash.failure = "Invalid token"
+     #  flash.keep.failure = "Invalid token"
      #  redirect to: EmailConfirmations::New
      #end
      # ...
@@ -252,8 +249,7 @@ This is particularly important, since email addresses are usually the only means
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.keep
-     #  flash.success = "Congratulations! Log in to access your account..."
+     #  flash.keep.success = "Congratulations! Log in to access your account..."
      #  redirect to: Logins::New
      #end
 
@@ -339,8 +335,7 @@ This is particularly important, since email addresses are usually the only means
      #    notice = "Account updated successfully"
      #  end
      #
-     #  flash.keep
-     #  flash.success = notice
+     #  flash.keep.success = notice
      #  redirect to: Show
      #end
 

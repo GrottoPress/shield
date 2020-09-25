@@ -30,6 +30,13 @@ module Lucky
   abstract class Action
     include MailHelpers
   end
+
+  class FlashStore
+    def keep
+      @next = @now
+      self
+    end
+  end
 end
 
 module Avram

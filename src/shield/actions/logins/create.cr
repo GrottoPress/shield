@@ -21,8 +21,7 @@ module Shield::Logins::Create
     end
 
     def do_run_operation_succeeded(operation, login)
-      flash.keep
-      flash.success = "Successfully logged in"
+      flash.keep.success = "Successfully logged in"
       redirect_back fallback: CurrentUser::Show
     end
 

@@ -26,8 +26,7 @@ module Shield::Users::Update
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.keep
-      flash.success = "User updated successfully"
+      flash.keep.success = "User updated successfully"
       redirect to: Show.with(user_id: user_id)
     end
 

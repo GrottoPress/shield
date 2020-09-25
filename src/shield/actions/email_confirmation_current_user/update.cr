@@ -29,8 +29,7 @@ module Shield::EmailConfirmationCurrentUser::Update
         notice = "Account updated successfully"
       end
 
-      flash.keep
-      flash.success = notice
+      flash.keep.success = notice
       redirect to: Show
     end
   end
