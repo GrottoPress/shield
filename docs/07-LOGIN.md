@@ -160,7 +160,7 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, login)
-     #  flash.keep.info = "Logged out. See ya!"
+     #  flash.keep.success = "Logged out. See ya!"
      #  redirect to: New
      #end
 
