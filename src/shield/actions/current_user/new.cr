@@ -2,7 +2,7 @@ module Shield::CurrentUser::New
   macro included
     skip :require_logged_in
 
-    # get "/register" do
+    # get "/account/new" do
     #   html NewPage
     # end
   end

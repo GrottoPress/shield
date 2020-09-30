@@ -199,7 +199,7 @@ This is particularly important, since email addresses are usually the only means
      # to disable pinning an email confirmation to its IP address
      #skip :pin_email_confirmation_to_ip_address
 
-     get "/register" do
+     get "/account/new" do
        run_operation
      end
 
@@ -242,7 +242,7 @@ This is particularly important, since email addresses are usually the only means
      # to disable pinning an email confirmation to its IP address
      #skip :pin_email_confirmation_to_ip_address
 
-     post "/register" do
+     post "/account" do
        run_operation
      end
 

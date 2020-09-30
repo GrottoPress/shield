@@ -4,7 +4,7 @@ module Shield::EmailConfirmationCurrentUser::New
 
     before :pin_email_confirmation_to_ip_address
 
-    # get "/register" do
+    # get "/account/new" do
     #   run_operation
     # end
 

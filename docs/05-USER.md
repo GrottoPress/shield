@@ -89,7 +89,7 @@
      # ...
      include Shield::CurrentUser::New
 
-     get "/register" do
+     get "/account/new" do
        html NewPage
      end
      # ...
@@ -114,7 +114,7 @@
      # ...
      include Shield::CurrentUser::Create
 
-     post "/register" do
+     post "/account" do
        run_operation
      end
 

@@ -2,7 +2,7 @@ module Shield::Logins::Create
   macro included
     skip :require_logged_in
 
-    # post "/log-in" do
+    # post "/login" do
     #   run_operation
     # end
 

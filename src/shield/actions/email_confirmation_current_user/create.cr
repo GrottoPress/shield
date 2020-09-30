@@ -10,7 +10,7 @@ module Shield::EmailConfirmationCurrentUser::Create
 
     before :pin_email_confirmation_to_ip_address
 
-    # post "/register" do
+    # post "/account" do
     #   run_operation
     # end
 

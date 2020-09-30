@@ -2,7 +2,7 @@ module Shield::Logins::Destroy
   macro included
     skip :require_logged_out
 
-    # delete "/log-out" do
+    # delete "/login" do
     #   run_operation
     # end
 

@@ -8,7 +8,7 @@ module Shield::CurrentUser::Create
   macro included
     skip :require_logged_in
 
-    # post "/register" do
+    # post "/account" do
     #   run_operation
     # end
 
