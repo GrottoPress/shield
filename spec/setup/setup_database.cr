@@ -1,4 +1,4 @@
-unless ENV["SKIP_CREATE_DB"]?.in?({"1", "true", "yes"})
+unless Bool::Lucky.parse(ENV["SKIP_CREATE_DB"]?.to_s).value
   Db::Create.new(quiet: true).call
 end
 
