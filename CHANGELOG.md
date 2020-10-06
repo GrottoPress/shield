@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Fix wrong flash type used when deleting user fails
 
+### Removed
+- Remove `Shield::Error`
+
 ## [0.3.0] - 2020-09-19
 
 ### Added
