@@ -40,9 +40,9 @@ class Errors::Show < Lucky::ErrorAction
 
   def report(error : Exception) : Nil
     puts
-    puts "##### ERROR #####"
-    puts error.message
-    puts "##### ERROR #####"
+    puts "===== ERROR ====="
+    puts "#{error.class} -> #{error.message}"
+    puts "===== ERROR ====="
     puts
   end
 end
