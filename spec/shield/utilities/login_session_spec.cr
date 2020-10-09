@@ -20,7 +20,7 @@ describe Shield::LoginSession do
       sleep 3
 
       login.status.started?.should be_true
-      LoginSession.new(session).verify
+      LoginSession.new(session).verify.should be_nil
       login.reload.status.expired?.should be_true
     end
   end

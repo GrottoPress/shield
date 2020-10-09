@@ -22,7 +22,7 @@ describe Shield::PasswordResetSession do
 
       sleep 3
 
-      password_reset_session.verify
+      password_reset_session.verify.should be_nil
       password_reset.reload.status.expired?.should be_true
     end
   end
