@@ -14,6 +14,7 @@ module Shield::LogUserIn
     after_commit notify_login
 
     include Shield::ValidateEmail
+    include Shield::RequireIpAddress
     include Shield::StartAuthentication(Login)
 
     private def verify_login

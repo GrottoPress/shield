@@ -18,6 +18,7 @@ module Shield::StartPasswordReset
     after_commit send_email
 
     include Shield::ValidateEmail
+    include Shield::RequireIpAddress
     include Shield::StartAuthentication(PasswordReset)
 
     private def set_user_id

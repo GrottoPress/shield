@@ -1,7 +1,5 @@
 module Shield::StartAuthentication(T)
   macro included
-    include Shield::RequireIpAddress
-
     getter token = ""
 
     before_save do
