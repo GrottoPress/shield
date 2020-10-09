@@ -35,7 +35,7 @@ module Shield::EmailConfirmations::Show
       end
     end
 
-    def authorize? : Bool
+    def authorize?(user : User) : Bool
       true
     end
   end

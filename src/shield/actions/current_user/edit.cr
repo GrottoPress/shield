@@ -10,7 +10,7 @@ module Shield::CurrentUser::Edit
       current_user!
     end
 
-    def authorize? : Bool
+    def authorize?(user : User) : Bool
       true
     end
   end

@@ -60,7 +60,7 @@ module Shield::EmailConfirmations::Update
       html CurrentUser::EditPage, operation: operation, user: user
     end
 
-    def authorize? : Bool
+    def authorize?(user : User) : Bool
       true
     end
   end

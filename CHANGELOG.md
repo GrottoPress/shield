@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Fix wrong flash type used when deleting user fails
 
+### Changed
+- Add `user : User` parameter to `Shield::AuthorizationPipes#authorize?`
+
 ### Removed
 - Remove `Shield::Error`
 

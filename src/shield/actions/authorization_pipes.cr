@@ -1,14 +1,14 @@
 module Shield::AuthorizationPipes
   macro included
     def check_authorization
-      if logged_out? || authorize?
+      if logged_out? || authorize?(current_user!)
         continue
       else
         do_check_authorization_failed
       end
     end
 
-    def authorize? : Bool
+    def authorize?(user : User) : Bool
       false
     end
 

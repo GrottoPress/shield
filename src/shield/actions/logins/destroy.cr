@@ -29,7 +29,7 @@ module Shield::Logins::Destroy
       redirect to: CurrentUser::Show
     end
 
-    def authorize? : Bool
+    def authorize?(user : User) : Bool
       true
     end
   end

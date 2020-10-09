@@ -34,7 +34,7 @@ module Shield::CurrentUser::Update
       html EditPage, operation: operation, user: user
     end
 
-    def authorize? : Bool
+    def authorize?(user : User) : Bool
       true
     end
   end
