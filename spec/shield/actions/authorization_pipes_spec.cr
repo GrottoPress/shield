@@ -42,7 +42,7 @@ describe Shield::AuthorizationPipes do
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Show.with(user_id: user.id))
 
-      response.should_not send_json(200, authorized: false)
+      response.should send_json(200, user: user.id)
     end
   end
 end
