@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-describe LoginSession do
+describe Shield::LoginSession do
   it "deactivates login when expired but active" do
     Shield.temp_config(login_expiry: 2.seconds) do
       email = "user@example.tld"

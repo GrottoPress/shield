@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-describe PasswordResetSession do
+describe Shield::PasswordResetSession do
   it "deactivates password reset when expired but active" do
     Shield.temp_config(password_reset_expiry: 2.seconds) do
       email = "user@example.tld"
