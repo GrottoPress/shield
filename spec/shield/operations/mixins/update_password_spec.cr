@@ -170,4 +170,46 @@ describe Shield::UpdatePassword do
     login_2.reload.status.started?.should be_false
     current_login.reload.status.started?.should be_true
   end
+
+  it "does not log other users out when password changes" do
+    mary_email = "mary@example.tld"
+    mary_password = "password12U-password"
+    mary_new_password = "assword12U-passwor"
+
+    john_email = "john@example.tld"
+    john_password = "pasword12U-pasword"
+
+    mary = UserBox.create &.email(mary_email)
+      .password_digest(CryptoHelper.hash_bcrypt(mary_password))
+
+    john = UserBox.create &.email(john_email)
+      .password_digest(CryptoHelper.hash_bcrypt(john_password))
+
+    mary_login = LogUserIn.create!(
+      params(email: mary_email, password: mary_password),
+      session: Lucky::Session.new,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    )
+
+    john_login = LogUserIn.create!(
+      params(email: john_email, password: john_password),
+      session: Lucky::Session.new,
+      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
+    )
+
+    mary_login.status.started?.should be_true
+    john_login.status.started?.should be_true
+
+    UpdateCurrentUser.update!(
+      mary,
+      params(
+        password: mary_new_password,
+        password_confirmation: mary_new_password
+      ),
+      current_login: nil
+    )
+
+    mary_login.reload.status.started?.should be_false
+    john_login.reload.status.started?.should be_true
+  end
 end

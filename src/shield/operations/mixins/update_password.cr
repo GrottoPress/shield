@@ -28,6 +28,7 @@ module Shield::UpdatePassword
       return unless password_digest.changed?
 
       LoginQuery.new
+        .user_id(user.id)
         .status(Login::Status.new :started)
         .id.not.eq(current_login.try(&.id) || 0_i64)
         .update(ended_at: Time.utc, status: Login::Status.new(:ended))
