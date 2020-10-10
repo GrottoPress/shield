@@ -3,10 +3,10 @@ require "../../spec_helper"
 describe Shield::AuthenticationPipes do
   describe "#require_logged_in" do
     it "requires logged in" do
-      response = ApiClient.exec(Logins::Destroy)
+      response = ApiClient.exec(CurrentLogin::Destroy)
 
       response.should send_json(403, logged_in: false)
-      response.should send_json(403, return_url: Logins::Destroy.path)
+      response.should send_json(403, return_url: CurrentLogin::Destroy.path)
     end
   end
 
@@ -20,7 +20,7 @@ describe Shield::AuthenticationPipes do
 
       client = ApiClient.new
 
-      response = client.exec(Logins::Create, login: {
+      response = client.exec(CurrentLogin::Create, login: {
         email: email,
         password: password
       })
@@ -28,7 +28,7 @@ describe Shield::AuthenticationPipes do
       response.should send_json(200, session: 1)
 
       client.headers("Cookie": response.headers["Set-Cookie"])
-      response = client.exec(Logins::Create)
+      response = client.exec(CurrentLogin::Create)
 
       response.should send_json(200, logged_in: true)
     end
@@ -44,7 +44,7 @@ describe Shield::AuthenticationPipes do
 
       client = ApiClient.new
 
-      response = client.exec(Logins::Create, login: {
+      response = client.exec(CurrentLogin::Create, login: {
         email: email,
         password: password
       })
@@ -66,7 +66,7 @@ describe Shield::AuthenticationPipes do
 
       client = ApiClient.new
 
-      response = client.exec(Logins::Create, login: {
+      response = client.exec(CurrentLogin::Create, login: {
         email: email,
         password: password
       })

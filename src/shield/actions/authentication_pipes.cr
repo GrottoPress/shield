@@ -67,7 +67,7 @@ module Shield::AuthenticationPipes
 
     def do_require_logged_in_failed
       flash.keep.failure = "You are not logged in"
-      redirect to: Logins::New
+      redirect to: CurrentLogin::New
     end
 
     def do_require_logged_out_failed
@@ -77,7 +77,7 @@ module Shield::AuthenticationPipes
 
     def do_pin_login_to_ip_address_failed
       flash.keep.failure = "Your IP address has changed. Please log in again."
-      redirect to: Logins::New
+      redirect to: CurrentLogin::New
     end
 
     def do_pin_password_reset_to_ip_address_failed

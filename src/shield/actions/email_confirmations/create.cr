@@ -38,7 +38,7 @@ module Shield::EmailConfirmations::Create
 
     private def success_action
       flash.keep.success = "Done! Check your email for further instructions."
-      redirect to: Logins::New
+      redirect to: CurrentLogin::New
     end
   end
 end

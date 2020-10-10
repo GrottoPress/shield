@@ -11,7 +11,7 @@ describe Shield::AuthorizationPipes do
 
       client = ApiClient.new
 
-      response = client.exec(Logins::Create, login: {
+      response = client.exec(CurrentLogin::Create, login: {
         email: user.email,
         password: password
       })
@@ -32,7 +32,7 @@ describe Shield::AuthorizationPipes do
 
       client = ApiClient.new
 
-      response = client.exec(Logins::Create, login: {
+      response = client.exec(CurrentLogin::Create, login: {
         email: user.email,
         password: password
       })

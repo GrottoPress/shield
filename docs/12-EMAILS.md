@@ -209,7 +209,7 @@
 
        To access your account, log in via the following link:
 
-       #{Logins::New.url}
+       #{CurrentLogin::New.url}
 
        If you did not register this account, kindly reply to let us know.
 

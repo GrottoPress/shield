@@ -155,7 +155,7 @@
 
      #private def success_action
      #  flash.keep.success = "Done! Check your email for further instructions."
-     #  redirect to: Logins::New
+     #  redirect to: CurrentLogin::New
      #end
      # ...
    end
@@ -248,7 +248,7 @@
      #
      #def do_run_operation_succeeded(operation, user)
      #  flash.keep.success = "Password changed successfully"
-     #  redirect to: Logins::New
+     #  redirect to: CurrentLogin::New
      #end
 
      # What to do if `run_operation` fails

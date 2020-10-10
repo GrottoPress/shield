@@ -1,5 +1,5 @@
-class Logins::Create < ApiAction
-  include Shield::Logins::Create
+class CurrentLogin::Create < ApiAction
+  include Shield::CurrentLogin::Create
 
   post "/log-in" do
     run_operation

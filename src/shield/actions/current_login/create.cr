@@ -1,4 +1,4 @@
-module Shield::Logins::Create
+module Shield::CurrentLogin::Create
   macro included
     skip :require_logged_in
 

@@ -1,5 +1,5 @@
-class Logins::Destroy < ApiAction
-  include Shield::Logins::Destroy
+class CurrentLogin::Destroy < ApiAction
+  include Shield::CurrentLogin::Destroy
 
   delete "/log-out" do
     run_operation

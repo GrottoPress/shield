@@ -1,4 +1,4 @@
-module Shield::Logins::Destroy
+module Shield::CurrentLogin::Destroy
   macro included
     skip :require_logged_out
 

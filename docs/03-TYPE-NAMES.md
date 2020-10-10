@@ -42,6 +42,9 @@
 
 ### Actions
 
+- `CurrentLogin::Create`
+- `CurrentLogin::Destroy`
+- `CurrentLogin::New`
 - `CurrentUser::Create`
 - `CurrentUser::Edit`
 - `CurrentUser::New`
@@ -51,9 +54,6 @@
 - `EmailConfirmations::New`
 - `EmailConfirmations::Show`
 - `EmailConfirmations::Update`
-- `Logins::Create`
-- `Logins::Destroy`
-- `Logins::New`
 - `PasswordResets::Create`
 - `PasswordResets::Edit`
 - `PasswordResets::New`
@@ -62,10 +62,10 @@
 
 ### Pages
 
+- `CurrentLogin::NewPage`
 - `CurrentUser::EditPage`
 - `CurrentUser::NewPage`
 - `EmailConfirmations::NewPage`
-- `Logins::NewPage`
 - `PasswordResets::EditPage`
 - `PasswordResets::NewPage`
 

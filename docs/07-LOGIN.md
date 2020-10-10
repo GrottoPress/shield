@@ -94,9 +94,9 @@
    ```crystal
    # ->>> src/actions/logins/new.cr
 
-   class Logins::New < BrowserAction
+   class CurrentLogin::New < BrowserAction
      # ...
-     include Shield::Logins::New
+     include Shield::CurrentLogin::New
 
      get "/login" do
        html NewPage
@@ -105,9 +105,9 @@
    end
    ```
 
-   You may need to add `Logins::NewPage` in `src/pages/logins/new_page.cr`, containing your user login form.
+   You may need to add `CurrentLogin::NewPage` in `src/pages/logins/new_page.cr`, containing your user login form.
 
-   The form should be `POST`ed to `Logins::Create`, with the following parameters:
+   The form should be `POST`ed to `CurrentLogin::Create`, with the following parameters:
 
    - `email : String`
    - `password : String`
@@ -120,9 +120,9 @@
    ```crystal
    # ->>> src/actions/logins/create.cr
 
-   class Logins::Create < BrowserAction
+   class CurrentLogin::Create < BrowserAction
      # ...
-     include Shield::Logins::Create
+     include Shield::CurrentLogin::Create
 
      post "/login" do
        run_operation
@@ -149,9 +149,9 @@
    ```crystal
    # ->>> src/actions/logins/destroy.cr
 
-   class Logins::Destroy < BrowserAction
+   class CurrentLogin::Destroy < BrowserAction
      # ...
-     include Shield::Logins::Destroy
+     include Shield::CurrentLogin::Destroy
 
      delete "/login" do
        run_operation

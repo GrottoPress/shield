@@ -17,12 +17,12 @@ describe Shield::AuthenticationHelpers do
 
       client = ApiClient.new
 
-      response = client.exec(Logins::Create, login: {
+      response = client.exec(CurrentLogin::Create, login: {
         email: email,
         password: password
       })
 
-      response_2 = client.exec(Logins::Create, login: {
+      response_2 = client.exec(CurrentLogin::Create, login: {
         email: email_2,
         password: password_2
       })

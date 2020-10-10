@@ -15,7 +15,7 @@ describe Shield::PasswordResets::New do
 
     client = ApiClient.new
 
-    response = client.exec(Logins::Create, login: {
+    response = client.exec(CurrentLogin::Create, login: {
       email: email,
       password: password
     })

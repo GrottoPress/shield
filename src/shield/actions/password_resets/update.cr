@@ -38,7 +38,7 @@ module Shield::PasswordResets::Update
 
     def do_run_operation_succeeded(operation, user)
       flash.keep.success = "Password changed successfully"
-      redirect to: Logins::New
+      redirect to: CurrentLogin::New
     end
 
     def do_run_operation_failed(operation, user)

@@ -30,7 +30,7 @@
      #
      #def do_require_logged_in_failed
      #  flash.keep.failure = "You are not logged in"
-     #  redirect to: Logins::New
+     #  redirect to: CurrentLogin::New
      #end
 
      # What to do if user is logged in but the action
@@ -54,7 +54,7 @@
      #
      #def do_pin_login_to_ip_address_failed
      #  flash.keep.failure = "Your IP address has changed. Please log in again."
-     #  redirect to: Logins::New
+     #  redirect to: CurrentLogin::New
      #end
 
      # What to do when a user's IP address changes in a password reset, if the
@@ -86,7 +86,7 @@
      #
      #def do_require_logged_in_failed
      #  flash.keep.failure = "You are not logged in"
-     #  redirect to: Logins::New
+     #  redirect to: CurrentLogin::New
      #end
 
      # What to do if user is logged in but the action
@@ -110,7 +110,7 @@
      #
      #def do_pin_login_to_ip_address_failed
      #  flash.keep.failure = "Your IP address has changed. Please log in again."
-     #  redirect to: Logins::New
+     #  redirect to: CurrentLogin::New
      #end
 
      # What to do when a user's IP address changes in a password reset, if the
