@@ -20,10 +20,6 @@ describe Shield::ActionPipes do
       response = client.exec(Home::Index)
       response.should send_json(200, page: "Home::Index")
 
-      client.headers("Cookie": response.headers["Set-Cookie"]?)
-      response = client.exec(Home::Index)
-      response.should send_json(200, page: "Home::Index")
-
       response.should send_json(200, previous_page: About::Index.path)
     end
   end

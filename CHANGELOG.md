@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Fix wrong flash type used when deleting user fails
+- Fix `#redirect_back` going back past the previous page sometimes
 
 ### Changed
 - Add `user : User` parameter to `Shield::AuthorizationPipes#authorize?`
