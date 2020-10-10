@@ -5,6 +5,7 @@ module Shield::AuthenticationPipes
         continue
       else
         ReturnUrlSession.new(session).set(request)
+        response.status_code = 403
         do_require_logged_in_failed
       end
     end

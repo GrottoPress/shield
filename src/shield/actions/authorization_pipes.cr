@@ -4,6 +4,7 @@ module Shield::AuthorizationPipes
       if logged_out? || authorize?(current_user!)
         continue
       else
+        response.status_code = 403
         do_check_authorization_failed
       end
     end

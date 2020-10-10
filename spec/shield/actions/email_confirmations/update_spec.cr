@@ -44,6 +44,6 @@ describe Shield::EmailConfirmations::Update do
   it "requires logged in" do
     response = ApiClient.exec(EmailConfirmations::Update)
 
-    response.should send_json(200, logged_in: false)
+    response.should send_json(403, logged_in: false)
   end
 end

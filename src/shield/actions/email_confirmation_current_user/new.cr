@@ -15,6 +15,7 @@ module Shield::EmailConfirmationCurrentUser::New
         if email_confirmation
           do_run_operation_succeeded(utility, email_confirmation.not_nil!)
         else
+          response.status_code = 403
           do_run_operation_failed(utility)
         end
       end
