@@ -26,7 +26,7 @@ Find the complete documentation of *Shield* in the `docs/` directory of this rep
 - [x] Pin authentication session to its IP address
 - [x] Authorization
 - [x] Email confirmation
-- [ ] Bearer authentication
+- [x] *Bearer* logins (API tokens)
 - [ ] Anti-spam
 - [ ] Web Application Firewall (WAF)
 - [ ] Multi-factor authentication

@@ -9,6 +9,9 @@ Shield.configure do |settings|
   # The cost to apply to bcrypt hashes
   settings.bcrypt_cost = Lucky::Env.production? ? 12 : 4
 
+  # How long should bearer login last before it expires?
+  settings.bearer_login_expiry = 90.days
+
   # How long should email confirmation last before it expires?
   settings.email_confirmation_expiry = 1.hour
 

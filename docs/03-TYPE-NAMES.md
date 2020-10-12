@@ -4,6 +4,7 @@
 
 ### Models
 
+- `BearerLogin`
 - `Login`
 - `PasswordReset`
 - `User`
@@ -11,6 +12,7 @@
 
 ### Queries
 
+- `BearerLoginQuery`
 - `LoginQuery`
 - `PasswordResetQuery`
 - `UserQuery`
@@ -29,11 +31,13 @@
 
 ### Operations
 
+- `CreateBearerLogin`
 - `EndPasswordReset`
 - `LogUserIn`
 - `LogUserOut`
 - `RegisterCurrentUser`
 - `ResetPassword`
+- `RevokeBearerLogin`
 - `SaveUserOptions`
 - `StartEmailConfirmation`
 - `StartPasswordReset`
@@ -42,6 +46,10 @@
 
 ### Actions
 
+- `BearerLogins::Create`
+- `BearerLogins::Destroy`
+- `BearerLogins::Index`
+- `BearerLogins::New`
 - `CurrentLogin::Create`
 - `CurrentLogin::Destroy`
 - `CurrentLogin::New`
@@ -62,6 +70,9 @@
 
 ### Pages
 
+- `BearerLogins::IndexPage`
+- `BearerLogins::NewPage`
+- `BearerLogins::ShowPage`
 - `CurrentLogin::NewPage`
 - `CurrentUser::EditPage`
 - `CurrentUser::NewPage`
@@ -71,6 +82,7 @@
 
 ### Utilities
 
+- `BearerLoginHeaders`
 - `EmailConfirmation`
 - `EmailConfirmationSession`
 - `LoginSession`
@@ -80,6 +92,7 @@
 
 ### Helpers
 
+- `BearerLoginHelper`
 - `CryptoHelper`
 - `LoginHelper`
 - `PasswordResetHelper`
