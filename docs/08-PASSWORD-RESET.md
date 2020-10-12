@@ -30,6 +30,15 @@
 
    You may add other columns and associations specific to your application.
 
+1. Set up the query:
+   ```crystal
+   # ->>> src/queries/password_reset_query.cr
+
+   class PasswordResetQuery < PasswordReset::BaseQuery
+     # ...
+   end
+   ```
+
 1. Set up the migration:
 
    ```crystal
