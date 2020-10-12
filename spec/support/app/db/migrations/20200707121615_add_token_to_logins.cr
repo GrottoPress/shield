@@ -1,4 +1,4 @@
-class AddTokenToLogin::V20200707121615 < Avram::Migrator::Migration::V1
+class AddTokenToLogins::V20200707121615 < Avram::Migrator::Migration::V1
   def migrate
     alter table_for(Login) do
       add token : String, fill_existing_with: CryptoHelper.generate_token

@@ -1,4 +1,4 @@
-class AddStatusToPasswordReset::V20200722210722 < Avram::Migrator::Migration::V1
+class AddStatusToPasswordResets::V20200722210722 < Avram::Migrator::Migration::V1
   def migrate
     alter table_for(PasswordReset) do
       add status : String, fill_existing_with: "Ended"

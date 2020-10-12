@@ -33,9 +33,9 @@
 1. Set up the migration:
 
    ```crystal
-   # ->>> db/migrations/XXXXXXXXXXXXXX_create_password_reset.cr
+   # ->>> db/migrations/XXXXXXXXXXXXXX_create_password_resets.cr
 
-   class CreatePasswordReset::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
+   class CreatePasswordResets::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
        create table_for(PasswordReset) do
          # ...

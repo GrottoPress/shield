@@ -33,9 +33,9 @@
 1. Set up the migration:
 
    ```crystal
-   # ->>> db/migrations/XXXXXXXXXXXXXX_create_login.cr
+   # ->>> db/migrations/XXXXXXXXXXXXXX_create_logins.cr
 
-   class CreateLogin::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
+   class CreateLogins::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
        create table_for(Login) do
          # ...

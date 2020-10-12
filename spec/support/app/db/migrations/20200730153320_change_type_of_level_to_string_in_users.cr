@@ -1,4 +1,4 @@
-class ChangeTypeOfLevelToStringInUser::V20200730153320 < Avram::Migrator::Migration::V1
+class ChangeTypeOfLevelToStringInUsers::V20200730153320 < Avram::Migrator::Migration::V1
   def migrate
     alter table_for(User) do
       change_type level : String

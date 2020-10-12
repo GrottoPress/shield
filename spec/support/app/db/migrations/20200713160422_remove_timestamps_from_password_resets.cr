@@ -1,4 +1,4 @@
-class RemoveTimestampsFromPasswordReset::V20200713160422 < Avram::Migrator::Migration::V1
+class RemoveTimestampsFromPasswordResets::V20200713160422 < Avram::Migrator::Migration::V1
   def migrate
     alter table_for(PasswordReset) do
       remove :created_at

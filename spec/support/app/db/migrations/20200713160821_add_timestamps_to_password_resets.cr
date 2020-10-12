@@ -1,4 +1,4 @@
-class AddTimestampsToPasswordReset::V20200713160821 < Avram::Migrator::Migration::V1
+class AddTimestampsToPasswordResets::V20200713160821 < Avram::Migrator::Migration::V1
   def migrate
     alter table_for(PasswordReset) do
       add started_at : Time, fill_existing_with: Time.utc
