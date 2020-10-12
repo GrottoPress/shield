@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 - Remove `Shield::Error`
+- Remove `Shield::Users` actions
 
 ## [0.3.0] - 2020-09-19
 

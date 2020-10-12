@@ -1,8 +1,8 @@
 class Users::Show < ApiAction
-  include Shield::Users::Show
+  skip :require_logged_out
 
   get "/users/:user_id" do
-    json({user: user.id})
+    json({user: 1})
   end
 
   def remote_ip : Socket::IPAddress?
