@@ -6,9 +6,9 @@ describe Shield::CryptoHelper do
       plaintext = "abcdef"
 
       ciphertext = CryptoHelper.encrypt_and_sign(plaintext)
-      decrypted = CryptoHelper.verify_and_decrypt!(ciphertext)
+      decrypted = CryptoHelper.verify_and_decrypt(ciphertext)
 
-      decrypted[0].should eq(plaintext)
+      decrypted.try(&.[0]).should eq(plaintext)
     end
 
     it "verifies and decrypts ciphertext generated from multiple plaintexts" do
@@ -16,10 +16,10 @@ describe Shield::CryptoHelper do
       plaintext_2 = "123456"
 
       ciphertext = CryptoHelper.encrypt_and_sign(plaintext, plaintext_2)
-      decrypted = CryptoHelper.verify_and_decrypt!(ciphertext)
+      decrypted = CryptoHelper.verify_and_decrypt(ciphertext)
 
-      decrypted[0].should eq(plaintext)
-      decrypted[1].should eq(plaintext_2)
+      decrypted.try(&.[0]).should eq(plaintext)
+      decrypted.try(&.[1]).should eq(plaintext_2)
     end
   end
 
