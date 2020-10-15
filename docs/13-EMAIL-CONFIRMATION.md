@@ -105,21 +105,21 @@ This is particularly important, since email addresses are usually the only means
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, email_confirmation)
-     #  success_action
+     #  success_action(operation)
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
      #  if operation.user_email?
-     #     success_action
+     #     success_action(operation)
      #   else
      #     flash.failure = "Email confirmation request failed"
      #     html NewPage, operation: operation
      #   end
      #end
 
-     #private def success_action
+     #private def success_action(operation)
      #  flash.keep.success = "Done! Check your email for further instructions."
      #  redirect to: CurrentLogin::New
      #end

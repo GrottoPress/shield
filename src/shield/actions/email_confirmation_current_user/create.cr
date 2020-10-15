@@ -45,7 +45,7 @@ module Shield::EmailConfirmationCurrentUser::Create
 
     def do_run_operation_failed(operation)
       if operation.user_email?
-        success_action # <= IMPORTANT!
+        success_action(operation) # <= IMPORTANT!
       else
         flash.failure = "Could not create your account"
         html NewPage, operation: operation, email: operation.email.value.to_s

@@ -148,21 +148,21 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, password_reset)
-     #  success_action
+     #  success_action(operation)
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
      #  if operation.guest_email?
-     #     success_action
+     #     success_action(operation)
      #   else
      #     flash.failure = "Password reset request failed"
      #     html NewPage, operation: operation
      #   end
      #end
 
-     #private def success_action
+     #private def success_action(operation)
      #  flash.keep.success = "Done! Check your email for further instructions."
      #  redirect to: CurrentLogin::New
      #end
