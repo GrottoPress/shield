@@ -2,26 +2,12 @@
 
 *Utilities* are (plain old *Crystal*) objects with domain-specific business logic. You may know them as non-database models. *Shield* calls them *Utilities* to differentiate them from database-backed models.
 
-1. `BaseSession`
-
-   ```crystal
-   # ->>> src/utilities/base_session.cr
-
-   abstract class BaseSession # Or `abstract struct ...`
-     # ...
-     include Shield::Session
-     # ...
-   end
-   ```
-
-   `Shield::BaseSession` serves as the base type for all session wrappers.
-
 1. `LoginSession`
 
    ```crystal
    # ->>> src/utilities/login_session.cr
 
-   class LoginSession < BaseSession # Or `struct ...`
+   class LoginSession # Or `struct ...`
      # ...
      include Shield::LoginSession
      # ...
@@ -35,7 +21,7 @@
    ```crystal
    # ->>> src/utilities/previous_page_session.cr
 
-   class PageUrlSession < BaseSession # Or `struct ...`
+   class PageUrlSession # Or `struct ...`
      # ...
      include Shield::PageUrlSession
      # ...
@@ -49,7 +35,7 @@
    ```crystal
    # ->>> src/utilities/password_reset_session.cr
 
-   class PasswordResetSession < BaseSession # Or `struct ...`
+   class PasswordResetSession # Or `struct ...`
      # ...
      include Shield::PasswordResetSession
      # ...
@@ -63,7 +49,7 @@
    ```crystal
    # ->>> src/utilities/previous_page_session.cr
 
-   class ReturnUrlSession < BaseSession # Or `struct ...`
+   class ReturnUrlSession # Or `struct ...`
      # ...
      include Shield::ReturnUrlSession
      # ...

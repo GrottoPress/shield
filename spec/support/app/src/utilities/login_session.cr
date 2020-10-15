@@ -1,3 +1,3 @@
-struct LoginSession < BaseSession
+struct LoginSession
   include Shield::LoginSession
 end

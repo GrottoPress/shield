@@ -1,5 +1,7 @@
 module Shield::PasswordResetSession
   macro included
+    include Shield::Session
+
     def verify!
       verify.not_nil!
     end

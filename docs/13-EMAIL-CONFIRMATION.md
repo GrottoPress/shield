@@ -369,7 +369,7 @@ This is particularly important, since email addresses are usually the only means
    ```crystal
    # ->>> src/utilities/email_confirmation_session.cr
 
-   class EmailConfirmationSession < BaseSession # Or `struct ...`
+   class EmailConfirmationSession # Or `struct ...`
      # ...
      include Shield::EmailConfirmationSession
      # ...

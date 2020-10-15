@@ -1,3 +1,3 @@
-struct PageUrlSession < BaseSession
+struct PageUrlSession
   include Shield::PageUrlSession
 end

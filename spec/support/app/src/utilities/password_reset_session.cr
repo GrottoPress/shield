@@ -1,3 +1,3 @@
-struct PasswordResetSession < BaseSession
+struct PasswordResetSession
   include Shield::PasswordResetSession
 end

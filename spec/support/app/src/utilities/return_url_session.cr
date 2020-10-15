@@ -1,3 +1,3 @@
-struct ReturnUrlSession < BaseSession
+struct ReturnUrlSession
   include Shield::ReturnUrlSession
 end

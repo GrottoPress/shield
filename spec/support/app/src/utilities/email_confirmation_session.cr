@@ -1,3 +1,3 @@
-struct EmailConfirmationSession < BaseSession
+struct EmailConfirmationSession
   include Shield::EmailConfirmationSession
 end

@@ -1,5 +1,7 @@
 module Shield::ReturnUrlSession
   macro included
+    include Shield::Session
+
     def return_url! : String
       return_url.not_nil!
     end

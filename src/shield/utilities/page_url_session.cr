@@ -1,5 +1,7 @@
 module Shield::PageUrlSession
   macro included
+    include Shield::Session
+
     def previous_page_url! : String
       previous_page_url.not_nil!
     end

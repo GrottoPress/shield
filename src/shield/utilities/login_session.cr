@@ -1,5 +1,7 @@
 module Shield::LoginSession
   macro included
+    include Shield::Session
+
     def verify!
       verify.not_nil!
     end
