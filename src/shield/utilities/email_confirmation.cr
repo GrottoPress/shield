@@ -35,11 +35,11 @@ module Shield::EmailConfirmation
       (Time.utc - started_at) > Shield.settings.email_confirmation_expiry
     end
 
-    def url(operation : StartEmailConfirmation) : String
+    def self.url(operation : StartEmailConfirmation) : String
       url(operation.token)
     end
 
-    def url(token : String) : String
+    def self.url(token : String) : String
       EmailConfirmations::Show.url(token: token)
     end
   end

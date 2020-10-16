@@ -146,7 +146,7 @@ describe Shield::AuthenticationPipes do
 
         client = ApiClient.new
 
-        response = client.get(email_confirmation.url(operation))
+        response = client.get(EmailConfirmation.url(operation))
 
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(CurrentUser::New)
@@ -164,7 +164,7 @@ describe Shield::AuthenticationPipes do
 
         client = ApiClient.new
 
-        response = client.get(email_confirmation.url(operation))
+        response = client.get(EmailConfirmation.url(operation))
 
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(CurrentUser::New)

@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `user : User` parameter to `Shield::AuthorizationPipes#authorize?`
 - Return `403` status code, by default, for denied requests.
 - Rename `Shield::Logins` to `Shield::CurrentLogin`
+- Convert `EmailConfirmation#url` to a class method.
 
 ### Removed
 - Remove `Shield::Error`

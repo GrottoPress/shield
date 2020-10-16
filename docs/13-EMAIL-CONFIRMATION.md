@@ -415,7 +415,7 @@ This is particularly important, since email addresses are usually the only means
 
        To proceed to confirm your email, click the link below:
 
-       #{@email_confirmation.url(@operation)}
+       #{EmailConfirmation.url(@operation)}
 
        This email confirmation link will expire in #{Shield.settings.email_confirmation_expiry.total_minutes.to_i} minutes.
 

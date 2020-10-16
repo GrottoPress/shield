@@ -15,7 +15,7 @@ class EmailConfirmationRequestEmail < BaseEmail
 
   private def text_message : String
     <<-TEXT
-    #{@email_confirmation.url(@operation)}
+    #{EmailConfirmation.url(@operation)}
     TEXT
   end
 end
