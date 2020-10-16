@@ -61,7 +61,7 @@ module Shield::EmailConfirmations::Update
     end
 
     def authorize?(user : User) : Bool
-      true
+      user.id == current_user.try &.id
     end
   end
 end
