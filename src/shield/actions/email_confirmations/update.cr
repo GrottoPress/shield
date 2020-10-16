@@ -28,12 +28,15 @@ module Shield::EmailConfirmations::Update
         if email_confirmation.try &.user_id == current_user!.id # <= IMPORTANT!
           update_email(email_confirmation.not_nil!)
         else
-          CurrentUser::New.new(
-            context,
-            Hash(String, String).new
-          ).do_run_operation_failed(utility)
+          response.status_code = 403
+          do_verify_operation_failed(utility)
         end
       end
+    end
+
+    def do_verify_operation_failed(utility)
+      flash.keep.failure = "Invalid token"
+      redirect to: New
     end
 
     private def update_email(email_confirmation)

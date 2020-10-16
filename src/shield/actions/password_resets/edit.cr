@@ -11,19 +11,19 @@ module Shield::PasswordResets::Edit
     def run_operation
       PasswordResetSession.new(session).verify do |utility, password_reset|
         if password_reset
-          do_run_operation_succeeded(utility, password_reset.not_nil!)
+          render_form(utility, password_reset.not_nil!)
         else
           response.status_code = 403
-          do_run_operation_failed(utility)
+          do_verify_operation_failed(utility)
         end
       end
     end
 
-    def do_run_operation_succeeded(utility, password_reset)
+    private def render_form(utility, password_reset)
       html EditPage, user: utility.password_reset!.user!
     end
 
-    def do_run_operation_failed(utility)
+    def do_verify_operation_failed(utility)
       flash.keep.failure = "Invalid token"
       redirect to: New
     end

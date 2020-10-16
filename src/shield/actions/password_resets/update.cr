@@ -13,12 +13,15 @@ module Shield::PasswordResets::Update
         if password_reset
           reset_password(password_reset.not_nil!)
         else
-          Edit.new(
-            context,
-            Hash(String, String).new
-          ).do_run_operation_failed(utility)
+          response.status_code = 403
+          do_verify_operation_failed(utility)
         end
       end
+    end
+
+    def do_verify_operation_failed(utility)
+      flash.keep.failure = "Invalid token"
+      redirect to: New
     end
 
     private def reset_password(password_reset)

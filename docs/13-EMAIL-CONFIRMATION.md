@@ -168,6 +168,13 @@ This is particularly important, since email addresses are usually the only means
        run_operation
      end
 
+     # What to do if token verification fails
+     #
+     #def do_verify_operation_failed(utility)
+     #  flash.keep.failure = "Invalid token"
+     #  redirect to: New
+     #end
+
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
@@ -203,15 +210,9 @@ This is particularly important, since email addresses are usually the only means
        run_operation
      end
 
-     # What to do if `run_operation` succeeds
+     # What to do if token verification fails
      #
-     #def do_run_operation_succeeded(utility, email_confirmation)
-     #  html NewPage, email: email_confirmation.email
-     #end
-
-     # What to do if `run_operation` fails
-     #
-     #def do_run_operation_failed(utility)
+     #def do_verify_operation_failed(utility)
      #  flash.keep.failure = "Invalid token"
      #  redirect to: EmailConfirmations::New
      #end
@@ -245,6 +246,13 @@ This is particularly important, since email addresses are usually the only means
      post "/account" do
        run_operation
      end
+
+     # What to do if token verification fails
+     #
+     #def do_verify_operation_failed(utility)
+     #  flash.keep.failure = "Invalid token"
+     #  redirect to: EmailConfirmations::New
+     #end
 
      # What to do if `run_operation` succeeds
      #

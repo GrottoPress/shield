@@ -5,11 +5,11 @@ class PasswordResets::Edit < ApiAction
     run_operation
   end
 
-  def do_run_operation_succeeded(operation, password_reset)
+  private def render_form(utility, password_reset)
     json({exit: 0})
   end
 
-  def do_run_operation_failed(operation)
+  def do_verify_operation_failed(utility)
     json({exit: 1})
   end
 

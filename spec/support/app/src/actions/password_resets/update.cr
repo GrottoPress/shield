@@ -5,6 +5,10 @@ class PasswordResets::Update < ApiAction
     run_operation
   end
 
+  def do_verify_operation_failed(utility)
+    json({exit: 1})
+  end
+
   def do_run_operation_succeeded(operation, user)
     json({a: ""})
   end

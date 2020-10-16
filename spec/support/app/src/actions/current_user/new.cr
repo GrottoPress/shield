@@ -5,11 +5,11 @@ class CurrentUser::New < ApiAction
     run_operation
   end
 
-  def do_run_operation_succeeded(utility, email_confirmation)
+  private def render_form(utility, email_confirmation)
     json({exit: 0})
   end
 
-  def do_run_operation_failed(utility)
+  def do_verify_operation_failed(utility)
     json({exit: 1})
   end
 

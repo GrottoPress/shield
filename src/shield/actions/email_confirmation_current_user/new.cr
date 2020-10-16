@@ -13,19 +13,19 @@ module Shield::EmailConfirmationCurrentUser::New
         session
       ).verify do |utility, email_confirmation|
         if email_confirmation
-          do_run_operation_succeeded(utility, email_confirmation.not_nil!)
+          render_form(utility, email_confirmation.not_nil!)
         else
           response.status_code = 403
-          do_run_operation_failed(utility)
+          do_verify_operation_failed(utility)
         end
       end
     end
 
-    def do_run_operation_succeeded(utility, email_confirmation)
+    private def render_form(utility, email_confirmation)
       html NewPage, email: email_confirmation.email
     end
 
-    def do_run_operation_failed(utility)
+    def do_verify_operation_failed(utility)
       flash.keep.failure = "Invalid token"
       redirect to: EmailConfirmations::New
     end
