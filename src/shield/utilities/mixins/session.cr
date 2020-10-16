@@ -3,8 +3,10 @@ module Shield::Session
     def initialize(@session : Lucky::Session)
     end
 
-    abstract def delete : self
+    def delete : self
+    end
 
-    abstract def set(*values) : self
+    def set(*values) : self
+    end
   end
 end
