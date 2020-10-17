@@ -25,13 +25,17 @@ module Shield::EmailConfirmations::Update
       EmailConfirmationSession.new(
         session
       ).verify do |utility, email_confirmation|
-        if email_confirmation.try &.user_id == current_user!.id # <= IMPORTANT!
+        if email_confirmation.try &.user_id == user.id # <= IMPORTANT!
           update_email(email_confirmation.not_nil!)
         else
           response.status_code = 403
           do_verify_operation_failed(utility)
         end
       end
+    end
+
+    def user
+      current_user!
     end
 
     def do_verify_operation_failed(utility)
