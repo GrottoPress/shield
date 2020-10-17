@@ -18,7 +18,7 @@ module Shield::CurrentLogin::Destroy
 
     @[Memoize]
     def login
-      LoginSession.new(session).login!
+      current_login!
     end
 
     def do_run_operation_succeeded(operation, login)
