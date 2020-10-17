@@ -332,8 +332,6 @@ For these purposes, *Shield* provides the following modules:
 - `Shield::EmailConfirmationParams`
 - `Shield::PasswordResetParams`
 
-Password resets and email confirmations for APIs uses params passed directly to the respective actions. The user should receive these param values, instead of a link, in their email.
-
 If your application decides to allow any of these functionalities via its API, the modules above should be `include`d in their respective API classes.
 
 ### Rate limiting
