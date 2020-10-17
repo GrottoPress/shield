@@ -1,8 +1,8 @@
 ## Getting Started
 
-*Shield*'s core philosophy is to **deny by default**. It locks everything down, without regard to the security policy, or usability requirements, of the consumer application.
+*Shield*'s core philosophy is to **deny by default**. It locks everything down, without regard to the security policy, or usability requirements, of the parent application.
 
-It is up to the consumer application to explicitly disable features it finds an overkill for its specific use case. In *Shield*, most features can be disabled by `skip`ping the relevant action pipes.
+It is up to applications to explicitly disable features it finds an overkill for its specific use case. In *Shield*, most features can be disabled by `skip`ping the relevant action pipes.
 
 This posture makes it difficult for an application to be *insecure by accident*.
 

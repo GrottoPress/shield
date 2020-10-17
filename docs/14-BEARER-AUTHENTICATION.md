@@ -307,7 +307,7 @@ Effectively, a user cannot generate a valid *bearer login* token for an action t
 
 ### Rate limiting
 
-*Shield* has no API rate limiting implementation yet. For now, consumer applications may achieve this via a reverse proxy (eg *Nginx*), or *Crystal* shards (eg [Defense](https://github.com/defense-cr/defense)).
+*Shield* has no API rate limiting implementation yet. For now, applications may achieve this via a reverse proxy (eg *Nginx*), or *Crystal* shards (eg [Defense](https://github.com/defense-cr/defense)).
 
 ### API security tips
 
