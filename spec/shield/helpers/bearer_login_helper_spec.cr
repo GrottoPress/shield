@@ -3,7 +3,7 @@ require "../../spec_helper"
 describe Shield::BearerLoginHelper do
   describe ".scope" do
     it "works" do
-      BearerLoginHelper.scope(Posts::Index).should eq("posts.index")
+      BearerLoginHelper.scope(Api::Posts::Index).should eq("api.posts.index")
       BearerLoginHelper.scope(CurrentUser::Show).should eq("current_user.show")
     end
   end
@@ -16,8 +16,7 @@ describe Shield::BearerLoginHelper do
 
   describe ".authorization_header" do
     it "works" do
-      BearerLoginHelper.authorization_header(1, "abcdef")
-        .should eq("Bearer 1.abcdef")
+      BearerLoginHelper.bearer_header(1, "abcdef").should eq("Bearer 1.abcdef")
     end
   end
 

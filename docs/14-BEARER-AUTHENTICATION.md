@@ -4,7 +4,7 @@
 
 In *Shield*, every action represents a single scope, which, if included in a *bearer login*'s assigned `scopes`, would allow a client possessing that *bearer login*'s token to access that action.
 
-An action's scope name is the action's class name underscored, with `::` replaced with `.`. For instance, `Posts::Index` becomes `posts.index`, `CurrentUser::Show` becomes `current_user.show`, etc.
+An action's scope name is the action's class name underscored, with `::` replaced with `.`. For instance, `Api::Posts::Index` becomes `api.posts.index`, `Api::CurrentUser::Show` becomes `api.current_user.show`, etc.
 
 When a user creates a *bearer login*, they generate a token, and delegate some or all of their rights, to this token. Any client in possession of the token may access the application on behalf of the user, without needing login credentials of their own.
 
@@ -16,9 +16,19 @@ When *Shield* receives a request from a client, it retrieves this `<TOKEN>` from
 
 If the token is successfully verified, *Shield* further checks that the token has the required `scopes` to access the current action.
 
-Finally, *Shield* checks that the user that generated this token has the right to access the current action. This check is based on the authorization rules you set up in section *13-AUTHORIZATION.md*.
+Finally, *Shield* checks that the user that generated this token has the right to access the current action. This check is based on the authorization rules you set up in section *12-AUTHORIZATION.md*.
 
 Effectively, a user cannot generate a valid *bearer login* token for an action they do not, originally, have access to.
+
+### API logins with regular passwords
+
+*Shield* supports API logins with regular passwords, if you expose that endpoint in you API. However, *sessions* are not used at all for API logins.
+
+Instead, *Shield* generates a temporary token for every successful login, and expects clients to pass such token in the `Authorization` header, as with bearer logins.
+
+This token is revoked when the user logs out.
+
+### Setting up
 
 1. Set up the model
 
@@ -121,44 +131,6 @@ Effectively, a user cannot generate a valid *bearer login* token for an action t
 
 1. Set up actions:
 
-   ```crystal
-   # ->>> src/actions/api_action_.cr
-
-   abstract class ApiAction < Lucky::Action
-     # ...
-     include Shield::BearerAuthenticationAction
-
-     # What to do if user is **not** logged in
-     # but the action requires user to be logged in.
-     #
-     #def do_require_logged_in_failed
-     #  flash.failure = "You are not logged in"
-     #  json({notices: flash})
-     #end
-
-     # What to do if user is logged in but the action
-     # requires user to **not** be logged in.
-     #
-     #def do_require_logged_out_failed
-     #  flash.info = "You are already logged in"
-     #  json({notices: flash})
-     #end
-
-     # What to do if user is not allowed to perform action
-     #
-     #def do_check_authorization_failed
-     #  flash.failure = "You are not allowed to perform this action!"
-     #  json({notices: flash})
-     #end
-     # ...
-   end
-   ```
-
-   `Shield::BearerAuthenticationAction` adds in all bearer authentication helpers and pipes, and must be included with, and after, `Shield::Action`.
-
-   This makes any action that extends `ApiAction` ready to authenticate and authorize access tokens from clients.
-
-   ---
    ```crystal
    # ->>> src/actions/bearer_logins/new.cr
 
@@ -294,6 +266,17 @@ Effectively, a user cannot generate a valid *bearer login* token for an action t
 
    `Shield::BearerLoginHeaders` handles verification of *bearer login* tokens retrieved from request headers.
 
+   ---
+   ```crystal
+   # ->>> src/utilities/login_headers.cr
+
+   class LoginHeaders # or `struct ...`
+     include Shield::LoginHeaders
+   end
+   ```
+
+   `Shield::LoginHeaders` handles verifications for regular password logins, since APIs do not use sessions for password authentication.
+
 ### Action helpers
 
 `Shield::BearerAuthenticationHelpers` adds in the following helpers, as counterparts to those provided in `Shield::AuthenticationHelpers`.
@@ -304,6 +287,54 @@ Effectively, a user cannot generate a valid *bearer login* token for an action t
 - `#current_bearer_login!`
 - `#current_bearer_user`
 - `#current_bearer_user!`
+
+Other helpers are provided as follows:
+
+- `#current_or_bearer_user`:
+
+   Returns `#current_user` if available, otherwise returns `#current_bearer_user`. This is useful for dealing with the current user in APIs.
+
+### Authentication actions via API endpoints
+
+*Shield* allows all authentication actions that are possible via the web browser to be done via API, if the application chooses to expose those endpoints.
+
+For instance, an application may allow a user to register or log in or start a password reset, from API endpoints exposed for such purposes.
+
+*Shield* even supports creating bearer logins from APIs. A user may log in with a regular password via API, and use the token they receive to create bearer logins. They could even create a bearer login via the browser, assigning it `scopes` that allow it to create other bearer logins via API.
+
+For these purposes, *Shield* provides the following modules:
+
+#### Actions
+
+- `Shield::Api::BearerLogins::Create`
+- `Shield::Api::BearerLogins::Destroy`
+- `Shield::Api::BearerLogins::Index`
+
+- `Shield::Api::CurrentLogin::Create`
+- `Shield::Api::CurrentLogin::Destroy`
+
+- `Shield::Api::CurrentUser::Create`
+- `Shield::Api::CurrentUser::Show`
+- `Shield::Api::CurrentUser::Update`
+
+- `Shield::Api::EmailConfirmationCurrentUser::Create`
+- `Shield::Api::EmailConfirmationCurrentUser::Show`
+- `Shield::Api::EmailConfirmationCurrentUser::Update`
+
+- `Shield::Api::EmailConfirmations::Create`
+- `Shield::Api::EmailConfirmations::Update`
+
+- `Shield::Api::PasswordResets::Create`
+- `Shield::Api::PasswordResets::Update`
+
+#### Utilities
+
+- `Shield::EmailConfirmationParams`
+- `Shield::PasswordResetParams`
+
+Password resets and email confirmations for APIs uses params passed directly to the respective actions. The user should receive these param values, instead of a link, in their email.
+
+If your application decides to allow any of these functionalities via its API, the modules above should be `include`d in their respective API classes.
 
 ### Rate limiting
 

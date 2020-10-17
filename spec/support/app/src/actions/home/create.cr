@@ -1,4 +1,4 @@
-class Home::Create < ApiAction
+class Home::Create < BrowserAction
   skip :require_logged_in
   skip :require_logged_out
 

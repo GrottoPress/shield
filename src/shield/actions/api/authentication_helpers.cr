@@ -1,5 +1,19 @@
-module Shield::BearerAuthenticationHelpers
+module Shield::Api::AuthenticationHelpers
   macro included
+    include Shield::AuthenticationHelpers
+
+    def current_login : Login?
+      LoginHeaders.new(request.headers).verify
+    end
+
+    def current_or_bearer_user! : User
+      current_or_bearer_user.not_nil!
+    end
+
+    def current_or_bearer_user : User?
+      current_user || current_bearer_user
+    end
+
     def bearer_logged_in? : Bool
       !bearer_logged_out?
     end

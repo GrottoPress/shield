@@ -1,4 +1,4 @@
-class CurrentUser::Show < ApiAction
+class CurrentUser::Show < BrowserAction
   include Shield::CurrentUser::Show
 
   get "/profile" do

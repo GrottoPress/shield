@@ -1,4 +1,4 @@
-class CurrentUser::Create < ApiAction
+class CurrentUser::Create < BrowserAction
   include Shield::CurrentUser::Create
 
   post "/register" do

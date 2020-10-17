@@ -1,5 +1,6 @@
-class Posts::Create < BearerApiAction
+class Api::Posts::Create < ApiAction
   skip :require_logged_out
+  skip :pin_login_to_ip_address
 
   post "/posts" do
     json({

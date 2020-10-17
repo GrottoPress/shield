@@ -80,13 +80,22 @@
 - `PasswordResets::EditPage`
 - `PasswordResets::NewPage`
 
+### Serializers
+
+- `BearerLoginSerializer`
+- `LoginSerializer`
+- `UserSerializer`
+
 ### Utilities
 
 - `BearerLoginHeaders`
 - `EmailConfirmation`
+- `EmailConfirmationParams`
 - `EmailConfirmationSession`
+- `LoginHeaders`
 - `LoginSession`
 - `PageUrlSession`
+- `PasswordResetParams`
 - `PasswordResetSession`
 - `ReturnUrlSession`
 

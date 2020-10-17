@@ -1,4 +1,4 @@
-class CurrentLogin::Create < ApiAction
+class CurrentLogin::Create < BrowserAction
   include Shield::CurrentLogin::Create
 
   post "/log-in" do
@@ -10,7 +10,8 @@ class CurrentLogin::Create < ApiAction
       login: login.id,
       session: 1,
       current_login: current_login!.id,
-      current_user: current_user!.id
+      current_user: current_user!.id,
+      login_token: operation.token
     })
   end
 

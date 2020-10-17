@@ -1,4 +1,4 @@
-class Users::Update < ApiAction
+class Users::Update < BrowserAction
   skip :require_logged_in
   skip :require_logged_out
 

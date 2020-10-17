@@ -1,4 +1,4 @@
-class Home::Edit < ApiAction
+class Home::Edit < BrowserAction
   skip :require_logged_in
   skip :require_logged_out
 

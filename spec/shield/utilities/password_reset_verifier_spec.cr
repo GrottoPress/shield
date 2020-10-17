@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-describe Shield::PasswordResetSession do
+describe Shield::PasswordResetVerifier do
   it "deactivates password reset when expired but active" do
     Shield.temp_config(password_reset_expiry: 2.seconds) do
       email = "user@example.tld"
@@ -9,20 +9,22 @@ describe Shield::PasswordResetSession do
       UserBox.create &.email(email)
         .password_digest(CryptoHelper.hash_bcrypt(password))
 
-      session = Lucky::Session.new
-
       password_reset = StartPasswordReset.create!(
         params(email: email),
-        remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+        remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
       )
+
       password_reset.status.started?.should be_true
 
-      password_reset_session = PasswordResetSession.new(session)
-      password_reset_session.set(password_reset.id, "abcdef")
+      password_reset_params = PasswordResetParams.new(params(
+        id: password_reset.id,
+        token: "abcdef"
+      ))
 
       sleep 3
 
-      password_reset_session.verify.should be_nil
+      password_reset.status.started?.should be_true
+      password_reset_params.verify.should be_nil
       password_reset.reload.status.expired?.should be_true
     end
   end

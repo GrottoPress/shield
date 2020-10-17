@@ -1,4 +1,4 @@
-class EmailConfirmations::Update < ApiAction
+class EmailConfirmations::Update < BrowserAction
   include Shield::EmailConfirmations::Update
 
   skip :pin_email_confirmation_to_ip_address

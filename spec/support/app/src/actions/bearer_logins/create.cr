@@ -1,4 +1,4 @@
-class BearerLogins::Create < ApiAction
+class BearerLogins::Create < BrowserAction
   include Shield::BearerLogins::Create
 
   skip :pin_login_to_ip_address

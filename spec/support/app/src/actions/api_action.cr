@@ -1,13 +1,12 @@
 abstract class ApiAction < Lucky::Action
-  include Shield::Action
+  include Shield::ApiAction
 
   accepted_formats [:json]
 
+  # route_prefix "/api/v1"
+
   def do_require_logged_in_failed
-    json({
-      logged_in: false,
-      return_url: ReturnUrlSession.new(session).return_url
-    })
+    json({logged_in: false})
   end
 
   def do_require_logged_out_failed

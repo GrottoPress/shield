@@ -1,4 +1,4 @@
-class PasswordResets::New < ApiAction
+class PasswordResets::New < BrowserAction
   include Shield::PasswordResets::New
 
   get "/password-resets/new" do

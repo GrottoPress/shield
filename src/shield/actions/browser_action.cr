@@ -1,5 +1,6 @@
-module Shield::Action
+module Shield::BrowserAction
   macro included
+    include Lucky::ProtectFromForgery
     include Lucky::Paginator::BackendHelpers
 
     include Shield::ActionHelpers

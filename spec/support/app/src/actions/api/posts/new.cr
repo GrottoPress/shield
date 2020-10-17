@@ -1,7 +1,7 @@
-class Posts::Index < BearerApiAction
-  skip :require_logged_out
+class Api::Posts::New < ApiAction
+  skip :require_logged_in
 
-  get "/posts" do
+  get "/posts/new" do
     json({
       scopes: current_bearer_login.try &.scopes,
       current_bearer_user: current_bearer_user.try &.id,

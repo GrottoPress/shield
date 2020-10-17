@@ -3,8 +3,6 @@ module Shield::LogUserIn
     attribute email : String
     attribute password : String
 
-    needs session : Lucky::Session
-
     before_save do
       validate_required email, password
       verify_login
@@ -16,6 +14,8 @@ module Shield::LogUserIn
     include Shield::ValidateEmail
     include Shield::RequireIpAddress
     include Shield::StartAuthentication(Login)
+
+    needs session : Lucky::Session? = nil
 
     private def verify_login
       return unless email.value.to_s.email? && password.value
@@ -32,7 +32,9 @@ module Shield::LogUserIn
     end
 
     private def set_session(login : Login)
-      LoginSession.new(session).set(login.id, token)
+      session.try do |session|
+        LoginSession.new(session).set(login.id, token)
+      end
     end
 
     private def notify_login(login : Login)

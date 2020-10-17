@@ -1,4 +1,4 @@
-class EmailConfirmations::Show < ApiAction
+class EmailConfirmations::Show < BrowserAction
   include Shield::EmailConfirmations::Show
 
   param token : String

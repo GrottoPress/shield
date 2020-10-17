@@ -1,4 +1,4 @@
-class PasswordResets::Show < ApiAction
+class PasswordResets::Show < BrowserAction
   include Shield::PasswordResets::Show
 
   param id : Int64

@@ -1,4 +1,4 @@
-class Users::Edit < ApiAction
+class Users::Edit < BrowserAction
   skip :require_logged_out
 
   get "/users/:user_id/edit" do

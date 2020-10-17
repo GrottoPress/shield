@@ -14,18 +14,18 @@ module Shield::BearerLoginHelper
     end
 
     def bearer_token(id, token : String) : String
-      "#{id}.#{token}"
+      LoginHelper.bearer_token(id, token)
     end
 
-    def authorization_header(
+    def bearer_header(
       bearer_login : BearerLogin,
       operation : CreateBearerLogin
     ) : String
-      authorization_header(bearer_login.id, operation.token)
+      bearer_header(bearer_login.id, operation.token)
     end
 
-    def authorization_header(id, token : String)
-      "Bearer #{bearer_token(id, token)}"
+    def bearer_header(id, token : String)
+      LoginHelper.bearer_header(id, token)
     end
 
     def token_from_headers(request : HTTP::Request)
@@ -36,9 +36,7 @@ module Shield::BearerLoginHelper
     # "Authorization: Bearer <ID>.<TOKEN>",
     # where <ID> = bearer login id, <TOKEN> = bearer login token
     def token_from_headers(headers : HTTP::Headers) : String?
-      header = headers["Authorization"]?.try &.split
-      return unless header.try(&.size) == 2 && header.try(&.[0]?) == "Bearer"
-      header.try &.[1]?
+      LoginHelper.token_from_headers(headers)
     end
 
     def scope(action : Lucky::Action.class) : String
@@ -50,7 +48,7 @@ module Shield::BearerLoginHelper
         Lucky::Action
           .all_subclasses
           .reject(&.abstract?)
-          .select { |k| k < Shield::BearerAuthenticationPipes }
+          .select { |k| k < Shield::ApiAction }
       }} of Lucky::Action.class
 
       actions.map { |action| scope(action) }

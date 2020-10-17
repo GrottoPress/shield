@@ -1,4 +1,4 @@
-class PasswordResets::Create < ApiAction
+class PasswordResets::Create < BrowserAction
   include Shield::PasswordResets::Create
 
   post "/password-resets" do

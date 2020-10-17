@@ -1,4 +1,4 @@
-class Home::Show < ApiAction
+class Home::Show < BrowserAction
   skip :require_logged_in
   skip :require_logged_out
 

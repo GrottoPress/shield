@@ -1,4 +1,4 @@
-class CurrentUser::New < ApiAction
+class CurrentUser::New < BrowserAction
   include Shield::EmailConfirmationCurrentUser::New
 
   get "/register" do

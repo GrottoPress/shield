@@ -1,4 +1,4 @@
-class EmailConfirmations::Create < ApiAction
+class EmailConfirmations::Create < BrowserAction
   include Shield::EmailConfirmations::Create
 
   post "/email-confirmations" do
