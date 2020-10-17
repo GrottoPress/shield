@@ -31,7 +31,7 @@ module Shield::Api::BearerLogins::Create
         message: "Copy the token now; it will only be shown once!",
         data: {
           bearer_login: BearerLoginSerializer.new(bearer_login),
-          token: BearerLoginHelper.bearer_token(bearer_login, operation)
+          token: BearerLoginHelper.token(bearer_login, operation)
         }
       })
     end

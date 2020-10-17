@@ -10,7 +10,7 @@ describe Shield::BearerLoginHelper do
 
   describe ".bearer_token" do
     it "works" do
-      BearerLoginHelper.bearer_token(1, "abcdef").should eq("1.abcdef")
+      BearerLoginHelper.token(1, "abcdef").should eq("1.abcdef")
     end
   end
 

@@ -6,11 +6,11 @@ module Shield::LoginHelper
       (Time.utc - login.started_at) > Shield.settings.login_expiry
     end
 
-    def bearer_token(login : Login, operation : LogUserIn) : String
-      bearer_token(login.id, operation.token)
+    def token(login : Login, operation : LogUserIn) : String
+      token(login.id, operation.token)
     end
 
-    def bearer_token(id, token : String) : String
+    def token(id, token : String) : String
       "#{id}.#{token}"
     end
 
@@ -22,7 +22,7 @@ module Shield::LoginHelper
     end
 
     def bearer_header(id, token : String)
-      "Bearer #{bearer_token(id, token)}"
+      "Bearer #{token(id, token)}"
     end
 
     def token_from_headers(request : HTTP::Request)

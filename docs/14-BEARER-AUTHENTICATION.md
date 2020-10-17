@@ -184,7 +184,7 @@ This token is revoked when the user logs out.
 
    You may need to add `BearerLogins::ShowPage` in `src/pages/bearer_logins/show_page.cr`, that displays the generated login token.
 
-   You display the token by calling `BearerLoginHelper.bearer_token(bearer_login, operation)`. This method prepends the *bearer login* ID to the raw token generated in the `CreateBearerLogin` operation, separated by a `.`.
+   You display the token by calling `BearerLoginHelper.token(bearer_login, operation)`. This method prepends the *bearer login* ID to the raw token generated in the `CreateBearerLogin` operation, separated by a `.`.
    
    The resulting string is the final token expected to be used by clients to authenticate against the API.
 
