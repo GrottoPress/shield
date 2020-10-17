@@ -2,7 +2,7 @@ class Users::Show < ApiAction
   skip :require_logged_out
 
   get "/users/:user_id" do
-    json({user: 1})
+    json({user: user_id.to_i64})
   end
 
   def remote_ip : Socket::IPAddress?
