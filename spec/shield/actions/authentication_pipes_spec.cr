@@ -40,6 +40,7 @@ describe Shield::AuthenticationPipes do
       password = "password4APASSWORD<"
 
       user = UserBox.create &.email(email)
+        .level(User::Level.new :admin)
         .password_digest(CryptoHelper.hash_bcrypt(password))
 
       client = ApiClient.new
@@ -54,7 +55,7 @@ describe Shield::AuthenticationPipes do
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Show.with(user_id: user.id))
 
-      response.should_not send_json(200, ip_address_changed: true)
+      response.should send_json(200, user: user.id)
     end
 
     it "rejects login from different IP" do
@@ -62,6 +63,7 @@ describe Shield::AuthenticationPipes do
       password = "password4APASSWORD<"
 
       user = UserBox.create &.email(email)
+        .level(User::Level.new :admin)
         .password_digest(CryptoHelper.hash_bcrypt(password))
 
       client = ApiClient.new
@@ -86,6 +88,7 @@ describe Shield::AuthenticationPipes do
       password = "password4APASSWORD<"
 
       UserBox.create &.email(email)
+        .level(User::Level.new :admin)
         .password_digest(CryptoHelper.hash_bcrypt(password))
 
       StartPasswordReset.create(
@@ -104,7 +107,7 @@ describe Shield::AuthenticationPipes do
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(PasswordResets::Edit)
 
-        response.should_not send_json(200, ip_address_changed: true)
+        response.should send_json(200, exit: 0)
       end
     end
 
@@ -113,6 +116,7 @@ describe Shield::AuthenticationPipes do
       password = "password4APASSWORD<"
 
       UserBox.create &.email(email)
+        .level(User::Level.new :admin)
         .password_digest(CryptoHelper.hash_bcrypt(password))
 
       StartPasswordReset.create(
@@ -151,7 +155,7 @@ describe Shield::AuthenticationPipes do
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(CurrentUser::New)
 
-        response.should_not send_json(200, ip_address_changed: true)
+        response.should send_json(200, exit: 0)
       end
     end
 
