@@ -28,6 +28,11 @@ module Shield::PasswordResetSession
       self
     end
 
+    def set(token : String) : self
+      id_token = token.split('.', 2)
+      set(id_token[0]?, id_token[1]?.to_s)
+    end
+
     def set(id, token : String) : self
       @session.set(:password_reset_id, id.to_s)
       @session.set(:password_reset_token, token)

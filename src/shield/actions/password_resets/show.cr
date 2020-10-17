@@ -13,7 +13,6 @@ module Shield::PasswordResets::Show
 
     before :set_no_referrer_policy # <= IMPORTANT!
 
-    # param id : Int64
     # param token : String
 
     # get "/password-resets" do
@@ -21,7 +20,7 @@ module Shield::PasswordResets::Show
     # end
 
     def run_operation
-      PasswordResetSession.new(session).set(id, token)
+      PasswordResetSession.new(session).set(token)
       redirect to: Edit # <= IMPORTANT!
     end
   end

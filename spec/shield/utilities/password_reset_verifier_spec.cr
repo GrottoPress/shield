@@ -17,8 +17,7 @@ describe Shield::PasswordResetVerifier do
       password_reset.status.started?.should be_true
 
       password_reset_params = PasswordResetParams.new(params(
-        id: password_reset.id,
-        token: "abcdef"
+        token: PasswordResetHelper.token(password_reset.id, "abcdef")
       ))
 
       sleep 3

@@ -182,7 +182,6 @@
      # ...
      include Shield::PasswordResets::Show
 
-     param id : Int64
      param token : String
 
      get "/password-resets" do
@@ -194,7 +193,7 @@
 
    `Shield::PasswordResets::Show` is just a pass-through to avoid leaking password reset tokens to third parties, via the HTTP referer header.
 
-   It sets the id and token, retrieved from params, in session, and redirects to the route responsible for actual verification.
+   It sets the token, retrieved from params, in session, and redirects to the route responsible for actual verification.
 
    ---
    ```crystal

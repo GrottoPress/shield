@@ -6,12 +6,17 @@ module Shield::PasswordResetParams
     end
 
     def password_reset_id : Int64?
-      @params.get?("id").try &.to_i64
+      token_from_params.try &.[0]?.try &.to_i64
     rescue
     end
 
     def password_reset_token : String?
-      @params.get?("token")
+      token_from_params.try &.[1]?
+    end
+
+    @[Memoize]
+    private def token_from_params
+      @params.get?("token").try &.split('.', 2)
     end
   end
 end

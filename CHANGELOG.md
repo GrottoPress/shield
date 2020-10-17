@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Return `403` status code, by default, for denied requests.
 - Rename `Shield::Logins` to `Shield::CurrentLogin`
 - Convert `EmailConfirmation#url` to a class method.
+- Remove required `id` param from password reset URL.
 
 ### Removed
 - Remove `Shield::Error`
