@@ -24,6 +24,7 @@ module Shield::AuthenticationPipes
         continue
       else
         LogUserOut.update!(current_login!, session: session)
+        response.status_code = 403
         do_pin_login_to_ip_address_failed
       end
     end
@@ -37,6 +38,7 @@ module Shield::AuthenticationPipes
         continue
       else
         EndPasswordReset.update!(password_reset.not_nil!, session: session)
+        response.status_code = 403
         do_pin_password_reset_to_ip_address_failed
       end
     end
@@ -50,6 +52,7 @@ module Shield::AuthenticationPipes
         continue
       else
         email_confirmation_session.delete
+        response.status_code = 403
         do_pin_email_confirmation_to_ip_address_failed
       end
     end

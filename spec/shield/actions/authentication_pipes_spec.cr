@@ -76,7 +76,7 @@ describe Shield::AuthenticationPipes do
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Edit.with(user_id: user.id))
 
-      response.should send_json(200, ip_address_changed: true)
+      response.should send_json(403, ip_address_changed: true)
     end
   end
 
@@ -131,7 +131,7 @@ describe Shield::AuthenticationPipes do
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(PasswordResets::Update)
 
-        response.should send_json(200, ip_address_changed: true)
+        response.should send_json(403, ip_address_changed: true)
       end
     end
   end
@@ -169,7 +169,7 @@ describe Shield::AuthenticationPipes do
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(CurrentUser::New)
 
-        response.should send_json(200, ip_address_changed: true)
+        response.should send_json(403, ip_address_changed: true)
       end
     end
   end
