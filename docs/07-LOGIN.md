@@ -160,6 +160,10 @@
 
    class CurrentLogin::Destroy < BrowserAction
      # ...
+     # By default, *Shield* sets the status of the login to
+     # `Ended` to mark it as inactive, without deleting it.
+     #
+     # To delete it, use `Shield::CurrentLogin::Delete` instead.
      include Shield::CurrentLogin::Destroy
 
      delete "/login" do

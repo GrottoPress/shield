@@ -83,6 +83,14 @@
    class UpdateCurrentUser < User::SaveOperation
      # ...
      include Shield::UpdateUser
+
+     # By default, *Shield* sets the status of all logins to
+     # `Ended` to mark them as inactive, when password changes,
+     # without deleting them.
+     #
+     # Enable this to delete them from the database instead.
+     #
+     #include Shield::DeleteLoginsOnPasswordChange
      # ...
    end
    ```

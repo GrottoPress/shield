@@ -103,6 +103,13 @@
    class ResetPassword < User::SaveOperation
      # ...
      include Shield::ResetPassword
+
+     # By default, *Shield* sets the status of all password resets to
+     # `Ended` to mark them as inactive, without deleting them.
+     #
+     # Enable this to delete them from the database instead.
+     #
+     #include Shield::DeletePasswordResetsAfterPasswordReset
      # ...
    end
    ```

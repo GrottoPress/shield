@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add documentation on integration with third-party authorization shards
 - Add `Shield::DeleteSession` operation mixin
 - Add `Shield::IpAddressColumn` model mixin
+- Add modules to delete authentication records, as an alternative to revoke them.
 
 ### Fixed
 - Fix wrong flash type used when deleting user fails

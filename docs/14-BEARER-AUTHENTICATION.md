@@ -219,6 +219,10 @@ This token is revoked when the user logs out.
 
    class BearerLogins::Destroy < BrowserAction
      # ...
+     # By default, *Shield* sets the status of the bearer login to
+     # `Ended` to mark it as inactive, without deleting it.
+     #
+     # To delete it, use `Shield::BearerLogins::Delete` instead.
      include Shield::BearerLogins::Destroy
 
      delete "/bearer-logins/:bearer_login_id" do
@@ -261,6 +265,12 @@ This token is revoked when the user logs out.
 
    class BearerLoginHeaders # or `struct ...`
      include Shield::BearerLoginHeaders
+
+     # By default, *Shield* sets the status of a bearer login to
+     # `Expired` when it expired, without deleting it.
+     #
+     # Enable this to delete it instead
+     #include Shield::DeleteBearerLoginIfExpired
    end
    ```
 
@@ -272,6 +282,12 @@ This token is revoked when the user logs out.
 
    class LoginHeaders # or `struct ...`
      include Shield::LoginHeaders
+
+     # By default, *Shield* sets the status of a login to
+     # `Expired` when it expired, without deleting it.
+     #
+     # Enable this to delete it instead
+     #include Shield::DeleteLoginIfExpired
    end
    ```
 
@@ -308,10 +324,12 @@ For these purposes, *Shield* provides the following modules:
 
 - `Shield::Api::BearerLogins::Create`
 - `Shield::Api::BearerLogins::Destroy`
+- `Shield::Api::BearerLogins::Delete`
 - `Shield::Api::BearerLogins::Index`
 
 - `Shield::Api::CurrentLogin::Create`
 - `Shield::Api::CurrentLogin::Destroy`
+- `Shield::Api::CurrentLogin::Delete`
 
 - `Shield::Api::CurrentUser::Create`
 - `Shield::Api::CurrentUser::Show`
