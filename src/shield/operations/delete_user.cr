@@ -1,5 +1,7 @@
 module Shield::DeleteUser
   macro included
+    @user : User? = nil
+
     param_key :user
 
     attribute user_id : Int64
@@ -9,6 +11,7 @@ module Shield::DeleteUser
     def submit
       validate_required user_id
       validate_not_current_user
+      validate_user_exists
 
       yield self, delete_user
     end
@@ -19,11 +22,17 @@ module Shield::DeleteUser
       end
     end
 
+    private def validate_user_exists
+      user_id.value.try do |value|
+        @user = UserQuery.new.id(value).first?
+        user_id.add_error("does not exist") unless @user
+      end
+    end
+
     private def delete_user
       return unless valid?
 
-      user_id.value.try do |value|
-        user = UserQuery.find(value)
+      @user.try do |user|
         user if user.delete.rows_affected > 0
       end
     end

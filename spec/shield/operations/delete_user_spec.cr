@@ -34,4 +34,15 @@ describe Shield::DeleteUser do
       assert_invalid(operation.user_id, " required")
     end
   end
+
+  it "requires user exists" do
+    DeleteUser.submit(
+      user_id: 1_i64,
+      current_user: nil
+    ) do |operation, deleted_user|
+      deleted_user.should be_nil
+
+      assert_invalid(operation.user_id, "not exist")
+    end
+  end
 end
