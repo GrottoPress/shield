@@ -15,7 +15,7 @@ module Shield::Api::CurrentUser::Update
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)
         else
-          do_run_operation_failed(operation, updated_user)
+          do_run_operation_failed(operation)
         end
       end
     end
@@ -32,7 +32,7 @@ module Shield::Api::CurrentUser::Update
       })
     end
 
-    def do_run_operation_failed(operation, user)
+    def do_run_operation_failed(operation)
       json({
         status: "failure",
         message: "Could not update your account",

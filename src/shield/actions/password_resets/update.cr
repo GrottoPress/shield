@@ -34,7 +34,7 @@ module Shield::PasswordResets::Update
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)
         else
-          do_run_operation_failed(operation, updated_user)
+          do_run_operation_failed(operation)
         end
       end
     end
@@ -44,9 +44,9 @@ module Shield::PasswordResets::Update
       redirect to: CurrentLogin::New
     end
 
-    def do_run_operation_failed(operation, user)
+    def do_run_operation_failed(operation)
       flash.failure = "Could not change password"
-      html EditPage, operation: operation, user: user
+      html EditPage, operation: operation
     end
   end
 end

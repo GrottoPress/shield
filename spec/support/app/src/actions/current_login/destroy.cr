@@ -9,7 +9,7 @@ class CurrentLogin::Destroy < BrowserAction
     json({a: ""})
   end
 
-  def do_run_operation_failed(operation, updated_login)
+  def do_run_operation_failed(operation)
     json({a: ""})
   end
 end

@@ -234,7 +234,7 @@ This token is revoked when the user logs out.
 
      # What to do if `run_operation` fails
      #
-     #def do_run_operation_failed(operation, login)
+     #def do_run_operation_failed(operation)
      #  flash.keep.failure = "Could not revoke bearer login"
      #  redirect_back fallback: Index
      #end

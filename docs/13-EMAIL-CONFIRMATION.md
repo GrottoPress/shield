@@ -222,9 +222,9 @@ This is particularly important, since email addresses are usually the only means
 
      # What to do if `run_operation` fails
      #
-     #def do_run_operation_failed(operation, user)
+     #def do_run_operation_failed(operation)
      #  flash.failure = "Could not change email"
-     #  html CurrentUser::EditPage, operation: operation, user: user
+     #  html CurrentUser::EditPage, operation: operation
      #end
      # ...
    end
@@ -341,7 +341,8 @@ This is particularly important, since email addresses are usually the only means
      include Shield::EmailConfirmationCurrentUser::Edit
 
      get "/account/edit" do
-       html EditPage, user: user
+       operation = UpdateCurrentUser.new(user, params)
+       html EditPage, operation: operation
      end
      # ...
    end
@@ -389,7 +390,7 @@ This is particularly important, since email addresses are usually the only means
      #
      #def do_run_operation_failed(operation)
      #  flash.failure = "Could not update your account"
-     #  html EditPage, operation: operation, user: user
+     #  html EditPage, operation: operation
      #end
      # ...
    end

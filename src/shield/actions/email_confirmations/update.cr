@@ -52,7 +52,7 @@ module Shield::EmailConfirmations::Update
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)
         else
-          do_run_operation_failed(operation, updated_user)
+          do_run_operation_failed(operation)
         end
       end
     end
@@ -62,9 +62,9 @@ module Shield::EmailConfirmations::Update
       redirect to: CurrentUser::Show
     end
 
-    def do_run_operation_failed(operation, user)
+    def do_run_operation_failed(operation)
       flash.failure = "Could not change email"
-      html CurrentUser::EditPage, operation: operation, user: user
+      html CurrentUser::EditPage, operation: operation
     end
 
     def authorize?(user : User) : Bool

@@ -11,7 +11,7 @@ module Shield::Api::CurrentLogin::Destroy
         if operation.saved?
           do_run_operation_succeeded(operation, updated_login)
         else
-          do_run_operation_failed(operation, updated_login)
+          do_run_operation_failed(operation)
         end
       end
     end
@@ -29,7 +29,7 @@ module Shield::Api::CurrentLogin::Destroy
       })
     end
 
-    def do_run_operation_failed(operation, login)
+    def do_run_operation_failed(operation)
       json({
         status: "failure",
         message: "Something went wrong",

@@ -175,7 +175,7 @@
 
      # What to do if `run_operation` fails
      #
-     #def do_run_operation_failed(operation, login)
+     #def do_run_operation_failed(operation)
      #  flash.keep.failure = "Something went wrong"
      #  redirect_back fallback: CurrentUser::Show
      #end

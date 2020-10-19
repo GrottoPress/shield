@@ -178,7 +178,8 @@
      include Shield::CurrentUser::Show
 
      get "/account/edit" do
-       html EditPage, user: user
+       operation = UpdateCurrentUser.new(user, params)
+       html EditPage, operation: operation
      end
      # ...
    end
@@ -217,7 +218,7 @@
      #
      #def do_run_operation_failed(operation)
      #  flash.failure = "Could not update your account"
-     #  html EditPage, operation: operation, user: user
+     #  html EditPage, operation: operation
      #end
      # ...
    end

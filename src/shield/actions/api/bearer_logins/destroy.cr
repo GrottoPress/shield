@@ -13,7 +13,7 @@ module Shield::Api::BearerLogins::Destroy
         if operation.saved?
           do_run_operation_succeeded(operation, updated_bearer_login)
         else
-          do_run_operation_failed(operation, updated_bearer_login)
+          do_run_operation_failed(operation)
         end
       end
     end
@@ -26,7 +26,7 @@ module Shield::Api::BearerLogins::Destroy
       })
     end
 
-    def do_run_operation_failed(operation, bearer_login)
+    def do_run_operation_failed(operation)
       json({
         status: "failure",
         message: "Could not revoke bearer login",

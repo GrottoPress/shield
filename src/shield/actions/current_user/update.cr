@@ -15,7 +15,7 @@ module Shield::CurrentUser::Update
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)
         else
-          do_run_operation_failed(operation, updated_user)
+          do_run_operation_failed(operation)
         end
       end
     end
@@ -29,9 +29,9 @@ module Shield::CurrentUser::Update
       redirect to: Show
     end
 
-    def do_run_operation_failed(operation, user)
+    def do_run_operation_failed(operation)
       flash.failure = "Could not update your account"
-      html EditPage, operation: operation, user: user
+      html EditPage, operation: operation
     end
 
     def authorize?(user : User) : Bool

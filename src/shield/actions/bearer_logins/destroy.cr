@@ -13,7 +13,7 @@ module Shield::BearerLogins::Destroy
         if operation.saved?
           do_run_operation_succeeded(operation, updated_bearer_login)
         else
-          do_run_operation_failed(operation, updated_bearer_login)
+          do_run_operation_failed(operation)
         end
       end
     end
@@ -23,7 +23,7 @@ module Shield::BearerLogins::Destroy
       redirect to: Index
     end
 
-    def do_run_operation_failed(operation, bearer_login)
+    def do_run_operation_failed(operation)
       flash.keep.failure = "Could not revoke bearer login"
       redirect_back fallback: Index
     end

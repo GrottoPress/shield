@@ -262,9 +262,9 @@
 
      # What to do if `run_operation` fails
      #
-     #def do_run_operation_failed(operation, user)
+     #def do_run_operation_failed(operation)
      #  flash.failure = "Could not change password"
-     #  html EditPage, operation: operation, user: user
+     #  html EditPage, operation: operation
      #end
      # ...
    end

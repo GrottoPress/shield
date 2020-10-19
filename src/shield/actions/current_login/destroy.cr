@@ -11,7 +11,7 @@ module Shield::CurrentLogin::Destroy
         if operation.saved?
           do_run_operation_succeeded(operation, updated_login)
         else
-          do_run_operation_failed(operation, updated_login)
+          do_run_operation_failed(operation)
         end
       end
     end
@@ -26,7 +26,7 @@ module Shield::CurrentLogin::Destroy
       redirect to: New
     end
 
-    def do_run_operation_failed(operation, login)
+    def do_run_operation_failed(operation)
       flash.keep.failure = "Something went wrong"
       redirect to: CurrentUser::Show
     end

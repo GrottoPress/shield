@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Rename `Shield::Logins` to `Shield::CurrentLogin`
 - Convert `EmailConfirmation#url` to a class method.
 - Remove required `id` param from password reset URL.
+- Remove the second parameter from all `#do_run_operation_failed` action methods.
 
 ### Removed
 - Remove `Shield::Error`

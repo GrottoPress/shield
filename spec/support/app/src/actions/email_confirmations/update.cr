@@ -16,7 +16,7 @@ class EmailConfirmations::Update < BrowserAction
     json({exit: 0})
   end
 
-  def do_run_operation_failed(operation, user)
+  def do_run_operation_failed(operation)
     json({exit: 1})
   end
 end
