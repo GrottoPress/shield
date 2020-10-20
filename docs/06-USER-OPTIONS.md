@@ -82,6 +82,19 @@
 
    `Shield::SaveUserOptions` saves `login_notify` and `password_notify`. If you added other columns and associations to the model, you may have to add callbacks for dealing with those.
 
+   ---
+   ```crystal
+   # ->>> src/operations/log_user_in.cr
+
+   class LogUserIn < Login::SaveOperation
+     # ...
+     include Shield::NotifyLogin
+     # ...
+   end
+   ```
+
+   `Shield::NotifyLogin` notifies a user after they log in, if they have that option enabled.
+
 1. Set up actions:
 
    User options do not have its own actions, since it is an extension of the `User` model in its own table.

@@ -8,8 +8,6 @@ module Shield::LogUserIn
       verify_login
     end
 
-    after_commit notify_login
-
     include Shield::ValidateEmail
     include Shield::RequireIpAddress
     include Shield::StartAuthentication(Login)
@@ -33,12 +31,6 @@ module Shield::LogUserIn
       session.try do |session|
         LoginSession.new(session).set(login.id, token)
       end
-    end
-
-    private def notify_login(login : Login)
-      return unless login.user!.options!.login_notify
-
-      mail_later LoginNotificationEmail, self, login
     end
   end
 end
