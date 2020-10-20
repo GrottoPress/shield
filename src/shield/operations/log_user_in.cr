@@ -8,14 +8,12 @@ module Shield::LogUserIn
       verify_login
     end
 
-    after_commit set_session
     after_commit notify_login
 
     include Shield::ValidateEmail
     include Shield::RequireIpAddress
     include Shield::StartAuthentication(Login)
-
-    needs session : Lucky::Session? = nil
+    include Shield::SetSession
 
     private def verify_login
       return unless email.value.to_s.email? && password.value

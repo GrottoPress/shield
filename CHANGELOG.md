@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Add *Bearer* authentication ([RFC 6750](https://tools.ietf.org/html/rfc6750)).
 - Add documentation on integration with third-party authorization shards
-- Add `Shield::DeleteSession` operation mixin
+- Add `Shield::SetSession` and `Shield::DeleteSession` operation mixins
 - Add `Shield::IpAddressColumn` model mixin
 - Add modules to delete authentication records, as an alternative to revoking them.
 
