@@ -11,8 +11,6 @@ module Shield::UpdatePassword
 
     after_save log_out_everywhere
 
-    after_commit notify_password_change
-
     private def set_password_digest
       password.value.try do |value|
         return if CryptoHelper.verify_bcrypt?(
@@ -32,13 +30,6 @@ module Shield::UpdatePassword
         .status(Login::Status.new :started)
         .id.not.eq(current_login.try(&.id) || 0_i64)
         .update(ended_at: Time.utc, status: Login::Status.new(:ended))
-    end
-
-    private def notify_password_change(user : User)
-      return unless password_digest.changed?
-      return unless user.options!.password_notify
-
-      mail_later PasswordChangeNotificationEmail, self, user
     end
   end
 end

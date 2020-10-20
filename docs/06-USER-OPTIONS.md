@@ -95,6 +95,19 @@
 
    `Shield::NotifyLogin` notifies a user after they log in, if they have that option enabled.
 
+   ---
+   ```crystal
+   # ->>> src/operations/update_currrent_user.cr
+
+   class UpdateCurrentUser < User::SaveOperation
+     # ...
+     include Shield::NotifyPasswordChange
+     # ...
+   end
+   ```
+
+   `Shield::NotifyPasswordChange` notifies a user after their password changed, if they have that option enabled.
+
 1. Set up actions:
 
    User options do not have its own actions, since it is an extension of the `User` model in its own table.
