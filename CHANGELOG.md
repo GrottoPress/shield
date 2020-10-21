@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::IpAddressColumn` model mixin
 - Add `Shield::NotifyLogin` operation mixin
 - Add `Shield::NotifyPasswordChange` operation mixin
+- Add `Shield::HasManyLogins` model association mixin
+- Add `Shield::HasManyPasswordResets` model association mixin
+- Add `Shield::HasOneUserOptions` model association mixin
+- Add `Shield::BelongsToUser` model association mixin
 - Add modules to delete authentication records, as an alternative to revoking them.
 
 ### Fixed

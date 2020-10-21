@@ -1,7 +1,20 @@
 ## Login
 
-1. Set up the model
+1. Set up models:
 
+   ```crystal
+   # ->>> src/models/user.cr
+
+   class User < BaseModel
+     # ...
+     include Shield::HasManyLogins
+     # ...
+   end
+   ```
+
+   `Shield::HasManyLogins` sets up a *one-to-many* association with the user model.
+
+   ---
    ```crystal
    # ->>> src/models/login.cr
 
@@ -100,6 +113,44 @@
 
 1. Set up actions:
 
+   ```crystal
+   # ->>> src/actions/browser_action.cr
+
+   abstract class BrowserAction < Lucky::Action
+     # ...
+     # If you are worried about users on mobile, you may want
+     # to disable pinning a login to its IP address
+     #skip :pin_login_to_ip_address
+
+     # What to do if user is **not** logged in
+     # but the action requires user to be logged in.
+     #
+     #def do_require_logged_in_failed
+     #  flash.keep.failure = "You are not logged in"
+     #  redirect to: CurrentLogin::New
+     #end
+
+     # What to do if user is logged in but the action
+     # requires user to **not** be logged in.
+     #
+     #def do_require_logged_out_failed
+     #  flash.keep.info = "You are already logged in"
+     #  redirect_back fallback: CurrentUser::Show
+     #end
+
+     # What to do when a logged in user's IP address changes, if the
+     # action requires the user's IP to match the IP they used to
+     # log in.
+     #
+     #def do_pin_login_to_ip_address_failed
+     #  flash.keep.failure = "Your IP address has changed. Please log in again."
+     #  redirect to: CurrentLogin::New
+     #end
+     # ...
+   end
+   ```
+
+   ---
    ```crystal
    # ->>> src/actions/logins/new.cr
 

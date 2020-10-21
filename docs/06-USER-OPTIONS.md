@@ -1,7 +1,20 @@
 ## User Options
 
-1. Set up the model:
+1. Set up models:
 
+   ```crystal
+   # ->>> src/models/user.cr
+
+   class User < BaseModel
+     # ...
+     include Shield::HasOneUserOptions
+     # ...
+   end
+   ```
+
+   `Shield::HasOneUserOptions` sets up a *one-to-one* association with the user model.
+
+   ---
    ```crystal
    # ->>> src/models/user_options.cr
 

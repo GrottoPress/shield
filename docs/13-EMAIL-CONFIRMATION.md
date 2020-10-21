@@ -85,26 +85,6 @@ This is particularly important, since email addresses are usually the only means
 
    ---
    ```crystal
-   # ->>> src/actions/api_action.cr
-
-   abstract class ApiAction < Lucky::Action
-     # ...
-     # What to do when a user's IP address changes in an email confirmationo, if the
-     # action requires the user's IP to match the IP with which they started
-     # the email confirmation.
-     #
-     #def do_pin_email_confirmation_to_ip_address_failed
-     #  json({
-     #    status: "failure",
-     #    message: "Your IP address has changed. Please try again."
-     #  })
-     #end
-     # ...
-   end
-   ```
-
-   ---
-   ```crystal
    # ->>> src/actions/email_confirmations/new.cr
 
    class EmailConfirmations::New < BrowserAction

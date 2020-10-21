@@ -3,6 +3,18 @@
 1. Set up the model
 
    ```crystal
+   # ->>> src/models/user.cr
+
+   class User < BaseModel
+     # ...
+     include Shield::HasManyPasswordResets
+     # ...
+   end
+   ```
+
+   `Shield::HasManyPasswordResets` sets up a *one-to-many* association with the user model.
+
+   ```crystal
    # ->>> src/models/password_reset.cr
 
    class PasswordReset < BaseModel
@@ -118,6 +130,24 @@
 
 1. Set up actions:
 
+   ```crystal
+   # ->>> src/actions/browser_action.cr
+
+   abstract class BrowserAction < Lucky::Action
+     # ...
+     # What to do when a user's IP address changes in a password reset, if the
+     # action requires the user's IP to match the IP with which they requested
+     # the password reset.
+     #
+     #def do_pin_password_reset_to_ip_address_failed
+     #  flash.keep.failure = "Your IP address has changed. Please try again."
+     #  redirect to: PasswordResets::New
+     #end
+     # ...
+   end
+   ```
+
+   ---
    ```crystal
    # ->>> src/actions/password_resets/new.cr
 

@@ -36,6 +36,23 @@ The `:check_authorization` pipe is for authorizing a **logged in** user to perfo
 
 It should not be used for any other type of authorization. For instance, if you need to restrict access based on IP address, you should define a new pipe for that.
 
+1. Set up actions:
+
+   ```crystal
+   # ->>> src/actions/browser_action.cr
+
+   abstract class BrowserAction < Lucky::Action
+     # ...
+     # What to do if user is not allowed to perform action
+     #
+     #def do_check_authorization_failed
+     #  flash.keep.failure = "You are not allowed to perform this action!"
+     #  redirect_back fallback: CurrentUser::Show
+     #end
+     # ...
+   end
+   ```
+
 ### Integration with third-party authorization shards
 
 If you need to, you may use *Shield* with an authorization shard, such as [*LuckyCan*](https://github.com/confact/lucky_can) or [*Praetorian*](https://github.com/ilanusse/praetorian).

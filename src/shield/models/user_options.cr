@@ -1,6 +1,6 @@
 module Shield::UserOptions
   macro included
-    belongs_to user : User
+    include Shield::BelongsToUser
 
     column login_notify : Bool
     column password_notify : Bool

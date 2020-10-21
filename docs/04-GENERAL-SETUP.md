@@ -11,7 +11,7 @@
      # ...
    end
    ```
-   
+
 1. Set up base actions:
 
    ```crystal
@@ -20,111 +20,6 @@
    abstract class BrowserAction < Lucky::Action
      # ...
      include Shield::BrowserAction
-
-     # If you are worried about users on mobile, you may want
-     # to disable pinning a login to its IP address
-     #skip :pin_login_to_ip_address
-
-     # What to do if user is **not** logged in
-     # but the action requires user to be logged in.
-     #
-     #def do_require_logged_in_failed
-     #  flash.keep.failure = "You are not logged in"
-     #  redirect to: CurrentLogin::New
-     #end
-
-     # What to do if user is logged in but the action
-     # requires user to **not** be logged in.
-     #
-     #def do_require_logged_out_failed
-     #  flash.keep.info = "You are already logged in"
-     #  redirect_back fallback: CurrentUser::Show
-     #end
-
-     # What to do if user is not allowed to perform action
-     #
-     #def do_check_authorization_failed
-     #  flash.keep.failure = "You are not allowed to perform this action!"
-     #  redirect_back fallback: CurrentUser::Show
-     #end
-
-     # What to do when a logged in user's IP address changes, if the
-     # action requires the user's IP to match the IP they used to
-     # log in.
-     #
-     #def do_pin_login_to_ip_address_failed
-     #  flash.keep.failure = "Your IP address has changed. Please log in again."
-     #  redirect to: CurrentLogin::New
-     #end
-
-     # What to do when a user's IP address changes in a password reset, if the
-     # action requires the user's IP to match the IP with which they requested
-     # the password reset.
-     #
-     #def do_pin_password_reset_to_ip_address_failed
-     #  flash.keep.failure = "Your IP address has changed. Please try again."
-     #  redirect to: PasswordResets::New
-     #end
-     # ...
-   end
-   ```
-
-   ---
-   ```crystal
-   # ->>> src/actions/api_action.cr
-
-   abstract class ApiAction < Lucky::Action
-     # ...
-     include Shield::ApiAction
-
-     # If you are worried about users on mobile, you may want
-     # to disable pinning a login to its IP address
-     #skip :pin_login_to_ip_address
-
-     # What to do if user is **not** logged in
-     # but the action requires user to be logged in.
-     #
-     #def do_require_logged_in_failed
-     #  json({status: "failure", message: "You are not logged in"})
-     #end
-
-     # What to do if user is logged in but the action
-     # requires user to **not** be logged in.
-     #
-     #def do_require_logged_out_failed
-     #  json({status: "failure", message: "You are already logged in"})
-     #end
-
-     # What to do if user is not allowed to perform action
-     #
-     #def do_check_authorization_failed
-     #  json({
-     #    status: "failure",
-     #    message: "You are not allowed to perform this action!"
-     #  })
-     #end
-
-     # What to do when a logged in user's IP address changes, if the
-     # action requires the user's IP to match the IP they used to
-     # log in.
-     #
-     #def do_pin_login_to_ip_address_failed
-     #  json({
-     #    status: "failure",
-     #    message: "Your IP address has changed. Please log in again."
-     #  })
-     #end
-
-     # What to do when a user's IP address changes in a password reset, if the
-     # action requires the user's IP to match the IP with which they requested
-     # the password reset.
-     #
-     #def do_pin_password_reset_to_ip_address_failed
-     #  json({
-     #    status: "failure",
-     #    message: "Your IP address has changed. Please try again."
-     #  })
-     #end
      # ...
    end
    ```

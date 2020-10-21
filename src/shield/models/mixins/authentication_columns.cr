@@ -1,10 +1,9 @@
 module Shield::AuthenticationColumns(T)
   macro included
     include Shield::AuthenticationStatus
+    include Shield::BelongsToUser
 
     skip_default_columns
-
-    belongs_to user : User
 
     primary_key id : Int64
 
