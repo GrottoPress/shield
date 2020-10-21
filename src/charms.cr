@@ -37,6 +37,22 @@ module Lucky
       self
     end
   end
+
+  class MessageEncryptor
+    def initialize(
+      @secret : String,
+      @cipher_algorithm = "aes-256-cbc",
+      @digest = :sha256
+    )
+      previous_def
+    end
+  end
+
+  class MessageVerifier
+    def initialize(@secret : String, @digest = :sha256)
+      previous_def
+    end
+  end
 end
 
 module Avram
