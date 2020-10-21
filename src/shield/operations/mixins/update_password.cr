@@ -1,4 +1,3 @@
-
 module Shield::UpdatePassword
   macro included
     include Shield::ValidatePassword
