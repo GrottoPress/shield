@@ -1,6 +1,6 @@
 ## Password Reset
 
-1. Set up the model
+1. Set up models:
 
    ```crystal
    # ->>> src/models/user.cr
@@ -14,6 +14,7 @@
 
    `Shield::HasManyPasswordResets` sets up a *one-to-many* association with the user model.
 
+   ---
    ```crystal
    # ->>> src/models/password_reset.cr
 
@@ -43,6 +44,7 @@
    You may add other columns and associations specific to your application.
 
 1. Set up the query:
+
    ```crystal
    # ->>> src/queries/password_reset_query.cr
 
