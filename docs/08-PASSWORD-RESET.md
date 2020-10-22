@@ -123,7 +123,7 @@
      #
      # Enable this to delete them from the database instead.
      #
-     #include Shield::DeletePasswordResetsAfterPasswordReset
+     #include Shield::DeletePasswordResetsAfterResetPassword
      # ...
    end
    ```
