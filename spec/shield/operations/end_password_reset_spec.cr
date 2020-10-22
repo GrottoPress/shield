@@ -14,7 +14,7 @@ describe Shield::EndPasswordReset do
     ) do |operation, password_reset|
       password_reset =  password_reset.not_nil!
 
-      PasswordResetSession.new(session).set(password_reset.id, operation.token)
+      PasswordResetSession.new(session).set(password_reset, operation)
 
       EndPasswordReset.update(
         password_reset,

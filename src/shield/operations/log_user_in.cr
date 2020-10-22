@@ -29,7 +29,7 @@ module Shield::LogUserIn
 
     private def set_session(login : Login)
       session.try do |session|
-        LoginSession.new(session).set(login.id, token)
+        LoginSession.new(session).set(login, self)
       end
     end
   end

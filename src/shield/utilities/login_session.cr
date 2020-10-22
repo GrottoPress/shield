@@ -28,6 +28,10 @@ module Shield::LoginSession
       self
     end
 
+    def set(login : Login, operation : LogUserIn) : self
+      set(login.id, operation.token)
+    end
+
     def set(id, token : String) : self
       @session.set(:login_id, id.to_s)
       @session.set(:login_token, token)
