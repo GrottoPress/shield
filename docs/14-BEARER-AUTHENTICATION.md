@@ -30,8 +30,21 @@ This token is revoked when the user logs out.
 
 ### Setting up
 
-1. Set up the model
+1. Set up models:
 
+   ```crystal
+   # ->>> src/models/user.cr
+
+   class User < BaseModel
+     # ...
+     include Shield::HasManyBearerLogins
+     # ...
+   end
+   ```
+
+   `Shield::HasManyBearerLogins` sets up a *one-to-many* association with the user model.
+
+   ---
    ```crystal
    # ->>> src/models/bearer_login.cr
 
