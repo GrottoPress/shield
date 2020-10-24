@@ -21,7 +21,7 @@ module Shield::UpdateEmailConfirmationUser
 
     private def start_email_confirmation(user : User)
       new_email.try do |email|
-        StartEmailConfirmation.submit!(
+        StartEmailConfirmation.create!(
           user_id: user.id,
           email: email,
           remote_ip: remote_ip

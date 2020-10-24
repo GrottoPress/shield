@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fix other users logged out when a given user's password changes
 
 ### Changed
+- Convert email confirmation into a database model
 - Upgrade default hash for message encryptor/verifier from `SHA1` to `SHA256`
 - Add `user : User` parameter to `Shield::AuthorizationPipes#authorize?`
 - Return `403` status code, by default, for denied requests.

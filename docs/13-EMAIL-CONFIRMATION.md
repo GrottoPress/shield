@@ -8,6 +8,50 @@ This is particularly important, since email addresses are usually the only means
 
 [Read this](https://www.forbes.com/sites/ianmorris/2017/08/01/when-companies-dont-verify-email-addresses-this-is-what-happens/) for more reasons why email confirmation may be important.
 
+1. Set up models:
+
+   ```crystal
+   # ->>> src/models/user.cr
+
+   class User < BaseModel
+     # ...
+     include Shield::HasManyEmailConfirmations
+     # ...
+   end
+   ```
+
+   `Shield::HasManyEmailConfirmations` sets up a *one-to-many* association with the user model.
+
+   ---
+   ```crystal
+   # ->>> src/models/email_confirmation.cr
+
+   class EmailConfirmation < BaseModel
+     # ...
+     include Shield::EmailConfirmation
+
+     table :email_confirmations do
+       # You may add more columns here
+     end
+     # ...
+   end
+   ```
+
+   `Shield::EmailConfirmation` adds the following columns:
+
+   - `email : String`
+   - `ended_at : Time?`
+   - `ip_address : String`
+   - `started_at : Time`
+   - `status : EmailConfirmation::Status`
+   - `token_digest : String`
+
+   ...and sets up an optional one-to-many association with the `User` model.
+
+   It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
+
+   You may add other columns and associations specific to your application.
+
 1. Set up operations:
 
    ```crystal
@@ -30,6 +74,13 @@ This is particularly important, since email addresses are usually the only means
      # ...
      include Shield::RegisterEmailConfirmationUser
      include Shield::SendWelcomeEmail
+
+     # By default, *Shield* sets the status of all email confirmations to
+     # `Ended` to mark them as inactive, without deleting them.
+     #
+     # Enable this to delete them from the database instead.
+     #
+     #include Shield::DeleteEmailConfirmationsAfterRegisterUser
      # ...
    end
    ```
@@ -58,6 +109,13 @@ This is particularly important, since email addresses are usually the only means
    class UpdateConfirmedEmail < User::SaveOperation
      # ...
      include Shield::UpdateConfirmedEmail
+
+     # By default, *Shield* sets the status of all email confirmations to
+     # `Ended` to mark them as inactive, without deleting them.
+     #
+     # Enable this to delete them from the database instead.
+     #
+     #include Shield::DeleteEmailConfirmationsAfterUpdateEmail
      # ...
    end
    ```
@@ -286,7 +344,10 @@ This is particularly important, since email addresses are usually the only means
      #    success_action
      #  else
      #    flash.failure = "Could not create your account"
-     #    html NewPage, operation: operation, email: operation.email.value.to_s
+     #
+     #    html NewPage,
+     #      operation: operation,
+     #      email_confirmation: operation.email_confirmation
      #  end
      #end
      # ...
@@ -378,27 +439,30 @@ This is particularly important, since email addresses are usually the only means
    
    `Shield::EmailConfirmationCurrentUser::Update` updates a user. Include this module, instead of `Shield::CurrentUser::Update`, if you use email confirmations in your app.
 
-1. Set up utilities:
+1. Set up helpers:
 
    ```crystal
-   # ->>> src/utilities/email_confirmation.cr
+   # ->>> src/helpers/email_confirmation_helper.cr
 
-   class EmailConfirmation # Or `struct ...`
-     # ...
-     include Shield::EmailConfirmation
-     # ...
+   module EmailConfirmationHelper
+    extend Shield::EmailConfirmationHelper
    end
    ```
 
-   `Shield::EmailConfirmation` is a data type representing an email confirmation.
+1. Set up utilities:
 
-   ---
    ```crystal
    # ->>> src/utilities/email_confirmation_session.cr
 
    class EmailConfirmationSession # Or `struct ...`
      # ...
      include Shield::EmailConfirmationSession
+
+     # By default, *Shield* sets the status of an email confirmation to
+     # `Expired` when it expired, without deleting it.
+     #
+     # Enable this to delete it instead
+     #include Shield::DeleteEmailConfirmationIfExpired
      # ...
    end
    ```
@@ -442,7 +506,7 @@ This is particularly important, since email addresses are usually the only means
 
        To proceed to confirm your email, click the link below:
 
-       #{EmailConfirmation.url(@operation)}
+       #{EmailConfirmationHelper.email_confirmation_url(@email_confirmation, @operation)}
 
        This email confirmation link will expire in #{Shield.settings.email_confirmation_expiry.total_minutes.to_i} minutes.
 
@@ -491,7 +555,7 @@ This is particularly important, since email addresses are usually the only means
        worry about.
 
        If you have lost your password, however, you may reset your password here:
-       
+
        #{PasswordResets::New.url}
 
        Regards,

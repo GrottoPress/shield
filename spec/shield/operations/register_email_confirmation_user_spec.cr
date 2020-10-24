@@ -4,6 +4,11 @@ describe Shield::RegisterEmailConfirmationUser do
   it "creates email confirmed user" do
     password = "password12U password"
 
+    email_confirmation = StartEmailConfirmation.create!(
+      params(email: "user@example.tld"),
+      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
+    )
+
     RegisterEmailConfirmationCurrentUser.create(
       params(
         password: password,
@@ -11,44 +16,65 @@ describe Shield::RegisterEmailConfirmationUser do
         login_notify: true,
         password_notify: true
       ),
-      email: "user@example.tld",
+      email_confirmation: email_confirmation,
       session: Lucky::Session.new,
     ) do |operation, user|
       user.should be_a(User)
+
+      user.try(&.email).should eq(email_confirmation.email)
+      email_confirmation.reload.user_id.should eq(user.try(&.id))
     end
   end
 
-  it "deletes email confirmation session" do
+  it "ends all active email confirmations for that email" do
     email = "user@example.tld"
-    password = "password12U,password"
-    session = Lucky::Session.new
+    password = "password12U-password"
 
-    email_confirmation_session = EmailConfirmationSession.new(session).set(
-      1,
-      email,
-      Socket::IPAddress.new("128.0.0.2", 5000),
-      Time.utc
+    email_confirmation = StartEmailConfirmation.create!(
+      params(email: email),
+      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     )
 
-    RegisterEmailConfirmationCurrentUser.create!(
+    email_confirmation_2 = StartEmailConfirmation.create!(
+      params(email: email),
+      remote_ip: Socket::IPAddress.new("6.7.8.9", 10)
+    )
+
+    email_confirmation_3 = StartEmailConfirmation.create!(
+      params(email: "abc@domain.net"),
+      remote_ip: Socket::IPAddress.new("11.12.13.14", 15)
+    )
+
+    email_confirmation.status.started?.should be_true
+    email_confirmation_2.status.started?.should be_true
+    email_confirmation_3.status.started?.should be_true
+
+    user = RegisterEmailConfirmationCurrentUser.create!(
       params(
         password: password,
         password_confirmation: password,
         login_notify: true,
         password_notify: true
       ),
-      email: email,
-      session: session,
+      email_confirmation: email_confirmation,
     )
 
-    email_confirmation_session.email_confirmation_user_id.should be_nil
-    email_confirmation_session.email_confirmation_email.should be_nil
-    email_confirmation_session.email_confirmation_ip_address.should be_nil
-    email_confirmation_session.email_confirmation_started_at.should be_nil
+    email_confirmation.reload.status.started?.should be_false
+    email_confirmation_2.reload.status.started?.should be_false
+    email_confirmation_3.reload.status.started?.should be_true
+
+    email_confirmation.reload.user_id.should eq(user.id)
+    email_confirmation_2.reload.user_id.should be_nil
+    email_confirmation_3.reload.user_id.should be_nil
   end
 
   it "creates user options" do
     password = "password12U-password"
+
+    email_confirmation = StartEmailConfirmation.create!(
+      params(email: "user@example.tld"),
+      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
+    )
 
     user = RegisterEmailConfirmationCurrentUser.create!(
       params(
@@ -57,7 +83,7 @@ describe Shield::RegisterEmailConfirmationUser do
         login_notify: true,
         password_notify: false
       ),
-      email: "user@example.tld",
+      email_confirmation: email_confirmation,
       session: Lucky::Session.new,
     )
 
@@ -70,6 +96,11 @@ describe Shield::RegisterEmailConfirmationUser do
   it "fails when nested operation fails" do
     password = "password12U password"
 
+    email_confirmation = StartEmailConfirmation.create!(
+      params(email: "user@example.tld"),
+      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
+    )
+
     RegisterEmailConfirmationCurrentUser2.create(
       params(
         password: password,
@@ -77,7 +108,7 @@ describe Shield::RegisterEmailConfirmationUser do
         login_notify: false,
         password_notify: false
       ),
-      email: "user@example.tld",
+      email_confirmation: email_confirmation,
       session: Lucky::Session.new,
     ) do |operation, user|
       operation.saved?.should be_false

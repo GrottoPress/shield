@@ -1,3 +1,3 @@
-class StartEmailConfirmation < Avram::BasicOperation
+class StartEmailConfirmation < EmailConfirmation::SaveOperation
   include Shield::StartEmailConfirmation
 end

@@ -45,8 +45,8 @@ module Shield::EmailConfirmations::Update
 
     private def update_email(email_confirmation)
       UpdateConfirmedEmail.update(
-        email_confirmation.user!,
-        email: email_confirmation.email,
+        email_confirmation.user!.not_nil!,
+        email_confirmation: email_confirmation,
         session: session
       ) do |operation, updated_user|
         if operation.saved?

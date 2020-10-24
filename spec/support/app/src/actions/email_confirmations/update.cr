@@ -9,7 +9,7 @@ class EmailConfirmations::Update < BrowserAction
   end
 
   def do_verify_operation_failed(utility)
-    json({exit: 1})
+    json({exit: 2})
   end
 
   def do_run_operation_succeeded(operation, user)

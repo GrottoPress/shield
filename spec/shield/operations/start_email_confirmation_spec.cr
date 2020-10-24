@@ -2,25 +2,25 @@ require "../../spec_helper"
 
 describe Shield::StartEmailConfirmation do
   it "starts email confirmation for new user" do
-    ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
+    ip_address = Socket::IPAddress.new("1.2.3.4", 5)
 
-    StartEmailConfirmation.submit(
+    StartEmailConfirmation.create(
       params(email: "user@example.tld"),
       remote_ip: ip_address
     ) do |operation, email_confirmation|
       email_confirmation.should be_a(EmailConfirmation)
       operation.token.should_not be_empty
 
-      email_confirmation.try &.ip_address.should(eq ip_address.address)
+      email_confirmation.try(&.ip_address).should(eq ip_address.address)
     end
   end
 
   it "starts email confirmation for existing user" do
-    ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
+    ip_address = Socket::IPAddress.new("1.2.3.4", 5)
 
     user = UserBox.create &.email("user@example.tld")
 
-    StartEmailConfirmation.submit(
+    StartEmailConfirmation.create(
       params(email: "user@domain.tld"),
       user_id: user.id,
       remote_ip: ip_address
@@ -28,14 +28,14 @@ describe Shield::StartEmailConfirmation do
       email_confirmation.should be_a(EmailConfirmation)
       operation.token.should_not be_empty
 
-      email_confirmation.try &.ip_address.should(eq ip_address.address)
-      email_confirmation.try &.user_id.try &.should(eq user.id)
+      email_confirmation.try(&.ip_address).should(eq ip_address.address)
+      email_confirmation.try(&.user_id).try &.should(eq user.id)
     end
   end
 
   it "requires email" do
-    StartEmailConfirmation.submit(
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    StartEmailConfirmation.create(
+      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     ) do |operation, email_confirmation|
       email_confirmation.should be_nil
 
@@ -44,9 +44,9 @@ describe Shield::StartEmailConfirmation do
   end
 
   it "rejects invalid email" do
-    StartEmailConfirmation.submit(
+    StartEmailConfirmation.create(
       params(email: "email"),
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     ) do |operation, email_confirmation|
       email_confirmation.should be_nil
 
@@ -59,7 +59,7 @@ describe Shield::StartEmailConfirmation do
 
     UserBox.create &.email(email)
 
-    StartEmailConfirmation.submit(
+    StartEmailConfirmation.create(
       params(email: email),
       remote_ip: nil
     ) do |operation, email_confirmation|
@@ -70,7 +70,7 @@ describe Shield::StartEmailConfirmation do
   end
 
   it "requires valid IP address" do
-    StartEmailConfirmation.submit(
+    StartEmailConfirmation.create(
       params(email: "user@example.tld"),
       remote_ip: nil
     ) do |operation, email_confirmation|
@@ -81,9 +81,9 @@ describe Shield::StartEmailConfirmation do
   end
 
   it "sends email confirmation email" do
-    StartEmailConfirmation.submit(
+    StartEmailConfirmation.create(
       params(email: "user@example.tld"),
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     ) do |operation, email_confirmation|
       UserEmailConfirmationRequestEmail.new(operation).should_not be_delivered
 
@@ -98,9 +98,9 @@ describe Shield::StartEmailConfirmation do
 
     UserBox.create &.email(email)
 
-    StartEmailConfirmation.submit(
+    StartEmailConfirmation.create(
       params(email: email),
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     ) do |operation, email_confirmation|
       email_confirmation.should be_nil
       UserEmailConfirmationRequestEmail.new(operation).should be_delivered

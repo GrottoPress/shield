@@ -51,7 +51,11 @@ module Shield::AuthenticationPipes
         email_confirmation.not_nil!.ip_address == remote_ip.try &.address
         continue
       else
-        email_confirmation_session.delete
+        EndEmailConfirmation.update!(
+          email_confirmation.not_nil!,
+          session: session
+        )
+
         response.status_code = 403
         do_pin_email_confirmation_to_ip_address_failed
       end

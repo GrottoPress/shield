@@ -5,6 +5,7 @@
 ### Models
 
 - `BearerLogin`
+- `EmailConfirmation`
 - `Login`
 - `PasswordReset`
 - `User`
@@ -13,6 +14,7 @@
 ### Queries
 
 - `BearerLoginQuery`
+- `EmailConfirmationQuery`
 - `LoginQuery`
 - `PasswordResetQuery`
 - `UserQuery`
@@ -32,6 +34,8 @@
 ### Operations
 
 - `CreateBearerLogin`
+- `DeleteEmailConfirmation`
+- `EndEmailConfirmation`
 - `EndPasswordReset`
 - `LogUserIn`
 - `LogUserOut`
@@ -89,7 +93,6 @@
 ### Utilities
 
 - `BearerLoginHeaders`
-- `EmailConfirmation`
 - `EmailConfirmationParams`
 - `EmailConfirmationSession`
 - `LoginHeaders`
@@ -103,6 +106,7 @@
 
 - `BearerLoginHelper`
 - `CryptoHelper`
+- `EmailConfirmationHelper`
 - `LoginHelper`
 - `PasswordResetHelper`
 - `UserHelper`

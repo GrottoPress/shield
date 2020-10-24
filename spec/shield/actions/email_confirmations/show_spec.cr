@@ -2,13 +2,16 @@ require "../../../spec_helper"
 
 describe Shield::EmailConfirmations::Show do
   it "works" do
-    StartEmailConfirmation.submit(
-      params(user_id: 1_i64, email: "email@domain.tld"),
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    StartEmailConfirmation.create(
+      params(email: "email@domain.tld"),
+      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     ) do |operation, email_confirmation|
       email_confirmation = email_confirmation.not_nil!
 
-      response = ApiClient.get(EmailConfirmation.url(operation))
+      response = ApiClient.get(EmailConfirmationHelper.email_confirmation_url(
+        email_confirmation,
+        operation
+      ))
 
       response.status.should eq(HTTP::Status::FOUND)
 
@@ -17,15 +20,8 @@ describe Shield::EmailConfirmations::Show do
 
       from_session = EmailConfirmationSession.new(session)
 
-      from_session
-        .email_confirmation_user_id
-        .should(eq email_confirmation.user_id)
-
-      from_session.email_confirmation_email.should eq(email_confirmation.email)
-
-      from_session
-        .email_confirmation_ip_address
-        .should(eq email_confirmation.ip_address)
+      from_session.email_confirmation_id.should(eq email_confirmation.id)
+      from_session.email_confirmation_token.should eq(operation.token)
     end
   end
 end

@@ -30,7 +30,7 @@ module Shield::EmailConfirmationCurrentUser::Create
     private def register_user(email_confirmation)
       RegisterCurrentUser.create(
         params,
-        email: email_confirmation.email,
+        email_confirmation: email_confirmation,
         session: session,
       ) do |operation, user|
         if user
@@ -51,7 +51,10 @@ module Shield::EmailConfirmationCurrentUser::Create
         success_action(operation) # <= IMPORTANT!
       else
         flash.failure = "Could not create your account"
-        html NewPage, operation: operation, email: operation.email.value.to_s
+
+        html NewPage,
+          operation: operation,
+          email_confirmation: operation.email_confirmation
       end
     end
   end

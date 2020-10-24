@@ -11,7 +11,7 @@ module Shield::EmailConfirmations::Create
     # end
 
     def run_operation
-      StartEmailConfirmation.submit(
+      StartEmailConfirmation.create(
         params,
         remote_ip: remote_ip
       ) do |operation, email_confirmation|

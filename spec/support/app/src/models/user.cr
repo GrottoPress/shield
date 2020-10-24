@@ -2,6 +2,7 @@ class User < BaseModel
   include Shield::User
 
   include Shield::HasManyBearerLogins
+  include Shield::HasManyEmailConfirmations
   include Shield::HasManyLogins
   include Shield::HasManyPasswordResets
   include Shield::HasOneUserOptions

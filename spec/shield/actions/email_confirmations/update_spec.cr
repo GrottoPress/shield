@@ -10,8 +10,9 @@ describe Shield::EmailConfirmations::Update do
     user = UserBox.create &.email(email)
       .password_digest(CryptoHelper.hash_bcrypt(password))
 
-    StartEmailConfirmation.submit(
-      params(user_id: user.id, email: new_email),
+    StartEmailConfirmation.create(
+      params(email: new_email),
+      user_id: user.id,
       remote_ip: ip_address
     ) do |operation, email_confirmation|
       email_confirmation = email_confirmation.not_nil!
@@ -25,7 +26,7 @@ describe Shield::EmailConfirmations::Update do
         remote_ip: ip_address
       )
 
-      EmailConfirmationSession.new(session).set(email_confirmation)
+      EmailConfirmationSession.new(session).set(email_confirmation, operation)
 
       cookies.set(Lucky::Session.settings.key, session.to_json)
       headers = cookies.updated.add_response_headers(HTTP::Headers.new)
