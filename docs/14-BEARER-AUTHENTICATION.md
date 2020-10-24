@@ -30,6 +30,17 @@ This token is revoked when the user logs out.
 
 ### Setting up
 
+1. Configure:
+
+   ```crystal
+   # ->>> config/shield.cr
+
+   Shield.configure do |settings|
+     # How long should bearer login last before it expires?
+     settings.bearer_login_expiry = 90.days
+   end
+   ```
+
 1. Set up models:
 
    ```crystal

@@ -8,6 +8,19 @@ This is particularly important, since email addresses are usually the only means
 
 [Read this](https://www.forbes.com/sites/ianmorris/2017/08/01/when-companies-dont-verify-email-addresses-this-is-what-happens/) for more reasons why email confirmation may be important.
 
+### Setting up
+
+1. Configure:
+
+   ```crystal
+   # ->>> config/shield.cr
+
+   Shield.configure do |settings|
+     # How long should email confirmation last before it expires?
+     settings.email_confirmation_expiry = 1.hour
+   end
+   ```
+
 1. Set up models:
 
    ```crystal

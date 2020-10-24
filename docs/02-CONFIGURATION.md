@@ -9,15 +9,6 @@ Shield.configure do |settings|
   # The cost to apply to bcrypt hashes
   settings.bcrypt_cost = Lucky::Env.production? ? 12 : 4
 
-  # How long should bearer login last before it expires?
-  settings.bearer_login_expiry = 90.days
-
-  # How long should email confirmation last before it expires?
-  settings.email_confirmation_expiry = 1.hour
-
-  # How long should a login last before it expires?
-  settings.login_expiry = 24.hours
-
   # Required minimum length of password
   settings.password_min_length = 12
 
@@ -32,8 +23,5 @@ Shield.configure do |settings|
 
   # Require special character in password?
   settings.password_require_special_char = true
-
-  # How long should a password reset last before it expires?
-  settings.password_reset_expiry = 30.minutes
 end
 ```

@@ -1,5 +1,16 @@
 ## Login
 
+1. Configure:
+
+   ```crystal
+   # ->>> config/shield.cr
+
+   Shield.configure do |settings|
+     # How long should a login last before it expires?
+     settings.login_expiry = 24.hours
+   end
+   ```
+
 1. Set up models:
 
    ```crystal

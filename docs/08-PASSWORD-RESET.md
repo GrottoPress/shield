@@ -1,5 +1,16 @@
 ## Password Reset
 
+1. Configure:
+
+   ```crystal
+   # ->>> config/shield.cr
+
+   Shield.configure do |settings|
+     # How long should a password reset last before it expires?
+     settings.password_reset_expiry = 30.minutes
+   end
+   ```
+
 1. Set up models:
 
    ```crystal
