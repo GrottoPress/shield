@@ -65,6 +65,47 @@ This is particularly important, since email addresses are usually the only means
 
    You may add other columns and associations specific to your application.
 
+1. Set up the query:
+
+   ```crystal
+   # ->>> src/queries/email_confirmation_query.cr
+
+   class EmailConfirmationQuery < EmailConfirmation::BaseQuery
+     # ...
+   end
+   ```
+
+1. Set up the migration:
+
+   ```crystal
+   # ->>> db/migrations/XXXXXXXXXXXXXX_create_email_confirmations.cr
+
+   class CreateEmailConfirmations::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
+     def migrate
+       create table_for(EmailConfirmation) do
+         # ...
+         primary_key id : Int64
+
+         add_belongs_to user : User?, on_delete: :cascade
+
+         add email : String
+
+         add token_digest : String
+         add ip_address : String
+         add started_at : Time
+         add ended_at : Time?
+         # ...
+       end
+     end
+
+     def rollback
+       drop table_for(EmailConfirmation)
+     end
+   end
+   ```
+
+   Add any columns you added to the model here.
+
 1. Set up operations:
 
    ```crystal
@@ -78,6 +119,19 @@ This is particularly important, since email addresses are usually the only means
    ```
 
    `Shield::StartEmailConfirmation` kicks off the entire process of confirming a given email address. It receives `email : String` and an optional `user_id : Int64?` (for an existing user), and generates a link that it sends to the email address supplied.
+
+   ---
+   ```crystal
+   # ->>> src/operations/end_email_confirmation.cr
+
+   class EndEmailConfirmation < EmailConfirmation::SaveOperation
+     # ...
+     include Shield::EndEmailConfirmation
+     # ...
+   end
+   ```
+
+   `Shield::EndEmailConfirmation` marks an email confirmation inactive, to ensure it is never reused.
 
    ---
    ```crystal
