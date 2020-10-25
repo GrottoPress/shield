@@ -5,6 +5,7 @@ module Shield::RegisterEmailConfirmationUser
 
     has_one_create save_user_options : SaveUserOptions, assoc_name: :options
 
+    after_save set_email_confirmation_user
     after_save end_email_confirmations
 
     include Shield::SetEmailFromEmailConfirmation
@@ -12,11 +13,13 @@ module Shield::RegisterEmailConfirmationUser
     include Shield::CreatePassword
     include Shield::DeleteSession(EmailConfirmationSession)
 
-    private def end_email_confirmations(user : User)
+    private def set_email_confirmation_user(user : User)
       EmailConfirmationQuery.new
         .id(email_confirmation.id)
         .update(user_id: user.id)
+    end
 
+    private def end_email_confirmations(user : User)
       EmailConfirmationQuery.new
         .email(user.email)
         .status(EmailConfirmation::Status.new :started)
