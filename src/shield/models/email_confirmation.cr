@@ -1,6 +1,6 @@
 module Shield::EmailConfirmation
   macro included
-    include Shield::AuthenticationColumns(EmailConfirmation)
+    include Shield::AuthenticationColumns
     include Shield::IpAddressColumn
 
     include Shield::OptionalBelongsToUser

@@ -12,16 +12,15 @@ describe Shield::EndEmailConfirmation do
 
       EmailConfirmationSession.new(session).set(email_confirmation, operation)
 
+      email_confirmation.active?.should be_true
+
       EndEmailConfirmation.update(
         email_confirmation,
-        params(status: "Started"),
-        status: EmailConfirmation::Status.new(:expired),
         session: session
       ) do |operation, updated_email_confirmation|
         operation.saved?.should be_true
 
-        updated_email_confirmation.ended_at.should_not be_nil
-        updated_email_confirmation.status.expired?.should be_true
+        updated_email_confirmation.active?.should be_false
       end
     end
 

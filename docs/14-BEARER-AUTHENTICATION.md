@@ -76,7 +76,6 @@ This token is revoked when the user logs out.
    - `name : String`
    - `scopes : Array(String)`
    - `started_at : Time`
-   - `status : BearerLogin::Status`
    - `token_digest : String`
    
    ...and sets up a one-to-many association with the `User` model.
@@ -86,10 +85,13 @@ This token is revoked when the user logs out.
    You may add other columns and associations specific to your application.
 
 1. Set up the query:
+
    ```crystal
    # ->>> src/queries/bearer_login_query.cr
 
    class BearerLoginQuery < BearerLogin::BaseQuery
+     # ...
+     include Shield::BearerLoginQuery
      # ...
    end
    ```
@@ -111,7 +113,6 @@ This token is revoked when the user logs out.
          add scopes : Array(String)
 
          add token_digest : String
-         add status : String
          add started_at : Time
          add ended_at : Time?
          # ...
@@ -294,13 +295,11 @@ This token is revoked when the user logs out.
      param page : Int32 = 1
 
      get "/bearer-logins" do
-       pages, bearer_logins = paginate(
-         BearerLoginQuery.new
-           .user_id(user.id)
-           .status(BearerLogins:Status.new :started)
-       )
-    
-       html IndexPage, bearer_logins: bearer_logins, pages: pages
+       html IndexPage, bearer_logins: active_bearer_logins, pages: pages
+     end
+
+     private def active_bearer_logins
+       bearer_logins.select &.active?
      end
      # ...
    end
@@ -360,12 +359,6 @@ This token is revoked when the user logs out.
 
    class BearerLoginHeaders # or `struct ...`
      include Shield::BearerLoginHeaders
-
-     # By default, *Shield* sets the status of a bearer login to
-     # `Expired` when it expired, without deleting it.
-     #
-     # Enable this to delete it instead
-     #include Shield::DeleteBearerLoginIfExpired
    end
    ```
 
@@ -377,12 +370,6 @@ This token is revoked when the user logs out.
 
    class LoginHeaders # or `struct ...`
      include Shield::LoginHeaders
-
-     # By default, *Shield* sets the status of a login to
-     # `Expired` when it expired, without deleting it.
-     #
-     # Enable this to delete it instead
-     #include Shield::DeleteLoginIfExpired
    end
    ```
 

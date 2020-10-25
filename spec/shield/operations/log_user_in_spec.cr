@@ -17,7 +17,7 @@ describe Shield::LogUserIn do
       remote_ip: ip_address
     )
 
-    login.status.started?.should be_true
+    login.active?.should be_true
     login.ip_address.should eq(ip_address.address)
 
     LoginSession.new(session).login_id!.should eq(login.id)

@@ -17,11 +17,6 @@ module Shield::PasswordResetHelper
       PasswordResets::Show.url(token: token)
     end
 
-    def password_reset_expired?(password_reset : PasswordReset) : Bool
-      (Time.utc - password_reset.started_at) >
-        Shield.settings.password_reset_expiry
-    end
-
     def token(
       password_reset : PasswordReset,
       operation : StartPasswordReset

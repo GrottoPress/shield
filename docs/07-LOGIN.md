@@ -45,7 +45,6 @@
    - `ended_at : Time?`
    - `ip_address : String`
    - `started_at : Time`
-   - `status : Login::Status`
    - `token_digest : String`
    
    ...and sets up a one-to-many association with the `User` model.
@@ -55,10 +54,13 @@
    You may add other columns and associations specific to your application.
 
 1. Set up the query:
+
    ```crystal
    # ->>> src/queries/login_query.cr
 
    class LoginQuery < Login::BaseQuery
+     # ...
+     include Shield::LoginQuery
      # ...
    end
    ```
@@ -78,7 +80,6 @@
 
          add token_digest : String
          add ip_address : String
-         add status : String
          add started_at : Time
          add ended_at : Time?
          # ...

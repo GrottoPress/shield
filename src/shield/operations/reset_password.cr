@@ -22,8 +22,8 @@ module Shield::ResetPassword
     private def end_password_resets(user : User)
       PasswordResetQuery.new
         .user_id(user.id)
-        .status(PasswordReset::Status.new :started)
-        .update(ended_at: Time.utc, status: PasswordReset::Status.new(:ended))
+        .active
+        .update(ended_at: Time.utc)
     end
   end
 end

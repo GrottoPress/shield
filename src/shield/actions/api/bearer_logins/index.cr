@@ -5,26 +5,39 @@ module Shield::Api::BearerLogins::Index
     # param page : Int32 = 1
 
     # get "/bearer-logins" do
-    #   pages, bearer_logins = paginate(
-    #     BearerLoginQuery.new
-    #       .user_id(user.id)
-    #       .status(BearerLogins::Status.new :started)
-    #   )
-    #
     #   json({
     #     status: "success",
     #     data: {
-    #       bearer_logins: BearerLoginSerializer.for_collection(bearer_logins)
+    #       bearer_logins: BearerLoginSerializer.for_collection(
+    #         active_bearer_logins
+    #       )
     #     },
     #     pages: {
     #       first: pages.path_to_page(1)
     #       previous: pages.path_to_previous,
     #       current: pages.path_to_page(page),
     #       next: pages.path_to_next,
-    #       last: pages.path_to_page(page.total)
+    #       last: pages.path_to_page(pages.total)
     #     }
     #   })
     # end
+
+    # private def active_bearer_logins
+    #   bearer_logins.select &.active?
+    # end
+
+    def pages
+      paginated_bearer_logins[0]
+    end
+
+    def bearer_logins
+      paginated_bearer_logins[1]
+    end
+
+    @[Memoize]
+    private def paginated_bearer_logins
+      paginate(BearerLoginQuery.new.user_id(user.id))
+    end
 
     def user
       current_or_bearer_user!

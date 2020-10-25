@@ -11,15 +11,12 @@ describe Shield::RevokeBearerLogin do
       all_scopes: ["posts.index", "posts.create"]
     )
 
-    RevokeBearerLogin.update(
-      bearer_login,
-      params(status: "Expired"),
-      status: BearerLogin::Status.new(:started)
-    ) do |operation, updated_bearer_login|
+    bearer_login.active?.should be_true
+
+    RevokeBearerLogin.update(bearer_login) do |operation, updated_bearer_login|
       operation.saved?.should be_true
 
-      updated_bearer_login.ended_at.should be_a(Time)
-      updated_bearer_login.status.ended?.should be_true
+      updated_bearer_login.active?.should be_false
     end
   end
 end

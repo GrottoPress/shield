@@ -10,12 +10,6 @@
    class LoginSession # Or `struct ...`
      # ...
      include Shield::LoginSession
-
-     # By default, *Shield* sets the status of a login to
-     # `Expired` when it expired, without deleting it.
-     #
-     # Enable this to delete it instead
-     #include Shield::DeleteLoginIfExpired
      # ...
    end
    ```
@@ -44,12 +38,6 @@
    class PasswordResetSession # Or `struct ...`
      # ...
      include Shield::PasswordResetSession
-
-     # By default, *Shield* sets the status of a password reset to
-     # `Expired` when it expired, without deleting it.
-     #
-     # Enable this to delete it instead
-     #include Shield::DeletePasswordResetIfExpired
      # ...
    end
    ```

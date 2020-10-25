@@ -33,7 +33,7 @@ module Shield::AuthenticationPipes
       password_reset = PasswordResetSession.new(session).password_reset
 
       if password_reset.nil? ||
-        !password_reset.not_nil!.status.started? ||
+        !password_reset.not_nil!.active? ||
         password_reset.not_nil!.ip_address == remote_ip.try &.address
         continue
       else
@@ -48,6 +48,7 @@ module Shield::AuthenticationPipes
       email_confirmation = email_confirmation_session.email_confirmation
 
       if email_confirmation.nil? ||
+        !email_confirmation.not_nil!.active? ||
         email_confirmation.not_nil!.ip_address == remote_ip.try &.address
         continue
       else

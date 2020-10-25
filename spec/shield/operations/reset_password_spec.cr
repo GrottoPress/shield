@@ -28,7 +28,7 @@ describe Shield::ResetPassword do
         operation.saved?.should be_true
 
         UserHelper.verify_user?(updated_user, new_password).should be_true
-        password_reset.reload.status.ended?.should be_true
+        password_reset.reload.active?.should be_false
         PasswordResetSession.new(session).password_reset_id.should be_nil
         PasswordResetSession.new(session).password_reset_token.should be_nil
       end
@@ -85,7 +85,7 @@ describe Shield::ResetPassword do
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
-      password_reset.reload.status.started?.should be_false
+      password_reset.reload.active?.should be_false
     end
   end
 
@@ -109,8 +109,8 @@ describe Shield::ResetPassword do
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
-    password_reset_1.status.started?.should be_true
-    password_reset_2.status.started?.should be_true
+    password_reset_1.active?.should be_true
+    password_reset_2.active?.should be_true
 
     ResetPassword.update!(
       password_reset_1.user!,
@@ -119,7 +119,7 @@ describe Shield::ResetPassword do
       current_login: nil
     )
 
-    password_reset_1.reload.status.started?.should be_false
-    password_reset_2.reload.status.started?.should be_false
+    password_reset_1.reload.active?.should be_false
+    password_reset_2.reload.active?.should be_false
   end
 end

@@ -56,7 +56,6 @@ This is particularly important, since email addresses are usually the only means
    - `ended_at : Time?`
    - `ip_address : String`
    - `started_at : Time`
-   - `status : EmailConfirmation::Status`
    - `token_digest : String`
 
    ...and sets up an optional one-to-many association with the `User` model.
@@ -71,6 +70,8 @@ This is particularly important, since email addresses are usually the only means
    # ->>> src/queries/email_confirmation_query.cr
 
    class EmailConfirmationQuery < EmailConfirmation::BaseQuery
+     # ...
+     include Shield::EmailConfirmationQuery
      # ...
    end
    ```
@@ -524,12 +525,6 @@ This is particularly important, since email addresses are usually the only means
    class EmailConfirmationSession # Or `struct ...`
      # ...
      include Shield::EmailConfirmationSession
-
-     # By default, *Shield* sets the status of an email confirmation to
-     # `Expired` when it expired, without deleting it.
-     #
-     # Enable this to delete it instead
-     #include Shield::DeleteEmailConfirmationIfExpired
      # ...
    end
    ```

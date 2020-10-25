@@ -45,9 +45,9 @@ describe Shield::RegisterEmailConfirmationUser do
       remote_ip: Socket::IPAddress.new("11.12.13.14", 15)
     )
 
-    email_confirmation.status.started?.should be_true
-    email_confirmation_2.status.started?.should be_true
-    email_confirmation_3.status.started?.should be_true
+    email_confirmation.active?.should be_true
+    email_confirmation_2.active?.should be_true
+    email_confirmation_3.active?.should be_true
 
     user = RegisterEmailConfirmationCurrentUser.create!(
       params(
@@ -59,9 +59,9 @@ describe Shield::RegisterEmailConfirmationUser do
       email_confirmation: email_confirmation,
     )
 
-    email_confirmation.reload.status.started?.should be_false
-    email_confirmation_2.reload.status.started?.should be_false
-    email_confirmation_3.reload.status.started?.should be_true
+    email_confirmation.reload.active?.should be_false
+    email_confirmation_2.reload.active?.should be_false
+    email_confirmation_3.reload.active?.should be_true
 
     email_confirmation.reload.user_id.should eq(user.id)
     email_confirmation_2.reload.user_id.should be_nil

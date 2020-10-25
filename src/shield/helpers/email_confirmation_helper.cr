@@ -17,13 +17,6 @@ module Shield::EmailConfirmationHelper
       EmailConfirmations::Show.url(token: token)
     end
 
-    def email_confirmation_expired?(
-      email_confirmation : EmailConfirmation
-    ) : Bool
-      (Time.utc - email_confirmation.started_at) >
-        Shield.settings.email_confirmation_expiry
-    end
-
     def token(
       email_confirmation : EmailConfirmation,
       operation : StartEmailConfirmation

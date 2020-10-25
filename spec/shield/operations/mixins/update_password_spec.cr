@@ -117,8 +117,8 @@ describe Shield::UpdatePassword do
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
-    login_1.status.started?.should be_true
-    login_2.status.started?.should be_true
+    login_1.active?.should be_true
+    login_2.active?.should be_true
 
     UpdateCurrentUser.update!(
       user,
@@ -126,8 +126,8 @@ describe Shield::UpdatePassword do
       current_login: nil
     )
 
-    login_1.reload.status.started?.should be_false
-    login_2.reload.status.started?.should be_false
+    login_1.reload.active?.should be_false
+    login_2.reload.active?.should be_false
   end
 
   it "retains current login when password changes" do
@@ -156,9 +156,9 @@ describe Shield::UpdatePassword do
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
-    login_1.status.started?.should be_true
-    login_2.status.started?.should be_true
-    current_login.status.started?.should be_true
+    login_1.active?.should be_true
+    login_2.active?.should be_true
+    current_login.active?.should be_true
 
     UpdateCurrentUser.update!(
       user,
@@ -166,9 +166,9 @@ describe Shield::UpdatePassword do
       current_login: current_login
     )
 
-    login_1.reload.status.started?.should be_false
-    login_2.reload.status.started?.should be_false
-    current_login.reload.status.started?.should be_true
+    login_1.reload.active?.should be_false
+    login_2.reload.active?.should be_false
+    current_login.reload.active?.should be_true
   end
 
   it "does not log other users out when password changes" do
@@ -197,8 +197,8 @@ describe Shield::UpdatePassword do
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     )
 
-    mary_login.status.started?.should be_true
-    john_login.status.started?.should be_true
+    mary_login.active?.should be_true
+    john_login.active?.should be_true
 
     UpdateCurrentUser.update!(
       mary,
@@ -209,7 +209,7 @@ describe Shield::UpdatePassword do
       current_login: nil
     )
 
-    mary_login.reload.status.started?.should be_false
-    john_login.reload.status.started?.should be_true
+    mary_login.reload.active?.should be_false
+    john_login.reload.active?.should be_true
   end
 end

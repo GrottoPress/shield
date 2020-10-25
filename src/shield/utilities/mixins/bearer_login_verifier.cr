@@ -3,9 +3,12 @@ module Shield::BearerLoginVerifier
     include Shield::Verifier
 
     def verify : BearerLogin?
-      return hash unless bearer_login.try &.status.started?
-      expire && return hash if expired?
+      return hash unless active?
       bearer_login if verify?
+    end
+
+    def active? : Bool?
+      bearer_login.try &.active?
     end
 
     def verify? : Bool?
@@ -20,21 +23,6 @@ module Shield::BearerLoginVerifier
     # To mitigate timing attacks
     private def hash : Nil
       bearer_login_token.try { |token| CryptoHelper.hash_sha256(token) }
-    end
-
-    private def expire
-      RevokeBearerLogin.update!(
-        bearer_login!,
-        status: BearerLogin::Status.new(:expired)
-      )
-    rescue
-      true
-    end
-
-    def expired? : Bool?
-      bearer_login.try do |bearer_login|
-        BearerLoginHelper.bearer_login_expired?(bearer_login)
-      end
     end
 
     def bearer_login! : BearerLogin

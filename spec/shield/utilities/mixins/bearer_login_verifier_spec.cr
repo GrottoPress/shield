@@ -1,8 +1,8 @@
-require "../../spec_helper"
+require "../../../spec_helper"
 
 describe Shield::BearerLoginVerifier do
-  it "deactivates login when expired but active" do
-    Shield.temp_config(bearer_login_expiry: 2.seconds) do
+  describe "#verify" do
+    it "verifies bearer login" do
       CreateBearerLogin.create(
         params(name: "some token"),
         user_id: UserBox.create.id,
@@ -18,11 +18,15 @@ describe Shield::BearerLoginVerifier do
           )
         }
 
-        sleep 3
+        headers_2 = HTTP::Headers{
+          "Authorization" => BearerLoginHelper.bearer_header(
+            1,
+            "abcdefghijklmnopqrstuvwxyz"
+          )
+        }
 
-        bearer_login.status.started?.should be_true
-        BearerLoginHeaders.new(headers).verify.should be_nil
-        bearer_login.reload.status.expired?.should be_true
+        BearerLoginHeaders.new(headers).verify.should be_a(BearerLogin)
+        BearerLoginHeaders.new(headers_2).verify.should be_nil
       end
     end
   end

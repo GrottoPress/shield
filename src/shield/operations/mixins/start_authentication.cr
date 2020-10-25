@@ -1,11 +1,10 @@
-module Shield::StartAuthentication(T)
+module Shield::StartAuthentication
   macro included
     getter token = ""
 
     before_save do
       set_started_at
       set_ended_at
-      set_status
       set_token
     end
 
@@ -15,10 +14,6 @@ module Shield::StartAuthentication(T)
 
     private def set_ended_at
       ended_at.value = nil
-    end
-
-    private def set_status
-      status.value = T::Status.new(:started)
     end
 
     private def set_token

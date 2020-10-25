@@ -10,8 +10,12 @@ module Shield::LogUserIn
 
     include Shield::ValidateEmail
     include Shield::RequireIpAddress
-    include Shield::StartAuthentication(Login)
+    include Shield::StartAuthentication
     include Shield::SetSession
+
+    private def set_ended_at
+      ended_at.value = started_at.value.not_nil! + Shield.settings.login_expiry
+    end
 
     private def verify_login
       return unless email.value.to_s.email? && password.value

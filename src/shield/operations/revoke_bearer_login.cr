@@ -1,5 +1,5 @@
 module Shield::RevokeBearerLogin
   macro included
-    include Shield::EndAuthentication(BearerLogin)
+    include Shield::EndAuthentication
   end
 end

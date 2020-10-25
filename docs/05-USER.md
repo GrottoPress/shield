@@ -26,10 +26,13 @@
    You may add other columns and associations specific to your application.
 
 1. Set up the query:
+
    ```crystal
    # ->>> src/queries/user_query.cr
 
    class UserQuery < User::BaseQuery
+     # ...
+     include Shield::UserQuery
      # ...
    end
    ```

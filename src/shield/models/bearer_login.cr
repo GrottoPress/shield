@@ -1,6 +1,6 @@
 module Shield::BearerLogin
   macro included
-    include Shield::AuthenticationColumns(BearerLogin)
+    include Shield::AuthenticationColumns
     include Shield::BelongsToUser
 
     column name : String

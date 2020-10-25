@@ -3,16 +3,6 @@ module Shield::LoginSession
     include Shield::Session
     include Shield::LoginVerifier
 
-    private def expire
-      LogUserOut.update!(
-        login!,
-        status: Login::Status.new(:expired),
-        session: @session
-      )
-    rescue
-      true
-    end
-
     def login_id : Int64?
       @session.get?(:login_id).try &.to_i64
     rescue

@@ -3,9 +3,12 @@ module Shield::EmailConfirmationVerifier
     include Shield::Verifier
 
     def verify : EmailConfirmation?
-      return hash unless email_confirmation.try &.status.started?
-      expire && return hash if expired?
+      return hash unless active?
       email_confirmation if verify?
+    end
+
+    def active? : Bool?
+      email_confirmation.try &.active?
     end
 
     def verify? : Bool?
@@ -20,21 +23,6 @@ module Shield::EmailConfirmationVerifier
     # To mitigate timing attacks
     private def hash : Nil
       email_confirmation_token.try { |token| CryptoHelper.hash_sha256(token) }
-    end
-
-    private def expire
-      EndEmailConfirmation.update!(
-        email_confirmation!,
-        status: EmailConfirmation::Status.new(:expired)
-      )
-    rescue
-      true
-    end
-
-    def expired? : Bool?
-      email_confirmation.try do |email_confirmation|
-        EmailConfirmationHelper.email_confirmation_expired?(email_confirmation)
-      end
     end
 
     def email_confirmation! : EmailConfirmation

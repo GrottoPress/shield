@@ -16,16 +16,15 @@ describe Shield::EndPasswordReset do
 
       PasswordResetSession.new(session).set(password_reset, operation)
 
+      password_reset.active?.should be_true
+
       EndPasswordReset.update(
         password_reset,
-        params(status: "Started"),
-        status: PasswordReset::Status.new(:expired),
         session: session
       ) do |operation, updated_password_reset|
         operation.saved?.should be_true
 
-        updated_password_reset.ended_at.should_not be_nil
-        updated_password_reset.status.expired?.should be_true
+        updated_password_reset.active?.should be_false
       end
     end
 

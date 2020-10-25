@@ -1,8 +1,8 @@
-require "../../spec_helper"
+require "../../../spec_helper"
 
 describe Shield::LoginVerifier do
-  it "deactivates login when expired but active" do
-    Shield.temp_config(login_expiry: 2.seconds) do
+  describe "#verify" do
+    it "verifies login" do
       email = "user@example.tld"
       password = "password12U password"
 
@@ -10,18 +10,16 @@ describe Shield::LoginVerifier do
         .password_digest(CryptoHelper.hash_bcrypt(password))
 
       session = Lucky::Session.new
+      session_2 = Lucky::Session.new
 
       login = LogUserIn.create!(
         params(email: email, password: password),
         session: session,
-        remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+        remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
       )
 
-      sleep 3
-
-      login.status.started?.should be_true
-      LoginSession.new(session).verify.should be_nil
-      login.reload.status.expired?.should be_true
+      LoginSession.new(session).verify.should be_a(Login)
+      LoginSession.new(session_2).verify.should be_nil
     end
   end
 end

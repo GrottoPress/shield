@@ -45,7 +45,6 @@
    - `ended_at : Time?`
    - `ip_address : String`
    - `started_at : Time`
-   - `status : PasswordReset::Status`
    - `token_digest : String`
    
    ...and sets up a one-to-many association with the `User` model.
@@ -60,6 +59,8 @@
    # ->>> src/queries/password_reset_query.cr
 
    class PasswordResetQuery < PasswordReset::BaseQuery
+     # ...
+     include Shield::PasswordResetQuery
      # ...
    end
    ```
@@ -79,7 +80,6 @@
 
          add token_digest : String
          add ip_address : String
-         add status : String
          add started_at : Time
          add ended_at : Time?
          # ...

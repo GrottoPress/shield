@@ -1,14 +1,15 @@
-module Shield::AuthenticationColumns(T)
+module Shield::AuthenticationColumns
   macro included
-    include Shield::AuthenticationStatus
-
     skip_default_columns
 
     primary_key id : Int64
 
     column token_digest : String
-    column status : T::Status
     column started_at : Time
     column ended_at : Time?
+
+    def active?
+      ended_at.nil? || ended_at.not_nil! > Time.utc
+    end
   end
 end

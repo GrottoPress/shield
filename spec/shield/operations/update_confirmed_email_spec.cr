@@ -69,18 +69,18 @@ describe Shield::UpdateConfirmedEmail do
       remote_ip: Socket::IPAddress.new("21.22.23.24", 25)
     )
 
-    email_confirmation.status.started?.should be_true
-    email_confirmation_2.status.started?.should be_true
-    email_confirmation_3.status.started?.should be_true
-    email_confirmation_4.status.started?.should be_true
-    email_confirmation_5.status.started?.should be_true
+    email_confirmation.active?.should be_true
+    email_confirmation_2.active?.should be_true
+    email_confirmation_3.active?.should be_true
+    email_confirmation_4.active?.should be_true
+    email_confirmation_5.active?.should be_true
 
     UpdateConfirmedEmail.update!(user, email_confirmation: email_confirmation)
 
-    email_confirmation.reload.status.started?.should be_false
-    email_confirmation_2.reload.status.started?.should be_false
-    email_confirmation_3.reload.status.started?.should be_false
-    email_confirmation_4.reload.status.started?.should be_true
-    email_confirmation_5.reload.status.started?.should be_true
+    email_confirmation.reload.active?.should be_false
+    email_confirmation_2.reload.active?.should be_false
+    email_confirmation_3.reload.active?.should be_false
+    email_confirmation_4.reload.active?.should be_true
+    email_confirmation_5.reload.active?.should be_true
   end
 end

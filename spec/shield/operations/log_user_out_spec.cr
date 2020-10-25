@@ -10,7 +10,7 @@ describe Shield::LogUserOut do
 
     session = Lucky::Session.new
 
-    LogUserIn.create!(
+    login = LogUserIn.create!(
       params(email: email, password: password),
       session: session,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
@@ -18,17 +18,15 @@ describe Shield::LogUserOut do
 
     LoginSession.new(session).login_id.should_not be_nil
 
+    login.active?.should be_true
+
     LogUserOut.update(
       LoginSession.new(session).login!,
-      params(status: "Expired"),
-      status: Login::Status.new(:started),
       session: session
     ) do |operation, updated_login|
       operation.saved?.should be_true
 
-      updated_login.ended_at.should be_a(Time)
-      updated_login.status.ended?.should be_true
-
+      updated_login.active?.should be_false
       LoginSession.new(session).login_id.should be_nil
     end
   end

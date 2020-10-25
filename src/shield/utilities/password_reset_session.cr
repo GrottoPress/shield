@@ -3,16 +3,6 @@ module Shield::PasswordResetSession
     include Shield::Session
     include Shield::PasswordResetVerifier
 
-    private def expire
-      EndPasswordReset.update!(
-        password_reset!,
-        status: PasswordReset::Status.new(:expired),
-        session: @session
-      )
-    rescue
-      true
-    end
-
     def password_reset_id : Int64?
       @session.get?(:password_reset_id).try &.to_i64
     rescue

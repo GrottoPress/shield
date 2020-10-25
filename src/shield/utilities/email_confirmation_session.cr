@@ -3,16 +3,6 @@ module Shield::EmailConfirmationSession
     include Shield::Session
     include Shield::EmailConfirmationVerifier
 
-    private def expire
-      EndEmailConfirmation.update!(
-        email_confirmation!,
-        status: EmailConfirmation::Status.new(:expired),
-        session: @session
-      )
-    rescue
-      true
-    end
-
     def email_confirmation_id : Int64?
       @session.get?(:email_confirmation_id).try &.to_i64
     rescue

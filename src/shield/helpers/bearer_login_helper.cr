@@ -2,10 +2,6 @@ module Shield::BearerLoginHelper
   macro extended
     extend self
 
-    def bearer_login_expired?(bearer_login : BearerLogin) : Bool
-      (Time.utc - bearer_login.started_at) > Shield.settings.bearer_login_expiry
-    end
-
     def token(
       bearer_login : BearerLogin,
       operation : CreateBearerLogin

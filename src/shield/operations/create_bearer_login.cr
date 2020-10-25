@@ -9,7 +9,12 @@ module Shield::CreateBearerLogin
     end
 
     include Shield::ValidateScopes
-    include Shield::StartAuthentication(BearerLogin)
+    include Shield::StartAuthentication
+
+    private def set_ended_at
+      ended_at.value = started_at.value.not_nil! +
+        Shield.settings.bearer_login_expiry
+    end
 
     # Prevents a user from using a bearer login `name`
     # more than once.
