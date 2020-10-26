@@ -258,3 +258,31 @@
      # ...
    end
    ```
+
+1. Set up helpers:
+
+   ```crystal
+   # ->>> src/helpers/login_helper.cr
+
+   module LoginHelper
+     # ...
+     extend Shield::LoginHelper
+     # ...
+   end
+   ```
+
+   `Shield::LoginHelper` contains login-related helper methods.
+
+1. Set up utilities:
+
+   ```crystal
+   # ->>> src/utilities/login_session.cr
+
+   class LoginSession # Or `struct ...`
+     # ...
+     include Shield::LoginSession
+     # ...
+   end
+   ```
+
+   `Shield::LoginSession` is a wrapper around *Lucky* sessions that deals with session keys and values for logins, and handles verification of login tokens retrieved from session.

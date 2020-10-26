@@ -233,3 +233,86 @@
      # ...
    end
    ```
+
+1. Set up helpers:
+
+   ```crystal
+   # ->>> src/helpers/user_helper.cr
+
+   module UserHelper
+     # ...
+     extend Shield::UserHelper
+     # ...
+   end
+   ```
+
+   `Shield::UserHelper` contains helper methods related to the user model.
+
+1. Set up emails:
+
+   ```crystal
+   # ->>> src/emails/welcome_email.cr
+
+   class WelcomeEmail < BaseEmail
+     # ...
+     def initialize(@operation : RegisterCurrentUser, @user : User)
+     end
+
+     # Sample message
+     def text_body
+       <<-MESSAGE
+       Hi User ##{@user.id},
+
+       You have successfully completed your registration for your <app name here> account.
+
+       To access your account, log in via the following link:
+
+       #{CurrentLogin::New.url}
+
+       If you did not register this account, kindly reply to let us know.
+
+       Regards,
+       <app name here>.
+       MESSAGE
+     end
+     # ...
+   end
+   ```
+
+   This is the email sent to the email address of a newly registered user of your application. It is sent if you included `Shield::SendWelcomeEmail` in `RegisterCurrentUser`.
+
+   ---
+   ```crystal
+   # ->>> src/emails/user_welcome_email.cr
+
+   class UserWelcomeEmail < BaseEmail
+     # ...
+     def initialize(@operation : RegisterCurrentUser)
+     end
+
+     # Sample message
+     def text_body
+       <<-MESSAGE
+       Hi,
+
+       You (or someone else) entered this email address while trying to
+       register for a new <app name here> account.
+
+       The attempted action has failed, so there is nothing you should
+       worry about.
+
+       If you have lost your password, however, you may reset your password here:
+
+       #{PasswordResets::New.url}
+
+       Regards,
+       <app name here>.
+       MESSAGE
+     end
+     # ...
+   end
+   ```
+
+   This is the email sent to the email address of an existing user, after someone tries to register a new account with said user's email.
+
+   This email is sent if you included `Shield::SendWelcomeEmail` in `RegisterCurrentUser`.

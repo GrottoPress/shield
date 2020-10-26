@@ -328,3 +328,104 @@
      # ...
    end
    ```
+
+1. Set up helpers:
+
+   ```crystal
+   # ->>> src/helpers/password_reset_helper.cr
+
+   module PasswordResetHelper
+     # ...
+     extend Shield::PasswordResetHelper
+     # ...
+   end
+   ```
+
+   `Shield::PasswordResetHelper` contains helper methods related to password resets.
+
+1. Set up utilities:
+
+   ```crystal
+   # ->>> src/utilities/password_reset_session.cr
+
+   class PasswordResetSession # Or `struct ...`
+     # ...
+     include Shield::PasswordResetSession
+     # ...
+   end
+   ```
+
+   `Shield::PasswordResetSession` is a wrapper around *Lucky* sessions that deals with session keys and values for password resets, and handles verification of password reset tokens retrieved from session.
+
+1. Set up emails:
+
+   ```crystal
+   # ->>> src/emails/password_reset_request_email.cr
+
+   class PasswordResetRequestEmail < BaseEmail
+     # ...
+     def initialize(@operation : StartPasswordReset, @password_reset : PasswordReset)
+     end
+
+     # Sample message
+     def text_body
+       <<-MESSAGE
+       Hi User ##{@password_reset.user!.id},
+
+       You (or someone else) recently requested to reset the password
+       for your <app name here> account.
+
+       To proceed with the password reset process, click the link below:
+
+       #{PasswordResetHelper.password_reset_url(@password_reset, @operation)}
+
+       This password reset link will expire in #{Shield.settings.password_reset_expiry.total_minutes.to_i} minutes.
+
+       If you did not request a password reset, ignore this email or
+       reply to let us know.
+
+       Regards,
+       <app name here>.
+       MESSAGE
+     end
+     # ...
+   end
+   ```
+
+   This is a password reset email sent to the email address of a registered user of your application. It should contain the password reset URL.
+
+   ---
+   ```crystal
+   # ->>> src/emails/guest_password_reset_request_email.cr
+
+   class GuestPasswordResetRequestEmail < BaseEmail
+     # ...
+     def initialize(@operation : StartPasswordReset)
+     end
+
+     # Sample message
+     def text_body
+       <<-MESSAGE
+       Hi,
+
+       You (or someone else) entered this email address while trying to
+       change the password of a <app name here> account.
+
+       However, this email address is not in our database. Therefore,
+       the attempted password change has failed.
+
+       If you are a <app name here> user and were expecting this email,
+       you may try again using the email address you gave when you
+       registered your account.
+
+       If you are not a <app name here> user, ignore this email.
+
+       Regards,
+       <app name here>.
+       MESSAGE
+     end
+     # ...
+   end
+   ```
+
+   This email is sent to a valid email address that requested a password reset, but the email did not belong to any registered user of your application.

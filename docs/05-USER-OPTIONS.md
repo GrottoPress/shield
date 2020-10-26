@@ -138,7 +138,7 @@
 
    `Shield::HasOneUpdateSaveUserOptions` saves user options after updating the user. `Shield::NotifyPasswordChange` notifies a user after their password changed, if they have that option enabled.
 
-   1. Set up actions:
+1. Set up actions:
 
    User options do not have its own actions, since it is an extension of the `User` model in its own table.
 
@@ -148,3 +148,69 @@
 
    - `login_notify : Bool`
    - `password_notify : Bool`
+
+1. Set up emails:
+
+   ```crystal
+   # ->>> src/emails/login_notification_email.cr
+
+   class LoginNotificationEmail < BaseEmail
+     # ...
+     def initialize(@operation : LogUserIn, @login : Login)
+     end
+
+     # Sample message
+     def text_body
+       <<-MESSAGE
+       Hi User ##{@login.user!.id},
+
+       This is to let you know that your <app name here> account has just been
+       accessed.
+
+       =====
+       Date: #{@login.started_at.to_s("%d %B, %Y, %l:%M %P")}
+       IP Address: #{@login.ip_address}
+       =====
+
+       If you did not log in yourself, let us know immediately in your reply
+       to this message. Otherwise, you may safely ignore this email.
+
+       Regards,
+       <app name here>.
+       MESSAGE
+     end
+     # ...
+   end
+   ```
+
+   Each registered user has the option to receive this notification email when they (or someone else) logs in into their account.
+
+   ---
+   ```crystal
+   # ->>> src/emails/password_change_notification_email.cr
+
+   class PasswordChangeNotificationEmail < BaseEmail
+     # ...
+     def initialize(@operation : User::SaveOperation, @user : User)
+     end
+
+     # Sample message
+     def text_body
+       <<-MESSAGE
+       Hi User ##{@user.id},
+
+       This is to let you know that the password for your <app name here> account
+       has just been changed.
+
+       If you did not authorize this change, let us know immediately in your
+       reply to this message. Otherwise, you may safely ignore this email.
+
+       Regards,
+       <app name here>.
+       MESSAGE
+     end
+     # ...
+   end
+   ```
+
+   Each registered user has the option to receive this notification email when they (or someone else) updates or resets their password.
