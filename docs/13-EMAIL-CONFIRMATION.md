@@ -115,6 +115,15 @@ This is particularly important, since email addresses are usually the only means
    class StartEmailConfirmation < Avram::BasicOperation
      # ...
      include Shield::StartEmailConfirmation
+
+     # By default, *Shield* sets the `ended_at` time here, using
+     # the expiry setting above.
+     #
+     # Use this, if you would like to never expire email confirmations,
+     # irrespective of the expiry setting.
+     #private def set_ended_at
+     #  ended_at.value = nil
+     #end
      # ...
    end
    ```

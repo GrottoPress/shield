@@ -102,6 +102,15 @@
    class StartPasswordReset < PasswordReset::SaveOperation
      # ...
      include Shield::StartPasswordReset
+
+     # By default, *Shield* sets the `ended_at` time here, using
+     # the expiry setting above.
+     #
+     # Use this, if you would like to never expire password resets,
+     # irrespective of the expiry setting.
+     #private def set_ended_at
+     #  ended_at.value = nil
+     #end
      # ...
    end
    ```

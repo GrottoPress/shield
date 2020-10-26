@@ -135,6 +135,15 @@ This token is revoked when the user logs out.
    class CreateBearerLogin < BearerLogin::SaveOperation
      # ...
      include Shield::CreateBearerLogin
+
+     # By default, *Shield* sets the `ended_at` time here, using
+     # the expiry setting above.
+     #
+     # Use this, if you would like to never expire bearer logins,
+     # irrespective of the expiry setting.
+     #private def set_ended_at
+     #  ended_at.value = nil
+     #end
      # ...
    end
    ```
