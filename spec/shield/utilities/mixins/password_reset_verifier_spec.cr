@@ -16,7 +16,7 @@ describe Shield::PasswordResetVerifier do
         password_reset = password_reset.not_nil!
 
         token = PasswordResetHelper.token(password_reset, operation)
-        token_2 = PasswordResetHelper.token(1, "abcdefghijklmnopqrstuvwxyz")
+        token_2 = PasswordResetHelper.token(1, "abcdefghij")
 
         PasswordResetParams.new(params(token: token))
           .verify

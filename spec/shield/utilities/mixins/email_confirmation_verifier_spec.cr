@@ -13,7 +13,7 @@ describe Shield::EmailConfirmationVerifier do
         session_2 = Lucky::Session.new
 
         EmailConfirmationSession.new(session).set(email_confirmation, operation)
-        EmailConfirmationSession.new(session_2).set(1, "abcdefghijklmnopqrst")
+        EmailConfirmationSession.new(session_2).set(1, "abcdefghi")
 
         EmailConfirmationSession.new(session)
           .verify

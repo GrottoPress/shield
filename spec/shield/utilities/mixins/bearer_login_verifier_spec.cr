@@ -19,10 +19,7 @@ describe Shield::BearerLoginVerifier do
         }
 
         headers_2 = HTTP::Headers{
-          "Authorization" => BearerLoginHelper.bearer_header(
-            1,
-            "abcdefghijklmnopqrstuvwxyz"
-          )
+          "Authorization" => BearerLoginHelper.bearer_header(1, "abcdefghij")
         }
 
         BearerLoginHeaders.new(headers).verify.should be_a(BearerLogin)
