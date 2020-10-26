@@ -3,8 +3,6 @@ module Shield::RegisterEmailConfirmationUser
     attribute password : String
     attribute password_confirmation : String
 
-    has_one_create save_user_options : SaveUserOptions, assoc_name: :options
-
     after_save set_email_confirmation_user
     after_save end_email_confirmations
 

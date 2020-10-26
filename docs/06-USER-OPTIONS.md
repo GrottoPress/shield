@@ -113,18 +113,32 @@
 
    ---
    ```crystal
+   # ->>> src/operations/register_currrent_user.cr
+
+   class RegisterCurrentUser < User::SaveOperation
+     # ...
+     include Shield::HasOneCreateSaveUserOptions
+     # ...
+   end
+   ```
+
+   `Shield::HasOneCreateSaveUserOptions` saves user options after saving the user.
+
+   ---
+   ```crystal
    # ->>> src/operations/update_currrent_user.cr
 
    class UpdateCurrentUser < User::SaveOperation
      # ...
+     include Shield::HasOneUpdateSaveUserOptions
      include Shield::NotifyPasswordChange
      # ...
    end
    ```
 
-   `Shield::NotifyPasswordChange` notifies a user after their password changed, if they have that option enabled.
+   `Shield::HasOneUpdateSaveUserOptions` saves user options after updating the user. `Shield::NotifyPasswordChange` notifies a user after their password changed, if they have that option enabled.
 
-1. Set up actions:
+   1. Set up actions:
 
    User options do not have its own actions, since it is an extension of the `User` model in its own table.
 

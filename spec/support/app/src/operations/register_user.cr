@@ -1,5 +1,6 @@
 class RegisterUser < User::SaveOperation
   include Shield::RegisterUser
+  include Shield::HasOneCreateSaveUserOptions
 
   permit_columns :level
 

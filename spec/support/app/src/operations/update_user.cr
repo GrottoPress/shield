@@ -1,5 +1,6 @@
 class UpdateUser < User::SaveOperation
   include Shield::UpdateUser
+  include Shield::HasOneUpdateSaveUserOptions
 
   permit_columns :level
 
