@@ -313,8 +313,8 @@ This token is revoked when the user logs out.
 
    class BearerLogins::Destroy < BrowserAction
      # ...
-     # By default, *Shield* sets the status of the bearer login to
-     # `Ended` to mark it as inactive, without deleting it.
+     # By default, *Shield* marks the bearer login as inactive,
+     # without deleting it.
      #
      # To delete it, use `Shield::BearerLogins::Delete` instead.
      include Shield::BearerLogins::Destroy
