@@ -1,4 +1,4 @@
-## *Bearer* Authentication (API tokens)
+## *Bearer* login (API tokens)
 
 *Shield* enables authentication via access tokens, per [RFC 6750](https://tools.ietf.org/html/rfc6750). Any registered user may create *bearer login*s, and assign capabilities to them in the form of `scopes`.
 
@@ -386,7 +386,7 @@ This token is revoked when the user logs out.
 
 ### Action helpers
 
-`Shield::BearerAuthenticationHelpers` adds in the following helpers, as counterparts to those provided in `Shield::AuthenticationHelpers`.
+`Shield::ApiAction` adds in the following helpers, as counterparts to those provided in `Shield::BrowserAction`.
 
 - `#bearer_logged_in?`
 - `#bearer_logged_out?`
