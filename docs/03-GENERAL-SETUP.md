@@ -9,6 +9,7 @@
    # ->>> config/shield.cr
 
    Shield.configure do |settings|
+     # ...
      # The cost to apply to bcrypt hashes
      settings.bcrypt_cost = Lucky::Env.production? ? 12 : 4
 
@@ -26,6 +27,7 @@
 
      # Require special character in password?
      #settings.password_require_special_char = true
+     # ...
    end
    ```
 

@@ -1,6 +1,5 @@
 class UpdateEmailConfirmationCurrentUser2 < User::SaveOperation
   include Shield::SaveEmail
-  include Shield::UpdatePassword
 
   getter new_email : String?
 
@@ -12,6 +11,8 @@ class UpdateEmailConfirmationCurrentUser2 < User::SaveOperation
   has_one_update save_user_options : SaveUserOptions2, assoc_name: :options
 
   needs remote_ip : Socket::IPAddress?
+
+  include Shield::UpdatePassword
 
   before_save do
     set_email

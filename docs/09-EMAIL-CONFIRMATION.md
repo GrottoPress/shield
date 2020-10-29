@@ -2,7 +2,7 @@
 
 *Shield* offers email confirmations, for the purpose of verifying a new email address supplied by a user, either when registering for a new account, or while updating their exisiting account.
 
-Email confirmation provides very little, if any, security benefits. It, however, improves usability by ensuring that and email address is valid, exists and is owned by the user supplying it.
+Email confirmation provides very little, if any, security benefits. It, however, improves usability by ensuring that an email address is valid, exists and is owned by the user supplying it.
 
 This is particularly important, since email addresses are usually the only means to reset passwords. If a user supplied the wrong email address, and lost their password, they are out of luck.
 
@@ -16,8 +16,10 @@ This is particularly important, since email addresses are usually the only means
    # ->>> config/shield.cr
 
    Shield.configure do |settings|
+     # ...
      # How long should email confirmation last before it expires?
-     settings.email_confirmation_expiry = 1.hour
+     #settings.email_confirmation_expiry = 1.hour
+     # ...
    end
    ```
 
@@ -112,7 +114,7 @@ This is particularly important, since email addresses are usually the only means
    ```crystal
    # ->>> src/operations/start_email_confirmation.cr
 
-   class StartEmailConfirmation < Avram::BasicOperation
+   class StartEmailConfirmation < EmailConfirmation::SaveOperation
      # ...
      include Shield::StartEmailConfirmation
 
@@ -522,7 +524,9 @@ This is particularly important, since email addresses are usually the only means
    # ->>> src/helpers/email_confirmation_helper.cr
 
    module EmailConfirmationHelper
-    extend Shield::EmailConfirmationHelper
+     # ...
+     extend Shield::EmailConfirmationHelper
+     # ...
    end
    ```
 
@@ -541,10 +545,6 @@ This is particularly important, since email addresses are usually the only means
    `Shield::EmailConfirmationSession` is a wrapper around *Lucky* sessions that deals with session keys and values for email confirmations, and handles verification of email confirmation tokens retrieved from session.
 
 1. Set up emails:
-   
-   `EmailConfirmationRequestEmail`:
-
-   This is a confirmation email sent to the new email address of a new or existing user. It should contain the email confirmation URL.
 
    ```crystal
    # ->>> src/emails/email_confirmation_request_email.cr
@@ -556,17 +556,8 @@ This is particularly important, since email addresses are usually the only means
        @email_confirmation : EmailConfirmation
      )
      end
-     # ...
-   end
-   ```
 
-   *Sample Message*:
-
-   ```crystal
-   # ->>> src/emails/email_confirmation_request_email.cr
-   
-   class EmailConfirmationRequestEmail < BaseEmail
-     # ...
+     # Sample message
      def text_body
        <<-MESSAGE
        Hi,
@@ -591,11 +582,9 @@ This is particularly important, since email addresses are usually the only means
    end
    ```
 
+   This is a confirmation email sent to the new email address of a new or existing user. It should contain the email confirmation URL.
+
    ---
-   `UserEmailConfirmationRequestEmail`:
-
-   This email is sent to a valid email address that initiated email confirmation, if the email belongs to an existing user.
-
    ```crystal
    # ->>> src/emails/user_email_confirmation_request_email.cr
    
@@ -603,17 +592,8 @@ This is particularly important, since email addresses are usually the only means
      # ...
      def initialize(@operation : StartEmailConfirmation)
      end
-     # ...
-   end
-   ```
 
-   *Sample Message*:
-
-   ```crystal
-   # ->>> src/emails/user_email_confirmation_request_email.cr
-   
-   class UserEmailConfirmationRequestEmail < BaseEmail
-     # ...
+     # Sample message
      def text_body
        <<-MESSAGE
        Hi,
@@ -636,3 +616,5 @@ This is particularly important, since email addresses are usually the only means
      # ...
    end
    ```
+
+   This email is sent to a valid email address that initiated email confirmation, if the email belongs to an existing user.

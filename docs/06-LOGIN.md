@@ -6,8 +6,10 @@
    # ->>> config/shield.cr
 
    Shield.configure do |settings|
+     # ...
      # How long should a login last before it expires?
-     settings.login_expiry = 24.hours
+     #settings.login_expiry = 24.hours
+     # ...
    end
    ```
 

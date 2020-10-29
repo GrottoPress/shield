@@ -1,7 +1,5 @@
 module Shield::UpdateEmailConfirmationUser
   macro included
-    include Shield::UpdateUser
-
     getter new_email : String?
 
     needs remote_ip : Socket::IPAddress?
@@ -11,6 +9,8 @@ module Shield::UpdateEmailConfirmationUser
     end
 
     after_save start_email_confirmation
+
+    include Shield::UpdateUser
 
     private def set_email
       return unless email.changed?

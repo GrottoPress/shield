@@ -64,9 +64,11 @@ In this case, define your authorization policies as usual:
 
 # This example uses *LuckyCan*
 class PostPolicy < LuckyCan::BasePolicy
+  # ...
   can update, post, current_user do
     current_user.level.admin? || post.user_id == current_user.id
   end
+  # ...
 end
 ```
 

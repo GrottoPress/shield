@@ -8,15 +8,15 @@ An action's scope name is the action's class name underscored, with `::` replace
 
 When a user creates a *bearer login*, they generate a token, and delegate some or all of their rights, to this token. Any client in possession of the token may access the application on behalf of the user, without needing login credentials of their own.
 
-A token is never saved in its plain form, so users are expected to copy and save them as soon as they are generated.
+Tokens are salted and hashed (SHA-256) before being saved to the database, so users are expected to copy and save them as soon as they are generated.
 
 Shield expects clients to pass a token in their `Authorization` header, with the `Bearer` authentication scheme, thus: `Authorization: Bearer <TOKEN>`.
 
-When *Shield* receives a request from a client, it retrieves this `<TOKEN>` from its headers, and verifies that it exists in the database (salted SHA-256), and that it has not been revoked or expired.
+When *Shield* receives a request from a client, it retrieves this `<TOKEN>` from its headers, and verifies that it exists in the database, and that it has not been revoked or expired.
 
 If the token is successfully verified, *Shield* further checks that the token has the required `scopes` to access the current action.
 
-Finally, *Shield* checks that the user that generated this token has the right to access the current action. This check is based on the authorization rules you set up in section *12-AUTHORIZATION.md*.
+Finally, *Shield* checks that the user that generated this token has the right to access the current action. This check is based on the authorization rules you set up in section *08-AUTHORIZATION.md*.
 
 Effectively, a user cannot generate a valid *bearer login* token for an action they do not, originally, have access to.
 
@@ -36,8 +36,10 @@ This token is revoked when the user logs out.
    # ->>> config/shield.cr
 
    Shield.configure do |settings|
+     # ...
      # How long should bearer login last before it expires?
-     settings.bearer_login_expiry = 90.days
+     #settings.bearer_login_expiry = 90.days
+     # ...
    end
    ```
 
@@ -357,7 +359,9 @@ This token is revoked when the user logs out.
    # ->>> src/helpers/bearer_login_helper.cr
 
    module BearerLoginHelper
-    extend Shield::BearerLoginHelper
+     # ...
+     extend Shield::BearerLoginHelper
+     # ...
    end
    ```
 
@@ -367,7 +371,9 @@ This token is revoked when the user logs out.
    # ->>> src/utilities/bearer_login_headers.cr
 
    class BearerLoginHeaders # or `struct ...`
+     # ...
      include Shield::BearerLoginHeaders
+     # ...
    end
    ```
 
@@ -378,7 +384,9 @@ This token is revoked when the user logs out.
    # ->>> src/utilities/login_headers.cr
 
    class LoginHeaders # or `struct ...`
+     # ...
      include Shield::LoginHeaders
+     # ...
    end
    ```
 

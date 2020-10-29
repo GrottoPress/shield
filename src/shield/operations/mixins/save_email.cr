@@ -1,7 +1,5 @@
 module Shield::SaveEmail
   macro included
-    include Shield::ValidateEmail
-
     getter? user_email = false
 
     before_save do
@@ -10,6 +8,8 @@ module Shield::SaveEmail
       set_user_email
       validate_email_unique
     end
+
+    include Shield::ValidateEmail
 
     private def set_user_email
       email.value.try do |value|

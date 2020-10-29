@@ -1,14 +1,14 @@
 module Shield::UpdatePassword
   macro included
-    include Shield::ValidatePassword
-
-    needs current_login : Login?
+    needs current_login : Login? = nil
 
     before_save do
       set_password_digest
     end
 
     after_save log_out_everywhere
+
+    include Shield::ValidatePassword
 
     private def set_password_digest
       password.value.try do |value|

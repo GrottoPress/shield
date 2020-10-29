@@ -19,11 +19,11 @@ module Shield::BearerLogins::Index
       paginated_bearer_logins[0]
     end
 
+    @[Memoize]
     def bearer_logins
-      paginated_bearer_logins[1]
+      paginated_bearer_logins[1].map &.itself
     end
 
-    @[Memoize]
     private def paginated_bearer_logins
       paginate(BearerLoginQuery.new.user_id(user.id))
     end

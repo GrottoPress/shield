@@ -183,12 +183,12 @@
    ```crystal
    # ->>> src/actions/current_user/edit.cr
 
-   class CurrentUser::Show < BrowserAction
+   class CurrentUser::Edit < BrowserAction
      # ...
-     include Shield::CurrentUser::Show
+     include Shield::CurrentUser::Edit
 
      get "/account/edit" do
-       operation = UpdateCurrentUser.new(user, params)
+       operation = UpdateCurrentUser.new(user, params, remote_ip: remote_ip)
        html EditPage, operation: operation
      end
      # ...

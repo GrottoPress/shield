@@ -1,7 +1,5 @@
 module Shield::ResetPassword
   macro included
-    include Shield::UpdatePassword
-
     attribute password : String
     attribute password_confirmation : String
 
@@ -11,6 +9,7 @@ module Shield::ResetPassword
 
     after_save end_password_resets
 
+    include Shield::UpdatePassword
     include Shield::DeleteSession(PasswordResetSession)
 
     private def set_password_digest

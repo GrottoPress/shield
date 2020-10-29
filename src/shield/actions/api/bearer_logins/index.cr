@@ -13,7 +13,7 @@ module Shield::Api::BearerLogins::Index
     #       )
     #     },
     #     pages: {
-    #       first: pages.path_to_page(1)
+    #       first: pages.path_to_page(1),
     #       previous: pages.path_to_previous,
     #       current: pages.path_to_page(page),
     #       next: pages.path_to_next,
@@ -30,11 +30,11 @@ module Shield::Api::BearerLogins::Index
       paginated_bearer_logins[0]
     end
 
+    @[Memoize]
     def bearer_logins
-      paginated_bearer_logins[1]
+      paginated_bearer_logins[1].map &.itself
     end
 
-    @[Memoize]
     private def paginated_bearer_logins
       paginate(BearerLoginQuery.new.user_id(user.id))
     end
