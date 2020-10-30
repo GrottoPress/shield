@@ -109,7 +109,7 @@
      include Shield::CurrentUser::New
 
      get "/account/new" do
-       html NewPage
+       html NewPage, operation: RegisterCurrentUser.new(params)
      end
      # ...
    end

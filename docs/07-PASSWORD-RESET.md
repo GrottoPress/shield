@@ -180,7 +180,7 @@
      include Shield::PasswordResets::New
 
      get "/password-resets/new" do
-       html NewPage
+       html NewPage, operation: StartPasswordReset.new(params)
      end
      # ...
    end

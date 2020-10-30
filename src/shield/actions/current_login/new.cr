@@ -3,7 +3,7 @@ module Shield::CurrentLogin::New
     skip :require_logged_in
 
     # get "/login" do
-    #   html NewPage
+    #   html NewPage, operation: LogUserIn.new(params)
     # end
   end
 end

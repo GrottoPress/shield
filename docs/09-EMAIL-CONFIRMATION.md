@@ -229,7 +229,7 @@ This is particularly important, since email addresses are usually the only means
      include Shield::EmailConfirmations::New
 
      get "/email-confirmations/new" do
-       html NewPage
+       html NewPage, operation: StartEmailConfirmation.new(params)
      end
      # ...
    end

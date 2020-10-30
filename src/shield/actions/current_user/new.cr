@@ -3,7 +3,7 @@ module Shield::CurrentUser::New
     skip :require_logged_in
 
     # get "/account/new" do
-    #   html NewPage
+    #   html NewPage, operation: RegisterCurrentUser.new(params)
     # end
   end
 end

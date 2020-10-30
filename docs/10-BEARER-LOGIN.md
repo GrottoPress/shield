@@ -246,7 +246,7 @@ This token is revoked when the user logs out.
      include Shield::BearerLogins::New
 
      get "/bearer-logins/new" do
-       html NewPage
+       html NewPage, operation: CreateBearerLogin.new(params)
      end
      # ...
    end

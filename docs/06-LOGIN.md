@@ -182,7 +182,7 @@
      include Shield::CurrentLogin::New
 
      get "/login" do
-       html NewPage
+       html NewPage, operation: LogUserIn.new(params)
      end
      # ...
    end
