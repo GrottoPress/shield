@@ -63,11 +63,11 @@ module Shield::Api::AuthenticationPipes
     end
 
     def do_require_logged_in_failed
-      json({status: "failure", message: "You are not logged in"})
+      json({status: "failure", message: "Invalid token"})
     end
 
     def do_require_logged_out_failed
-      json({status: "failure", message: "You are already logged in"})
+      json({status: "failure", message: "You already have a valid token"})
     end
 
     def do_pin_login_to_ip_address_failed
