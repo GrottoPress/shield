@@ -246,7 +246,12 @@ This token is revoked when the user logs out.
      include Shield::BearerLogins::New
 
      get "/bearer-logins/new" do
-       html NewPage, operation: CreateBearerLogin.new(params)
+       operation = CreateBearerLogin.new(
+         params,
+         all_scopes: BearerLoginHelper.all_scopes
+       )
+
+       html NewPage, operation: operation
      end
      # ...
    end

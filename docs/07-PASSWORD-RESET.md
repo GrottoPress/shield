@@ -180,7 +180,8 @@
      include Shield::PasswordResets::New
 
      get "/password-resets/new" do
-       html NewPage, operation: StartPasswordReset.new(params)
+       operation = StartPasswordReset.new(params, remote_ip: remote_ip)
+       html NewPage, operation: operation
      end
      # ...
    end

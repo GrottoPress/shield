@@ -182,7 +182,8 @@
      include Shield::CurrentLogin::New
 
      get "/login" do
-       html NewPage, operation: LogUserIn.new(params)
+       operation = LogUserIn.new(params, remote_ip: remote_ip)
+       html NewPage, operation: operation
      end
      # ...
    end

@@ -3,7 +3,8 @@ module Shield::PasswordResets::New
     skip :require_logged_in
 
     # get "/password-resets/new" do
-    #   html NewPage, operation: StartPasswordReset.new(params)
+    #   operation = StartPasswordReset.new(params, remote_ip: remote_ip)
+    #   html NewPage, operation: operation
     # end
   end
 end

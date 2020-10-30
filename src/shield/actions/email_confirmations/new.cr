@@ -3,7 +3,8 @@ module Shield::EmailConfirmations::New
     skip :require_logged_in
 
     # get "/email-confirmations/new" do
-    #   html NewPage, operation: StartEmailConfirmation.new(params)
+    #   operation = StartEmailConfirmation.new(params, remote_ip: remote_ip)
+    #   html NewPage, operation: operation
     # end
   end
 end
