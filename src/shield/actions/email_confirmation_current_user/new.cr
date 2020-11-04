@@ -22,9 +22,11 @@ module Shield::EmailConfirmationCurrentUser::New
     end
 
     private def render_form(utility, email_confirmation)
-      html NewPage,
-        operation: RegisterCurrentUser.new(params),
+      operation = RegisterCurrentUser.new(
         email_confirmation: email_confirmation
+      );
+
+      html NewPage, operation: operation
     end
 
     def do_verify_operation_failed(utility)

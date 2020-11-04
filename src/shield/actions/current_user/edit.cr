@@ -3,7 +3,7 @@ module Shield::CurrentUser::Edit
     skip :require_logged_out
 
     # get "/account/edit" do
-    #   operation = UpdateCurrentUser.new(user, params)
+    #   operation = UpdateCurrentUser.new(user, remote_ip: remote_ip)
     #   html EditPage, operation: operation
     # end
 

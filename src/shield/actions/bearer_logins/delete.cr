@@ -7,7 +7,9 @@ module Shield::BearerLogins::Delete
     # end
 
     def run_operation
-      DeleteBearerLogin.submit(params) do |operation, deleted_bearer_login|
+      DeleteBearerLogin.submit(
+        bearer_login_id: bearer_login_id
+      ) do |operation, deleted_bearer_login|
         if deleted_bearer_login
           do_run_operation_succeeded(operation, deleted_bearer_login.not_nil!)
         else

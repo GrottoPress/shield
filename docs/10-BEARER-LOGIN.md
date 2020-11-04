@@ -247,7 +247,6 @@ This token is revoked when the user logs out.
 
      get "/bearer-logins/new" do
        operation = CreateBearerLogin.new(
-         params,
          all_scopes: BearerLoginHelper.all_scopes
        )
 

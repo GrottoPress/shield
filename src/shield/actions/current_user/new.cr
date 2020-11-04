@@ -3,7 +3,7 @@ module Shield::CurrentUser::New
     skip :require_logged_in
 
     # get "/account/new" do
-    #   operation = RegisterCurrentUser.new(params)
+    #   operation = RegisterCurrentUser.new(remote_ip: remote_ip)
     #   html NewPage, operation: operation
     # end
   end

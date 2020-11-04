@@ -4,7 +4,6 @@ module Shield::BearerLogins::New
 
     # get "/bearer-logins/new" do
     #   operation = CreateBearerLogin.new(
-    #     params,
     #     all_scopes: BearereLoginHelper.all_scopes
     #   )
     #

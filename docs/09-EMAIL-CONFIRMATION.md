@@ -229,7 +229,7 @@ This is particularly important, since email addresses are usually the only means
      include Shield::EmailConfirmations::New
 
      get "/email-confirmations/new" do
-       operation = StartEmailConfirmation.new(params, remote_ip: remote_ip)
+       operation = StartEmailConfirmation.new(remote_ip: remote_ip)
        html NewPage, operation: operation
      end
      # ...
@@ -462,7 +462,7 @@ This is particularly important, since email addresses are usually the only means
      include Shield::EmailConfirmationCurrentUser::Edit
 
      get "/account/edit" do
-       operation = UpdateCurrentUser.new(user, params)
+       operation = UpdateCurrentUser.new(user, remote_ip: remote_ip)
        html EditPage, operation: operation
      end
      # ...
