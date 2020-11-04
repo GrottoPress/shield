@@ -5,8 +5,9 @@ describe Shield::AuthenticationPipes do
     it "requires logged in" do
       response = ApiClient.exec(CurrentLogin::Destroy)
 
-      response.should send_json(403, logged_in: false)
-      response.should send_json(403, return_url: CurrentLogin::Destroy.path)
+      response.status.should eq(HTTP::Status::FOUND)
+      response.headers["X-Logged-In"].should eq("false")
+      response.headers["X-Return-Url"].should eq(CurrentLogin::Destroy.path)
     end
   end
 
@@ -25,12 +26,13 @@ describe Shield::AuthenticationPipes do
         password: password
       })
 
-      response.should send_json(200, session: 1)
+      response.status.should eq(HTTP::Status::FOUND)
 
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(CurrentLogin::Create)
 
-      response.should send_json(200, logged_in: true)
+      response.status.should eq(HTTP::Status::FOUND)
+      response.headers["X-Logged-In"].should eq("true")
     end
   end
 
@@ -50,7 +52,7 @@ describe Shield::AuthenticationPipes do
         password: password
       })
 
-      response.should send_json(200, session: 1)
+      response.status.should eq(HTTP::Status::FOUND)
 
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Show.with(user_id: user.id))
@@ -73,12 +75,13 @@ describe Shield::AuthenticationPipes do
         password: password
       })
 
-      response.should send_json(200, session: 1)
+      response.status.should eq(HTTP::Status::FOUND)
 
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Edit.with(user_id: user.id))
 
-      response.should send_json(403, ip_address_changed: true)
+      response.status.should eq(HTTP::Status::FOUND)
+      response.headers["X-Ip-Address-Changed"].should eq("true")
     end
   end
 
@@ -107,7 +110,7 @@ describe Shield::AuthenticationPipes do
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(PasswordResets::Edit)
 
-        response.should send_json(200, exit: 0)
+        response.body.should eq("PasswordResets::EditPage")
       end
     end
 
@@ -135,7 +138,8 @@ describe Shield::AuthenticationPipes do
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(PasswordResets::Update)
 
-        response.should send_json(403, ip_address_changed: true)
+        response.status.should eq(HTTP::Status::FOUND)
+        response.headers["X-Ip-Address-Changed"].should eq("true")
       end
     end
   end
@@ -156,9 +160,9 @@ describe Shield::AuthenticationPipes do
         ))
 
         client.headers("Cookie": response.headers["Set-Cookie"])
-        response = client.exec(CurrentUser::New)
+        response = client.exec(EmailConfirmationCurrentUser::New)
 
-        response.should send_json(200, exit: 0)
+        response.body.should eq("EmailConfirmationCurrentUser::NewPage")
       end
     end
 
@@ -177,9 +181,10 @@ describe Shield::AuthenticationPipes do
         ))
 
         client.headers("Cookie": response.headers["Set-Cookie"])
-        response = client.exec(CurrentUser::New)
+        response = client.exec(EmailConfirmationCurrentUser::New)
 
-        response.should send_json(403, ip_address_changed: true)
+        response.status.should eq(HTTP::Status::FOUND)
+        response.headers["X-Ip-Address-Changed"].should eq("true")
       end
     end
   end

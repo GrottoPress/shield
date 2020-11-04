@@ -2,6 +2,7 @@ class PasswordResets::New < BrowserAction
   include Shield::PasswordResets::New
 
   get "/password-resets/new" do
-    json({exit: 1})
+    operation = StartPasswordReset.new(remote_ip: remote_ip)
+    html NewPage, operation: operation
   end
 end

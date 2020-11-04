@@ -16,13 +16,11 @@ describe Shield::Api::AuthenticationHelpers do
         password: password
       })
 
-      response.should send_json(200, session: 1)
-
-      body = JSON.parse(response.body)
+      response.status.should eq(HTTP::Status::FOUND)
 
       bearer_header = LoginHelper.bearer_header(
-        body["current_login"]?.to_s,
-        body["login_token"]?.to_s
+        response.headers["X-Current-Login"],
+        response.headers["X-Login-Token"]
       )
 
       client.headers("Cookie": response.headers["Set-Cookie"])

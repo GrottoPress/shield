@@ -421,13 +421,10 @@ This is particularly important, since email addresses are usually the only means
      #
      #def do_run_operation_failed(operation)
      #  if operation.user_email?
-     #    success_action
+     #    success_action(operation)
      #  else
      #    flash.failure = "Could not create your account"
-     #
-     #    html NewPage,
-     #      operation: operation,
-     #      email_confirmation: operation.email_confirmation
+     #    html NewPage, operation: operation
      #  end
      #end
      # ...

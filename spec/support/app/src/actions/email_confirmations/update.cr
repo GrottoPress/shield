@@ -8,15 +8,13 @@ class EmailConfirmations::Update < BrowserAction
     run_operation
   end
 
-  def do_verify_operation_failed(utility)
-    json({exit: 2})
-  end
-
   def do_run_operation_succeeded(operation, user)
-    json({exit: 0})
+    flash.keep.success = "Email changed successfully"
+    redirect to: EmailConfirmationCurrentUser::Show
   end
 
   def do_run_operation_failed(operation)
-    json({exit: 1})
+    flash.failure = "Could not change email"
+    html EmailConfirmationCurrentUser::EditPage, operation: operation
   end
 end

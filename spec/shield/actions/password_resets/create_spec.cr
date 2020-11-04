@@ -12,7 +12,7 @@ describe Shield::PasswordResets::Create do
       email: email
     })
 
-    response.should send_json(200, exit: 0)
+    response.status.should eq(HTTP::Status::FOUND)
   end
 
   it "requires logged out" do
@@ -29,13 +29,14 @@ describe Shield::PasswordResets::Create do
       password: password
     })
 
-    response.should send_json(200, session: 1)
+    response.status.should eq(HTTP::Status::FOUND)
 
     client.headers("Cookie": response.headers["Set-Cookie"])
     response = client.exec(PasswordResets::Create, password_reset: {
       email: email
     })
 
-    response.should send_json(200, logged_in: true)
+    response.status.should eq(HTTP::Status::FOUND)
+    response.headers["X-Logged-In"].should eq("true")
   end
 end

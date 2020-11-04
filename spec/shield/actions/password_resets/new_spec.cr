@@ -3,7 +3,7 @@ require "../../../spec_helper"
 describe Shield::PasswordResets::New do
   it "works" do
     response = ApiClient.exec(PasswordResets::New)
-    response.should send_json(200, exit: 1)
+    response.body.should eq("PasswordResets::NewPage")
   end
 
   it "requires logged out" do
@@ -20,11 +20,12 @@ describe Shield::PasswordResets::New do
       password: password
     })
 
-    response.should send_json(200, session: 1)
+    response.status.should eq(HTTP::Status::FOUND)
 
     client.headers("Cookie": response.headers["Set-Cookie"])
     response = client.exec(PasswordResets::New)
 
-    response.should send_json(200, logged_in: true)
+    response.status.should eq(HTTP::Status::FOUND)
+    response.headers["X-Logged-In"].should eq("true")
   end
 end

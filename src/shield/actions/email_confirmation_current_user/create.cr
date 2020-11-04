@@ -51,10 +51,7 @@ module Shield::EmailConfirmationCurrentUser::Create
         success_action(operation) # <= IMPORTANT!
       else
         flash.failure = "Could not create your account"
-
-        html NewPage,
-          operation: operation,
-          email_confirmation: operation.email_confirmation
+        html NewPage, operation: operation
       end
     end
   end

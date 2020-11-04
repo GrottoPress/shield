@@ -16,12 +16,13 @@ describe Shield::AuthorizationPipes do
         password: password
       })
 
-      response.should send_json(200, session: 1)
+      response.status.should eq(HTTP::Status::FOUND)
 
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Show.with(user_id: user.id))
 
-      response.should send_json(403, authorized: false)
+      response.status.should eq(HTTP::Status::FOUND)
+      response.headers["X-Authorized"].should eq("false")
     end
 
     it "grants authorization" do
@@ -37,7 +38,7 @@ describe Shield::AuthorizationPipes do
         password: password
       })
 
-      response.should send_json(200, session: 1)
+      response.status.should eq(HTTP::Status::FOUND)
 
       client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Show.with(user_id: user.id))

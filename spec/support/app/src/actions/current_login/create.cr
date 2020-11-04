@@ -6,17 +6,10 @@ class CurrentLogin::Create < BrowserAction
   end
 
   def do_run_operation_succeeded(operation, login)
-    json({
-      login: login.id,
-      session: 1,
-      current_login: current_login!.id,
-      current_user: current_user!.id,
-      login_token: operation.token
-    })
-  end
-
-  def do_run_operation_failed(operation)
-    json({errors: operation.errors})
+    response.headers["X-Current-Login"] = current_login!.id.to_s
+    response.headers["X-Login-Token"] = operation.token
+    response.headers["X-User-ID"] = current_user!.id.to_s
+    previous_def
   end
 
   def remote_ip : Socket::IPAddress?

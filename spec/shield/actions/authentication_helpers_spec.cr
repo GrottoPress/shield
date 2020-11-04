@@ -27,8 +27,8 @@ describe Shield::AuthenticationHelpers do
         password: password_2
       })
 
-      response.should send_json(200, current_user: user.id)
-      response_2.should send_json(200, current_user: user_2.id)
+      response.headers["X-User-ID"] = user.id.to_s
+      response_2.headers["X-User-ID"] = user_2.id.to_s
     end
   end
 end
