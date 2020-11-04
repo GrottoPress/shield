@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::HasOneUserOptions` model association mixin
 - Add `Shield::BelongsToUser` model association mixin
 - Add `Shield::HasOneCreateSaveUserOptions` and `Shield::HasOneUpdateSaveUserOptions` operation mixins
+- Add `Shield::NeverExpires` operation mixin
 - Add modules to delete authentication records, as an alternative to revoking them.
 
 ### Fixed

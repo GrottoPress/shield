@@ -143,9 +143,7 @@ This token is revoked when the user logs out.
      #
      # Use this, if you would like to never expire bearer logins,
      # irrespective of the expiry setting.
-     #private def set_ended_at
-     #  ended_at.value = nil
-     #end
+     #include Shield::NeverExpires
      # ...
    end
    ```
