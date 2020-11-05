@@ -28,7 +28,15 @@ module Shield::Api::PasswordResets::Create
     end
 
     def do_run_operation_succeeded(operation, password_reset)
-      success_action(operation)
+      if Lucky::Env.production?
+        success_action(operation)
+      else
+        json({
+          status: "success",
+          message: "*Development* mode",
+          data: {token: PasswordResetHelper.token(password_reset, operation)}
+        })
+      end
     end
 
     def do_run_operation_failed(operation)

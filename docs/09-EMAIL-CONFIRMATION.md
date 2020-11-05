@@ -259,7 +259,16 @@ This is particularly important, since email addresses are usually the only means
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, email_confirmation)
-     #  success_action(operation)
+     #  if Lucky::Env.production?
+     #    success_action(operation)
+     #  else
+     #    flash.keep.success = "*Development* mode"
+     #
+     #    redirect to: EmailConfirmationHelper.email_confirmation_url(
+     #      email_confirmation,
+     #      operation
+     #    )
+     #  end
      #end
 
      # What to do if `run_operation` fails

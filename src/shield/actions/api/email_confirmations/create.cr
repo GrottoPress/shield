@@ -24,7 +24,18 @@ module Shield::Api::EmailConfirmations::Create
     end
 
     def do_run_operation_succeeded(operation, email_confirmation)
-      success_action(operation)
+      if Lucky::Env.production?
+        success_action(operation)
+      else
+        json({
+          status: "success",
+          message: "*Development* mode",
+          data: {token: EmailConfirmationHelper.token(
+            email_confirmation,
+            operation
+          )}
+        })
+      end
     end
 
     def do_run_operation_failed(operation)

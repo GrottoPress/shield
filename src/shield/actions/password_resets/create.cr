@@ -28,7 +28,16 @@ module Shield::PasswordResets::Create
     end
 
     def do_run_operation_succeeded(operation, password_reset)
-      success_action(operation)
+      if Lucky::Env.production?
+        success_action(operation)
+      else
+        flash.keep.success = "*Development* mode"
+
+        redirect to: PasswordResetHelper.password_reset_url(
+          password_reset,
+          operation
+        )
+      end
     end
 
     def do_run_operation_failed(operation)
