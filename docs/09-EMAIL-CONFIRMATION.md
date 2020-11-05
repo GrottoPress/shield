@@ -457,7 +457,12 @@ This is particularly important, since email addresses are usually the only means
      include Shield::EmailConfirmationCurrentUser::Edit
 
      get "/account/edit" do
-       operation = UpdateCurrentUser.new(user, remote_ip: remote_ip)
+       operation = UpdateCurrentUser.new(
+         user,
+         remote_ip: remote_ip,
+         current_login: current_login
+       )
+
        html EditPage, operation: operation
      end
      # ...
