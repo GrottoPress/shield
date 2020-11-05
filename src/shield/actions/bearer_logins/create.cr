@@ -40,7 +40,7 @@ module Shield::BearerLogins::Create
       user.id == current_user.try &.id
     end
 
-    private def scopes
+    private def scopes : Array(String)
       param_key = CreateBearerLogin.param_key
 
       json? ?
