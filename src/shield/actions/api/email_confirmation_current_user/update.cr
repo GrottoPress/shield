@@ -23,15 +23,15 @@ module Shield::Api::EmailConfirmationCurrentUser::Update
 
     def do_run_operation_succeeded(operation, user)
       if operation.new_email
-        notice = "Account updated successfully. Check '#{
+        message = "Account updated successfully. Check '#{
           operation.new_email}' for further instructions."
       else
-        notice = "Account updated successfully"
+        message = "Account updated successfully"
       end
 
       json({
         status: "success",
-        message: notice,
+        message: message,
         data: {user: UserSerializer.new(user)}
       })
     end
