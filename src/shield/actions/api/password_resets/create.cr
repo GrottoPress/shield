@@ -35,11 +35,7 @@ module Shield::Api::PasswordResets::Create
       if operation.guest_email?
         success_action(operation) # <= IMPORTANT!
       else
-        json({
-          status: "failure",
-          message: "Password reset request failed",
-          data: {errors: operation.errors}
-        })
+        failure_action(operation)
       end
     end
 
@@ -47,6 +43,14 @@ module Shield::Api::PasswordResets::Create
       json({
         status: "success",
         message: "Done! Check your email for further instructions."
+      })
+    end
+
+    private def failure_action(operation)
+      json({
+        status: "failure",
+        message: "Password reset request failed",
+        data: {errors: operation.errors}
       })
     end
   end

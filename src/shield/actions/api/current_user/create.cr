@@ -30,11 +30,7 @@ module Shield::Api::CurrentUser::Create
       if operation.user_email?
         success_action(operation) # <= IMPORTANT!
       else
-        json({
-          status: "failure",
-          message: "Could not create your account",
-          data: {errors: operation.errors}
-        })
+        failure_action(operation)
       end
     end
 
@@ -42,6 +38,14 @@ module Shield::Api::CurrentUser::Create
       json({
         status: "success",
         message: "Done! Check your email for further instructions."
+      })
+    end
+
+    private def failure_action(operation)
+      json({
+        status: "failure",
+        message: "Could not create your account",
+        data: {errors: operation.errors}
       })
     end
   end

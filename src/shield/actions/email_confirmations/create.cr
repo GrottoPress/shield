@@ -31,14 +31,18 @@ module Shield::EmailConfirmations::Create
       if operation.user_email?
         success_action(operation) # <= IMPORTANT!
       else
-        flash.failure = "Email confirmation request failed"
-        html NewPage, operation: operation
+        failure_action(operation)
       end
     end
 
     private def success_action(operation)
       flash.keep.success = "Done! Check your email for further instructions."
       redirect to: CurrentLogin::New
+    end
+
+    private def failure_action(operation)
+      flash.failure = "Email confirmation request failed"
+      html NewPage, operation: operation
     end
   end
 end

@@ -151,8 +151,7 @@
      #  if operation.user_email?
      #    success_action(operation)
      #  else
-     #    flash.failure = "Could not create your account"
-     #    html NewPage, operation: operation
+     #    failure_action(operation)
      #  end
      #end
 
@@ -160,6 +159,11 @@
      #private def success_action(operation)
      #  flash.keep.success = "Done! Check your email for further instructions."
      #  redirect to: CurrentLogin::New
+     #end
+
+     #private def failure_action(operation)
+     #  flash.failure = "Could not create your account"
+     #  html NewPage, operation: operation
      #end
      # ...
    end
