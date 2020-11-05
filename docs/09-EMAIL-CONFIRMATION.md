@@ -340,7 +340,7 @@ This is particularly important, since email addresses are usually the only means
      #
      #def do_run_operation_failed(operation)
      #  flash.failure = "Could not change email"
-     #  html CurrentUser::EditPage, operation: operation
+     #  redirect to: CurrentUser::Edit
      #end
      # ...
    end
