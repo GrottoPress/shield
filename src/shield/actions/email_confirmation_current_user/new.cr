@@ -23,6 +23,7 @@ module Shield::EmailConfirmationCurrentUser::New
 
     private def render_form(utility, email_confirmation)
       operation = RegisterCurrentUser.new(
+        email: email_confirmation.email,
         email_confirmation: email_confirmation
       );
 
