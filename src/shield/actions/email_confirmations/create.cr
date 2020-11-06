@@ -27,7 +27,7 @@ module Shield::EmailConfirmations::Create
       if Lucky::Env.production?
         success_action(operation)
       else
-        flash.keep.success = "*Development* mode"
+        flash.keep.success = "Development mode: No need to check your mail."
 
         redirect to: EmailConfirmationHelper.email_confirmation_url(
           email_confirmation,

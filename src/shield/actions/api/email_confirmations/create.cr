@@ -29,7 +29,7 @@ module Shield::Api::EmailConfirmations::Create
       else
         json({
           status: "success",
-          message: "*Development* mode",
+          message: "Development mode: No need to check your mail.",
           data: {token: EmailConfirmationHelper.token(
             email_confirmation,
             operation

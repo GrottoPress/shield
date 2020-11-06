@@ -31,7 +31,7 @@ module Shield::PasswordResets::Create
       if Lucky::Env.production?
         success_action(operation)
       else
-        flash.keep.success = "*Development* mode"
+        flash.keep.success = "Development mode: No need to check your mail."
 
         redirect to: PasswordResetHelper.password_reset_url(
           password_reset,
