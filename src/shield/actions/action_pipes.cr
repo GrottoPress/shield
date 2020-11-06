@@ -5,10 +5,12 @@ module Shield::ActionPipes
       continue
     end
 
+    @[Memoize]
     def previous_page_url
       PageUrlSession.new(session).previous_page_url
     end
 
+    @[Memoize]
     def return_url
       ReturnUrlSession.new(session).return_url
     end
@@ -20,7 +22,6 @@ module Shield::ActionPipes
       allow_external = false
     )
       url = return_url || previous_page_url || fallback
-      ReturnUrlSession.new(session).delete
       redirect to: url, status: status
     end
   end

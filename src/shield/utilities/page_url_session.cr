@@ -7,7 +7,10 @@ module Shield::PageUrlSession
     end
 
     def previous_page_url : String?
-      @session.get?(:previous_page_url)
+      @session.get?(:previous_page_url).try do |url|
+        delete
+        url
+      end
     end
 
     def delete : self
@@ -16,8 +19,11 @@ module Shield::PageUrlSession
     end
 
     def set(request : HTTP::Request) : self
-      set(request.resource) if request.method.in?({"GET", "HEAD"})
-      self
+      if request.method.in?({"GET", "HEAD"})
+        set(request.resource)
+      else
+        delete
+      end
     end
 
     def set(url : String) : self

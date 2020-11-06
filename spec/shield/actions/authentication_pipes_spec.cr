@@ -7,7 +7,6 @@ describe Shield::AuthenticationPipes do
 
       response.status.should eq(HTTP::Status::FOUND)
       response.headers["X-Logged-In"].should eq("false")
-      response.headers["X-Return-Url"].should eq(CurrentLogin::Destroy.path)
     end
   end
 

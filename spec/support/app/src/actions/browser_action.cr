@@ -7,10 +7,6 @@ abstract class BrowserAction < Lucky::Action
 
   def do_require_logged_in_failed
     response.headers["X-Logged-In"] = "false"
-    response.headers["X-Return-Url"] = ReturnUrlSession.new(session)
-      .return_url
-      .to_s
-
     previous_def
   end
 
