@@ -511,7 +511,7 @@ This is particularly important, since email addresses are usually the only means
      #def do_run_operation_succeeded(operation, user)
      #  flash.keep.success = success_message(operation)
      #
-     #  if Lucky::Env.production?
+     #  if Lucky::Env.production? || operation.new_email.nil?
      #    redirect to: Show
      #  else
      #    redirect to: EmailConfirmationHelper.email_confirmation_url(

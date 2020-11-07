@@ -1,7 +1,7 @@
 require "../../spec_helper"
 
 describe Shield::UpdateEmailConfirmationUser do
-  it "does not update email" do
+  it "updates user" do
     email = "user@example.tld"
     new_email = "user@domain.com"
 
@@ -17,6 +17,9 @@ describe Shield::UpdateEmailConfirmationUser do
 
       operation.new_email.should eq(new_email)
       updated_user.email.should eq(email)
+
+      operation.email_confirmation.should be_a(EmailConfirmation)
+      operation.start_email_confirmation.should be_a(StartEmailConfirmation)
     end
   end
 
