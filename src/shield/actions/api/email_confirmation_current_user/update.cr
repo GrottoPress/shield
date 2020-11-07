@@ -22,18 +22,36 @@ module Shield::Api::EmailConfirmationCurrentUser::Update
     end
 
     def do_run_operation_succeeded(operation, user)
-      if operation.new_email
-        message = "Account updated successfully. Check '#{
-          operation.new_email}' for further instructions."
+      if Lucky::Env.production?
+        json({
+          status: "success",
+          message: success_message(operation),
+          data: {user: UserSerializer.new(user)}
+        })
       else
-        message = "Account updated successfully"
+        json({
+          status: "success",
+          message: success_message(operation),
+          data: {
+            user: UserSerializer.new(user),
+            token: EmailConfirmationHelper.token(
+              operation.email_confirmation.not_nil!,
+              operation.start_email_confirmation.not_nil!
+            )
+          }
+        })
       end
+    end
 
-      json({
-        status: "success",
-        message: message,
-        data: {user: UserSerializer.new(user)}
-      })
+    private def success_message(operation)
+      if operation.new_email
+        Lucky::Env.production? ?
+          "Account updated successfully. \
+            Check '#{operation.new_email}' for further instructions." :
+          "Development mode: No need to check your mail."
+      else
+        "Account updated successfully"
+      end
     end
   end
 end

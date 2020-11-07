@@ -509,15 +509,16 @@ This is particularly important, since email addresses are usually the only means
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  if operation.new_email
-     #    message = "Account updated successfully. Check '#{
-     #      operation.new_email}' for further instructions."
-     #  else
-     #    message = "Account updated successfully"
-     #  end
+     #  flash.keep.success = success_message(operation)
      #
-     #  flash.keep.success = message
-     #  redirect to: Show
+     #  if Lucky::Env.production?
+     #    redirect to: Show
+     #  else
+     #    redirect to: EmailConfirmationHelper.email_confirmation_url(
+     #      operation.email_confirmation.not_nil!,
+     #      operation.start_email_confirmation.not_nil!
+     #    )
+     #  end
      #end
 
      # What to do if `run_operation` fails

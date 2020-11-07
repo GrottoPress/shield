@@ -22,15 +22,27 @@ module Shield::EmailConfirmationCurrentUser::Update
     end
 
     def do_run_operation_succeeded(operation, user)
-      if operation.new_email
-        message = "Account updated successfully. Check '#{
-          operation.new_email}' for further instructions."
-      else
-        message = "Account updated successfully"
-      end
+      flash.keep.success = success_message(operation)
 
-      flash.keep.success = message
-      redirect to: Show
+      if Lucky::Env.production?
+        redirect to: Show
+      else
+        redirect to: EmailConfirmationHelper.email_confirmation_url(
+          operation.email_confirmation.not_nil!,
+          operation.start_email_confirmation.not_nil!
+        )
+      end
+    end
+
+    private def success_message(operation)
+      if operation.new_email
+        Lucky::Env.production? ?
+          "Account updated successfully. \
+            Check '#{operation.new_email}' for further instructions." :
+          "Development mode: No need to check your mail."
+      else
+        "Account updated successfully"
+      end
     end
   end
 end

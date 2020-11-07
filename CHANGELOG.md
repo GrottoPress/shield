@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Convert `EmailConfirmation#url` to a class method.
 - Remove required `id` param from password reset URL.
 - Remove the second parameter from all `#do_run_operation_failed` action methods.
+- In development and test, automatically *click* email confirmation and password reset links.
 
 ### Removed
 - Remove `status` column from authentication models
