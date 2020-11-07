@@ -26,5 +26,15 @@ module Shield::ActionHelpers
         status: status.value,
         allow_external: allow_external
     end
+
+    def array_param(param_key, param) : Array(String)
+      if json?
+        params.from_json[param_key.to_s][param.to_s].as_a.map(&.to_s)
+      else
+        params.from_form_data.fetch_all("#{param_key}:#{param}")
+      end
+    rescue KeyError
+      Array(String).new
+    end
   end
 end

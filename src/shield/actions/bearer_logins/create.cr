@@ -41,13 +41,7 @@ module Shield::BearerLogins::Create
     end
 
     private def scopes : Array(String)
-      param_key = CreateBearerLogin.param_key
-
-      json? ?
-        params.from_json[param_key]["scopes"].as_a.map(&.to_s) :
-        params.from_form_data.fetch_all("#{param_key}:scopes")
-    rescue KeyError
-      Array(String).new
+      array_param(CreateBearerLogin.param_key, :scopes)
     end
   end
 end
