@@ -79,7 +79,7 @@ module Shield::AuthenticationPipes
     end
 
     def do_require_logged_out_failed
-      flash.keep.info = "You are already logged in"
+      flash.keep.info = "You are logged in"
       redirect_back fallback: CurrentUser::Show
     end
 
