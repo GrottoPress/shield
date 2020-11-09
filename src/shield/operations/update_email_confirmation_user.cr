@@ -5,15 +5,24 @@ module Shield::UpdateEmailConfirmationUser
     getter email_confirmation : EmailConfirmation?
     getter start_email_confirmation : StartEmailConfirmation?
 
+    permit_columns :email
+
+    attribute password : String
+    attribute password_confirmation : String
+
     needs remote_ip : Socket::IPAddress?
 
+    include Shield::ValidateEmail
+
     before_save do
+      validate_required email
+
       reset_email
     end
 
     after_save start_email_confirmation
 
-    include Shield::UpdateUser
+    include Shield::UpdatePassword
 
     private def reset_email
       return unless email.changed?
