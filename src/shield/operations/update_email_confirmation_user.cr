@@ -8,14 +8,14 @@ module Shield::UpdateEmailConfirmationUser
     needs remote_ip : Socket::IPAddress?
 
     before_save do
-      set_email
+      reset_email
     end
 
     after_save start_email_confirmation
 
     include Shield::UpdateUser
 
-    private def set_email
+    private def reset_email
       return unless email.changed?
 
       @new_email = email.value
