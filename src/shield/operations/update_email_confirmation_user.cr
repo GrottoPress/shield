@@ -33,6 +33,8 @@ module Shield::UpdateEmailConfirmationUser
           @start_email_confirmation = operation
         end
       end
+    rescue NilAssertionError
+      raise Avram::Rollback.new
     end
   end
 end
