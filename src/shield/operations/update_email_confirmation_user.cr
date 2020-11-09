@@ -29,8 +29,10 @@ module Shield::UpdateEmailConfirmationUser
           email: email,
           remote_ip: remote_ip
         ) do |operation, email_confirmation|
-          @email_confirmation = email_confirmation.not_nil!
-          @start_email_confirmation = operation
+          unless operation.user_email?
+            @email_confirmation = email_confirmation.not_nil!
+            @start_email_confirmation = operation
+          end
         end
       end
     rescue NilAssertionError
