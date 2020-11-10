@@ -14,12 +14,9 @@ describe Shield::SendWelcomeEmail do
   end
 
   it "sends welcome email for new user" do
-    password = "password12U.password"
-
     RegisterCurrentUser.create(params(
       email: "user@example.tld",
-      password: password,
-      password_confirmation: password,
+      password: "password12U.password",
       level: User::Level.new(:author),
       login_notify: true,
       password_notify: true

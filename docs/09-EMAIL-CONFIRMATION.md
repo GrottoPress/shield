@@ -394,7 +394,6 @@ This is particularly important, since email addresses are usually the only means
    The form should be `POST`ed to `CurrentUser::Create`, with the following parameters:
 
    - `password : String`
-   - `password_confirmation : String`
 
    You may skip this action if building an API.
 
@@ -490,7 +489,6 @@ This is particularly important, since email addresses are usually the only means
 
    - `email : String`
    - `password : String`
-   - `password_confirmation : String`
 
    You may skip this action if building an API.
 

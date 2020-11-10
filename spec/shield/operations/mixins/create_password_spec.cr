@@ -7,7 +7,6 @@ describe Shield::CreatePassword do
     user = RegisterCurrentUser.create!(params(
       email: "user@example.tld",
       password: password,
-      password_confirmation: password,
       login_notify: true,
       password_notify: true
     ))
@@ -19,7 +18,6 @@ describe Shield::CreatePassword do
     RegisterCurrentUser.create(params(
       email: "user@domain.tld",
       password: "",
-      password_confirmation: "",
       login_notify: true,
       password_notify: true,
     )) do |operation, user|
@@ -31,12 +29,9 @@ describe Shield::CreatePassword do
   end
 
   it "does not send password change notification" do
-    password = "password1=Apassword"
-
     RegisterCurrentUser.create(params(
       email: "user@domain.tld",
-      password: password,
-      password_confirmation: password,
+      password: "password1=Apassword",
       login_notify: true,
       password_notify: false,
     )) do |operation, user|

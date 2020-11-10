@@ -2,12 +2,9 @@ require "../../spec_helper"
 
 describe Shield::RegisterUser do
   it "creates user" do
-    password = "password12U password"
-
     RegisterUser.create(params(
       email: "user@example.tld",
-      password: password,
-      password_confirmation: password,
+      password: "password12U password",
       level: User::Level.new(:editor),
       login_notify: true,
       password_notify: true
@@ -17,12 +14,9 @@ describe Shield::RegisterUser do
   end
 
   it "creates user options" do
-    password = "password12U/password"
-
     user = RegisterUser.create!(params(
       email: "user@example.tld",
-      password: password,
-      password_confirmation: password,
+      password: "password12U/password",
       level: User::Level.new(:editor),
       login_notify: true,
       password_notify: false
@@ -35,12 +29,9 @@ describe Shield::RegisterUser do
   end
 
   it "fails when nested operation fails" do
-    password = "password12U password"
-
     RegisterCurrentUser2.create(params(
       email: "user@example.tld",
-      password: password,
-      password_confirmation: password,
+      password: "password12U password",
       login_notify: false,
       password_notify: false
     )) do |operation, user|

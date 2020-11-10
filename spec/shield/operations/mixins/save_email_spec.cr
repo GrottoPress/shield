@@ -3,12 +3,10 @@ require "../../../spec_helper"
 describe Shield::SaveEmail do
   it "saves email" do
     email = "user@example.tld"
-    password = "password12U)password"
 
     user = RegisterCurrentUser.create!(params(
       email: email,
-      password: password,
-      password_confirmation: password,
+      password: "password12U)password",
       login_notify: true,
       password_notify: true
     ))

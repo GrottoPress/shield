@@ -1,7 +1,6 @@
 module Shield::ResetPassword
   macro included
     attribute password : String
-    attribute password_confirmation : String
 
     before_save do
       validate_required password

@@ -7,7 +7,6 @@ class UpdateCurrentUser2 < User::SaveOperation
   permit_columns :email
 
   attribute password : String
-  attribute password_confirmation : String
 
   has_one_update save_user_options : SaveUserOptions2, assoc_name: :options
 

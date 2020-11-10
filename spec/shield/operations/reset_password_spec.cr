@@ -21,7 +21,7 @@ describe Shield::ResetPassword do
 
       ResetPassword.update(
         PasswordResetSession.new(session).verify!.user!,
-        params(password: new_password, password_confirmation: new_password),
+        params(password: new_password),
         session: session,
         current_login: nil
       ) do |operation, updated_user|
@@ -52,7 +52,7 @@ describe Shield::ResetPassword do
 
     ResetPassword.update(
       password_reset.user!,
-      params(password: new_password, password_confirmation: new_password),
+      params(password: new_password),
       session: session,
       current_login: nil
     ) do |operation, updated_user|
@@ -79,7 +79,7 @@ describe Shield::ResetPassword do
 
     ResetPassword.update(
       password_reset.user!,
-      params(password: new_password, password_confirmation: new_password),
+      params(password: new_password),
       session: session,
       current_login: nil
     ) do |operation, updated_user|
@@ -114,7 +114,7 @@ describe Shield::ResetPassword do
 
     ResetPassword.update!(
       password_reset_1.user!,
-      params(password: new_password, password_confirmation: new_password),
+      params(password: new_password),
       session: session,
       current_login: nil
     )

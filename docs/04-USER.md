@@ -122,7 +122,6 @@
 
    - `email : String`
    - `password : String`
-   - `password_confirmation : String`
 
    You may skip this action if building an API.
 
@@ -211,7 +210,6 @@
 
    - `email : String`
    - `password : String`
-   - `password_confirmation : String`
 
    You may skip this action if building an API.
 

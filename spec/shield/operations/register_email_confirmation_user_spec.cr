@@ -2,8 +2,6 @@ require "../../spec_helper"
 
 describe Shield::RegisterEmailConfirmationUser do
   it "creates email confirmed user" do
-    password = "password12U password"
-
     email_confirmation = StartEmailConfirmation.create!(
       params(email: "user@example.tld"),
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
@@ -11,8 +9,7 @@ describe Shield::RegisterEmailConfirmationUser do
 
     RegisterEmailConfirmationCurrentUser.create(
       params(
-        password: password,
-        password_confirmation: password,
+        password: "password12U password",
         login_notify: true,
         password_notify: true
       ),
@@ -28,7 +25,6 @@ describe Shield::RegisterEmailConfirmationUser do
 
   it "ends all active email confirmations for that email" do
     email = "user@example.tld"
-    password = "password12U-password"
 
     email_confirmation = StartEmailConfirmation.create!(
       params(email: email),
@@ -51,8 +47,7 @@ describe Shield::RegisterEmailConfirmationUser do
 
     user = RegisterEmailConfirmationCurrentUser.create!(
       params(
-        password: password,
-        password_confirmation: password,
+        password: "password12U-password",
         login_notify: true,
         password_notify: true
       ),
@@ -69,8 +64,6 @@ describe Shield::RegisterEmailConfirmationUser do
   end
 
   it "creates user options" do
-    password = "password12U-password"
-
     email_confirmation = StartEmailConfirmation.create!(
       params(email: "user@example.tld"),
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
@@ -78,8 +71,7 @@ describe Shield::RegisterEmailConfirmationUser do
 
     user = RegisterEmailConfirmationCurrentUser.create!(
       params(
-        password: password,
-        password_confirmation: password,
+        password: "password12U-password",
         login_notify: true,
         password_notify: false
       ),
@@ -94,8 +86,6 @@ describe Shield::RegisterEmailConfirmationUser do
   end
 
   it "fails when nested operation fails" do
-    password = "password12U password"
-
     email_confirmation = StartEmailConfirmation.create!(
       params(email: "user@example.tld"),
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
@@ -103,8 +93,7 @@ describe Shield::RegisterEmailConfirmationUser do
 
     RegisterEmailConfirmationCurrentUser2.create(
       params(
-        password: password,
-        password_confirmation: password,
+        password: "password12U password",
         login_notify: false,
         password_notify: false
       ),

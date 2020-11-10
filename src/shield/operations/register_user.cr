@@ -6,6 +6,5 @@ module Shield::RegisterUser
     include Shield::CreatePassword
 
     attribute password : String
-    attribute password_confirmation : String
   end
 end

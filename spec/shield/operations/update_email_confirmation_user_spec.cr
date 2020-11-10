@@ -71,7 +71,6 @@ describe Shield::UpdateEmailConfirmationUser do
       user,
       params(
         password: new_password,
-        password_confirmation: new_password,
         login_notify: false,
         password_notify: false
       ),

@@ -8,7 +8,6 @@ module Shield::UpdateEmailConfirmationUser
     permit_columns :email
 
     attribute password : String
-    attribute password_confirmation : String
 
     needs remote_ip : Socket::IPAddress?
 

@@ -8,7 +8,6 @@ module Shield::ValidatePassword
       require_uppercase
       require_number
       require_special_char
-      validate_confirmation_of password, with: password_confirmation
       validate_size_of password,
         min: Shield.settings.password_min_length,
         max: 64, # To mitigate DOS. Also cuz bcrypt has a max length

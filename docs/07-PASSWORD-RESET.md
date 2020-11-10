@@ -299,7 +299,6 @@
    The form should be `PATCH`ed to `PasswordResets::Update`, with the following parameters:
 
    - `password : String`
-   - `password_confirmation : String`
 
    You may skip this action if building an API.
 
