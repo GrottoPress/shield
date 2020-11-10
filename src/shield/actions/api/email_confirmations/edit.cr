@@ -1,4 +1,4 @@
-module Shield::EmailConfirmations::Update
+module Shield::Api::EmailConfirmations::Edit
   # IMPORTANT!
   #
   # This requires the user to be logged in to update their email address.
@@ -17,13 +17,13 @@ module Shield::EmailConfirmations::Update
 
     before :pin_email_confirmation_to_ip_address
 
-    # patch "/email-confirmations" do
+    # get "/email-confirmations/edit" do
     #   run_operation
     # end
 
     def run_operation
-      EmailConfirmationSession.new(
-        session
+      EmailConfirmationParams.new(
+        params
       ).verify do |utility, email_confirmation|
         if email_confirmation.try &.user_id == user.id # <= IMPORTANT!
           update_email(email_confirmation.not_nil!)
@@ -35,19 +35,17 @@ module Shield::EmailConfirmations::Update
     end
 
     def user
-      current_user!
+      current_or_bearer_user!
     end
 
     def do_verify_operation_failed(utility)
-      flash.keep.failure = "Invalid token"
-      redirect to: New
+      json({status: "failure", message: "Invalid token"})
     end
 
     private def update_email(email_confirmation)
       UpdateConfirmedEmail.update(
         email_confirmation.user!.not_nil!,
-        email_confirmation: email_confirmation,
-        session: session
+        email_confirmation: email_confirmation
       ) do |operation, updated_user|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)
@@ -58,17 +56,23 @@ module Shield::EmailConfirmations::Update
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.keep.success = "Email changed successfully"
-      redirect to: CurrentUser::Show
+      json({
+        status: "success",
+        message: "Email changed successfully",
+        data: {user: UserSerializer.new(user)}
+      })
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = "Could not change email"
-      redirect to: CurrentUser::Edit
+      json({
+        status: "failure",
+        message: "Could not change email",
+        data: {errors: operation.errors}
+      })
     end
 
     def authorize?(user : User) : Bool
-      user.id == current_user.try &.id
+      user.id == current_or_bearer_user.try &.id
     end
   end
 end

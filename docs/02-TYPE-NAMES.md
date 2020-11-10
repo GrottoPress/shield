@@ -63,9 +63,9 @@
 - `CurrentUser::Show`
 - `CurrentUser::Update`
 - `EmailConfirmations::Create`
+- `EmailConfirmations::Edit`
 - `EmailConfirmations::New`
 - `EmailConfirmations::Show`
-- `EmailConfirmations::Update`
 - `PasswordResets::Create`
 - `PasswordResets::Edit`
 - `PasswordResets::New`

@@ -1,10 +1,10 @@
-class EmailConfirmations::Update < BrowserAction
-  include Shield::EmailConfirmations::Update
+class EmailConfirmations::Edit < BrowserAction
+  include Shield::EmailConfirmations::Edit
 
   skip :pin_email_confirmation_to_ip_address
   skip :pin_login_to_ip_address
 
-  patch "/email-confirmations" do
+  get "/email-confirmations/edit" do
     run_operation
   end
 

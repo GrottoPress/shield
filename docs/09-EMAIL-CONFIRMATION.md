@@ -321,17 +321,17 @@ This is particularly important, since email addresses are usually the only means
 
    ---
    ```crystal
-   # ->>> src/actions/email_confirmations/update.cr
+   # ->>> src/actions/email_confirmations/edit.cr
 
-   class EmailConfirmations::Update < BrowserAction
+   class EmailConfirmations::Edit < BrowserAction
      # ...
-     include Shield::EmailConfirmations::Update
+     include Shield::EmailConfirmations::Edit
 
      # If you are worried about users on mobile, you may want
      # to disable pinning an email confirmation to its IP address
      #skip :pin_email_confirmation_to_ip_address
 
-     patch "/email-confirmations" do
+     get "/email-confirmations/edit" do
        run_operation
      end
 
@@ -359,7 +359,7 @@ This is particularly important, since email addresses are usually the only means
    end
    ```
 
-   `Shield::EmailConfirmations::Update` updates the email of an existing user, after they have successfully verified their email.
+   `Shield::EmailConfirmations::Edit` updates the email of an existing user, after they have successfully verified their email.
 
    ---
    ```crystal
