@@ -51,7 +51,7 @@ describe Shield::StartPasswordReset do
     ) do |operation, password_reset|
       password_reset.should be_nil
 
-      assert_invalid(operation.email, "format is invalid")
+      assert_invalid(operation.email, "is invalid")
     end
   end
 

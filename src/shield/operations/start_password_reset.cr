@@ -6,6 +6,7 @@ module Shield::StartPasswordReset
 
     before_save do
       validate_required email
+      validate_email email
 
       set_user_id
       set_guest_email
@@ -17,7 +18,6 @@ module Shield::StartPasswordReset
 
     after_commit send_email
 
-    include Shield::ValidateEmail
     include Shield::RequireIpAddress
     include Shield::StartAuthentication
 

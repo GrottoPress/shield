@@ -20,9 +20,48 @@ module MailHelpers
 end
 
 class String
-  # Source: https://github.com/amberframework/amber/blob/master/src/amber/extensions/string.cr
+  # Copied from:
+  # https://github.com/amberframework/amber/blob/9628bb4034b32e3cbcf6b1756917b88d14778d4e/src/amber/extensions/string.cr
   def email? : Bool
-    !!match(/^[_]*([a-z0-9]+(\.|_*)?)+@([a-z][a-z0-9-]+(\.|-*\.))+[a-z]{2,6}$/)
+    matches?(/^[_]*([a-z0-9]+(\.|_*)?)+@([a-z][a-z0-9-]+(\.|-*\.))+[a-z]{2,6}$/)
+  end
+
+  # Copied from:
+  # https://github.com/amberframework/amber/blob/9628bb4034b32e3cbcf6b1756917b88d14778d4e/src/amber/extensions/string.cr
+  def domain? : Bool
+    matches?(/^([a-z][a-z0-9-]+(\.|-*\.))+[a-z]{2,6}$/)
+  end
+
+  # Copied from:
+  # https://github.com/amberframework/amber/blob/9628bb4034b32e3cbcf6b1756917b88d14778d4e/src/amber/extensions/string.cr
+  def url? : Bool
+    matches?(/^(http(s)?(:\/\/))?(www\.)?[a-zA-Z0-9-_\.]+(\.[a-zA-Z0-9]{2,})([-a-zA-Z0-9:%_\+.~#?&\/\/=]*)/)
+  end
+
+  def ip? : Bool
+    ip4? || ip6?
+  end
+
+  def ip4? : Bool
+    Socket::IPAddress.new(self, 0).ip4?
+  rescue
+    false
+  end
+
+  def ip6? : Bool
+    Socket::IPAddress.new(self, 0).ip6?
+  rescue
+    false
+  end
+end
+
+struct Socket::IPAddress
+  def ip6? : Bool
+    !!ip6?(address)
+  end
+
+  def ip4? : Bool
+    !!ip4?(address)
   end
 end
 
@@ -426,6 +465,100 @@ module Avram
     def self.submit(*args, **named_args)
       new(*args, **named_args).submit do |operation, result|
         yield operation, result
+      end
+    end
+  end
+
+  module Validations
+    def validate_email(
+      *attributes,
+      message : Avram::Attribute::ErrorMessage = "is invalid"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          attribute.add_error(message) unless value.downcase.email?
+        end
+      end
+    end
+
+    def validate_name(
+      *attributes,
+      message : Avram::Attribute::ErrorMessage = "is invalid"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          next if value.matches?(/^[a-zA-Z][a-zA-Z\-\s]*$/)
+
+          attribute.add_error(message)
+        end
+      end
+    end
+
+    def validate_username(
+      *attributes,
+      message : Avram::Attribute::ErrorMessage = "is invalid"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          next if value.matches?(/^[a-zA-Z\_][a-zA-Z0-9\_]*$/)
+
+          attribute.add_error(message)
+        end
+      end
+    end
+
+    def validate_domain(
+      *attributes,
+      message : Avram::Attribute::ErrorMessage = "is invalid"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          attribute.add_error(message) unless value.domain?
+        end
+      end
+    end
+
+    def validate_url(
+      *attributes,
+      message : Avram::Attribute::ErrorMessage = "is invalid"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          attribute.add_error(message) unless value.url?
+        end
+      end
+    end
+
+    def validate_ip(
+      *attributes,
+      message : Avram::Attribute::ErrorMessage = "is invalid"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          attribute.add_error(message) unless value.ip?
+        end
+      end
+    end
+
+    def validate_ip4(
+      *attributes,
+      message : Avram::Attribute::ErrorMessage = "is invalid"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          attribute.add_error(message) unless value.ip4?
+        end
+      end
+    end
+
+    def validate_ip6(
+      *attributes,
+      message : Avram::Attribute::ErrorMessage = "is invalid"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          attribute.add_error(message) unless value.ip6?
+        end
       end
     end
   end

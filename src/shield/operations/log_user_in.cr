@@ -5,10 +5,11 @@ module Shield::LogUserIn
 
     before_save do
       validate_required email, password
+      validate_email email
+
       verify_login
     end
 
-    include Shield::ValidateEmail
     include Shield::RequireIpAddress
     include Shield::StartAuthentication
     include Shield::SetSession
@@ -18,7 +19,7 @@ module Shield::LogUserIn
     end
 
     private def verify_login
-      return unless email.value.to_s.email? && password.value
+      return unless email.value && password.value
 
       if user = UserHelper.verify_user(
         email.value.not_nil!,

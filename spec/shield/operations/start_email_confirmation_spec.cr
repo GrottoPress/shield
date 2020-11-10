@@ -50,7 +50,7 @@ describe Shield::StartEmailConfirmation do
     ) do |operation, email_confirmation|
       email_confirmation.should be_nil
 
-      assert_invalid(operation.email, "format is invalid")
+      assert_invalid(operation.email, "is invalid")
     end
   end
 

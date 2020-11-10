@@ -26,7 +26,7 @@ describe Shield::SaveEmail do
     RegisterCurrentUser.create(params(email: "user")) do |operation, user|
       user.should be_nil
 
-      assert_invalid(operation.email, "format is invalid")
+      assert_invalid(operation.email, "is invalid")
     end
   end
 

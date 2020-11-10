@@ -11,10 +11,9 @@ module Shield::UpdateEmailConfirmationUser
 
     needs remote_ip : Socket::IPAddress?
 
-    include Shield::ValidateEmail
-
     before_save do
       validate_required email
+      validate_email email
 
       reset_email
     end

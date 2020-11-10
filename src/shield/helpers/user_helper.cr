@@ -16,7 +16,7 @@ module Shield::UserHelper
     end
 
     def user_from_email(email : String) : User?
-      UserQuery.new.email(email).first?
+      UserQuery.new.email(email.downcase).first?
     end
   end
 end
