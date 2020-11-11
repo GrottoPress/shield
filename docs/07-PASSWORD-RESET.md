@@ -132,6 +132,19 @@
 
    ---
    ```crystal
+   # ->>> src/operations/delete_password_reset.cr
+
+   class DeletePasswordReset < Avram::BasicOperation
+     # ...
+     include Shield::DeletePasswordReset
+     # ...
+   end
+   ```
+
+   `Shield::DeletePasswordReset` actually deletes a given password reset from the database. Use this instead of `Shield::EndPasswordReset` if you intend to actually delete password resets, rather than mark them as inactive.
+
+   ---
+   ```crystal
    # ->>> src/operations/reset_password.cr
 
    class ResetPassword < User::SaveOperation

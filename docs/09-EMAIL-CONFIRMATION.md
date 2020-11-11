@@ -145,6 +145,19 @@ This is particularly important, since email addresses are usually the only means
 
    ---
    ```crystal
+   # ->>> src/operations/delete_email_confirmation.cr
+
+   class DeleteEmailConfirmation < Avram::BasicOperation
+     # ...
+     include Shield::DeleteEmailConfirmation
+     # ...
+   end
+   ```
+
+   `Shield::DeleteEmailConfirmation` actually deletes a given *email confirmation* from the database. Use this instead of `Shield::EndEmailConfirmation` if you intend to actually delete email confirmations, rather than mark them as inactive.
+
+   ---
+   ```crystal
    # ->>> src/operations/register_currrent_user.cr
 
    class RegisterCurrentUser < User::SaveOperation

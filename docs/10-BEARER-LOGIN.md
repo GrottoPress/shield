@@ -163,6 +163,19 @@ This token is revoked when the user logs out.
 
    `Shield::RevokeBearerLogin` updates the relevant columns in the database to mark a given *bearer login* as inactive.
 
+   ---
+   ```crystal
+   # ->>> src/operations/delete_bearer_login.cr
+
+   class DeleteBearerLogin < Avram::BasicOperation
+     # ...
+     include Shield::DeleteBearerLogin
+     # ...
+   end
+   ```
+
+   `Shield::DeleteBearerLogin` actually deletes a given *bearer login* from the database. Use this instead of `Shield::RevokeBearerLogin` if you intend to actually delete bearer logins, rather than mark them as inactive.
+
 1. Set up actions:
 
    ```crystal

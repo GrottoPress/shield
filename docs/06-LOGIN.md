@@ -132,6 +132,19 @@
 
    `Shield::LogUserOut` deletes session values related to the login, and updates the relevant columns in the database to mark the login as inactive.
 
+   ---
+   ```crystal
+   # ->>> src/operations/delete_login.cr
+
+   class DeleteLogin < Avram::BasicOperation
+     # ...
+     include Shield::DeleteLogin
+     # ...
+   end
+   ```
+
+   `Shield::DeleteLogin` actually deletes a given login from the database. Use this instead of `Shield::LogUserOut` if you intend to actually delete logins, rather than mark them as inactive.
+
 1. Set up actions:
 
    ```crystal
