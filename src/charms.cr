@@ -593,6 +593,10 @@ macro __enum(enum_name, &block)
     delegate :to_s, to: @raw
     forward_missing_to @raw
 
+    def self.raw
+      Raw{{ enum_name }}
+    end
+
     module Lucky
       alias ColumnType = String
 
