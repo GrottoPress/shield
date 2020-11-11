@@ -24,7 +24,7 @@ module Shield::Api::CurrentLogin::Destroy
     def do_run_operation_succeeded(operation, login)
       json({
         status: "success",
-        message: "Logged out. See ya!",
+        message: "You logged out",
         data: {login: LoginSerializer.new(login)}
       })
     end
