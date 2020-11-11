@@ -1,5 +1,5 @@
 class Users::Show < BrowserAction
-  skip :require_logged_out
+  include Shield::Users::Show
 
   get "/users/:user_id" do
     json({user: user_id.to_i64})
