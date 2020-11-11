@@ -319,3 +319,24 @@
    This is the email sent to the email address of an existing user, after someone tries to register a new account with said user's email.
 
    This email is sent if you included `Shield::SendWelcomeEmail` in `RegisterCurrentUser`.
+
+### Other Types
+
+1. Operations:
+
+   - `Shield::DeleteUser`
+
+   `Shield::DeleteUser` deletes a given user. It protects against self-deletion; a user cannot delete themselves.
+
+1. Actions:
+
+   - `Shield::Users::Create`
+   - `Shield::Users::Delete`
+   - `Shield::Users::Destroy`
+   - `Shield::Users::Edit`
+   - `Shield::Users::Index`
+   - `Shield::Users::New`
+   - `Shield::Users::Show`
+   - `Shield::Users::Update`
+
+   `Shield::Users::*` actions are reserved for situations where admins would like to perform certain operations on other registered users.

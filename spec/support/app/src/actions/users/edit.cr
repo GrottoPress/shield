@@ -1,5 +1,5 @@
 class Users::Edit < BrowserAction
-  skip :require_logged_out
+  include Shield::Users::Edit
 
   get "/users/:user_id/edit" do
     json({user: 1})

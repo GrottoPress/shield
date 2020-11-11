@@ -466,6 +466,19 @@ For these purposes, *Shield* provides the following modules:
 
 If your application decides to allow any of these functionalities via its API, the modules above should be `include`d in their respective API classes.
 
+### Other Types
+
+1. Actions:
+
+   - `Shield::Api::Users::Create`
+   - `Shield::Api::Users::Delete`
+   - `Shield::Api::Users::Destroy`
+   - `Shield::Api::Users::Index`
+   - `Shield::Api::Users::Show`
+   - `Shield::Api::Users::Update`
+
+   `Shield::Api::Users::*` actions are reserved for situations where admins would like to perform certain operations on other registered users.
+
 ### Rate limiting
 
 *Shield* has no API rate limiting implementation yet. For now, applications may achieve this via a reverse proxy (eg *Nginx*), or *Crystal* shards (eg [Defense](https://github.com/defense-cr/defense)).
