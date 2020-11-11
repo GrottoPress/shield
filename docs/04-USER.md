@@ -109,7 +109,7 @@
      include Shield::CurrentUser::New
 
      get "/account/new" do
-       operation = RegisterCurrentUser.new(remote_ip: remote_ip)
+       operation = RegisterCurrentUser.new
        html NewPage, operation: operation
      end
      # ...
@@ -192,12 +192,7 @@
      include Shield::CurrentUser::Edit
 
      get "/account/edit" do
-       operation = UpdateCurrentUser.new(
-         user,
-         remote_ip: remote_ip,
-         current_login: current_login
-       )
-
+       operation = UpdateCurrentUser.new(user)
        html EditPage, operation: operation
      end
      # ...
