@@ -9,11 +9,8 @@ module Shield::Api::Users::Index
     #     status: "success",
     #     data: {users: UserSerializer.for_collection(users)},
     #     pages: {
-    #       first: pages.path_to_page(1),
-    #       previous: pages.path_to_previous,
-    #       current: pages.path_to_page(page),
-    #       next: pages.path_to_next,
-    #       last: pages.path_to_page(pages.total)
+    #       current: page,
+    #       total: pages.total
     #     }
     #   })
     # end
