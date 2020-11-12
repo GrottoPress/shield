@@ -35,7 +35,7 @@ Find the complete documentation of *Shield* in the `docs/` directory of this rep
 
 ## Development
 
-Run tests with `docker-compose -f spec/docker-compose.yml run --rm spec`. If you need to update shards before that, run `docker-compose -f spec/docker-compose.yml run --rm shards`.
+Run tests with `docker-compose run --rm spec`. If you need to update shards before that, run `docker-compose run --rm shards`.
 
 If you would rather run tests on your local machine (ie, without docker), create a `.env.sh` file:
 

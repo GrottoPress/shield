@@ -11,7 +11,7 @@ services:
       SKIP_CREATE_DB: "true"
     image: crystallang/crystal:0.35.1-alpine
     volumes:
-      - ..:/var/www/html
+      - .:/var/www/html
     working_dir: /var/www/html
   postgres:
     environment:

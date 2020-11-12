@@ -6,7 +6,7 @@ services:
   - docker
 
 install:
-  - docker-compose -f spec/docker-compose.yml run --rm shards
+  - docker-compose run --rm shards
 
 script:
-  - docker-compose -f spec/docker-compose.yml run --rm spec
+  - docker-compose run --rm spec
