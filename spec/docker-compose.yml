@@ -18,7 +18,7 @@ services:
       POSTGRES_DB: shield_spec
       POSTGRES_PASSWORD: password
       POSTGRES_USER: username
-    image: postgres:12.3-alpine
+    image: postgres:12.4-alpine
   shards:
     <<: *crystal
     command: 'sh -c "shards update"'
