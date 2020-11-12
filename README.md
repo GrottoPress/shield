@@ -8,7 +8,7 @@ User IDs are never saved in session. Instead, each authentication gets a unique 
 
 When a user changes their password, *Shield* logs out the user on all devices (except the current one), to ensure that an attacker no longer has access to a previously compromised account.
 
-Shield supports API authentication, with regular passwords or with user-generated bearer tokens. In addition, all other authentication actions that can be performed in the browser can be done in APIs.
+Shield supports API authentication, with regular passwords or with user-generated bearer tokens. In addition, all authentication actions that can be performed in the browser have their API equivalents.
 
 *Shield* is designed to be resilient against critical application vulnerabilities, including brute force, user enumeration, denial of service and timing attacks.
 
