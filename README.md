@@ -29,8 +29,6 @@ Find the complete documentation of *Shield* in the `docs/` directory of this rep
 - [x] Authorization
 - [x] Email confirmation
 - [x] *Bearer* logins (API tokens)
-- [ ] Anti-spam
-- [ ] Web Application Firewall (WAF)
 - [ ] Multi-factor authentication
 
 ## Development
