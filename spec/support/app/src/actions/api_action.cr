@@ -1,7 +1,7 @@
 abstract class ApiAction < Lucky::Action
   include Shield::ApiAction
 
-  accepted_formats [:json]
+  accepted_formats [:html, :json], default: :json
 
   # route_prefix "/api/v1"
 

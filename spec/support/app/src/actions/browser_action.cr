@@ -1,7 +1,7 @@
 abstract class BrowserAction < Lucky::Action
   include Shield::BrowserAction
 
-  accepted_formats [:json]
+  accepted_formats [:html, :json], default: :html
 
   skip :protect_from_forgery
 
