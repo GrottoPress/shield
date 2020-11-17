@@ -14,19 +14,19 @@
      settings.bcrypt_cost = Lucky::Env.production? ? 12 : 4
 
      # Required minimum length of password
-     #settings.password_min_length = 12
+     #settings.password_min_length = Lucky::Env.production? ? 12 : 4
 
      # Require lowercase letter in password?
-     #settings.password_require_lowercase = true
+     #settings.password_require_lowercase = Lucky::Env.production?
 
      # Require uppercase letter in password?
-     #settings.password_require_uppercase = true
+     #settings.password_require_uppercase = Lucky::Env.production?
 
      # Require number in password?
-     #settings.password_require_number = true
+     #settings.password_require_number = Lucky::Env.production?
 
      # Require special character in password?
-     #settings.password_require_special_char = true
+     #settings.password_require_special_char = Lucky::Env.production?
      # ...
    end
    ```
