@@ -1,6 +1,6 @@
 require "../../../spec_helper"
 
-describe Shield::Api::AuthenticationHelpers do
+describe Shield::Api::LoginHelpers do
   describe "#current_login" do
     it "does not use session authentication" do
       email = "user@example.tld"

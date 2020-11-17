@@ -219,6 +219,9 @@ This is particularly important, since email addresses are usually the only means
 
    abstract class BrowserAction < Lucky::Action
      # ...
+     include Shield::EmailConfirmationHelpers
+     include Shield::EmailConfirmationPipes
+
      # What to do when a user's IP address changes in an email confirmation, if the
      # action requires the user's IP to match the IP with which they started
      # the email confirmation.

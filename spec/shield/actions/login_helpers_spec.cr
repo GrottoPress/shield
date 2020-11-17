@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-describe Shield::AuthenticationHelpers do
+describe Shield::LoginHelpers do
   describe "#current_user" do
     it "works" do
       email = "user@example.tld"

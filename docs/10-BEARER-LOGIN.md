@@ -185,6 +185,18 @@ This token is revoked when the user logs out.
      # ...
      include Shield::ApiAction
 
+     include Shield::Api::LoginHelpers
+     include Shield::Api::LoginPipes
+
+     include Shield::Api::AuthorizationHelpers
+     include Shield::Api::AuthorizationPipes
+
+     #include Shield::Api::PasswordResetHelpers
+     #include Shield::Api::PasswordResetPipes
+
+     #include Shield::Api::EmailConfirmationHelpers
+     #include Shield::Api::EmailConfirmationPipes
+
      # If you are worried about users on mobile, you may want
      # to disable pinning a login to its IP address
      #skip :pin_login_to_ip_address

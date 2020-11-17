@@ -1,6 +1,6 @@
-module Shield::Api::AuthenticationHelpers
+module Shield::Api::LoginHelpers
   macro included
-    include Shield::AuthenticationHelpers
+    include Shield::LoginHelpers
 
     def current_login : Login?
       LoginHeaders.new(request.headers).verify

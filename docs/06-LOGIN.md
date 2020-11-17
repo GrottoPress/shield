@@ -152,6 +152,9 @@
 
    abstract class BrowserAction < Lucky::Action
      # ...
+     include Shield::LoginHelpers
+     include Shield::LoginPipes
+
      # If you are worried about users on mobile, you may want
      # to disable pinning a login to its IP address
      #skip :pin_login_to_ip_address

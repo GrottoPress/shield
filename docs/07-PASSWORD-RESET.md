@@ -170,6 +170,9 @@
 
    abstract class BrowserAction < Lucky::Action
      # ...
+     include Shield::PasswordResetHelpers
+     include Shield::PasswordResetPipes
+
      # What to do when a user's IP address changes in a password reset, if the
      # action requires the user's IP to match the IP with which they requested
      # the password reset.

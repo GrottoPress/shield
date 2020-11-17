@@ -1,4 +1,4 @@
-module Shield::AuthenticationHelpers
+module Shield::LoginHelpers
   macro included
     def logged_in? : Bool
       !logged_out?

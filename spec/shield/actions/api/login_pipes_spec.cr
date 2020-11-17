@@ -1,6 +1,6 @@
 require "../../../spec_helper"
 
-describe Shield::Api::AuthenticationPipes do
+describe Shield::Api::LoginPipes do
   describe "#require_logged_in" do
     it "allows logins with regular passwords" do
       email = "user@example.tld"

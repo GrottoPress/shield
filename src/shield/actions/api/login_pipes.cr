@@ -1,8 +1,8 @@
 # Implements Bearer authentication as defined
 # in [RFC 6750](https://tools.ietf.org/html/rfc6750)
-module Shield::Api::AuthenticationPipes
+module Shield::Api::LoginPipes
   macro included
-    include Shield::AuthenticationPipes
+    include Shield::LoginPipes
 
     def require_logged_in
       if logged_in? || bearer_logged_in?
@@ -33,35 +33,6 @@ module Shield::Api::AuthenticationPipes
       end
     end
 
-    def pin_password_reset_to_ip_address
-      password_reset = PasswordResetParams.new(params).password_reset
-
-      if password_reset.nil? ||
-        !password_reset.not_nil!.active? ||
-        password_reset.not_nil!.ip_address == remote_ip.try &.address
-        continue
-      else
-        EndPasswordReset.update!(password_reset.not_nil!)
-        response.status_code = 403
-        do_pin_password_reset_to_ip_address_failed
-      end
-    end
-
-    def pin_email_confirmation_to_ip_address
-      email_confirmation_params = EmailConfirmationParams.new(params)
-      email_confirmation = email_confirmation_params.email_confirmation
-
-      if email_confirmation.nil? ||
-        !email_confirmation.not_nil!.active? ||
-        email_confirmation.not_nil!.ip_address == remote_ip.try &.address
-        continue
-      else
-        EndEmailConfirmation.update!(email_confirmation.not_nil!)
-        response.status_code = 403
-        do_pin_email_confirmation_to_ip_address_failed
-      end
-    end
-
     def do_require_logged_in_failed
       json({status: "failure", message: "Invalid token"})
     end
@@ -74,20 +45,6 @@ module Shield::Api::AuthenticationPipes
       json({
         status: "failure",
         message: "Your IP address has changed. Please log in again."
-      })
-    end
-
-    def do_pin_password_reset_to_ip_address_failed
-      json({
-        status: "failure",
-        message: "Your IP address has changed. Please try again."
-      })
-    end
-
-    def do_pin_email_confirmation_to_ip_address_failed
-      json({
-        status: "failure",
-        message: "Your IP address has changed. Please try again."
       })
     end
 
