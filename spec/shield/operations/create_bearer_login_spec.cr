@@ -23,6 +23,19 @@ describe Shield::CreateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
+      assert_invalid(operation.user_id, " required")
+    end
+  end
+
+  it "requires valid user id" do
+    CreateBearerLogin.create(
+      params(name: "some token"),
+      user_id: 111,
+      scopes: ["posts.index"],
+      all_scopes: ["posts.update", "posts.index", "current_user.show"],
+    ) do |operation, bearer_login|
+      bearer_login.should be_nil
+
       assert_invalid(operation.user_id, "not exist")
     end
   end

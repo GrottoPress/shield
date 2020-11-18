@@ -18,6 +18,17 @@ describe Shield::SaveUserOptions do
     )) do |operation, user_options|
       user_options.should be_nil
 
+      assert_invalid(operation.user_id, " required")
+    end
+  end
+
+  it "requires valid user id" do
+    SaveUserOptions.create(
+      params(login_notify: true, password_notify: true),
+      user_id: 111
+    ) do |operation, user_options|
+      user_options.should be_nil
+
       assert_invalid(operation.user_id, "not exist")
     end
   end

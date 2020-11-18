@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased] - 
 
+### Added
+- Validate the existence of records for foreign keys in save operations
+
 ### Changed
 -  Split action helpers and pipes into modules that may be used independently
 
