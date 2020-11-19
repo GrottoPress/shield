@@ -197,6 +197,9 @@ This token is revoked when the user logs out.
      #include Shield::Api::EmailConfirmationHelpers
      #include Shield::Api::EmailConfirmationPipes
 
+     # Bug: https://github.com/luckyframework/lucky/issues/1281
+     #route_prefix "/api/v0"
+
      # If you are worried about users on mobile, you may want
      # to disable pinning a login to its IP address
      #skip :pin_login_to_ip_address
