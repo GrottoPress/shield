@@ -26,8 +26,8 @@ module Shield::EmailConfirmationSession
     end
 
     def set(token : String) : self
-      id_token = token.split('.', 2)
-      set(id_token[0]?, id_token[1]?.to_s)
+      id, _, token = token.partition('.')
+      set(id, token)
     end
 
     def set(id, token : String) : self
