@@ -4,7 +4,7 @@ module Shield::CreateBearerLogin
 
     before_save do
       validate_required name, user_id
-      validate_user_exists
+      validate_exists_by_id user_id, query: UserQuery.new
       validate_name_unique
     end
 
@@ -14,14 +14,6 @@ module Shield::CreateBearerLogin
     private def set_ended_at
       ended_at.value = started_at.value.not_nil! +
         Shield.settings.bearer_login_expiry
-    end
-
-    private def validate_user_exists
-      user_id.value.try do |value|
-        unless UserQuery.new.id(value).first?
-          user_id.add_error("does not exist")
-        end
-      end
     end
 
     # Prevents a user from using a bearer login `name`

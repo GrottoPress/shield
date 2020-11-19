@@ -408,9 +408,137 @@ describe Avram::Validations do
     end
   end
 
-      Avram::Validations.validate_domain domain
+  describe "#validte_subdomain" do
+    it "accepts valid subdomain" do
+      subdomains = {
+        Avram::Attribute(String?).new(
+          :subdomain,
+          param: nil,
+          value: "1blog",
+          param_key: "app"
+        ),
+        Avram::Attribute(String?).new(
+          :subdomain,
+          param: nil,
+          value: "roses-are.red",
+          param_key: "app"
+        ),
+        Avram::Attribute(String?).new(
+          :subdomain,
+          param: nil,
+          value: "abc.def--ghi.jkl.5mno",
+          param_key: "app"
+        )
+      }
 
-      domain.valid?.should be_false
+      subdomains.each do |subdomain|
+        Avram::Validations.validate_subdomain subdomain
+        subdomain.valid?.should be_true
+      end
+    end
+
+    it "rejects invalid subdomain" do
+      subdomains = {
+        Avram::Attribute(String?).new(
+          :subdomain,
+          param: nil,
+          value: "-blog",
+          param_key: "app"
+        ),
+        Avram::Attribute(String?).new(
+          :subdomain,
+          param: nil,
+          value: "blog-",
+          param_key: "app"
+        ),
+        Avram::Attribute(String?).new(
+          :subdomain,
+          param: nil,
+          value: "blog.",
+          param_key: "app"
+        ),
+        Avram::Attribute(String?).new(
+          :subdomain,
+          param: nil,
+          value: ".blog",
+          param_key: "app"
+        ),
+        Avram::Attribute(String?).new(
+          :subdomain,
+          param: nil,
+          value: "abc_def.ghi",
+          param_key: "app"
+        ),
+        Avram::Attribute(String?).new(
+          :subdomain,
+          param: nil,
+          value: "sub..domain",
+          param_key: "app"
+        )
+      }
+
+      subdomains.each do |subdomain|
+        Avram::Validations.validate_subdomain subdomain
+        subdomain.valid?.should be_false
+      end
+    end
+  end
+
+  describe "#validate_http_url" do
+    it "accepts valid HTTP URL" do
+      urls = {
+        Avram::Attribute(String?).new(
+          :url,
+          param: nil,
+          value: "//sarkodie.com/wp-admin/",
+          param_key: "site"
+        ),
+        Avram::Attribute(String?).new(
+          :url,
+          param: nil,
+          value: "https://www.grottopress.com/images/hello.png",
+          param_key: "site"
+        ),
+        Avram::Attribute(String?).new(
+          :url,
+          param: nil,
+          value: "http://www.grottopress.com/images/hi.php",
+          param_key: "site"
+        )
+      }
+
+      urls.each do |url|
+        Avram::Validations.validate_http_url url
+        url.valid?.should be_true
+      end
+    end
+
+    it "rejects valid non-HTTP URL" do
+      urls = {
+        Avram::Attribute(String?).new(
+          :url,
+          param: nil,
+          value: "sftp://www.grottopress.com/contact/",
+          param_key: "site"
+        ),
+        Avram::Attribute(String?).new(
+          :url,
+          param: nil,
+          value: "ftps://www.grottopress.com/contact/",
+          param_key: "site"
+        ),
+        Avram::Attribute(String?).new(
+          :url,
+          param: nil,
+          value: "file://www.grottopress.com/contact/",
+          param_key: "site"
+        )
+      }
+
+      urls.each do |url|
+        Avram::Validations.validate_http_url url
+        url.valid?.should be_false
+      end
     end
   end
 
@@ -511,6 +639,100 @@ describe Avram::Validations do
         Avram::Validations.validate_url url
         url.valid?.should be_false
       end
+    end
+  end
+
+  describe "#validate_slug" do
+    it "accepts valid slug" do
+      slugs = {
+        Avram::Attribute(String?).new(
+          :slug,
+          param: nil,
+          value: "sarkodie",
+          param_key: "post"
+        ),
+        Avram::Attribute(String?).new(
+          :slug,
+          param: nil,
+          value: "what-a_day",
+          param_key: "post"
+        ),
+        Avram::Attribute(String?).new(
+          :slug,
+          param: nil,
+          value: "_WhAt-a-DAY_",
+          param_key: "post"
+        ),
+        Avram::Attribute(String?).new(
+          :slug,
+          param: nil,
+          value: "_",
+          param_key: "post"
+        )
+      }
+
+      slugs.each do |slug|
+        Avram::Validations.validate_slug slug
+        slug.valid?.should be_true
+      end
+    end
+
+    it "rejects invalid slug" do
+      slugs = {
+        Avram::Attribute(String?).new(
+          :slug,
+          param: nil,
+          value: "-what-a-day",
+          param_key: "post"
+        ),
+        Avram::Attribute(String?).new(
+          :slug,
+          param: nil,
+          value: "what-a-day-",
+          param_key: "post"
+        ),
+        Avram::Attribute(String?).new(
+          :slug,
+          param: nil,
+          value: "what.a.day",
+          param_key: "post"
+        ),
+        Avram::Attribute(String?).new(
+          :slug,
+          param: nil,
+          value: "/what-a-day",
+          param_key: "post"
+        )
+      }
+
+      slugs.each do |slug|
+        Avram::Validations.validate_slug slug
+        slug.valid?.should be_false
+      end
+    end
+  end
+
+  describe "#validate_exists_by_id" do
+    it "accepts existing ID" do
+      user_id = Avram::Attribute(Int64?).new(
+        :slug,
+        param: nil,
+        value: UserBox.create.id,
+        param_key: "user"
+      )
+
+      Avram::Validations.validate_exists_by_id user_id, query: UserQuery.new
+    end
+
+    it "rejectes non-existing ID" do
+      user_id = Avram::Attribute(Int64?).new(
+        :slug,
+        param: nil,
+        value: 45,
+        param_key: "user"
+      )
+
+      Avram::Validations.validate_exists_by_id user_id, query: UserQuery.new
     end
   end
 end

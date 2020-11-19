@@ -36,6 +36,12 @@ class String
     matches?(/^(?:[a-z0-9][a-z0-9\-]{0,62}(?<!\-)\.)+[a-z][a-z0-9\-]{1,19}(?<!\-)$/i)
   end
 
+  def http_url? : Bool
+    return false if empty? || !url?
+    uri = URI.parse(self)
+    uri.scheme.nil? || uri.scheme.to_s.matches?(/^https?$/i)
+  end
+
   def url? : Bool
     return false if empty?
 
@@ -519,6 +525,19 @@ module Avram
       end
     end
 
+    def validate_slug(
+      *attributes,
+      message : Attribute::ErrorMessage = "is invalid"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          next if value.matches?(/^[a-z0-9\_][a-z0-9\_\-]*(?<!\-)$/i)
+
+          attribute.add_error(message)
+        end
+      end
+    end
+
     def validate_domain(
       *attributes,
       message : Attribute::ErrorMessage = "is invalid"
@@ -526,6 +545,30 @@ module Avram
       attributes.each do |attribute|
         attribute.value.try do |value|
           attribute.add_error(message) unless value.domain?
+        end
+      end
+    end
+
+    def validate_subdomain(
+      *attributes,
+      message : Attribute::ErrorMessage = "is invalid"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          next if value.matches?(/^[a-z0-9](?:[a-z0-9\-]*(?<!\.)\.?)*(?<![\.\-])$/i)
+
+          attribute.add_error(message)
+        end
+      end
+    end
+
+    def validate_http_url(
+      *attributes,
+      message : Attribute::ErrorMessage = "is invalid"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          attribute.add_error(message) unless value.http_url?
         end
       end
     end
@@ -571,6 +614,17 @@ module Avram
         attribute.value.try do |value|
           attribute.add_error(message) unless value.ip6?
         end
+      end
+    end
+
+    def validate_exists_by_id(
+      attribute,
+      *,
+      query,
+      message : Attribute::ErrorMessage = "does not exist"
+    )
+      attribute.value.try do |value|
+        attribute.add_error(message) unless query.id(value).first?
       end
     end
   end

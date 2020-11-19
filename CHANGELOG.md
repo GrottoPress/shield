@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Validate the existence of records for foreign keys in save operations
+- Add `#validate_http_url`, `#validate_sudomain`, `#validate_slug`, `#validate_exists_by_id` validations.
 
 ### Changed
 -  Split action helpers and pipes into modules that may be used independently
