@@ -185,7 +185,7 @@ module Avram
         after_save(record!)
         after_commit(record!)
 
-        Avram::Events::SaveSuccessEvent.publish(
+        Events::SaveSuccessEvent.publish(
           operation_class: self.class.name,
           attributes: generic_attributes
         )
@@ -220,7 +220,7 @@ module Avram
   #
   # Ref: https://github.com/luckyframework/avram/blob/master/src/avram/nested_save_operation.cr
   module NestedSaveOperation
-    NESTED_SAVE_OPERATIONS = [] of Avram::MarkAsFailed
+    NESTED_SAVE_OPERATIONS = [] of MarkAsFailed
 
     macro has_one_create(type_declaration, *, assoc_name)
       {% nested_name = type_declaration.var.id %}
@@ -459,7 +459,7 @@ module Avram
     def self.submit!(*args, **named_args)
       submit(*args, **named_args) { |_, result| return result.not_nil! }
     rescue
-      raise Avram::Rollback.new
+      raise Rollback.new
     end
 
     def self.submit(*args, **named_args)
@@ -472,7 +472,7 @@ module Avram
   module Validations
     def validate_email(
       *attributes,
-      message : Avram::Attribute::ErrorMessage = "is invalid"
+      message : Attribute::ErrorMessage = "is invalid"
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
@@ -483,7 +483,7 @@ module Avram
 
     def validate_name(
       *attributes,
-      message : Avram::Attribute::ErrorMessage = "is invalid"
+      message : Attribute::ErrorMessage = "is invalid"
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
@@ -496,7 +496,7 @@ module Avram
 
     def validate_username(
       *attributes,
-      message : Avram::Attribute::ErrorMessage = "is invalid"
+      message : Attribute::ErrorMessage = "is invalid"
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
@@ -509,7 +509,7 @@ module Avram
 
     def validate_domain(
       *attributes,
-      message : Avram::Attribute::ErrorMessage = "is invalid"
+      message : Attribute::ErrorMessage = "is invalid"
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
@@ -520,7 +520,7 @@ module Avram
 
     def validate_url(
       *attributes,
-      message : Avram::Attribute::ErrorMessage = "is invalid"
+      message : Attribute::ErrorMessage = "is invalid"
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
@@ -531,7 +531,7 @@ module Avram
 
     def validate_ip(
       *attributes,
-      message : Avram::Attribute::ErrorMessage = "is invalid"
+      message : Attribute::ErrorMessage = "is invalid"
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
@@ -542,7 +542,7 @@ module Avram
 
     def validate_ip4(
       *attributes,
-      message : Avram::Attribute::ErrorMessage = "is invalid"
+      message : Attribute::ErrorMessage = "is invalid"
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
@@ -553,7 +553,7 @@ module Avram
 
     def validate_ip6(
       *attributes,
-      message : Avram::Attribute::ErrorMessage = "is invalid"
+      message : Attribute::ErrorMessage = "is invalid"
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
