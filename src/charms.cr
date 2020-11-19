@@ -20,22 +20,34 @@ module MailHelpers
 end
 
 class String
-  # Copied from:
-  # https://github.com/amberframework/amber/blob/9628bb4034b32e3cbcf6b1756917b88d14778d4e/src/amber/extensions/string.cr
+  # References:
+  #
+  # - https://en.wikipedia.org/wiki/Email_address
+  # - https://support.google.com/mail/answer/9211434
   def email? : Bool
-    matches?(/^[_]*([a-z0-9]+(\.|_*)?)+@([a-z][a-z0-9-]+(\.|-*\.))+[a-z]{2,6}$/)
+    address, _, domain = partition('@')
+    return false if address.empty? || address.size > 64 || !domain.domain?
+    address.matches?(/^[a-z\_](?:[a-z0-9\_]*(?<!\.)\.?)*(?<!\.)$/i)
   end
 
-  # Copied from:
-  # https://github.com/amberframework/amber/blob/9628bb4034b32e3cbcf6b1756917b88d14778d4e/src/amber/extensions/string.cr
+  # Reference: https://en.wikipedia.org/wiki/Domain_Name_System
   def domain? : Bool
-    matches?(/^([a-z][a-z0-9-]+(\.|-*\.))+[a-z]{2,6}$/)
+    return false if empty? || size > 253
+    matches?(/^(?:[a-z0-9][a-z0-9\-]{0,62}(?<!\-)\.)+[a-z][a-z0-9\-]{1,19}(?<!\-)$/i)
   end
 
-  # Copied from:
-  # https://github.com/amberframework/amber/blob/9628bb4034b32e3cbcf6b1756917b88d14778d4e/src/amber/extensions/string.cr
   def url? : Bool
-    matches?(/^(http(s)?(:\/\/))?(www\.)?[a-zA-Z0-9-_\.]+(\.[a-zA-Z0-9]{2,})([-a-zA-Z0-9:%_\+.~#?&\/\/=]*)/)
+    return false if empty?
+
+    uri = URI.parse(self)
+    valid = uri.host.nil? || uri.host.to_s.domain?
+
+    valid &&= (uri.path.empty? || uri.path.matches?(/^[a-z0-9\-\_\.\%\+\/]+$/i))
+    valid &&= (uri.query.nil? || uri.query.to_s.matches?(/^([a-z0-9\-\_\.\:\%\+\&\=\,\[\]]+)$/i))
+
+    valid && (uri.fragment.nil? || uri.fragment.to_s.matches?(/^[a-z0-9\-\_\.\%\+]+$/i))
+  rescue
+    false
   end
 
   def ip? : Bool
@@ -476,7 +488,7 @@ module Avram
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
-          attribute.add_error(message) unless value.downcase.email?
+          attribute.add_error(message) unless value.email?
         end
       end
     end
@@ -487,7 +499,7 @@ module Avram
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
-          next if value.matches?(/^[a-zA-Z][a-zA-Z\-\s]*$/)
+          next if value.matches?(/^[a-z][a-z\-\s]*$/i)
 
           attribute.add_error(message)
         end
@@ -500,7 +512,7 @@ module Avram
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
-          next if value.matches?(/^[a-zA-Z\_][a-zA-Z0-9\_]*$/)
+          next if value.matches?(/^[a-z\_][a-z0-9\_]*$/i)
 
           attribute.add_error(message)
         end
