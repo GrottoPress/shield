@@ -11,5 +11,9 @@ module Shield::AuthenticationColumns
     def active? : Bool
       ended_at.nil? || ended_at.not_nil! > Time.utc
     end
+
+    def inactive? : Bool
+      !active?
+    end
   end
 end
