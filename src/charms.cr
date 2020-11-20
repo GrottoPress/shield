@@ -549,7 +549,7 @@ module Avram
       end
     end
 
-    def validate_subdomain(
+    def validate_domain_label(
       *attributes,
       message : Attribute::ErrorMessage = "is invalid"
     )

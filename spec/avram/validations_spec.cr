@@ -408,78 +408,78 @@ describe Avram::Validations do
     end
   end
 
-  describe "#validte_subdomain" do
-    it "accepts valid subdomain" do
-      subdomains = {
+  describe "#validate_domain_label" do
+    it "accepts valid domain label" do
+      labels = {
         Avram::Attribute(String?).new(
-          :subdomain,
+          :label,
           param: nil,
           value: "1blog",
           param_key: "app"
         ),
         Avram::Attribute(String?).new(
-          :subdomain,
+          :label,
           param: nil,
           value: "roses-are.red",
           param_key: "app"
         ),
         Avram::Attribute(String?).new(
-          :subdomain,
+          :label,
           param: nil,
           value: "abc.def--ghi.jkl.5mno",
           param_key: "app"
         )
       }
 
-      subdomains.each do |subdomain|
-        Avram::Validations.validate_subdomain subdomain
-        subdomain.valid?.should be_true
+      labels.each do |label|
+        Avram::Validations.validate_domain_label label
+        label.valid?.should be_true
       end
     end
 
-    it "rejects invalid subdomain" do
-      subdomains = {
+    it "rejects invalid domain label" do
+      labels = {
         Avram::Attribute(String?).new(
-          :subdomain,
+          :label,
           param: nil,
           value: "-blog",
           param_key: "app"
         ),
         Avram::Attribute(String?).new(
-          :subdomain,
+          :label,
           param: nil,
           value: "blog-",
           param_key: "app"
         ),
         Avram::Attribute(String?).new(
-          :subdomain,
+          :label,
           param: nil,
           value: "blog.",
           param_key: "app"
         ),
         Avram::Attribute(String?).new(
-          :subdomain,
+          :label,
           param: nil,
           value: ".blog",
           param_key: "app"
         ),
         Avram::Attribute(String?).new(
-          :subdomain,
+          :label,
           param: nil,
           value: "abc_def.ghi",
           param_key: "app"
         ),
         Avram::Attribute(String?).new(
-          :subdomain,
+          :label,
           param: nil,
           value: "sub..domain",
           param_key: "app"
         )
       }
 
-      subdomains.each do |subdomain|
-        Avram::Validations.validate_subdomain subdomain
-        subdomain.valid?.should be_false
+      labels.each do |label|
+        Avram::Validations.validate_domain_label label
+        label.valid?.should be_false
       end
     end
   end
