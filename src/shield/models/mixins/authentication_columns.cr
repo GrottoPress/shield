@@ -8,7 +8,7 @@ module Shield::AuthenticationColumns
     column started_at : Time
     column ended_at : Time?
 
-    def active?
+    def active? : Bool
       ended_at.nil? || ended_at.not_nil! > Time.utc
     end
   end
