@@ -715,24 +715,26 @@ describe Avram::Validations do
   describe "#validate_exists_by_id" do
     it "accepts existing ID" do
       user_id = Avram::Attribute(Int64?).new(
-        :slug,
+        :id,
         param: nil,
         value: UserBox.create.id,
         param_key: "user"
       )
 
       Avram::Validations.validate_exists_by_id user_id, query: UserQuery.new
+      user_id.valid?.should be_true
     end
 
     it "rejectes non-existing ID" do
       user_id = Avram::Attribute(Int64?).new(
-        :slug,
+        :id,
         param: nil,
         value: 45,
         param_key: "user"
       )
 
       Avram::Validations.validate_exists_by_id user_id, query: UserQuery.new
+      user_id.valid?.should be_false
     end
   end
 end
