@@ -627,6 +627,28 @@ module Avram
         attribute.add_error(message) unless query.id(value).first?
       end
     end
+
+    def validate_positive_number(
+      *attributes,
+      message : Attribute::ErrorMessage = "must be positive"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          attribute.add_error(message) if value < 0
+        end
+      end
+    end
+
+    def validate_negative_number(
+      *attributes,
+      message : Attribute::ErrorMessage = "must be negative"
+    )
+      attributes.each do |attribute|
+        attribute.value.try do |value|
+          attribute.add_error(message) if value >= 0
+        end
+      end
+    end
   end
 end
 

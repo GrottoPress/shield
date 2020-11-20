@@ -737,4 +737,30 @@ describe Avram::Validations do
       user_id.valid?.should be_false
     end
   end
+
+  describe "#validate_positive_number" do
+    it "accepts postive number" do
+      number = Avram::Attribute(Int64?).new(
+        :age,
+        param: nil,
+        value: 5,
+        param_key: "user"
+      )
+
+      Avram::Validations.validate_positive_number number
+      number.valid?.should be_true
+    end
+
+    it "rejects negative number" do
+      number = Avram::Attribute(Int64?).new(
+        :age,
+        param: nil,
+        value: -5,
+        param_key: "user"
+      )
+
+      Avram::Validations.validate_positive_number number
+      number.valid?.should be_false
+    end
+  end
 end
