@@ -8,7 +8,7 @@ module Shield::Users::Delete
 
     def run_operation
       DeleteUser.submit(
-        user_id: user_id.to_i64,
+        id: user_id.to_i64,
         current_user: current_user
       ) do |operation, deleted_user|
         if deleted_user

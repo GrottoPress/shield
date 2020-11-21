@@ -4,19 +4,19 @@ module Shield::DeleteLogin
 
     param_key :login
 
-    attribute login_id : Int64
+    attribute id : Int64
 
     def submit
-      validate_required login_id
+      validate_required id
       validate_login_exists
 
       yield self, delete_login
     end
 
     private def validate_login_exists
-      login_id.value.try do |value|
+      id.value.try do |value|
         @login = LoginQuery.new.id(value).first?
-        login_id.add_error("does not exist") unless @login
+        id.add_error("does not exist") unless @login
       end
     end
 

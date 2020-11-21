@@ -12,7 +12,7 @@ describe Shield::DeletePasswordReset do
     )
 
     DeletePasswordReset.submit(
-      params(password_reset_id: password_reset.id)
+      params(id: password_reset.id)
     ) do |operation, deleted_password_reset|
       deleted_password_reset.should be_a(PasswordReset)
 
@@ -26,17 +26,17 @@ describe Shield::DeletePasswordReset do
     ) do |operation, deleted_password_reset|
       deleted_password_reset.should be_nil
 
-      assert_invalid(operation.password_reset_id, " required")
+      assert_invalid(operation.id, " required")
     end
   end
 
   it "requires password reset exists" do
     DeletePasswordReset.submit(
-      password_reset_id: 1_i64
+      id: 1_i64
     ) do |operation, deleted_password_reset|
       deleted_password_reset.should be_nil
 
-      assert_invalid(operation.password_reset_id, "not exist")
+      assert_invalid(operation.id, "not exist")
     end
   end
 end

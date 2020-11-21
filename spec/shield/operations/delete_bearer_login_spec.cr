@@ -10,7 +10,7 @@ describe Shield::DeleteBearerLogin do
     )
 
     DeleteBearerLogin.submit(
-      params(bearer_login_id: bearer_login.id)
+      params(id: bearer_login.id)
     ) do |operation, deleted_bearer_login|
       deleted_bearer_login.should be_a(BearerLogin)
 
@@ -24,17 +24,15 @@ describe Shield::DeleteBearerLogin do
     ) do |operation, deleted_bearer_login|
       deleted_bearer_login.should be_nil
 
-      assert_invalid(operation.bearer_login_id, " required")
+      assert_invalid(operation.id, " required")
     end
   end
 
   it "requires bearer login exists" do
-    DeleteBearerLogin.submit(
-      bearer_login_id: 1_i64
-    ) do |operation, deleted_bearer_login|
+    DeleteBearerLogin.submit(id: 1_i64) do |operation, deleted_bearer_login|
       deleted_bearer_login.should be_nil
 
-      assert_invalid(operation.bearer_login_id, "not exist")
+      assert_invalid(operation.id, "not exist")
     end
   end
 end

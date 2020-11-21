@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Split action helpers and pipes into modules that may be used independently
 - Rename `Avram::Validations.validate_subdomain` to `.validate_domain_label`
+- Rename `bearer_login_id` attributes in basic operations to `id`
+- Rename `email_confirmation_id` attributes in basic operations to `id`
+- Rename `login_id` attributes in basic operations to `id`
+- Rename `password_reset_id` attributes in basic operations to `id`
+- Rename `user_id` attributes in basic operations to `id`
 
 ## [0.4.0] - 2020-11-12
 

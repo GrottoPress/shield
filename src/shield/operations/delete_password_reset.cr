@@ -4,19 +4,19 @@ module Shield::DeletePasswordReset
 
     param_key :password_reset
 
-    attribute password_reset_id : Int64
+    attribute id : Int64
 
     def submit
-      validate_required password_reset_id
+      validate_required id
       validate_password_reset_exists
 
       yield self, delete_password_reset
     end
 
     private def validate_password_reset_exists
-      password_reset_id.value.try do |value|
+      id.value.try do |value|
         @password_reset = PasswordResetQuery.new.id(value).first?
-        password_reset_id.add_error("does not exist") unless @password_reset
+        id.add_error("does not exist") unless @password_reset
       end
     end
 

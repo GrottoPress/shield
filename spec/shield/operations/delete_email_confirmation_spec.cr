@@ -10,7 +10,7 @@ describe Shield::DeleteEmailConfirmation do
     )
 
     DeleteEmailConfirmation.submit(
-      params(email_confirmation_id: email_confirmation.id)
+      params(id: email_confirmation.id)
     ) do |operation, deleted_email_confirmation|
       deleted_email_confirmation.should be_a(EmailConfirmation)
 
@@ -24,17 +24,17 @@ describe Shield::DeleteEmailConfirmation do
     ) do |operation, deleted_email_confirmation|
       deleted_email_confirmation.should be_nil
 
-      assert_invalid(operation.email_confirmation_id, " required")
+      assert_invalid(operation.id, " required")
     end
   end
 
   it "requires email confirmation exists" do
     DeleteEmailConfirmation.submit(
-      email_confirmation_id: 1_i64
+      id: 1_i64
     ) do |operation, deleted_email_confirmation|
       deleted_email_confirmation.should be_nil
 
-      assert_invalid(operation.email_confirmation_id, "not exist")
+      assert_invalid(operation.id, "not exist")
     end
   end
 end

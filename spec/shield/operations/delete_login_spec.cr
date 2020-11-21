@@ -14,7 +14,7 @@ describe Shield::DeleteLogin do
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )
 
-    DeleteLogin.submit(params(login_id: login.id)) do |operation, deleted_login|
+    DeleteLogin.submit(params(id: login.id)) do |operation, deleted_login|
       deleted_login.should be_a(Login)
 
       LoginQuery.new.id(login.id).first?.should be_nil
@@ -25,15 +25,15 @@ describe Shield::DeleteLogin do
     DeleteLogin.submit(params(some_id: 3)) do |operation, deleted_login|
       deleted_login.should be_nil
 
-      assert_invalid(operation.login_id, " required")
+      assert_invalid(operation.id, " required")
     end
   end
 
   it "requires login exists" do
-    DeleteLogin.submit(login_id: 1_i64) do |operation, deleted_login|
+    DeleteLogin.submit(id: 1_i64) do |operation, deleted_login|
       deleted_login.should be_nil
 
-      assert_invalid(operation.login_id, "not exist")
+      assert_invalid(operation.id, "not exist")
     end
   end
 end

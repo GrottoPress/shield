@@ -5,7 +5,7 @@ describe Shield::DeleteUser do
     user = UserBox.create
 
     DeleteUser.submit(
-      params(user_id: user.id),
+      params(id: user.id),
       current_user: nil
     ) do |operation, deleted_user|
       deleted_user.should be_a(User)
@@ -18,12 +18,12 @@ describe Shield::DeleteUser do
     user = UserBox.create
 
     DeleteUser.submit(
-      params(user_id: user.id),
+      params(id: user.id),
       current_user: user
     ) do |operation, deleted_user|
       deleted_user.should be_nil
 
-      assert_invalid(operation.user_id, "current user")
+      assert_invalid(operation.id, "current user")
     end
   end
 
@@ -31,18 +31,18 @@ describe Shield::DeleteUser do
     DeleteUser.submit(current_user: nil) do |operation, deleted_user|
       deleted_user.should be_nil
 
-      assert_invalid(operation.user_id, " required")
+      assert_invalid(operation.id, " required")
     end
   end
 
   it "requires user exists" do
     DeleteUser.submit(
-      user_id: 1_i64,
+      id: 1_i64,
       current_user: nil
     ) do |operation, deleted_user|
       deleted_user.should be_nil
 
-      assert_invalid(operation.user_id, "not exist")
+      assert_invalid(operation.id, "not exist")
     end
   end
 end
