@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Validate the existence of records for foreign keys in save operations
 - Add `Avram::Validations.validate_http_url`
-- Add `Avram::Validations.validate_sudomain`
+- Add `Avram::Validations.validate_domain_label`
 - Add `Avram::Validations.validate_slug`
 - Add `Avram::Validations.validate_exists_by_id`
 - Add `Avram::Validations.validate_positive_number`
