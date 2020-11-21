@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add  `Shield::AuthenticationColumns#inactive?`
 
 ### Changed
--  Split action helpers and pipes into modules that may be used independently
+- Split action helpers and pipes into modules that may be used independently
 - Rename `Avram::Validations.validate_subdomain` to `.validate_domain_label`
 
 ## [0.4.0] - 2020-11-12
