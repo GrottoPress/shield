@@ -10,9 +10,13 @@ class RegisterEmailConfirmationCurrentUser2 < User::SaveOperation
   include Shield::SetEmailFromEmailConfirmation
   include Shield::SaveEmail
   include Shield::CreatePassword
-  include Shield::DeleteSession(EmailConfirmationSession)
+  include Shield::DeleteSession
 
   private def set_level
     level.value = User::Level.new(:author)
+  end
+
+  private def delete_session(user : User)
+    session.try { |session| EmailConfirmationSession.new(session).delete }
   end
 end

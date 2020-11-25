@@ -8,7 +8,7 @@ module Shield::RegisterEmailConfirmationUser
     include Shield::SetEmailFromEmailConfirmation
     include Shield::SaveEmail
     include Shield::CreatePassword
-    include Shield::DeleteSession(EmailConfirmationSession)
+    include Shield::DeleteSession
 
     private def set_email_confirmation_user(user : User)
       EmailConfirmationQuery.new
@@ -21,6 +21,10 @@ module Shield::RegisterEmailConfirmationUser
         .email(user.email)
         .active
         .update(ended_at: Time.utc)
+    end
+
+    private def delete_session(user : User)
+      session.try { |session| EmailConfirmationSession.new(session).delete }
     end
   end
 end

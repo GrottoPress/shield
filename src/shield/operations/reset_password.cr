@@ -9,7 +9,7 @@ module Shield::ResetPassword
     after_save end_password_resets
 
     include Shield::UpdatePassword
-    include Shield::DeleteSession(PasswordResetSession)
+    include Shield::DeleteSession
 
     private def set_password_digest
       password.value.try do |value|
@@ -22,6 +22,10 @@ module Shield::ResetPassword
         .user_id(user.id)
         .active
         .update(ended_at: Time.utc)
+    end
+
+    private def delete_session(user : User)
+      session.try { |session| PasswordResetSession.new(session).delete }
     end
   end
 end

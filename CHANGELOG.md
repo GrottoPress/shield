@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Rename `login_id` attributes in basic operations to `id`
 - Rename `password_reset_id` attributes in basic operations to `id`
 - Rename `user_id` attributes in basic operations to `id`
+- Convert `Shield::DeleteSession(U)` to a non-generic `Shield::DeleteSession`
 
 ## [0.4.0] - 2020-11-12
 
