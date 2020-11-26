@@ -33,6 +33,10 @@ module Shield::Api::LoginPipes
       end
     end
 
+    def enforce_login_idle_timeout
+      continue
+    end
+
     def do_require_logged_in_failed
       json({status: "failure", message: "Invalid token"})
     end
@@ -45,6 +49,13 @@ module Shield::Api::LoginPipes
       json({
         status: "failure",
         message: "Your IP address has changed. Please log in again."
+      })
+    end
+
+    def do_enforce_login_idle_timeout_failed
+      json({
+        status: "failure",
+        message: "Your login timed out"
       })
     end
 

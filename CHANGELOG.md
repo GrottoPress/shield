@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - 
 
 ### Added
+- Add login idle timeout
 - Validate the existence of records for foreign keys in save operations
 - Add `Avram::Validations.validate_http_url`
 - Add `Avram::Validations.validate_domain_label`

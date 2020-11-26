@@ -4,7 +4,10 @@ module Shield::LogUserOut
     include Shield::DeleteSession
 
     private def delete_session(login : Login)
-      session.try { |session| LoginSession.new(session).delete }
+      session.try do |session|
+        LoginSession.new(session).delete
+        LoginIdleTimeoutSession.new(session).delete
+      end
     end
   end
 end

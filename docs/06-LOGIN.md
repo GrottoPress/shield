@@ -7,8 +7,12 @@
 
    Shield.configure do |settings|
      # ...
-     # How long should a login last before it expires?
+     # How long should a login last before it is expired?
+     # The login will unconditionally expire after this time span.
      #settings.login_expiry = 24.hours
+     #
+     # How long can a login remain idle before it is timed out.
+     #settings.login_idle_timeout = 30.minutes
      # ...
    end
    ```
@@ -181,6 +185,14 @@
      #
      #def do_pin_login_to_ip_address_failed
      #  flash.keep.failure = "Your IP address has changed. Please log in again."
+     #  redirect to: CurrentLogin::New
+     #end
+
+     # What to do when a login has been idle for as long as defined in
+     # `Shield.settings.login_idle_timeout`, if the action enforces login timeouts.
+     #
+     #def do_enforce_login_idle_timeout_failed
+     #  flash.keep.failure = "Your login timed out"
      #  redirect to: CurrentLogin::New
      #end
      # ...

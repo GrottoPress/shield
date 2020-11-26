@@ -4,6 +4,7 @@ module Shield::LoginPipes
     before :require_logged_in
     before :require_logged_out
     before :pin_login_to_ip_address
+    before :enforce_login_idle_timeout
 
     def require_logged_in
       if logged_in?
@@ -34,6 +35,22 @@ module Shield::LoginPipes
       end
     end
 
+    def enforce_login_idle_timeout
+      timeout_session = LoginIdleTimeoutSession.new(session)
+
+      if logged_out?
+        timeout_session.delete
+        continue
+      elsif timeout_session.expired?
+        LogUserOut.update!(current_login!, session: session)
+        response.status_code = 403
+        do_enforce_login_idle_timeout_failed
+      else
+        timeout_session.set
+        continue
+      end
+    end
+
     def set_no_referrer_policy
       response.headers["Referrer-Policy"] = "no-referrer"
       continue
@@ -57,6 +74,11 @@ module Shield::LoginPipes
 
     def do_pin_login_to_ip_address_failed
       flash.keep.failure = "Your IP address has changed. Please log in again."
+      redirect to: CurrentLogin::New
+    end
+
+    def do_enforce_login_idle_timeout_failed
+      flash.keep.failure = "Your login timed out"
       redirect to: CurrentLogin::New
     end
   end
