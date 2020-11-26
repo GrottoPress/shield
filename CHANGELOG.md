@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Avram::Validations.validate_positive_number`
 - Add `Avram::Validations.validate_negative_number`
 - Add `Shield::SetToken` operation mixin
-- Add  `Shield::AuthenticationColumns#inactive?`
+- Add `Shield::AuthenticationColumns#inactive?`
 
 ### Changed
 - Split action helpers and pipes into modules that may be used independently
