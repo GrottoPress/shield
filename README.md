@@ -29,6 +29,7 @@ Find the complete documentation of *Shield* in the `docs/` directory of this rep
 - [x] Authorization
 - [x] Email confirmation
 - [x] *Bearer* logins (API tokens)
+- [x] Login idle timeout
 - [ ] Multi-factor authentication
 
 ## Development
