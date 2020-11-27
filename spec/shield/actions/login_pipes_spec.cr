@@ -111,6 +111,7 @@ describe Shield::LoginPipes do
       response = client.exec(Users::Show.with(user_id: user.id))
 
       response.should send_json(200, user: user.id)
+      response.headers["Refresh"]?.should_not be_nil
     end
 
     it "rejects login that has timed out" do
