@@ -763,4 +763,31 @@ describe Avram::Validations do
       number.valid?.should be_false
     end
   end
+
+  describe "#validate_not_pwned" do
+    it "accepts safe password" do
+      password = Avram::Attribute(String?).new(
+        :password,
+        param: nil,
+        value: "msksieie565iww1id*slLF",
+        param_key: "login"
+      )
+
+      Avram::Validations.validate_not_pwned password
+      password.valid?.should be_true
+    end
+
+    it "rejects unsafe password" do
+      password = Avram::Attribute(String?).new(
+        :password,
+        param: nil,
+        value: "password",
+        param_key: "login"
+      )
+
+      sleep 1 # So we're not rate-limited
+      Avram::Validations.validate_not_pwned password
+      password.valid?.should be_false
+    end
+  end
 end

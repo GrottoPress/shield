@@ -100,6 +100,7 @@
 - `PageUrlSession`
 - `PasswordResetParams`
 - `PasswordResetSession`
+- `PwnedPasswords`
 - `ReturnUrlSession`
 
 ### Helpers
