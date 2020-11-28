@@ -18,6 +18,13 @@
 
   Checks that the given attribute is a valid ID of another model.
 
+  #### Examples:
+
+  ```crystal
+  validate_exists_by_id user_id, query: UserQuery.new, message: "does not exist"
+  validate_exists_by_id post_id, query: PostQuery.new
+  ```
+
 - `.validate_http_url`:
 
   Checks that given attributes are valid HTTP URLs.
