@@ -1,5 +1,3 @@
-require "crypto/bcrypt/password"
-
 require "lucky"
 require "carbon"
 require "../../../../src/shield"
