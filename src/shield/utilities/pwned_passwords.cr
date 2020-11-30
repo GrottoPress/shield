@@ -11,8 +11,8 @@ module Shield::PwnedPasswords
 
     def pwned?(password : String) : Bool?
       digest = Digest::SHA1.hexdigest(password)
-      first, last = digest[0..4], digest[5..]
-      connect_and_check(first, last.upcase)
+      first, last = digest[0, 5], digest[5..]
+      connect_and_check(first, last)
     end
 
     private def set_request_headers
@@ -26,6 +26,8 @@ module Shield::PwnedPasswords
     end
 
     private def connect_and_check(first : String, last : String) : Bool?
+      last = last.upcase
+
       5.times do |i|
         @client.get("/range/#{first}") do |response|
           if response.status.success?
