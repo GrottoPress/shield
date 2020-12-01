@@ -49,22 +49,6 @@
 
   Checks that the given attributes are negative numbers.
 
-- `.validate_positive_number`:
-
-  Checks that the given attributes are positive numbers.
-
-- `.validate_slug`:
-
-  Checks that the given attributes are valid URL slugs.
-
-- `.validate_url`:
-
-  Checks that the given attributes are valid URLs.
-
-- `.validate_username`:
-
-  Checks that the given attributes are valid usernames.
-
 - `.validate_not_pwned`:
 
   Checks the given password attributes to be sure they do not appear in any known data breach. This uses the [Pwned Passwords](https://haveibeenpwned.com/Passwords) API.
@@ -96,3 +80,19 @@
   ```crystal
   validate_not_pwned password, remote_fail: nil
   ```
+
+- `.validate_positive_number`:
+
+  Checks that the given attributes are positive numbers.
+
+- `.validate_slug`:
+
+  Checks that the given attributes are valid URL slugs.
+
+- `.validate_url`:
+
+  Checks that the given attributes are valid URLs.
+
+- `.validate_username`:
+
+  Checks that the given attributes are valid usernames.
