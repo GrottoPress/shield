@@ -10,6 +10,10 @@
 
   Sets the HTTP `Cache-Control` header to disable caching.
 
+- `#enforce_login_idle_timeout`:
+
+  Logs out the current user if the login has been idle for the time span defined by `Shield.settings.login_idle_timeout`
+
 - `#pin_login_to_ip_address`:
 
   Logs out the current user if their IP address changed from the one they originally used to log in.
@@ -37,9 +41,5 @@
 - `#set_previous_page_url`:
 
   Sets the current URL in session as the previous page URL to be used by the next action. *Shield* overrides `#redirect_back` to use this URL, instead of the value from the HTTP referrer header that *Lucky* uses.
-
-- `#enforce_login_idle_timeout`:
-
-  Logs out the current user if the login has been idle for the time span defined by `Shield.settings.login_idle_timeout`
 
 Because `#require_logged_in` and `#require_logged_out` are active at the same time, you are required to explicitly skip at least one of them in your actions.
