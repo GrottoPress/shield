@@ -315,3 +315,16 @@
    ```
 
    `Shield::LoginSession` is a wrapper around *Lucky* sessions that deals with session keys and values for logins, and handles verification of login tokens retrieved from session.
+
+   ---
+   ```crystal
+   # ->>> src/utilities/login_idle_timeout_session.cr
+
+   class LoginIdleTimeoutSession # Or `struct ...`
+     # ...
+     include Shield::LoginIdleTimeoutSession
+     # ...
+   end
+   ```
+
+   `Shield::LoginIdleTimeoutSession` is a wrapper around *Lucky* sessions that deals with session keys and values for login idle timeouts.
