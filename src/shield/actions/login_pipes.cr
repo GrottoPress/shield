@@ -47,7 +47,6 @@ module Shield::LoginPipes
         do_enforce_login_idle_timeout_failed
       else
         timeout_session.set
-        response.headers["Refresh"] = login_idle_refresh_seconds.to_s
         continue
       end
     end
@@ -81,11 +80,6 @@ module Shield::LoginPipes
     def do_enforce_login_idle_timeout_failed
       flash.keep.failure = "Your login timed out"
       redirect to: CurrentLogin::New
-    end
-
-    private def login_idle_refresh_seconds : Int32
-      time = Shield.settings.login_idle_timeout + 1.second
-      time.total_seconds.to_i
     end
   end
 end
