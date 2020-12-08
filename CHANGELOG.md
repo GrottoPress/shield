@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - 
 
 ### Changed
-- Undo auto refreshing the page when login times out
+- Undo automatic page reload when login times out
 
 ## [0.5.0] - 2020-12-01
 
