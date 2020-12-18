@@ -20,7 +20,7 @@ module Shield::ResetPassword
     private def end_password_resets(user : User)
       PasswordResetQuery.new
         .user_id(user.id)
-        .active
+        .is_active
         .update(ended_at: Time.utc)
     end
 

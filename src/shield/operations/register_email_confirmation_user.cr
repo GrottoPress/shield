@@ -19,7 +19,7 @@ module Shield::RegisterEmailConfirmationUser
     private def end_email_confirmations(user : User)
       EmailConfirmationQuery.new
         .email(user.email)
-        .active
+        .is_active
         .update(ended_at: Time.utc)
     end
 

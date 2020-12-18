@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - 
 
 ### Changed
+- Rename `Shield::AuthenticationQuery#active` to `#is_active`
 - Reduce *Pwned Passwords* API retry times from 5 to 3
 
 ## [0.5.1] - 2020-12-08

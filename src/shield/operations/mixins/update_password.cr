@@ -27,7 +27,7 @@ module Shield::UpdatePassword
       LoginQuery.new
         .user_id(user.id)
         .id.not.eq(current_login.try(&.id) || 0_i64)
-        .active
+        .is_active
         .update(ended_at: Time.utc)
     end
   end
