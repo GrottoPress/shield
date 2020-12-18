@@ -27,15 +27,16 @@ module Shield::PwnedPasswords
 
     private def connect_and_check(first : String, last : String) : Bool?
       last = last.upcase
+      retries = 5
 
-      5.times do |i|
+      retries.times do |i|
         @client.get("/range/#{first}") do |response|
           if response.status.success?
             return response.body_io.each_line.any? &.starts_with?(last)
           end
-
-          sleep 1 unless i == 4
         end
+
+        sleep 1 unless i == (retries - 1)
       end
     end
   end
