@@ -22,8 +22,7 @@ module Shield::StartPasswordReset
     include Shield::StartAuthentication
 
     private def set_ended_at
-      ended_at.value = started_at.value.not_nil! +
-        Shield.settings.password_reset_expiry
+      ended_at.value = started_at.value! + Shield.settings.password_reset_expiry
     end
 
     private def set_user_id

@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased] - 
 
+### Added
+- Add `Avram::Attribute#value!` that raises if value is `nil`.
+
 ### Changed
 - Rename `Shield::AuthenticationQuery#active` to `#is_active`
 - Reduce *Pwned Passwords* API retry times from 5 to 3

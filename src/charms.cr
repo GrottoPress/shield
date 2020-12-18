@@ -188,6 +188,12 @@ module Avram
     end
   end
 
+  class Attribute(T)
+    def value!
+      value.not_nil!
+    end
+  end
+
   abstract class SaveOperation(T)
     def record!
       record.not_nil!
@@ -279,12 +285,12 @@ module Avram
           {% for nested_attribute in nested_attributes %}
             {{ nested_attribute.var }}: {{ nested_attribute.var }}.value.nil? ?
               Nothing.new :
-              {{ nested_attribute.var }}.value.not_nil!,
+              {{ nested_attribute.var }}.value!,
           {% end %}
           {% for nested_column in nested_columns %}
             {{ nested_column[:name].id }}: {{ nested_column[:name].id }}.value.nil? ?
               Nothing.new :
-              {{ nested_column[:name].id }}.value.not_nil!,
+              {{ nested_column[:name].id }}.value!,
           {% end %}
         )
       end
@@ -343,12 +349,12 @@ module Avram
           {% for nested_attribute in nested_attributes %}
             {{ nested_attribute.var }}: {{ nested_attribute.var }}.value.nil? ?
               Nothing.new :
-              {{ nested_attribute.var }}.value.not_nil!,
+              {{ nested_attribute.var }}.value!,
           {% end %}
           {% for nested_column in nested_columns %}
             {{ nested_column[:name].id }}: {{ nested_column[:name].id }}.value.nil? ?
               Nothing.new :
-              {{ nested_column[:name].id }}.value.not_nil!,
+              {{ nested_column[:name].id }}.value!,
           {% end %}
         )
       end

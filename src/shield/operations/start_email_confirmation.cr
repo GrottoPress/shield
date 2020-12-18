@@ -13,7 +13,7 @@ module Shield::StartEmailConfirmation
     include Shield::StartAuthentication
 
     private def set_ended_at
-      ended_at.value = started_at.value.not_nil! +
+      ended_at.value = started_at.value! +
         Shield.settings.email_confirmation_expiry
     end
 
