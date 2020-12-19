@@ -31,19 +31,14 @@ module Shield::UpdateEmailConfirmationUser
 
     private def start_email_confirmation(user : User)
       new_email.try do |email|
-        StartEmailConfirmation.create(
+        @start_email_confirmation = StartEmailConfirmation.new(
           user_id: user.id,
           email: email,
           remote_ip: remote_ip
-        ) do |operation, email_confirmation|
-          unless operation.user_email?
-            @email_confirmation = email_confirmation.not_nil!
-            @start_email_confirmation = operation
-          end
-        end
+        )
+
+        @email_confirmation = @start_email_confirmation.try(&.save!)
       end
-    rescue NilAssertionError
-      raise Avram::Rollback.new
     end
   end
 end
