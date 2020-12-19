@@ -1,12 +1,8 @@
 require "./save_user_options_2"
 
 class RegisterCurrentUser2 < User::SaveOperation
-  include Shield::SaveEmail
-  include Shield::CreatePassword
-
-  permit_columns :email
-
-  attribute password : String
+  include Shield::RegisterUser
+  # include Shield::SendWelcomeEmail
 
   has_one_create save_user_options : SaveUserOptions2, assoc_name: :options
 

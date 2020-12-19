@@ -1,12 +1,8 @@
 require "./save_user_options_2"
 
 class UpdateCurrentUser2 < User::SaveOperation
-  include Shield::SaveEmail
-  include Shield::UpdatePassword
-
-  permit_columns :email
-
-  attribute password : String
+  include Shield::UpdateUser
+  # include Shield::NotifyPasswordChange
 
   has_one_update save_user_options : SaveUserOptions2, assoc_name: :options
 
