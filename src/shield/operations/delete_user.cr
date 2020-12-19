@@ -8,12 +8,16 @@ module Shield::DeleteUser
 
     needs current_user : User?
 
-    def submit
+    before_run do
       validate_required id
       validate_not_current_user
       validate_user_exists
+    end
 
-      yield self, delete_user
+    def run
+      @user.try do |user|
+        user if user.delete.rows_affected > 0
+      end
     end
 
     private def validate_not_current_user
@@ -26,14 +30,6 @@ module Shield::DeleteUser
       id.value.try do |value|
         @user = UserQuery.new.id(value).first?
         id.add_error("does not exist") unless @user
-      end
-    end
-
-    private def delete_user
-      return unless valid?
-
-      @user.try do |user|
-        user if user.delete.rows_affected > 0
       end
     end
   end

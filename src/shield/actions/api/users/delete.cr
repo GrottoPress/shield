@@ -7,7 +7,7 @@ module Shield::Api::Users::Delete
     # end
 
     def run_operation
-      DeleteUser.submit(
+      DeleteUser.run(
         id: user_id.to_i64,
         current_user: current_user
       ) do |operation, deleted_user|

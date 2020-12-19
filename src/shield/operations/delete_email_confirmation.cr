@@ -6,11 +6,15 @@ module Shield::DeleteEmailConfirmation
 
     attribute id : Int64
 
-    def submit
+    before_run do
       validate_required id
       validate_email_confirmation_exists
+    end
 
-      yield self, delete_email_confirmation
+    def run
+      @email_confirmation.try do |email_confirmation|
+        email_confirmation if email_confirmation.delete.rows_affected > 0
+      end
     end
 
     private def validate_email_confirmation_exists
@@ -20,14 +24,6 @@ module Shield::DeleteEmailConfirmation
         unless @email_confirmation
           id.add_error("does not exist")
         end
-      end
-    end
-
-    private def delete_email_confirmation
-      return unless valid?
-
-      @email_confirmation.try do |email_confirmation|
-        email_confirmation if email_confirmation.delete.rows_affected > 0
       end
     end
   end

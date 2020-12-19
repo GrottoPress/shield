@@ -140,7 +140,7 @@
    ```crystal
    # ->>> src/operations/delete_login.cr
 
-   class DeleteLogin < Avram::BasicOperation
+   class DeleteLogin < Avram::Operation
      # ...
      include Shield::DeleteLogin
      # ...

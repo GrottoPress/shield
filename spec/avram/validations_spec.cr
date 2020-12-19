@@ -721,7 +721,9 @@ describe Avram::Validations do
         param_key: "user"
       )
 
-      Avram::Validations.validate_exists_by_id user_id, query: UserQuery.new
+      Avram::DatabaseValidations.validate_exists_by_id user_id,
+        query: UserQuery.new
+
       user_id.valid?.should be_true
     end
 
@@ -733,7 +735,9 @@ describe Avram::Validations do
         param_key: "user"
       )
 
-      Avram::Validations.validate_exists_by_id user_id, query: UserQuery.new
+      Avram::DatabaseValidations.validate_exists_by_id user_id,
+        query: UserQuery.new
+
       user_id.valid?.should be_false
     end
   end

@@ -167,7 +167,7 @@ This token is revoked when the user logs out.
    ```crystal
    # ->>> src/operations/delete_bearer_login.cr
 
-   class DeleteBearerLogin < Avram::BasicOperation
+   class DeleteBearerLogin < Avram::Operation
      # ...
      include Shield::DeleteBearerLogin
      # ...
@@ -197,8 +197,7 @@ This token is revoked when the user logs out.
      #include Shield::Api::EmailConfirmationHelpers
      #include Shield::Api::EmailConfirmationPipes
 
-     # Bug: https://github.com/luckyframework/lucky/issues/1281
-     #route_prefix "/api/v0"
+     route_prefix "/api/v0"
 
      # If you are worried about users on mobile, you may want
      # to disable pinning a login to its IP address

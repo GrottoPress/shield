@@ -13,7 +13,7 @@ abstract class ApiAction < Lucky::Action
 
   accepted_formats [:html, :json], default: :json
 
-  # route_prefix "/api/v1"
+  route_prefix "/api/v0"
 
   def do_require_logged_in_failed
     json({logged_in: false})

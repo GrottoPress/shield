@@ -1,3 +1,3 @@
-class DeletePasswordReset < Avram::BasicOperation
+class DeletePasswordReset < Avram::Operation
   include Shield::DeletePasswordReset
 end

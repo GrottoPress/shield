@@ -1,7 +1,7 @@
 class EmailConfirmationCurrentUser::New < BrowserAction
   include Shield::EmailConfirmationCurrentUser::New
 
-  get "/register" do
+  get "/ec/new" do
     run_operation
   end
 

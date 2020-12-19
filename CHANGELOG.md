@@ -8,11 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - 
 
 ### Added
+- Add support for *Lucky* v0.25.0
 - Add `Avram::Attribute#value!` that raises if value is `nil`.
 
 ### Changed
 - Rename `Shield::AuthenticationQuery#active` to `#is_active`
 - Reduce *Pwned Passwords* API retry times from 5 to 3
+
+### Removed
+- Drop support for *Lucky* versions lower than v0.25.0
 
 ## [0.5.1] - 2020-12-08
 

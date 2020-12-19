@@ -1,3 +1,3 @@
-class DeleteLogin < Avram::BasicOperation
+class DeleteLogin < Avram::Operation
   include Shield::DeleteLogin
 end

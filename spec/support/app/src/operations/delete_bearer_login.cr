@@ -1,3 +1,3 @@
-class DeleteBearerLogin < Avram::BasicOperation
+class DeleteBearerLogin < Avram::Operation
   include Shield::DeleteBearerLogin
 end

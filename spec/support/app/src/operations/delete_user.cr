@@ -1,3 +1,3 @@
-class DeleteUser < Avram::BasicOperation
+class DeleteUser < Avram::Operation
   include Shield::DeleteUser
 end

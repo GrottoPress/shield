@@ -36,6 +36,7 @@ describe Shield::RegisterUser do
       password_notify: false
     )) do |operation, user|
       operation.saved?.should be_false
+      UserQuery.new.first?.should be_nil
     end
   end
 end

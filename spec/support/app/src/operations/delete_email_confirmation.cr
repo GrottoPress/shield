@@ -1,3 +1,3 @@
-class DeleteEmailConfirmation < Avram::BasicOperation
+class DeleteEmailConfirmation < Avram::Operation
   include Shield::DeleteEmailConfirmation
 end

@@ -9,7 +9,7 @@ describe Shield::DeleteEmailConfirmation do
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     )
 
-    DeleteEmailConfirmation.submit(
+    DeleteEmailConfirmation.run(
       params(id: email_confirmation.id)
     ) do |operation, deleted_email_confirmation|
       deleted_email_confirmation.should be_a(EmailConfirmation)
@@ -19,7 +19,7 @@ describe Shield::DeleteEmailConfirmation do
   end
 
   it "requires email confirmation id" do
-    DeleteEmailConfirmation.submit(
+    DeleteEmailConfirmation.run(
       params(some_id: 3)
     ) do |operation, deleted_email_confirmation|
       deleted_email_confirmation.should be_nil
@@ -29,7 +29,7 @@ describe Shield::DeleteEmailConfirmation do
   end
 
   it "requires email confirmation exists" do
-    DeleteEmailConfirmation.submit(
+    DeleteEmailConfirmation.run(
       id: 1_i64
     ) do |operation, deleted_email_confirmation|
       deleted_email_confirmation.should be_nil

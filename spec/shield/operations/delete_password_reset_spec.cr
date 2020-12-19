@@ -11,7 +11,7 @@ describe Shield::DeletePasswordReset do
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     )
 
-    DeletePasswordReset.submit(
+    DeletePasswordReset.run(
       params(id: password_reset.id)
     ) do |operation, deleted_password_reset|
       deleted_password_reset.should be_a(PasswordReset)
@@ -21,7 +21,7 @@ describe Shield::DeletePasswordReset do
   end
 
   it "requires password reset id" do
-    DeletePasswordReset.submit(
+    DeletePasswordReset.run(
       params(some_id: 3)
     ) do |operation, deleted_password_reset|
       deleted_password_reset.should be_nil
@@ -31,7 +31,7 @@ describe Shield::DeletePasswordReset do
   end
 
   it "requires password reset exists" do
-    DeletePasswordReset.submit(
+    DeletePasswordReset.run(
       id: 1_i64
     ) do |operation, deleted_password_reset|
       deleted_password_reset.should be_nil

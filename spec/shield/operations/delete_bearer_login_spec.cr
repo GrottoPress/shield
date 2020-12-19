@@ -9,7 +9,7 @@ describe Shield::DeleteBearerLogin do
       user_id: UserBox.create.id
     )
 
-    DeleteBearerLogin.submit(
+    DeleteBearerLogin.run(
       params(id: bearer_login.id)
     ) do |operation, deleted_bearer_login|
       deleted_bearer_login.should be_a(BearerLogin)
@@ -19,7 +19,7 @@ describe Shield::DeleteBearerLogin do
   end
 
   it "requires bearer login id" do
-    DeleteBearerLogin.submit(
+    DeleteBearerLogin.run(
       params(some_id: 3)
     ) do |operation, deleted_bearer_login|
       deleted_bearer_login.should be_nil
@@ -29,7 +29,7 @@ describe Shield::DeleteBearerLogin do
   end
 
   it "requires bearer login exists" do
-    DeleteBearerLogin.submit(id: 1_i64) do |operation, deleted_bearer_login|
+    DeleteBearerLogin.run(id: 1_i64) do |operation, deleted_bearer_login|
       deleted_bearer_login.should be_nil
 
       assert_invalid(operation.id, "not exist")

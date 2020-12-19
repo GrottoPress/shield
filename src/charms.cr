@@ -113,8 +113,10 @@ module Lucky
 end
 
 module Avram
-  class Operation
-    include MailHelpers
+  class Attribute(T)
+    def value!
+      value.not_nil!
+    end
   end
 
   abstract class Box
@@ -188,13 +190,13 @@ module Avram
     end
   end
 
-  class Attribute(T)
-    def value!
-      value.not_nil!
-    end
+  class Operation
+    include MailHelpers
   end
 
   abstract class SaveOperation(T)
+    include MailHelpers
+
     def record!
       record.not_nil!
     end
@@ -202,8 +204,13 @@ module Avram
     # Patched to ensure callbacks run for update operations even if no
     # column attributes changed.
     #
+    # There's `after_completed` since Avram 0.18.0, but that does
+    # not help in situations where you need to roll back a parent
+    # operation's transaction if a nested operation fails; it would be
+    # too late to roll back.
+    #
     # Also to ensure operation is marked as failed if a nested
-    # operation rolls back a database transaction
+    # operation rolls back a database transaction.
     def save : Bool
       if valid? && persisted? && changes.empty?
         after_save(record!)
@@ -375,120 +382,17 @@ module Avram
     end
   end
 
-  # Adds `needs` macro to Basic (non-database) operations
-  module NeedyInitializer
-    macro included
-      OPERATION_NEEDS = [] of Nil
+  module DatabaseValidations(T)
+    extend self
 
-      macro inherited
-        inherit_needs
-      end
-    end
-
-    macro needs(type_declaration)
-      {% OPERATION_NEEDS << type_declaration %}
-      @{{ type_declaration.var }} : {{ type_declaration.type }}
-      property {{ type_declaration.var }}
-    end
-
-    macro inherit_needs
-      \{% if !@type.constant(:OPERATION_NEEDS) %}
-        OPERATION_NEEDS = [] of Nil
-      \{% end %}
-
-      \{% if !@type.ancestors.first.abstract? %}
-        \{% for type_declaration in @type.ancestors.first.constant :OPERATION_NEEDS %}
-          \{% OPERATION_NEEDS << type_declaration %}
-        \{% end %}
-      \{% end %}
-
-      macro inherited
-        inherit_needs
-      end
-
-      macro finished
-        setup_initializer
-      end
-    end
-
-    macro setup_initializer
-      # Build up a list of method arguments
-      #
-      # This way everything has a name and type and we don't have to rely on
-      # **named_args**. **named_args** are easy but you get horrible type errors.
-      #
-      # attribute_method_args would look something like:
-      #
-      #   name : String | Nothing = Nothing.new,
-      #   email : String | Nil | Nothing = Nothing.new
-      #
-      # This can be passed to macros as a string, and then the macro can call .id
-      # on it to output the string as code!
-      {% attribute_method_args = "" %}
-
-      # Build up a list of params so you can use the method args
-      #
-      # This looks something like:
-      #
-      #   name: name,
-      #   email: email
-      {% attribute_params = "" %}
-
-      {% for attribute in ATTRIBUTES %}
-        {% attribute_method_args = attribute_method_args + "#{attribute.var} : #{attribute.type} | Nothing = Nothing.new,\n" %}
-        {% attribute_params = attribute_params + "#{attribute.var}: #{attribute.var},\n" %}
-      {% end %}
-
-      generate_initializers({{ attribute_method_args }}, {{ attribute_params }})
-    end
-
-    private class Nothing
-    end
-
-    macro generate_initializers(attribute_method_args, attribute_params)
-      {% needs_method_args = "" %}
-      {% for type_declaration in OPERATION_NEEDS %}
-        {% needs_method_args = needs_method_args + "@#{type_declaration},\n" %}
-      {% end %}
-
-      def initialize(
-          @params : Avram::Paramable,
-          {{ needs_method_args.id }}
-          {{ attribute_method_args.id }}
-        )
-        set_attributes({{ attribute_params.id }})
-      end
-
-      def initialize(
-          {{ needs_method_args.id }}
-          {{ attribute_method_args.id }}
-        )
-        @params = Avram::Params.new
-        set_attributes({{ attribute_params.id }})
-      end
-
-      def set_attributes({{ attribute_method_args.id }})
-        {% for attribute in ATTRIBUTES %}
-          unless {{ attribute.var }}.is_a? Nothing
-            self.{{ attribute.var }}.value = {{ attribute.var }}
-          end
-        {% end %}
-      end
-    end
-  end
-
-  abstract class BasicOperation < Operation
-    include NeedyInitializer
-
-    def self.submit!(*args, **named_args)
-      submit(*args, **named_args) { |_, result| return result.not_nil! }
-    rescue
-      raise Rollback.new
-    end
-
-    def self.submit(*args, **named_args)
-      new(*args, **named_args).submit do |operation, result|
-        yield operation, result
+    def validate_exists_by_id(
+      attribute,
+      *,
+      query,
+      message : Attribute::ErrorMessage = "does not exist"
+    )
+      attribute.value.try do |value|
+        attribute.add_error(message) unless query.id(value).first?
       end
     end
   end
@@ -620,17 +524,6 @@ module Avram
         attribute.value.try do |value|
           attribute.add_error(message) unless value.ip6?
         end
-      end
-    end
-
-    def validate_exists_by_id(
-      attribute,
-      *,
-      query,
-      message : Attribute::ErrorMessage = "does not exist"
-    )
-      attribute.value.try do |value|
-        attribute.add_error(message) unless query.id(value).first?
       end
     end
 

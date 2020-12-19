@@ -134,7 +134,7 @@
    ```crystal
    # ->>> src/operations/delete_password_reset.cr
 
-   class DeletePasswordReset < Avram::BasicOperation
+   class DeletePasswordReset < Avram::Operation
      # ...
      include Shield::DeletePasswordReset
      # ...
