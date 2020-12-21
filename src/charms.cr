@@ -384,17 +384,6 @@ module Avram
 
   module DatabaseValidations(T)
     extend self
-
-    def validate_exists_by_id(
-      attribute,
-      *,
-      query,
-      message : Attribute::ErrorMessage = "does not exist"
-    )
-      attribute.value.try do |value|
-        attribute.add_error(message) unless query.id(value).first?
-      end
-    end
   end
 
   module Validations
@@ -546,6 +535,17 @@ module Avram
         attribute.value.try do |value|
           attribute.add_error(message) if value >= 0
         end
+      end
+    end
+
+    def validate_exists_by_id(
+      attribute,
+      *,
+      query,
+      message : Attribute::ErrorMessage = "does not exist"
+    )
+      attribute.value.try do |value|
+        attribute.add_error(message) unless query.id(value).first?
       end
     end
 
