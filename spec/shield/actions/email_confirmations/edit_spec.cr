@@ -16,24 +16,13 @@ describe Shield::EmailConfirmations::Edit do
       remote_ip: ip_address
     ) do |operation, email_confirmation|
       email_confirmation = email_confirmation.not_nil!
-
       session = Lucky::Session.new
-      cookies = Lucky::CookieJar.empty_jar
-
-      LogUserIn.create!(
-        params(email: email, password: password),
-        session: session,
-        remote_ip: ip_address
-      )
 
       EmailConfirmationSession.new(session).set(email_confirmation, operation)
 
-      cookies.set(Lucky::Session.settings.key, session.to_json)
-      headers = cookies.updated.add_response_headers(HTTP::Headers.new)
-
       client = ApiClient.new
+      client.browser_auth(user, password, session: session)
 
-      client.headers("Cookie": headers["Set-Cookie"])
       response = client.exec(EmailConfirmations::Edit)
 
       response.status.should eq(HTTP::Status::FOUND)

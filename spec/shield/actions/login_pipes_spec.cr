@@ -14,20 +14,11 @@ describe Shield::LoginPipes do
     it "requires logged out" do
       email = "user@example.tld"
       password = "password4APASSWORD<"
-
-      UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+      ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
       client = ApiClient.new
+      client.browser_auth(email, password, ip_address)
 
-      response = client.exec(CurrentLogin::Create, login: {
-        email: email,
-        password: password
-      })
-
-      response.status.should eq(HTTP::Status::FOUND)
-
-      client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(CurrentLogin::Create)
 
       response.status.should eq(HTTP::Status::FOUND)
@@ -39,21 +30,15 @@ describe Shield::LoginPipes do
     it "accepts login from same IP" do
       email = "user@example.tld"
       password = "password4APASSWORD<"
+      ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
       user = UserBox.create &.email(email)
         .level(User::Level.new :admin)
         .password_digest(CryptoHelper.hash_bcrypt(password))
 
       client = ApiClient.new
+      client.browser_auth(user, password, ip_address)
 
-      response = client.exec(CurrentLogin::Create, login: {
-        email: email,
-        password: password
-      })
-
-      response.status.should eq(HTTP::Status::FOUND)
-
-      client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Show.with(user_id: user.id))
 
       response.should send_json(200, user: user.id)
@@ -68,15 +53,8 @@ describe Shield::LoginPipes do
         .password_digest(CryptoHelper.hash_bcrypt(password))
 
       client = ApiClient.new
+      client.browser_auth(user, password)
 
-      response = client.exec(CurrentLogin::Create, login: {
-        email: email,
-        password: password
-      })
-
-      response.status.should eq(HTTP::Status::FOUND)
-
-      client.headers("Cookie": response.headers["Set-Cookie"])
       response = client.exec(Users::Edit.with(user_id: user.id))
 
       response.status.should eq(HTTP::Status::FOUND)
@@ -88,26 +66,18 @@ describe Shield::LoginPipes do
     it "accepts login that has not timed out" do
       email = "user@example.tld"
       password = "password4APASSWORD<"
+      ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
       user = UserBox.create &.email(email)
         .level(User::Level.new :admin)
         .password_digest(CryptoHelper.hash_bcrypt(password))
 
-      cookies = Lucky::CookieJar.empty_jar
       session = Lucky::Session.new
-
-      LogUserIn.create!(
-        params(email: email, password: password),
-        session: session,
-        remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
-      )
-
-      cookies.set(Lucky::Session.settings.key, session.to_json)
-      headers = cookies.updated.add_response_headers(HTTP::Headers.new)
+      LoginIdleTimeoutSession.new(session).set
 
       client = ApiClient.new
+      client.browser_auth(user, password, ip_address, session)
 
-      client.headers("Cookie": headers["Set-Cookie"])
       response = client.exec(Users::Show.with(user_id: user.id))
 
       response.should send_json(200, user: user.id)
@@ -117,28 +87,20 @@ describe Shield::LoginPipes do
       Shield.temp_config(login_idle_timeout: 2.seconds) do
         email = "user@example.tld"
         password = "password4APASSWORD<"
+        ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
           .password_digest(CryptoHelper.hash_bcrypt(password))
 
-        cookies = Lucky::CookieJar.empty_jar
         session = Lucky::Session.new
-
-        LogUserIn.create!(
-          params(email: email, password: password),
-          session: session,
-          remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
-        )
-
-        cookies.set(Lucky::Session.settings.key, session.to_json)
-        headers = cookies.updated.add_response_headers(HTTP::Headers.new)
+        LoginIdleTimeoutSession.new(session).set
 
         client = ApiClient.new
+        client.browser_auth(user, password, ip_address, session)
 
         sleep 3
 
-        client.headers("Cookie": headers["Set-Cookie"])
         response = client.exec(Users::Show.with(user_id: user.id))
 
         response.status.should eq(HTTP::Status::FOUND)
@@ -150,26 +112,18 @@ describe Shield::LoginPipes do
       Shield.temp_config(login_idle_timeout: 3.seconds) do
         email = "user@example.tld"
         password = "password4APASSWORD<"
+        ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
           .password_digest(CryptoHelper.hash_bcrypt(password))
 
-        cookies = Lucky::CookieJar.empty_jar
         session = Lucky::Session.new
-
-        LogUserIn.create!(
-          params(email: email, password: password),
-          session: session,
-          remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
-        )
-
-        cookies.set(Lucky::Session.settings.key, session.to_json)
-        headers = cookies.updated.add_response_headers(HTTP::Headers.new)
+        LoginIdleTimeoutSession.new(session).set
 
         client = ApiClient.new
+        client.browser_auth(user, password, ip_address, session)
 
-        client.headers("Cookie": headers["Set-Cookie"])
         response = client.exec(Users::Show.with(user_id: user.id))
 
         sleep 1
@@ -204,7 +158,7 @@ describe Shield::LoginPipes do
     it "is skipped when logged out" do
       response = ApiClient.exec(CurrentLogin::New)
 
-      response.body.should eq("CurrentLogin::New")
+      response.body.should eq("CurrentLogin::NewPage")
     end
   end
 end
