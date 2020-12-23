@@ -2,7 +2,7 @@
 
 *Shield* is a comprehensive security solution for [*Lucky* framework](https://luckyframework.org). It features robust authentication and authorization, including user registrations, logins and logouts, password resets and more.
 
-*Shield* is secure by default, and exploits defence-in-depth strategies, including pinning an authentication session to the IP address that started it -- the session is invalidated if the IP address changes.
+*Shield* is secure by default, and exploits defence-in-depth strategies, including the option to pin an authentication session to the IP address that started it -- the session is invalidated if the IP address changes.
 
 User IDs are never saved in session. Instead, each authentication gets a unique ID and token, which is saved in session, and checked against their corresponding salted SHA-256 hashes in the database.
 
