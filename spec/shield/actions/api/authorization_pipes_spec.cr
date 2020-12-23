@@ -10,20 +10,12 @@ describe Shield::Api::AuthorizationPipes do
           CryptoHelper.hash_bcrypt(password)
         )
 
-        LogUserIn.create(
-          params(email: user.email, password: password),
-          remote_ip: Socket::IPAddress.new("129.0.0.5", 5555)
-        ) do |operation, login|
-          login = login.not_nil!
+        client = ApiClient.new
+        client.api_auth(user, password)
 
-          bearer_header = LoginHelper.bearer_header(login, operation)
+        response = client.exec(Api::Posts::Create)
 
-          client = ApiClient.new
-          client.headers("Authorization": bearer_header)
-          response = client.exec(Api::Posts::Create)
-
-          response.should send_json(403, authorized: false)
-        end
+        response.should send_json(403, authorized: false)
       end
 
       it "grants authorization" do
@@ -32,20 +24,12 @@ describe Shield::Api::AuthorizationPipes do
         user = UserBox.create &.level(User::Level.new(:admin))
           .password_digest(CryptoHelper.hash_bcrypt(password))
 
-        LogUserIn.create(
-          params(email: user.email, password: password),
-          remote_ip: Socket::IPAddress.new("129.0.0.5", 5555)
-        ) do |operation, login|
-          login = login.not_nil!
+        client = ApiClient.new
+        client.api_auth(user, password)
 
-          bearer_header = LoginHelper.bearer_header(login, operation)
+        response = client.exec(Api::Posts::Create)
 
-          client = ApiClient.new
-          client.headers("Authorization": bearer_header)
-          response = client.exec(Api::Posts::Create)
-
-          response.should send_json(200, current_user: user.id)
-        end
+        response.should send_json(200, current_user: user.id)
       end
     end
 
@@ -61,13 +45,11 @@ describe Shield::Api::AuthorizationPipes do
         ) do |operation, bearer_login|
           bearer_login = bearer_login.not_nil!
 
-          bearer_header = BearerLoginHelper.bearer_header(
-            bearer_login,
-            operation
-          )
+          bearer_token = BearerLoginHelper.token(bearer_login, operation)
 
           client = ApiClient.new
-          client.headers("Authorization": bearer_header)
+          client.api_auth(bearer_token)
+
           response = client.exec(Api::Posts::Create)
 
           response.should send_json(403, authorized: false)
@@ -85,13 +67,10 @@ describe Shield::Api::AuthorizationPipes do
         ) do |operation, bearer_login|
           bearer_login = bearer_login.not_nil!
 
-          bearer_header = BearerLoginHelper.bearer_header(
-            bearer_login,
-            operation
-          )
+          bearer_token = BearerLoginHelper.token(bearer_login, operation)
 
           client = ApiClient.new
-          client.headers("Authorization": bearer_header)
+          client.api_auth(bearer_token)
           response = client.exec(Api::Posts::Create)
 
           response.should send_json(403, authorized: false)
@@ -109,13 +88,10 @@ describe Shield::Api::AuthorizationPipes do
         ) do |operation, bearer_login|
           bearer_login = bearer_login.not_nil!
 
-          bearer_header = BearerLoginHelper.bearer_header(
-            bearer_login,
-            operation
-          )
+          bearer_token = BearerLoginHelper.token(bearer_login, operation)
 
           client = ApiClient.new
-          client.headers("Authorization": bearer_header)
+          client.api_auth(bearer_token)
           response = client.exec(Api::Posts::Create)
 
           response.should send_json(200, current_bearer_user: user.id)

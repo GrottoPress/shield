@@ -5,31 +5,19 @@ describe Shield::Api::LoginHelpers do
     it "does not use session authentication" do
       email = "user@example.tld"
       password = "password4APASSWORD<"
+      ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
       user = UserBox.create &.email(email)
         .password_digest(CryptoHelper.hash_bcrypt(password))
 
       client = ApiClient.new
 
-      response = client.exec(CurrentLogin::Create, login: {
-        email: email,
-        password: password
-      })
-
-      response.status.should eq(HTTP::Status::FOUND)
-
-      bearer_header = LoginHelper.bearer_header(
-        response.headers["X-Current-Login"],
-        response.headers["X-Login-Token"]
-      )
-
-      client.headers("Cookie": response.headers["Set-Cookie"])
+      client.browser_auth(user, password, ip_address)
       response = client.exec(Api::Posts::Index)
 
       response.status_code.should eq(401)
 
-      client = ApiClient.new
-      client.headers("Authorization": bearer_header)
+      client.api_auth(user, password, ip_address)
       response = client.exec(Api::Posts::Index)
 
       response.should send_json(200, current_user: user.id)
@@ -52,10 +40,10 @@ describe Shield::Api::LoginHelpers do
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
 
-        bearer_header = BearerLoginHelper.bearer_header(bearer_login, operation)
+        bearer_token = BearerLoginHelper.token(bearer_login, operation)
 
         client = ApiClient.new
-        client.headers("Authorization": bearer_header)
+        client.api_auth(bearer_token)
         response = client.exec(Api::Posts::Index)
 
         response.should send_json(200, current_bearer_user: user.id)

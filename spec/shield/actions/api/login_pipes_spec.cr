@@ -5,24 +5,17 @@ describe Shield::Api::LoginPipes do
     it "allows logins with regular passwords" do
       email = "user@example.tld"
       password = "password4APASSWORD<"
+      ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
       user = UserBox.create &.email(email)
         .password_digest(CryptoHelper.hash_bcrypt(password))
 
-      LogUserIn.create(
-        params(email: email, password: password),
-        remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
-      ) do |operation, login|
-        login = login.not_nil!
+      client = ApiClient.new
+      client.api_auth(user, password, ip_address)
 
-        bearer_header = LoginHelper.bearer_header(login, operation)
+      response = client.exec(Api::Posts::Index)
 
-        client = ApiClient.new
-        client.headers("Authorization": bearer_header)
-        response = client.exec(Api::Posts::Index)
-
-        response.should send_json(200, current_user: user.id)
-      end
+      response.should send_json(200, current_user: user.id)
     end
 
     it "allows logins with user-generated bearer tokens" do
@@ -40,10 +33,10 @@ describe Shield::Api::LoginPipes do
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
 
-        bearer_header = BearerLoginHelper.bearer_header(bearer_login, operation)
+        bearer_token = BearerLoginHelper.token(bearer_login, operation)
 
         client = ApiClient.new
-        client.headers("Authorization": bearer_header)
+        client.api_auth(bearer_token)
         response = client.exec(Api::Posts::Index)
 
         response.should send_json(200, current_bearer_user: user.id)
@@ -62,24 +55,14 @@ describe Shield::Api::LoginPipes do
     it "rejects logins with regular passwords" do
       email = "user@example.tld"
       password = "password4APASSWORD<"
+      ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
 
-      UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+      client = ApiClient.new
+      client.api_auth(email, password, ip_address)
 
-      LogUserIn.create(
-        params(email: email, password: password),
-        remote_ip: Socket::IPAddress.new("129.0.0.5", 5555)
-      ) do |operation, login|
-        login = login.not_nil!
+      response = client.exec(Api::Posts::New)
 
-        bearer_header = LoginHelper.bearer_header(login, operation)
-
-        client = ApiClient.new
-        client.headers("Authorization": bearer_header)
-        response = client.exec(Api::Posts::New)
-
-        response.should send_json(200, logged_in: true)
-      end
+      response.should send_json(200, logged_in: true)
     end
 
     it "rejects logins with user-generated bearer tokens" do
@@ -97,10 +80,10 @@ describe Shield::Api::LoginPipes do
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
 
-        bearer_header = BearerLoginHelper.bearer_header(bearer_login, operation)
+        bearer_token = BearerLoginHelper.token(bearer_login, operation)
 
         client = ApiClient.new
-        client.headers("Authorization": bearer_header)
+        client.api_auth(bearer_token)
         response = client.exec(Api::Posts::New)
 
         response.should send_json(200, logged_in: true)
@@ -113,25 +96,18 @@ describe Shield::Api::LoginPipes do
       it "accepts login from same IP" do
         email = "user@example.tld"
         password = "password4APASSWORD<"
+        ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
           .password_digest(CryptoHelper.hash_bcrypt(password))
 
-        LogUserIn.create(
-          params(email: email, password: password),
-          remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
-        ) do |operation, login|
-          login = login.not_nil!
+        client = ApiClient.new
+        client.api_auth(user, password, ip_address)
 
-          bearer_header = LoginHelper.bearer_header(login, operation)
+        response = client.exec(Api::Posts::Index)
 
-          client = ApiClient.new
-          client.headers("Authorization": bearer_header)
-          response = client.exec(Api::Posts::Index)
-
-          response.should send_json(200, current_user: user.id)
-        end
+        response.should send_json(200, current_user: user.id)
       end
 
       it "rejects login from different IP" do
@@ -142,20 +118,12 @@ describe Shield::Api::LoginPipes do
           .level(User::Level.new :admin)
           .password_digest(CryptoHelper.hash_bcrypt(password))
 
-        LogUserIn.create(
-          params(email: email, password: password),
-          remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
-        ) do |operation, login|
-          login = login.not_nil!
+        client = ApiClient.new
+        client.api_auth(user, password)
 
-          bearer_header = LoginHelper.bearer_header(login, operation)
+        response = client.exec(Api::Posts::Index)
 
-          client = ApiClient.new
-          client.headers("Authorization": bearer_header)
-          response = client.exec(Api::Posts::Index)
-
-          response.should send_json(403, ip_address_changed: true)
-        end
+        response.should send_json(403, ip_address_changed: true)
       end
     end
   end

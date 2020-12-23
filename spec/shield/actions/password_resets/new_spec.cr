@@ -10,19 +10,9 @@ describe Shield::PasswordResets::New do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
-    UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password))
-
     client = ApiClient.new
+    client.browser_auth(email, password)
 
-    response = client.exec(CurrentLogin::Create, login: {
-      email: email,
-      password: password
-    })
-
-    response.status.should eq(HTTP::Status::FOUND)
-
-    client.headers("Cookie": response.headers["Set-Cookie"])
     response = client.exec(PasswordResets::New)
 
     response.status.should eq(HTTP::Status::FOUND)
