@@ -32,7 +32,9 @@ module Shield::StartPasswordReset
     end
 
     private def set_guest_email
-      @guest_email = user_id.value.nil? && email.valid?
+      email.value.try do |value|
+        @guest_email = user_id.value.nil? && value.email?
+      end
     end
 
     private def validate_email_exists
