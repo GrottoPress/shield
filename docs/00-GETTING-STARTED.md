@@ -13,7 +13,7 @@ This posture makes it difficult for an application to be *insecure by accident*.
 
 ### Generating a new *Lucky* project
 
-Use [*Meth*](https://github.com/GrottoPress/meth). *Meth* is a *Lucky* application scaffold that gets you up and running with *Shield*.
+Use [*Penny*](https://github.com/GrottoPress/penny). *Penny* is a *Lucky* application scaffold that gets you up and running with *Shield*.
 
 If you would rather start from scratch, generate a new *Lucky* project without authentication, with the `--no-auth` flag: `lucky init.custom my_app --no-auth`.
 
