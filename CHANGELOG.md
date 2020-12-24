@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Change `Shield::CryptoHelper#verify_and_decrypt!` to return a string.
 - Change `Shield::CryptoHelper#verify_and_decrypt` to return a nillable string.
 
+### Fixed
+- Fix email enumeration protection failure in password resets.
+
 ## [0.6.0] - 2020-12-21
 
 ### Added

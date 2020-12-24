@@ -27,6 +27,7 @@ describe Shield::StartPasswordReset do
       remote_ip: nil
     ) do |operation, password_reset|
       password_reset.should be_nil
+      operation.guest_email?.should be_true
 
       assert_valid(operation.user_id)
       assert_invalid(operation.email, "not exist")
@@ -50,6 +51,7 @@ describe Shield::StartPasswordReset do
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       password_reset.should be_nil
+      operation.guest_email?.should be_false
 
       assert_invalid(operation.email, "is invalid")
     end
