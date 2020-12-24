@@ -14,6 +14,10 @@ Shield supports API authentication, with regular passwords or with user-generate
 
 On top of these, *Shield* offers seamless integration with your application. For the most part, `include` a bunch of `module`s in the appropriate `class`es, and you are good to go!
 
+## Quick Start
+
+Get started quickly using [*Penny*](https://github.com/GrottoPress/penny). *Penny* is a *Lucky* application scaffold that gets you up and running with *Shield*.
+
 ## Documentation
 
 Find the complete documentation of *Shield* in the `docs/` directory of this repository.
