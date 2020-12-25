@@ -6,7 +6,7 @@ module Shield::UpdatePassword
       set_password_digest
     end
 
-    after_save log_out_everywhere
+    after_completed log_out_everywhere
 
     include Shield::ValidatePassword
 

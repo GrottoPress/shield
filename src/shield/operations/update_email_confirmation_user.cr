@@ -18,7 +18,7 @@ module Shield::UpdateEmailConfirmationUser
       reset_email
     end
 
-    after_save start_email_confirmation
+    after_completed start_email_confirmation
 
     include Shield::UpdatePassword
 

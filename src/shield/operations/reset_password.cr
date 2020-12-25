@@ -6,7 +6,7 @@ module Shield::ResetPassword
       validate_required password
     end
 
-    after_save end_password_resets
+    after_completed end_password_resets
 
     include Shield::UpdatePassword
     include Shield::DeleteSession

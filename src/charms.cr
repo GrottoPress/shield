@@ -201,27 +201,9 @@ module Avram
       record.not_nil!
     end
 
-    # Patched to ensure callbacks run for update operations even if no
-    # column attributes changed.
-    #
-    # There's `after_completed` since Avram 0.18.0, but that does
-    # not help in situations where you need to roll back a parent
-    # operation's transaction if a nested operation fails; it would be
-    # too late to roll back.
-    #
-    # Also to ensure operation is marked as failed if a nested
+    # To ensure operation is marked as failed if a nested
     # operation rolls back a database transaction.
     def save : Bool
-      if valid? && persisted? && changes.empty?
-        after_save(record!)
-        after_commit(record!)
-
-        Events::SaveSuccessEvent.publish(
-          operation_class: self.class.name,
-          attributes: generic_attributes
-        )
-      end
-
       previous_def
     rescue Rollback
       mark_as_failed
@@ -235,8 +217,11 @@ module Avram
     # All operations are expected to explicitly define any validations
     # needed
     def valid? : Bool
-      before_save
-      attributes.all? &.valid?
+      # These validations must be ran after all `before_save` callbacks have completed
+      # in the case that someone has set a required field in a `before_save`. If we run
+      # this in a `before_save` ourselves, the ordering would cause this to be ran first.
+      # validate_required *required_attributes
+      custom_errors.empty? && attributes.all?(&.valid?)
     end
   end
 
@@ -272,6 +257,10 @@ module Avram
       {% end %}
 
       after_save save_{{ nested_name }}
+
+      after_completed do |saved_record|
+        save_{{ nested_name }}(saved_record) if changes.empty?
+      end
 
       def save_{{ nested_name }}(saved_record)
         nested = {{ nested_name }}
@@ -336,6 +325,10 @@ module Avram
       {% end %}
 
       after_save save_{{ nested_name }}
+
+      after_completed do |saved_record|
+        save_{{ nested_name }}(saved_record) if changes.empty?
+      end
 
       def save_{{ nested_name }}(saved_record)
         nested = {{ nested_name }}

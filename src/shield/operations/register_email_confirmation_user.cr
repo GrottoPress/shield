@@ -2,8 +2,8 @@ module Shield::RegisterEmailConfirmationUser
   macro included
     attribute password : String
 
-    after_save set_email_confirmation_user
-    after_save end_email_confirmations
+    after_completed set_email_confirmation_user
+    after_completed end_email_confirmations
 
     include Shield::SetEmailFromEmailConfirmation
     include Shield::SaveEmail
