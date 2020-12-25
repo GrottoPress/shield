@@ -1,7 +1,7 @@
 require "../../../spec_helper"
 
 describe Shield::PasswordResets::Show do
-  it "works" do
+  it "sets session" do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 

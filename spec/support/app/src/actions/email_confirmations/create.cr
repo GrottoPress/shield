@@ -4,4 +4,9 @@ class EmailConfirmations::Create < BrowserAction
   post "/email-confirmations" do
     run_operation
   end
+
+  def do_run_operation_succeeded(operation, email_confirmation)
+    response.headers["X-Email-Confirmation-ID"] = "ec_id"
+    previous_def
+  end
 end

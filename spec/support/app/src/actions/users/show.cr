@@ -1,8 +1,10 @@
 class Users::Show < BrowserAction
   include Shield::Users::Show
 
+  skip :check_authorization
+
   get "/users/:user_id" do
-    json({user: user_id.to_i64})
+    html ShowPage, user: user
   end
 
   def remote_ip : Socket::IPAddress?

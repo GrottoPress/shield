@@ -1,8 +1,9 @@
 require "../../../spec_helper"
 
 describe Shield::PasswordResets::New do
-  it "works" do
+  it "renders new page" do
     response = ApiClient.exec(PasswordResets::New)
+
     response.body.should eq("PasswordResets::NewPage")
   end
 

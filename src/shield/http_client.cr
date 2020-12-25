@@ -57,19 +57,28 @@ module Shield::HttpClient
           .password_digest(CryptoHelper.hash_bcrypt(password))
       end
 
-      cookies = Lucky::CookieJar.empty_jar
-
       LogUserIn.create!(
         params(email: email, password: password),
         session: session,
         remote_ip: remote_ip
       )
 
-      cookies.set(Lucky::Session.settings.key, session.to_json)
-      headers = cookies.updated.add_response_headers(HTTP::Headers.new)
-      headers("Cookie": headers["Set-Cookie"]?.to_s)
-
+      set_cookie_from_session(session)
       self
+    end
+
+    def set_cookie_from_session(session : Lucky::Session)
+      headers("Cookie": self.class.cookie_from_session(session).to_s)
+    end
+
+    def self.cookie_from_session!(session : Lucky::Session)
+      cookie_from_session(session).not_nil!
+    end
+
+    def self.cookie_from_session(session : Lucky::Session)
+      cookies = Lucky::CookieJar.empty_jar
+      cookies.set(Lucky::Session.settings.key, session.to_json)
+      cookies.updated.add_response_headers(HTTP::Headers.new)["Set-Cookie"]?
     end
   end
 end

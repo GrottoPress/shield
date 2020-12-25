@@ -16,14 +16,12 @@ describe Shield::PasswordResetPipes do
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
 
+        session = Lucky::Session.new
+        PasswordResetSession.new(session).set(password_reset, operation)
+
         client = ApiClient.new
+        client.set_cookie_from_session(session)
 
-        response = client.get(PasswordResetHelper.password_reset_url(
-          password_reset,
-          operation
-        ))
-
-        client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(PasswordResets::Edit)
 
         response.body.should eq("PasswordResets::EditPage")
@@ -44,14 +42,12 @@ describe Shield::PasswordResetPipes do
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
 
+        session = Lucky::Session.new
+        PasswordResetSession.new(session).set(password_reset, operation)
+
         client = ApiClient.new
+        client.set_cookie_from_session(session)
 
-        response = client.get(PasswordResetHelper.password_reset_url(
-          password_reset,
-          operation
-        ))
-
-        client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(PasswordResets::Update)
 
         response.status.should eq(HTTP::Status::FOUND)

@@ -50,7 +50,7 @@
 
      # Go ahead and make requests to routes with
      # the authenticated client.
-     client.exec(CurrentUser::Show)
+     client.exec(Api::CurrentUser::Show)
      ```
 
    - API Authentication with bearer tokens
@@ -64,5 +64,21 @@
 
      # Go ahead and make requests to routes with
      # the authenticated client.
-     client.exec(CurrentUser::Show)
+     client.exec(Api::CurrentUser::Show)
+     ```
+
+   - Set cookie header from session
+
+     ```crystal
+     client = ApiClient.new
+     session = Lucky::Session.new
+
+     session.set(:one, "one")
+     session.set(:two, "two")
+
+     # Sets "Cookie" header from session
+     client.set_cookie_from_session(session)
+
+     # Go ahead and make requests.
+     client.exec(Numbers::Show)
      ```

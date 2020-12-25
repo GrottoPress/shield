@@ -1,7 +1,9 @@
 class EmailConfirmationCurrentUser::Show < BrowserAction
   include Shield::EmailConfirmationCurrentUser::Show
 
-  get "/account" do
-    plain_text "EmailConfirmationCurrentUser::Show"
+  skip :pin_login_to_ip_address
+
+  get "/ec/profile" do
+    html ShowPage, user: user
   end
 end

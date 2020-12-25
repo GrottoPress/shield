@@ -9,14 +9,12 @@ describe Shield::EmailConfirmationPipes do
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!
 
+        session = Lucky::Session.new
+        EmailConfirmationSession.new(session).set(email_confirmation, operation)
+
         client = ApiClient.new
+        client.set_cookie_from_session(session)
 
-        response = client.get(EmailConfirmationHelper.email_confirmation_url(
-          email_confirmation,
-          operation
-        ))
-
-        client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(EmailConfirmationCurrentUser::New)
 
         response.body.should eq("EmailConfirmationCurrentUser::NewPage")
@@ -30,14 +28,12 @@ describe Shield::EmailConfirmationPipes do
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!
 
+        session = Lucky::Session.new
+        EmailConfirmationSession.new(session).set(email_confirmation, operation)
+
         client = ApiClient.new
+        client.set_cookie_from_session(session)
 
-        response = client.get(EmailConfirmationHelper.email_confirmation_url(
-          email_confirmation,
-          operation
-        ))
-
-        client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(EmailConfirmationCurrentUser::New)
 
         response.status.should eq(HTTP::Status::FOUND)

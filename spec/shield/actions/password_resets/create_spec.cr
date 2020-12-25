@@ -1,7 +1,7 @@
 require "../../../spec_helper"
 
 describe Shield::PasswordResets::Create do
-  it "works" do
+  it "starts password reset" do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
@@ -12,7 +12,7 @@ describe Shield::PasswordResets::Create do
       email: email
     })
 
-    response.status.should eq(HTTP::Status::FOUND)
+    response.headers["X-Password-Reset-ID"].should eq("pr_id")
   end
 
   it "requires logged out" do
