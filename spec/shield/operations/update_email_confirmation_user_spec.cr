@@ -20,6 +20,11 @@ describe Shield::UpdateEmailConfirmationUser do
 
       operation.email_confirmation.should be_a(EmailConfirmation)
       operation.start_email_confirmation.should be_a(StartEmailConfirmation)
+
+      EmailConfirmationRequestEmail.new(
+        operation.start_email_confirmation.not_nil!,
+        operation.email_confirmation.not_nil!
+      ).should(be_delivered)
     end
   end
 

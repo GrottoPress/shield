@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Fix email enumeration protection failure in password resets.
+- Fix `before_save` callbacks called multiple times in a single save.
 
 ## [0.6.0] - 2020-12-21
 

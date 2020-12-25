@@ -2,6 +2,6 @@ module Shield::SetSession
   macro included
     needs session : Lucky::Session? = nil
 
-    after_commit set_session
+    after_completed set_session
   end
 end

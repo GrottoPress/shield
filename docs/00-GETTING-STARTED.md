@@ -22,16 +22,3 @@ If you would rather start from scratch, generate a new *Lucky* project without a
 *Shield* patches *Lucky* and [*Avram*](https://github.com/luckyframework/avram) in a few places. This may lead to behaviours that are inconsistent with core *Lucky* and *Avram*. Take note of the following:
 
 1. *Shield* disables the default validation performed by *Avram* in save operations. See [#1209 (comment)](https://github.com/luckyframework/lucky/discussions/1209#discussioncomment-46030). You have to **explicitly** define validations for all attributes in save operations.
-
-1. *Shield* runs *Avram*'s `after_save` and `after_commit` save operation callbacks even if no column attribute changed. If you need a callback to not run, you may check with the operation's `#changes` method:
-
-   ```crystal
-   # ...
-   after_save my_callback
-
-   def my_callback(saved_record)
-     return if changes.empty?
-     # ...
-   end
-   # ...
-   ```

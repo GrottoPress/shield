@@ -1,6 +1,6 @@
 module Shield::UpdateConfirmedEmail
   macro included
-    after_save end_email_confirmations
+    after_completed end_email_confirmations
 
     include Shield::SetEmailFromEmailConfirmation
     include Shield::SaveEmail
