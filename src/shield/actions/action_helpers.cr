@@ -28,7 +28,7 @@ module Shield::ActionHelpers
     end
 
     def array_param(param_key, param) : Array(String)
-      if json?
+      if request.headers["Content-Type"]?.try &.includes?("/json")
         params.from_json[param_key.to_s][param.to_s].as_a.map(&.to_s)
       else
         params.from_form_data.fetch_all("#{param_key}:#{param}")

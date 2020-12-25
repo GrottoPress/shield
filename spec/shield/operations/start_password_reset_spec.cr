@@ -21,6 +21,13 @@ describe Shield::StartPasswordReset do
     end
   end
 
+  it "requires email" do
+    StartPasswordReset.create(remote_ip: nil) do |operation, password_reset|
+      password_reset.should be_nil
+      assert_invalid(operation.email, " required")
+    end
+  end
+
   it "requires existing email" do
     StartPasswordReset.create(
       params(email: "user@example.tld"),

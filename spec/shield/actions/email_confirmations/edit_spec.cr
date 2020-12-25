@@ -1,7 +1,7 @@
 require "../../../spec_helper"
 
 describe Shield::EmailConfirmations::Edit do
-  it "works" do
+  it "updates email confirmation user" do
     email = "user@example.tld"
     new_email = "user@domain.net"
     password = "password4APASSWORD<"
@@ -25,10 +25,24 @@ describe Shield::EmailConfirmations::Edit do
 
       response = client.exec(EmailConfirmations::Edit)
 
-      response.status.should eq(HTTP::Status::FOUND)
+      user.reload.email.should eq(new_email)
     end
+  end
 
-    user.reload.email.should eq(new_email)
+  it "rejects invalid email confirmation token" do
+    email = "user@domain.tld"
+    password = "password4APASSWORD<"
+
+    session = Lucky::Session.new
+    EmailConfirmationSession.new(session).set(1, "abcdef")
+
+    client = ApiClient.new
+    client.browser_auth(email, password, session: session)
+
+    response = client.exec(EmailConfirmations::Edit)
+
+    response.status.should eq(HTTP::Status::FOUND)
+    response.headers["X-Email-Confirmation-Status"]?.should eq("failure")
   end
 
   it "requires logged in" do

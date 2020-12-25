@@ -1,7 +1,7 @@
 require "../../../spec_helper"
 
 describe Shield::PasswordResets::Edit do
-  it "works" do
+  it "renders edit form" do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
@@ -10,30 +10,44 @@ describe Shield::PasswordResets::Edit do
 
     StartPasswordReset.create(
       params(email: email),
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+      remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
     ) do |operation, password_reset|
       password_reset = password_reset.not_nil!
 
-      response = ApiClient.get(PasswordResetHelper.password_reset_url(
-        password_reset,
-        operation
-      ))
+      session = Lucky::Session.new
+      PasswordResetSession.new(session).set(password_reset, operation)
 
-      response.status.should eq(HTTP::Status::FOUND)
+      client = ApiClient.new
+      client.set_cookie_from_session(session)
 
-      cookies = Lucky::CookieJar.from_request_cookies(response.cookies)
-      session = Lucky::Session.from_cookie_jar(cookies)
+      response = client.exec(PasswordResets::Edit)
 
-      PasswordResetSession
-        .new(session)
-        .password_reset_id
-        .should eq(password_reset.id)
-
-      PasswordResetSession
-        .new(session)
-        .password_reset_token
-        .should eq(operation.token)
+      response.body.should eq("PasswordResets::EditPage")
     end
+  end
+
+  it "rejects invalid password reset token" do
+    email = "user@example.tld"
+    password = "password4APASSWORD<"
+
+    UserBox.create &.email(email)
+      .password_digest(CryptoHelper.hash_bcrypt(password))
+
+    password_reset = StartPasswordReset.create!(
+      params(email: email),
+      remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
+    )
+
+    session = Lucky::Session.new
+    PasswordResetSession.new(session).set(password_reset.id, "abcdef")
+
+    client = ApiClient.new
+    client.set_cookie_from_session(session)
+
+    response = client.exec(PasswordResets::Edit)
+
+    response.status.should eq(HTTP::Status::FOUND)
+    response.headers["X-Password-Reset-Status"]?.should eq("failure")
   end
 
   it "requires logged out" do

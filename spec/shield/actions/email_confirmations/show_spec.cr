@@ -1,7 +1,7 @@
 require "../../../spec_helper"
 
 describe Shield::EmailConfirmations::Show do
-  it "works" do
+  it "sets session" do
     StartEmailConfirmation.create(
       params(email: "email@domain.tld"),
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)

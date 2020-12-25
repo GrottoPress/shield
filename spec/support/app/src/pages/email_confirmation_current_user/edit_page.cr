@@ -1,5 +1,5 @@
 class EmailConfirmationCurrentUser::EditPage < MainLayout
-  needs operation : UpdateConfirmedEmail
+  needs operation : UpdateEmailConfirmationCurrentUser
 
   def content
     text "EmailConfirmationCurrentUser::EditPage"

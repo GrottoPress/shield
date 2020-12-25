@@ -1,8 +1,11 @@
 class Users::Edit < BrowserAction
   include Shield::Users::Edit
 
+  skip :check_authorization
+
   get "/users/:user_id/edit" do
-    json({user: 1})
+    operation = UpdateUser.new(user)
+    html EditPage, operation: operation
   end
 
   def remote_ip : Socket::IPAddress?

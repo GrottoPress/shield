@@ -1,12 +1,12 @@
 require "../../../spec_helper"
 
 describe Shield::EmailConfirmations::Create do
-  it "works" do
+  it "starts email confirmation" do
     response = ApiClient.exec(EmailConfirmations::Create, email_confirmation: {
       email: "user@domain.tld"
     })
 
-    response.status.should eq(HTTP::Status::FOUND)
+    response.headers["X-Email-Confirmation-ID"].should eq("ec_id")
   end
 
   it "requires logged out" do

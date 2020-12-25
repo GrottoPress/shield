@@ -41,7 +41,7 @@ describe Shield::LoginPipes do
 
       response = client.exec(Users::Show.with(user_id: user.id))
 
-      response.should send_json(200, user: user.id)
+      response.body.should eq("Users::ShowPage")
     end
 
     it "rejects login from different IP" do
@@ -80,7 +80,7 @@ describe Shield::LoginPipes do
 
       response = client.exec(Users::Show.with(user_id: user.id))
 
-      response.should send_json(200, user: user.id)
+      response.body.should eq("Users::ShowPage")
     end
 
     it "rejects login that has timed out" do
@@ -151,7 +151,7 @@ describe Shield::LoginPipes do
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(Users::Show.with(user_id: user.id))
 
-        response.should send_json(200, user: user.id)
+        response.body.should eq("Users::ShowPage")
       end
     end
 
