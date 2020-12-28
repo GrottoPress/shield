@@ -1,6 +1,10 @@
 module Shield::UpdateConfirmedEmail
   macro included
-    after_completed end_email_confirmations
+    after_save end_email_confirmations
+
+    after_completed do |saved_record|
+      end_email_confirmations(saved_record) if changes.empty?
+    end
 
     include Shield::SetEmailFromEmailConfirmation
     include Shield::SaveEmail

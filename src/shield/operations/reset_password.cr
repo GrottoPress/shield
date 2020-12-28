@@ -6,16 +6,14 @@ module Shield::ResetPassword
       validate_required password
     end
 
-    after_completed end_password_resets
+    after_save end_password_resets
+
+    after_completed do |saved_record|
+      end_password_resets(saved_record) if changes.empty?
+    end
 
     include Shield::UpdatePassword
     include Shield::DeleteSession
-
-    private def set_password_digest
-      password.value.try do |value|
-        password_digest.value = CryptoHelper.hash_bcrypt(value)
-      end
-    end
 
     private def end_password_resets(user : User)
       PasswordResetQuery.new
