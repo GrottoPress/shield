@@ -28,7 +28,7 @@ module Shield::CryptoHelper
       hash_sha256("#{salt}#{plaintext}", salt: false) == raw_digest
     end
 
-    def generate_token(size : Int32 = 32) : String
+    def generate_token(size : Int32 = 24) : String
       Random::Secure.urlsafe_base64(size)
     end
 

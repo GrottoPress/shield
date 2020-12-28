@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Change `Shield::CryptoHelper#encrypt_and_sign` to accept and return a string.
 - Change `Shield::CryptoHelper#verify_and_decrypt!` to return a string.
 - Change `Shield::CryptoHelper#verify_and_decrypt` to return a nillable string.
+- Reduce default token length from `32` to `24`
 
 ### Fixed
 - Fix email enumeration protection failure in password resets.
