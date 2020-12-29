@@ -34,7 +34,7 @@ module Shield::Api::PasswordResets::Create
         json({
           status: "success",
           message: "Development mode: No need to check your mail.",
-          data: {token: PasswordResetHelper.token(password_reset, operation)}
+          data: {token: BearerToken.new(operation, password_reset)}
         })
       end
     end

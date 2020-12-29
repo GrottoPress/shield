@@ -34,9 +34,9 @@ module Shield::Api::EmailConfirmationCurrentUser::Update
           message: success_message(operation),
           data: {
             user: UserSerializer.new(user),
-            token: EmailConfirmationHelper.token(
-              operation.email_confirmation.not_nil!,
-              operation.start_email_confirmation.not_nil!
+            token: BearerToken.new(
+              operation.start_email_confirmation.not_nil!,
+              operation.email_confirmation.not_nil!
             )
           }
         })

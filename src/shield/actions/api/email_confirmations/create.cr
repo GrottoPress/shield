@@ -30,10 +30,7 @@ module Shield::Api::EmailConfirmations::Create
         json({
           status: "success",
           message: "Development mode: No need to check your mail.",
-          data: {token: EmailConfirmationHelper.token(
-            email_confirmation,
-            operation
-          )}
+          data: {token: BearerToken.new(operation, email_confirmation)}
         })
       end
     end

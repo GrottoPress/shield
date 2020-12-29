@@ -12,7 +12,7 @@ describe Shield::Api::EmailConfirmationCurrentUser::Create do
     ) do |operation, email_confirmation|
       email_confirmation = email_confirmation.not_nil!
 
-      token = EmailConfirmationHelper.token(email_confirmation, operation)
+      token = BearerToken.new(operation, email_confirmation)
 
       response = ApiClient.exec(
         Api::EmailConfirmationCurrentUser::Create,
@@ -30,7 +30,7 @@ describe Shield::Api::EmailConfirmationCurrentUser::Create do
 
   it "rejects invalid email confirmation token" do
     password = "password4APASSWORD<"
-    token = EmailConfirmationHelper.token(1, "abcdef")
+    token = BearerToken.new("abcdef", 1)
 
     response = ApiClient.exec(
       Api::EmailConfirmationCurrentUser::Create,

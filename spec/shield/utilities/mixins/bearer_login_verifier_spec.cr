@@ -12,14 +12,11 @@ describe Shield::BearerLoginVerifier do
         bearer_login = bearer_login.not_nil!
 
         headers = HTTP::Headers{
-          "Authorization" => BearerLoginHelper.bearer_header(
-            bearer_login,
-            operation
-          )
+          "Authorization" => BearerToken.new(operation, bearer_login).to_header
         }
 
         headers_2 = HTTP::Headers{
-          "Authorization" => BearerLoginHelper.bearer_header(1, "abcdefghij")
+          "Authorization" => BearerToken.new("abcdefghij", 1).to_header
         }
 
         BearerLoginHeaders.new(headers).verify.should be_a(BearerLogin)

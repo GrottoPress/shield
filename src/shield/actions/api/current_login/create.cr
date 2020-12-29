@@ -23,7 +23,7 @@ module Shield::Api::CurrentLogin::Create
         message: "Copy the token now; it will only be shown once!",
         data: {
           login: LoginSerializer.new(login),
-          token: LoginHelper.token(login, operation)
+          token: BearerToken.new(operation, login)
         }
       })
     end

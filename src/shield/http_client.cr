@@ -1,7 +1,11 @@
 module Shield::HttpClient
   macro included
     def api_auth(token : String)
-      headers("Authorization": "Bearer #{token}")
+      api_auth(BearerToken.new token)
+    end
+
+    def api_auth(token : BearerToken)
+      headers("Authorization": token.to_header)
     end
 
     def api_auth(
@@ -28,8 +32,10 @@ module Shield::HttpClient
         params(email: email, password: password),
         remote_ip: remote_ip
       ) do |operation, login|
-        bearer_header = LoginHelper.bearer_header(login.not_nil!, operation)
-        headers("Authorization": bearer_header)
+        headers("Authorization": BearerToken.new(
+          operation,
+          login.not_nil!
+        ).to_header)
       end
 
       self

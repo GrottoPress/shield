@@ -16,7 +16,7 @@ describe Shield::Api::PasswordResetPipes do
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
 
-        token = PasswordResetHelper.token(password_reset, operation)
+        token = BearerToken.new(operation, password_reset)
 
         response = ApiClient.exec(
           Api::PasswordResets::Update,
@@ -46,7 +46,7 @@ describe Shield::Api::PasswordResetPipes do
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
 
-        token = PasswordResetHelper.token(password_reset, operation)
+        token = BearerToken.new(operation, password_reset)
 
         response = ApiClient.exec(
           Api::PasswordResets::Update,

@@ -15,7 +15,7 @@ describe Shield::Api::PasswordResets::Update do
     ) do |operation, password_reset|
       password_reset = password_reset.not_nil!
 
-      token = PasswordResetHelper.token(password_reset, operation)
+      token = BearerToken.new(operation, password_reset)
 
       response = ApiClient.exec(
         Api::PasswordResets::Update,
@@ -43,11 +43,13 @@ describe Shield::Api::PasswordResets::Update do
       remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
     )
 
-    token = PasswordResetHelper.token(1, "abcdef")
+    token = BearerToken.new("abcdef", 1)
 
-    response = ApiClient.exec(Api::PasswordResets::Update, token: token, user: {
-      password: new_password
-    })
+    response = ApiClient.exec(
+      Api::PasswordResets::Update,
+      token: token,
+      user: {password: new_password}
+    )
 
     response.should send_json(403, {status: "failure"})
   end

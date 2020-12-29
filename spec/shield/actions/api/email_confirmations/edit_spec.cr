@@ -17,7 +17,7 @@ describe Shield::Api::EmailConfirmations::Edit do
     ) do |operation, email_confirmation|
       email_confirmation = email_confirmation.not_nil!
 
-      token = EmailConfirmationHelper.token(email_confirmation, operation)
+      token = BearerToken.new(operation, email_confirmation)
 
       client = ApiClient.new
       client.api_auth(user, password)
@@ -33,7 +33,7 @@ describe Shield::Api::EmailConfirmations::Edit do
     email = "user@domain.tld"
     password = "password4APASSWORD<"
 
-    token = EmailConfirmationHelper.token(1, "abcdef")
+    token = BearerToken.new("abcdef", 1)
 
     client = ApiClient.new
     client.api_auth(email, password)
