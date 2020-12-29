@@ -93,6 +93,7 @@
 ### Utilities
 
 - `BearerLoginHeaders`
+- `BearerToken`
 - `EmailConfirmationParams`
 - `EmailConfirmationSession`
 - `LoginHeaders`

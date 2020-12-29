@@ -40,10 +40,10 @@ describe Shield::Api::LoginHelpers do
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
 
-        bearer_token = BearerLoginHelper.token(bearer_login, operation)
+        token = BearerToken.new(operation, bearer_login)
 
         client = ApiClient.new
-        client.api_auth(bearer_token)
+        client.api_auth(token)
         response = client.exec(Api::Posts::Index)
 
         response.should send_json(200, current_bearer_user: user.id)

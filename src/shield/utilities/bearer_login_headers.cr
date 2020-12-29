@@ -6,17 +6,16 @@ module Shield::BearerLoginHeaders
     end
 
     def bearer_login_id : Int64?
-      token_from_headers.try &.[0]?.try &.to_i64
-    rescue
+      token_from_headers.try &.id
     end
 
     def bearer_login_token : String?
-      token_from_headers.try &.[1]?
+      token_from_headers.try &.token
     end
 
     @[Memoize]
     private def token_from_headers
-      BearerLoginHelper.token_from_headers(@headers).try &.split('.', 2)
+      BearerToken.from_headers(@headers)
     end
   end
 end
