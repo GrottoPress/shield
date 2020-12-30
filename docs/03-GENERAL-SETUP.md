@@ -111,3 +111,16 @@
    `#redirect_back` checks for this session value first, and redirects to it if present.
 
    *Shield* throws away the `allow_external` parameter in `Lucky::Action#redirect_back`, so the only way to return to an external URL is to set the external URL thus: `ReturnUrlSession.new(session).set("http://external.url")`.
+
+   ---
+   ```crystal
+   # ->>> src/utilities/bearer_token.cr
+
+   class BearerToken # or `struct ...`
+     # ...
+     include Shield::BearerToken
+     # ...
+   end
+   ```
+
+   `Shield::BearerToken` is a type representing a bearer token. *Shield*'s tokens are made up of the generated token and a record ID. The ID helps us find the right record to verify, since tokens in the database are hashed.
