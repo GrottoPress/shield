@@ -15,7 +15,7 @@ class PasswordResetRequestEmail < BaseEmail
 
   private def text_message : String
     <<-TEXT
-    #{PasswordResetHelper.password_reset_url(@password_reset, @operation)}
+    #{PasswordResetUrl.new(@operation, @password_reset)}
     TEXT
   end
 end

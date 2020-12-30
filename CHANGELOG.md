@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Add `Shield::HttpClient` that enables API and browser authentication in tests.
 - Add `Shield::BearerToken` utility
+- Add `Shield::PasswordResetUrl` utility
 
 ### Changed
 - Change `Shield::CryptoHelper#encrypt_and_sign` to accept and return a string.

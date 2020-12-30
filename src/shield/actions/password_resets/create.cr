@@ -32,11 +32,7 @@ module Shield::PasswordResets::Create
         success_action(operation)
       else
         flash.keep.success = "Development mode: No need to check your mail."
-
-        redirect to: PasswordResetHelper.password_reset_url(
-          password_reset,
-          operation
-        )
+        redirect to: PasswordResetUrl.new(operation, password_reset)
       end
     end
 
