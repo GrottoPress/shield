@@ -393,18 +393,6 @@ This token is revoked when the user logs out.
 1. Set up utilities:
 
    ```crystal
-   # ->>> src/utilities/bearer_token.cr
-
-   class BearerToken # or `struct ...`
-     # ...
-     include Shield::BearerToken
-     # ...
-   end
-   ```
-
-   `Shield::BearerToken` is a type representing a bearer token.
-
-   ```crystal
    # ->>> src/utilities/bearer_login_headers.cr
 
    class BearerLoginHeaders # or `struct ...`
