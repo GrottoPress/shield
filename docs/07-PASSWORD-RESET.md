@@ -228,11 +228,7 @@
      #    success_action(operation)
      #  else
      #    flash.keep.success = "Development mode: No need to check your mail."
-     #
-     #    redirect to: PasswordResetHelper.password_reset_url(
-     #      password_reset,
-     #      operation
-     #    )
+     #    redirect to: PasswordResetUrl.new(operation, password_reset)
      #  end
      #end
 
@@ -386,6 +382,17 @@
 
    `Shield::PasswordResetSession` is a wrapper around *Lucky* sessions that deals with session keys and values for password resets, and handles verification of password reset tokens retrieved from session.
 
+   ---
+   ```crystal
+   # ->>> src/utilities/password_reset_url.cr
+
+   class PasswordResetUrl # or `struct ...`
+     # ...
+     include Shield::PasswordResetUrl
+     # ...
+   end
+   ```
+
 1. Set up emails:
 
    ```crystal
@@ -406,7 +413,7 @@
 
        To proceed with the password reset process, click the link below:
 
-       #{PasswordResetHelper.password_reset_url(@password_reset, @operation)}
+       #{PasswordResetUrl.new(@operation, @password_reset)}
 
        This password reset link will expire in #{Shield.settings.password_reset_expiry.total_minutes.to_i} minutes.
 
