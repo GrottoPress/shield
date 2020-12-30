@@ -27,9 +27,9 @@ module Shield::EmailConfirmationCurrentUser::Update
       if Lucky::Env.production? || operation.new_email.nil?
         redirect to: Show
       else
-        redirect to: EmailConfirmationHelper.email_confirmation_url(
-          operation.email_confirmation.not_nil!,
-          operation.start_email_confirmation.not_nil!
+        redirect to: EmailConfirmationUrl.new(
+          operation.start_email_confirmation.not_nil!,
+          operation.email_confirmation.not_nil!
         )
       end
     end

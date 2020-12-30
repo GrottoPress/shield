@@ -8,10 +8,10 @@ describe Shield::EmailConfirmations::Show do
     ) do |operation, email_confirmation|
       email_confirmation = email_confirmation.not_nil!
 
-      response = ApiClient.get(EmailConfirmationHelper.email_confirmation_url(
-        email_confirmation,
-        operation
-      ))
+      response = ApiClient.get(EmailConfirmationUrl.new(
+        operation,
+        email_confirmation
+      ).to_s)
 
       response.status.should eq(HTTP::Status::FOUND)
 

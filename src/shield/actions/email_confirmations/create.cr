@@ -28,11 +28,7 @@ module Shield::EmailConfirmations::Create
         success_action(operation)
       else
         flash.keep.success = "Development mode: No need to check your mail."
-
-        redirect to: EmailConfirmationHelper.email_confirmation_url(
-          email_confirmation,
-          operation
-        )
+        redirect to: EmailConfirmationUrl.new(operation, email_confirmation)
       end
     end
 
