@@ -279,11 +279,7 @@ This is particularly important, since email addresses are usually the only means
      #    success_action(operation)
      #  else
      #    flash.keep.success = "Development mode: No need to check your mail."
-     #
-     #    redirect to: EmailConfirmationHelper.email_confirmation_url(
-     #      email_confirmation,
-     #      operation
-     #    )
+     #    redirect to: EmailConfirmationUrl.new(operation, email_confirmation)
      #  end
      #end
 
@@ -523,9 +519,9 @@ This is particularly important, since email addresses are usually the only means
      #  if Lucky::Env.production? || operation.new_email.nil?
      #    redirect to: Show
      #  else
-     #    redirect to: EmailConfirmationHelper.email_confirmation_url(
-     #      operation.email_confirmation.not_nil!,
-     #      operation.start_email_confirmation.not_nil!
+     #    redirect to: EmailConfirmationUrl.new(
+     #      operation.start_email_confirmation.not_nil!,
+     #      operation.email_confirmation.not_nil!
      #    )
      #  end
      #end
@@ -568,6 +564,17 @@ This is particularly important, since email addresses are usually the only means
 
    `Shield::EmailConfirmationSession` is a wrapper around *Lucky* sessions that deals with session keys and values for email confirmations, and handles verification of email confirmation tokens retrieved from session.
 
+   ---
+   ```crystal
+   # ->>> src/utilities/email_confirmation_url.cr
+
+   class EmailConfirmationUrl # or `struct ...`
+     # ...
+     include Shield::EmailConfirmationUrl
+     # ...
+   end
+   ```
+
 1. Set up emails:
 
    ```crystal
@@ -592,7 +599,7 @@ This is particularly important, since email addresses are usually the only means
 
        To proceed to confirm your email, click the link below:
 
-       #{EmailConfirmationHelper.email_confirmation_url(@email_confirmation, @operation)}
+       #{EmailConfirmationUrl.new(@operation, @email_confirmation)}
 
        This email confirmation link will expire in #{Shield.settings.email_confirmation_expiry.total_minutes.to_i} minutes.
 
