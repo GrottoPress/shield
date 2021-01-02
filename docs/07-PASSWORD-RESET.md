@@ -354,20 +354,6 @@
    end
    ```
 
-1. Set up helpers:
-
-   ```crystal
-   # ->>> src/helpers/password_reset_helper.cr
-
-   module PasswordResetHelper
-     # ...
-     extend Shield::PasswordResetHelper
-     # ...
-   end
-   ```
-
-   `Shield::PasswordResetHelper` contains helper methods related to password resets.
-
 1. Set up utilities:
 
    ```crystal

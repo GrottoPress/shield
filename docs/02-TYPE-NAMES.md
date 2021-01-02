@@ -110,15 +110,6 @@
 - `ReturnUrlSession`
 - `Sha256Hash`
 
-### Helpers
-
-- `BearerLoginHelper`
-- `CryptoHelper`
-- `EmailConfirmationHelper`
-- `LoginHelper`
-- `PasswordResetHelper`
-- `UserHelper`
-
 If you would rather name your types differently, set aliases for them, thus:
 
 ```crystal

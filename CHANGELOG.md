@@ -17,15 +17,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Sha256Hash` utility
 - Add `Shield::PasswordAuthentication` utility
 
-### Changed
-- Change `Shield::CryptoHelper#encrypt_and_sign` to accept and return a string.
-- Change `Shield::CryptoHelper#verify_and_decrypt!` to return a string.
-- Change `Shield::CryptoHelper#verify_and_decrypt` to return a nillable string.
-- Reduce default token length from `32` to `24`
-
 ### Fixed
 - Fix email enumeration protection failure in password resets.
 - Fix `before_save` callbacks called multiple times in a single save.
+
+### Removed
+- Remove `Shield::BearerLoginHelper`
+- Remove `Shield::CryptoHelper`
+- Remove `Shield::EmailConfirmationHelper`
+- Remove `Shield::LoginHelper`
+- Remove `Shield::PasswordResetHelper`
+- Remove `Shield::UserHelper`
 
 ## [0.6.0] - 2020-12-21
 

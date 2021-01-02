@@ -538,18 +538,6 @@ This is particularly important, since email addresses are usually the only means
    
    `Shield::EmailConfirmationCurrentUser::Update` updates a user. Include this module, instead of `Shield::CurrentUser::Update`, if you use email confirmations in your app.
 
-1. Set up helpers:
-
-   ```crystal
-   # ->>> src/helpers/email_confirmation_helper.cr
-
-   module EmailConfirmationHelper
-     # ...
-     extend Shield::EmailConfirmationHelper
-     # ...
-   end
-   ```
-
 1. Set up utilities:
 
    ```crystal
