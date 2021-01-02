@@ -1,6 +1,6 @@
 module Shield::ValidateScopes
   macro included
-    needs all_scopes : Array(String)
+    needs allowed_scopes : Array(String)
 
     before_save do
       validate_required scopes
@@ -10,7 +10,7 @@ module Shield::ValidateScopes
     private def validate_scopes
       scopes.value.try do |value|
         scopes.add_error("is required") if value.empty?
-        scopes.add_error("is invalid") unless value.all? &.in?(all_scopes)
+        scopes.add_error("is invalid") unless value.all? &.in?(allowed_scopes)
       end
     end
   end

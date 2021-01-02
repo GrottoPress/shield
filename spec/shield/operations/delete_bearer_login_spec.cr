@@ -5,7 +5,7 @@ describe Shield::DeleteBearerLogin do
     bearer_login = CreateBearerLogin.create!(
       params(name: "super secret"),
       scopes: ["posts.index"],
-      all_scopes: ["posts.update", "posts.index"],
+      allowed_scopes: ["posts.update", "posts.index"],
       user_id: UserBox.create.id
     )
 

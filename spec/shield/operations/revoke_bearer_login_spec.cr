@@ -8,7 +8,7 @@ describe Shield::RevokeBearerLogin do
       params(name: "some token"),
       user_id: UserBox.create.id,
       scopes: ["posts.index"],
-      all_scopes: ["posts.index", "posts.create"]
+      allowed_scopes: ["posts.index", "posts.create"]
     )
 
     bearer_login.active?.should be_true

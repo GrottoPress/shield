@@ -7,7 +7,7 @@ describe Shield::BearerLoginVerifier do
         params(name: "some token"),
         user_id: UserBox.create.id,
         scopes: ["posts.new", "posts.create"],
-        all_scopes: ["posts.new", "posts.create"]
+        allowed_scopes: ["posts.new", "posts.create"]
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
 

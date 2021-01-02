@@ -35,7 +35,7 @@ describe Shield::Api::LoginHelpers do
       CreateBearerLogin.create(
         params(name: "secret token"),
         scopes: ["api.posts.index"],
-        all_scopes: ["api.posts.update", "api.posts.index"],
+        allowed_scopes: ["api.posts.update", "api.posts.index"],
         user_id: user.id
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
