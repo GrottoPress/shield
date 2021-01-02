@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::BearerToken` utility
 - Add `Shield::BearerScope` utility
 - Add `Shield::PasswordResetUrl` utility
+- Add `Shield::EmailConfirmationUrl` utility
 
 ### Changed
 - Change `Shield::CryptoHelper#encrypt_and_sign` to accept and return a string.
