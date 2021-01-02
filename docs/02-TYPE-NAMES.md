@@ -94,15 +94,18 @@
 
 - `BcryptHash`
 - `BearerLoginHeaders`
+- `BearerScope`
 - `BearerToken`
 - `EmailConfirmationParams`
 - `EmailConfirmationSession`
+- `EmailConfirmationUrl`
 - `LoginHeaders`
 - `LoginSession`
 - `PageUrlSession`
 - `PasswordAuthentication`
 - `PasswordResetParams`
 - `PasswordResetSession`
+- `PasswordResetUrl`
 - `PwnedPasswords`
 - `ReturnUrlSession`
 - `Sha256Hash`
