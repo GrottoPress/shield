@@ -5,7 +5,7 @@ describe Shield::CreateBearerLogin do
     CreateBearerLogin.create(
       params(name: "some token"),
       scopes: ["posts.index"],
-      all_scopes: ["posts.update", "posts.index", "current_user.show"],
+      allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
       user_id: UserBox.create.id
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
@@ -19,7 +19,7 @@ describe Shield::CreateBearerLogin do
     CreateBearerLogin.create(
       params(name: "some token"),
       scopes: ["posts.index"],
-      all_scopes: ["posts.update", "posts.index", "current_user.show"],
+      allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -32,7 +32,7 @@ describe Shield::CreateBearerLogin do
       params(name: "some token"),
       user_id: 111,
       scopes: ["posts.index"],
-      all_scopes: ["posts.update", "posts.index", "current_user.show"],
+      allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -43,7 +43,7 @@ describe Shield::CreateBearerLogin do
   it "requires name" do
     CreateBearerLogin.create(
       scopes: ["posts.index"],
-      all_scopes: ["posts.update", "posts.index", "current_user.show"],
+      allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
       user_id: UserBox.create.id
     ) do |operation, bearer_login|
       bearer_login.should be_nil
@@ -59,14 +59,14 @@ describe Shield::CreateBearerLogin do
     CreateBearerLogin.create!(
       params(name: name),
       scopes: ["posts.index"],
-      all_scopes: ["posts.update", "posts.index"],
+      allowed_scopes: ["posts.update", "posts.index"],
       user_id: user.id
     )
 
     CreateBearerLogin.create(
       params(name: name),
       scopes: ["current_user.show"],
-      all_scopes: ["current_user.show", "posts.index"],
+      allowed_scopes: ["current_user.show", "posts.index"],
       user_id: user.id
     ) do |operation, bearer_login|
       bearer_login.should be_nil
@@ -83,14 +83,14 @@ describe Shield::CreateBearerLogin do
     CreateBearerLogin.create!(
       params(name: name),
       scopes: ["posts.index"],
-      all_scopes: ["posts.update", "posts.index"],
+      allowed_scopes: ["posts.update", "posts.index"],
       user_id: user.id
     )
 
     CreateBearerLogin.create(
       params(name: name),
       scopes: ["current_user.show"],
-      all_scopes: ["current_user.show", "posts.index"],
+      allowed_scopes: ["current_user.show", "posts.index"],
       user_id: user_2.id
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)

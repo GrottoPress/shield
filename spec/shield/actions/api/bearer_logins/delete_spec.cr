@@ -11,7 +11,7 @@ describe Shield::Api::BearerLogins::Delete do
     bearer_login = CreateBearerLogin.create!(
       params(name: "secret token"),
       scopes: ["api.posts.index"],
-      all_scopes: ["api.posts.update", "api.posts.index"],
+      allowed_scopes: ["api.posts.update", "api.posts.index"],
       user_id: user.id
     )
 

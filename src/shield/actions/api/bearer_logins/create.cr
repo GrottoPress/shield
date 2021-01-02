@@ -11,7 +11,7 @@ module Shield::Api::BearerLogins::Create
         params,
         user_id: user.id,
         scopes: array_param(CreateBearerLogin.param_key, :scopes),
-        all_scopes: BearerScope.action_scopes.map(&.name)
+        allowed_scopes: BearerScope.action_scopes.map(&.name)
       ) do |operation, bearer_login|
         if bearer_login
           do_run_operation_succeeded(operation, bearer_login.not_nil!)

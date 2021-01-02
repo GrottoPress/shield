@@ -4,7 +4,7 @@ describe Shield::ValidateScopes do
   it "requires scopes" do
     CreateBearerLogin.create(
       params(name: "some token"),
-      all_scopes: ["posts.update", "posts.index"],
+      allowed_scopes: ["posts.update", "posts.index"],
       user_id: UserBox.create.id
     ) do |operation, bearer_login|
       bearer_login.should be_nil
@@ -17,7 +17,7 @@ describe Shield::ValidateScopes do
     CreateBearerLogin.create(
       params(name: "some token"),
       scopes: Array(String).new,
-      all_scopes: ["posts.update", "posts.index"],
+      allowed_scopes: ["posts.update", "posts.index"],
       user_id: UserBox.create.id
     ) do |operation, bearer_login|
       bearer_login.should be_nil
@@ -30,7 +30,7 @@ describe Shield::ValidateScopes do
     CreateBearerLogin.create(
       params(name: "some token"),
       scopes: ["current_user.show"],
-      all_scopes: ["posts.update", "posts.index"],
+      allowed_scopes: ["posts.update", "posts.index"],
       user_id: UserBox.create.id
     ) do |operation, bearer_login|
       bearer_login.should be_nil
