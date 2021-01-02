@@ -8,7 +8,7 @@ describe Shield::Api::LoginHelpers do
       ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
       user = UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       client = ApiClient.new
 
@@ -30,7 +30,7 @@ describe Shield::Api::LoginHelpers do
       password = "password4APASSWORD<"
 
       user = UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       CreateBearerLogin.create(
         params(name: "secret token"),

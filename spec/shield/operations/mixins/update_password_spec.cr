@@ -6,7 +6,7 @@ describe Shield::UpdatePassword do
     new_password = "assword12U-passwor"
 
     user = UserBox.create &.password_digest(
-      CryptoHelper.hash_bcrypt(password)
+      BcryptHash.new(password).hash
     )
 
     UpdateCurrentUser.update!(
@@ -15,8 +15,8 @@ describe Shield::UpdatePassword do
       current_login: nil
     )
 
-    CryptoHelper
-      .verify_bcrypt?(new_password, user.reload.password_digest)
+    BcryptHash.new(new_password)
+      .verify?(user.reload.password_digest)
       .should(be_true)
   end
 
@@ -38,7 +38,7 @@ describe Shield::UpdatePassword do
     new_password = "ass)word1Apasswor"
 
     user = UserBox.create &.password_notify(true)
-      .password_digest(CryptoHelper.hash_bcrypt(password))
+      .password_digest(BcryptHash.new(password).hash)
 
     UpdateCurrentUser.update(
       user,
@@ -58,7 +58,7 @@ describe Shield::UpdatePassword do
     new_password = "ass)word1Apassword"
 
     user = UserBox.create &.password_digest(
-      CryptoHelper.hash_bcrypt(password)
+      BcryptHash.new(password).hash
     )
 
     UpdateCurrentUser.update(
@@ -78,7 +78,7 @@ describe Shield::UpdatePassword do
     password = "pass)word1Apassword"
 
     user = UserBox.create &.password_notify(true)
-      .password_digest(CryptoHelper.hash_bcrypt(password))
+      .password_digest(BcryptHash.new(password).hash)
 
     UpdateCurrentUser.update(
       user,
@@ -99,7 +99,7 @@ describe Shield::UpdatePassword do
     new_password = "assword12U-passwor"
 
     user = UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password))
+      .password_digest(BcryptHash.new(password).hash)
 
     login_1 = LogUserIn.create!(
       params(email: email, password: password),
@@ -132,7 +132,7 @@ describe Shield::UpdatePassword do
     new_password = "assword12U-passwor"
 
     user = UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password))
+      .password_digest(BcryptHash.new(password).hash)
 
     login_1 = LogUserIn.create!(
       params(email: email, password: password),
@@ -176,10 +176,10 @@ describe Shield::UpdatePassword do
     john_password = "pasword12U-pasword"
 
     mary = UserBox.create &.email(mary_email)
-      .password_digest(CryptoHelper.hash_bcrypt(mary_password))
+      .password_digest(BcryptHash.new(mary_password).hash)
 
     john = UserBox.create &.email(john_email)
-      .password_digest(CryptoHelper.hash_bcrypt(john_password))
+      .password_digest(BcryptHash.new(john_password).hash)
 
     mary_login = LogUserIn.create!(
       params(email: mary_email, password: mary_password),

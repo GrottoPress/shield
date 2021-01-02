@@ -6,7 +6,7 @@ describe Shield::AuthorizationPipes do
       password = "password_1Apassword"
 
       user = UserBox.create &.level(User::Level.new(:author))
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       client = ApiClient.new
       client.browser_auth(user, password)
@@ -21,7 +21,7 @@ describe Shield::AuthorizationPipes do
       password = "password_1Apassword"
 
       user = UserBox.create &.level(User::Level.new(:admin))
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       client = ApiClient.new
       client.browser_auth(user, password)

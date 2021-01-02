@@ -13,12 +13,12 @@ module Shield::LoginVerifier
 
     def verify? : Bool?
       return unless login && login_token
-      CryptoHelper.verify_sha256?(login_token!, login!.token_digest)
+      Sha256Hash.new(login_token!).verify?(login!.token_digest)
     end
 
     # To mitigate timing attacks
     private def hash : Nil
-      login_token.try { |token| CryptoHelper.hash_sha256(token) }
+      login_token.try { |token| Sha256Hash.new(token).hash }
     end
 
     def login! : Login

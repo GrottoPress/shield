@@ -12,12 +12,9 @@ module Shield::UpdatePassword
 
     private def set_password_digest
       password.value.try do |value|
-        return if CryptoHelper.verify_bcrypt?(
-          value,
-          password_digest.original_value.to_s
-        )
-
-        password_digest.value = CryptoHelper.hash_bcrypt(value)
+        bcrypt = BcryptHash.new(value)
+        return if bcrypt.verify?(password_digest.original_value.to_s)
+        password_digest.value = bcrypt.hash
       end
     end
 

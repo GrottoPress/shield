@@ -8,7 +8,7 @@ describe Shield::EmailConfirmations::Edit do
     ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
     user = UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password))
+      .password_digest(BcryptHash.new(password).hash)
 
     StartEmailConfirmation.create(
       params(email: new_email),

@@ -8,7 +8,7 @@ describe Shield::Api::LoginPipes do
       ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
       user = UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       client = ApiClient.new
       client.api_auth(user, password, ip_address)
@@ -23,7 +23,7 @@ describe Shield::Api::LoginPipes do
       password = "password4APASSWORD<"
 
       user = UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       CreateBearerLogin.create(
         params(name: "secret token"),
@@ -70,7 +70,7 @@ describe Shield::Api::LoginPipes do
       password = "password4APASSWORD<"
 
       user = UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       CreateBearerLogin.create(
         params(name: "secret token"),
@@ -100,7 +100,7 @@ describe Shield::Api::LoginPipes do
 
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
-          .password_digest(CryptoHelper.hash_bcrypt(password))
+          .password_digest(BcryptHash.new(password).hash)
 
         client = ApiClient.new
         client.api_auth(user, password, ip_address)
@@ -116,7 +116,7 @@ describe Shield::Api::LoginPipes do
 
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
-          .password_digest(CryptoHelper.hash_bcrypt(password))
+          .password_digest(BcryptHash.new(password).hash)
 
         client = ApiClient.new
         client.api_auth(user, password)

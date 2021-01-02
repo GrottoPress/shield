@@ -10,7 +10,7 @@ module Shield::CreatePassword
 
     private def set_password_digest
       password.value.try do |value|
-        password_digest.value = CryptoHelper.hash_bcrypt(value)
+        password_digest.value = BcryptHash.new(value).hash
       end
     end
   end

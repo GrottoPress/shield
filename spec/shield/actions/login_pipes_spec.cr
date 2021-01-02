@@ -34,7 +34,7 @@ describe Shield::LoginPipes do
 
       user = UserBox.create &.email(email)
         .level(User::Level.new :admin)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       client = ApiClient.new
       client.browser_auth(user, password, ip_address)
@@ -50,7 +50,7 @@ describe Shield::LoginPipes do
 
       user = UserBox.create &.email(email)
         .level(User::Level.new :admin)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       client = ApiClient.new
       client.browser_auth(user, password)
@@ -70,7 +70,7 @@ describe Shield::LoginPipes do
 
       user = UserBox.create &.email(email)
         .level(User::Level.new :admin)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       session = Lucky::Session.new
       LoginIdleTimeoutSession.new(session).set
@@ -91,7 +91,7 @@ describe Shield::LoginPipes do
 
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
-          .password_digest(CryptoHelper.hash_bcrypt(password))
+          .password_digest(BcryptHash.new(password).hash)
 
         session = Lucky::Session.new
         LoginIdleTimeoutSession.new(session).set
@@ -116,7 +116,7 @@ describe Shield::LoginPipes do
 
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
-          .password_digest(CryptoHelper.hash_bcrypt(password))
+          .password_digest(BcryptHash.new(password).hash)
 
         session = Lucky::Session.new
         LoginIdleTimeoutSession.new(session).set

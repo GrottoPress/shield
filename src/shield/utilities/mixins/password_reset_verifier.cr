@@ -14,15 +14,13 @@ module Shield::PasswordResetVerifier
     def verify? : Bool?
       return unless password_reset && password_reset_token
 
-      CryptoHelper.verify_sha256?(
-        password_reset_token!,
-        password_reset!.token_digest
-      )
+      Sha256Hash.new(password_reset_token!)
+        .verify?(password_reset!.token_digest)
     end
 
     # To mitigate timing attacks
     private def hash : Nil
-      password_reset_token.try { |token| CryptoHelper.hash_sha256(token) }
+      password_reset_token.try { |token| Sha256Hash.new(token).hash }
     end
 
     def password_reset! : PasswordReset
