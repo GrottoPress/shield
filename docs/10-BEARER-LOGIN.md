@@ -378,18 +378,6 @@ This token is revoked when the user logs out.
 
    `Shield::BearerLogins::Destroy` is responsible for revoking bearer logins. Revoke buttons/links must point to this action.
 
-1. Set up helpers:
-
-   ```crystal
-   # ->>> src/helpers/bearer_login_helper.cr
-
-   module BearerLoginHelper
-     # ...
-     extend Shield::BearerLoginHelper
-     # ...
-   end
-   ```
-
 1. Set up utilities:
 
    ```crystal

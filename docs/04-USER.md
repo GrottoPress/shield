@@ -237,20 +237,6 @@
    end
    ```
 
-1. Set up helpers:
-
-   ```crystal
-   # ->>> src/helpers/user_helper.cr
-
-   module UserHelper
-     # ...
-     extend Shield::UserHelper
-     # ...
-   end
-   ```
-
-   `Shield::UserHelper` contains helper methods related to the user model.
-
 1. Set up emails:
 
    ```crystal

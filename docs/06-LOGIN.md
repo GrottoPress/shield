@@ -288,20 +288,6 @@
    end
    ```
 
-1. Set up helpers:
-
-   ```crystal
-   # ->>> src/helpers/login_helper.cr
-
-   module LoginHelper
-     # ...
-     extend Shield::LoginHelper
-     # ...
-   end
-   ```
-
-   `Shield::LoginHelper` contains login-related helper methods.
-
 1. Set up utilities:
 
    ```crystal
