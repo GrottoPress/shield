@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::EmailConfirmationUrl` utility
 - Add `Shield::BcryptHash` utility
 - Add `Shield::Sha256Hash` utility
+- Add `Shield::PasswordAuthentication` utility
 
 ### Changed
 - Change `Shield::CryptoHelper#encrypt_and_sign` to accept and return a string.

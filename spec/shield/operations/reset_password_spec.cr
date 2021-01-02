@@ -27,7 +27,10 @@ describe Shield::ResetPassword do
       ) do |operation, updated_user|
         operation.saved?.should be_true
 
-        UserHelper.verify_user?(updated_user, new_password).should be_true
+        PasswordAuthentication.new(updated_user)
+          .verify(new_password)
+          .should(be_a User)
+
         password_reset.reload.active?.should be_false
         PasswordResetSession.new(session).password_reset_id.should be_nil
         PasswordResetSession.new(session).password_reset_token.should be_nil
