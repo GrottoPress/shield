@@ -272,7 +272,7 @@ This token is revoked when the user logs out.
 
      get "/bearer-logins/new" do
        operation = CreateBearerLogin.new(
-         all_scopes: BearerLoginHelper.all_scopes
+         all_scopes: BearerScope.action_scopes.map(&.name)
        )
 
        html NewPage, operation: operation
@@ -416,6 +416,17 @@ This token is revoked when the user logs out.
    ```
 
    `Shield::LoginHeaders` handles verifications for regular password logins, since APIs do not use sessions for password authentication.
+
+   ---
+   ```crystal
+   # ->>> src/utilities/bearer_scope.cr
+
+   class BearerScope # or `struct ...`
+     # ...
+     include Shield::BearerScope
+     # ...
+   end
+   ```
 
 ### Action helpers
 

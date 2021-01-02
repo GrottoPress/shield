@@ -10,8 +10,8 @@ module Shield::BearerLogins::Create
       CreateBearerLogin.create(
         params,
         user_id: user.id,
-        scopes: scopes,
-        all_scopes: BearerLoginHelper.all_scopes
+        scopes: array_param(CreateBearerLogin.param_key, :scopes),
+        all_scopes: BearerScope.action_scopes.map(&.name)
       ) do |operation, bearer_login|
         if bearer_login
           do_run_operation_succeeded(operation, bearer_login.not_nil!)
@@ -38,10 +38,6 @@ module Shield::BearerLogins::Create
 
     def authorize?(user : User) : Bool
       user.id == current_user.try &.id
-    end
-
-    private def scopes : Array(String)
-      array_param(CreateBearerLogin.param_key, :scopes)
     end
   end
 end

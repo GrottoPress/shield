@@ -61,11 +61,11 @@ module Shield::Api::LoginPipes
     private def send_invalid_token_response
       response.status_code = 401
       response.headers["WWW-Authenticate"] =
-        %(Bearer error="invalid_token", scope="#{bearer_login_scope}")
+        %(Bearer error="invalid_token", scope="#{bearer_scope}")
     end
 
-    private def bearer_login_scope
-      BearerLoginHelper.scope(self.class)
+    private def bearer_scope
+      BearerScope.new(self.class).name
     end
   end
 end
