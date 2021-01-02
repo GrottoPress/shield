@@ -13,16 +13,12 @@ module Shield::BearerLoginVerifier
 
     def verify? : Bool?
       return unless bearer_login && bearer_login_token
-
-      CryptoHelper.verify_sha256?(
-        bearer_login_token!,
-        bearer_login!.token_digest
-      )
+      Sha256Hash.new(bearer_login_token!).verify?(bearer_login!.token_digest)
     end
 
     # To mitigate timing attacks
     private def hash : Nil
-      bearer_login_token.try { |token| CryptoHelper.hash_sha256(token) }
+      bearer_login_token.try { |token| Sha256Hash.new(token).hash }
     end
 
     def bearer_login! : BearerLogin

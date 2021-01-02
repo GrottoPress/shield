@@ -8,7 +8,7 @@ describe Shield::PasswordResetPipes do
 
       UserBox.create &.email(email)
         .level(User::Level.new :admin)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       StartPasswordReset.create(
         params(email: email),
@@ -34,7 +34,7 @@ describe Shield::PasswordResetPipes do
 
       UserBox.create &.email(email)
         .level(User::Level.new :admin)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       StartPasswordReset.create(
         params(email: email),

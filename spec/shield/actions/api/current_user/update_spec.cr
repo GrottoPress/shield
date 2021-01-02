@@ -7,7 +7,7 @@ describe Shield::Api::CurrentUser::Update do
     password = "password4APASSWORD<"
 
     user = UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password))
+      .password_digest(BcryptHash.new(password).hash)
 
     client = ApiClient.new
     client.api_auth(user, password)

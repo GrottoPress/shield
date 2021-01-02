@@ -10,10 +10,10 @@ describe Shield::LoginHelpers do
       password_2 = "assword4A,PASSWOR"
 
       user = UserBox.create &.email(email)
-        .password_digest(CryptoHelper.hash_bcrypt(password))
+        .password_digest(BcryptHash.new(password).hash)
 
       user_2 = UserBox.create &.email(email_2)
-        .password_digest(CryptoHelper.hash_bcrypt(password_2))
+        .password_digest(BcryptHash.new(password_2).hash)
 
       client = ApiClient.new
 

@@ -6,7 +6,7 @@ describe Shield::DeleteLogin do
     password = "password12U~password"
 
     user = UserBox.create &.email(email).password_digest(
-      CryptoHelper.hash_bcrypt(password)
+      BcryptHash.new(password).hash
     )
 
     login = LogUserIn.create!(

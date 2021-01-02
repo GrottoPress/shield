@@ -92,6 +92,7 @@
 
 ### Utilities
 
+- `BcryptHash`
 - `BearerLoginHeaders`
 - `BearerToken`
 - `EmailConfirmationParams`
@@ -103,6 +104,7 @@
 - `PasswordResetSession`
 - `PwnedPasswords`
 - `ReturnUrlSession`
+- `Sha256Hash`
 
 ### Helpers
 

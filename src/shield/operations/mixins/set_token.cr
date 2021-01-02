@@ -8,7 +8,7 @@ module Shield::SetToken
 
     private def set_token
       @token = CryptoHelper.generate_token
-      token_digest.value = CryptoHelper.hash_sha256(token)
+      token_digest.value = Sha256Hash.new(token).hash
     end
   end
 end

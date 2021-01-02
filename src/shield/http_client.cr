@@ -25,7 +25,7 @@ module Shield::HttpClient
     )
       if create_user
         UserBox.create &.email(email)
-          .password_digest(CryptoHelper.hash_bcrypt(password))
+          .password_digest(BcryptHash.new(password).hash)
       end
 
       LogUserIn.create(
@@ -60,7 +60,7 @@ module Shield::HttpClient
     )
       if create_user
         UserBox.create &.email(email)
-          .password_digest(CryptoHelper.hash_bcrypt(password))
+          .password_digest(BcryptHash.new(password).hash)
       end
 
       LogUserIn.create!(

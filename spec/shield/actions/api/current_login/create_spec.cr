@@ -6,7 +6,7 @@ describe Shield::Api::CurrentLogin::Create do
     password = "password4APASSWORD<"
 
     user = UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password))
+      .password_digest(BcryptHash.new(password).hash)
 
     client = ApiClient.new
 

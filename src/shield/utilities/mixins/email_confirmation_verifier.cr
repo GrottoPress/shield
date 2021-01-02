@@ -14,15 +14,13 @@ module Shield::EmailConfirmationVerifier
     def verify? : Bool?
       return unless email_confirmation && email_confirmation_token
 
-      CryptoHelper.verify_sha256?(
-        email_confirmation_token!,
-        email_confirmation!.token_digest
-      )
+      Sha256Hash.new(email_confirmation_token!)
+        .verify?(email_confirmation!.token_digest)
     end
 
     # To mitigate timing attacks
     private def hash : Nil
-      email_confirmation_token.try { |token| CryptoHelper.hash_sha256(token) }
+      email_confirmation_token.try { |token| Sha256Hash.new(token).hash }
     end
 
     def email_confirmation! : EmailConfirmation

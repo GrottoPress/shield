@@ -8,7 +8,7 @@ describe Shield::EmailConfirmationCurrentUser::Update do
 
     user = UserBox.create &.email(email)
       .level(User::Level.new(:admin))
-      .password_digest(CryptoHelper.hash_bcrypt(password))
+      .password_digest(BcryptHash.new(password).hash)
 
     client = ApiClient.new
     client.browser_auth(user, password)

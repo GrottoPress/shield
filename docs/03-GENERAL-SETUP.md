@@ -124,3 +124,25 @@
    ```
 
    `Shield::BearerToken` is a type representing a bearer token. *Shield*'s tokens are made up of the generated token and a record ID. The ID helps us find the right record to verify, since tokens in the database are hashed.
+
+   ---
+   ```crystal
+   # ->>> src/utilities/bcrypt_hash.cr
+
+   class BcryptHash # or `struct ...`
+     # ...
+     include Shield::BcryptHash
+     # ...
+   end
+   ```
+
+   ---
+   ```crystal
+   # ->>> src/utilities/sha256_hash.cr
+
+   class Sha256Hash # or `struct ...`
+     # ...
+     include Shield::Sha256Hash
+     # ...
+   end
+   ```

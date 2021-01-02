@@ -11,7 +11,9 @@ describe Shield::CreatePassword do
       password_notify: true
     ))
 
-    CryptoHelper.verify_bcrypt?(password, user.password_digest).should be_true
+    BcryptHash.new(password)
+      .verify?(user.password_digest)
+      .should(be_true)
   end
 
   it "requires password" do

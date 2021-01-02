@@ -6,7 +6,7 @@ describe Shield::PasswordResets::Edit do
     password = "password4APASSWORD<"
 
     UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password))
+      .password_digest(BcryptHash.new(password).hash)
 
     StartPasswordReset.create(
       params(email: email),
@@ -31,7 +31,7 @@ describe Shield::PasswordResets::Edit do
     password = "password4APASSWORD<"
 
     UserBox.create &.email(email)
-      .password_digest(CryptoHelper.hash_bcrypt(password))
+      .password_digest(BcryptHash.new(password).hash)
 
     password_reset = StartPasswordReset.create!(
       params(email: email),
