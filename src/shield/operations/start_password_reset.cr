@@ -27,7 +27,7 @@ module Shield::StartPasswordReset
 
     private def set_user_id
       email.value.try do |value|
-        user_id.value = UserHelper.user_from_email(value).try(&.id)
+        user_id.value = UserQuery.new.email(value.downcase).first?.try(&.id)
       end
     end
 

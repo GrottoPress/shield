@@ -21,7 +21,7 @@ module Shield::LogUserIn
     private def verify_login
       return unless email.value && password.value
 
-      if user = UserHelper.verify_user(email.value!, password.value!)
+      if user = PasswordAuthentication.new(email.value!).verify(password.value!)
         user_id.value = user.not_nil!.id
       else
         email.add_error "may be incorrect"

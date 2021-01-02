@@ -146,3 +146,14 @@
      # ...
    end
    ```
+
+   ---
+   ```crystal
+   # ->>> src/utilities/password_authentication.cr
+
+   class PasswordAuthentication # or `struct ...`
+     # ...
+     include Shield::PasswordAuthentication
+     # ...
+   end
+   ```

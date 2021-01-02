@@ -100,6 +100,7 @@
 - `LoginHeaders`
 - `LoginSession`
 - `PageUrlSession`
+- `PasswordAuthentication`
 - `PasswordResetParams`
 - `PasswordResetSession`
 - `PwnedPasswords`
