@@ -25,17 +25,17 @@ module Shield::Api::AuthorizationPipes
     end
 
     private def authorize_bearer_login?
-      current_bearer_login.try &.scopes.includes?(bearer_login_scope)
+      current_bearer_login.try &.scopes.includes?(bearer_scope)
     end
 
     private def send_insufficient_scope_response
       response.status_code = 403
       response.headers["WWW-Authenticate"] =
-        %(Bearer error="insufficient_scope", scope="#{bearer_login_scope}")
+        %(Bearer error="insufficient_scope", scope="#{bearer_scope}")
     end
 
-    private def bearer_login_scope
-      BearerLoginHelper.scope(self.class)
+    private def bearer_scope
+      BearerScope.new(self.class).name
     end
   end
 end
