@@ -1,4 +1,4 @@
-unless Bool::Lucky.parse(ENV["SKIP_CREATE_DB"]?.to_s).value
+unless Bool.adapter.parse(ENV["SKIP_CREATE_DB"]?.to_s).value
   Db::Create.new(quiet: true).call
 end
 
