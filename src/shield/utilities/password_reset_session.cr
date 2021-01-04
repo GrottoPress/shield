@@ -19,18 +19,18 @@ module Shield::PasswordResetSession
     end
 
     def set(
-      password_reset : PasswordReset,
-      operation : StartPasswordReset
+      operation : StartPasswordReset,
+      password_reset : PasswordReset
     ) : self
-      set(password_reset.id, operation.token)
+      set(operation.token, password_reset.id)
     end
 
     def set(token : String) : self
       bearer_token = BearerToken.new(token)
-      set(bearer_token.id, bearer_token.token)
+      set(bearer_token.token, bearer_token.id)
     end
 
-    def set(id, token : String) : self
+    def set(token : String, id) : self
       @session.set(:password_reset_id, id.to_s)
       @session.set(:password_reset_token, token)
       self

@@ -18,7 +18,7 @@ describe Shield::EmailConfirmations::Edit do
       email_confirmation = email_confirmation.not_nil!
       session = Lucky::Session.new
 
-      EmailConfirmationSession.new(session).set(email_confirmation, operation)
+      EmailConfirmationSession.new(session).set(operation, email_confirmation)
 
       client = ApiClient.new
       client.browser_auth(user, password, session: session)
@@ -34,7 +34,7 @@ describe Shield::EmailConfirmations::Edit do
     password = "password4APASSWORD<"
 
     session = Lucky::Session.new
-    EmailConfirmationSession.new(session).set(1, "abcdef")
+    EmailConfirmationSession.new(session).set("abcdef", 1)
 
     client = ApiClient.new
     client.browser_auth(email, password, session: session)

@@ -19,18 +19,18 @@ module Shield::EmailConfirmationSession
     end
 
     def set(
-      email_confirmation : EmailConfirmation,
-      operation : StartEmailConfirmation
+      operation : StartEmailConfirmation,
+      email_confirmation : EmailConfirmation
     ) : self
-      set(email_confirmation.id, operation.token)
+      set(operation.token, email_confirmation.id)
     end
 
     def set(token : String) : self
       bearer_token = BearerToken.new(token)
-      set(bearer_token.id, bearer_token.token)
+      set(bearer_token.token, bearer_token.id)
     end
 
-    def set(id, token : String) : self
+    def set(token : String, id) : self
       @session.set(:email_confirmation_id, id.to_s)
       @session.set(:email_confirmation_token, token)
       self

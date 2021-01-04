@@ -10,7 +10,7 @@ describe Shield::EndEmailConfirmation do
     ) do |operation, email_confirmation|
       email_confirmation =  email_confirmation.not_nil!
 
-      EmailConfirmationSession.new(session).set(email_confirmation, operation)
+      EmailConfirmationSession.new(session).set(operation, email_confirmation)
 
       email_confirmation.active?.should be_true
 
