@@ -10,7 +10,7 @@ describe Shield::EmailConfirmationPipes do
         email_confirmation = email_confirmation.not_nil!
 
         session = Lucky::Session.new
-        EmailConfirmationSession.new(session).set(email_confirmation, operation)
+        EmailConfirmationSession.new(session).set(operation, email_confirmation)
 
         client = ApiClient.new
         client.set_cookie_from_session(session)
@@ -29,7 +29,7 @@ describe Shield::EmailConfirmationPipes do
         email_confirmation = email_confirmation.not_nil!
 
         session = Lucky::Session.new
-        EmailConfirmationSession.new(session).set(email_confirmation, operation)
+        EmailConfirmationSession.new(session).set(operation, email_confirmation)
 
         client = ApiClient.new
         client.set_cookie_from_session(session)

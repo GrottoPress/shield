@@ -16,8 +16,8 @@ describe Shield::UpdateConfirmedEmail do
       email_confirmation = email_confirmation.not_nil!
 
       from_session = EmailConfirmationSession.new(session).set(
-        email_confirmation,
-        operation
+        operation,
+        email_confirmation
       )
 
       UpdateConfirmedEmail.update(

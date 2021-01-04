@@ -18,11 +18,16 @@ module Shield::LoginSession
       self
     end
 
-    def set(login : Login, operation : LogUserIn) : self
-      set(login.id, operation.token)
+    def set(operation : LogUserIn, login : Login) : self
+      set(operation.token, login.id)
     end
 
-    def set(id, token : String) : self
+    def set(token : String) : self
+      bearer_token = BearerToken.new(token)
+      set(bearer_token.token, bearer_token.id)
+    end
+
+    def set(token : String, id) : self
       @session.set(:login_id, id.to_s)
       @session.set(:login_token, token)
       self

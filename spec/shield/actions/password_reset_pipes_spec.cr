@@ -17,7 +17,7 @@ describe Shield::PasswordResetPipes do
         password_reset = password_reset.not_nil!
 
         session = Lucky::Session.new
-        PasswordResetSession.new(session).set(password_reset, operation)
+        PasswordResetSession.new(session).set(operation, password_reset)
 
         client = ApiClient.new
         client.set_cookie_from_session(session)
@@ -43,7 +43,7 @@ describe Shield::PasswordResetPipes do
         password_reset = password_reset.not_nil!
 
         session = Lucky::Session.new
-        PasswordResetSession.new(session).set(password_reset, operation)
+        PasswordResetSession.new(session).set(operation, password_reset)
 
         client = ApiClient.new
         client.set_cookie_from_session(session)
