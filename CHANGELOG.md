@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Add `Shield::HttpClient` that enables API and browser authentication in tests.
+- Add `Avram::NestedSaveOperation.has_one` macro
+- Add `Shield::HasOneSaveUserOptions` operation mixin
 
 ### Changed
 - Change `Shield::CryptoHelper#encrypt_and_sign` to accept and return a string.
@@ -19,6 +21,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Fix email enumeration protection failure in password resets.
 - Fix `before_save` callbacks called multiple times in a single save.
+
+### Removed
+- Remove `Avram::NestedSaveOperation.has_one_create` macro
+- Remove `Avram::NestedSaveOperation.has_one_update` macro
+- Remove `Shield::HasOneCreateSaveUserOptions` operation mixin
+- Remove `Shield::HasOneUpdateSaveUserOptions` operation mixin
 
 ## [0.6.0] - 2020-12-21
 

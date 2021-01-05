@@ -1,6 +1,6 @@
 class UpdateEmailConfirmationCurrentUser < User::SaveOperation
   include Shield::UpdateEmailConfirmationUser
-  include Shield::HasOneUpdateSaveUserOptions
+  include Shield::HasOneSaveUserOptions
 
   before_save set_level
 
