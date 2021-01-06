@@ -4,7 +4,7 @@ class RegisterEmailConfirmationCurrentUser2 < User::SaveOperation
   include Shield::RegisterEmailConfirmationUser
   # include Shield::SendWelcomeEmail
 
-  has_one_create save_user_options : SaveUserOptions2, assoc_name: :options
+  has_one save_user_options : SaveUserOptions2
 
   before_save set_level
 
