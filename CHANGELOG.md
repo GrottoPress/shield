@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::BcryptHash` utility
 - Add `Shield::Sha256Hash` utility
 - Add `Shield::PasswordAuthentication` utility
+- Add `Avram::NestedSaveOperation.has_one` macro
+- Add `Shield::HasOneSaveUserOptions` operation mixin
 
 ### Fixed
 - Fix email enumeration protection failure in password resets.
@@ -28,6 +30,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove `Shield::LoginHelper`
 - Remove `Shield::PasswordResetHelper`
 - Remove `Shield::UserHelper`
+- Remove `Avram::NestedSaveOperation.has_one_create` macro
+- Remove `Avram::NestedSaveOperation.has_one_update` macro
+- Remove `Shield::HasOneCreateSaveUserOptions` operation mixin
+- Remove `Shield::HasOneUpdateSaveUserOptions` operation mixin
 
 ## [0.6.0] - 2020-12-21
 

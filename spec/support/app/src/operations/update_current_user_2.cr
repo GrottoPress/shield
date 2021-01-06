@@ -4,7 +4,7 @@ class UpdateCurrentUser2 < User::SaveOperation
   include Shield::UpdateUser
   # include Shield::NotifyPasswordChange
 
-  has_one_update save_user_options : SaveUserOptions2, assoc_name: :options
+  has_one save_user_options : SaveUserOptions2
 
   before_save set_level
 
