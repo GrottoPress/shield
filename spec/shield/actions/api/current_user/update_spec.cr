@@ -12,16 +12,22 @@ describe Shield::Api::CurrentUser::Update do
     client = ApiClient.new
     client.api_auth(user, password)
 
-    response = client.exec(Api::CurrentUser::Update, user: {email: new_email})
+    response = client.exec(
+      Api::CurrentUser::Update,
+      user: {email: new_email},
+      user_options: {password_notify: true}
+    )
 
     response.should send_json(200, {status: "success"})
     user.reload.email.should eq(new_email)
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(Api::CurrentUser::Update, user: {
-      email: "user@email.com"
-    })
+    response = ApiClient.exec(
+      Api::CurrentUser::Update,
+      user: {email: "user@email.com"},
+      user_options: {login_notify: true}
+    )
 
     response.should send_json(401, logged_in: false)
   end

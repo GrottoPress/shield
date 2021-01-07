@@ -17,11 +17,8 @@ describe Shield::Api::EmailConfirmationCurrentUser::Create do
       response = ApiClient.exec(
         Api::EmailConfirmationCurrentUser::Create,
         token: token,
-        user: {
-          password: password,
-          password_notify: true,
-          login_notify: true
-        }
+        user: {password: password},
+        user_options: {password_notify: true, login_notify: true}
       )
 
       response.should send_json(200, {status: "success"})
@@ -35,11 +32,8 @@ describe Shield::Api::EmailConfirmationCurrentUser::Create do
     response = ApiClient.exec(
       Api::EmailConfirmationCurrentUser::Create,
       token: token,
-      user: {
-        password: password,
-        password_notify: true,
-        login_notify: true
-      }
+      user: {password: password},
+      user_options: {password_notify: true, login_notify: true}
     )
 
     response.should send_json(403, {status: "failure"})
@@ -52,11 +46,11 @@ describe Shield::Api::EmailConfirmationCurrentUser::Create do
     client = ApiClient.new
     client.api_auth(email, password)
 
-    response = client.exec(Api::EmailConfirmationCurrentUser::Create, user: {
-      password: password,
-      password_notify: true,
-      login_notify: true
-    })
+    response = client.exec(
+      Api::EmailConfirmationCurrentUser::Create,
+      user: {password: password},
+      user_options: {password_notify: true, login_notify: true}
+    )
 
     response.should send_json(200, logged_in: true)
   end

@@ -16,11 +16,8 @@ describe Shield::Api::EmailConfirmationPipes do
         response = ApiClient.exec(
           Api::EmailConfirmationCurrentUser::Create,
           token: token,
-          user: {
-            password: password,
-            password_notify: true,
-            login_notify: true
-          }
+          user: {password: password},
+          user_options: {password_notify: true, login_notify: true}
         )
 
         response.should send_json(200, {status: "success"})
@@ -41,11 +38,8 @@ describe Shield::Api::EmailConfirmationPipes do
         response = ApiClient.exec(
           Api::EmailConfirmationCurrentUser::Create,
           token: token,
-          user: {
-            password: password,
-            password_notify: true,
-            login_notify: true
-          }
+          user: {password: password},
+          user_options: {password_notify: true, login_notify: true}
         )
 
         response.should send_json(403, ip_address_changed: true)

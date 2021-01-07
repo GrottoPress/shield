@@ -4,11 +4,9 @@ describe Shield::CreatePassword do
   it "saves password" do
     password = "password12U-password"
 
-    user = RegisterCurrentUser.create!(params(
-      email: "user@example.tld",
-      password: password,
-      login_notify: true,
-      password_notify: true
+    user = RegisterCurrentUser.create!(nested_params(
+      user: {email: "user@example.tld", password: password},
+      user_options: {login_notify: true, password_notify: true}
     ))
 
     BcryptHash.new(password)
@@ -17,11 +15,9 @@ describe Shield::CreatePassword do
   end
 
   it "requires password" do
-    RegisterCurrentUser.create(params(
-      email: "user@domain.tld",
-      password: "",
-      login_notify: true,
-      password_notify: true,
+    RegisterCurrentUser.create(nested_params(
+      user: {email: "user@domain.tld", password: ""},
+      user_options: {login_notify: true, password_notify: true}
     )) do |operation, user|
       user.should be_nil
 
@@ -31,11 +27,9 @@ describe Shield::CreatePassword do
   end
 
   it "does not send password change notification" do
-    RegisterCurrentUser.create(params(
-      email: "user@domain.tld",
-      password: "password1=Apassword",
-      login_notify: true,
-      password_notify: false,
+    RegisterCurrentUser.create(nested_params(
+      user: {email: "user@domain.tld", password: "password1=Apassword"},
+      user_options: {login_notify: true, password_notify: false}
     )) do |operation, user|
       PasswordChangeNotificationEmail
         .new(operation, user.not_nil!)

@@ -9,7 +9,7 @@ describe Shield::UpdateEmailConfirmationUser do
 
     UpdateEmailConfirmationCurrentUser.update(
       user,
-      params(email: new_email),
+      nested_params(user: {email: new_email}),
       current_login: nil,
       remote_ip: Socket::IPAddress.new("129.0.0.3", 5555)
     ) do |operation, updated_user|
@@ -34,7 +34,7 @@ describe Shield::UpdateEmailConfirmationUser do
 
     UpdateEmailConfirmationCurrentUser.update(
       user,
-      params(login_notify: "false", password_notify: "true"),
+      nested_params(user_options: {login_notify: false, password_notify: true}),
       current_login: nil,
       remote_ip: Socket::IPAddress.new("129.0.0.3", 5555)
     ) do |operation, updated_user|
@@ -52,7 +52,10 @@ describe Shield::UpdateEmailConfirmationUser do
 
     UpdateEmailConfirmationCurrentUser2.update(
       user,
-      params(login_notify: false, password_notify: false),
+      nested_params(user_options: {
+        login_notify: false,
+        password_notify: false
+      }),
       current_login: nil,
       remote_ip: Socket::IPAddress.new("129.0.0.3", 5555)
     ) do |operation, updated_user|
@@ -74,10 +77,9 @@ describe Shield::UpdateEmailConfirmationUser do
 
     UpdateEmailConfirmationCurrentUser2.update(
       user,
-      params(
-        password: new_password,
-        login_notify: false,
-        password_notify: false
+      nested_params(
+        user: {password: new_password},
+        user_options: {login_notify: false, password_notify: false}
       ),
       current_login: nil,
       remote_ip: Socket::IPAddress.new("129.0.0.3", 5555)

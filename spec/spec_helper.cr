@@ -30,6 +30,10 @@ def params(**named_args)
     .transform_values &.to_s
 end
 
+def nested_params(**named_args)
+  FakeNestedParams.new(**named_args)
+end
+
 Avram::Migrator::Runner.new.ensure_migrated!
 Avram::SchemaEnforcer.ensure_correct_column_mappings!
 Habitat.raise_if_missing_settings!

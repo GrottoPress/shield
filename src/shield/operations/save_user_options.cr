@@ -1,7 +1,5 @@
 module Shield::SaveUserOptions
   macro included
-    param_key :user
-
     permit_columns :login_notify, :password_notify
 
     before_save do

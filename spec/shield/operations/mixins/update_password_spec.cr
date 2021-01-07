@@ -11,7 +11,7 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update!(
       user,
-      params(password: new_password),
+      nested_params(user: {password: new_password}),
       current_login: nil
     )
 
@@ -25,7 +25,7 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update(
       user,
-      params(password: ""),
+      nested_params(user: {password: ""}),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -42,7 +42,7 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update(
       user,
-      params(password: new_password),
+      nested_params(user: {password: new_password}),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -63,8 +63,10 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update(
       user,
-      params(password: new_password),
-      password_notify: false,
+      nested_params(
+        user: {password: new_password},
+        user_options: {password_notify: false}
+      ),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -82,7 +84,7 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update(
       user,
-      params(email: "user2@example.tld", password: password),
+      nested_params(user: {email: "user2@example.tld", password: password}),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -118,7 +120,7 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update!(
       user,
-      params(password: new_password),
+      nested_params(user: {password: new_password}),
       current_login: nil
     )
 
@@ -158,7 +160,7 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update!(
       user,
-      params(password: new_password),
+      nested_params(user: {password: new_password}),
       current_login: current_login
     )
 
@@ -198,7 +200,7 @@ describe Shield::UpdatePassword do
 
     UpdateCurrentUser.update!(
       mary,
-      params(password: mary_new_password),
+      nested_params(user: {password: mary_new_password}),
       current_login: nil
     )
 

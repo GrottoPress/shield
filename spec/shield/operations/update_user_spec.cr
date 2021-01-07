@@ -3,11 +3,12 @@ require "../../spec_helper"
 describe Shield::UpdateUser do
   it "updates user" do
     new_email = "newuser@example.tld"
+
     user = UserBox.create &.email("user@example.tld")
 
     UpdateUser.update(
       user,
-      params(email: new_email),
+      nested_params(user: {email: new_email}),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -24,7 +25,10 @@ describe Shield::UpdateUser do
 
     UpdateUser.update(
       user,
-      params(login_notify: "false", password_notify: "true", email: new_email),
+      nested_params(
+        user: {email: new_email},
+        user_options: {login_notify: false, password_notify: true}
+      ),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -42,7 +46,10 @@ describe Shield::UpdateUser do
 
     UpdateCurrentUser2.update(
       user,
-      params(login_notify: false, password_notify: false),
+      nested_params(user_options: {
+        login_notify: false,
+        password_notify: false
+      }),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_false
@@ -62,10 +69,9 @@ describe Shield::UpdateUser do
 
     UpdateCurrentUser2.update(
       user,
-      params(
-        email: "user@example.com",
-        login_notify: false,
-        password_notify: false
+      nested_params(
+        user: {email: "user@example.com"},
+        user_options: {login_notify: false, password_notify: false}
       ),
       current_login: nil
     ) do |operation, updated_user|
