@@ -18,11 +18,11 @@ describe Shield::EmailConfirmationCurrentUser::Create do
       client = ApiClient.new
       client.set_cookie_from_session(session)
 
-      response = client.exec(EmailConfirmationCurrentUser::Create, user: {
-        password: password,
-        password_notify: true,
-        login_notify: true
-      })
+      response = client.exec(
+        EmailConfirmationCurrentUser::Create,
+        user: {password: password},
+        user_options: {password_notify: true, login_notify: true}
+      )
 
       response.headers["X-User-ID"]?.should eq("ec_user_id")
     end
@@ -37,11 +37,11 @@ describe Shield::EmailConfirmationCurrentUser::Create do
     client = ApiClient.new
     client.set_cookie_from_session(session)
 
-    response = client.exec(EmailConfirmationCurrentUser::Create, user: {
-      password: password,
-      password_notify: true,
-      login_notify: true
-    })
+    response = client.exec(
+      EmailConfirmationCurrentUser::Create,
+      user: {password: password},
+      user_options: {password_notify: true, login_notify: true}
+    )
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Email-Confirmation-Status"]?.should eq("failure")
@@ -54,11 +54,11 @@ describe Shield::EmailConfirmationCurrentUser::Create do
     client = ApiClient.new
     client.browser_auth(email, password)
 
-    response = client.exec(EmailConfirmationCurrentUser::Create, user: {
-      password: password,
-      password_notify: true,
-      login_notify: true
-    })
+    response = client.exec(
+      EmailConfirmationCurrentUser::Create,
+      user: {password: password},
+      user_options: {password_notify: true, login_notify: true}
+    )
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"]?.should eq("true")

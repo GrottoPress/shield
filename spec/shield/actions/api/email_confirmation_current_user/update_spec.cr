@@ -13,18 +13,22 @@ describe Shield::Api::EmailConfirmationCurrentUser::Update do
     client = ApiClient.new
     client.api_auth(user, password)
 
-    response = client.exec(Api::EmailConfirmationCurrentUser::Update, user: {
-      level: new_level.to_s
-    })
+    response = client.exec(
+      Api::EmailConfirmationCurrentUser::Update,
+      user: {level: new_level.to_s},
+      user_options: {password_notify: true}
+    )
 
     response.should send_json(200, {status: "success"})
     user.reload.level.should eq(new_level)
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(Api::EmailConfirmationCurrentUser::Update, user: {
-      level: User::Level.new(:author).to_s
-    })
+    response = ApiClient.exec(
+      Api::EmailConfirmationCurrentUser::Update,
+      user: {level: User::Level.new(:author).to_s},
+      user_options: {login_notify: true}
+    )
 
     response.should send_json(401, logged_in: false)
   end

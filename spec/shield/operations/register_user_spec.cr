@@ -2,26 +2,31 @@ require "../../spec_helper"
 
 describe Shield::RegisterUser do
   it "creates user" do
-    RegisterUser.create(params(
-      email: "user@example.tld",
-      password: "password12U password",
-      level: User::Level.new(:editor),
-      login_notify: true,
-      password_notify: true
-    )) do |operation, user|
+    params = nested_params(
+      user: {
+        email: "user@example.tld",
+        password: "password12U password",
+        level: User::Level.new(:editor)
+      },
+      user_options: {login_notify: true, password_notify: true}
+    )
+
+    RegisterUser.create(params) do |operation, user|
       user.should be_a(User)
     end
   end
 
   it "creates user options" do
-    user = RegisterUser.create!(params(
-      email: "user@example.tld",
-      password: "password12U/password",
-      level: User::Level.new(:editor),
-      login_notify: true,
-      password_notify: false
-    ))
+    params = nested_params(
+      user: {
+        email: "user@example.tld",
+        password: "password12U/password",
+        level: User::Level.new(:editor)
+      },
+      user_options: {login_notify: true, password_notify: false}
+    )
 
+    user = RegisterUser.create!(params)
     user_options = user.options!
 
     user_options.login_notify.should be_true
@@ -29,12 +34,12 @@ describe Shield::RegisterUser do
   end
 
   it "fails when nested operation fails" do
-    RegisterCurrentUser2.create(params(
-      email: "user@example.tld",
-      password: "password12U password",
-      login_notify: false,
-      password_notify: false
-    )) do |operation, user|
+    params = nested_params(
+      user: {email: "user@example.tld", password: "password12U password"},
+      user_options: {login_notify: false, password_notify: false}
+    )
+
+    RegisterCurrentUser2.create(params) do |operation, user|
       operation.saved?.should be_false
       UserQuery.new.first?.should be_nil
     end

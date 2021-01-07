@@ -5,7 +5,7 @@ describe Shield::DeleteUser do
     user = UserBox.create
 
     DeleteUser.run(
-      params(id: user.id),
+      nested_params(user: {id: user.id}),
       current_user: nil
     ) do |operation, deleted_user|
       deleted_user.should be_a(User)
@@ -18,7 +18,7 @@ describe Shield::DeleteUser do
     user = UserBox.create
 
     DeleteUser.run(
-      params(id: user.id),
+      nested_params(user: {id: user.id}),
       current_user: user
     ) do |operation, deleted_user|
       deleted_user.should be_nil

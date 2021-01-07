@@ -6,7 +6,9 @@ describe Shield::SendWelcomeEmail do
 
     UserBox.create &.email(email)
 
-    RegisterCurrentUser.create(params(email: email)) do |operation, user|
+    RegisterCurrentUser.create(
+      nested_params(user: {email: email})
+    ) do |operation, user|
       user.should be_nil
 
       UserWelcomeEmail.new(operation).should be_delivered
@@ -14,13 +16,16 @@ describe Shield::SendWelcomeEmail do
   end
 
   it "sends welcome email for new user" do
-    RegisterCurrentUser.create(params(
-      email: "user@example.tld",
-      password: "password12U.password",
-      level: User::Level.new(:author),
-      login_notify: true,
-      password_notify: true
-    )) do |operation, user|
+    params = nested_params(
+      user: {
+        email: "user@example.tld",
+        password: "password12U.password",
+        level: User::Level.new(:author)
+      },
+      user_options: {login_notify: true, password_notify: true}
+    )
+
+    RegisterCurrentUser.create(params) do |operation, user|
       UserWelcomeEmail.new(operation).should_not be_delivered
       WelcomeEmail.new(operation, user.not_nil!).should be_delivered
     end

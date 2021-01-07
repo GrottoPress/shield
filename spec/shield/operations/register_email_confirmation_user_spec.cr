@@ -7,12 +7,13 @@ describe Shield::RegisterEmailConfirmationUser do
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     )
 
+    params = nested_params(
+      user: {password: "password12U password"},
+      user_options: {login_notify: true, password_notify: true}
+    )
+
     RegisterEmailConfirmationCurrentUser.create(
-      params(
-        password: "password12U password",
-        login_notify: true,
-        password_notify: true
-      ),
+      params,
       email_confirmation: email_confirmation,
       session: Lucky::Session.new,
     ) do |operation, user|
@@ -46,10 +47,9 @@ describe Shield::RegisterEmailConfirmationUser do
     email_confirmation_3.active?.should be_true
 
     user = RegisterEmailConfirmationCurrentUser.create!(
-      params(
-        password: "password12U-password",
-        login_notify: true,
-        password_notify: true
+      nested_params(
+        user: {password: "password12U-password"},
+        user_options: {login_notify: true, password_notify: true}
       ),
       email_confirmation: email_confirmation,
     )
@@ -70,10 +70,9 @@ describe Shield::RegisterEmailConfirmationUser do
     )
 
     user = RegisterEmailConfirmationCurrentUser.create!(
-      params(
-        password: "password12U-password",
-        login_notify: true,
-        password_notify: false
+      nested_params(
+        user: {password: "password12U-password"},
+        user_options: {login_notify: true, password_notify: false}
       ),
       email_confirmation: email_confirmation,
       session: Lucky::Session.new,
@@ -92,10 +91,9 @@ describe Shield::RegisterEmailConfirmationUser do
     )
 
     RegisterEmailConfirmationCurrentUser2.create(
-      params(
-        password: "password12U password",
-        login_notify: false,
-        password_notify: false
+      nested_params(
+        user: {password: "password12U password"},
+        user_options: {login_notify: false, password_notify: false}
       ),
       email_confirmation: email_confirmation,
       session: Lucky::Session.new,

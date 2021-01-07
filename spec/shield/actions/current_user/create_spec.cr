@@ -5,12 +5,11 @@ describe Shield::CurrentUser::Create do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
-    response = ApiClient.exec(CurrentUser::Create, user: {
-      email: email,
-      password: password,
-      password_notify: true,
-      login_notify: true,
-    })
+    response = ApiClient.exec(
+      CurrentUser::Create,
+      user: {email: email, password: password},
+      user_options: {password_notify: true, login_notify: true}
+    )
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-User-ID"]?.should eq("current_user_id")
@@ -24,12 +23,11 @@ describe Shield::CurrentUser::Create do
     client = ApiClient.new
     client.browser_auth(email, password, ip_address)
 
-    response = client.exec(CurrentUser::Create, user: {
-      email: email,
-      password: password,
-      password_notify: true,
-      login_notify: true
-    })
+    response = client.exec(
+      CurrentUser::Create,
+      user: {email: email, password: password},
+      user_options: {password_notify: true, login_notify: true}
+    )
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"]?.should eq("true")
