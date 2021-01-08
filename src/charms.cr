@@ -245,12 +245,11 @@ module Avram
     macro has_one(type_declaration)
       {% name = type_declaration.var %}
       {% type = type_declaration.type.resolve %}
-
-      {% model_type = type.superclass.name.gsub(/\:\:SaveOperation$/, "") %}
+      {% model_type = type.superclass.superclass.type_vars.first.resolve %}
 
       {% assoc = T.resolve.constant(:ASSOCIATIONS).find do |assoc|
         assoc[:relationship_type] == :has_one &&
-          assoc[:type].resolve.name == model_type
+          assoc[:type].resolve.name == model_type.name
       end %}
 
       after_save save_{{ name }}
@@ -262,6 +261,7 @@ module Avram
       def save_{{ name }}(saved_record)
         unless {{ name }}.save
           mark_nested_save_operations_as_failed
+          # TODO: Roll back already saved nested operations
           database.rollback
         end
       end
@@ -298,8 +298,8 @@ module Avram
     end
 
     def mark_nested_save_operations_as_failed
-      nested_save_operations.each do |f|
-        f.as(Avram::MarkAsFailed).mark_as_failed
+      nested_save_operations.each do |operation|
+        operation.as(Avram::MarkAsFailed).mark_as_failed
       end
     end
 
