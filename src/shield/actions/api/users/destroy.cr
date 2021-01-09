@@ -17,7 +17,7 @@ module Shield::Api::Users::Destroy
     # end
 
     @[Memoize]
-    def user
+    def user : User
       UserQuery.find(user_id)
     end
 

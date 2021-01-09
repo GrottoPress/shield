@@ -2,6 +2,7 @@ module Shield::Api::LoginHelpers
   macro included
     include Shield::LoginHelpers
 
+    @[Memoize]
     def current_login : Login?
       LoginHeaders.new(request.headers).verify
     end

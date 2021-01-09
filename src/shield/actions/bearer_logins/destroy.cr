@@ -29,7 +29,7 @@ module Shield::BearerLogins::Destroy
     end
 
     @[Memoize]
-    def bearer_login
+    def bearer_login : BearerLogin
       BearerLoginQuery.find(bearer_login_id)
     end
 

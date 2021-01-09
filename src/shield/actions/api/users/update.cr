@@ -21,7 +21,7 @@ module Shield::Api::Users::Update
     end
 
     @[Memoize]
-    def user
+    def user : User
       UserQuery.find(user_id)
     end
 

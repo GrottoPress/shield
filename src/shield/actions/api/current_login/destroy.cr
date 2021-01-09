@@ -16,7 +16,6 @@ module Shield::Api::CurrentLogin::Destroy
       end
     end
 
-    @[Memoize]
     def login
       current_login!
     end

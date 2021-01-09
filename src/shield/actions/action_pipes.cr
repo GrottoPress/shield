@@ -8,12 +8,12 @@ module Shield::ActionPipes
     end
 
     @[Memoize]
-    def previous_page_url
+    def previous_page_url : String?
       PageUrlSession.new(session).previous_page_url
     end
 
     @[Memoize]
-    def return_url
+    def return_url : String?
       ReturnUrlSession.new(session).return_url
     end
 

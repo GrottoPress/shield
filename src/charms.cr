@@ -2,10 +2,12 @@ annotation Memoize
 end
 
 class Object
-  macro method_added(method)
-    {% if method.annotation(Memoize) %}
-      memoize method
-    {% end %}
+  macro inherited
+    macro method_added(method)
+      \{% if method.annotation(Memoize) %}
+        memoize(\{{ method }})
+      \{% end %}
+    end
   end
 end
 
