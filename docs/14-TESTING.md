@@ -82,3 +82,44 @@
      # Go ahead and make requests.
      client.exec(Numbers::Show)
      ```
+
+1. Set up fake params:
+
+   ```crystal
+   # ->>> spec/support/fake_nested_params.cr
+
+   class FakeNestedParams
+     include Shield::FakeNestedParams
+   end
+   ```
+
+   `Shield::FakeNestedParams` allows creating nested params for tests.
+
+   ---
+   ```crystal
+   # ->>> spec/spec_helper.cr
+
+   def params(**named_args)
+     Avram::Params.new named_args.to_h
+       .transform_keys(&.to_s)
+       .transform_values &.to_s
+   end
+
+   def nested_params(**named_args)
+     FakeNestedParams.new(**named_args)
+   end
+   ```
+
+   For simple params:
+
+   ```crystal
+   SomeOperation.create!(params(email: "a@b.c", name: "abc"))
+   ```
+
+   For nested params:
+
+   ```crystal
+   SomeOperation.create!(
+     nested_params(user: {email: "a@b.c", name: "abc"}, school: {name: "xyz"})
+   )
+   ```
