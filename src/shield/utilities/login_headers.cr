@@ -14,7 +14,7 @@ module Shield::LoginHeaders
     end
 
     @[Memoize]
-    private def token_from_headers
+    private def token_from_headers : BearerToken?
       BearerToken.from_headers(@headers)
     end
   end

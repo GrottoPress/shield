@@ -6,10 +6,20 @@ class CurrentLogin::Create < BrowserAction
   end
 
   def do_run_operation_succeeded(operation, login)
-    response.headers["X-Current-Login"] = current_login!.id.to_s
+    response.headers["X-Login-ID"] = current_login!.id.to_s
     response.headers["X-Login-Token"] = operation.token
     response.headers["X-User-ID"] = current_user!.id.to_s
     previous_def
+  end
+
+  # To skip cache
+  def current_user : User?
+    current_login.try &.user!
+  end
+
+  # To skip cache
+  def current_login : Login?
+    LoginSession.new(session).verify
   end
 
   def remote_ip : Socket::IPAddress?
