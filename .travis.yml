@@ -5,6 +5,9 @@ sudo: false
 services:
   - docker
 
+before_install:
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+
 install:
   - docker-compose run --rm shards
 
