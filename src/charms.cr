@@ -229,6 +229,38 @@ module Avram
       # validate_required *required_attributes
       custom_errors.empty? && attributes.all?(&.valid?)
     end
+
+    # `#persisted?` always returns `true` in `after_*` hooks, whether
+    # a new record was created, or an existing one was updated.
+    #
+    # This method should always return `true` for a create or `false`
+    # for an update, independent of the stage we are at in the operation.
+    def new_record? : Bool
+      {{ T.resolve.constant(:PRIMARY_KEY_NAME).id }}.value.nil?
+    end
+
+    def revert : self?
+      return unless saved?
+
+      saved_record = record!
+      operation = self.class.new(saved_record)
+
+      if new_record?
+        operation if saved_record.delete.rows_affected > 0
+      else
+        {% for attribute in @type.constant(:ATTRIBUTES) %}
+          operation.{{ attribute.var }}.value =
+            {{ attribute.var }}.original_value
+        {% end %}
+
+        {% for column in @type.constant(:COLUMN_ATTRIBUTES) %}
+          operation.{{ column[:name].id }}.value =
+            {{ column[:name].id }}.original_value
+        {% end %}
+
+        operation if operation.save
+      end
+    end
   end
 
   # Avram's implementation errors in an update operation:
@@ -260,14 +292,13 @@ module Avram
 
       def save_{{ name }}(saved_record)
         unless {{ name }}.save
-          mark_nested_save_operations_as_failed
-          # TODO: Roll back already saved nested operations
+          revert_nested_save_operations
           database.rollback
         end
       end
 
       def {{ name }}
-        return update_{{ name }} unless id.value.nil?
+        return update_{{ name }} unless new_record?
 
         nested = create_{{ name }}
 
@@ -297,8 +328,9 @@ module Avram
       end
     end
 
-    def mark_nested_save_operations_as_failed
+    def revert_nested_save_operations
       nested_save_operations.each do |operation|
+        operation.revert
         operation.as(Avram::MarkAsFailed).mark_as_failed
       end
     end
