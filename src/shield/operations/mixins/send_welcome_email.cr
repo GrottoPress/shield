@@ -4,7 +4,7 @@ module Shield::SendWelcomeEmail
       send_user_welcome_email
     end
 
-    after_completed send_welcome_email
+    after_commit send_welcome_email
 
     private def send_user_welcome_email
       return unless user_email?

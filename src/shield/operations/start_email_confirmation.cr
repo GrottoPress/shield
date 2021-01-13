@@ -2,7 +2,7 @@ module Shield::StartEmailConfirmation
   macro included
     permit_columns :email
 
-    after_completed send_email
+    after_commit send_email
 
     include Shield::SaveEmail
     include Shield::RequireIpAddress

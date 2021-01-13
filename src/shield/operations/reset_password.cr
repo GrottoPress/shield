@@ -8,10 +8,6 @@ module Shield::ResetPassword
 
     after_save end_password_resets
 
-    after_completed do |saved_record|
-      end_password_resets(saved_record) if changes.empty?
-    end
-
     include Shield::UpdatePassword
     include Shield::DeleteSession
 

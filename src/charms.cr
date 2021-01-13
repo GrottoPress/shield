@@ -209,13 +209,40 @@ module Avram
       record.not_nil!
     end
 
-    # To ensure operation is marked as failed if a nested
-    # operation rolls back a database transaction.
+    # Always save, whether or not attributes changed.
+    #
+    # See https://github.com/luckyframework/avram/issues/604
     def save : Bool
-      previous_def
-    rescue Rollback
-      mark_as_failed
-      false
+      before_save
+
+      if valid?
+        transaction_committed = database.transaction do
+          insert_or_update
+          saved_record = record.not_nil!
+          after_save(saved_record)
+          true
+        end
+
+        if transaction_committed
+          saved_record = record.not_nil!
+          after_commit(saved_record)
+          after_completed(saved_record)
+
+          self.save_status = SaveStatus::Saved
+
+          Avram::Events::SaveSuccessEvent.publish(
+            operation_class: self.class.name,
+            attributes: generic_attributes
+          )
+          true
+        else
+          mark_as_failed
+          false
+        end
+      else
+        mark_as_failed
+        false
+      end
     end
 
     # Getting rid of default validations in Avram
@@ -239,29 +266,6 @@ module Avram
     # for an update, independent of the stage we are at in the operation.
     def new_record? : Bool
       {{ T.resolve.constant(:PRIMARY_KEY_NAME).id }}.value.nil?
-    end
-
-    def revert : self?
-      return unless saved?
-
-      saved_record = record!
-      operation = self.class.new(saved_record)
-
-      if new_record?
-        operation if saved_record.delete.rows_affected > 0
-      else
-        {% for attribute in @type.constant(:ATTRIBUTES) %}
-          operation.{{ attribute.var }}.value =
-            {{ attribute.var }}.original_value
-        {% end %}
-
-        {% for column in @type.constant(:COLUMN_ATTRIBUTES) %}
-          operation.{{ column[:name].id }}.value =
-            {{ column[:name].id }}.original_value
-        {% end %}
-
-        operation if operation.save
-      end
     end
   end
 
@@ -292,13 +296,9 @@ module Avram
 
       after_save save_{{ name }}
 
-      after_completed do |saved_record|
-        save_{{ name }}(saved_record) if changes.empty?
-      end
-
       def save_{{ name }}(saved_record)
         unless {{ name }}.save
-          revert_nested_save_operations
+          mark_nested_save_operations_as_failed
           database.rollback
         end
       end
@@ -334,9 +334,8 @@ module Avram
       end
     end
 
-    def revert_nested_save_operations
+    def mark_nested_save_operations_as_failed
       nested_save_operations.each do |operation|
-        operation.revert
         operation.as(Avram::MarkAsFailed).mark_as_failed
       end
     end
