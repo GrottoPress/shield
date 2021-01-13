@@ -20,10 +20,6 @@ module Shield::UpdateEmailConfirmationUser
 
     after_save start_email_confirmation
 
-    after_completed do |saved_record|
-      start_email_confirmation(saved_record) if changes.empty?
-    end
-
     include Shield::UpdatePassword
 
     private def reset_email

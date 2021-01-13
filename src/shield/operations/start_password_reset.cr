@@ -16,7 +16,7 @@ module Shield::StartPasswordReset
       send_guest_email
     end
 
-    after_completed send_email
+    after_commit send_email
 
     include Shield::RequireIpAddress
     include Shield::StartAuthentication
