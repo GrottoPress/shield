@@ -217,9 +217,8 @@ module Avram
 
       if valid?
         transaction_committed = database.transaction do
-          insert_or_update unless changes.empty? && persisted?
-          saved_record = record.not_nil!
-          after_save(saved_record)
+          insert_or_update if changes.any? || !persisted?
+          after_save(record.not_nil!)
           true
         end
 
