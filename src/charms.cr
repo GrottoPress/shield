@@ -209,7 +209,7 @@ module Avram
       record.not_nil!
     end
 
-    # Always save, whether or not attributes changed.
+    # Always run `after_save`, whether or not attributes changed.
     #
     # See https://github.com/luckyframework/avram/issues/604
     def save : Bool
