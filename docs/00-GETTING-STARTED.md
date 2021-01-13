@@ -23,4 +23,4 @@ If you would rather start from scratch, generate a new *Lucky* project without a
 
 1. *Shield* disables the default validation performed by *Avram* in save operations. See [#1209 (comment)](https://github.com/luckyframework/lucky/discussions/1209#discussioncomment-46030). You have to **explicitly** define validations for all attributes in save operations.
 
-1. *Avram* does not actually update a record if no columns changed. *Shield* updates, whether or not columns changed. See https://github.com/luckyframework/avram/issues/604
+1. In *Avram*, `after_save` hook does not run for updates if no columns changed. In *Shield*, it always runs, and inside the transation so that roll backs are possible. See https://github.com/luckyframework/avram/issues/604
