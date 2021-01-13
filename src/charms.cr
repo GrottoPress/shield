@@ -286,6 +286,10 @@ module Avram
           assoc[:type].resolve.name == model_type.name
       end %}
 
+      {% unless assoc %}
+        {% raise "#{T} must have a has_one association with #{model_type}" %}
+      {% end %}
+
       after_save save_{{ name }}
 
       after_completed do |saved_record|
