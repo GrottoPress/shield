@@ -223,12 +223,10 @@ module Avram
         end
 
         if transaction_committed
+          self.save_status = SaveStatus::Saved
           saved_record = record.not_nil!
           after_commit(saved_record)
           after_completed(saved_record)
-
-          self.save_status = SaveStatus::Saved
-
           Avram::Events::SaveSuccessEvent.publish(
             operation_class: self.class.name,
             attributes: generic_attributes
