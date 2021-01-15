@@ -8,13 +8,13 @@ describe Shield::Api::EmailConfirmationCurrentUser::Show do
     client = ApiClient.new
     client.api_auth(email, password)
 
-    response = client.exec(Api::EmailConfirmationCurrentUser::Show)
+    response = client.exec(Api::CurrentUser::Show)
 
     response.should send_json(200, {status: "success"})
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(Api::EmailConfirmationCurrentUser::Show)
+    response = ApiClient.exec(Api::CurrentUser::Show)
 
     response.should send_json(401, logged_in: false)
   end

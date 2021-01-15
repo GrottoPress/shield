@@ -18,9 +18,9 @@ describe Shield::EmailConfirmationCurrentUser::New do
       client = ApiClient.new
       client.set_cookie_from_session(session)
 
-      response = client.exec(EmailConfirmationCurrentUser::New)
+      response = client.exec(CurrentUser::New)
 
-      response.body.should eq("EmailConfirmationCurrentUser::NewPage")
+      response.body.should eq("CurrentUser::NewPage")
     end
   end
 
@@ -33,7 +33,7 @@ describe Shield::EmailConfirmationCurrentUser::New do
     client = ApiClient.new
     client.set_cookie_from_session(session)
 
-    response = ApiClient.exec(EmailConfirmationCurrentUser::New)
+    response = ApiClient.exec(CurrentUser::New)
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Email-Confirmation-Status"]?.should eq("failure")
@@ -47,7 +47,7 @@ describe Shield::EmailConfirmationCurrentUser::New do
     client = ApiClient.new
     client.browser_auth(email, password, ip_address)
 
-    response = client.exec(EmailConfirmationCurrentUser::New)
+    response = client.exec(CurrentUser::New)
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"]?.should eq("true")

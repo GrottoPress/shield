@@ -18,8 +18,6 @@
 
   Checks that the given attribute is a valid ID of another model.
 
-  #### Examples:
-
   ```crystal
   validate_exists_by_id user_id, query: UserQuery.new, message: "does not exist"
   validate_exists_by_id post_id, query: PostQuery.new
@@ -52,18 +50,6 @@
 - `.validate_not_pwned`:
 
   Checks the given password attributes to be sure they do not appear in any known data breach. This uses the [Pwned Passwords](https://haveibeenpwned.com/Passwords) API.
-
-  #### Setup
-
-  1. Set up utilities:
-
-     ```crystal
-     class PwnedPasswords # or `struct`
-       include Shield::PwnedPasswords
-     end
-     ```
-
-  #### Examples:
 
   ```crystal
   validate_not_pwned password, message: "appears in a known data breach"

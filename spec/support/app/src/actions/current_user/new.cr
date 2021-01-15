@@ -1,8 +1,16 @@
 class CurrentUser::New < BrowserAction
-  include Shield::CurrentUser::New
+  include Shield::EmailConfirmationCurrentUser::New
 
-  get "/register" do
-    operation = RegisterCurrentUser.new
-    html NewPage, operation: operation
+  get "/ec/new" do
+    run_operation
+  end
+
+  def do_verify_operation_failed(utility)
+    response.headers["X-Email-Confirmation-Status"] = "failure"
+    previous_def
+  end
+
+  def remote_ip : Socket::IPAddress?
+    Socket::IPAddress.new("128.0.0.2", 5000)
   end
 end

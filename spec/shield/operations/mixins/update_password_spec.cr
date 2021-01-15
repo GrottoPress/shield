@@ -8,7 +8,7 @@ describe Shield::UpdatePassword do
     user = UserBox.create &.password(password)
     UserOptionsBox.create &.user_id(user.id)
 
-    UpdateCurrentUser.update!(
+    UpdateRegularCurrentUser.update!(
       user,
       nested_params(user: {password: new_password}),
       current_login: nil
@@ -23,7 +23,7 @@ describe Shield::UpdatePassword do
     user = UserBox.create
     UserOptionsBox.create &.user_id(user.id)
 
-    UpdateCurrentUser.update(
+    UpdateRegularCurrentUser.update(
       user,
       nested_params(user: {password: ""}),
       current_login: nil
@@ -40,7 +40,7 @@ describe Shield::UpdatePassword do
     user = UserBox.create &.password(password)
     UserOptionsBox.create &.user_id(user.id).password_notify(true)
 
-    UpdateCurrentUser.update(
+    UpdateRegularCurrentUser.update(
       user,
       nested_params(user: {password: new_password}),
       current_login: nil
@@ -60,7 +60,7 @@ describe Shield::UpdatePassword do
     user = UserBox.create &.password(password)
     UserOptionsBox.create &.user_id(user.id)
 
-    UpdateCurrentUser.update(
+    UpdateRegularCurrentUser.update(
       user,
       nested_params(
         user: {password: new_password},
@@ -81,7 +81,7 @@ describe Shield::UpdatePassword do
     user = UserBox.create &.password(password)
     UserOptionsBox.create &.user_id(user.id).password_notify(true)
 
-    UpdateCurrentUser.update(
+    UpdateRegularCurrentUser.update(
       user,
       nested_params(user: {email: "user2@example.tld", password: password}),
       current_login: nil
@@ -108,7 +108,7 @@ describe Shield::UpdatePassword do
     login_1.active?.should be_true
     login_2.active?.should be_true
 
-    UpdateCurrentUser.update!(
+    UpdateRegularCurrentUser.update!(
       user,
       nested_params(user: {password: new_password}),
       current_login: nil
@@ -134,7 +134,7 @@ describe Shield::UpdatePassword do
     login_2.active?.should be_true
     current_login.active?.should be_true
 
-    UpdateCurrentUser.update!(
+    UpdateRegularCurrentUser.update!(
       user,
       nested_params(user: {password: new_password}),
       current_login: current_login
@@ -165,7 +165,7 @@ describe Shield::UpdatePassword do
     mary_login.active?.should be_true
     john_login.active?.should be_true
 
-    UpdateCurrentUser.update!(
+    UpdateRegularCurrentUser.update!(
       mary,
       nested_params(user: {password: mary_new_password}),
       current_login: nil

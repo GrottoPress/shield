@@ -1,0 +1,39 @@
+{% skip_file unless Avram::Model.all_subclasses
+  .map(&.stringify)
+  .includes?("UserOptions")
+%}
+
+class User < BaseModel
+  include Shield::HasOneUserOptions
+end
+
+class UserOptionsQuery < UserOptions::BaseQuery
+  include Shield::UserOptionsQuery
+end
+
+class SaveUserOptions < UserOptions::SaveOperation
+  include Shield::SaveUserOptions
+end
+
+class RegisterCurrentUser < User::SaveOperation
+  include Shield::HasOneSaveUserOptions
+end
+
+class RegisterUser < User::SaveOperation
+  include Shield::HasOneSaveUserOptions
+end
+
+class UpdateCurrentUser < User::SaveOperation
+  include Shield::HasOneSaveUserOptions
+  include Shield::NotifyPasswordChange
+end
+
+class UpdateUser < User::SaveOperation
+  include Shield::HasOneSaveUserOptions
+end
+
+{% if Avram::Model.all_subclasses.map(&.stringify).includes?("Login") %}
+  class LogUserIn < Login::SaveOperation
+    include Shield::NotifyLogin
+  end
+{% end %}

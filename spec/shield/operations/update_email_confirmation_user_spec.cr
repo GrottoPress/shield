@@ -8,7 +8,7 @@ describe Shield::UpdateEmailConfirmationUser do
     user = UserBox.create &.email(email)
     user_options = UserOptionsBox.create &.user_id(user.id)
 
-    UpdateEmailConfirmationCurrentUser.update(
+    UpdateCurrentUser.update(
       user,
       nested_params(user: {email: new_email}),
       current_login: nil,
@@ -36,8 +36,8 @@ describe Shield::UpdateEmailConfirmationUser do
       .login_notify(true)
       .password_notify(false)
 
-    UpdateEmailConfirmationCurrentUser.update(
-      user_options.user!,
+    UpdateCurrentUser.update(
+      user,
       nested_params(user_options: {login_notify: false, password_notify: true}),
       current_login: nil,
       remote_ip: Socket::IPAddress.new("129.0.0.3", 5555)
@@ -57,8 +57,8 @@ describe Shield::UpdateEmailConfirmationUser do
       .login_notify(true)
       .password_notify(true)
 
-    UpdateEmailConfirmationCurrentUser2.update(
-      user_options.user!,
+    UpdateCurrentUser2.update(
+      user,
       nested_params(user_options: {
         login_notify: false,
         password_notify: false
@@ -84,7 +84,7 @@ describe Shield::UpdateEmailConfirmationUser do
       .login_notify(true)
       .password_notify(true)
 
-    UpdateEmailConfirmationCurrentUser2.update(
+    UpdateCurrentUser2.update(
       user,
       nested_params(
         user: {password: new_password},

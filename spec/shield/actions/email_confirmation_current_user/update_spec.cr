@@ -16,7 +16,7 @@ describe Shield::EmailConfirmationCurrentUser::Update do
     client.browser_auth(user, password)
 
     response = client.exec(
-      EmailConfirmationCurrentUser::Update,
+      CurrentUser::Update,
       user: {level: new_level.to_s},
       user_options: {password_notify: true}
     )
@@ -26,7 +26,7 @@ describe Shield::EmailConfirmationCurrentUser::Update do
 
   it "requires logged in" do
     response = ApiClient.exec(
-      EmailConfirmationCurrentUser::Update,
+      CurrentUser::Update,
       user: {level: User::Level.new(:author).to_s},
       user_options: {password_notify: true}
     )

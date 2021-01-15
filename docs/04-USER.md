@@ -20,22 +20,8 @@
    
    - `email : String`
    - `password_digest : String`
-   
-   ...and sets up the relevant associations with other *Shield* models.
 
    You may add other columns and associations specific to your application.
-
-1. Set up the query:
-
-   ```crystal
-   # ->>> src/queries/user_query.cr
-
-   class UserQuery < User::BaseQuery
-     # ...
-     include Shield::UserQuery
-     # ...
-   end
-   ```
 
 1. Set up the migration:
 
@@ -66,18 +52,19 @@
 
 1. Set up operations:
 
+   All operations are already set up. You may reopen an operation to add new functionality.
+
    ```crystal
    # ->>> src/operations/register_currrent_user.cr
 
    class RegisterCurrentUser < User::SaveOperation
-     # ...
-     include Shield::RegisterUser
+     # Send welcome email
+     #
      include Shield::SendWelcomeEmail
-     # ...
    end
    ```
 
-   `Shield::RegisterUser` saves `email`, `password` and user options. If you added other columns and associations to the model, you may have to add callbacks for dealing with those.
+   `RegisterCurrentUser` saves `email`, `password` and user options. If you added other columns and associations to the model, you may have to add callbacks for dealing with those.
 
    ---
    ```crystal
@@ -85,8 +72,6 @@
 
    class UpdateCurrentUser < User::SaveOperation
      # ...
-     include Shield::UpdateUser
-
      # By default, *Shield* marks all logins as inactive,
      # when password changes, without deleting them.
      #
@@ -97,7 +82,7 @@
    end
    ```
 
-   `Shield::UpdateUser` is similar to `Shield::RegisterUser`, except it *updates* an existing user rather than create a new one.
+   `UpdateCurrentUser` is similar to `RegisterCurrentUser`, except it *updates* an existing user rather than create a new one.
 
 1. Set up actions:
 
@@ -310,9 +295,9 @@
 
 1. Operations:
 
-   - `Shield::DeleteUser`
+   - `DeleteUser`
 
-   `Shield::DeleteUser` deletes a given user. It protects against self-deletion; a user cannot delete themselves.
+   `DeleteUser` deletes a given user. It protects against self-deletion; a user cannot delete themselves.
 
 1. Actions:
 

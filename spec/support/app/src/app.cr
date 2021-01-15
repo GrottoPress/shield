@@ -5,8 +5,9 @@ require "../../../../src/shield"
 require "./app_database"
 require "./models/base_model"
 require "./models/**"
-require "./queries/**"
-require "./utilities/**"
+
+require "../../../../src/presets"
+
 require "./operations/**"
 require "./serializers/base_serializer"
 require "./serializers/**"

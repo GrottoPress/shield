@@ -9,13 +9,13 @@ describe Shield::CurrentUser::Edit do
     client = ApiClient.new
     client.browser_auth(email, password, ip_address)
 
-    response = client.exec(CurrentUser::Edit)
+    response = client.exec(RegularCurrentUser::Edit)
 
-    response.body.should eq("CurrentUser::EditPage")
+    response.body.should eq("RegularCurrentUser::EditPage")
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(CurrentUser::Edit)
+    response = ApiClient.exec(RegularCurrentUser::Edit)
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"]?.should eq("false")

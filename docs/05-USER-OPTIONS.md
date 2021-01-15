@@ -3,19 +3,6 @@
 1. Set up models:
 
    ```crystal
-   # ->>> src/models/user.cr
-
-   class User < BaseModel
-     # ...
-     include Shield::HasOneUserOptions
-     # ...
-   end
-   ```
-
-   `Shield::HasOneUserOptions` sets up a *one-to-one* association with the user model.
-
-   ---
-   ```crystal
    # ->>> src/models/user_options.cr
 
    class UserOptions < BaseModel
@@ -33,22 +20,8 @@
    
    - `login_notify : Bool`
    - `password_notify : Bool`
-   
-   ...and sets up a one-to-one association with the `User` model.
 
    You may add other columns and associations specific to your application.
-
-1. Set up the query:
-
-   ```crystal
-   # ->>> src/queries/user_options_query.cr
-
-   class UserOptionsQuery < UserOptions::BaseQuery
-     # ...
-     include Shield::UserOptionsQuery
-     # ...
-   end
-   ```
 
 1. Set up the migration:
 
@@ -86,57 +59,17 @@
 
 1. Set up operations:
 
+   All operations are already set up. You may reopen an operation to add new functionality.
+
    ```crystal
    # ->>> src/operations/save_user_options.cr
 
    class SaveUserOptions < UserOptions::SaveOperation
      # ...
-     include Shield::SaveUserOptions
-     # ...
    end
    ```
 
-   `Shield::SaveUserOptions` saves `login_notify` and `password_notify`. If you added other columns and associations to the model, you may have to add callbacks for dealing with those.
-
-   ---
-   ```crystal
-   # ->>> src/operations/log_user_in.cr
-
-   class LogUserIn < Login::SaveOperation
-     # ...
-     include Shield::NotifyLogin
-     # ...
-   end
-   ```
-
-   `Shield::NotifyLogin` notifies a user after they log in, if they have that option enabled.
-
-   ---
-   ```crystal
-   # ->>> src/operations/register_currrent_user.cr
-
-   class RegisterCurrentUser < User::SaveOperation
-     # ...
-     include Shield::HasOneSaveUserOptions
-     # ...
-   end
-   ```
-
-   `Shield::HasOneSaveUserOptions` saves user options after saving the user.
-
-   ---
-   ```crystal
-   # ->>> src/operations/update_currrent_user.cr
-
-   class UpdateCurrentUser < User::SaveOperation
-     # ...
-     include Shield::HasOneSaveUserOptions
-     include Shield::NotifyPasswordChange
-     # ...
-   end
-   ```
-
-   `Shield::HasOneSaveUserOptions` saves user options after updating the user. `Shield::NotifyPasswordChange` notifies a user after their password changed, if they have that option enabled.
+   `SaveUserOptions` saves `login_notify` and `password_notify`. If you added other columns and associations to the model, you may have to add callbacks for dealing with those.
 
 1. Set up actions:
 
@@ -144,7 +77,7 @@
 
    Operations and actions related to the `User` model already take care of saving user options.
 
-   User edit forms, are therefore, required to include user options parameters:
+   User edit forms, are therefore, required to include user options parameters, nested under its own key (`user_options`):
 
    - `login_notify : Bool`
    - `password_notify : Bool`

@@ -58,8 +58,6 @@
      ```crystal
      client = ApiClient.new
 
-     # Creates a user and logs them in with an email and password
-     # You may optionally pass in `remote_ip` and `session`
      client.api_auth(bearer_token)
 
      # Go ahead and make requests to routes with

@@ -1,10 +1,10 @@
 class CurrentUser::Edit < BrowserAction
-  include Shield::CurrentUser::Edit
+  include Shield::EmailConfirmationCurrentUser::Edit
 
   skip :pin_login_to_ip_address
 
-  get "/profile/edit" do
-    operation = UpdateCurrentUser.new(user)
+  get "/ec/profile/edit" do
+    operation = UpdateCurrentUser.new(user, remote_ip: remote_ip)
     html EditPage, operation: operation
   end
 end

@@ -1,9 +1,9 @@
 class Api::CurrentUser::Show < ApiAction
-  include Shield::Api::CurrentUser::Show
+  include Shield::Api::EmailConfirmationCurrentUser::Show
 
   skip :pin_login_to_ip_address
 
-  get "/profile" do
+  get "/ec/profile" do
     json({
       status: "success",
       data: {user: UserSerializer.new(user)}

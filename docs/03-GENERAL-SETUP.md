@@ -14,123 +14,19 @@
      settings.bcrypt_cost = Lucky::Env.production? ? 12 : 4
 
      # Required minimum length of password
-     #settings.password_min_length = Lucky::Env.production? ? 12 : 4
+     settings.password_min_length = Lucky::Env.production? ? 12 : 4
 
      # Require lowercase letter in password?
-     #settings.password_require_lowercase = Lucky::Env.production?
+     settings.password_require_lowercase = Lucky::Env.production?
 
      # Require uppercase letter in password?
-     #settings.password_require_uppercase = Lucky::Env.production?
+     settings.password_require_uppercase = Lucky::Env.production?
 
      # Require number in password?
-     #settings.password_require_number = Lucky::Env.production?
+     settings.password_require_number = Lucky::Env.production?
 
      # Require special character in password?
-     #settings.password_require_special_char = Lucky::Env.production?
-     # ...
-   end
-   ```
-
-1. Set up the base model:
-
-   ```crystal
-   # ->>> src/models/base_model.cr
-
-   abstract class BaseModel < Avram::Model
-     # ...
-     include Shield::Model
-     # ...
-   end
-   ```
-
-1. Set up base actions:
-
-   ```crystal
-   # ->>> src/actions/browser_action.cr
-
-   abstract class BrowserAction < Lucky::Action
-     # ...
-     include Shield::BrowserAction
-     # ...
-   end
-   ```
-
-1. Set up utilities:
-
-   *Utilities* are (plain old *Crystal*) objects with domain-specific business logic. You may know them as non-database models. *Shield* calls them *Utilities* to differentiate them from database-backed models.
-
-   ---
-   ```crystal
-   # ->>> src/utilities/page_url_session.cr
-
-   class PageUrlSession # Or `struct ...`
-     # ...
-     include Shield::PageUrlSession
-     # ...
-   end
-   ```
-
-   `Shield::PageUrlSession` is a wrapper around *Lucky* sessions that deals with session keys and values for the page previous to the current page.
-
-   ---
-   ```crystal
-   # ->>> src/utilities/return_url_session.cr
-
-   class ReturnUrlSession # Or `struct ...`
-     # ...
-     include Shield::ReturnUrlSession
-     # ...
-   end
-   ```
-
-   `Shield::ReturnUrlSession` is a wrapper around *Lucky* sessions that deals with session keys and values for the URL to return to.
-
-   `#redirect_back` checks for this session value first, and redirects to it if present.
-
-   *Shield* throws away the `allow_external` parameter in `Lucky::Action#redirect_back`, so the only way to return to an external URL is to set the external URL thus: `ReturnUrlSession.new(session).set("http://external.url")`.
-
-   ---
-   ```crystal
-   # ->>> src/utilities/bearer_token.cr
-
-   class BearerToken # or `struct ...`
-     # ...
-     include Shield::BearerToken
-     # ...
-   end
-   ```
-
-   `Shield::BearerToken` is a type representing a bearer token. *Shield*'s tokens are made up of the generated token and a record ID. The ID helps us find the right record to verify, since tokens in the database are hashed.
-
-   ---
-   ```crystal
-   # ->>> src/utilities/bcrypt_hash.cr
-
-   class BcryptHash # or `struct ...`
-     # ...
-     include Shield::BcryptHash
-     # ...
-   end
-   ```
-
-   ---
-   ```crystal
-   # ->>> src/utilities/sha256_hash.cr
-
-   class Sha256Hash # or `struct ...`
-     # ...
-     include Shield::Sha256Hash
-     # ...
-   end
-   ```
-
-   ---
-   ```crystal
-   # ->>> src/utilities/password_authentication.cr
-
-   class PasswordAuthentication # or `struct ...`
-     # ...
-     include Shield::PasswordAuthentication
+     settings.password_require_special_char = Lucky::Env.production?
      # ...
    end
    ```

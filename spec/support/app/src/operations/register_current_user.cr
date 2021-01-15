@@ -1,8 +1,4 @@
-require "./save_user_options"
-
 class RegisterCurrentUser < User::SaveOperation
-  include Shield::RegisterUser
-  include Shield::HasOneSaveUserOptions
   include Shield::SendWelcomeEmail
 
   before_save set_level
