@@ -218,15 +218,14 @@ module Avram
       if valid?
         transaction_committed = database.transaction do
           insert_or_update if changes.any? || !persisted?
-          after_save(record.not_nil!)
+          after_save(record!)
           true
         end
 
         if transaction_committed
           self.save_status = SaveStatus::Saved
-          saved_record = record.not_nil!
-          after_commit(saved_record)
-          after_completed(saved_record)
+          after_commit(record!)
+          after_completed(record!)
           Avram::Events::SaveSuccessEvent.publish(
             operation_class: self.class.name,
             attributes: generic_attributes
