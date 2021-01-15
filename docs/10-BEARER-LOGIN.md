@@ -45,18 +45,6 @@ This token is revoked when the user logs out.
 
 1. Set up models:
 
-   ```crystal
-   # ->>> src/models/user.cr
-
-   class User < BaseModel
-     # ...
-     include Shield::HasManyBearerLogins
-     # ...
-   end
-   ```
-
-   `Shield::HasManyBearerLogins` sets up a *one-to-many* association with the user model.
-
    ---
    ```crystal
    # ->>> src/models/bearer_login.cr
@@ -79,24 +67,10 @@ This token is revoked when the user logs out.
    - `scopes : Array(String)`
    - `started_at : Time`
    - `token_digest : String`
-   
-   ...and sets up a one-to-many association with the `User` model.
 
    It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
 
    You may add other columns and associations specific to your application.
-
-1. Set up the query:
-
-   ```crystal
-   # ->>> src/queries/bearer_login_query.cr
-
-   class BearerLoginQuery < BearerLogin::BaseQuery
-     # ...
-     include Shield::BearerLoginQuery
-     # ...
-   end
-   ```
 
 1. Set up the migration:
 
@@ -131,13 +105,13 @@ This token is revoked when the user logs out.
 
 1. Set up operations:
 
+   All operations are already set up. You may reopen an operation to add new functionality.
+
    ```crystal
    # ->>> src/operations/create_bearer_login.cr
 
    class CreateBearerLogin < BearerLogin::SaveOperation
      # ...
-     include Shield::CreateBearerLogin
-
      # By default, *Shield* sets the `ended_at` time here, using
      # the expiry setting above.
      #
@@ -148,7 +122,7 @@ This token is revoked when the user logs out.
    end
    ```
 
-   `Shield::CreateBearerLogin` receives `name : String` and `scopes : Array(String)` parameters, and creates a database entry with a unique ID and hashed token.
+   `CreateBearerLogin` receives `name : String` and `scopes : Array(String)` parameters, and creates a database entry with a unique ID and hashed token.
 
    ---
    ```crystal
@@ -156,12 +130,10 @@ This token is revoked when the user logs out.
 
    class RevokeBearerLogin < BearerLogin::SaveOperation
      # ...
-     include Shield::RevokeBearerLogin
-     # ...
    end
    ```
 
-   `Shield::RevokeBearerLogin` updates the relevant columns in the database to mark a given *bearer login* as inactive.
+   `RevokeBearerLogin` updates the relevant columns in the database to mark a given *bearer login* as inactive.
 
    ---
    ```crystal
@@ -169,12 +141,10 @@ This token is revoked when the user logs out.
 
    class DeleteBearerLogin < Avram::Operation
      # ...
-     include Shield::DeleteBearerLogin
-     # ...
    end
    ```
 
-   `Shield::DeleteBearerLogin` actually deletes a given *bearer login* from the database. Use this instead of `Shield::RevokeBearerLogin` if you intend to actually delete bearer logins, rather than mark them as inactive.
+   `DeleteBearerLogin` actually deletes a given *bearer login* from the database. Use this instead of `RevokeBearerLogin` if you intend to actually delete bearer logins, rather than mark them as inactive.
 
 1. Set up actions:
 
@@ -183,20 +153,6 @@ This token is revoked when the user logs out.
 
    abstract class ApiAction < Lucky::Action
      # ...
-     include Shield::ApiAction
-
-     include Shield::Api::LoginHelpers
-     include Shield::Api::LoginPipes
-
-     include Shield::Api::AuthorizationHelpers
-     include Shield::Api::AuthorizationPipes
-
-     #include Shield::Api::PasswordResetHelpers
-     #include Shield::Api::PasswordResetPipes
-
-     #include Shield::Api::EmailConfirmationHelpers
-     #include Shield::Api::EmailConfirmationPipes
-
      route_prefix "/api/v0"
 
      # If you are worried about users on mobile, you may want
@@ -378,47 +334,9 @@ This token is revoked when the user logs out.
 
    `Shield::BearerLogins::Destroy` is responsible for revoking bearer logins. Revoke buttons/links must point to this action.
 
-1. Set up utilities:
-
-   ```crystal
-   # ->>> src/utilities/bearer_login_headers.cr
-
-   class BearerLoginHeaders # or `struct ...`
-     # ...
-     include Shield::BearerLoginHeaders
-     # ...
-   end
-   ```
-
-   `Shield::BearerLoginHeaders` handles verification of *bearer login* tokens retrieved from request headers.
-
-   ---
-   ```crystal
-   # ->>> src/utilities/login_headers.cr
-
-   class LoginHeaders # or `struct ...`
-     # ...
-     include Shield::LoginHeaders
-     # ...
-   end
-   ```
-
-   `Shield::LoginHeaders` handles verifications for regular password logins, since APIs do not use sessions for password authentication.
-
-   ---
-   ```crystal
-   # ->>> src/utilities/bearer_scope.cr
-
-   class BearerScope # or `struct ...`
-     # ...
-     include Shield::BearerScope
-     # ...
-   end
-   ```
-
 ### Action helpers
 
-`Shield::ApiAction` adds in the following helpers, as counterparts to those provided in `Shield::BrowserAction`.
+`ApiAction` adds in the following helpers, as counterparts to those provided in `BrowserAction`.
 
 - `#bearer_logged_in?`
 - `#bearer_logged_out?`
@@ -449,29 +367,19 @@ For these purposes, *Shield* provides the following modules:
 - `Shield::Api::BearerLogins::Destroy`
 - `Shield::Api::BearerLogins::Delete`
 - `Shield::Api::BearerLogins::Index`
-
 - `Shield::Api::CurrentLogin::Create`
 - `Shield::Api::CurrentLogin::Destroy`
 - `Shield::Api::CurrentLogin::Delete`
-
 - `Shield::Api::CurrentUser::Create`
 - `Shield::Api::CurrentUser::Show`
 - `Shield::Api::CurrentUser::Update`
-
 - `Shield::Api::EmailConfirmationCurrentUser::Create`
 - `Shield::Api::EmailConfirmationCurrentUser::Show`
 - `Shield::Api::EmailConfirmationCurrentUser::Update`
-
 - `Shield::Api::EmailConfirmations::Create`
 - `Shield::Api::EmailConfirmations::Edit`
-
 - `Shield::Api::PasswordResets::Create`
 - `Shield::Api::PasswordResets::Update`
-
-#### Utilities
-
-- `Shield::EmailConfirmationParams`
-- `Shield::PasswordResetParams`
 
 If your application decides to allow any of these functionalities via its API, the modules above should be `include`d in their respective API classes.
 

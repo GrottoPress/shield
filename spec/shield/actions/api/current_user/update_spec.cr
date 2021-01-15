@@ -13,7 +13,7 @@ describe Shield::Api::CurrentUser::Update do
     client.api_auth(user, password)
 
     response = client.exec(
-      Api::CurrentUser::Update,
+      Api::RegularCurrentUser::Update,
       user: {email: new_email},
       user_options: {password_notify: true}
     )
@@ -24,7 +24,7 @@ describe Shield::Api::CurrentUser::Update do
 
   it "requires logged in" do
     response = ApiClient.exec(
-      Api::CurrentUser::Update,
+      Api::RegularCurrentUser::Update,
       user: {email: "user@email.com"},
       user_options: {login_notify: true}
     )

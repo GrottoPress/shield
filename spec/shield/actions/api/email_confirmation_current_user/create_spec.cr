@@ -15,7 +15,7 @@ describe Shield::Api::EmailConfirmationCurrentUser::Create do
       token = BearerToken.new(operation, email_confirmation)
 
       response = ApiClient.exec(
-        Api::EmailConfirmationCurrentUser::Create,
+        Api::CurrentUser::Create,
         token: token,
         user: {password: password},
         user_options: {password_notify: true, login_notify: true}
@@ -30,7 +30,7 @@ describe Shield::Api::EmailConfirmationCurrentUser::Create do
     token = BearerToken.new("abcdef", 1)
 
     response = ApiClient.exec(
-      Api::EmailConfirmationCurrentUser::Create,
+      Api::CurrentUser::Create,
       token: token,
       user: {password: password},
       user_options: {password_notify: true, login_notify: true}
@@ -47,7 +47,7 @@ describe Shield::Api::EmailConfirmationCurrentUser::Create do
     client.api_auth(email, password)
 
     response = client.exec(
-      Api::EmailConfirmationCurrentUser::Create,
+      Api::CurrentUser::Create,
       user: {password: password},
       user_options: {password_notify: true, login_notify: true}
     )

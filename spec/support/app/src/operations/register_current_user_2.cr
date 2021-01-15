@@ -1,8 +1,7 @@
 require "./save_user_options_2"
 
 class RegisterCurrentUser2 < User::SaveOperation
-  include Shield::RegisterUser
-  # include Shield::SendWelcomeEmail
+  include Shield::RegisterEmailConfirmationUser
 
   has_one save_user_options : SaveUserOptions2
 

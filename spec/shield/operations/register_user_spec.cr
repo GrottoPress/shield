@@ -39,7 +39,7 @@ describe Shield::RegisterUser do
       user_options: {login_notify: false, password_notify: false}
     )
 
-    RegisterCurrentUser2.create(params) do |operation, user|
+    RegisterRegularCurrentUser2.create(params) do |operation, user|
       operation.saved?.should be_false
       UserQuery.new.first?.should be_nil
     end

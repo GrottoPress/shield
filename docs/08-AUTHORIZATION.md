@@ -43,9 +43,6 @@ It should not be used for any other type of authorization. For instance, if you 
 
    abstract class BrowserAction < Lucky::Action
      # ...
-     include Shield::AuthorizationHelpers
-     include Shield::AuthorizationPipes
-
      # What to do if user is not allowed to perform action
      #
      #def do_check_authorization_failed

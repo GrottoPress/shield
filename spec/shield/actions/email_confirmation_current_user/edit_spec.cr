@@ -8,13 +8,13 @@ describe Shield::EmailConfirmationCurrentUser::Edit do
     client = ApiClient.new
     client.browser_auth(email, password)
 
-    response = client.exec(EmailConfirmationCurrentUser::Edit)
+    response = client.exec(CurrentUser::Edit)
 
-    response.body.should eq("EmailConfirmationCurrentUser::EditPage")
+    response.body.should eq("CurrentUser::EditPage")
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(EmailConfirmationCurrentUser::Edit)
+    response = ApiClient.exec(CurrentUser::Edit)
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"]?.should eq("false")

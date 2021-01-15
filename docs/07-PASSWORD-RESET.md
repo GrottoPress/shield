@@ -15,18 +15,6 @@
 
 1. Set up models:
 
-   ```crystal
-   # ->>> src/models/user.cr
-
-   class User < BaseModel
-     # ...
-     include Shield::HasManyPasswordResets
-     # ...
-   end
-   ```
-
-   `Shield::HasManyPasswordResets` sets up a *one-to-many* association with the user model.
-
    ---
    ```crystal
    # ->>> src/models/password_reset.cr
@@ -48,24 +36,10 @@
    - `ip_address : String`
    - `started_at : Time`
    - `token_digest : String`
-   
-   ...and sets up a one-to-many association with the `User` model.
 
    It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
 
    You may add other columns and associations specific to your application.
-
-1. Set up the query:
-
-   ```crystal
-   # ->>> src/queries/password_reset_query.cr
-
-   class PasswordResetQuery < PasswordReset::BaseQuery
-     # ...
-     include Shield::PasswordResetQuery
-     # ...
-   end
-   ```
 
 1. Set up the migration:
 
@@ -98,13 +72,13 @@
 
 1. Set up operations:
 
+   All operations are already set up. You may reopen an operation to add new functionality.
+
    ```crystal
    # ->>> src/operations/start_password_reset.cr
 
    class StartPasswordReset < PasswordReset::SaveOperation
      # ...
-     include Shield::StartPasswordReset
-
      # By default, *Shield* sets the `ended_at` time here, using
      # the expiry setting above.
      #
@@ -115,7 +89,7 @@
    end
    ```
 
-   `Shield::StartPasswordReset` receives a `email` parameter, generates a token, sends email, and saves the relevant values in the database.
+   `StartPasswordReset` receives a `email` parameter, generates a token, sends email, and saves the relevant values in the database.
 
    ---
    ```crystal
@@ -123,12 +97,10 @@
 
    class EndPasswordReset < PasswordReset::SaveOperation
      # ...
-     include Shield::EndPasswordReset
-     # ...
    end
    ```
 
-   `Shield::EndPasswordReset` marks a password reset inactive, to ensure it is never reused.
+   `EndPasswordReset` marks a password reset inactive, to ensure it is never reused.
 
    ---
    ```crystal
@@ -136,12 +108,10 @@
 
    class DeletePasswordReset < Avram::Operation
      # ...
-     include Shield::DeletePasswordReset
-     # ...
    end
    ```
 
-   `Shield::DeletePasswordReset` actually deletes a given password reset from the database. Use this instead of `Shield::EndPasswordReset` if you intend to actually delete password resets, rather than mark them as inactive.
+   `DeletePasswordReset` actually deletes a given password reset from the database. Use this instead of `EndPasswordReset` if you intend to actually delete password resets, rather than mark them as inactive.
 
    ---
    ```crystal
@@ -149,8 +119,6 @@
 
    class ResetPassword < User::SaveOperation
      # ...
-     include Shield::ResetPassword
-
      # By default, *Shield* marks all password resets as inactive,
      # after a successful reset, without deleting them.
      #
@@ -161,7 +129,7 @@
    end
    ```
 
-   `Shield::ResetPassword` does the actual work of updating a user's password, after which it deactivates all active password resets for that user.
+   `ResetPassword` does the actual work of updating a user's password, after which it deactivates all active password resets for that user.
 
 1. Set up actions:
 
@@ -170,9 +138,6 @@
 
    abstract class BrowserAction < Lucky::Action
      # ...
-     include Shield::PasswordResetHelpers
-     include Shield::PasswordResetPipes
-
      # What to do when a user's IP address changes in a password reset, if the
      # action requires the user's IP to match the IP with which they requested
      # the password reset.
@@ -350,31 +315,6 @@
      #  flash.failure = "Could not change password"
      #  html EditPage, operation: operation
      #end
-     # ...
-   end
-   ```
-
-1. Set up utilities:
-
-   ```crystal
-   # ->>> src/utilities/password_reset_session.cr
-
-   class PasswordResetSession # Or `struct ...`
-     # ...
-     include Shield::PasswordResetSession
-     # ...
-   end
-   ```
-
-   `Shield::PasswordResetSession` is a wrapper around *Lucky* sessions that deals with session keys and values for password resets, and handles verification of password reset tokens retrieved from session.
-
-   ---
-   ```crystal
-   # ->>> src/utilities/password_reset_url.cr
-
-   class PasswordResetUrl # or `struct ...`
-     # ...
-     include Shield::PasswordResetUrl
      # ...
    end
    ```

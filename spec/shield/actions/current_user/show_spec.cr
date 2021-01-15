@@ -9,13 +9,13 @@ describe Shield::CurrentUser::Show do
     client = ApiClient.new
     client.browser_auth(email, password, ip_address)
 
-    response = client.exec(CurrentUser::Show)
+    response = client.exec(RegularCurrentUser::Show)
 
-    response.body.should eq("CurrentUser::ShowPage")
+    response.body.should eq("RegularCurrentUser::ShowPage")
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(CurrentUser::Show)
+    response = ApiClient.exec(RegularCurrentUser::Show)
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"]?.should eq("false")

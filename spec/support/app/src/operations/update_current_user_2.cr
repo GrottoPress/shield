@@ -1,8 +1,5 @@
-require "./save_user_options_2"
-
 class UpdateCurrentUser2 < User::SaveOperation
-  include Shield::UpdateUser
-  # include Shield::NotifyPasswordChange
+  include Shield::UpdateEmailConfirmationUser
 
   has_one save_user_options : SaveUserOptions2
 

@@ -12,14 +12,4 @@ class EmailConfirmations::Edit < BrowserAction
     response.headers["X-Email-Confirmation-Status"] = "failure"
     previous_def
   end
-
-  def do_run_operation_succeeded(operation, user)
-    flash.keep.success = "Email changed successfully"
-    redirect to: EmailConfirmationCurrentUser::Show
-  end
-
-  def do_run_operation_failed(operation)
-    flash.failure = "Could not change email"
-    redirect to: EmailConfirmationCurrentUser::Edit
-  end
 end

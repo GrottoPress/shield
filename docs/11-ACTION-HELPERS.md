@@ -1,6 +1,6 @@
 ## Action Helpers
 
-`Shield::Action` adds in the following helpers:
+*Shield* comes with the following action helpers:
 
 - `#current_login`:
 

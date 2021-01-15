@@ -1,9 +1,10 @@
 ## Type Names
 
-*Shield* assumes the following type names in your application:
+*Shield* uses the following type names:
 
-### Models
+### Data Models
 
+- `BaseModel`
 - `BearerLogin`
 - `EmailConfirmation`
 - `Login`
@@ -17,8 +18,8 @@
 - `EmailConfirmationQuery`
 - `LoginQuery`
 - `PasswordResetQuery`
-- `UserQuery`
 - `UserOptionsQuery`
+- `UserQuery`
 
 ### Emails
 
@@ -34,12 +35,17 @@
 ### Operations
 
 - `CreateBearerLogin`
+- `DeleteBearerLogin`
 - `DeleteEmailConfirmation`
+- `DeleteLogin`
+- `DeletePasswordResets`
+- `DeleteUser`
 - `EndEmailConfirmation`
 - `EndPasswordReset`
 - `LogUserIn`
 - `LogUserOut`
 - `RegisterCurrentUser`
+- `RegisterUser`
 - `ResetPassword`
 - `RevokeBearerLogin`
 - `SaveUserOptions`
@@ -47,13 +53,16 @@
 - `StartPasswordReset`
 - `UpdateConfirmedEmail`
 - `UpdateCurrentUser`
+- `UpdateUser`
 
 ### Actions
 
+- `ApiAction`
 - `BearerLogins::Create`
 - `BearerLogins::Destroy`
 - `BearerLogins::Index`
 - `BearerLogins::New`
+- `BrowserAction`
 - `CurrentLogin::Create`
 - `CurrentLogin::Destroy`
 - `CurrentLogin::New`
@@ -71,6 +80,15 @@
 - `PasswordResets::New`
 - `PasswordResets::Show`
 - `PasswordResets::Update`
+- `Users::Create`
+- `Users::Destroy`
+- `Users::Edit`
+- `Users::Index`
+- `Users::New`
+- `Users::Show`
+- `Users::Update`
+
+API equivalents, where applicable, are prefixed with `Api::`
 
 ### Pages
 
@@ -80,9 +98,14 @@
 - `CurrentLogin::NewPage`
 - `CurrentUser::EditPage`
 - `CurrentUser::NewPage`
+- `CurrentUser::ShowPage`
 - `EmailConfirmations::NewPage`
 - `PasswordResets::EditPage`
 - `PasswordResets::NewPage`
+- `Users::EditPage`
+- `Users::IndexPage`
+- `Users::NewPage`
+- `Users::ShowPage`
 
 ### Serializers
 
@@ -90,7 +113,7 @@
 - `LoginSerializer`
 - `UserSerializer`
 
-### Utilities
+### Domain Models
 
 - `BcryptHash`
 - `BearerLoginHeaders`
@@ -100,6 +123,7 @@
 - `EmailConfirmationSession`
 - `EmailConfirmationUrl`
 - `LoginHeaders`
+- `LoginIdleTimeoutSession`
 - `LoginSession`
 - `PageUrlSession`
 - `PasswordAuthentication`
@@ -109,15 +133,3 @@
 - `PwnedPasswords`
 - `ReturnUrlSession`
 - `Sha256Hash`
-
-If you would rather name your types differently, set aliases for them, thus:
-
-```crystal
-# ->>> config/types.cr
-
-alias User = MyUserModel
-alias UserQuery = MyUserQuery
-# ...
-```
-
-Then `require` this alias file wherever the compiler yells about a missing type.

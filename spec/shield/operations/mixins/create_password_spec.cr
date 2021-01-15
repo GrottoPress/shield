@@ -4,7 +4,7 @@ describe Shield::CreatePassword do
   it "saves password" do
     password = "password12U-password"
 
-    user = RegisterCurrentUser.create!(nested_params(
+    user = RegisterRegularCurrentUser.create!(nested_params(
       user: {email: "user@example.tld", password: password},
       user_options: {login_notify: true, password_notify: true}
     ))
@@ -15,7 +15,7 @@ describe Shield::CreatePassword do
   end
 
   it "requires password" do
-    RegisterCurrentUser.create(nested_params(
+    RegisterRegularCurrentUser.create(nested_params(
       user: {email: "user@domain.tld", password: ""},
       user_options: {login_notify: true, password_notify: true}
     )) do |operation, user|
@@ -27,7 +27,7 @@ describe Shield::CreatePassword do
   end
 
   it "does not send password change notification" do
-    RegisterCurrentUser.create(nested_params(
+    RegisterRegularCurrentUser.create(nested_params(
       user: {email: "user@domain.tld", password: "password1=Apassword"},
       user_options: {login_notify: true, password_notify: false}
     )) do |operation, user|

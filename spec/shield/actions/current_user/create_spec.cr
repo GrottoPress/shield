@@ -6,7 +6,7 @@ describe Shield::CurrentUser::Create do
     password = "password4APASSWORD<"
 
     response = ApiClient.exec(
-      CurrentUser::Create,
+      RegularCurrentUser::Create,
       user: {email: email, password: password},
       user_options: {password_notify: true, login_notify: true}
     )
@@ -24,7 +24,7 @@ describe Shield::CurrentUser::Create do
     client.browser_auth(email, password, ip_address)
 
     response = client.exec(
-      CurrentUser::Create,
+      RegularCurrentUser::Create,
       user: {email: email, password: password},
       user_options: {password_notify: true, login_notify: true}
     )

@@ -19,7 +19,7 @@ describe Shield::EmailConfirmationCurrentUser::Create do
       client.set_cookie_from_session(session)
 
       response = client.exec(
-        EmailConfirmationCurrentUser::Create,
+        CurrentUser::Create,
         user: {password: password},
         user_options: {password_notify: true, login_notify: true}
       )
@@ -38,7 +38,7 @@ describe Shield::EmailConfirmationCurrentUser::Create do
     client.set_cookie_from_session(session)
 
     response = client.exec(
-      EmailConfirmationCurrentUser::Create,
+      CurrentUser::Create,
       user: {password: password},
       user_options: {password_notify: true, login_notify: true}
     )
@@ -55,7 +55,7 @@ describe Shield::EmailConfirmationCurrentUser::Create do
     client.browser_auth(email, password)
 
     response = client.exec(
-      EmailConfirmationCurrentUser::Create,
+      CurrentUser::Create,
       user: {password: password},
       user_options: {password_notify: true, login_notify: true}
     )

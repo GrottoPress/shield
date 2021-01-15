@@ -20,19 +20,6 @@
 1. Set up models:
 
    ```crystal
-   # ->>> src/models/user.cr
-
-   class User < BaseModel
-     # ...
-     include Shield::HasManyLogins
-     # ...
-   end
-   ```
-
-   `Shield::HasManyLogins` sets up a *one-to-many* association with the user model.
-
-   ---
-   ```crystal
    # ->>> src/models/login.cr
 
    class Login < BaseModel
@@ -52,24 +39,10 @@
    - `ip_address : String`
    - `started_at : Time`
    - `token_digest : String`
-   
-   ...and sets up a one-to-many association with the `User` model.
 
    It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
 
    You may add other columns and associations specific to your application.
-
-1. Set up the query:
-
-   ```crystal
-   # ->>> src/queries/login_query.cr
-
-   class LoginQuery < Login::BaseQuery
-     # ...
-     include Shield::LoginQuery
-     # ...
-   end
-   ```
 
 1. Set up the migration:
 
@@ -102,13 +75,13 @@
 
 1. Set up operations:
 
+   All operations are already set up. You may reopen an operation to add new functionality.
+
    ```crystal
    # ->>> src/operations/log_user_in.cr
 
    class LogUserIn < Login::SaveOperation
      # ...
-     include Shield::LogUserIn
-
      # By default, *Shield* sets the `ended_at` time here, using
      # the expiry setting above.
      #
@@ -119,7 +92,7 @@
    end
    ```
 
-   `Shield::LogUserIn` receives `email` and `password` parameters, and creates a login entry with a unique ID and hashed token in the database.
+   `LogUserIn` receives `email` and `password` parameters, and creates a login entry with a unique ID and hashed token in the database.
 
    For a client to be considered logged in, it must present a matching login ID and token from session.
 
@@ -129,12 +102,10 @@
 
    class LogUserOut < Login::SaveOperation
      # ...
-     include Shield::LogUserOut
-     # ...
    end
    ```
 
-   `Shield::LogUserOut` deletes session values related to the login, and updates the relevant columns in the database to mark the login as inactive.
+   `LogUserOut` deletes session values related to the login, and updates the relevant columns in the database to mark the login as inactive.
 
    ---
    ```crystal
@@ -142,12 +113,10 @@
 
    class DeleteLogin < Avram::Operation
      # ...
-     include Shield::DeleteLogin
-     # ...
    end
    ```
 
-   `Shield::DeleteLogin` actually deletes a given login from the database. Use this instead of `Shield::LogUserOut` if you intend to actually delete logins, rather than mark them as inactive.
+   `DeleteLogin` actually deletes a given login from the database. Use this instead of `LogUserOut` if you intend to actually delete logins, rather than mark them as inactive.
 
 1. Set up actions:
 
@@ -156,9 +125,6 @@
 
    abstract class BrowserAction < Lucky::Action
      # ...
-     include Shield::LoginHelpers
-     include Shield::LoginPipes
-
      # If you are worried about users on mobile, you may want
      # to disable pinning a login to its IP address
      #skip :pin_login_to_ip_address
@@ -287,30 +253,3 @@
      # ...
    end
    ```
-
-1. Set up utilities:
-
-   ```crystal
-   # ->>> src/utilities/login_session.cr
-
-   class LoginSession # Or `struct ...`
-     # ...
-     include Shield::LoginSession
-     # ...
-   end
-   ```
-
-   `Shield::LoginSession` is a wrapper around *Lucky* sessions that deals with session keys and values for logins, and handles verification of login tokens retrieved from session.
-
-   ---
-   ```crystal
-   # ->>> src/utilities/login_idle_timeout_session.cr
-
-   class LoginIdleTimeoutSession # Or `struct ...`
-     # ...
-     include Shield::LoginIdleTimeoutSession
-     # ...
-   end
-   ```
-
-   `Shield::LoginIdleTimeoutSession` is a wrapper around *Lucky* sessions that deals with session keys and values for login idle timeouts.

@@ -4,7 +4,7 @@ describe Shield::SaveEmail do
   it "saves email" do
     email = "user@example.tld"
 
-    user = RegisterCurrentUser.create!(nested_params(
+    user = RegisterRegularCurrentUser.create!(nested_params(
       user: {email: email, password: "password12U)password"},
       user_options: {login_notify: true, password_notify: true}
     ))
@@ -13,7 +13,7 @@ describe Shield::SaveEmail do
   end
 
   it "requires email" do
-    RegisterCurrentUser.create(
+    RegisterRegularCurrentUser.create(
       nested_params(user: {email: ""})
     ) do |operation, user|
       user.should be_nil
@@ -23,7 +23,7 @@ describe Shield::SaveEmail do
   end
 
   it "rejects invalid email" do
-    RegisterCurrentUser.create(
+    RegisterRegularCurrentUser.create(
       nested_params(user: {email: "user"})
     ) do |operation, user|
       user.should be_nil
@@ -37,7 +37,7 @@ describe Shield::SaveEmail do
 
     UserBox.create &.email(email)
 
-    RegisterCurrentUser.create(
+    RegisterRegularCurrentUser.create(
       nested_params(user: {email: email})
     ) do |operation, user|
       user.should be_nil

@@ -15,9 +15,9 @@ describe Shield::EmailConfirmationPipes do
         client = ApiClient.new
         client.set_cookie_from_session(session)
 
-        response = client.exec(EmailConfirmationCurrentUser::New)
+        response = client.exec(CurrentUser::New)
 
-        response.body.should eq("EmailConfirmationCurrentUser::NewPage")
+        response.body.should eq("CurrentUser::NewPage")
       end
     end
 
@@ -34,7 +34,7 @@ describe Shield::EmailConfirmationPipes do
         client = ApiClient.new
         client.set_cookie_from_session(session)
 
-        response = client.exec(EmailConfirmationCurrentUser::New)
+        response = client.exec(CurrentUser::New)
 
         response.status.should eq(HTTP::Status::FOUND)
         response.headers["X-Ip-Address-Changed"].should eq("true")

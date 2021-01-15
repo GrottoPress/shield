@@ -8,13 +8,13 @@ describe Shield::Api::CurrentUser::Show do
     client = ApiClient.new
     client.api_auth(email, password)
 
-    response = client.exec(Api::CurrentUser::Show)
+    response = client.exec(Api::RegularCurrentUser::Show)
 
     response.should send_json(200, {status: "success"})
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(Api::CurrentUser::Show)
+    response = ApiClient.exec(Api::RegularCurrentUser::Show)
 
     response.should send_json(401, logged_in: false)
   end

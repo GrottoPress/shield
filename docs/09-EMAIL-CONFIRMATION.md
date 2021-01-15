@@ -26,19 +26,6 @@ This is particularly important, since email addresses are usually the only means
 1. Set up models:
 
    ```crystal
-   # ->>> src/models/user.cr
-
-   class User < BaseModel
-     # ...
-     include Shield::HasManyEmailConfirmations
-     # ...
-   end
-   ```
-
-   `Shield::HasManyEmailConfirmations` sets up a *one-to-many* association with the user model.
-
-   ---
-   ```crystal
    # ->>> src/models/email_confirmation.cr
 
    class EmailConfirmation < BaseModel
@@ -60,23 +47,9 @@ This is particularly important, since email addresses are usually the only means
    - `started_at : Time`
    - `token_digest : String`
 
-   ...and sets up an optional one-to-many association with the `User` model.
-
    It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
 
    You may add other columns and associations specific to your application.
-
-1. Set up the query:
-
-   ```crystal
-   # ->>> src/queries/email_confirmation_query.cr
-
-   class EmailConfirmationQuery < EmailConfirmation::BaseQuery
-     # ...
-     include Shield::EmailConfirmationQuery
-     # ...
-   end
-   ```
 
 1. Set up the migration:
 
@@ -111,13 +84,13 @@ This is particularly important, since email addresses are usually the only means
 
 1. Set up operations:
 
+   All operations are already set up. You may reopen an operation to add new functionality.
+
    ```crystal
    # ->>> src/operations/start_email_confirmation.cr
 
    class StartEmailConfirmation < EmailConfirmation::SaveOperation
      # ...
-     include Shield::StartEmailConfirmation
-
      # By default, *Shield* sets the `ended_at` time here, using
      # the expiry setting above.
      #
@@ -128,7 +101,7 @@ This is particularly important, since email addresses are usually the only means
    end
    ```
 
-   `Shield::StartEmailConfirmation` kicks off the entire process of confirming a given email address. It receives `email : String` and an optional `user_id : Int64?` (for an existing user), and generates a link that it sends to the email address supplied.
+   `StartEmailConfirmation` kicks off the entire process of confirming a given email address. It receives `email : String` and an optional `user_id : Int64?` (for an existing user), and generates a link that it sends to the email address supplied.
 
    ---
    ```crystal
@@ -136,12 +109,10 @@ This is particularly important, since email addresses are usually the only means
 
    class EndEmailConfirmation < EmailConfirmation::SaveOperation
      # ...
-     include Shield::EndEmailConfirmation
-     # ...
    end
    ```
 
-   `Shield::EndEmailConfirmation` marks an email confirmation inactive, to ensure it is never reused.
+   `EndEmailConfirmation` marks an email confirmation inactive, to ensure it is never reused.
 
    ---
    ```crystal
@@ -149,12 +120,10 @@ This is particularly important, since email addresses are usually the only means
 
    class DeleteEmailConfirmation < Avram::Operation
      # ...
-     include Shield::DeleteEmailConfirmation
-     # ...
    end
    ```
 
-   `Shield::DeleteEmailConfirmation` actually deletes a given *email confirmation* from the database. Use this instead of `Shield::EndEmailConfirmation` if you intend to actually delete email confirmations, rather than mark them as inactive.
+   `DeleteEmailConfirmation` actually deletes a given *email confirmation* from the database. Use this instead of `EndEmailConfirmation` if you intend to actually delete email confirmations, rather than mark them as inactive.
 
    ---
    ```crystal
@@ -162,7 +131,8 @@ This is particularly important, since email addresses are usually the only means
 
    class RegisterCurrentUser < User::SaveOperation
      # ...
-     include Shield::RegisterEmailConfirmationUser
+     # Send welcome email
+     #
      include Shield::SendWelcomeEmail
 
      # By default, *Shield* marks all email confirmations as inactive,
@@ -175,7 +145,7 @@ This is particularly important, since email addresses are usually the only means
    end
    ```
 
-   `Shield::RegisterEmailConfirmationUser` creates a new user after they have verified their email address. Include this module, instead of `Shield::RegisterUser`, if you use email confirmations in your app.
+   `RegisterCurrentUser` creates a new user after they have verified their email address.
 
    ---
    ```crystal
@@ -183,14 +153,17 @@ This is particularly important, since email addresses are usually the only means
 
    class UpdateCurrentUser < User::SaveOperation
      # ...
-     include Shield::UpdateEmailConfirmationUser
+     # By default, *Shield* marks all logins as inactive,
+     # when password changes, without deleting them.
+     #
+     # Enable this to delete them from the database instead.
+     #
+     #include Shield::DeleteLoginsOnPasswordChange
      # ...
    end
    ```
 
-   `Shield::UpdateEmailConfirmationUser` updates an existing user, but does not save the new email. It starts a new email confirmation for the user if their email changed.
-
-   Include this module, instead of `Shield::UpdateUser`, if you use email confirmations in your app.
+   `UpdateCurrentUser` updates an existing user, but does not save the new email. It starts a new email confirmation for the user if their email changed.
 
    ---
    ```crystal
@@ -198,8 +171,6 @@ This is particularly important, since email addresses are usually the only means
 
    class UpdateConfirmedEmail < User::SaveOperation
      # ...
-     include Shield::UpdateConfirmedEmail
-
      # By default, *Shield* marks all email confirmations as inactive,
      # after successful update, without deleting them.
      #
@@ -210,7 +181,7 @@ This is particularly important, since email addresses are usually the only means
    end
    ```
 
-   `Shield::UpdateConfirmedEmail` updates an existing users email address, after they have verified their email.
+   `UpdateConfirmedEmail` updates an existing users email, after they have verified their address.
 
 1. Set up actions:
 
@@ -219,9 +190,6 @@ This is particularly important, since email addresses are usually the only means
 
    abstract class BrowserAction < Lucky::Action
      # ...
-     include Shield::EmailConfirmationHelpers
-     include Shield::EmailConfirmationPipes
-
      # What to do when a user's IP address changes in an email confirmation, if the
      # action requires the user's IP to match the IP with which they started
      # the email confirmation.
@@ -537,31 +505,6 @@ This is particularly important, since email addresses are usually the only means
    ```
    
    `Shield::EmailConfirmationCurrentUser::Update` updates a user. Include this module, instead of `Shield::CurrentUser::Update`, if you use email confirmations in your app.
-
-1. Set up utilities:
-
-   ```crystal
-   # ->>> src/utilities/email_confirmation_session.cr
-
-   class EmailConfirmationSession # Or `struct ...`
-     # ...
-     include Shield::EmailConfirmationSession
-     # ...
-   end
-   ```
-
-   `Shield::EmailConfirmationSession` is a wrapper around *Lucky* sessions that deals with session keys and values for email confirmations, and handles verification of email confirmation tokens retrieved from session.
-
-   ---
-   ```crystal
-   # ->>> src/utilities/email_confirmation_url.cr
-
-   class EmailConfirmationUrl # or `struct ...`
-     # ...
-     include Shield::EmailConfirmationUrl
-     # ...
-   end
-   ```
 
 1. Set up emails:
 

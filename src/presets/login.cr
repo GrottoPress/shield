@@ -1,0 +1,40 @@
+{% skip_file unless Avram::Model.all_subclasses
+  .map(&.stringify)
+  .includes?("Login")
+%}
+
+class User < BaseModel
+  include Shield::HasManyLogins
+end
+
+class LoginQuery < Login::BaseQuery
+  include Shield::LoginQuery
+end
+
+class LogUserOut < Login::SaveOperation
+  include Shield::LogUserOut
+end
+
+class LogUserIn < Login::SaveOperation
+  include Shield::LogUserIn
+end
+
+class DeleteLogin < Avram::Operation
+  include Shield::DeleteLogin
+end
+
+abstract class BrowserAction < Lucky::Action
+  include Shield::LoginHelpers
+  include Shield::LoginPipes
+
+  include Shield::AuthorizationHelpers
+  include Shield::AuthorizationPipes
+end
+
+struct LoginSession
+  include Shield::LoginSession
+end
+
+struct LoginIdleTimeoutSession
+  include Shield::LoginIdleTimeoutSession
+end

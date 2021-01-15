@@ -51,7 +51,7 @@ describe Shield::UpdateUser do
       .login_notify(true)
       .password_notify(true)
 
-    UpdateCurrentUser2.update(
+    UpdateRegularCurrentUser2.update(
       user,
       nested_params(user_options: {
         login_notify: false,
@@ -76,7 +76,7 @@ describe Shield::UpdateUser do
       .login_notify(true)
       .password_notify(true)
 
-    UpdateCurrentUser2.update(
+    UpdateRegularCurrentUser2.update(
       user,
       nested_params(
         user: {email: "user@example.com"},

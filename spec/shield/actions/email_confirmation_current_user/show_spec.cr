@@ -8,13 +8,13 @@ describe Shield::EmailConfirmationCurrentUser::Show do
     client = ApiClient.new
     client.browser_auth(email, password)
 
-    response = client.exec(EmailConfirmationCurrentUser::Show)
+    response = client.exec(CurrentUser::Show)
 
-    response.body.should eq("EmailConfirmationCurrentUser::ShowPage")
+    response.body.should eq("CurrentUser::ShowPage")
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(EmailConfirmationCurrentUser::Show)
+    response = ApiClient.exec(CurrentUser::Show)
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"]?.should eq("false")
