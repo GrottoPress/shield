@@ -81,6 +81,11 @@ module Shield::HttpClient
       cookies.updated.add_response_headers(HTTP::Headers.new)["Set-Cookie"]?
     end
 
+    def self.session_from_cookies(cookies : HTTP::Cookies)
+      cookies = Lucky::CookieJar.from_request_cookies(cookies)
+      Lucky::Session.from_cookie_jar(cookies)
+    end
+
     private def create_user(email : String, password : String) : Nil
       password_digest = BcryptHash.new(password).hash
       user = UserBox.create &.email(email).password_digest(password_digest)

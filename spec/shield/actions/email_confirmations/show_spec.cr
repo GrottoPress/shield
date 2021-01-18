@@ -15,8 +15,7 @@ describe Shield::EmailConfirmations::Show do
 
       response.status.should eq(HTTP::Status::FOUND)
 
-      cookies = Lucky::CookieJar.from_request_cookies(response.cookies)
-      session = Lucky::Session.from_cookie_jar(cookies)
+      session = ApiClient.session_from_cookies(response.cookies)
 
       from_session = EmailConfirmationSession.new(session)
 
