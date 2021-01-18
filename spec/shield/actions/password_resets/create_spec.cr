@@ -5,8 +5,10 @@ describe Shield::PasswordResets::Create do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
-    UserBox.create &.email(email)
+    user = UserBox.create &.email(email)
       .password_digest(BcryptHash.new(password).hash)
+
+    UserOptionsBox.create &.user_id(user.id)
 
     response = ApiClient.exec(PasswordResets::Create, password_reset: {
       email: email

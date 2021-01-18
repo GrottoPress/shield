@@ -6,6 +6,7 @@ describe Shield::Api::Users::Delete do
     password = "password4APASSWORD<"
 
     user = UserBox.create
+    UserOptionsBox.create &.user_id(user.id)
 
     client = ApiClient.new
     client.api_auth(email, password)
@@ -17,6 +18,7 @@ describe Shield::Api::Users::Delete do
 
   it "requires logged in" do
     user = UserBox.create
+    UserOptionsBox.create &.user_id(user.id)
 
     response = ApiClient.exec(Api::Users::Delete.with(user_id: user.id))
 

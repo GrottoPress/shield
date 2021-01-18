@@ -8,6 +8,8 @@ describe Shield::AuthorizationPipes do
       user = UserBox.create &.level(User::Level.new(:author))
         .password_digest(BcryptHash.new(password).hash)
 
+      UserOptionsBox.create &.user_id(user.id)
+
       client = ApiClient.new
       client.browser_auth(user, password)
 
@@ -22,6 +24,8 @@ describe Shield::AuthorizationPipes do
 
       user = UserBox.create &.level(User::Level.new(:admin))
         .password_digest(BcryptHash.new(password).hash)
+
+      UserOptionsBox.create &.user_id(user.id)
 
       client = ApiClient.new
       client.browser_auth(user, password)

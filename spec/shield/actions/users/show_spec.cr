@@ -7,6 +7,7 @@ describe Shield::Users::Show do
     ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
     user = UserBox.create
+    UserOptionsBox.create &.user_id(user.id)
 
     client = ApiClient.new
     client.browser_auth(email, password, ip_address)
@@ -18,6 +19,7 @@ describe Shield::Users::Show do
 
   it "requires logged in" do
     user = UserBox.create
+    UserOptionsBox.create &.user_id(user.id)
 
     response = ApiClient.exec(Users::Show.with(user_id: user.id))
 

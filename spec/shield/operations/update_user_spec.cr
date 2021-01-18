@@ -5,6 +5,7 @@ describe Shield::UpdateUser do
     new_email = "newuser@example.tld"
 
     user = UserBox.create &.email("user@example.tld")
+    UserOptionsBox.create &.user_id(user.id)
 
     UpdateUser.update(
       user,
@@ -20,6 +21,8 @@ describe Shield::UpdateUser do
     new_email = "user@example.com"
 
     user = UserBox.create &.email("user@domain.tld")
+
+    UserOptionsBox.create &.user_id(user.id)
       .login_notify(true)
       .password_notify(false)
 
@@ -42,7 +45,11 @@ describe Shield::UpdateUser do
   end
 
   it "fails when nested operation fails" do
-    user = UserBox.create &.login_notify(true).password_notify(true)
+    user = UserBox.create
+
+    UserOptionsBox.create &.user_id(user.id)
+      .login_notify(true)
+      .password_notify(true)
 
     UpdateCurrentUser2.update(
       user,
@@ -64,6 +71,8 @@ describe Shield::UpdateUser do
     email = "user@domain.tld"
 
     user = UserBox.create &.email(email)
+
+    UserOptionsBox.create &.user_id(user.id)
       .login_notify(true)
       .password_notify(true)
 

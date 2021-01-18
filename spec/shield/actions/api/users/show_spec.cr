@@ -6,6 +6,7 @@ describe Shield::Api::Users::Show do
     password = "password4APASSWORD<"
 
     user = UserBox.create
+    UserOptionsBox.create &.user_id(user.id)
 
     client = ApiClient.new
     client.api_auth(email, password)
@@ -17,6 +18,8 @@ describe Shield::Api::Users::Show do
 
   it "requires logged in" do
     user = UserBox.create
+    UserOptionsBox.create &.user_id(user.id)
+
     response = ApiClient.exec(Api::Users::Show.with(user_id: user.id))
 
     response.should send_json(401, logged_in: false)

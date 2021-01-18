@@ -10,6 +10,8 @@ describe Shield::Api::LoginPipes do
       user = UserBox.create &.email(email)
         .password_digest(BcryptHash.new(password).hash)
 
+      UserOptionsBox.create &.user_id(user.id)
+
       client = ApiClient.new
       client.api_auth(user, password, ip_address)
 
@@ -24,6 +26,8 @@ describe Shield::Api::LoginPipes do
 
       user = UserBox.create &.email(email)
         .password_digest(BcryptHash.new(password).hash)
+
+      UserOptionsBox.create &.user_id(user.id)
 
       CreateBearerLogin.create(
         params(name: "secret token"),
@@ -72,6 +76,8 @@ describe Shield::Api::LoginPipes do
       user = UserBox.create &.email(email)
         .password_digest(BcryptHash.new(password).hash)
 
+      UserOptionsBox.create &.user_id(user.id)
+
       CreateBearerLogin.create(
         params(name: "secret token"),
         scopes: ["api.posts.new"],
@@ -102,6 +108,8 @@ describe Shield::Api::LoginPipes do
           .level(User::Level.new :admin)
           .password_digest(BcryptHash.new(password).hash)
 
+        UserOptionsBox.create &.user_id(user.id)
+
         client = ApiClient.new
         client.api_auth(user, password, ip_address)
 
@@ -117,6 +125,8 @@ describe Shield::Api::LoginPipes do
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
           .password_digest(BcryptHash.new(password).hash)
+
+        UserOptionsBox.create &.user_id(user.id)
 
         client = ApiClient.new
         client.api_auth(user, password)

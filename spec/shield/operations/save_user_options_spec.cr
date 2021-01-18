@@ -2,8 +2,10 @@ require "../../spec_helper"
 
 describe Shield::SaveUserOptions do
   it "updates user options" do
+    user_options = UserOptionsBox.create &.user_id(UserBox.create.id)
+
     SaveUserOptions.update(
-      UserBox.create.options!,
+      user_options,
       params(login_notify: false, password_notify: true)
     ) do |operation, updated_user_options|
       updated_user_options.login_notify.should be_false

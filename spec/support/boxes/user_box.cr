@@ -1,8 +1,4 @@
-require "./user_options_box"
-
 class UserBox < Avram::Box
-  has_one user_options_box : UserOptionsBox
-
   def initialize
     set_defaults
   end

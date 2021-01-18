@@ -36,6 +36,8 @@ describe Shield::LoginPipes do
         .level(User::Level.new :admin)
         .password_digest(BcryptHash.new(password).hash)
 
+      UserOptionsBox.create &.user_id(user.id)
+
       client = ApiClient.new
       client.browser_auth(user, password, ip_address)
 
@@ -51,6 +53,8 @@ describe Shield::LoginPipes do
       user = UserBox.create &.email(email)
         .level(User::Level.new :admin)
         .password_digest(BcryptHash.new(password).hash)
+
+      UserOptionsBox.create &.user_id(user.id)
 
       client = ApiClient.new
       client.browser_auth(user, password)
@@ -72,6 +76,8 @@ describe Shield::LoginPipes do
         .level(User::Level.new :admin)
         .password_digest(BcryptHash.new(password).hash)
 
+      UserOptionsBox.create &.user_id(user.id)
+
       session = Lucky::Session.new
       LoginIdleTimeoutSession.new(session).set
 
@@ -92,6 +98,8 @@ describe Shield::LoginPipes do
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
           .password_digest(BcryptHash.new(password).hash)
+
+        UserOptionsBox.create &.user_id(user.id)
 
         session = Lucky::Session.new
         LoginIdleTimeoutSession.new(session).set
@@ -117,6 +125,8 @@ describe Shield::LoginPipes do
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
           .password_digest(BcryptHash.new(password).hash)
+
+        UserOptionsBox.create &.user_id(user.id)
 
         session = Lucky::Session.new
         LoginIdleTimeoutSession.new(session).set

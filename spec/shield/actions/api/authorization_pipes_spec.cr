@@ -7,6 +7,7 @@ describe Shield::Api::AuthorizationPipes do
         password = "password_1Apassword"
 
         user = UserBox.create &.password_digest(BcryptHash.new(password).hash)
+        UserOptionsBox.create &.user_id(user.id)
 
         client = ApiClient.new
         client.api_auth(user, password)
@@ -22,6 +23,8 @@ describe Shield::Api::AuthorizationPipes do
         user = UserBox.create &.level(User::Level.new(:admin))
           .password_digest(BcryptHash.new(password).hash)
 
+        UserOptionsBox.create &.user_id(user.id)
+
         client = ApiClient.new
         client.api_auth(user, password)
 
@@ -34,6 +37,7 @@ describe Shield::Api::AuthorizationPipes do
     context "for logins with user-generated bearer tokens" do
       it "denies authorization when scopes insufficient" do
         user = UserBox.create &.level(User::Level.new :admin)
+        UserOptionsBox.create &.user_id(user.id)
 
         CreateBearerLogin.create(
           params(name: "secret token"),
@@ -56,6 +60,7 @@ describe Shield::Api::AuthorizationPipes do
 
       it "denies authorization when user not allowed access to route" do
         user = UserBox.create
+        UserOptionsBox.create &.user_id(user.id)
 
         CreateBearerLogin.create(
           params(name: "secret token"),
@@ -78,6 +83,7 @@ describe Shield::Api::AuthorizationPipes do
 
       it "grants authorization" do
         user = UserBox.create &.level(User::Level.new :admin)
+        UserOptionsBox.create &.user_id(user.id)
 
         CreateBearerLogin.create(
           params(name: "secret token"),

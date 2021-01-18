@@ -6,6 +6,7 @@ describe Shield::UpdateEmailConfirmationUser do
     new_email = "user@domain.com"
 
     user = UserBox.create &.email(email)
+    user_options = UserOptionsBox.create &.user_id(user.id)
 
     UpdateEmailConfirmationCurrentUser.update(
       user,
@@ -29,11 +30,14 @@ describe Shield::UpdateEmailConfirmationUser do
   end
 
   it "updates user options" do
-    user = UserBox.create &.login_notify(true)
+    user = UserBox.create
+
+    user_options = UserOptionsBox.create &.user_id(user.id)
+      .login_notify(true)
       .password_notify(false)
 
     UpdateEmailConfirmationCurrentUser.update(
-      user,
+      user_options.user!,
       nested_params(user_options: {login_notify: false, password_notify: true}),
       current_login: nil,
       remote_ip: Socket::IPAddress.new("129.0.0.3", 5555)
@@ -47,11 +51,14 @@ describe Shield::UpdateEmailConfirmationUser do
   end
 
   it "fails when nested operation fails" do
-    user = UserBox.create &.login_notify(true)
+    user = UserBox.create
+
+    user_options = UserOptionsBox.create &.user_id(user.id)
+      .login_notify(true)
       .password_notify(true)
 
     UpdateEmailConfirmationCurrentUser2.update(
-      user,
+      user_options.user!,
       nested_params(user_options: {
         login_notify: false,
         password_notify: false
@@ -71,9 +78,11 @@ describe Shield::UpdateEmailConfirmationUser do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    user = UserBox.create &.login_notify(true)
+    user = UserBox.create &.password_digest(BcryptHash.new(password).hash)
+
+    user_options = UserOptionsBox.create &.user_id(user.id)
+      .login_notify(true)
       .password_notify(true)
-      .password_digest(BcryptHash.new(password).hash)
 
     UpdateEmailConfirmationCurrentUser2.update(
       user,

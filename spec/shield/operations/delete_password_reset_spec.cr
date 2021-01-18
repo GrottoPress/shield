@@ -5,6 +5,7 @@ describe Shield::DeletePasswordReset do
     email = "user@example.net"
 
     user = UserBox.create &.email(email)
+    UserOptionsBox.create &.user_id(user.id)
 
     password_reset = StartPasswordReset.create!(
       params(email: email),
