@@ -27,24 +27,17 @@ describe Shield::RegisterEmailConfirmationUser do
   it "ends all active email confirmations for that email" do
     email = "user@example.tld"
 
-    email_confirmation = StartEmailConfirmation.create!(
-      params(email: email),
-      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
-    )
-
-    email_confirmation_2 = StartEmailConfirmation.create!(
-      params(email: email),
-      remote_ip: Socket::IPAddress.new("6.7.8.9", 10)
-    )
-
-    email_confirmation_3 = StartEmailConfirmation.create!(
-      params(email: "abc@domain.net"),
-      remote_ip: Socket::IPAddress.new("11.12.13.14", 15)
-    )
+    email_confirmation = EmailConfirmationBox.create &.email(email)
+    email_confirmation_2 = EmailConfirmationBox.create &.email(email)
+    email_confirmation_3 = EmailConfirmationBox.create &.email("abc@domain.net")
 
     email_confirmation.active?.should be_true
     email_confirmation_2.active?.should be_true
     email_confirmation_3.active?.should be_true
+
+    email_confirmation.user_id.should be_nil
+    email_confirmation_2.user_id.should be_nil
+    email_confirmation_3.user_id.should be_nil
 
     user = RegisterEmailConfirmationCurrentUser.create!(
       nested_params(
@@ -54,27 +47,26 @@ describe Shield::RegisterEmailConfirmationUser do
       email_confirmation: email_confirmation,
     )
 
-    email_confirmation.reload.active?.should be_false
-    email_confirmation_2.reload.active?.should be_false
-    email_confirmation_3.reload.active?.should be_true
+    email_confirmation = email_confirmation.reload
+    email_confirmation_2 = email_confirmation_2.reload
+    email_confirmation_3 = email_confirmation_3.reload
 
-    email_confirmation.reload.user_id.should eq(user.id)
-    email_confirmation_2.reload.user_id.should be_nil
-    email_confirmation_3.reload.user_id.should be_nil
+    email_confirmation.active?.should be_false
+    email_confirmation_2.active?.should be_false
+    email_confirmation_3.active?.should be_true
+
+    email_confirmation.user_id.should eq(user.id)
+    email_confirmation_2.user_id.should be_nil
+    email_confirmation_3.user_id.should be_nil
   end
 
   it "creates user options" do
-    email_confirmation = StartEmailConfirmation.create!(
-      params(email: "user@example.tld"),
-      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
-    )
-
     user = RegisterEmailConfirmationCurrentUser.create!(
       nested_params(
         user: {password: "password12U-password"},
         user_options: {login_notify: true, password_notify: false}
       ),
-      email_confirmation: email_confirmation,
+      email_confirmation: EmailConfirmationBox.create,
       session: Lucky::Session.new,
     )
 
@@ -85,17 +77,12 @@ describe Shield::RegisterEmailConfirmationUser do
   end
 
   it "fails when nested operation fails" do
-    email_confirmation = StartEmailConfirmation.create!(
-      params(email: "user@example.tld"),
-      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
-    )
-
     RegisterEmailConfirmationCurrentUser2.create(
       nested_params(
         user: {password: "password12U password"},
         user_options: {login_notify: false, password_notify: false}
       ),
-      email_confirmation: email_confirmation,
+      email_confirmation: EmailConfirmationBox.create,
       session: Lucky::Session.new,
     ) do |operation, user|
       operation.saved?.should be_false

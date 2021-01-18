@@ -2,12 +2,7 @@ require "../../spec_helper"
 
 describe Shield::DeleteBearerLogin do
   it "deletes bearer login" do
-    bearer_login = CreateBearerLogin.create!(
-      params(name: "super secret"),
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index"],
-      user_id: UserBox.create.id
-    )
+    bearer_login = BearerLoginBox.create &.user_id(UserBox.create.id)
 
     DeleteBearerLogin.run(
       params(id: bearer_login.id)

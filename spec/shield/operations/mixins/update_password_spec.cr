@@ -102,17 +102,8 @@ describe Shield::UpdatePassword do
     user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id)
 
-    login_1 = LogUserIn.create!(
-      params(email: email, password: password),
-      session: Lucky::Session.new,
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    )
-
-    login_2 = LogUserIn.create!(
-      params(email: email, password: password),
-      session: Lucky::Session.new,
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    )
+    login_1 = LoginBox.create &.user_id(user.id)
+    login_2 = LoginBox.create &.user_id(user.id)
 
     login_1.active?.should be_true
     login_2.active?.should be_true
@@ -135,23 +126,9 @@ describe Shield::UpdatePassword do
     user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id)
 
-    login_1 = LogUserIn.create!(
-      params(email: email, password: password),
-      session: Lucky::Session.new,
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    )
-
-    login_2 = LogUserIn.create!(
-      params(email: email, password: password),
-      session: Lucky::Session.new,
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    )
-
-    current_login = LogUserIn.create!(
-      params(email: email, password: password),
-      session: Lucky::Session.new,
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    )
+    login_1 = LoginBox.create &.user_id(user.id)
+    login_2 = LoginBox.create &.user_id(user.id)
+    current_login = LoginBox.create &.user_id(user.id)
 
     login_1.active?.should be_true
     login_2.active?.should be_true
@@ -182,17 +159,8 @@ describe Shield::UpdatePassword do
     john = UserBox.create &.email(john_email).password(john_password)
     UserOptionsBox.create &.user_id(john.id)
 
-    mary_login = LogUserIn.create!(
-      params(email: mary_email, password: mary_password),
-      session: Lucky::Session.new,
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    )
-
-    john_login = LogUserIn.create!(
-      params(email: john_email, password: john_password),
-      session: Lucky::Session.new,
-      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
-    )
+    mary_login = LoginBox.create &.user_id(mary.id)
+    john_login = LoginBox.create &.user_id(john.id)
 
     mary_login.active?.should be_true
     john_login.active?.should be_true

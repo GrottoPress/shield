@@ -7,13 +7,7 @@ describe Shield::BearerLogins::Destroy do
 
     user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id)
-
-    bearer_login = CreateBearerLogin.create!(
-      params(name: "secret token"),
-      scopes: ["api.posts.index"],
-      allowed_scopes: ["api.posts.update", "api.posts.index"],
-      user_id: user.id
-    )
+    bearer_login = BearerLoginBox.create &.user_id(user.id)
 
     client = ApiClient.new
     client.browser_auth(user, password)

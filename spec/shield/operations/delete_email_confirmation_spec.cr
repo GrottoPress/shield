@@ -4,10 +4,7 @@ describe Shield::DeleteEmailConfirmation do
   it "deletes email confirmation" do
     email = "user@example.net"
 
-    email_confirmation = StartEmailConfirmation.create!(
-      params(email: email),
-      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
-    )
+    email_confirmation = EmailConfirmationBox.create &.email(email)
 
     DeleteEmailConfirmation.run(
       params(id: email_confirmation.id)

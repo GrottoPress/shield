@@ -7,11 +7,7 @@ describe Shield::DeleteLogin do
 
     user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id)
-
-    login = LogUserIn.create!(
-      params(email: email, password: password),
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    )
+    login = LoginBox.create &.user_id(user.id)
 
     DeleteLogin.run(params(id: login.id)) do |operation, deleted_login|
       deleted_login.should be_a(Login)

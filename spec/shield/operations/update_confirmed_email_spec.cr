@@ -41,33 +41,18 @@ describe Shield::UpdateConfirmedEmail do
     user = UserBox.create &.email("another_user@example.net")
     user_2 = UserBox.create &.email("yet_another_user@edomain.com")
 
-    email_confirmation = StartEmailConfirmation.create!(
-      params(email: email),
-      user_id: user.id,
-      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
-    )
+    email_confirmation = EmailConfirmationBox.create &.user_id(user.id)
+      .email(email)
 
-    email_confirmation_2 = StartEmailConfirmation.create!(
-      params(email: email),
-      user_id: user_2.id,
-      remote_ip: Socket::IPAddress.new("6.7.8.9", 10)
-    )
+    email_confirmation_2 = EmailConfirmationBox.create &.user_id(user.id)
+      .email(email)
 
-    email_confirmation_3 = StartEmailConfirmation.create!(
-      params(email: email),
-      remote_ip: Socket::IPAddress.new("11.12.13.14", 15)
-    )
+    email_confirmation_3 = EmailConfirmationBox.create &.email(email)
 
-    email_confirmation_4 = StartEmailConfirmation.create!(
-      params(email: "abc@domain.com"),
-      user_id: user.id,
-      remote_ip: Socket::IPAddress.new("16.17.18.19", 20)
-    )
+    email_confirmation_4 = EmailConfirmationBox.create &.user_id(user.id)
+      .email("abc@domain.com")
 
-    email_confirmation_5 = StartEmailConfirmation.create!(
-      params(email: "def@domain.com"),
-      remote_ip: Socket::IPAddress.new("21.22.23.24", 25)
-    )
+    email_confirmation_5 = EmailConfirmationBox.create &.email("def@domain.com")
 
     email_confirmation.active?.should be_true
     email_confirmation_2.active?.should be_true
