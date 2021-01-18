@@ -5,9 +5,7 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "password12U password"
 
-    user = UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
-
+    user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id)
 
     session = Lucky::Session.new
@@ -41,7 +39,7 @@ describe Shield::LogUserIn do
   it "rejects incorrect email" do
     password = "password12U~password"
 
-    user = UserBox.create &.password_digest(BcryptHash.new(password).hash)
+    user = UserBox.create &.password(password)
     UserOptionsBox.create &.user_id(user.id)
 
     LogUserIn.create(
@@ -61,9 +59,7 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "password12U~password"
 
-    user = UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
-
+    user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id)
 
     LogUserIn.create(
@@ -81,9 +77,7 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "pass)word1Apassword"
 
-    user = UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
-
+    user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id).login_notify(true)
 
     LogUserIn.create(
@@ -101,9 +95,7 @@ describe Shield::LogUserIn do
     password = "pass)word1Apassword"
     email = "user@example.tld"
 
-    user = UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
-
+    user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id).login_notify(false)
 
     LogUserIn.create(

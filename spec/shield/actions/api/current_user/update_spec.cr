@@ -6,9 +6,7 @@ describe Shield::Api::CurrentUser::Update do
     new_email = "newuser@domain.com.gh"
     password = "password4APASSWORD<"
 
-    user = UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
-
+    user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id)
 
     client = ApiClient.new

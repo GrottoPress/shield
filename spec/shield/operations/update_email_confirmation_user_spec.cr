@@ -78,7 +78,7 @@ describe Shield::UpdateEmailConfirmationUser do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    user = UserBox.create &.password_digest(BcryptHash.new(password).hash)
+    user = UserBox.create &.password(password)
 
     user_options = UserOptionsBox.create &.user_id(user.id)
       .login_notify(true)

@@ -5,7 +5,7 @@ describe Shield::UpdatePassword do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    user = UserBox.create &.password_digest(BcryptHash.new(password).hash)
+    user = UserBox.create &.password(password)
     UserOptionsBox.create &.user_id(user.id)
 
     UpdateCurrentUser.update!(
@@ -37,7 +37,7 @@ describe Shield::UpdatePassword do
     password = "pass)word1Apassword"
     new_password = "ass)word1Apasswor"
 
-    user = UserBox.create &.password_digest(BcryptHash.new(password).hash)
+    user = UserBox.create &.password(password)
     UserOptionsBox.create &.user_id(user.id).password_notify(true)
 
     UpdateCurrentUser.update(
@@ -57,7 +57,7 @@ describe Shield::UpdatePassword do
     password = "pass)word1Apassword"
     new_password = "ass)word1Apassword"
 
-    user = UserBox.create &.password_digest(BcryptHash.new(password).hash)
+    user = UserBox.create &.password(password)
     UserOptionsBox.create &.user_id(user.id)
 
     UpdateCurrentUser.update(
@@ -78,7 +78,7 @@ describe Shield::UpdatePassword do
   it "does not send password change notification if password did not change" do
     password = "pass)word1Apassword"
 
-    user = UserBox.create &.password_digest(BcryptHash.new(password).hash)
+    user = UserBox.create &.password(password)
     UserOptionsBox.create &.user_id(user.id).password_notify(true)
 
     UpdateCurrentUser.update(
@@ -99,9 +99,7 @@ describe Shield::UpdatePassword do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    user = UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
-
+    user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id)
 
     login_1 = LogUserIn.create!(
@@ -134,9 +132,7 @@ describe Shield::UpdatePassword do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    user = UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
-
+    user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id)
 
     login_1 = LogUserIn.create!(
@@ -180,13 +176,10 @@ describe Shield::UpdatePassword do
     john_email = "john@example.tld"
     john_password = "pasword12U-pasword"
 
-    mary = UserBox.create &.email(mary_email)
-      .password_digest(BcryptHash.new(mary_password).hash)
-
-    john = UserBox.create &.email(john_email)
-      .password_digest(BcryptHash.new(john_password).hash)
-
+    mary = UserBox.create &.email(mary_email).password(mary_password)
     UserOptionsBox.create &.user_id(mary.id)
+
+    john = UserBox.create &.email(john_email).password(john_password)
     UserOptionsBox.create &.user_id(john.id)
 
     mary_login = LogUserIn.create!(

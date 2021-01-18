@@ -8,7 +8,7 @@ describe Shield::Api::EmailConfirmationCurrentUser::Update do
 
     user = UserBox.create &.email(email)
       .level(User::Level.new(:admin))
-      .password_digest(BcryptHash.new(password).hash)
+      .password(password)
 
     UserOptionsBox.create &.user_id(user.id)
 
