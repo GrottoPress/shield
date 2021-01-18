@@ -6,11 +6,7 @@ describe Shield::DeletePasswordReset do
 
     user = UserBox.create &.email(email)
     UserOptionsBox.create &.user_id(user.id)
-
-    password_reset = StartPasswordReset.create!(
-      params(email: email),
-      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
-    )
+    password_reset = PasswordResetBox.create &.user_id(user.id)
 
     DeletePasswordReset.run(
       params(id: password_reset.id)
