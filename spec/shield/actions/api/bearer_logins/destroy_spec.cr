@@ -8,6 +8,8 @@ describe Shield::Api::BearerLogins::Destroy do
     user = UserBox.create &.email(email)
       .password_digest(BcryptHash.new(password).hash)
 
+    UserOptionsBox.create &.user_id(user.id)
+
     bearer_login = CreateBearerLogin.create!(
       params(name: "secret token"),
       scopes: ["api.posts.index"],

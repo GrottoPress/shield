@@ -5,8 +5,10 @@ describe Shield::PasswordResets::Edit do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
-    UserBox.create &.email(email)
+    user = UserBox.create &.email(email)
       .password_digest(BcryptHash.new(password).hash)
+
+    UserOptionsBox.create &.user_id(user.id)
 
     StartPasswordReset.create(
       params(email: email),
@@ -30,8 +32,10 @@ describe Shield::PasswordResets::Edit do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
-    UserBox.create &.email(email)
+    user = UserBox.create &.email(email)
       .password_digest(BcryptHash.new(password).hash)
+
+    UserOptionsBox.create &.user_id(user.id)
 
     password_reset = StartPasswordReset.create!(
       params(email: email),

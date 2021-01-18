@@ -10,6 +10,8 @@ describe Shield::Api::EmailConfirmations::Edit do
     user = UserBox.create &.email(email)
       .password_digest(BcryptHash.new(password).hash)
 
+    UserOptionsBox.create &.user_id(user.id)
+
     StartEmailConfirmation.create(
       params(email: new_email),
       user_id: user.id,

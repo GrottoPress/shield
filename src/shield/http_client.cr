@@ -23,10 +23,7 @@ module Shield::HttpClient
       *,
       create_user = true
     )
-      if create_user
-        UserBox.create &.email(email)
-          .password_digest(BcryptHash.new(password).hash)
-      end
+      create_user(email, password) if create_user
 
       LogUserIn.create(
         params(email: email, password: password),
@@ -58,10 +55,7 @@ module Shield::HttpClient
       *,
       create_user = true
     )
-      if create_user
-        UserBox.create &.email(email)
-          .password_digest(BcryptHash.new(password).hash)
-      end
+      create_user(email, password) if create_user
 
       LogUserIn.create!(
         params(email: email, password: password),
@@ -85,6 +79,12 @@ module Shield::HttpClient
       cookies = Lucky::CookieJar.empty_jar
       cookies.set(Lucky::Session.settings.key, session.to_json)
       cookies.updated.add_response_headers(HTTP::Headers.new)["Set-Cookie"]?
+    end
+
+    private def create_user(email : String, password : String) : Nil
+      password_digest = BcryptHash.new(password).hash
+      user = UserBox.create &.email(email).password_digest(password_digest)
+      UserOptionsBox.create &.user_id(user.id)
     end
   end
 end

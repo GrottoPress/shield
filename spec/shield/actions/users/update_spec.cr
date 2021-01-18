@@ -7,6 +7,7 @@ describe Shield::Users::Update do
     password = "password4APASSWORD<"
 
     user = UserBox.create
+    UserOptionsBox.create &.user_id(user.id)
 
     client = ApiClient.new
     client.browser_auth(email, password)

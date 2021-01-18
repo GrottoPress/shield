@@ -10,6 +10,8 @@ describe Shield::Api::LoginHelpers do
       user = UserBox.create &.email(email)
         .password_digest(BcryptHash.new(password).hash)
 
+      UserOptionsBox.create &.user_id(user.id)
+
       client = ApiClient.new
 
       client.browser_auth(user, password, ip_address)
@@ -31,6 +33,8 @@ describe Shield::Api::LoginHelpers do
 
       user = UserBox.create &.email(email)
         .password_digest(BcryptHash.new(password).hash)
+
+      UserOptionsBox.create &.user_id(user.id)
 
       CreateBearerLogin.create(
         params(name: "secret token"),

@@ -5,8 +5,10 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "password12U password"
 
-    UserBox.create &.email(email)
+    user = UserBox.create &.email(email)
       .password_digest(BcryptHash.new(password).hash)
+
+    UserOptionsBox.create &.user_id(user.id)
 
     session = Lucky::Session.new
     ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
@@ -39,7 +41,8 @@ describe Shield::LogUserIn do
   it "rejects incorrect email" do
     password = "password12U~password"
 
-    UserBox.create &.password_digest(BcryptHash.new(password).hash)
+    user = UserBox.create &.password_digest(BcryptHash.new(password).hash)
+    UserOptionsBox.create &.user_id(user.id)
 
     LogUserIn.create(
       params(email: "incorrect@example.tld", password: password),
@@ -58,8 +61,10 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "password12U~password"
 
-    UserBox.create &.email(email)
+    user = UserBox.create &.email(email)
       .password_digest(BcryptHash.new(password).hash)
+
+    UserOptionsBox.create &.user_id(user.id)
 
     LogUserIn.create(
       params(email: email, password: "assword12U~passwor"),
@@ -76,9 +81,10 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "pass)word1Apassword"
 
-    UserBox.create &.email(email)
+    user = UserBox.create &.email(email)
       .password_digest(BcryptHash.new(password).hash)
-      .login_notify(true)
+
+    UserOptionsBox.create &.user_id(user.id).login_notify(true)
 
     LogUserIn.create(
       params(email: email, password: password),
@@ -95,9 +101,10 @@ describe Shield::LogUserIn do
     password = "pass)word1Apassword"
     email = "user@example.tld"
 
-    UserBox.create &.email(email)
+    user = UserBox.create &.email(email)
       .password_digest(BcryptHash.new(password).hash)
-      .login_notify(false)
+
+    UserOptionsBox.create &.user_id(user.id).login_notify(false)
 
     LogUserIn.create(
       params(email: email, password: password),

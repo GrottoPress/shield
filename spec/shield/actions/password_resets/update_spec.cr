@@ -9,6 +9,8 @@ describe Shield::PasswordResets::Update do
     user = UserBox.create &.email(email)
       .password_digest(BcryptHash.new(password).hash)
 
+    UserOptionsBox.create &.user_id(user.id)
+
     StartPasswordReset.create(
       params(email: email),
       remote_ip: Socket::IPAddress.new("129.0.0.5", 6000)
@@ -36,8 +38,10 @@ describe Shield::PasswordResets::Update do
     password = "password4APASSWORD<"
     new_password = "assword4APASSWOR<"
 
-    UserBox.create &.email(email)
+    user = UserBox.create &.email(email)
       .password_digest(BcryptHash.new(password).hash)
+
+    UserOptionsBox.create &.user_id(user.id)
 
     password_reset = StartPasswordReset.create!(
       params(email: email),

@@ -12,8 +12,12 @@ describe Shield::LoginHelpers do
       user = UserBox.create &.email(email)
         .password_digest(BcryptHash.new(password).hash)
 
+      UserOptionsBox.create &.user_id(user.id)
+
       user_2 = UserBox.create &.email(email_2)
         .password_digest(BcryptHash.new(password_2).hash)
+
+      UserOptionsBox.create &.user_id(user_2.id)
 
       client = ApiClient.new
 
