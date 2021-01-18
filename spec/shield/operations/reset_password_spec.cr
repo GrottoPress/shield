@@ -6,8 +6,7 @@ describe Shield::ResetPassword do
     password = "password12U\\password"
     new_password = "assword12U\\passwor"
 
-    UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
+    UserBox.create &.email(email).password(password)
 
     session = Lucky::Session.new
 
@@ -43,8 +42,7 @@ describe Shield::ResetPassword do
     password = "password12U\\password"
     new_password = ""
 
-    UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
+    UserBox.create &.email(email).password(password)
 
     session = Lucky::Session.new
 
@@ -70,8 +68,7 @@ describe Shield::ResetPassword do
     password = "password12U\\password"
     new_password = password
 
-    UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
+    UserBox.create &.email(email).password(password)
 
     session = Lucky::Session.new
 
@@ -97,8 +94,7 @@ describe Shield::ResetPassword do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
+    UserBox.create &.email(email).password(password)
 
     session = Lucky::Session.new
 

@@ -7,9 +7,7 @@ describe Shield::Api::EmailConfirmations::Edit do
     password = "password4APASSWORD<"
     ip_address = Socket::IPAddress.new("1.2.3.4", 5)
 
-    user = UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
-
+    user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id)
 
     StartEmailConfirmation.create(

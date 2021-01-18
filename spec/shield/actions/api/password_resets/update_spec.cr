@@ -6,8 +6,7 @@ describe Shield::Api::PasswordResets::Update do
     password = "password4APASSWORD<"
     new_password = "assword4APASSWOR<"
 
-    user = UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
+    user = UserBox.create &.email(email).password(password)
 
     StartPasswordReset.create(
       params(email: email),
@@ -32,18 +31,7 @@ describe Shield::Api::PasswordResets::Update do
   end
 
   it "rejects invalid password reset token" do
-    email = "user@example.tld"
-    password = "password4APASSWORD<"
     new_password = "assword4APASSWOR<"
-
-    UserBox.create &.email(email)
-      .password_digest(BcryptHash.new(password).hash)
-
-    password_reset = StartPasswordReset.create!(
-      params(email: email),
-      remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
-    )
-
     token = BearerToken.new("abcdef", 1)
 
     response = ApiClient.exec(

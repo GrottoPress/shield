@@ -34,7 +34,7 @@ describe Shield::LoginPipes do
 
       user = UserBox.create &.email(email)
         .level(User::Level.new :admin)
-        .password_digest(BcryptHash.new(password).hash)
+        .password(password)
 
       UserOptionsBox.create &.user_id(user.id)
 
@@ -52,7 +52,7 @@ describe Shield::LoginPipes do
 
       user = UserBox.create &.email(email)
         .level(User::Level.new :admin)
-        .password_digest(BcryptHash.new(password).hash)
+        .password(password)
 
       UserOptionsBox.create &.user_id(user.id)
 
@@ -74,7 +74,7 @@ describe Shield::LoginPipes do
 
       user = UserBox.create &.email(email)
         .level(User::Level.new :admin)
-        .password_digest(BcryptHash.new(password).hash)
+        .password(password)
 
       UserOptionsBox.create &.user_id(user.id)
 
@@ -97,7 +97,7 @@ describe Shield::LoginPipes do
 
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
-          .password_digest(BcryptHash.new(password).hash)
+          .password(password)
 
         UserOptionsBox.create &.user_id(user.id)
 
@@ -124,7 +124,7 @@ describe Shield::LoginPipes do
 
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
-          .password_digest(BcryptHash.new(password).hash)
+          .password(password)
 
         UserOptionsBox.create &.user_id(user.id)
 

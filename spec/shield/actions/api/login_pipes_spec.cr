@@ -7,9 +7,7 @@ describe Shield::Api::LoginPipes do
       password = "password4APASSWORD<"
       ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-      user = UserBox.create &.email(email)
-        .password_digest(BcryptHash.new(password).hash)
-
+      user = UserBox.create &.email(email).password(password)
       UserOptionsBox.create &.user_id(user.id)
 
       client = ApiClient.new
@@ -24,9 +22,7 @@ describe Shield::Api::LoginPipes do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      user = UserBox.create &.email(email)
-        .password_digest(BcryptHash.new(password).hash)
-
+      user = UserBox.create &.email(email).password(password)
       UserOptionsBox.create &.user_id(user.id)
 
       CreateBearerLogin.create(
@@ -73,9 +69,7 @@ describe Shield::Api::LoginPipes do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      user = UserBox.create &.email(email)
-        .password_digest(BcryptHash.new(password).hash)
-
+      user = UserBox.create &.email(email).password(password)
       UserOptionsBox.create &.user_id(user.id)
 
       CreateBearerLogin.create(
@@ -106,7 +100,7 @@ describe Shield::Api::LoginPipes do
 
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
-          .password_digest(BcryptHash.new(password).hash)
+          .password(password)
 
         UserOptionsBox.create &.user_id(user.id)
 
@@ -124,7 +118,7 @@ describe Shield::Api::LoginPipes do
 
         user = UserBox.create &.email(email)
           .level(User::Level.new :admin)
-          .password_digest(BcryptHash.new(password).hash)
+          .password(password)
 
         UserOptionsBox.create &.user_id(user.id)
 

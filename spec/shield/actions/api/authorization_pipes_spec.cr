@@ -6,7 +6,7 @@ describe Shield::Api::AuthorizationPipes do
       it "denies authorization" do
         password = "password_1Apassword"
 
-        user = UserBox.create &.password_digest(BcryptHash.new(password).hash)
+        user = UserBox.create &.password(password)
         UserOptionsBox.create &.user_id(user.id)
 
         client = ApiClient.new
@@ -21,7 +21,7 @@ describe Shield::Api::AuthorizationPipes do
         password = "password_1Apassword"
 
         user = UserBox.create &.level(User::Level.new(:admin))
-          .password_digest(BcryptHash.new(password).hash)
+          .password(password)
 
         UserOptionsBox.create &.user_id(user.id)
 
