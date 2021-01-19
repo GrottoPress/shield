@@ -56,12 +56,7 @@ describe Shield::CreateBearerLogin do
     name = "some token"
     user = UserBox.create
 
-    CreateBearerLogin.create!(
-      params(name: name),
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index"],
-      user_id: user.id
-    )
+    BearerLoginBox.create &.user_id(user.id).name(name)
 
     CreateBearerLogin.create(
       params(name: name),
@@ -80,12 +75,7 @@ describe Shield::CreateBearerLogin do
     user = UserBox.create &.email("user@example.tld")
     user_2 = UserBox.create &.email("someone@example.net")
 
-    CreateBearerLogin.create!(
-      params(name: name),
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index"],
-      user_id: user.id
-    )
+    BearerLoginBox.create &.user_id(user.id).name(name)
 
     CreateBearerLogin.create(
       params(name: name),

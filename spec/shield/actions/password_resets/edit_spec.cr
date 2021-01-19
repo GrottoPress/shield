@@ -33,10 +33,8 @@ describe Shield::PasswordResets::Edit do
     user = UserBox.create &.email(email).password(password)
     UserOptionsBox.create &.user_id(user.id)
 
-    password_reset = StartPasswordReset.create!(
-      params(email: email),
-      remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
-    )
+    password_reset = PasswordResetBox.create &.user_id(user.id)
+      .ip_address("128.0.0.2")
 
     session = Lucky::Session.new
     PasswordResetSession.new(session).set("abcdef", password_reset.id)
