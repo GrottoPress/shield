@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::PasswordAuthentication` utility
 - Add `Avram::NestedSaveOperation.has_one` macro
 - Add `Shield::HasOneSaveUserOptions` operation mixin
+- Add `Shield::SkipAuthenticationCache`
+- Add `Shield::Api::SkipAuthenticationCache`
 
 ### Fixed
 - Fix email enumeration protection failure in password resets.
