@@ -2,10 +2,7 @@ require "../../spec_helper"
 
 describe Shield::RegisterEmailConfirmationUser do
   it "creates email confirmed user" do
-    email_confirmation = StartEmailConfirmation.create!(
-      params(email: "user@example.tld"),
-      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
-    )
+    email_confirmation = EmailConfirmationBox.create
 
     params = nested_params(
       user: {password: "password12U password"},
