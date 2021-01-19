@@ -200,6 +200,13 @@
      # ...
      include Shield::CurrentLogin::Create
 
+     # Enable this to skip authentication caching.
+     #
+     # Authentication helpers are memoized. If you call any of the
+     # helpers after login is created, you may want to skip cache to
+     # fetch the latest status from the database.
+     #include Shield::SkipAuthenticationCache
+
      post "/login" do
        run_operation
      end
