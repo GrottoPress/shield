@@ -112,7 +112,7 @@ describe Shield::LoginPipes do
         response = client.exec(Users::Show.with(user_id: user.id))
 
         response.status.should eq(HTTP::Status::FOUND)
-        response.headers["Location"].should eq(CurrentLogin::New.path)
+        response.headers["X-Login-Timed-Out"].should eq("true")
       end
     end
 
