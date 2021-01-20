@@ -14,15 +14,6 @@
 
   Checks that the given attributes are valid domains labels (such as *example* in 'example.com').
 
-- `.validate_exists_by_id`:
-
-  Checks that the given attribute is a valid ID of another model.
-
-  ```crystal
-  validate_exists_by_id user_id, query: UserQuery.new, message: "does not exist"
-  validate_exists_by_id post_id, query: PostQuery.new
-  ```
-
 - `.validate_http_url`:
 
   Checks that given attributes are valid HTTP URLs.
@@ -70,6 +61,15 @@
 - `.validate_positive_number`:
 
   Checks that the given attributes are positive numbers.
+
+- `.validate_primary_key`:
+
+  Checks that the given attribute is a valid ID of another model.
+
+  ```crystal
+  validate_primary_key user_id, query: UserQuery, message: "does not exist"
+  validate_primary_key post_id, query: PostQuery.new
+  ```
 
 - `.validate_slug`:
 
