@@ -1,6 +1,6 @@
 ## Testing
 
-1. Set up API client
+1. Set up API client:
 
    ```crystal
    # ->>> spec/support/api_client.cr
@@ -12,6 +12,18 @@
        super
        headers("Content-Type": "application/json")
      end
+
+     # This creates a user for authentication purposes.
+     #
+     # Override this if you need to create the user some other way.
+     # For instance, you may decide you do not want to create user
+     # options when the user is created. Or you may want to create other
+     # models associated with the user.
+     #private def create_user(email : String, password : String)
+     #  password_digest = BcryptHash.new(password).hash
+     #  user = UserBox.create &.email(email).password_digest(password_digest)
+     #  UserOptionsBox.create &.user_id(user.id)
+     #end
    end
    ```
 
