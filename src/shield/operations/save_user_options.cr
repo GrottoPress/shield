@@ -4,7 +4,7 @@ module Shield::SaveUserOptions
 
     before_save do
       validate_required login_notify, password_notify, user_id
-      validate_exists_by_id user_id, query: UserQuery.new
+      validate_primary_key user_id, query: UserQuery
     end
   end
 end

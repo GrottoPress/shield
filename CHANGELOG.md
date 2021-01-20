@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::HasOneSaveUserOptions` operation mixin
 - Add `Shield::SkipAuthenticationCache`
 - Add `Shield::Api::SkipAuthenticationCache`
+- Add `Avram::Validations.validate_primary_key`
 
 ### Fixed
 - Fix email enumeration protection failure in password resets.
@@ -40,6 +41,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove `Shield::HasOneCreateSaveUserOptions` operation mixin
 - Remove `Shield::HasOneUpdateSaveUserOptions` operation mixin
 - Remove `Avram::Box.has_one` macro
+- Remove `Avram::Validations.validate_exists_by_id`
 
 ## [0.6.0] - 2020-12-21
 

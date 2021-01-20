@@ -426,15 +426,26 @@ module Avram
       end
     end
 
-    def validate_exists_by_id(
+    def validate_primary_key(
       attribute,
       *,
-      query,
+      query : Queryable,
       message : Attribute::ErrorMessage = "does not exist"
     )
       attribute.value.try do |value|
-        attribute.add_error(message) unless query.id(value).first?
+        unless query.where(query.primary_key_name, value).first?
+          attribute.add_error(message)
+        end
       end
+    end
+
+    def validate_primary_key(
+      attribute,
+      *,
+      query : Queryable.class,
+      message : Attribute::ErrorMessage = "does not exist"
+    )
+      validate_primary_key(attribute, query: query.new, message: message)
     end
 
     def validate_not_pwned(
