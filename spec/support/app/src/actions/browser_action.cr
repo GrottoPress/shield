@@ -33,6 +33,11 @@ abstract class BrowserAction < Lucky::Action
     previous_def
   end
 
+  def do_enforce_login_idle_timeout_failed
+    response.headers["X-Login-Timed-Out"] = "true"
+    previous_def
+  end
+
   def authorize?(user : User) : Bool
     user.level.admin?
   end
