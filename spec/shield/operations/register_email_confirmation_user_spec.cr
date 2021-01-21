@@ -42,6 +42,7 @@ describe Shield::RegisterEmailConfirmationUser do
         user_options: {login_notify: true, password_notify: true}
       ),
       email_confirmation: email_confirmation,
+      session: nil
     )
 
     email_confirmation = email_confirmation.reload

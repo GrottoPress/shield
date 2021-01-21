@@ -20,7 +20,12 @@ module Shield::PasswordResets::Edit
     end
 
     private def render_form(utility, password_reset)
-      operation = ResetPassword.new(utility.password_reset!.user!)
+      operation = ResetPassword.new(
+        utility.password_reset!.user!,
+        session: session,
+        current_login: current_login
+      )
+
       html EditPage, operation: operation
     end
 

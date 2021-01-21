@@ -1,6 +1,6 @@
 module Shield::UpdatePassword
   macro included
-    needs current_login : Login? = nil
+    needs current_login : Login?
 
     before_save do
       set_password_digest
