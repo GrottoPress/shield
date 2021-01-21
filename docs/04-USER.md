@@ -177,7 +177,7 @@
      include Shield::CurrentUser::Edit
 
      get "/account/edit" do
-       operation = UpdateCurrentUser.new(user)
+       operation = UpdateCurrentUser.new(user, current_login: current_login)
        html EditPage, operation: operation
      end
      # ...

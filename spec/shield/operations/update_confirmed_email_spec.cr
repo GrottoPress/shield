@@ -60,7 +60,11 @@ describe Shield::UpdateConfirmedEmail do
     email_confirmation_4.active?.should be_true
     email_confirmation_5.active?.should be_true
 
-    UpdateConfirmedEmail.update!(user, email_confirmation: email_confirmation)
+    UpdateConfirmedEmail.update!(
+      user,
+      email_confirmation: email_confirmation,
+      session: nil
+    )
 
     email_confirmation.reload.active?.should be_false
     email_confirmation_2.reload.active?.should be_false

@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove `Shield::HasOneUpdateSaveUserOptions` operation mixin
 - Remove `Avram::Box.has_one` macro
 - Remove `Avram::Validations.validate_exists_by_id`
+- Remove default values from all operation `.needs` calls
 
 ## [0.6.0] - 2020-12-21
 
