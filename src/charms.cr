@@ -190,7 +190,7 @@ module Avram
     # This method should always return `true` for a create or `false`
     # for an update, independent of the stage we are at in the operation.
     def new_record? : Bool
-      {{ T.resolve.constant(:PRIMARY_KEY_NAME).id }}.value.nil?
+      {{ T.constant(:PRIMARY_KEY_NAME).id }}.value.nil?
     end
   end
 
@@ -208,12 +208,15 @@ module Avram
     macro has_one(type_declaration)
       {% name = type_declaration.var %}
       {% type = type_declaration.type.resolve %}
-      {% model_type = type.superclass.superclass.type_vars.first.resolve %}
 
-      {% assoc = T.resolve.constant(:ASSOCIATIONS).find do |assoc|
-        assoc[:relationship_type] == :has_one &&
-          assoc[:type].resolve.name == model_type.name
-      end %}
+      {% model_type = type.ancestors.find do |t|
+           t.stringify.starts_with?("Avram::SaveOperation(")
+         end.type_vars.first %}
+
+      {% assoc = T.constant(:ASSOCIATIONS).find do |assoc|
+           assoc[:relationship_type] == :has_one &&
+             assoc[:type].resolve.name == model_type.name
+         end %}
 
       {% unless assoc %}
         {% raise "#{T} must have a has_one association with #{model_type}" %}
@@ -223,18 +226,23 @@ module Avram
 
       def save_{{ name }}(saved_record)
         unless {{ name }}.save
+          add_error(:{{ name }}, "failed")
           mark_nested_save_operations_as_failed
           database.rollback
         end
       end
 
       def {{ name }}
-        return update_{{ name }} unless new_record?
+        @{{ name }} ||= if new_record?
+          {{ type }}.new(params)
+        else
+          {{ type }}.new(record!.{{ assoc[:assoc_name].id }}!, params)
+        end
 
-        nested = create_{{ name }}
+        nested = @{{ name }}.not_nil!
 
-        if persisted?
-          nested.{{ @type.constant(:FOREIGN_KEY).id }}.value = record!.id
+        record.try do |record|
+          nested.{{ @type.constant(:FOREIGN_KEY).id }}.value = record.id
         end
 
         nested
@@ -245,17 +253,6 @@ module Avram
           previous_def +
         {% end %}
         [{{ name }}]
-      end
-
-      private def create_{{ name }}
-        @{{ name }} ||= {{ type }}.new(params)
-      end
-
-      private def update_{{ name }}
-        @{{ name }} ||= {{ type }}.new(
-          record!.{{ assoc[:assoc_name].id }}!,
-          params
-        )
       end
     end
 
