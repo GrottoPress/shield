@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Avram::Validations.validate_primary_key`
 
 ### Fixed
+- Fix potential timing attack in SHA-256 verification.
 - Fix email enumeration protection failure in password resets.
 - Fix `Memoize` annotation not caching as intended.
 - Fix `before_save` callbacks called multiple times in a single save.
