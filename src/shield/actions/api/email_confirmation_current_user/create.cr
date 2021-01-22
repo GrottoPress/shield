@@ -30,7 +30,8 @@ module Shield::Api::EmailConfirmationCurrentUser::Create
     private def register_user(email_confirmation)
       RegisterCurrentUser.create(
         params,
-        email_confirmation: email_confirmation
+        email_confirmation: email_confirmation,
+        session: nil
       ) do |operation, user|
         if user
           do_run_operation_succeeded(operation, user.not_nil!)

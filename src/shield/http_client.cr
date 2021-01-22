@@ -27,7 +27,8 @@ module Shield::HttpClient
 
       LogUserIn.create(
         params(email: email, password: password),
-        remote_ip: remote_ip
+        remote_ip: remote_ip,
+        session: nil
       ) do |operation, login|
         headers("Authorization": BearerToken.new(
           operation,

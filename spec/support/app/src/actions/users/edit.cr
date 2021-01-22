@@ -4,7 +4,7 @@ class Users::Edit < BrowserAction
   skip :check_authorization
 
   get "/users/:user_id/edit" do
-    operation = UpdateUser.new(user)
+    operation = UpdateUser.new(user, current_login: current_login)
     html EditPage, operation: operation
   end
 
