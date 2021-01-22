@@ -17,7 +17,9 @@ module Shield::Sha256Hash
     def verify?(digest : String) : Bool
       raw_digest = digest[-64..]
       salt = digest.rchop(raw_digest)
-      self.class.new("#{salt}#{@plaintext}").hash(salt: false) == raw_digest
+      new_digest = self.class.new("#{salt}#{@plaintext}").hash(salt: false)
+
+      Crypto::Subtle.constant_time_compare(new_digest, raw_digest)
     end
   end
 end
