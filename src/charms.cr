@@ -127,8 +127,24 @@ module Avram
     end
   end
 
-  class Operation
+  abstract class Operation
     include MailHelpers
+
+    # See https://github.com/luckyframework/avram/issues/619
+    #
+    def self.run(params : Avram::Paramable, *args, **named_args)
+      operation = self.new(params, *args, **named_args)
+      value = nil
+
+      operation.before_run
+
+      if operation.valid?
+        value = operation.run
+        operation.after_run(value)
+      end
+
+      yield operation, value
+    end
   end
 
   abstract class SaveOperation(T)

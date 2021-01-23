@@ -3,12 +3,13 @@ require "../../spec_helper"
 describe Shield::DeleteUser do
   it "deletes user" do
     user = UserBox.create
+    user_2 = UserBox.create &.email("someone@somewhere.tld")
 
     DeleteUser.run(
-      nested_params(user: {id: user.id}),
-      current_user: nil
+      record: user,
+      current_user: user_2
     ) do |operation, deleted_user|
-      deleted_user.should be_a(User)
+      operation.deleted?.should be_true
 
       UserQuery.new.id(user.id).first?.should be_nil
     end
@@ -18,31 +19,13 @@ describe Shield::DeleteUser do
     user = UserBox.create
 
     DeleteUser.run(
-      nested_params(user: {id: user.id}),
+      record: user,
       current_user: user
     ) do |operation, deleted_user|
-      deleted_user.should be_nil
+      operation.deleted?.should be_false
 
-      assert_invalid(operation.id, "current user")
-    end
-  end
-
-  it "requires user id" do
-    DeleteUser.run(current_user: nil) do |operation, deleted_user|
-      deleted_user.should be_nil
-
-      assert_invalid(operation.id, " required")
-    end
-  end
-
-  it "requires user exists" do
-    DeleteUser.run(
-      id: 1_i64,
-      current_user: nil
-    ) do |operation, deleted_user|
-      deleted_user.should be_nil
-
-      assert_invalid(operation.id, "not exist")
+      assert_invalid(operation, :user, "current user")
+      UserQuery.new.id(user.id).first?.should be_a(User)
     end
   end
 end

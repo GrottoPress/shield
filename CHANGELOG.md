@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Api::SkipAuthenticationCache`
 - Add `Avram::Validations.validate_primary_key`
 - Add `Shield::SetUserIdFromUser` operation mixin
+- Add `Shield::DeleteOperation` operation mixin.
+
+### Changed
+- Rework delete operations to accept a record instead of record id.
 
 ### Fixed
 - Improve brute force and timing attack mitigations.
