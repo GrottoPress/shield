@@ -21,5 +21,12 @@ module Shield::Sha256Hash
 
       Crypto::Subtle.constant_time_compare(new_digest, raw_digest)
     end
+
+    def fake_verify : Nil
+      fake_digest = "54495e76128a0e67b1bd467a2a67277c9d1c3c93\
+        2506c8b725d91938dee1fecfe35579bc4efb62949b2cbf62bc40029a"
+
+      verify?(fake_digest)
+    end
   end
 end

@@ -3,22 +3,18 @@ module Shield::LoginVerifier
     include Shield::Verifier
 
     def verify : Login?
-      return hash unless active?
       login if verify?
     end
 
-    def active? : Bool?
-      login.try &.active?
-    end
-
     def verify? : Bool?
-      return unless login && login_token
-      Sha256Hash.new(login_token!).verify?(login!.token_digest)
-    end
+      return unless login_id && login_token
+      sha_256 = Sha256Hash.new(login_token!)
 
-    # To mitigate timing attacks
-    private def hash : Nil
-      login_token.try { |token| Sha256Hash.new(token).hash }
+      if login.try(&.active?)
+        sha_256.verify?(login!.token_digest)
+      else
+        sha_256.fake_verify
+      end
     end
 
     def login! : Login
