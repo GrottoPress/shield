@@ -16,12 +16,20 @@ def assert_valid(attribute, text)
   attribute.errors.select(&.includes? text).should be_empty
 end
 
+def assert_valid(operation, key, text)
+  operation.errors[key].select(&.includes? text).should be_empty
+end
+
 def assert_invalid(attribute)
   attribute.errors.should_not be_empty
 end
 
 def assert_invalid(attribute, text)
   attribute.errors.select(&.includes? text).size.should eq(1)
+end
+
+def assert_invalid(operation, key, text)
+  operation.errors[key].select(&.includes? text).size.should eq(1)
 end
 
 def params(**named_args)

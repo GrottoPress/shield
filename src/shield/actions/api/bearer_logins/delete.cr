@@ -8,9 +8,9 @@ module Shield::Api::BearerLogins::Delete
 
     def run_operation
       DeleteBearerLogin.run(
-        id: bearer_login_id.to_i64
+        record: bearer_login
       ) do |operation, deleted_bearer_login|
-        if deleted_bearer_login
+        if operation.deleted?
           do_run_operation_succeeded(operation, deleted_bearer_login.not_nil!)
         else
           do_run_operation_failed(operation)
