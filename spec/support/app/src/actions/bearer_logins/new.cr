@@ -4,7 +4,11 @@ class BearerLogins::New < BrowserAction
   skip :pin_login_to_ip_address
 
   get "/bearer-logins/new" do
-    operation = CreateBearerLogin.new(allowed_scopes: ["api.posts.index"])
+    operation = CreateBearerLogin.new(
+      user: user,
+      allowed_scopes: ["api.posts.index"]
+    )
+
     html NewPage, operation: operation
   end
 end

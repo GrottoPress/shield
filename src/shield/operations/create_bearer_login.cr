@@ -2,9 +2,10 @@ module Shield::CreateBearerLogin
   macro included
     permit_columns :name
 
+    include Shield::SetUserIdFromUser
+
     before_save do
       validate_required name, user_id
-      validate_primary_key user_id, query: UserQuery
       validate_name_unique
     end
 
