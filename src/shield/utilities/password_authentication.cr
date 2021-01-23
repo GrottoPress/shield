@@ -12,11 +12,10 @@ module Shield::PasswordAuthentication
     def verify(password : String) : User?
       bcrypt = BcryptHash.new(password)
 
-      if @user
-        @user if bcrypt.verify?(@user.not_nil!.password_digest)
+      if user = @user
+        user if bcrypt.verify?(user.password_digest)
       else
-        bcrypt.hash # To mitigate timing attacks
-        nil
+        bcrypt.fake_verify
       end
     end
   end

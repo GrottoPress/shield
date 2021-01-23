@@ -3,22 +3,18 @@ module Shield::BearerLoginVerifier
     include Shield::Verifier
 
     def verify : BearerLogin?
-      return hash unless active?
       bearer_login if verify?
     end
 
-    def active? : Bool?
-      bearer_login.try &.active?
-    end
-
     def verify? : Bool?
-      return unless bearer_login && bearer_login_token
-      Sha256Hash.new(bearer_login_token!).verify?(bearer_login!.token_digest)
-    end
+      return unless bearer_login_id && bearer_login_token
+      sha_256 = Sha256Hash.new(bearer_login_token!)
 
-    # To mitigate timing attacks
-    private def hash : Nil
-      bearer_login_token.try { |token| Sha256Hash.new(token).hash }
+      if bearer_login.try(&.active?)
+        sha_256.verify?(bearer_login!.token_digest)
+      else
+        sha_256.fake_verify
+      end
     end
 
     def bearer_login! : BearerLogin

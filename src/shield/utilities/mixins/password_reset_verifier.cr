@@ -3,24 +3,18 @@ module Shield::PasswordResetVerifier
     include Shield::Verifier
 
     def verify : PasswordReset?
-      return hash unless active?
       password_reset if verify?
     end
 
-    def active? : Bool?
-      password_reset.try &.active?
-    end
-
     def verify? : Bool?
-      return unless password_reset && password_reset_token
+      return unless password_reset_id && password_reset_token
+      sha_256 = Sha256Hash.new(password_reset_token!)
 
-      Sha256Hash.new(password_reset_token!)
-        .verify?(password_reset!.token_digest)
-    end
-
-    # To mitigate timing attacks
-    private def hash : Nil
-      password_reset_token.try { |token| Sha256Hash.new(token).hash }
+      if password_reset.try(&.active?)
+        sha_256.verify?(password_reset!.token_digest)
+      else
+        sha_256.fake_verify
+      end
     end
 
     def password_reset! : PasswordReset

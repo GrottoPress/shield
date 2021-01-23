@@ -3,24 +3,18 @@ module Shield::EmailConfirmationVerifier
     include Shield::Verifier
 
     def verify : EmailConfirmation?
-      return hash unless active?
       email_confirmation if verify?
     end
 
-    def active? : Bool?
-      email_confirmation.try &.active?
-    end
-
     def verify? : Bool?
-      return unless email_confirmation && email_confirmation_token
+      return unless email_confirmation_id && email_confirmation_token
+      sha_256 = Sha256Hash.new(email_confirmation_token!)
 
-      Sha256Hash.new(email_confirmation_token!)
-        .verify?(email_confirmation!.token_digest)
-    end
-
-    # To mitigate timing attacks
-    private def hash : Nil
-      email_confirmation_token.try { |token| Sha256Hash.new(token).hash }
+      if email_confirmation.try(&.active?)
+        sha_256.verify?(email_confirmation!.token_digest)
+      else
+        sha_256.fake_verify
+      end
     end
 
     def email_confirmation! : EmailConfirmation
