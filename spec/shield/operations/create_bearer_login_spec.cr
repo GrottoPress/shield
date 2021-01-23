@@ -6,7 +6,7 @@ describe Shield::CreateBearerLogin do
       params(name: "some token"),
       scopes: ["posts.index"],
       allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
-      user_id: UserBox.create.id
+      user: UserBox.create
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
@@ -20,6 +20,7 @@ describe Shield::CreateBearerLogin do
       params(name: "some token"),
       scopes: ["posts.index"],
       allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
+      user: nil
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -33,6 +34,7 @@ describe Shield::CreateBearerLogin do
       user_id: 111,
       scopes: ["posts.index"],
       allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
+      user: nil
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -44,7 +46,8 @@ describe Shield::CreateBearerLogin do
     CreateBearerLogin.create(
       scopes: ["posts.index"],
       allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
-      user_id: UserBox.create.id
+      user_id: UserBox.create.id,
+      user: nil
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -62,7 +65,8 @@ describe Shield::CreateBearerLogin do
       params(name: name),
       scopes: ["current_user.show"],
       allowed_scopes: ["current_user.show", "posts.index"],
-      user_id: user.id
+      user_id: user.id,
+      user: nil
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -81,7 +85,7 @@ describe Shield::CreateBearerLogin do
       params(name: name),
       scopes: ["current_user.show"],
       allowed_scopes: ["current_user.show", "posts.index"],
-      user_id: user_2.id
+      user: user_2
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
     end

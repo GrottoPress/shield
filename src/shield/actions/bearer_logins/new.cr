@@ -4,11 +4,16 @@ module Shield::BearerLogins::New
 
     # get "/bearer-logins/new" do
     #   operation = CreateBearerLogin.new(
+    #     user: user,
     #     allowed_scopes: BearerScope.action_scopes.map(&.name)
     #   )
     #
     #   html NewPage, operation: operation
     # end
+
+    def user
+      current_user!
+    end
 
     def authorize?(user : User) : Bool
       user.id == current_user.try &.id

@@ -43,7 +43,7 @@ describe Shield::Api::AuthorizationPipes do
           params(name: "secret token"),
           scopes: ["api.posts.index"],
           allowed_scopes: ["api.posts.update", "api.posts.index"],
-          user_id: user.id
+          user: user
         ) do |operation, bearer_login|
           bearer_login = bearer_login.not_nil!
 
@@ -66,7 +66,7 @@ describe Shield::Api::AuthorizationPipes do
           params(name: "secret token"),
           scopes: ["api.posts.create"],
           allowed_scopes: ["api.posts.update", "api.posts.create"],
-          user_id: user.id
+          user: user
         ) do |operation, bearer_login|
           bearer_login = bearer_login.not_nil!
 
@@ -89,7 +89,7 @@ describe Shield::Api::AuthorizationPipes do
           params(name: "secret token"),
           scopes: ["api.posts.create"],
           allowed_scopes: ["api.posts.update", "api.posts.create"],
-          user_id: user.id
+          user: user
         ) do |operation, bearer_login|
           bearer_login = bearer_login.not_nil!
 

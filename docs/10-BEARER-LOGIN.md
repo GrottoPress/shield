@@ -228,6 +228,7 @@ This token is revoked when the user logs out.
 
      get "/bearer-logins/new" do
        operation = CreateBearerLogin.new(
+         user: user,
          allowed_scopes: BearerScope.action_scopes.map(&.name)
        )
 
