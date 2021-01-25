@@ -28,6 +28,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Rework delete operations to accept a record instead of record id.
+- Add `Shield::DurationColumns` model mixin
+- Add `Shield::DurationQuery` operation mixin
+- Add `Shield::BeginDuration` operation mixin
+- Add `Shield::EndDuration` operation mixin
 
 ### Fixed
 - Improve brute force and timing attack mitigations.
