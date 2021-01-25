@@ -10,9 +10,6 @@
 
    Shield.configure do |settings|
      # ...
-     # The cost to apply to bcrypt hashes
-     settings.bcrypt_cost = Lucky::Env.production? ? 12 : 4
-
      # Required minimum length of password
      settings.password_min_length = Lucky::Env.production? ? 12 : 4
 

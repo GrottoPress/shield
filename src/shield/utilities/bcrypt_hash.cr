@@ -2,7 +2,12 @@ module Shield::BcryptHash
   macro included
     include Shield::Hash
 
-    @cost : Int32 = Shield.settings.bcrypt_cost
+    def initialize(@plaintext : String)
+      @cost = Lucky::Env.production? ? 12 : 4
+    end
+
+    def initialize(@plaintext : String, @cost : Int32)
+    end
 
     def hash : String
       Crypto::Bcrypt::Password.create(@plaintext, @cost).to_s
