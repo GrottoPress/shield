@@ -1,6 +1,5 @@
 module Shield
   Habitat.create do
-    setting bcrypt_cost : Int32 = 12
     setting bearer_login_expiry : Time::Span = 90.days
     setting email_confirmation_expiry : Time::Span = 1.hour
     setting login_expiry : Time::Span = 24.hours
