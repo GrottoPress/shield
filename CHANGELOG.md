@@ -32,6 +32,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Rework delete operations to accept a record instead of record id.
+- Rename `started_at` database columns to `active_at`
+- Rename `ended_at` database columns `inactive_at`
 
 ### Fixed
 - Improve brute force and timing attack mitigations.
