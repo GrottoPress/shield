@@ -1,5 +1,5 @@
 module Shield::AuthenticationQuery
   macro included
-    include Shield::DurationQuery
+    include Shield::StatusQuery
   end
 end

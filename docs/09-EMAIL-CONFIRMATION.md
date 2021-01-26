@@ -41,10 +41,10 @@ This is particularly important, since email addresses are usually the only means
 
    `Shield::EmailConfirmation` adds the following columns:
 
+   - `active_at : Time`
    - `email : String`
-   - `ended_at : Time?`
+   - `inactive_at : Time?`
    - `ip_address : String`
-   - `started_at : Time`
    - `token_digest : String`
 
    It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
@@ -68,8 +68,8 @@ This is particularly important, since email addresses are usually the only means
 
          add token_digest : String
          add ip_address : String
-         add started_at : Time
-         add ended_at : Time?
+         add active_at : Time
+         add inactive_at : Time?
          # ...
        end
      end
@@ -91,7 +91,7 @@ This is particularly important, since email addresses are usually the only means
 
    class StartEmailConfirmation < EmailConfirmation::SaveOperation
      # ...
-     # By default, *Shield* sets the `ended_at` time here, using
+     # By default, *Shield* sets the `inactive_at` time here, using
      # the expiry setting above.
      #
      # Use this, if you would like to never expire email confirmations,

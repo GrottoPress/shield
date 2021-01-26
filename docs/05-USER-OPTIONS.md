@@ -101,7 +101,7 @@
        accessed.
 
        =====
-       Date: #{@login.started_at.to_s("%d %B, %Y, %l:%M %P")}
+       Date: #{@login.active_at.to_s("%d %B, %Y, %l:%M %P")}
        IP Address: #{@login.ip_address}
        =====
 

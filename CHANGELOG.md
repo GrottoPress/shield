@@ -25,13 +25,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Avram::Validations.validate_primary_key`
 - Add `Shield::SetUserIdFromUser` operation mixin
 - Add `Shield::DeleteOperation` operation mixin.
+- Add `Shield::StatusColumns` model mixin
+- Add `Shield::StatusQuery` operation mixin
+- Add `Shield::Activate` operation mixin
+- Add `Shield::Deactivate` operation mixin
 
 ### Changed
 - Rework delete operations to accept a record instead of record id.
-- Add `Shield::DurationColumns` model mixin
-- Add `Shield::DurationQuery` operation mixin
-- Add `Shield::BeginDuration` operation mixin
-- Add `Shield::EndDuration` operation mixin
 
 ### Fixed
 - Improve brute force and timing attack mitigations.

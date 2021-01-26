@@ -21,8 +21,9 @@ module Shield::StartPasswordReset
     include Shield::RequireIpAddress
     include Shield::StartAuthentication
 
-    private def set_ended_at
-      ended_at.value = started_at.value! + Shield.settings.password_reset_expiry
+    private def set_inactive_at
+      inactive_at.value = active_at.value! +
+        Shield.settings.password_reset_expiry
     end
 
     private def set_user_id

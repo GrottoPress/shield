@@ -12,8 +12,8 @@ module Shield::CreateBearerLogin
     include Shield::ValidateScopes
     include Shield::StartAuthentication
 
-    private def set_ended_at
-      ended_at.value = started_at.value! + Shield.settings.bearer_login_expiry
+    private def set_inactive_at
+      inactive_at.value = active_at.value! + Shield.settings.bearer_login_expiry
     end
 
     # Prevents a user from using a bearer login `name`

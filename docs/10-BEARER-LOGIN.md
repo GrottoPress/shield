@@ -62,10 +62,10 @@ This token is revoked when the user logs out.
 
    `Shield::BearerLogin` adds the following columns:
    
-   - `ended_at : Time?`
+   - `active_at : Time`
+   - `inactive_at : Time?`
    - `name : String`
    - `scopes : Array(String)`
-   - `started_at : Time`
    - `token_digest : String`
 
    It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
@@ -89,8 +89,8 @@ This token is revoked when the user logs out.
          add scopes : Array(String)
 
          add token_digest : String
-         add started_at : Time
-         add ended_at : Time?
+         add active_at : Time
+         add inactive_at : Time?
          # ...
        end
      end
@@ -112,7 +112,7 @@ This token is revoked when the user logs out.
 
    class CreateBearerLogin < BearerLogin::SaveOperation
      # ...
-     # By default, *Shield* sets the `ended_at` time here, using
+     # By default, *Shield* sets the `inactive_at` time here, using
      # the expiry setting above.
      #
      # Use this, if you would like to never expire bearer logins,
