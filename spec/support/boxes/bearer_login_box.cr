@@ -10,7 +10,7 @@ class BearerLoginBox < Avram::Box
   private def set_defaults
     name "super secret"
     scopes ["api.posts.index"]
-    started_at Time.utc
+    active_at Time.utc
     token "123.abcdefghijklmnopqrst"
   end
 end

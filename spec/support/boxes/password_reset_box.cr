@@ -9,7 +9,7 @@ class PasswordResetBox < Avram::Box
 
   private def set_defaults
     ip_address "1.2.3.4"
-    started_at Time.utc
+    active_at Time.utc
     token "123.abcdefghijklmnopqrst"
   end
 end

@@ -1,6 +1,6 @@
 module Shield::AuthenticationColumns
   macro included
-    include Shield::DurationColumns
+    include Shield::StatusColumns
 
     skip_default_columns
     primary_key id : Int64

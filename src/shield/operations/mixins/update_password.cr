@@ -25,7 +25,7 @@ module Shield::UpdatePassword
         .user_id(user.id)
         .id.not.eq(current_login.try(&.id) || 0_i64)
         .is_active
-        .update(ended_at: Time.utc)
+        .update(inactive_at: Time.utc)
     end
   end
 end

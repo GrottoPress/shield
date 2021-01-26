@@ -1,6 +1,6 @@
 module Shield::StartAuthentication
   macro included
-    include Shield::BeginDuration
+    include Shield::Activate
     include Shield::SetToken
   end
 end

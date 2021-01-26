@@ -32,9 +32,9 @@
 
    `Shield::PasswordReset` adds the following columns:
    
-   - `ended_at : Time?`
+   - `active_at : Time`
+   - `inactive_at : Time?`
    - `ip_address : String`
-   - `started_at : Time`
    - `token_digest : String`
 
    It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
@@ -56,8 +56,8 @@
 
          add token_digest : String
          add ip_address : String
-         add started_at : Time
-         add ended_at : Time?
+         add active_at : Time
+         add inactive_at : Time?
          # ...
        end
      end
@@ -79,7 +79,7 @@
 
    class StartPasswordReset < PasswordReset::SaveOperation
      # ...
-     # By default, *Shield* sets the `ended_at` time here, using
+     # By default, *Shield* sets the `inactive_at` time here, using
      # the expiry setting above.
      #
      # Use this, if you would like to never expire password resets,

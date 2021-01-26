@@ -15,7 +15,7 @@ module Shield::ResetPassword
       PasswordResetQuery.new
         .user_id(user.id)
         .is_active
-        .update(ended_at: Time.utc)
+        .update(inactive_at: Time.utc)
     end
 
     private def delete_session(user : User)

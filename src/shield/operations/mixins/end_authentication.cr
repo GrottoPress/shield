@@ -1,5 +1,5 @@
 module Shield::EndAuthentication
   macro included
-    include Shield::EndDuration
+    include Shield::Deactivate
   end
 end
