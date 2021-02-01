@@ -1,13 +1,25 @@
 ## Testing
 
+### Setting up
+
+1. Require *Shield* spec:
+
+   ```crystal
+   # ->>> spec/spec_helper.cr
+
+   # ...
+   require "shield/spec"
+   # ...
+   ```
+
+   This pulls in various types and helpers for specs.
+
 1. Set up API client:
 
    ```crystal
    # ->>> spec/support/api_client.cr
 
    class ApiClient < Lucky::BaseHTTPClient
-     include Shield::HttpClient
-
      def initialize
        super
        headers("Content-Type": "application/json")
@@ -27,106 +39,143 @@
    end
    ```
 
-   `Shield::HttpClient` enables API and browser authentication in specs:
+   *Shield* includes `Shield::HttpClient` in `Lucky::BaseHTTPClient`, which enables API and browser authentication in specs.
 
-   - Browser authentication
+### Authentication
 
-     ```crystal
-     client = ApiClient.new
+- Browser authentication
 
-     # Creates a user and logs them in with an email and password.
-     # You may optionally pass in `remote_ip` and `session`.
-     client.browser_auth(email, password)
+  ```crystal
+  client = ApiClient.new
 
-     # Logs in a user that is already created.
-     # You may optionally pass in `remote_ip` and `session`.
-     client.browser_auth(user, password)
+  # Creates a user and logs them in with an email and password.
+  # You may optionally pass in `remote_ip` and `session`.
+  client.browser_auth(email, password)
 
-     # Go ahead and make requests to routes with
-     # the authenticated client.
-     client.exec(CurrentUser::Show)
-     ```
+  # Logs in a user that is already created.
+  # You may optionally pass in `remote_ip` and `session`.
+  client.browser_auth(user, password)
 
-   - API authentication with email and password
+  # Go ahead and make requests to routes with
+  # the authenticated client.
+  client.exec(CurrentUser::Show)
+  ```
 
-     ```crystal
-     client = ApiClient.new
+- API authentication with email and password
 
-     # Creates a user and logs them in with an email and password.
-     # You may optionally pass in `remote_ip`.
-     client.api_auth(email, password)
+  ```crystal
+  client = ApiClient.new
 
-     # Logs in a user that is already created.
-     # You may optionally pass in `remote_ip`.
-     client.api_auth(user, password)
+  # Creates a user and logs them in with an email and password.
+  # You may optionally pass in `remote_ip`.
+  client.api_auth(email, password)
 
-     # Go ahead and make requests to routes with
-     # the authenticated client.
-     client.exec(Api::CurrentUser::Show)
-     ```
+  # Logs in a user that is already created.
+  # You may optionally pass in `remote_ip`.
+  client.api_auth(user, password)
 
-   - API Authentication with bearer tokens
+  # Go ahead and make requests to routes with
+  # the authenticated client.
+  client.exec(Api::CurrentUser::Show)
+  ```
 
-     ```crystal
-     client = ApiClient.new
+- API Authentication with bearer tokens
 
-     client.api_auth(bearer_token)
+  ```crystal
+  client = ApiClient.new
 
-     # Go ahead and make requests to routes with
-     # the authenticated client.
-     client.exec(Api::CurrentUser::Show)
-     ```
+  client.api_auth(bearer_token)
 
-   - Set cookie header from session
+  # Go ahead and make requests to routes with
+  # the authenticated client.
+  client.exec(Api::CurrentUser::Show)
+  ```
 
-     ```crystal
-     client = ApiClient.new
-     session = Lucky::Session.new
+- Set cookie header from session
 
-     session.set(:one, "one")
-     session.set(:two, "two")
+  ```crystal
+  client = ApiClient.new
+  session = Lucky::Session.new
 
-     # Sets "Cookie" header from session
-     client.set_cookie_from_session(session)
+  session.set(:one, "one")
+  session.set(:two, "two")
 
-     # Go ahead and make requests.
-     client.exec(Numbers::Show)
-     ```
+  # Sets "Cookie" header from session
+  client.set_cookie_from_session(session)
 
-1. Set up fake params:
+  # Go ahead and make requests.
+  client.exec(Numbers::Show)
+  ```
 
-   ```crystal
-   # ->>> spec/support/fake_nested_params.cr
+### Spec Helpers
 
-   class FakeNestedParams
-     include Shield::FakeNestedParams
-   end
-   ```
+- `#assert_valid(attribute)`:
 
-   `Shield::FakeNestedParams` allows creating nested params for tests.
+  Asserts that the attribute is valid. Spec fails if the attribute has errors.
 
-   ---
-   ```crystal
-   # ->>> spec/spec_helper.cr
+- `#assert_valid(attribute, text)`:
 
-   def params(**named_args)
-     Avram::Params.new named_args.to_h
-       .transform_keys(&.to_s)
-       .transform_values &.to_s
-   end
+  Asserts that the attribute is valid, or has none of its errors containing `text`.
 
-   def nested_params(**named_args)
-     FakeNestedParams.new(**named_args)
-   end
-   ```
+  ```crystal
+  assert_valid(user_id, " required")
+  ```
 
-   For simple params:
+- `#assert_valid(operation, key)`:
+
+  Asserts that the operation is valid, or has no error with key `key`. This is useful for custom errors.
+
+  ```crystal
+  assert_invalid(operation, :user)
+  ```
+
+- `#assert_valid(operation, key, text)`:
+
+  Asserts that the operation is valid, or has no error with key `key`, or the error with key `key` has none of its values containing `text`. This is useful for custom errors.
+
+  ```crystal
+  assert_invalid(operation, :user, "not exist")
+  ```
+
+- `#assert_invalid(attribute)`:
+
+  Asserts that the attribute is invalid. Spec fails if the attribute has **no** errors.
+
+- `#assert_invalid(attribute, text)`:
+
+  Asserts that the attribute is invalid, and has exactly one of its errors containing `text`.
+
+  ```crystal
+  assert_invalid(user_id, " required")
+  ```
+
+- `#assert_invalid(operation, key)`:
+
+  Asserts that the operation is invalid, and has an error with key `key`. This is useful for custom errors.
+
+  ```crystal
+  assert_invalid(operation, :user)
+  ```
+
+- `#assert_invalid(operation, key, text)`:
+
+  Asserts that the operation is invalid, and has an error with key `key`, which has exactly one of its values containing `text`. This is useful for custom errors.
+
+  ```crystal
+  assert_invalid(operation, :user, "not exist")
+  ```
+
+- `#params(**named_args)`:
+
+   Useful for creating simple params:
 
    ```crystal
    SomeOperation.create!(params(email: "a@b.c", name: "abc"))
    ```
 
-   For nested params:
+- `#nested_params(**named_args)`:
+
+   Useful for creating nested params:
 
    ```crystal
    SomeOperation.create!(
