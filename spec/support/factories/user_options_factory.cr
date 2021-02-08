@@ -1,4 +1,4 @@
-class UserOptionsBox < Avram::Box
+class UserOptionsFactory < Avram::Factory
   def initialize
     set_defaults
   end

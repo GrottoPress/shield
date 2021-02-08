@@ -1,4 +1,4 @@
-class LoginBox < Avram::Box
+class EmailConfirmationFactory < Avram::Factory
   def initialize
     set_defaults
   end
@@ -8,8 +8,9 @@ class LoginBox < Avram::Box
   end
 
   private def set_defaults
+    email "Us3R@ExampLe.tld"
     ip_address "1.2.3.4"
     active_at Time.utc
-    token "123.abcdefghijklmnopqrst"
+    token "123abcdefghijklmnopqrst"
   end
 end

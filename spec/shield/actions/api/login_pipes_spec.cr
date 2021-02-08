@@ -7,8 +7,8 @@ describe Shield::Api::LoginPipes do
       password = "password4APASSWORD<"
       ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-      user = UserBox.create &.email(email).password(password)
-      UserOptionsBox.create &.user_id(user.id)
+      user = UserFactory.create &.email(email).password(password)
+      UserOptionsFactory.create &.user_id(user.id)
 
       client = ApiClient.new
       client.api_auth(user, password, ip_address)
@@ -22,8 +22,8 @@ describe Shield::Api::LoginPipes do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      user = UserBox.create &.email(email).password(password)
-      UserOptionsBox.create &.user_id(user.id)
+      user = UserFactory.create &.email(email).password(password)
+      UserOptionsFactory.create &.user_id(user.id)
 
       CreateBearerLogin.create(
         params(name: "secret token"),
@@ -69,8 +69,8 @@ describe Shield::Api::LoginPipes do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      user = UserBox.create &.email(email).password(password)
-      UserOptionsBox.create &.user_id(user.id)
+      user = UserFactory.create &.email(email).password(password)
+      UserOptionsFactory.create &.user_id(user.id)
 
       CreateBearerLogin.create(
         params(name: "secret token"),
@@ -98,11 +98,11 @@ describe Shield::Api::LoginPipes do
         password = "password4APASSWORD<"
         ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-        user = UserBox.create &.email(email)
+        user = UserFactory.create &.email(email)
           .level(User::Level.new :admin)
           .password(password)
 
-        UserOptionsBox.create &.user_id(user.id)
+        UserOptionsFactory.create &.user_id(user.id)
 
         client = ApiClient.new
         client.api_auth(user, password, ip_address)
@@ -116,11 +116,11 @@ describe Shield::Api::LoginPipes do
         email = "user@example.tld"
         password = "password4APASSWORD<"
 
-        user = UserBox.create &.email(email)
+        user = UserFactory.create &.email(email)
           .level(User::Level.new :admin)
           .password(password)
 
-        UserOptionsBox.create &.user_id(user.id)
+        UserOptionsFactory.create &.user_id(user.id)
 
         client = ApiClient.new
         client.api_auth(user, password)

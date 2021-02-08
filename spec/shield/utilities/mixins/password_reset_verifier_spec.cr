@@ -6,7 +6,7 @@ describe Shield::PasswordResetVerifier do
       email = "user@example.tld"
       password = "password12U password"
 
-      UserBox.create &.email(email).password(password)
+      UserFactory.create &.email(email).password(password)
 
       StartPasswordReset.create(
         params(email: email),

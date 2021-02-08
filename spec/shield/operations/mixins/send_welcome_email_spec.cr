@@ -4,8 +4,8 @@ describe Shield::SendWelcomeEmail do
   it "sends welcome email for existing user" do
     email = "mary@company.com"
 
-    user = UserBox.create &.email(email)
-    email_confirmation = EmailConfirmationBox.create &.email(email)
+    user = UserFactory.create &.email(email)
+    email_confirmation = EmailConfirmationFactory.create &.email(email)
 
     params = nested_params(
       user: {password: "password12U.password"},
@@ -31,7 +31,7 @@ describe Shield::SendWelcomeEmail do
 
     RegisterCurrentUser.create(
       params,
-      email_confirmation: EmailConfirmationBox.create,
+      email_confirmation: EmailConfirmationFactory.create,
       session: Lucky::Session.new,
     ) do |operation, user|
       UserWelcomeEmail.new(operation).should_not be_delivered

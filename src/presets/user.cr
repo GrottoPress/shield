@@ -28,7 +28,7 @@ class UpdateUser < User::SaveOperation
   include Shield::UpdateUser
 end
 
-class DeleteUser < Avram::Operation
+class DeleteUser < User::DeleteOperation
   include Shield::DeleteUser
 end
 

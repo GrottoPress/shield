@@ -5,8 +5,8 @@ describe Shield::UpdatePassword do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    user = UserBox.create &.password(password)
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.password(password)
+    UserOptionsFactory.create &.user_id(user.id)
 
     UpdateRegularCurrentUser.update!(
       user,
@@ -20,8 +20,8 @@ describe Shield::UpdatePassword do
   end
 
   it "does not update password if new password empty" do
-    user = UserBox.create
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create
+    UserOptionsFactory.create &.user_id(user.id)
 
     UpdateRegularCurrentUser.update(
       user,
@@ -37,8 +37,8 @@ describe Shield::UpdatePassword do
     password = "pass)word1Apassword"
     new_password = "ass)word1Apasswor"
 
-    user = UserBox.create &.password(password)
-    UserOptionsBox.create &.user_id(user.id).password_notify(true)
+    user = UserFactory.create &.password(password)
+    UserOptionsFactory.create &.user_id(user.id).password_notify(true)
 
     UpdateRegularCurrentUser.update(
       user,
@@ -57,8 +57,8 @@ describe Shield::UpdatePassword do
     password = "pass)word1Apassword"
     new_password = "ass)word1Apassword"
 
-    user = UserBox.create &.password(password)
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.password(password)
+    UserOptionsFactory.create &.user_id(user.id)
 
     UpdateRegularCurrentUser.update(
       user,
@@ -78,8 +78,8 @@ describe Shield::UpdatePassword do
   it "does not send password change notification if password did not change" do
     password = "pass)word1Apassword"
 
-    user = UserBox.create &.password(password)
-    UserOptionsBox.create &.user_id(user.id).password_notify(true)
+    user = UserFactory.create &.password(password)
+    UserOptionsFactory.create &.user_id(user.id).password_notify(true)
 
     UpdateRegularCurrentUser.update(
       user,
@@ -99,11 +99,11 @@ describe Shield::UpdatePassword do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    user = UserBox.create &.email(email).password(password)
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.email(email).password(password)
+    UserOptionsFactory.create &.user_id(user.id)
 
-    login_1 = LoginBox.create &.user_id(user.id)
-    login_2 = LoginBox.create &.user_id(user.id)
+    login_1 = LoginFactory.create &.user_id(user.id)
+    login_2 = LoginFactory.create &.user_id(user.id)
 
     login_1.active?.should be_true
     login_2.active?.should be_true
@@ -123,12 +123,12 @@ describe Shield::UpdatePassword do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    user = UserBox.create &.email(email).password(password)
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.email(email).password(password)
+    UserOptionsFactory.create &.user_id(user.id)
 
-    login_1 = LoginBox.create &.user_id(user.id)
-    login_2 = LoginBox.create &.user_id(user.id)
-    current_login = LoginBox.create &.user_id(user.id)
+    login_1 = LoginFactory.create &.user_id(user.id)
+    login_2 = LoginFactory.create &.user_id(user.id)
+    current_login = LoginFactory.create &.user_id(user.id)
 
     login_1.active?.should be_true
     login_2.active?.should be_true
@@ -153,14 +153,14 @@ describe Shield::UpdatePassword do
     john_email = "john@example.tld"
     john_password = "pasword12U-pasword"
 
-    mary = UserBox.create &.email(mary_email).password(mary_password)
-    UserOptionsBox.create &.user_id(mary.id)
+    mary = UserFactory.create &.email(mary_email).password(mary_password)
+    UserOptionsFactory.create &.user_id(mary.id)
 
-    john = UserBox.create &.email(john_email).password(john_password)
-    UserOptionsBox.create &.user_id(john.id)
+    john = UserFactory.create &.email(john_email).password(john_password)
+    UserOptionsFactory.create &.user_id(john.id)
 
-    mary_login = LoginBox.create &.user_id(mary.id)
-    john_login = LoginBox.create &.user_id(john.id)
+    mary_login = LoginFactory.create &.user_id(mary.id)
+    john_login = LoginFactory.create &.user_id(john.id)
 
     mary_login.active?.should be_true
     john_login.active?.should be_true

@@ -35,7 +35,7 @@ module Shield::CurrentUser::Create
     end
 
     private def success_action(operation)
-      flash.keep.success = "Done! Check your email for further instructions."
+      flash.success = "Done! Check your email for further instructions."
       redirect to: CurrentLogin::New
     end
 

@@ -133,7 +133,7 @@
      # but the action requires user to be logged in.
      #
      #def do_require_logged_in_failed
-     #  flash.keep.failure = "You are not logged in"
+     #  flash.failure = "You are not logged in"
      #  redirect to: CurrentLogin::New
      #end
 
@@ -141,7 +141,7 @@
      # requires user to **not** be logged in.
      #
      #def do_require_logged_out_failed
-     #  flash.keep.info = "You are already logged in"
+     #  flash.info = "You are already logged in"
      #  redirect_back fallback: CurrentUser::Show
      #end
 
@@ -150,7 +150,7 @@
      # log in.
      #
      #def do_pin_login_to_ip_address_failed
-     #  flash.keep.failure = "Your IP address has changed. Please log in again."
+     #  flash.failure = "Your IP address has changed. Please log in again."
      #  redirect to: CurrentLogin::New
      #end
 
@@ -158,7 +158,7 @@
      # `Shield.settings.login_idle_timeout`, if the action enforces login timeouts.
      #
      #def do_enforce_login_idle_timeout_failed
-     #  flash.keep.failure = "Your login timed out"
+     #  flash.failure = "Your login timed out"
      #  redirect to: CurrentLogin::New
      #end
      # ...
@@ -214,7 +214,7 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, login)
-     #  flash.keep.success = "Successfully logged in"
+     #  flash.success = "Successfully logged in"
      #  redirect_back fallback: CurrentUser::Show
      #end
 
@@ -247,14 +247,14 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, login)
-     #  flash.keep.success = "You logged out"
+     #  flash.success = "You logged out"
      #  redirect to: New
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.keep.failure = "Something went wrong"
+     #  flash.failure = "Something went wrong"
      #  redirect_back fallback: CurrentUser::Show
      #end
      # ...

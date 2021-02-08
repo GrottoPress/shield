@@ -2,7 +2,7 @@ require "../../../spec_helper"
 
 describe Shield::SaveEmail do
   it "saves email" do
-    email = "user@example.tld"
+    email = "user@exaMple.tlD"
 
     user = RegisterRegularCurrentUser.create!(nested_params(
       user: {email: email, password: "password12U)password"},
@@ -35,7 +35,7 @@ describe Shield::SaveEmail do
   it "rejects existing email" do
     email = "user@example.tld"
 
-    UserBox.create &.email(email)
+    UserFactory.create &.email(email)
 
     RegisterRegularCurrentUser.create(
       nested_params(user: {email: email})

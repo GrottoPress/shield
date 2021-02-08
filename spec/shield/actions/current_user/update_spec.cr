@@ -7,8 +7,8 @@ describe Shield::CurrentUser::Update do
     password = "password4APASSWORD<"
     ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-    user = UserBox.create &.email(email).password(password)
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.email(email).password(password)
+    UserOptionsFactory.create &.user_id(user.id)
 
     client = ApiClient.new
     client.browser_auth(user, password, ip_address)

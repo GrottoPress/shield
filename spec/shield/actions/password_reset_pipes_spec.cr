@@ -6,7 +6,7 @@ describe Shield::PasswordResetPipes do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      UserBox.create &.email(email)
+      UserFactory.create &.email(email)
         .level(User::Level.new :admin)
         .password(password)
 
@@ -32,7 +32,7 @@ describe Shield::PasswordResetPipes do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      UserBox.create &.email(email)
+      UserFactory.create &.email(email)
         .level(User::Level.new :admin)
         .password(password)
 

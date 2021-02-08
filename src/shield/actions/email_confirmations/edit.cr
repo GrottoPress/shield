@@ -39,7 +39,7 @@ module Shield::EmailConfirmations::Edit
     end
 
     def do_verify_operation_failed(utility)
-      flash.keep.failure = "Invalid token"
+      flash.failure = "Invalid token"
       redirect to: New
     end
 
@@ -58,7 +58,7 @@ module Shield::EmailConfirmations::Edit
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.keep.success = "Email changed successfully"
+      flash.success = "Email changed successfully"
       redirect to: CurrentUser::Show
     end
 

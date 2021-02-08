@@ -19,7 +19,7 @@ class EndPasswordReset < PasswordReset::SaveOperation
   include Shield::EndPasswordReset
 end
 
-class DeletePasswordReset < Avram::Operation
+class DeletePasswordReset < PasswordReset::DeleteOperation
   include Shield::DeletePasswordReset
 end
 

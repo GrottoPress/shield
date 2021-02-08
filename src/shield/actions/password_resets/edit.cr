@@ -30,7 +30,7 @@ module Shield::PasswordResets::Edit
     end
 
     def do_verify_operation_failed(utility)
-      flash.keep.failure = "Invalid token"
+      flash.failure = "Invalid token"
       redirect to: New
     end
   end

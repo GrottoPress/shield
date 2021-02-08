@@ -35,7 +35,10 @@ class String
   # Reference: https://en.wikipedia.org/wiki/Domain_Name_System
   def domain? : Bool
     return false if empty? || size > 253
-    matches?(/^(?:[a-z0-9][a-z0-9\-]{0,62}(?<!\-)\.)+[a-z][a-z0-9\-]{1,19}(?<!\-)$/i)
+
+    matches?(
+      /^(?:[a-z0-9][a-z0-9\-]{0,62}(?<!\-)\.)+[a-z][a-z0-9\-]{1,19}(?<!\-)$/i
+    )
   end
 
   def http_url? : Bool
@@ -50,10 +53,14 @@ class String
     uri = URI.parse(self)
     valid = uri.host.nil? || uri.host.to_s.domain?
 
-    valid &&= (uri.path.empty? || uri.path.matches?(/^[a-z0-9\-\_\.\%\+\/]+$/i))
-    valid &&= (uri.query.nil? || uri.query.to_s.matches?(/^([a-z0-9\-\_\.\:\%\+\&\=\,\[\]]+)$/i))
+    valid &&= (uri.path.empty? ||
+      uri.path.matches?(/^[a-z0-9\-\_\.\%\+\/]+$/i))
 
-    valid && (uri.fragment.nil? || uri.fragment.to_s.matches?(/^[a-z0-9\-\_\.\%\+]+$/i))
+    valid &&= (uri.query.nil? ||
+      uri.query.to_s.matches?(/^([a-z0-9\-\_\.\:\%\+\&\=\,\[\]]+)$/i))
+
+    valid && (uri.fragment.nil? ||
+      uri.fragment.to_s.matches?(/^[a-z0-9\-\_\.\%\+]+$/i))
   rescue
     false
   end
@@ -90,13 +97,6 @@ module Lucky
     include MailHelpers
   end
 
-  class FlashStore
-    def keep
-      @next = @now
-      self
-    end
-  end
-
   class MessageEncryptor
     def initialize(
       @secret : String,
@@ -129,21 +129,13 @@ module Avram
 
   abstract class Operation
     include MailHelpers
+  end
 
-    # See https://github.com/luckyframework/avram/issues/619
-    #
-    def self.run(params : Avram::Paramable, *args, **named_args)
-      operation = self.new(params, *args, **named_args)
-      value = nil
+  abstract class DeleteOperation(T)
+    include MailHelpers
 
-      operation.before_run
-
-      if operation.valid?
-        value = operation.run
-        operation.after_run(value)
-      end
-
-      yield operation, value
+    def record!
+      record.not_nil!
     end
   end
 
@@ -152,38 +144,6 @@ module Avram
 
     def record!
       record.not_nil!
-    end
-
-    # Always run `after_save`, whether or not attributes changed.
-    #
-    # See https://github.com/luckyframework/avram/issues/604
-    def save : Bool
-      before_save
-
-      if valid?
-        transaction_committed = database.transaction do
-          insert_or_update if changes.any? || !persisted?
-          after_save(record!)
-          true
-        end
-
-        if transaction_committed
-          self.save_status = SaveStatus::Saved
-          after_commit(record!)
-          after_completed(record!)
-          Avram::Events::SaveSuccessEvent.publish(
-            operation_class: self.class.name,
-            attributes: generic_attributes
-          )
-          true
-        else
-          mark_as_failed
-          false
-        end
-      else
-        mark_as_failed
-        false
-      end
     end
 
     # Getting rid of default validations in Avram
@@ -199,86 +159,6 @@ module Avram
       # validate_required *required_attributes
       custom_errors.empty? && attributes.all?(&.valid?)
     end
-
-    # `#persisted?` always returns `true` in `after_*` hooks, whether
-    # a new record was created, or an existing one was updated.
-    #
-    # This method should always return `true` for a create or `false`
-    # for an update, independent of the stage we are at in the operation.
-    def new_record? : Bool
-      {{ T.constant(:PRIMARY_KEY_NAME).id }}.value.nil?
-    end
-  end
-
-  # Avram's implementation errors in an update operation:
-  #
-  # `duplicate key value violates unique constraint
-  # "<constraint name>" (PQ::PQError)`
-  #
-  # `{{ type }}.new(params)` causes `{{ name }}.save` to create
-  # (rather than update) a record each time it is called, since
-  # no record was passed when the nested operation was instantiated.
-  #
-  # Ref: https://github.com/luckyframework/avram/blob/efe1d8afaf337809c2accf51300daac48dba1cdc/src/avram/nested_save_operation.cr
-  module NestedSaveOperation
-    macro has_one(type_declaration)
-      {% name = type_declaration.var %}
-      {% type = type_declaration.type.resolve %}
-
-      {% model_type = type.ancestors.find do |t|
-           t.stringify.starts_with?("Avram::SaveOperation(")
-         end.type_vars.first %}
-
-      {% assoc = T.constant(:ASSOCIATIONS).find do |assoc|
-           assoc[:relationship_type] == :has_one &&
-             assoc[:type].resolve.name == model_type.name
-         end %}
-
-      {% unless assoc %}
-        {% raise "#{T} must have a has_one association with #{model_type}" %}
-      {% end %}
-
-      after_save save_{{ name }}
-
-      def save_{{ name }}(saved_record)
-        {{ name }}.{{ @type.constant(:FOREIGN_KEY).id }}.value = saved_record.id
-
-        unless {{ name }}.save
-          add_error(:{{ name }}, "failed")
-          mark_nested_save_operations_as_failed
-          database.rollback
-        end
-      end
-
-      def {{ name }}
-        @{{ name }} ||= if new_record?
-          {{ type }}.new(params)
-        else
-          {{ type }}.new(record!.{{ assoc[:assoc_name].id }}!, params)
-        end
-      end
-
-      def nested_save_operations
-        {% if @type.methods.map(&.name).includes?(:nested_save_operations.id) %}
-          previous_def +
-        {% end %}
-        [{{ name }}]
-      end
-    end
-
-    def mark_nested_save_operations_as_failed
-      nested_save_operations.each do |operation|
-        operation.as(Avram::MarkAsFailed).mark_as_failed
-      end
-    end
-
-    def nested_save_operations
-      [] of Avram::MarkAsFailed
-    end
-  end
-
-  module DatabaseValidations(T)
-    extend self
   end
 
   module Validations
@@ -349,7 +229,9 @@ module Avram
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
-          next if value.matches?(/^[a-z0-9](?:[a-z0-9\-]*(?<!\.)\.?)*(?<![\.\-])$/i)
+          if value.matches?(/^[a-z0-9](?:[a-z0-9\-]*(?<!\.)\.?)*(?<![\.\-])$/i)
+            next
+          end
 
           attribute.add_error(message)
         end
@@ -458,7 +340,7 @@ module Avram
     def validate_not_pwned(
       *attributes,
       message : Attribute::ErrorMessage = "appears in a known data breach",
-      remote_fail : Attribute::ErrorMessage? = "validation failed. Try again.",
+      remote_fail : Attribute::ErrorMessage? = "validation failed. Try again."
     )
       attributes.each do |attribute|
         attribute.value.try do |value|
@@ -516,6 +398,10 @@ macro __enum(enum_name, &block)
       alias ColumnType = String
 
       include Avram::Type
+
+      def self.criteria(query : T, column) forall T
+        Criteria(T, String).new(query, column)
+      end
 
       def parse(value : {{ enum_name }})
         SuccessfulCast({{ enum_name }}).new(value)

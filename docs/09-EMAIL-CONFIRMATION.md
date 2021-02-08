@@ -58,13 +58,15 @@ This is particularly important, since email addresses are usually the only means
 
    class CreateEmailConfirmations::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
+       enable_extension "citext"
+
        create table_for(EmailConfirmation) do
          # ...
          primary_key id : Int64
 
          add_belongs_to user : User?, on_delete: :cascade
 
-         add email : String
+         add email : String, case_sensitive: false
 
          add token_digest : String
          add ip_address : String
@@ -195,7 +197,7 @@ This is particularly important, since email addresses are usually the only means
      # the email confirmation.
      #
      #def do_pin_email_confirmation_to_ip_address_failed
-     #  flash.keep.failure = "Your IP address has changed. Please try again."
+     #  flash.failure = "Your IP address has changed. Please try again."
      #  redirect to: EmailConfirmations::New
      #end
      # ...
@@ -246,7 +248,7 @@ This is particularly important, since email addresses are usually the only means
      #  if Lucky::Env.production?
      #    success_action(operation)
      #  else
-     #    flash.keep.success = "Development mode: No need to check your mail."
+     #    flash.success = "Development mode: No need to check your mail."
      #    redirect to: EmailConfirmationUrl.new(operation, email_confirmation)
      #  end
      #end
@@ -262,7 +264,7 @@ This is particularly important, since email addresses are usually the only means
      #end
 
      #private def success_action(operation)
-     #  flash.keep.success = "Done! Check your email for further instructions."
+     #  flash.success = "Done! Check your email for further instructions."
      #  redirect to: CurrentLogin::New
      #end
 
@@ -318,14 +320,14 @@ This is particularly important, since email addresses are usually the only means
      # What to do if token verification fails
      #
      #def do_verify_operation_failed(utility)
-     #  flash.keep.failure = "Invalid token"
+     #  flash.failure = "Invalid token"
      #  redirect to: New
      #end
 
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.keep.success = "Email changed successfully"
+     #  flash.success = "Email changed successfully"
      #  redirect to: CurrentUser::Show
      #end
 
@@ -360,7 +362,7 @@ This is particularly important, since email addresses are usually the only means
      # What to do if token verification fails
      #
      #def do_verify_operation_failed(utility)
-     #  flash.keep.failure = "Invalid token"
+     #  flash.failure = "Invalid token"
      #  redirect to: EmailConfirmations::New
      #end
      # ...
@@ -396,14 +398,14 @@ This is particularly important, since email addresses are usually the only means
      # What to do if token verification fails
      #
      #def do_verify_operation_failed(utility)
-     #  flash.keep.failure = "Invalid token"
+     #  flash.failure = "Invalid token"
      #  redirect to: EmailConfirmations::New
      #end
 
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.keep.success = "Congratulations! Log in to access your account..."
+     #  flash.success = "Congratulations! Log in to access your account..."
      #  redirect to: CurrentLogin::New
      #end
 
@@ -487,7 +489,7 @@ This is particularly important, since email addresses are usually the only means
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.keep.success = success_message(operation)
+     #  flash.success = success_message(operation)
      #
      #  if Lucky::Env.production? || operation.new_email.nil?
      #    redirect to: Show

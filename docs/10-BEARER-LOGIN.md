@@ -319,14 +319,14 @@ This token is revoked when the user logs out.
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, login)
-     #  flash.keep.success = "Bearer login revoked successfully"
+     #  flash.success = "Bearer login revoked successfully"
      #  redirect to: Index
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.keep.failure = "Could not revoke bearer login"
+     #  flash.failure = "Could not revoke bearer login"
      #  redirect_back fallback: Index
      #end
      # ...

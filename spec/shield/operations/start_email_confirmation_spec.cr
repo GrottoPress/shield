@@ -5,7 +5,7 @@ describe Shield::StartEmailConfirmation do
     ip_address = Socket::IPAddress.new("1.2.3.4", 5)
 
     StartEmailConfirmation.create(
-      params(email: "user@example.tld"),
+      params(email: "uSer@ex4mple.tld"),
       remote_ip: ip_address
     ) do |operation, email_confirmation|
       email_confirmation.should be_a(EmailConfirmation)
@@ -18,10 +18,10 @@ describe Shield::StartEmailConfirmation do
   it "starts email confirmation for existing user" do
     ip_address = Socket::IPAddress.new("1.2.3.4", 5)
 
-    user = UserBox.create &.email("user@example.tld")
+    user = UserFactory.create &.email("useR@examplE.tLd")
 
     StartEmailConfirmation.create(
-      params(email: "user@domain.tld"),
+      params(email: "user@domain.Tld"),
       user_id: user.id,
       remote_ip: ip_address
     ) do |operation, email_confirmation|
@@ -57,7 +57,7 @@ describe Shield::StartEmailConfirmation do
   it "rejects existing email" do
     email = "user@example.tld"
 
-    UserBox.create &.email(email)
+    UserFactory.create &.email(email)
 
     StartEmailConfirmation.create(
       params(email: email),
@@ -96,7 +96,7 @@ describe Shield::StartEmailConfirmation do
   it "sends email even if email exists" do
     email = "user@example.tld"
 
-    UserBox.create &.email(email)
+    UserFactory.create &.email(email)
 
     StartEmailConfirmation.create(
       params(email: email),

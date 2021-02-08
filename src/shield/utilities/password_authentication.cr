@@ -6,7 +6,7 @@ module Shield::PasswordAuthentication
     end
 
     def initialize(email : String)
-      @user = UserQuery.new.email(email.downcase).first?
+      @user = UserQuery.new.email(email).first?
     end
 
     def verify(password : String) : User?

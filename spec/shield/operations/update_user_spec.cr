@@ -4,8 +4,8 @@ describe Shield::UpdateUser do
   it "updates user" do
     new_email = "newuser@example.tld"
 
-    user = UserBox.create &.email("user@example.tld")
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.email("user@example.tld")
+    UserOptionsFactory.create &.user_id(user.id)
 
     UpdateUser.update(
       user,
@@ -20,9 +20,9 @@ describe Shield::UpdateUser do
   it "updates user options" do
     new_email = "user@example.com"
 
-    user = UserBox.create &.email("user@domain.tld")
+    user = UserFactory.create &.email("user@domain.tld")
 
-    UserOptionsBox.create &.user_id(user.id)
+    UserOptionsFactory.create &.user_id(user.id)
       .login_notify(true)
       .password_notify(false)
 
@@ -45,9 +45,9 @@ describe Shield::UpdateUser do
   end
 
   it "fails when nested operation fails" do
-    user = UserBox.create
+    user = UserFactory.create
 
-    UserOptionsBox.create &.user_id(user.id)
+    UserOptionsFactory.create &.user_id(user.id)
       .login_notify(true)
       .password_notify(true)
 
@@ -70,9 +70,9 @@ describe Shield::UpdateUser do
   it "fails when attributes change and nested operation fails" do
     email = "user@domain.tld"
 
-    user = UserBox.create &.email(email)
+    user = UserFactory.create &.email(email)
 
-    UserOptionsBox.create &.user_id(user.id)
+    UserOptionsFactory.create &.user_id(user.id)
       .login_notify(true)
       .password_notify(true)
 

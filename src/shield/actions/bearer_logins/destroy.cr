@@ -19,12 +19,12 @@ module Shield::BearerLogins::Destroy
     end
 
     def do_run_operation_succeeded(operation, bearer_login)
-      flash.keep.success = "Bearer login revoked successfully"
+      flash.success = "Bearer login revoked successfully"
       redirect to: Index
     end
 
     def do_run_operation_failed(operation)
-      flash.keep.failure = "Could not revoke bearer login"
+      flash.failure = "Could not revoke bearer login"
       redirect_back fallback: Index
     end
 

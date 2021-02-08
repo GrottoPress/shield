@@ -19,7 +19,7 @@ class EndEmailConfirmation < EmailConfirmation::SaveOperation
   include Shield::EndEmailConfirmation
 end
 
-class DeleteEmailConfirmation < Avram::Operation
+class DeleteEmailConfirmation < EmailConfirmation::DeleteOperation
   include Shield::DeleteEmailConfirmation
 end
 

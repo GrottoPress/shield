@@ -19,7 +19,7 @@ class RevokeBearerLogin < BearerLogin::SaveOperation
   include Shield::RevokeBearerLogin
 end
 
-class DeleteBearerLogin < Avram::Operation
+class DeleteBearerLogin < BearerLogin::DeleteOperation
   include Shield::DeleteBearerLogin
 end
 

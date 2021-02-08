@@ -5,8 +5,8 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "password12U password"
 
-    user = UserBox.create &.email(email).password(password)
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.email(email).password(password)
+    UserOptionsFactory.create &.user_id(user.id)
 
     session = Lucky::Session.new
     ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
@@ -39,8 +39,8 @@ describe Shield::LogUserIn do
   it "rejects incorrect email" do
     password = "password12U~password"
 
-    user = UserBox.create &.password(password)
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.password(password)
+    UserOptionsFactory.create &.user_id(user.id)
 
     LogUserIn.create(
       params(email: "incorrect@example.tld", password: password),
@@ -59,8 +59,8 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "password12U~password"
 
-    user = UserBox.create &.email(email).password(password)
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.email(email).password(password)
+    UserOptionsFactory.create &.user_id(user.id)
 
     LogUserIn.create(
       params(email: email, password: "assword12U~passwor"),
@@ -77,8 +77,8 @@ describe Shield::LogUserIn do
     email = "user@example.tld"
     password = "pass)word1Apassword"
 
-    user = UserBox.create &.email(email).password(password)
-    UserOptionsBox.create &.user_id(user.id).login_notify(true)
+    user = UserFactory.create &.email(email).password(password)
+    UserOptionsFactory.create &.user_id(user.id).login_notify(true)
 
     LogUserIn.create(
       params(email: email, password: password),
@@ -95,8 +95,8 @@ describe Shield::LogUserIn do
     password = "pass)word1Apassword"
     email = "user@example.tld"
 
-    user = UserBox.create &.email(email).password(password)
-    UserOptionsBox.create &.user_id(user.id).login_notify(false)
+    user = UserFactory.create &.email(email).password(password)
+    UserOptionsFactory.create &.user_id(user.id).login_notify(false)
 
     LogUserIn.create(
       params(email: email, password: password),

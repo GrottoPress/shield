@@ -2,7 +2,7 @@ require "../../spec_helper"
 
 describe Shield::SaveUserOptions do
   it "updates user options" do
-    user_options = UserOptionsBox.create &.user_id(UserBox.create.id)
+    user_options = UserOptionsFactory.create &.user_id(UserFactory.create.id)
 
     SaveUserOptions.update(
       user_options,

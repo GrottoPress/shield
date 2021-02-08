@@ -16,7 +16,7 @@ module Shield::AuthorizationPipes
     end
 
     def do_check_authorization_failed
-      flash.keep.failure = "You are not allowed to perform this action!"
+      flash.failure = "You are not allowed to perform this action!"
       redirect_back fallback: CurrentUser::Show
     end
   end

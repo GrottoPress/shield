@@ -1,4 +1,4 @@
-class UserBox < Avram::Box
+class UserFactory < Avram::Factory
   def initialize
     set_defaults
   end
@@ -8,7 +8,7 @@ class UserBox < Avram::Box
   end
 
   private def set_defaults
-    email "user@domain.tld"
+    email "useR@dom4iN.TLd"
     level User::Level.new(:author)
     password "password12U~password"
   end

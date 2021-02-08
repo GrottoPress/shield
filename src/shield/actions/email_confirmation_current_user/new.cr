@@ -32,7 +32,7 @@ module Shield::EmailConfirmationCurrentUser::New
     end
 
     def do_verify_operation_failed(utility)
-      flash.keep.failure = "Invalid token"
+      flash.failure = "Invalid token"
       redirect to: EmailConfirmations::New
     end
   end

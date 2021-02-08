@@ -5,8 +5,8 @@ describe Shield::AuthorizationPipes do
     it "denies authorization" do
       password = "password_1Apassword"
 
-      user = UserBox.create &.level(User::Level.new(:author)).password(password)
-      UserOptionsBox.create &.user_id(user.id)
+      user = UserFactory.create &.level(User::Level.new(:author)).password(password)
+      UserOptionsFactory.create &.user_id(user.id)
 
       client = ApiClient.new
       client.browser_auth(user, password)
@@ -20,8 +20,8 @@ describe Shield::AuthorizationPipes do
     it "grants authorization" do
       password = "password_1Apassword"
 
-      user = UserBox.create &.level(User::Level.new(:admin)).password(password)
-      UserOptionsBox.create &.user_id(user.id)
+      user = UserFactory.create &.level(User::Level.new(:admin)).password(password)
+      UserOptionsFactory.create &.user_id(user.id)
 
       client = ApiClient.new
       client.browser_auth(user, password)

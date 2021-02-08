@@ -31,7 +31,7 @@ module Shield::PasswordResets::Create
       if Lucky::Env.production?
         success_action(operation)
       else
-        flash.keep.success = "Development mode: No need to check your mail."
+        flash.success = "Development mode: No need to check your mail."
         redirect to: PasswordResetUrl.new(operation, password_reset)
       end
     end
@@ -45,7 +45,7 @@ module Shield::PasswordResets::Create
     end
 
     private def success_action(operation)
-      flash.keep.success = "Done! Check your email for further instructions."
+      flash.success = "Done! Check your email for further instructions."
       redirect to: CurrentLogin::New
     end
 

@@ -6,7 +6,7 @@ describe Shield::Api::PasswordResets::Update do
     password = "password4APASSWORD<"
     new_password = "assword4APASSWOR<"
 
-    user = UserBox.create &.email(email).password(password)
+    user = UserFactory.create &.email(email).password(password)
 
     StartPasswordReset.create(
       params(email: email),

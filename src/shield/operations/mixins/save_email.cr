@@ -3,17 +3,11 @@ module Shield::SaveEmail
     getter? user_email = false
 
     before_save do
-      downcase_email
-
       validate_required email
       validate_email email
 
       set_user_email
       validate_email_unique
-    end
-
-    private def downcase_email
-      email.value.try { |value| email.value = value.downcase }
     end
 
     private def set_user_email
