@@ -6,8 +6,8 @@ describe Shield::Users::Edit do
     password = "password4APASSWORD<"
     ip_address = Socket::IPAddress.new("129.0.0.5", 6000)
 
-    user = UserBox.create
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create
+    UserOptionsFactory.create &.user_id(user.id)
 
     client = ApiClient.new
     client.browser_auth(email, password, ip_address)
@@ -18,8 +18,8 @@ describe Shield::Users::Edit do
   end
 
   it "requires logged in" do
-    user = UserBox.create
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create
+    UserOptionsFactory.create &.user_id(user.id)
 
     response = ApiClient.exec(Users::Edit.with(user_id: user.id))
 

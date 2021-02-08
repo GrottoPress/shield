@@ -46,7 +46,7 @@ It should not be used for any other type of authorization. For instance, if you 
      # What to do if user is not allowed to perform action
      #
      #def do_check_authorization_failed
-     #  flash.keep.failure = "You are not allowed to perform this action!"
+     #  flash.failure = "You are not allowed to perform this action!"
      #  redirect_back fallback: CurrentUser::Show
      #end
      # ...

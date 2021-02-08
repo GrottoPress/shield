@@ -6,7 +6,7 @@ describe Shield::CreateBearerLogin do
       params(name: "some token"),
       scopes: ["posts.index"],
       allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
-      user: UserBox.create
+      user: UserFactory.create
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
@@ -46,7 +46,7 @@ describe Shield::CreateBearerLogin do
     CreateBearerLogin.create(
       scopes: ["posts.index"],
       allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
-      user_id: UserBox.create.id,
+      user_id: UserFactory.create.id,
       user: nil
     ) do |operation, bearer_login|
       bearer_login.should be_nil
@@ -57,9 +57,9 @@ describe Shield::CreateBearerLogin do
 
   it "rejects existing name by same user" do
     name = "some token"
-    user = UserBox.create
+    user = UserFactory.create
 
-    BearerLoginBox.create &.user_id(user.id).name(name)
+    BearerLoginFactory.create &.user_id(user.id).name(name)
 
     CreateBearerLogin.create(
       params(name: name),
@@ -76,10 +76,10 @@ describe Shield::CreateBearerLogin do
 
   it "accepts existing name by different user" do
     name = "some token"
-    user = UserBox.create &.email("user@example.tld")
-    user_2 = UserBox.create &.email("someone@example.net")
+    user = UserFactory.create &.email("user@example.tld")
+    user_2 = UserFactory.create &.email("someone@example.net")
 
-    BearerLoginBox.create &.user_id(user.id).name(name)
+    BearerLoginFactory.create &.user_id(user.id).name(name)
 
     CreateBearerLogin.create(
       params(name: name),

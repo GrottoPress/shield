@@ -19,7 +19,7 @@ class LogUserIn < Login::SaveOperation
   include Shield::LogUserIn
 end
 
-class DeleteLogin < Avram::Operation
+class DeleteLogin < Login::DeleteOperation
   include Shield::DeleteLogin
 end
 

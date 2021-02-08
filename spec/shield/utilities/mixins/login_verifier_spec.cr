@@ -6,8 +6,8 @@ describe Shield::LoginVerifier do
       email = "user@example.tld"
       password = "password12U password"
 
-      user = UserBox.create &.email(email).password(password)
-      UserOptionsBox.create &.user_id(user.id)
+      user = UserFactory.create &.email(email).password(password)
+      UserOptionsFactory.create &.user_id(user.id)
 
       session = Lucky::Session.new
       session_2 = Lucky::Session.new

@@ -89,8 +89,8 @@ module Shield::HttpClient
 
     private def create_user(email : String, password : String) : Nil
       password_digest = BcryptHash.new(password).hash
-      user = UserBox.create &.email(email).password_digest(password_digest)
-      UserOptionsBox.create &.user_id(user.id)
+      user = UserFactory.create &.email(email).password_digest(password_digest)
+      UserOptionsFactory.create &.user_id(user.id)
     end
   end
 end

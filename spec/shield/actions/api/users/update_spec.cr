@@ -6,8 +6,8 @@ describe Shield::Api::Users::Update do
     new_email = "newuser@domain.com.gh"
     password = "password4APASSWORD<"
 
-    user = UserBox.create
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create
+    UserOptionsFactory.create &.user_id(user.id)
 
     client = ApiClient.new
     client.api_auth(email, password)

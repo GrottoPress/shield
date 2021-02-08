@@ -5,8 +5,8 @@ describe Shield::PasswordResets::Edit do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
-    user = UserBox.create &.email(email).password(password)
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.email(email).password(password)
+    UserOptionsFactory.create &.user_id(user.id)
 
     StartPasswordReset.create(
       params(email: email),
@@ -30,10 +30,10 @@ describe Shield::PasswordResets::Edit do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
-    user = UserBox.create &.email(email).password(password)
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.email(email).password(password)
+    UserOptionsFactory.create &.user_id(user.id)
 
-    password_reset = PasswordResetBox.create &.user_id(user.id)
+    password_reset = PasswordResetFactory.create &.user_id(user.id)
       .ip_address("128.0.0.2")
 
     session = Lucky::Session.new

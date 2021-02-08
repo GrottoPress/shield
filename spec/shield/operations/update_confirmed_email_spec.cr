@@ -4,7 +4,7 @@ describe Shield::UpdateConfirmedEmail do
   it "updates confirmed email" do
     new_email = "user@example.tld"
 
-    user = UserBox.create &.email("user@domain.com")
+    user = UserFactory.create &.email("user@domain.com")
 
     session = Lucky::Session.new
 
@@ -38,21 +38,21 @@ describe Shield::UpdateConfirmedEmail do
   it "ends all active email confirmations for that email" do
     email = "user@example.tld"
 
-    user = UserBox.create &.email("another_user@example.net")
-    user_2 = UserBox.create &.email("yet_another_user@edomain.com")
+    user = UserFactory.create &.email("another_user@example.net")
+    user_2 = UserFactory.create &.email("yet_another_user@edomain.com")
 
-    email_confirmation = EmailConfirmationBox.create &.user_id(user.id)
+    email_confirmation = EmailConfirmationFactory.create &.user_id(user.id)
       .email(email)
 
-    email_confirmation_2 = EmailConfirmationBox.create &.user_id(user.id)
+    email_confirmation_2 = EmailConfirmationFactory.create &.user_id(user.id)
       .email(email)
 
-    email_confirmation_3 = EmailConfirmationBox.create &.email(email)
+    email_confirmation_3 = EmailConfirmationFactory.create &.email(email)
 
-    email_confirmation_4 = EmailConfirmationBox.create &.user_id(user.id)
+    email_confirmation_4 = EmailConfirmationFactory.create &.user_id(user.id)
       .email("abc@domain.com")
 
-    email_confirmation_5 = EmailConfirmationBox.create &.email("def@domain.com")
+    email_confirmation_5 = EmailConfirmationFactory.create &.email("def@domain.com")
 
     email_confirmation.active?.should be_true
     email_confirmation_2.active?.should be_true

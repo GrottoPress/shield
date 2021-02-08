@@ -5,8 +5,8 @@ describe Shield::Users::Delete do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
-    user = UserBox.create
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create
+    UserOptionsFactory.create &.user_id(user.id)
 
     client = ApiClient.new
     client.browser_auth(email, password)
@@ -17,8 +17,8 @@ describe Shield::Users::Delete do
   end
 
   it "requires logged in" do
-    user = UserBox.create
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create
+    UserOptionsFactory.create &.user_id(user.id)
 
     response = ApiClient.exec(Users::Delete.with(user_id: user.id))
 

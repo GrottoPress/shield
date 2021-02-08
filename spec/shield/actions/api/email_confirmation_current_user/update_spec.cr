@@ -2,15 +2,15 @@ require "../../../../spec_helper"
 
 describe Shield::Api::EmailConfirmationCurrentUser::Update do
   it "updates user" do
-    email = "user@example.tld"
+    email = "useR@ex4mple.tld"
     password = "password4APASSWORD<"
     new_level = User::Level.new(:author)
 
-    user = UserBox.create &.email(email)
+    user = UserFactory.create &.email(email)
       .level(User::Level.new(:admin))
       .password(password)
 
-    UserOptionsBox.create &.user_id(user.id)
+    UserOptionsFactory.create &.user_id(user.id)
 
     client = ApiClient.new
     client.api_auth(user, password)

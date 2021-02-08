@@ -4,7 +4,7 @@ describe Shield::EndPasswordReset do
   it "ends password reset" do
     email = "user@example.tld"
 
-    UserBox.create &.email(email)
+    UserFactory.create &.email(email)
 
     session = Lucky::Session.new
 

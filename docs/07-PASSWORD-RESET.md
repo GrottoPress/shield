@@ -143,7 +143,7 @@
      # the password reset.
      #
      #def do_pin_password_reset_to_ip_address_failed
-     #  flash.keep.failure = "Your IP address has changed. Please try again."
+     #  flash.failure = "Your IP address has changed. Please try again."
      #  redirect to: PasswordResets::New
      #end
      # ...
@@ -192,7 +192,7 @@
      #  if Lucky::Env.production?
      #    success_action(operation)
      #  else
-     #    flash.keep.success = "Development mode: No need to check your mail."
+     #    flash.success = "Development mode: No need to check your mail."
      #    redirect to: PasswordResetUrl.new(operation, password_reset)
      #  end
      #end
@@ -208,7 +208,7 @@
      #end
 
      #private def success_action(operation)
-     #  flash.keep.success = "Done! Check your email for further instructions."
+     #  flash.success = "Done! Check your email for further instructions."
      #  redirect to: CurrentLogin::New
      #end
 
@@ -264,7 +264,7 @@
      # What to do if token verification fails
      #
      #def do_verify_operation_failed(utility)
-     #  flash.keep.failure = "Invalid token"
+     #  flash.failure = "Invalid token"
      #  redirect to: New
      #end
      # ...
@@ -298,14 +298,14 @@
      # What to do if token verification fails
      #
      #def do_verify_operation_failed(utility)
-     #  flash.keep.failure = "Invalid token"
+     #  flash.failure = "Invalid token"
      #  redirect to: New
      #end
 
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.keep.success = "Password changed successfully"
+     #  flash.success = "Password changed successfully"
      #  redirect to: CurrentLogin::New
      #end
 

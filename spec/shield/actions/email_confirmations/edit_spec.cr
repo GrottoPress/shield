@@ -7,8 +7,8 @@ describe Shield::EmailConfirmations::Edit do
     password = "password4APASSWORD<"
     ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-    user = UserBox.create &.email(email).password(password)
-    UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.email(email).password(password)
+    UserOptionsFactory.create &.user_id(user.id)
 
     StartEmailConfirmation.create(
       params(email: new_email),

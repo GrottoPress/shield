@@ -6,8 +6,8 @@ describe Shield::Api::AuthorizationPipes do
       it "denies authorization" do
         password = "password_1Apassword"
 
-        user = UserBox.create &.password(password)
-        UserOptionsBox.create &.user_id(user.id)
+        user = UserFactory.create &.password(password)
+        UserOptionsFactory.create &.user_id(user.id)
 
         client = ApiClient.new
         client.api_auth(user, password)
@@ -20,10 +20,10 @@ describe Shield::Api::AuthorizationPipes do
       it "grants authorization" do
         password = "password_1Apassword"
 
-        user = UserBox.create &.level(User::Level.new(:admin))
+        user = UserFactory.create &.level(User::Level.new(:admin))
           .password(password)
 
-        UserOptionsBox.create &.user_id(user.id)
+        UserOptionsFactory.create &.user_id(user.id)
 
         client = ApiClient.new
         client.api_auth(user, password)
@@ -36,8 +36,8 @@ describe Shield::Api::AuthorizationPipes do
 
     context "for logins with user-generated bearer tokens" do
       it "denies authorization when scopes insufficient" do
-        user = UserBox.create &.level(User::Level.new :admin)
-        UserOptionsBox.create &.user_id(user.id)
+        user = UserFactory.create &.level(User::Level.new :admin)
+        UserOptionsFactory.create &.user_id(user.id)
 
         CreateBearerLogin.create(
           params(name: "secret token"),
@@ -59,8 +59,8 @@ describe Shield::Api::AuthorizationPipes do
       end
 
       it "denies authorization when user not allowed access to route" do
-        user = UserBox.create
-        UserOptionsBox.create &.user_id(user.id)
+        user = UserFactory.create
+        UserOptionsFactory.create &.user_id(user.id)
 
         CreateBearerLogin.create(
           params(name: "secret token"),
@@ -82,8 +82,8 @@ describe Shield::Api::AuthorizationPipes do
       end
 
       it "grants authorization" do
-        user = UserBox.create &.level(User::Level.new :admin)
-        UserOptionsBox.create &.user_id(user.id)
+        user = UserFactory.create &.level(User::Level.new :admin)
+        UserOptionsFactory.create &.user_id(user.id)
 
         CreateBearerLogin.create(
           params(name: "secret token"),

@@ -21,12 +21,12 @@ module Shield::CurrentLogin::Destroy
     end
 
     def do_run_operation_succeeded(operation, login)
-      flash.keep.success = "You logged out"
+      flash.success = "You logged out"
       redirect to: New
     end
 
     def do_run_operation_failed(operation)
-      flash.keep.failure = "Something went wrong"
+      flash.failure = "Something went wrong"
       redirect to: CurrentUser::Show
     end
 

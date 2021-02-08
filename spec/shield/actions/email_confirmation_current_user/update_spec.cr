@@ -6,11 +6,11 @@ describe Shield::EmailConfirmationCurrentUser::Update do
     password = "password4APASSWORD<"
     new_level = User::Level.new(:author)
 
-    user = UserBox.create &.email(email)
+    user = UserFactory.create &.email(email)
       .level(User::Level.new(:admin))
       .password(password)
 
-    UserOptionsBox.create &.user_id(user.id)
+    UserOptionsFactory.create &.user_id(user.id)
 
     client = ApiClient.new
     client.browser_auth(user, password)

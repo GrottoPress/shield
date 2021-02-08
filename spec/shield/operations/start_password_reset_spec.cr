@@ -4,7 +4,7 @@ describe Shield::StartPasswordReset do
   it "saves password reset" do
     email = "user@example.tld"
 
-    user = UserBox.create &.email(email)
+    user = UserFactory.create &.email(email)
     ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
 
     StartPasswordReset.create(
@@ -77,7 +77,7 @@ describe Shield::StartPasswordReset do
   it "sends password reset request email" do
     email = "user@example.tld"
 
-    UserBox.create &.email(email)
+    UserFactory.create &.email(email)
 
     StartPasswordReset.create(
       params(email: email),

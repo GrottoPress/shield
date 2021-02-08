@@ -6,14 +6,14 @@ describe Shield::LoginHelpers do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
-      email_2 = "user@domain.tld"
+      email_2 = "uSeR@dOmain.tld"
       password_2 = "assword4A,PASSWOR"
 
-      user = UserBox.create &.email(email).password(password)
-      UserOptionsBox.create &.user_id(user.id)
+      user = UserFactory.create &.email(email).password(password)
+      UserOptionsFactory.create &.user_id(user.id)
 
-      user_2 = UserBox.create &.email(email_2).password(password_2)
-      UserOptionsBox.create &.user_id(user_2.id)
+      user_2 = UserFactory.create &.email(email_2).password(password_2)
+      UserOptionsFactory.create &.user_id(user_2.id)
 
       client = ApiClient.new
 

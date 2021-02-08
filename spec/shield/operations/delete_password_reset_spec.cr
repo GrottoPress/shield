@@ -4,12 +4,12 @@ describe Shield::DeletePasswordReset do
   it "deletes password reset" do
     email = "user@example.net"
 
-    user = UserBox.create &.email(email)
-    UserOptionsBox.create &.user_id(user.id)
-    password_reset = PasswordResetBox.create &.user_id(user.id)
+    user = UserFactory.create &.email(email)
+    UserOptionsFactory.create &.user_id(user.id)
+    password_reset = PasswordResetFactory.create &.user_id(user.id)
 
-    DeletePasswordReset.run(
-      record: password_reset
+    DeletePasswordReset.destroy(
+      password_reset
     ) do |operation, deleted_password_reset|
       operation.deleted?.should be_true
 

@@ -30,13 +30,15 @@
 
    class CreateUsers::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
+       enable_extension "citext"
+
        create table_for(User) do
          # ...
          primary_key id : Int64
 
          add_timestamps
 
-         add email : String, unique: true
+         add email : String, unique: true, case_sensitive: false
          add password_digest : String
          # ...
        end
@@ -141,7 +143,7 @@
 
      # This assumes you are sending welcome emails.
      #private def success_action(operation)
-     #  flash.keep.success = "Done! Check your email for further instructions."
+     #  flash.success = "Done! Check your email for further instructions."
      #  redirect to: CurrentLogin::New
      #end
 
@@ -208,7 +210,7 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.keep.success = "Account updated successfully"
+     #  flash.success = "Account updated successfully"
      #  redirect to: Show
      #end
 

@@ -28,15 +28,15 @@ describe Shield::LoginPipes do
 
   describe "#pin_login_to_ip_address" do
     it "accepts login from same IP" do
-      email = "user@example.tld"
+      email = "user@eXAmple.tld"
       password = "password4APASSWORD<"
       ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-      user = UserBox.create &.email(email)
+      user = UserFactory.create &.email(email)
         .level(User::Level.new :admin)
         .password(password)
 
-      UserOptionsBox.create &.user_id(user.id)
+      UserOptionsFactory.create &.user_id(user.id)
 
       client = ApiClient.new
       client.browser_auth(user, password, ip_address)
@@ -47,14 +47,14 @@ describe Shield::LoginPipes do
     end
 
     it "rejects login from different IP" do
-      email = "user@example.tld"
+      email = "usEr@ex4mple.tld"
       password = "password4APASSWORD<"
 
-      user = UserBox.create &.email(email)
+      user = UserFactory.create &.email(email)
         .level(User::Level.new :admin)
         .password(password)
 
-      UserOptionsBox.create &.user_id(user.id)
+      UserOptionsFactory.create &.user_id(user.id)
 
       client = ApiClient.new
       client.browser_auth(user, password)
@@ -72,11 +72,11 @@ describe Shield::LoginPipes do
       password = "password4APASSWORD<"
       ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-      user = UserBox.create &.email(email)
+      user = UserFactory.create &.email(email)
         .level(User::Level.new :admin)
         .password(password)
 
-      UserOptionsBox.create &.user_id(user.id)
+      UserOptionsFactory.create &.user_id(user.id)
 
       session = Lucky::Session.new
       LoginIdleTimeoutSession.new(session).set
@@ -95,11 +95,11 @@ describe Shield::LoginPipes do
         password = "password4APASSWORD<"
         ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-        user = UserBox.create &.email(email)
+        user = UserFactory.create &.email(email)
           .level(User::Level.new :admin)
           .password(password)
 
-        UserOptionsBox.create &.user_id(user.id)
+        UserOptionsFactory.create &.user_id(user.id)
 
         session = Lucky::Session.new
         LoginIdleTimeoutSession.new(session).set
@@ -122,11 +122,11 @@ describe Shield::LoginPipes do
         password = "password4APASSWORD<"
         ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-        user = UserBox.create &.email(email)
+        user = UserFactory.create &.email(email)
           .level(User::Level.new :admin)
           .password(password)
 
-        UserOptionsBox.create &.user_id(user.id)
+        UserOptionsFactory.create &.user_id(user.id)
 
         session = Lucky::Session.new
         LoginIdleTimeoutSession.new(session).set

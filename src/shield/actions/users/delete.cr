@@ -7,8 +7,8 @@ module Shield::Users::Delete
     # end
 
     def run_operation
-      DeleteUser.run(
-        record: user,
+      DeleteUser.destroy(
+        user,
         current_user: current_user
       ) do |operation, deleted_user|
         if operation.deleted?

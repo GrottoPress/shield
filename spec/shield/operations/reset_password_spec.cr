@@ -6,7 +6,7 @@ describe Shield::ResetPassword do
     password = "password12U\\password"
     new_password = "assword12U\\passwor"
 
-    UserBox.create &.email(email).password(password)
+    UserFactory.create &.email(email).password(password)
 
     session = Lucky::Session.new
 
@@ -42,7 +42,7 @@ describe Shield::ResetPassword do
     password = "password12U\\password"
     new_password = ""
 
-    user = UserBox.create &.email(email).password(password)
+    user = UserFactory.create &.email(email).password(password)
 
     ResetPassword.update(
       user,
@@ -61,8 +61,8 @@ describe Shield::ResetPassword do
     password = "password12U\\password"
     new_password = password
 
-    user = UserBox.create &.email(email).password(password)
-    password_reset = PasswordResetBox.create &.user_id(user.id)
+    user = UserFactory.create &.email(email).password(password)
+    password_reset = PasswordResetFactory.create &.user_id(user.id)
 
     ResetPassword.update(
       user,
@@ -81,11 +81,11 @@ describe Shield::ResetPassword do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    user = UserBox.create &.email(email).password(password)
-    user_2 = UserBox.create
-    password_reset_1 = PasswordResetBox.create &.user_id(user.id)
-    password_reset_2 = PasswordResetBox.create &.user_id(user.id)
-    password_reset_3 = PasswordResetBox.create &.user_id(user_2.id)
+    user = UserFactory.create &.email(email).password(password)
+    user_2 = UserFactory.create
+    password_reset_1 = PasswordResetFactory.create &.user_id(user.id)
+    password_reset_2 = PasswordResetFactory.create &.user_id(user.id)
+    password_reset_3 = PasswordResetFactory.create &.user_id(user_2.id)
 
     password_reset_1.active?.should be_true
     password_reset_2.active?.should be_true

@@ -2,7 +2,7 @@ require "../../spec_helper"
 
 describe Shield::RevokeBearerLogin do
   it "ends bearer login" do
-    bearer_login = BearerLoginBox.create &.user_id(UserBox.create.id)
+    bearer_login = BearerLoginFactory.create &.user_id(UserFactory.create.id)
 
     bearer_login.active?.should be_true
 

@@ -8,8 +8,8 @@ This posture makes it difficult for an application to be *insecure by accident*.
 
 ### Requirements
 
-- *Crystal* **0.35.1**: Learn to install *Crystal* [here &raquo;](https://crystal-lang.org/install/)
-- *Lucky* **0.25.0**: Learn to install *Lucky* [here &raquo;](https://luckyframework.org/guides/getting-started/installing)
+- *Crystal* `~>0.36.0`: Learn to install *Crystal* [here &raquo;](https://crystal-lang.org/install/)
+- *Lucky* `~>0.26.0`: Learn to install *Lucky* [here &raquo;](https://luckyframework.org/guides/getting-started/installing)
 
 ### Generating a new *Lucky* project
 

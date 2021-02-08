@@ -4,43 +4,43 @@ describe Avram::Validations do
   describe "#validate_email" do
     it "accepts valid email" do
       emails = {
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: "uSer@domain.tLD",
           param_key: "user"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: "uSer._@domain.tLD",
           param_key: "user"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: "_._@domain.tLD",
           param_key: "user"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: "a@domain.tLD",
           param_key: "user"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: "_@domain.tLD",
           param_key: "user"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: "user21@domain.tLD",
           param_key: "user"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: "user.name@domain.tLD",
@@ -56,37 +56,37 @@ describe Avram::Validations do
 
     it "rejects invalid email" do
       emails = {
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: "user",
           param_key: "user"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: "user-@domain.com",
           param_key: "user"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: "user.@domain.com",
           param_key: "user"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: ".user@domain.com",
           param_key: "user"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: "user..name@domain.com",
           param_key: "user"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :email,
           param: nil,
           value: "21user@domain.com",
@@ -103,7 +103,7 @@ describe Avram::Validations do
 
   describe "#validate_name" do
     it "accepts valid name" do
-      name = Avram::Attribute(String?).new(
+      name = Avram::Attribute(String).new(
         :name,
         param: nil,
         value: "john smith-jnr",
@@ -116,7 +116,7 @@ describe Avram::Validations do
     end
 
     it "rejects number in name" do
-      name = Avram::Attribute(String?).new(
+      name = Avram::Attribute(String).new(
         :name,
         param: nil,
         value: "mary42",
@@ -129,7 +129,7 @@ describe Avram::Validations do
     end
 
     it "rejects leading hyphen in name" do
-      name = Avram::Attribute(String?).new(
+      name = Avram::Attribute(String).new(
         :name,
         param: nil,
         value: "-mary",
@@ -142,7 +142,7 @@ describe Avram::Validations do
     end
 
     it "rejects leading space in name" do
-      name = Avram::Attribute(String?).new(
+      name = Avram::Attribute(String).new(
         :name,
         param: nil,
         value: " mary",
@@ -155,7 +155,7 @@ describe Avram::Validations do
     end
 
     it "rejects special chars in name" do
-      name = Avram::Attribute(String?).new(
+      name = Avram::Attribute(String).new(
         :name,
         param: nil,
         value: "mary!jay",
@@ -170,7 +170,7 @@ describe Avram::Validations do
 
   describe "#validate_username" do
     it "accepts valid username" do
-      username = Avram::Attribute(String?).new(
+      username = Avram::Attribute(String).new(
         :username,
         param: nil,
         value: "mary_smith10",
@@ -183,7 +183,7 @@ describe Avram::Validations do
     end
 
     it "rejects leading number in username" do
-      username = Avram::Attribute(String?).new(
+      username = Avram::Attribute(String).new(
         :name,
         param: nil,
         value: "42mary",
@@ -196,7 +196,7 @@ describe Avram::Validations do
     end
 
     it "rejects special chars in username" do
-      username = Avram::Attribute(String?).new(
+      username = Avram::Attribute(String).new(
         :name,
         param: nil,
         value: "mary-jay",
@@ -211,7 +211,7 @@ describe Avram::Validations do
 
   describe "#validate_ip" do
     it "accepts valid IPv4" do
-      ip = Avram::Attribute(String?).new(
+      ip = Avram::Attribute(String).new(
         :ip,
         param: nil,
         value: "1.2.3.4",
@@ -224,7 +224,7 @@ describe Avram::Validations do
     end
 
     it "accepts valid IPv6" do
-      ip = Avram::Attribute(String?).new(
+      ip = Avram::Attribute(String).new(
         :ip,
         param: nil,
         value: "2a01:4f8:c0c:cfbf::1",
@@ -237,7 +237,7 @@ describe Avram::Validations do
     end
 
     it "rejects invalid IP" do
-      ip = Avram::Attribute(String?).new(
+      ip = Avram::Attribute(String).new(
         :ip,
         param: nil,
         value: "shatawale",
@@ -252,7 +252,7 @@ describe Avram::Validations do
 
   describe "#validate_ip4" do
     it "accepts valid IPv4" do
-      ip = Avram::Attribute(String?).new(
+      ip = Avram::Attribute(String).new(
         :ip,
         param: nil,
         value: "1.2.3.4",
@@ -265,7 +265,7 @@ describe Avram::Validations do
     end
 
     it "rejects valid IPv6" do
-      ip = Avram::Attribute(String?).new(
+      ip = Avram::Attribute(String).new(
         :ip,
         param: nil,
         value: "2a01:4f8:c0c:cfbf::1",
@@ -278,7 +278,7 @@ describe Avram::Validations do
     end
 
     it "rejects invalid IP" do
-      ip = Avram::Attribute(String?).new(
+      ip = Avram::Attribute(String).new(
         :ip,
         param: nil,
         value: "shatawale",
@@ -293,7 +293,7 @@ describe Avram::Validations do
 
   describe "#validate_ip6" do
     it "accepts valid IPv6" do
-      ip = Avram::Attribute(String?).new(
+      ip = Avram::Attribute(String).new(
         :ip,
         param: nil,
         value: "2a01:4f8:c0c:cfbf::1",
@@ -306,7 +306,7 @@ describe Avram::Validations do
     end
 
     it "rejects valid IPv4" do
-      ip = Avram::Attribute(String?).new(
+      ip = Avram::Attribute(String).new(
         :ip,
         param: nil,
         value: "1.2.3.4",
@@ -319,7 +319,7 @@ describe Avram::Validations do
     end
 
     it "rejects invalid IP" do
-      ip = Avram::Attribute(String?).new(
+      ip = Avram::Attribute(String).new(
         :ip,
         param: nil,
         value: "shatawale",
@@ -335,25 +335,25 @@ describe Avram::Validations do
   describe "#validate_domain" do
     it "accepts valid domain" do
       domains = {
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :domain,
           param: nil,
           value: "sarkodie.com",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :domain,
           param: nil,
           value: "74-7music.com",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :domain,
           param: nil,
           value: "music747.abcdef",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :domain,
           param: nil,
           value: "awe--some.photography",
@@ -369,31 +369,31 @@ describe Avram::Validations do
 
     it "rejects invalid domain" do
       domains = {
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :domain,
           param: nil,
           value: "sarkodie.com/wp-admin",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :domain,
           param: nil,
           value: "-sarkodie.com",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :domain,
           param: nil,
           value: "sarkodie-.com",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :domain,
           param: nil,
           value: "sarkodie.99com",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :domain,
           param: nil,
           value: "ghana_ndwom.com",
@@ -411,19 +411,19 @@ describe Avram::Validations do
   describe "#validate_domain_label" do
     it "accepts valid domain label" do
       labels = {
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :label,
           param: nil,
           value: "1blog",
           param_key: "app"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :label,
           param: nil,
           value: "roses-are.red",
           param_key: "app"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :label,
           param: nil,
           value: "abc.def--ghi.jkl.5mno",
@@ -439,37 +439,37 @@ describe Avram::Validations do
 
     it "rejects invalid domain label" do
       labels = {
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :label,
           param: nil,
           value: "-blog",
           param_key: "app"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :label,
           param: nil,
           value: "blog-",
           param_key: "app"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :label,
           param: nil,
           value: "blog.",
           param_key: "app"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :label,
           param: nil,
           value: ".blog",
           param_key: "app"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :label,
           param: nil,
           value: "abc_def.ghi",
           param_key: "app"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :label,
           param: nil,
           value: "sub..domain",
@@ -487,19 +487,19 @@ describe Avram::Validations do
   describe "#validate_http_url" do
     it "accepts valid HTTP URL" do
       urls = {
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "//sarkodie.com/wp-admin/",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "https://www.grottopress.com/images/hello.png",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "http://www.grottopress.com/images/hi.php",
@@ -515,19 +515,19 @@ describe Avram::Validations do
 
     it "rejects valid non-HTTP URL" do
       urls = {
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "sftp://www.grottopress.com/contact/",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "ftps://www.grottopress.com/contact/",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "file://www.grottopress.com/contact/",
@@ -545,67 +545,67 @@ describe Avram::Validations do
   describe "#validate_url" do
     it "accepts valid URL" do
       urls = {
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "sarkodie",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "http://sarkodie.com/wp-admin",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "ftps://sarkodie.com/wp-admin",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "file://sarkodie.com/wp-admin",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "//sarkodie.com/wp-admin/",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "https://www.grottopress.com/images/hello.png",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "http://www.grottopress.com/images/hi.php",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "/wp-admin",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "/admin.php?word=hello",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "#weird+but_works",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "#weird+but+works-2",
@@ -621,13 +621,13 @@ describe Avram::Validations do
 
     it "rejects invalid URL" do
       urls = {
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "//sarkodie.com/wp-admin/<jak/",
           param_key: "site"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :url,
           param: nil,
           value: "https://sarkodie.com/javascript:click/",
@@ -645,25 +645,25 @@ describe Avram::Validations do
   describe "#validate_slug" do
     it "accepts valid slug" do
       slugs = {
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :slug,
           param: nil,
           value: "sarkodie",
           param_key: "post"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :slug,
           param: nil,
           value: "what-a_day",
           param_key: "post"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :slug,
           param: nil,
           value: "_WhAt-a-DAY_",
           param_key: "post"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :slug,
           param: nil,
           value: "_",
@@ -679,25 +679,25 @@ describe Avram::Validations do
 
     it "rejects invalid slug" do
       slugs = {
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :slug,
           param: nil,
           value: "-what-a-day",
           param_key: "post"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :slug,
           param: nil,
           value: "what-a-day-",
           param_key: "post"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :slug,
           param: nil,
           value: "what.a.day",
           param_key: "post"
         ),
-        Avram::Attribute(String?).new(
+        Avram::Attribute(String).new(
           :slug,
           param: nil,
           value: "/what-a-day",
@@ -714,10 +714,10 @@ describe Avram::Validations do
 
   describe "#validate_primary_key" do
     it "accepts existing ID" do
-      user_id = Avram::Attribute(Int64?).new(
+      user_id = Avram::Attribute(Int64).new(
         :id,
         param: nil,
-        value: UserBox.create.id,
+        value: UserFactory.create.id,
         param_key: "user"
       )
 
@@ -726,7 +726,7 @@ describe Avram::Validations do
     end
 
     it "rejectes non-existing ID" do
-      user_id = Avram::Attribute(Int64?).new(
+      user_id = Avram::Attribute(Int64).new(
         :id,
         param: nil,
         value: 45,
@@ -740,7 +740,7 @@ describe Avram::Validations do
 
   describe "#validate_positive_number" do
     it "accepts postive number" do
-      number = Avram::Attribute(Int64?).new(
+      number = Avram::Attribute(Int64).new(
         :age,
         param: nil,
         value: 5,
@@ -752,7 +752,7 @@ describe Avram::Validations do
     end
 
     it "rejects negative number" do
-      number = Avram::Attribute(Int64?).new(
+      number = Avram::Attribute(Int64).new(
         :age,
         param: nil,
         value: -5,
@@ -766,7 +766,7 @@ describe Avram::Validations do
 
   describe "#validate_not_pwned" do
     it "accepts safe password" do
-      password = Avram::Attribute(String?).new(
+      password = Avram::Attribute(String).new(
         :password,
         param: nil,
         value: "msksieie565iww1id*slLF",
@@ -778,7 +778,7 @@ describe Avram::Validations do
     end
 
     it "rejects unsafe password" do
-      password = Avram::Attribute(String?).new(
+      password = Avram::Attribute(String).new(
         :password,
         param: nil,
         value: "password",

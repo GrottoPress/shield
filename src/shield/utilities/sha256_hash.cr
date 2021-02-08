@@ -7,11 +7,9 @@ module Shield::Sha256Hash
     end
 
     def hash(*, salt : Bool) : String
-      digest = OpenSSL::Digest.new("SHA256")
       salt = salt ? Random::Secure.hex(16) : ""
-      digest << salt << @plaintext
-
-      "#{salt}#{digest.final.hexstring}"
+      digest = Digest::SHA256.hexdigest { |ctx| ctx << salt << @plaintext }
+      "#{salt}#{digest}"
     end
 
     def verify?(digest : String) : Bool

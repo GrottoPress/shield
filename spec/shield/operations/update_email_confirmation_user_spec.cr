@@ -5,8 +5,8 @@ describe Shield::UpdateEmailConfirmationUser do
     email = "user@example.tld"
     new_email = "user@domain.com"
 
-    user = UserBox.create &.email(email)
-    user_options = UserOptionsBox.create &.user_id(user.id)
+    user = UserFactory.create &.email(email)
+    user_options = UserOptionsFactory.create &.user_id(user.id)
 
     UpdateCurrentUser.update(
       user,
@@ -30,9 +30,9 @@ describe Shield::UpdateEmailConfirmationUser do
   end
 
   it "updates user options" do
-    user = UserBox.create
+    user = UserFactory.create
 
-    user_options = UserOptionsBox.create &.user_id(user.id)
+    user_options = UserOptionsFactory.create &.user_id(user.id)
       .login_notify(true)
       .password_notify(false)
 
@@ -51,9 +51,9 @@ describe Shield::UpdateEmailConfirmationUser do
   end
 
   it "fails when nested operation fails" do
-    user = UserBox.create
+    user = UserFactory.create
 
-    user_options = UserOptionsBox.create &.user_id(user.id)
+    user_options = UserOptionsFactory.create &.user_id(user.id)
       .login_notify(true)
       .password_notify(true)
 
@@ -78,9 +78,9 @@ describe Shield::UpdateEmailConfirmationUser do
     password = "password12U-password"
     new_password = "assword12U-passwor"
 
-    user = UserBox.create &.password(password)
+    user = UserFactory.create &.password(password)
 
-    user_options = UserOptionsBox.create &.user_id(user.id)
+    user_options = UserOptionsFactory.create &.user_id(user.id)
       .login_notify(true)
       .password_notify(true)
 

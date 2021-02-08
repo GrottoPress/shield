@@ -20,7 +20,7 @@ module Shield::EmailConfirmationPipes
     end
 
     def do_pin_email_confirmation_to_ip_address_failed
-      flash.keep.failure = "Your IP address has changed. Please try again."
+      flash.failure = "Your IP address has changed. Please try again."
       redirect to: EmailConfirmations::New
     end
   end
