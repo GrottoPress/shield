@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Require email columns to be case-insensitive.
+- Save login notification option only when `Login` model is active.
 
 ### Removed
 - Remove support for *Lucky* v0.25.
