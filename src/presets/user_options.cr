@@ -33,6 +33,10 @@ class UpdateUser < User::SaveOperation
 end
 
 {% if Avram::Model.all_subclasses.map(&.stringify).includes?("Login") %}
+  class SaveUserOptions < UserOptions::SaveOperation
+    include Shield::SaveLoginUserOptions
+  end
+
   class LogUserIn < Login::SaveOperation
     include Shield::NotifyLogin
   end
