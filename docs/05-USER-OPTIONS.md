@@ -17,7 +17,8 @@
    ```
 
    `Shield::UserOptions` adds the following columns:
-   
+
+   - `bearer_login_notify : Bool`
    - `login_notify : Bool`
    - `password_notify : Bool`
 
@@ -37,6 +38,7 @@
          add_timestamps
          add_belongs_to user : User, on_delete: :cascade
 
+         add bearer_login_notify : Bool
          add login_notify : Bool
          add password_notify : Bool
          # ...

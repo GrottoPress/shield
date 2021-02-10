@@ -2,16 +2,53 @@ require "../../spec_helper"
 
 describe Shield::CreateBearerLogin do
   it "creates bearer login" do
+    user = UserFactory.create
+    UserOptionsFactory.create &.user_id(user.id)
+
     CreateBearerLogin.create(
       params(name: "some token"),
       scopes: ["posts.index"],
       allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
-      user: UserFactory.create
+      user: user
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
       bearer_login.try(&.active?).should be_true
       operation.token.should_not be_empty
+    end
+  end
+
+  it "sends login notification" do
+    user = UserFactory.create
+    UserOptionsFactory.create &.user_id(user.id).bearer_login_notify(true)
+
+    CreateBearerLogin.create(
+      params(name: "some token"),
+      scopes: ["posts.index"],
+      allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
+      user: user
+    ) do |operation, bearer_login|
+      bearer_login.should be_a(BearerLogin)
+
+      BearerLoginNotificationEmail.new(operation, bearer_login.not_nil!)
+        .should(be_delivered)
+    end
+  end
+
+  it "does not send login notification" do
+    user = UserFactory.create
+    UserOptionsFactory.create &.user_id(user.id).bearer_login_notify(false)
+
+    CreateBearerLogin.create(
+      params(name: "some token"),
+      scopes: ["posts.index"],
+      allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
+      user: user
+    ) do |operation, bearer_login|
+      bearer_login.should be_a(BearerLogin)
+
+      BearerLoginNotificationEmail.new(operation, bearer_login.not_nil!)
+      .should_not(be_delivered)
     end
   end
 
@@ -76,8 +113,12 @@ describe Shield::CreateBearerLogin do
 
   it "accepts existing name by different user" do
     name = "some token"
+
     user = UserFactory.create &.email("user@example.tld")
     user_2 = UserFactory.create &.email("someone@example.net")
+
+    UserOptionsFactory.create &.user_id(user.id)
+    UserOptionsFactory.create &.user_id(user_2.id)
 
     BearerLoginFactory.create &.user_id(user.id).name(name)
 

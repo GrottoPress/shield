@@ -23,6 +23,7 @@
 
 ### Emails
 
+- `BearerLoginNotificationEmail`
 - `EmailConfirmationRequestEmail`
 - `GuestPasswordResetRequestEmail`
 - `LoginNotificationEmail`

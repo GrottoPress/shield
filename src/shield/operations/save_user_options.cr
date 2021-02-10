@@ -11,6 +11,7 @@ module Shield::SaveUserOptions
 
     private def set_unused_columns
       login_notify.value = false if login_notify.value.nil?
+      bearer_login_notify.value = false if bearer_login_notify.value.nil?
     end
   end
 end

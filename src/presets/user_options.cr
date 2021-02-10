@@ -41,3 +41,13 @@ end
     include Shield::NotifyLogin
   end
 {% end %}
+
+{% if Avram::Model.all_subclasses.map(&.stringify).includes?("BearerLogin") %}
+  class SaveUserOptions < UserOptions::SaveOperation
+    include Shield::SaveBearerLoginUserOptions
+  end
+
+  class CreateBearerLogin < BearerLogin::SaveOperation
+    include Shield::NotifyBearerLogin
+  end
+{% end %}
