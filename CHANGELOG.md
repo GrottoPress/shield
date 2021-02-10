@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Add support for *Lucky* v0.26.
+- Add user option to send notification emails for new bearer logins.
 
 ### Changed
 - Require email columns to be case-insensitive.

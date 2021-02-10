@@ -335,6 +335,43 @@ This token is revoked when the user logs out.
 
    `Shield::BearerLogins::Destroy` is responsible for revoking bearer logins. Revoke buttons/links must point to this action.
 
+1. Set up emails:
+
+   ```crystal
+   # ->>> src/emails/bearer_login_notification_email.cr
+
+   class BearerLoginNotificationEmail < BaseEmail
+     # ...
+     def initialize(@operation : CreateBearerLogin, @bearer_login : BearerLogin)
+     end
+
+     # Sample message
+     def text_body
+       <<-MESSAGE
+       Hi User ##{@bearer_login.user!.id},
+
+       This is to let you know that a new bearer login token was created for your
+       <app name here> account.
+
+       =====
+       Date: #{@bearer_login.active_at.to_s("%d %B, %Y, %l:%M %P")}
+       =====
+
+       If you did not do this yourself, let us know immediately in your reply
+       to this message. Otherwise, you may safely ignore this email.
+
+       Regards,
+       <app name here>.
+       MESSAGE
+     end
+     # ...
+   end
+   ```
+
+   Each registered user has the option to receive this notification email when they (or someone else) creates a bearer login for their account.
+
+   Set this email up if you set up user options.
+
 ### Action helpers
 
 `ApiAction` adds in the following helpers, as counterparts to those provided in `BrowserAction`.

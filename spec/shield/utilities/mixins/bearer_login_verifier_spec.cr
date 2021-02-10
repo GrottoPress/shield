@@ -3,9 +3,12 @@ require "../../../spec_helper"
 describe Shield::BearerLoginVerifier do
   describe "#verify" do
     it "verifies bearer login" do
+      user = UserFactory.create
+      UserOptionsFactory.create &.user_id(user.id)
+
       CreateBearerLogin.create(
         params(name: "some token"),
-        user: UserFactory.create,
+        user: user,
         scopes: ["posts.new", "posts.create"],
         allowed_scopes: ["posts.new", "posts.create"]
       ) do |operation, bearer_login|
