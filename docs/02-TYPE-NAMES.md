@@ -37,8 +37,8 @@
 
 - `CreateBearerLogin`
 - `DeleteBearerLogin`
+- `DeleteCurrentLogin`
 - `DeleteEmailConfirmation`
-- `DeleteLogin`
 - `DeletePasswordResets`
 - `DeleteUser`
 - `EndEmailConfirmation`

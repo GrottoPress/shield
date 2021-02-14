@@ -109,14 +109,14 @@
 
    ---
    ```crystal
-   # ->>> src/operations/delete_login.cr
+   # ->>> src/operations/delete_current_login.cr
 
-   class DeleteLogin < Login::DeleteOperation
+   class DeleteCurrentLogin < Login::DeleteOperation
      # ...
    end
    ```
 
-   `DeleteLogin` actually deletes a given login from the database. Use this instead of `LogUserOut` if you intend to actually delete logins, rather than mark them as inactive.
+   `DeleteCurrentLogin` actually deletes a given login from the database. Use this instead of `LogUserOut` if you intend to actually delete logins, rather than mark them as inactive.
 
 1. Set up actions:
 
