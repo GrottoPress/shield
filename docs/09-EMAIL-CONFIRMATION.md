@@ -120,7 +120,7 @@ This is particularly important, since email addresses are usually the only means
    ```crystal
    # ->>> src/operations/delete_email_confirmation.cr
 
-   class DeleteEmailConfirmation < Avram::Operation
+   class DeleteEmailConfirmation < EmailConfirmation::DeleteOperation
      # ...
    end
    ```

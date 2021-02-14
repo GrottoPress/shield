@@ -139,7 +139,7 @@ This token is revoked when the user logs out.
    ```crystal
    # ->>> src/operations/delete_bearer_login.cr
 
-   class DeleteBearerLogin < Avram::Operation
+   class DeleteBearerLogin < BearerLogin::DeleteOperation
      # ...
    end
    ```
