@@ -39,7 +39,7 @@
 - `DeleteBearerLogin`
 - `DeleteCurrentLogin`
 - `DeleteEmailConfirmation`
-- `DeletePasswordResets`
+- `DeletePasswordReset`
 - `DeleteUser`
 - `EndEmailConfirmation`
 - `EndPasswordReset`
