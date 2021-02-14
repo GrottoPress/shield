@@ -19,7 +19,7 @@ class LogUserIn < Login::SaveOperation
   include Shield::LogUserIn
 end
 
-class DeleteLogin < Login::DeleteOperation
+class DeleteCurrentLogin < Login::DeleteOperation
   include Shield::DeleteLogin
 end
 
