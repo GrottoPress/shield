@@ -111,7 +111,7 @@
    ```crystal
    # ->>> src/operations/delete_login.cr
 
-   class DeleteLogin < Avram::Operation
+   class DeleteLogin < Login::DeleteOperation
      # ...
    end
    ```
