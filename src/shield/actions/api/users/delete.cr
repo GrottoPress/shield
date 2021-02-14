@@ -9,6 +9,7 @@ module Shield::Api::Users::Delete
     def run_operation
       DeleteUser.destroy(
         user,
+        params,
         current_user: current_user
       ) do |operation, deleted_user|
         if operation.deleted?

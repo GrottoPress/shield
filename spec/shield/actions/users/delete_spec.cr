@@ -11,7 +11,10 @@ describe Shield::Users::Delete do
     client = ApiClient.new
     client.browser_auth(email, password)
 
-    response = client.exec(Users::Delete.with(user_id: user.id))
+    response = client.exec(
+      Users::Delete.with(user_id: user.id),
+      user: {confirm_delete: true}
+    )
 
     response.headers["X-User-ID"]?.should eq("user_id")
   end
@@ -20,7 +23,10 @@ describe Shield::Users::Delete do
     user = UserFactory.create
     UserOptionsFactory.create &.user_id(user.id)
 
-    response = ApiClient.exec(Users::Delete.with(user_id: user.id))
+    response = ApiClient.exec(
+      Users::Delete.with(user_id: user.id),
+      user: {confirm_delete: true}
+    )
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"]?.should eq("false")

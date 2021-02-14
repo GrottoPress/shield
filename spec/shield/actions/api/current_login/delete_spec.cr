@@ -9,13 +9,19 @@ describe Shield::Api::CurrentLogin::Delete do
     client = ApiClient.new
     client.api_auth(email, password, ip_address)
 
-    response = client.exec(Api::CurrentLogin::Delete)
+    response = client.exec(
+      Api::CurrentLogin::Delete,
+      login: {confirm_delete: true}
+    )
 
     response.should send_json(200, {status: "success"})
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(Api::CurrentLogin::Delete)
+    response = ApiClient.exec(
+      Api::CurrentLogin::Delete,
+      login: {confirm_delete: true}
+    )
 
     response.should send_json(401, logged_in: false)
   end

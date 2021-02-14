@@ -9,14 +9,17 @@ describe Shield::CurrentLogin::Delete do
     client = ApiClient.new
     client.browser_auth(email, password, ip_address)
 
-    response = client.exec(CurrentLogin::Delete)
+    response = client.exec(CurrentLogin::Delete, login: {confirm_delete: true})
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Current-Login"]?.should eq("0")
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(CurrentLogin::Delete)
+    response = ApiClient.exec(
+      CurrentLogin::Delete,
+      login: {confirm_delete: true}
+    )
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"]?.should eq("false")

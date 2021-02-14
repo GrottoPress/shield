@@ -6,6 +6,8 @@ module Shield::DeleteUser
       validate_not_current_user
     end
 
+    include Shield::ConfirmDelete
+
     private def validate_not_current_user
       current_user.try do |current_user|
         id.add_error("is current user") if current_user.id == record!.id

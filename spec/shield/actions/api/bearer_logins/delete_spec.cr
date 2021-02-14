@@ -12,18 +12,20 @@ describe Shield::Api::BearerLogins::Delete do
     client = ApiClient.new
     client.api_auth(user, password)
 
-    response = client.exec(Api::BearerLogins::Delete.with(
-      bearer_login_id: bearer_login.id
-    ))
+    response = client.exec(
+      Api::BearerLogins::Delete.with(bearer_login_id: bearer_login.id),
+      bearer_login: {confirm_delete: true}
+    )
 
     response.should send_json(200, {status: "success"})
     BearerLoginQuery.new.id(bearer_login.id).first?.should be_nil
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(Api::BearerLogins::Delete.with(
-      bearer_login_id: 1_i64
-    ))
+    response = ApiClient.exec(
+      Api::BearerLogins::Delete.with(bearer_login_id: 1_i64),
+      bearer_login: {confirm_delete: true}
+    )
 
     response.should send_json(401, logged_in: false)
   end
