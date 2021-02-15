@@ -22,21 +22,6 @@ Get started quickly using [*Penny*](https://github.com/GrottoPress/penny). *Penn
 
 Find the complete documentation of *Shield* in the `docs/` directory of this repository.
 
-## Todo
-
-- [x] User registrations
-- [x] Logins and logouts
-- [x] Password resets
-- [x] Login notifications
-- [x] Password change notifications
-- [x] Pin authentication session to its IP address
-- [x] Authorization
-- [x] Email confirmation
-- [x] *Bearer* logins (API tokens)
-- [x] Login idle timeout
-- [x] Pwned Passwords integration
-- [ ] Multi-factor authentication
-
 ## Development
 
 Run tests with `docker-compose run --rm spec`. If you need to update shards before that, run `docker-compose run --rm shards`.
