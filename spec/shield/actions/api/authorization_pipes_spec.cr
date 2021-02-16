@@ -20,9 +20,7 @@ describe Shield::Api::AuthorizationPipes do
       it "grants authorization" do
         password = "password_1Apassword"
 
-        user = UserFactory.create &.level(User::Level.new(:admin))
-          .password(password)
-
+        user = UserFactory.create &.level(:admin).password(password)
         UserOptionsFactory.create &.user_id(user.id)
 
         client = ApiClient.new
@@ -36,7 +34,7 @@ describe Shield::Api::AuthorizationPipes do
 
     context "for logins with user-generated bearer tokens" do
       it "denies authorization when scopes insufficient" do
-        user = UserFactory.create &.level(User::Level.new :admin)
+        user = UserFactory.create &.level(:admin)
         UserOptionsFactory.create &.user_id(user.id)
 
         CreateBearerLogin.create(
@@ -82,7 +80,7 @@ describe Shield::Api::AuthorizationPipes do
       end
 
       it "grants authorization" do
-        user = UserFactory.create &.level(User::Level.new :admin)
+        user = UserFactory.create &.level(:admin)
         UserOptionsFactory.create &.user_id(user.id)
 
         CreateBearerLogin.create(

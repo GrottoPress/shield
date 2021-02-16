@@ -22,7 +22,7 @@ end
 
 describe ".__enum" do
   it "works with queries" do
-    UserFactory.create &.level(User::Level.new :admin)
+    UserFactory.create &.level(:admin)
 
     UserQuery.new.level(:admin).first?.should be_a(User)
   end

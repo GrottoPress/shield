@@ -7,7 +7,7 @@ describe Shield::EmailConfirmationCurrentUser::Update do
     new_level = User::Level.new(:author)
 
     user = UserFactory.create &.email(email)
-      .level(User::Level.new(:admin))
+      .level(:admin)
       .password(password)
 
     UserOptionsFactory.create &.user_id(user.id)

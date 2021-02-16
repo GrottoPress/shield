@@ -99,7 +99,7 @@ describe Shield::Api::LoginPipes do
         ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
         user = UserFactory.create &.email(email)
-          .level(User::Level.new :admin)
+          .level(:admin)
           .password(password)
 
         UserOptionsFactory.create &.user_id(user.id)
@@ -117,7 +117,7 @@ describe Shield::Api::LoginPipes do
         password = "password4APASSWORD<"
 
         user = UserFactory.create &.email(email)
-          .level(User::Level.new :admin)
+          .level(:admin)
           .password(password)
 
         UserOptionsFactory.create &.user_id(user.id)
