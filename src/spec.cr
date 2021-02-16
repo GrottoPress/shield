@@ -21,7 +21,7 @@ def assert_valid(operation : Avram::Callbacks, key : Symbol)
 end
 
 def assert_valid(operation : Avram::Callbacks, key : Symbol, text : String)
-  operation.errors[key].select(&.includes? text).should be_empty
+  operation.errors[key]?.try &.select(&.includes? text).should(be_empty)
 end
 
 def assert_invalid(attribute : Avram::Attribute)
@@ -37,7 +37,7 @@ def assert_invalid(operation : Avram::Callbacks, key : Symbol)
 end
 
 def assert_invalid(operation : Avram::Callbacks, key : Symbol, text : String)
-  operation.errors[key].select(&.includes? text).size.should eq(1)
+  operation.errors[key]?.try(&.select(&.includes? text).size).should eq(1)
 end
 
 def params(**named_args)
