@@ -19,3 +19,11 @@ describe Memoize do
     object.times_method_1_called.should eq 1
   end
 end
+
+describe ".__enum" do
+  it "works with queries" do
+    UserFactory.create &.level(User::Level.new :admin)
+
+    UserQuery.new.level(:admin).first?.should be_a(User)
+  end
+end
