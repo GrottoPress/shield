@@ -32,10 +32,7 @@ describe Shield::LoginPipes do
       password = "password4APASSWORD<"
       ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-      user = UserFactory.create &.email(email)
-        .level(User::Level.new :admin)
-        .password(password)
-
+      user = UserFactory.create &.email(email).level(:admin).password(password)
       UserOptionsFactory.create &.user_id(user.id)
 
       client = ApiClient.new
@@ -50,10 +47,7 @@ describe Shield::LoginPipes do
       email = "usEr@ex4mple.tld"
       password = "password4APASSWORD<"
 
-      user = UserFactory.create &.email(email)
-        .level(User::Level.new :admin)
-        .password(password)
-
+      user = UserFactory.create &.email(email).level(:admin).password(password)
       UserOptionsFactory.create &.user_id(user.id)
 
       client = ApiClient.new
@@ -72,10 +66,7 @@ describe Shield::LoginPipes do
       password = "password4APASSWORD<"
       ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
-      user = UserFactory.create &.email(email)
-        .level(User::Level.new :admin)
-        .password(password)
-
+      user = UserFactory.create &.email(email).level(:admin).password(password)
       UserOptionsFactory.create &.user_id(user.id)
 
       session = Lucky::Session.new
@@ -96,7 +87,7 @@ describe Shield::LoginPipes do
         ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
         user = UserFactory.create &.email(email)
-          .level(User::Level.new :admin)
+          .level(:admin)
           .password(password)
 
         UserOptionsFactory.create &.user_id(user.id)
@@ -123,7 +114,7 @@ describe Shield::LoginPipes do
         ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
         user = UserFactory.create &.email(email)
-          .level(User::Level.new :admin)
+          .level(:admin)
           .password(password)
 
         UserOptionsFactory.create &.user_id(user.id)

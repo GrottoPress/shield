@@ -5,7 +5,7 @@ describe Shield::AuthorizationPipes do
     it "denies authorization" do
       password = "password_1Apassword"
 
-      user = UserFactory.create &.level(User::Level.new(:author)).password(password)
+      user = UserFactory.create &.level(:author).password(password)
       UserOptionsFactory.create &.user_id(user.id)
 
       client = ApiClient.new
@@ -20,7 +20,7 @@ describe Shield::AuthorizationPipes do
     it "grants authorization" do
       password = "password_1Apassword"
 
-      user = UserFactory.create &.level(User::Level.new(:admin)).password(password)
+      user = UserFactory.create &.level(:admin).password(password)
       UserOptionsFactory.create &.user_id(user.id)
 
       client = ApiClient.new
