@@ -400,7 +400,7 @@ macro __enum(enum_name, &block)
       include Avram::Type
 
       def self.criteria(query : T, column) forall T
-        Criteria(T, String).new(query, column)
+        Criteria(T, {{ enum_name }}).new(query, column)
       end
 
       def parse(value : {{ enum_name }})
