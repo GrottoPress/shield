@@ -432,8 +432,16 @@ macro __enum(enum_name, &block)
         parse value.to_s
       end
 
+      def parse(value : Array)
+        SuccessfulCast(Array({{ enum_name }})).new(value.map { |v| parse!(v) })
+      end
+
       def to_db(value : {{ enum_name }})
         value.to_s
+      end
+
+      def to_db(values : Array({{ enum_name }}))
+        PQ::Param.encode_array(values)
       end
 
       class Criteria(T, V) < String::Lucky::Criteria(T, V)
