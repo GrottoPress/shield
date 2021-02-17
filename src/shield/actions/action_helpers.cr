@@ -27,6 +27,14 @@ module Shield::ActionHelpers
         allow_external: allow_external
     end
 
+    def array_param(operation : Avram::Callbacks, param)
+      array_param(operation.class.param_key, param)
+    end
+
+    def array_param(operation : Avram::Callbacks.class, param)
+      array_param(operation.param_key, param)
+    end
+
     def array_param(param_key, param) : Array(String)
       if request.headers["Content-Type"]?.try &.includes?("/json")
         params.from_json[param_key.to_s][param.to_s].as_a.map(&.to_s)
