@@ -18,7 +18,11 @@ describe Shield::Api::EmailConfirmationCurrentUser::Create do
         Api::CurrentUser::Create,
         token: token,
         user: {password: password},
-        user_options: {password_notify: true, login_notify: true}
+        user_options: {
+          password_notify: true,
+          login_notify: true,
+          bearer_login_notify: true
+        }
       )
 
       response.should send_json(200, {status: "success"})
@@ -33,7 +37,11 @@ describe Shield::Api::EmailConfirmationCurrentUser::Create do
       Api::CurrentUser::Create,
       token: token,
       user: {password: password},
-      user_options: {password_notify: true, login_notify: true}
+      user_options: {
+        password_notify: true,
+        login_notify: true,
+        bearer_login_notify: true
+      }
     )
 
     response.should send_json(403, {status: "failure"})
@@ -49,7 +57,11 @@ describe Shield::Api::EmailConfirmationCurrentUser::Create do
     response = client.exec(
       Api::CurrentUser::Create,
       user: {password: password},
-      user_options: {password_notify: true, login_notify: true}
+      user_options: {
+        password_notify: true,
+        login_notify: true,
+        bearer_login_notify: true
+      }
     )
 
     response.should send_json(200, logged_in: true)

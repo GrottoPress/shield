@@ -8,7 +8,11 @@ describe Shield::Api::CurrentUser::Create do
     response = ApiClient.exec(
       Api::RegularCurrentUser::Create,
       user: {email: email, password: password},
-      user_options: {password_notify: true, login_notify: true}
+      user_options: {
+        password_notify: true,
+        login_notify: true,
+        bearer_login_notify: true
+      }
     )
 
     response.should send_json(200, {status: "success"})

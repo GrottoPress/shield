@@ -8,7 +8,11 @@ describe Shield::CurrentUser::Create do
     response = ApiClient.exec(
       RegularCurrentUser::Create,
       user: {email: email, password: password},
-      user_options: {password_notify: true, login_notify: true}
+      user_options: {
+        password_notify: true,
+        login_notify: true,
+        bearer_login_notify: true
+      }
     )
 
     response.status.should eq(HTTP::Status::FOUND)
@@ -26,7 +30,11 @@ describe Shield::CurrentUser::Create do
     response = client.exec(
       RegularCurrentUser::Create,
       user: {email: email, password: password},
-      user_options: {password_notify: true, login_notify: true}
+      user_options: {
+        password_notify: true,
+        login_notify: true,
+        bearer_login_notify: true
+      }
     )
 
     response.status.should eq(HTTP::Status::FOUND)

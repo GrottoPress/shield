@@ -72,6 +72,21 @@ This token is revoked when the user logs out.
 
    You may add other columns and associations specific to your application.
 
+   ---
+   ```crystal
+   # ->>> src/models/user_options.cr
+
+   class UserOptions < BaseModel
+     # ...
+     include Shield::BearerLoginUserOptionsColumns
+     # ...
+   end
+   ```
+
+   `Shield::BearerLoginUserOptionsColumns` adds the following columns:
+
+   - `bearer_login_notify : Bool`
+
 1. Set up the migration:
 
    ```crystal
@@ -102,6 +117,25 @@ This token is revoked when the user logs out.
    ```
 
    Add any columns you added to the model here.
+
+   ---
+   ```crystal
+   # ->>> db/migrations/XXXXXXXXXXXXXX_add_bearer_login_user_options.cr
+
+   class AddBearerLoginUserOptions::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
+     def migrate
+       alter table_for(UserOptions) do
+         add bearer_login_notify : Bool, fill_existing_with: true
+       end
+     end
+
+     def rollback
+       alter table_for(UserOptions) do
+         remove :bearer_login_notify
+       end
+     end
+   end
+   ```
 
 1. Set up operations:
 

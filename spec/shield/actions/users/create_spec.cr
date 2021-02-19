@@ -15,7 +15,11 @@ describe Shield::Users::Create do
         password: password,
         level: User::Level.new(:author).to_s
       },
-      user_options: {password_notify: true, login_notify: true}
+      user_options: {
+        password_notify: true,
+        login_notify: true,
+        bearer_login_notify: true
+      }
     )
 
     response.headers["X-User-ID"]?.should eq("user_id")
@@ -32,7 +36,11 @@ describe Shield::Users::Create do
         password: password,
         level: User::Level.new(:author).to_s
       },
-      user_options: {password_notify: true, login_notify: true}
+      user_options: {
+        password_notify: true,
+        login_notify: true,
+        bearer_login_notify: true
+      }
     )
 
     response.status.should eq(HTTP::Status::FOUND)

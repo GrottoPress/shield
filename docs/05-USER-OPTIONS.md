@@ -18,8 +18,6 @@
 
    `Shield::UserOptions` adds the following columns:
 
-   - `bearer_login_notify : Bool`
-   - `login_notify : Bool`
    - `password_notify : Bool`
 
    You may add other columns and associations specific to your application.
@@ -36,19 +34,11 @@
          primary_key id : Int64
 
          add_timestamps
-         add_belongs_to user : User, on_delete: :cascade
+         add_belongs_to user : User, on_delete: :cascade, unique: true
 
-         add bearer_login_notify : Bool
-         add login_notify : Bool
          add password_notify : Bool
          # ...
        end
-
-       # This sets a "UNIQUE" constraint on the foreign key (user_id)
-       execute <<-SQL
-       ALTER TABLE #{table_for(UserOptions)} ADD CONSTRAINT
-       #{table_for(UserOptions)}_user_id_unique UNIQUE (user_id);
-       SQL
      end
 
      def rollback

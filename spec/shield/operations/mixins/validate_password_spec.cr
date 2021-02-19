@@ -25,7 +25,11 @@ describe Shield::ValidatePassword do
     Shield.temp_config(password_require_number: false) do
       RegisterRegularCurrentUser.create(nested_params(
         user: {email: "user@example.net", password: "passwordAPASSWORD-"},
-        user_options: {login_notify: true, password_notify: true}
+        user_options: {
+          login_notify: true,
+          password_notify: true,
+          bearer_login_notify: false
+        }
       )) do |operation, user|
         user.should be_a(User)
       end
@@ -46,7 +50,11 @@ describe Shield::ValidatePassword do
     Shield.temp_config(password_require_lowercase: false) do
       RegisterRegularCurrentUser.create(nested_params(
         user: {email: "user@example.org", password: "PASSWORD1AP%ASSWORD"},
-        user_options: {login_notify: true, password_notify: true}
+        user_options: {
+          login_notify: true,
+          password_notify: true,
+          bearer_login_notify: false
+        }
       )) do |operation, user|
         user.should be_a(User)
       end
@@ -67,7 +75,11 @@ describe Shield::ValidatePassword do
     Shield.temp_config(password_require_uppercase: false) do
       RegisterRegularCurrentUser.create(nested_params(
         user: {email: "user@domain.com", password: "pa(ssword1apassword"},
-        user_options: {login_notify: true, password_notify: true}
+        user_options: {
+          login_notify: true,
+          password_notify: true,
+          bearer_login_notify: false
+        }
       )) do |operation, user|
         user.should be_a(User)
       end
@@ -88,7 +100,11 @@ describe Shield::ValidatePassword do
     Shield.temp_config(password_require_special_char: false) do
       RegisterRegularCurrentUser.create(nested_params(
         user: {email: "user@domain.net", password: "password1Apassword"},
-        user_options: {login_notify: true, password_notify: true}
+        user_options: {
+          login_notify: true,
+          password_notify: true,
+          bearer_login_notify: false
+        }
       )) do |operation, user|
         user.should be_a(User)
       end

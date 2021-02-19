@@ -25,12 +25,17 @@ describe Shield::UpdateUser do
     UserOptionsFactory.create &.user_id(user.id)
       .login_notify(true)
       .password_notify(false)
+      .bearer_login_notify(true)
 
     UpdateUser.update(
       user,
       nested_params(
         user: {email: new_email},
-        user_options: {login_notify: false, password_notify: true}
+        user_options: {
+          login_notify: false,
+          password_notify: true,
+          bearer_login_notify: false
+        }
       ),
       current_login: nil
     ) do |operation, updated_user|
@@ -39,8 +44,10 @@ describe Shield::UpdateUser do
       updated_user.email.should eq(new_email)
 
       user_options = updated_user.options!
+
       user_options.login_notify.should be_false
       user_options.password_notify.should be_true
+      user_options.bearer_login_notify.should be_false
     end
   end
 
@@ -50,20 +57,24 @@ describe Shield::UpdateUser do
     UserOptionsFactory.create &.user_id(user.id)
       .login_notify(true)
       .password_notify(true)
+      .bearer_login_notify(true)
 
     UpdateRegularCurrentUser2.update(
       user,
       nested_params(user_options: {
         login_notify: false,
-        password_notify: false
+        password_notify: false,
+        bearer_login_notify: false
       }),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_false
 
       user_options = updated_user.options!
+
       user_options.login_notify.should be_true
       user_options.password_notify.should be_true
+      user_options.bearer_login_notify.should be_true
     end
   end
 
@@ -75,12 +86,17 @@ describe Shield::UpdateUser do
     UserOptionsFactory.create &.user_id(user.id)
       .login_notify(true)
       .password_notify(true)
+      .bearer_login_notify(true)
 
     UpdateRegularCurrentUser2.update(
       user,
       nested_params(
         user: {email: "user@example.com"},
-        user_options: {login_notify: false, password_notify: false}
+        user_options: {
+          login_notify: false,
+          password_notify: false,
+          bearer_login_notify: false
+        }
       ),
       current_login: nil
     ) do |operation, updated_user|

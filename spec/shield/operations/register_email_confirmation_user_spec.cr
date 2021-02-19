@@ -6,7 +6,11 @@ describe Shield::RegisterEmailConfirmationUser do
 
     params = nested_params(
       user: {password: "password12U password"},
-      user_options: {login_notify: true, password_notify: true}
+      user_options: {
+        login_notify: true,
+        password_notify: true,
+        bearer_login_notify: true
+      }
     )
 
     RegisterCurrentUser.create(
@@ -39,7 +43,11 @@ describe Shield::RegisterEmailConfirmationUser do
     user = RegisterCurrentUser.create!(
       nested_params(
         user: {password: "password12U-password"},
-        user_options: {login_notify: true, password_notify: true}
+        user_options: {
+          login_notify: true,
+          password_notify: true,
+          bearer_login_notify: true
+        }
       ),
       email_confirmation: email_confirmation,
       session: nil
@@ -62,7 +70,11 @@ describe Shield::RegisterEmailConfirmationUser do
     user = RegisterCurrentUser.create!(
       nested_params(
         user: {password: "password12U-password"},
-        user_options: {login_notify: true, password_notify: false}
+        user_options: {
+          login_notify: true,
+          password_notify: false,
+          bearer_login_notify: true
+        }
       ),
       email_confirmation: EmailConfirmationFactory.create,
       session: Lucky::Session.new,
@@ -78,7 +90,11 @@ describe Shield::RegisterEmailConfirmationUser do
     RegisterCurrentUser2.create(
       nested_params(
         user: {password: "password12U password"},
-        user_options: {login_notify: false, password_notify: false}
+        user_options: {
+          login_notify: false,
+          password_notify: false,
+          bearer_login_notify: true
+        }
       ),
       email_confirmation: EmailConfirmationFactory.create,
       session: Lucky::Session.new,
