@@ -6,7 +6,11 @@ describe Shield::SaveEmail do
 
     user = RegisterRegularCurrentUser.create!(nested_params(
       user: {email: email, password: "password12U)password"},
-      user_options: {login_notify: true, password_notify: true}
+      user_options: {
+        login_notify: true,
+        password_notify: true,
+        bearer_login_notify: false
+      }
     ))
 
     user.email.should eq(email)

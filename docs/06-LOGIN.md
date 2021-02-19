@@ -44,7 +44,22 @@
 
    You may add other columns and associations specific to your application.
 
-1. Set up the migration:
+   ---
+   ```crystal
+   # ->>> src/models/user_options.cr
+
+   class UserOptions < BaseModel
+     # ...
+     include Shield::LoginUserOptionsColumns
+     # ...
+   end
+   ```
+
+   `Shield::LoginUserOptionsColumns` adds the following columns:
+
+   - `login_notify : Bool`
+
+1. Set up migrations:
 
    ```crystal
    # ->>> db/migrations/XXXXXXXXXXXXXX_create_logins.cr
@@ -72,6 +87,25 @@
    ```
 
    Add any columns you added to the model here.
+
+   ---
+   ```crystal
+   # ->>> db/migrations/XXXXXXXXXXXXXX_add_login_user_options.cr
+
+   class AddLoginUserOptions::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
+     def migrate
+       alter table_for(UserOptions) do
+         add login_notify : Bool, fill_existing_with: true
+       end
+     end
+
+     def rollback
+       alter table_for(UserOptions) do
+         remove :login_notify
+       end
+     end
+   end
+   ```
 
 1. Set up operations:
 

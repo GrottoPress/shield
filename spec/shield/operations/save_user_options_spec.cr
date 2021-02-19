@@ -1,6 +1,24 @@
 require "../../spec_helper"
 
 describe Shield::SaveUserOptions do
+  it "creates user options" do
+    SaveUserOptions.create(
+      params(
+        login_notify: false,
+        password_notify: true,
+        bearer_login_notify: false
+      ),
+      user_id: UserFactory.create.id
+    ) do |operation, user_options|
+      user_options.should be_a(UserOptions)
+
+      user_options = user_options.not_nil!
+
+      user_options.login_notify.should be_false
+      user_options.password_notify.should be_true
+    end
+  end
+
   it "updates user options" do
     user_options = UserOptionsFactory.create &.user_id(UserFactory.create.id)
 

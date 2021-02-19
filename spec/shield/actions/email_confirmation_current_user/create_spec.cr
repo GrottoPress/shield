@@ -21,7 +21,11 @@ describe Shield::EmailConfirmationCurrentUser::Create do
       response = client.exec(
         CurrentUser::Create,
         user: {password: password},
-        user_options: {password_notify: true, login_notify: true}
+        user_options: {
+          password_notify: true,
+          login_notify: true,
+          bearer_login_notify: true
+        }
       )
 
       response.headers["X-User-ID"]?.should eq("ec_user_id")
@@ -40,7 +44,11 @@ describe Shield::EmailConfirmationCurrentUser::Create do
     response = client.exec(
       CurrentUser::Create,
       user: {password: password},
-      user_options: {password_notify: true, login_notify: true}
+      user_options: {
+        password_notify: true,
+        login_notify: true,
+        bearer_login_notify: true
+      }
     )
 
     response.status.should eq(HTTP::Status::FOUND)
@@ -57,7 +65,11 @@ describe Shield::EmailConfirmationCurrentUser::Create do
     response = client.exec(
       CurrentUser::Create,
       user: {password: password},
-      user_options: {password_notify: true, login_notify: true}
+      user_options: {
+        password_notify: true,
+        login_notify: true,
+        bearer_login_notify: true
+      }
     )
 
     response.status.should eq(HTTP::Status::FOUND)

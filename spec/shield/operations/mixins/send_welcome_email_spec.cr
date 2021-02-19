@@ -9,7 +9,11 @@ describe Shield::SendWelcomeEmail do
 
     params = nested_params(
       user: {password: "password12U.password"},
-      user_options: {login_notify: true, password_notify: true}
+      user_options: {
+        login_notify: true,
+        password_notify: true,
+        bearer_login_notify: false
+      }
     )
 
     RegisterCurrentUser.create(
@@ -26,7 +30,11 @@ describe Shield::SendWelcomeEmail do
   it "sends welcome email for new user" do
     params = nested_params(
       user: {password: "password12U.password"},
-      user_options: {login_notify: true, password_notify: true}
+      user_options: {
+        login_notify: true,
+        password_notify: true,
+        bearer_login_notify: false
+      }
     )
 
     RegisterCurrentUser.create(

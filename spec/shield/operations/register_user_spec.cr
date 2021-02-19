@@ -8,7 +8,11 @@ describe Shield::RegisterUser do
         password: "password12U password",
         level: User::Level.new(:editor)
       },
-      user_options: {login_notify: true, password_notify: true}
+      user_options: {
+        login_notify: true,
+        password_notify: true,
+        bearer_login_notify: true
+      }
     )
 
     RegisterUser.create(params) do |operation, user|
@@ -23,7 +27,11 @@ describe Shield::RegisterUser do
         password: "password12U/password",
         level: User::Level.new(:editor)
       },
-      user_options: {login_notify: true, password_notify: false}
+      user_options: {
+        login_notify: true,
+        password_notify: false,
+        bearer_login_notify: true
+      }
     )
 
     user = RegisterUser.create!(params)
@@ -36,7 +44,11 @@ describe Shield::RegisterUser do
   it "fails when nested operation fails" do
     params = nested_params(
       user: {email: "user@example.tld", password: "password12U password"},
-      user_options: {login_notify: false, password_notify: false}
+      user_options: {
+        login_notify: false,
+        password_notify: false,
+        bearer_login_notify: true
+      }
     )
 
     RegisterRegularCurrentUser2.create(params) do |operation, user|
