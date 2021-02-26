@@ -31,11 +31,7 @@ If you would rather run tests on your local machine (ie, without docker), create
 ```bash
 #!/bin/bash
 
-export APP_DOMAIN=http://localhost:5000
 export DATABASE_URL='postgres://postgres:password@localhost:5432/shield_spec'
-export SECRET_KEY_BASE='XeqAgSy5QQ+dWe8ruOBUMrz9XPbPZ7chPVtz2ecDGss='
-export SERVER_HOST='0.0.0.0'
-export SERVER_PORT=5000
 ```
 
 Update the file with your own details. Then run tests with `source .env.sh && crystal spec`.

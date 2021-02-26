@@ -1,7 +1,7 @@
 Lucky::Server.configure do |settings|
-  settings.secret_key_base = ENV["SECRET_KEY_BASE"]
-  settings.host = ENV["SERVER_HOST"]
-  settings.port = ENV["SERVER_PORT"].to_i
+  settings.secret_key_base = "abcdefghijklmnopqrstuvwxyz123456"
+  settings.host = "0.0.0.0"
+  settings.port = 5000
   settings.gzip_enabled = false
 end
 
