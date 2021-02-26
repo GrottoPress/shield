@@ -1,7 +1,7 @@
 services:
-  crystal: &crystal
+  app: &crystal
     depends_on:
-      - postgres
+      - db
     environment:
       DATABASE_URL: postgres://username:password@db:5432/shield_spec
       SKIP_CREATE_DB: "true"
@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/var/www/html
     working_dir: /var/www/html
-  postgres:
+  db:
     environment:
       POSTGRES_DB: shield_spec
       POSTGRES_PASSWORD: password
