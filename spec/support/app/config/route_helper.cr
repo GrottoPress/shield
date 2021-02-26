@@ -1,3 +1,3 @@
 Lucky::RouteHelper.configure do |settings|
-  settings.base_uri = ENV["APP_DOMAIN"]
+  settings.base_uri = "http://localhost:5000"
 end
