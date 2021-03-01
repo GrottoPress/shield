@@ -98,6 +98,7 @@ module Lucky
   end
 
   class MessageEncryptor
+    # Set default digest to `:sha256`
     def initialize(
       @secret : String,
       @cipher_algorithm = "aes-256-cbc",
@@ -108,6 +109,7 @@ module Lucky
   end
 
   class MessageVerifier
+    # Set default digest to `:sha256`
     def initialize(@secret : String, @digest = :sha256)
       previous_def
     end
