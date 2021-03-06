@@ -98,6 +98,7 @@ This token is revoked when the user logs out.
          # ...
          primary_key id : Int64
 
+         add_timestamps
          add_belongs_to user : User, on_delete: :cascade
 
          add name : String

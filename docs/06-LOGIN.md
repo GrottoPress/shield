@@ -70,6 +70,7 @@
          # ...
          primary_key id : Int64
 
+         add_timestamps
          add_belongs_to user : User, on_delete: :cascade
 
          add token_digest : String

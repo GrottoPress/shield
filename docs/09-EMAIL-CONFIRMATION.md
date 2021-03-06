@@ -64,6 +64,7 @@ This is particularly important, since email addresses are usually the only means
          # ...
          primary_key id : Int64
 
+         add_timestamps
          add_belongs_to user : User?, on_delete: :cascade
 
          add email : String, case_sensitive: false

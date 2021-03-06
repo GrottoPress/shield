@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Require email columns to be case-insensitive.
 - Save login notification option only when `Login` model is active.
 - Rename `DeleteLogin` to `DeleteCurrentLogin`.
+- Undo `skip_default_columns` in `Shield::AuthenticationColumns`
 
 ### Removed
 - Remove support for *Lucky* v0.25.
