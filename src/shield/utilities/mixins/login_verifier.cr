@@ -8,12 +8,12 @@ module Shield::LoginVerifier
 
     def verify? : Bool?
       return unless login_id && login_token
-      sha_256 = Sha256Hash.new(login_token!)
+      sha256 = Sha256Hash.new(login_token!)
 
       if login.try(&.active?)
-        sha_256.verify?(login!.token_digest)
+        sha256.verify?(login!.token_digest)
       else
-        sha_256.fake_verify
+        sha256.fake_verify
       end
     end
 
