@@ -4,8 +4,7 @@ module Shield::EmailConfirmationSession
     include Shield::EmailConfirmationVerifier
 
     def email_confirmation_id : Int64?
-      @session.get?(:email_confirmation_id).try &.to_i64
-    rescue
+      @session.get?(:email_confirmation_id).try &.to_i64?
     end
 
     def email_confirmation_token : String?

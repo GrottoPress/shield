@@ -4,8 +4,7 @@ module Shield::LoginSession
     include Shield::LoginVerifier
 
     def login_id : Int64?
-      @session.get?(:login_id).try &.to_i64
-    rescue
+      @session.get?(:login_id).try &.to_i64?
     end
 
     def login_token : String?

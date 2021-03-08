@@ -23,7 +23,9 @@ module Shield::EmailConfirmationVerifier
 
     @[Memoize]
     def email_confirmation : EmailConfirmation?
-      email_confirmation_id.try { |id| EmailConfirmationQuery.new.id(id).first? }
+      email_confirmation_id.try do |id|
+        EmailConfirmationQuery.new.id(id).first?
+      end
     end
 
     def email_confirmation_id! : Int64
