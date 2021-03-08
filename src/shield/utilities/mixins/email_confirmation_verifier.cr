@@ -8,12 +8,12 @@ module Shield::EmailConfirmationVerifier
 
     def verify? : Bool?
       return unless email_confirmation_id && email_confirmation_token
-      sha_256 = Sha256Hash.new(email_confirmation_token!)
+      sha256 = Sha256Hash.new(email_confirmation_token!)
 
       if email_confirmation.try(&.active?)
-        sha_256.verify?(email_confirmation!.token_digest)
+        sha256.verify?(email_confirmation!.token_digest)
       else
-        sha_256.fake_verify
+        sha256.fake_verify
       end
     end
 

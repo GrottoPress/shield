@@ -8,12 +8,12 @@ module Shield::BearerLoginVerifier
 
     def verify? : Bool?
       return unless bearer_login_id && bearer_login_token
-      sha_256 = Sha256Hash.new(bearer_login_token!)
+      sha256 = Sha256Hash.new(bearer_login_token!)
 
       if bearer_login.try(&.active?)
-        sha_256.verify?(bearer_login!.token_digest)
+        sha256.verify?(bearer_login!.token_digest)
       else
-        sha_256.fake_verify
+        sha256.fake_verify
       end
     end
 
