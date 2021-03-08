@@ -17,10 +17,7 @@ module Shield::BearerToken
 
     def self.new(token : String)
       id, _, tkn = token.partition('.')
-      id = id.empty? ? nil : id.to_i64
-      new(tkn, id)
-    rescue ArgumentError
-      new(token, nil)
+      new(tkn, id.to_i64?)
     end
 
     def to_header : String

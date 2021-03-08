@@ -4,8 +4,7 @@ module Shield::PasswordResetSession
     include Shield::PasswordResetVerifier
 
     def password_reset_id : Int64?
-      @session.get?(:password_reset_id).try &.to_i64
-    rescue
+      @session.get?(:password_reset_id).try &.to_i64?
     end
 
     def password_reset_token : String?

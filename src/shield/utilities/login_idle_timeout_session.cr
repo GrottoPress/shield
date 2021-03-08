@@ -13,8 +13,9 @@ module Shield::LoginIdleTimeoutSession
     end
 
     def login_last_active : Time?
-      @session.get?(:login_last_active).try { |time| Time.unix(time.to_i64) }
-    rescue
+      @session.get?(:login_last_active).try &.to_i64?.try do |time|
+        Time.unix(time)
+      end
     end
 
     def delete : self
