@@ -1,0 +1,54 @@
+name: CI
+on:
+  push:
+    paths:
+      - '**.cr'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [master]
+    paths:
+      - '**.cr'
+      - '.github/workflows/**'
+  schedule:
+    - cron: '0 6 * * 6'
+jobs:
+  specs:
+    strategy:
+      fail-fast: false
+      matrix:
+        crystal: [0.36.1]
+        experimental: [false]
+        include:
+          - crystal: 1.0.0
+            experimental: true
+          - crystal: nightly
+            experimental: true
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
+    steps:
+      - name: Download source
+        uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+        with:
+          crystal: ${{ matrix.crystal }}
+      - name: Cache shards
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/shards
+          key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
+          restore-keys: ${{ runner.os }}-shards-
+      - name: Install shards
+        run: shards update
+      - name: Install Postgresql
+        run: sudo apt -y install postgresql
+      - name: Start Postgresql
+        run: sudo systemctl start postgresql
+      - name: Set Postgres password
+        run: >-
+          sudo -u postgres psql -c
+          "ALTER USER postgres WITH PASSWORD 'password';"
+      - name: Run tests
+        env:
+          DATABASE_URL: postgres://postgres:password@localhost:5432/shield_spec
+        run: crystal spec --error-on-warnings
