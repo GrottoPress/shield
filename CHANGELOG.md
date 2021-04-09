@@ -7,10 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased] - 
 
+### Added
+- Add support for *Lucky* v0.27
+
 ### Changed
 - Replace travis-ci with GitHub actions
 
-### [0.8.0] - 2021-03-09
+### Removed
+- Remove support for *Lucky* v0.26
+
+## [0.8.0] - 2021-03-09
 
 ### Added
 - Add support for *Lucky* v0.26.
@@ -27,7 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove support for *Lucky* v0.25.
 - Remove `Shield::DeleteOperation` operation mixin.
 
-### [0.7.0] - 2021-02-02
+## [0.7.0] - 2021-02-02
 
 ### Added
 - Add presets, which sets most things up for you.

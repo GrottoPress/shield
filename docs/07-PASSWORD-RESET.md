@@ -48,7 +48,7 @@
 
    class CreatePasswordResets::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
-       create table_for(PasswordReset) do
+       create :password_resets do
          # ...
          primary_key id : Int64
 
@@ -64,7 +64,7 @@
      end
 
      def rollback
-       drop table_for(PasswordReset)
+       drop :password_resets
      end
    end
    ```
