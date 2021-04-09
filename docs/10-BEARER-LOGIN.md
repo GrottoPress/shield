@@ -94,7 +94,7 @@ This token is revoked when the user logs out.
 
    class CreateBearerLogins::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
-       create table_for(BearerLogin) do
+       create :bearer_logins do
          # ...
          primary_key id : Int64
 
@@ -112,7 +112,7 @@ This token is revoked when the user logs out.
      end
 
      def rollback
-       drop table_for(BearerLogin)
+       drop :bearer_logins
      end
    end
    ```
@@ -125,13 +125,13 @@ This token is revoked when the user logs out.
 
    class AddBearerLoginUserOptions::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
-       alter table_for(UserOptions) do
+       alter :user_options do
          add bearer_login_notify : Bool, fill_existing_with: true
        end
      end
 
      def rollback
-       alter table_for(UserOptions) do
+       alter :user_options do
          remove :bearer_login_notify
        end
      end

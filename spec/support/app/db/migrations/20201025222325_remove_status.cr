@@ -1,36 +1,36 @@
 class RemoveStatus::V20201025222325 < Avram::Migrator::Migration::V1
   def migrate
-    alter table_for(BearerLogin) do
+    alter :bearer_logins do
       remove :status
     end
 
-    alter table_for(EmailConfirmation) do
+    alter :email_confirmations do
       remove :status
     end
 
-    alter table_for(Login) do
+    alter :logins do
       remove :status
     end
 
-    alter table_for(PasswordReset) do
+    alter :password_resets do
       remove :status
     end
   end
 
   def rollback
-    alter table_for(BearerLogin) do
+    alter :bearer_logins do
       add status : String, fill_existing_with: "Ended"
     end
 
-    alter table_for(EmailConfirmation) do
+    alter :email_confirmations do
       add status : String, fill_existing_with: "Ended"
     end
 
-    alter table_for(Login) do
+    alter :logins do
       add status : String, fill_existing_with: "Ended"
     end
 
-    alter table_for(PasswordReset) do
+    alter :password_resets do
       add status : String, fill_existing_with: "Ended"
     end
   end

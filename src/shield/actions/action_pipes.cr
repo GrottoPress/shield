@@ -21,7 +21,7 @@ module Shield::ActionPipes
       *,
       fallback : String,
       status : Int32 = 302,
-      allow_external = false
+      allow_external : Bool = false
     )
       if request.method.in?({"PATCH", "POST", "PUT"})
         url = return_url || fallback

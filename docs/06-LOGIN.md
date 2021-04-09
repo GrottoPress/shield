@@ -66,7 +66,7 @@
 
    class CreateLogins::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
-       create table_for(Login) do
+       create :logins do
          # ...
          primary_key id : Int64
 
@@ -82,7 +82,7 @@
      end
 
      def rollback
-       drop table_for(Login)
+       drop :logins
      end
    end
    ```
@@ -95,13 +95,13 @@
 
    class AddLoginUserOptions::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
-       alter table_for(UserOptions) do
+       alter :user_options do
          add login_notify : Bool, fill_existing_with: true
        end
      end
 
      def rollback
-       alter table_for(UserOptions) do
+       alter :user_options do
          remove :login_notify
        end
      end

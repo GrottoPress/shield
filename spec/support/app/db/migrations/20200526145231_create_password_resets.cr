@@ -1,6 +1,6 @@
 class CreatePasswordResets::V20200526145231 < Avram::Migrator::Migration::V1
   def migrate
-    create table_for(PasswordReset) do
+    create :password_resets do
       primary_key id : Int64
 
       add_timestamps
@@ -12,6 +12,6 @@ class CreatePasswordResets::V20200526145231 < Avram::Migrator::Migration::V1
   end
 
   def rollback
-    drop table_for(PasswordReset)
+    drop :password_resets
   end
 end

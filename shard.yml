@@ -8,12 +8,12 @@ authors:
 
 license: MIT
 
-crystal: ~> 0.36.0
+crystal: ~> 1.0
 
 development_dependencies:
   carbon:
     github: luckyframework/carbon
-    version: ~> 0.1.0
+    version: ~> 0.1.4
   lucky:
     github: luckyframework/lucky
-    version: ~> 0.26.0
+    version: ~> 0.27.0

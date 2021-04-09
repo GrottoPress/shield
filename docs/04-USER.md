@@ -32,7 +32,7 @@
      def migrate
        enable_extension "citext"
 
-       create table_for(User) do
+       create :users do
          # ...
          primary_key id : Int64
 
@@ -45,7 +45,7 @@
      end
 
      def rollback
-       drop table_for(User)
+       drop :users
      end
    end
    ```

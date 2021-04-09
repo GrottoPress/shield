@@ -1,6 +1,6 @@
 class CreateUserOptions::V20200625201401 < Avram::Migrator::Migration::V1
   def migrate
-    create table_for(UserOptions) do
+    create :user_options do
       primary_key id : Int64
 
       add_timestamps
@@ -12,6 +12,6 @@ class CreateUserOptions::V20200625201401 < Avram::Migrator::Migration::V1
   end
 
   def rollback
-    drop table_for(UserOptions)
+    drop :user_options
   end
 end

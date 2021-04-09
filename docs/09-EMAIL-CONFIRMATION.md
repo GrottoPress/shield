@@ -60,7 +60,7 @@ This is particularly important, since email addresses are usually the only means
      def migrate
        enable_extension "citext"
 
-       create table_for(EmailConfirmation) do
+       create :email_confirmations do
          # ...
          primary_key id : Int64
 
@@ -78,7 +78,7 @@ This is particularly important, since email addresses are usually the only means
      end
 
      def rollback
-       drop table_for(EmailConfirmation)
+       drop :email_confirmations
      end
    end
    ```

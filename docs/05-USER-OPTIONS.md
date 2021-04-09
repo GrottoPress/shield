@@ -29,7 +29,7 @@
 
    class CreateUserOptions::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
-       create table_for(UserOptions) do
+       create :user_options do
          # ...
          primary_key id : Int64
 
@@ -42,7 +42,7 @@
      end
 
      def rollback
-       drop table_for(UserOptions)
+       drop :user_options
      end
    end
    ```
