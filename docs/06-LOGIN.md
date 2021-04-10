@@ -333,3 +333,11 @@
    Each registered user has the option to receive this notification email when they (or someone else) logs in into their account.
 
    Set this email up if you set up user options.
+
+### Other Types
+
+1. Actions:
+
+   - `Shield::Logins::Index`
+
+   `Shield::Logins::Index` is useful for listing all active logins of the current user.
