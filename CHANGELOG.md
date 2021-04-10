@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Add support for *Lucky* v0.27
+- Add `Shield::Logins::Index` action.
+- Add `Shield::Api::Logins::Index` action.
 
 ### Changed
 - Replace travis-ci with GitHub actions
