@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add support for *Lucky* v0.27
 - Add `Shield::Logins::Index` action.
 - Add `Shield::Api::Logins::Index` action.
+- Add `Shield::Logins::Delete` action.
+- Add `Shield::Logins::Destroy` action.
+- Add `Shield::Api::Logins::Delete` action.
+- Add `Shield::Api::Logins::Destroy` action.
 
 ### Changed
 - Replace travis-ci with GitHub actions
