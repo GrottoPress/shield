@@ -76,6 +76,7 @@
 - `EmailConfirmations::Edit`
 - `EmailConfirmations::New`
 - `EmailConfirmations::Show`
+- `Logins::Index`
 - `PasswordResets::Create`
 - `PasswordResets::Edit`
 - `PasswordResets::New`
