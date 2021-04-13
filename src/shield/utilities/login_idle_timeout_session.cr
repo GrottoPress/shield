@@ -18,6 +18,11 @@ module Shield::LoginIdleTimeoutSession
       end
     end
 
+    def delete(login : Login) : self
+      delete if login.id == LoginSession.new(@session).login_id
+      self
+    end
+
     def delete : self
       @session.delete(:login_last_active)
       self

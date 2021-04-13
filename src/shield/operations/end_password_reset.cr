@@ -4,7 +4,9 @@ module Shield::EndPasswordReset
     include Shield::DeleteSession
 
     private def delete_session(password_reset : PasswordReset)
-      session.try { |session| PasswordResetSession.new(session).delete }
+      session.try do |session|
+        PasswordResetSession.new(session).delete(password_reset)
+      end
     end
   end
 end

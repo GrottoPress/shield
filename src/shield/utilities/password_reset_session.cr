@@ -11,6 +11,11 @@ module Shield::PasswordResetSession
       @session.get?(:password_reset_token)
     end
 
+    def delete(password_reset : PasswordReset) : self
+      delete if password_reset.id == password_reset_id
+      self
+    end
+
     def delete : self
       @session.delete(:password_reset_id)
       @session.delete(:password_reset_token)

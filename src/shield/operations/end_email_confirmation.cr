@@ -4,7 +4,9 @@ module Shield::EndEmailConfirmation
     include Shield::DeleteSession
 
     private def delete_session(email_confirmation : EmailConfirmation)
-      session.try { |session| EmailConfirmationSession.new(session).delete }
+      session.try do |session|
+        EmailConfirmationSession.new(session).delete(email_confirmation)
+      end
     end
   end
 end
