@@ -23,6 +23,10 @@ class DeleteCurrentLogin < Login::DeleteOperation
   include Shield::DeleteLogin
 end
 
+class DeleteLogin < Login::DeleteOperation
+  include Shield::DeleteLogin
+end
+
 abstract class BrowserAction < Lucky::Action
   include Shield::LoginHelpers
   include Shield::LoginPipes

@@ -338,6 +338,8 @@
 
 1. Actions:
 
+   - `Shield::Logins::Delete`
+   - `Shield::Logins::Destroy`
    - `Shield::Logins::Index`
 
-   `Shield::Logins::Index` is useful for listing all active logins of the current user.
+   `Shield::Logins::*` is useful for listing or deleting active logins of the current user.
