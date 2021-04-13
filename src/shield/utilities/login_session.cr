@@ -11,6 +11,11 @@ module Shield::LoginSession
       @session.get?(:login_token)
     end
 
+    def delete(login : Login) : self
+      delete if login.id == login_id
+      self
+    end
+
     def delete : self
       @session.delete(:login_id)
       @session.delete(:login_token)
