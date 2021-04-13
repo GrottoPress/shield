@@ -461,6 +461,8 @@ If your application decides to allow any of these functionalities via its API, t
 
 1. Actions:
 
+   - `Shield::Api::Logins::Delete`
+   - `Shield::Api::Logins::Destroy`
    - `Shield::Api::Logins::Index`
    - `Shield::Api::Users::Create`
    - `Shield::Api::Users::Delete`
