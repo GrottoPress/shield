@@ -20,9 +20,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Api::Logins::Delete` action.
 - Add `Shield::Api::Logins::Destroy` action.
 
-### Changed
-- Replace travis-ci with GitHub actions
-
 ### Removed
 - Remove support for *Lucky* v0.26
 
