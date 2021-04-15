@@ -37,7 +37,7 @@ module Shield::Api::CurrentLogin::Destroy
     end
 
     def authorize?(user : User) : Bool
-      user.id == current_user.try &.id
+      user.id == login.user_id
     end
   end
 end

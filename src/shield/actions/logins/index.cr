@@ -31,7 +31,7 @@ module Shield::Logins::Index
     end
 
     def authorize?(user : User) : Bool
-      user.id == current_user.try &.id
+      user.id == self.user.id
     end
   end
 end

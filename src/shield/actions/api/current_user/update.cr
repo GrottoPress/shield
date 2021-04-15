@@ -41,7 +41,7 @@ module Shield::Api::CurrentUser::Update
     end
 
     def authorize?(user : User) : Bool
-      user.id == current_or_bearer_user.try &.id
+      user.id == self.user.id
     end
   end
 end
