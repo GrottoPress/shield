@@ -8,15 +8,11 @@ class Api::Logins::Index < ApiAction
   get "/logins" do
     json({
       status: "success",
-      data: {logins: LoginSerializer.for_collection(active_logins)},
+      data: {logins: LoginSerializer.for_collection(logins)},
       pages: {
         current: page,
         total: pages.total
       }
     })
-  end
-
-  private def active_logins
-    logins.select &.active?
   end
 end

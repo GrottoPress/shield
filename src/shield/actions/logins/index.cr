@@ -5,11 +5,7 @@ module Shield::Logins::Index
     # param page : Int32 = 1
 
     # get "/logins" do
-    #   html IndexPage, logins: active_logins, pages: pages
-    # end
-
-    # private def active_logins
-    #   logins.select &.active?
+    #   html IndexPage, logins: logins, pages: pages
     # end
 
     def pages
@@ -23,7 +19,7 @@ module Shield::Logins::Index
 
     @[Memoize]
     private def paginated_logins : Tuple(Lucky::Paginator, LoginQuery)
-      paginate(LoginQuery.new.user_id(user.id))
+      paginate LoginQuery.new.user_id(user.id).is_active
     end
 
     def user

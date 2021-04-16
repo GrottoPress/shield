@@ -9,18 +9,12 @@ class Api::BearerLogins::Index < ApiAction
     json({
       status: "success",
       data: {
-        bearer_logins: BearerLoginSerializer.for_collection(
-          active_bearer_logins
-        )
+        bearer_logins: BearerLoginSerializer.for_collection(bearer_logins)
       },
       pages: {
         current: page,
         total: pages.total
       }
     })
-  end
-
-  private def active_bearer_logins
-    bearer_logins.select &.active?
   end
 end

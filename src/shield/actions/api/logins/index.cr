@@ -7,16 +7,12 @@ module Shield::Api::Logins::Index
     # get "/logins" do
     #   json({
     #     status: "success",
-    #     data: {logins: LoginSerializer.for_collection(active_logins)},
+    #     data: {logins: LoginSerializer.for_collection(logins)},
     #     pages: {
     #       current: page,
     #       total: pages.total
     #     }
     #   })
-    # end
-
-    # private def active_logins
-    #   logins.select &.active?
     # end
 
     def pages
@@ -30,7 +26,7 @@ module Shield::Api::Logins::Index
 
     @[Memoize]
     private def paginated_logins : Tuple(Lucky::Paginator, LoginQuery)
-      paginate(LoginQuery.new.user_id(user.id))
+      paginate LoginQuery.new.user_id(user.id).is_active
     end
 
     def user

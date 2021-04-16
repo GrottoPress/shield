@@ -8,11 +8,7 @@ module Shield::BearerLogins::Index
     # param page : Int32 = 1
 
     # get "/bearer-logins" do
-    #   html IndexPage, bearer_logins: active_bearer_logins, pages: pages
-    # end
-
-    # private def active_bearer_logins
-    #   bearer_logins.select &.active?
+    #   html IndexPage, bearer_logins: bearer_logins, pages: pages
     # end
 
     def pages
@@ -29,7 +25,7 @@ module Shield::BearerLogins::Index
       Lucky::Paginator,
       BearerLoginQuery
     )
-      paginate(BearerLoginQuery.new.user_id(user.id))
+      paginate BearerLoginQuery.new.user_id(user.id).is_active
     end
 
     def user

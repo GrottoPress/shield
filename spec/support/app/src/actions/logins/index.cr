@@ -6,10 +6,6 @@ class Logins::Index < BrowserAction
   param page : Int32 = 1
 
   get "/logins" do
-    html IndexPage, logins: active_logins, pages: pages
-  end
-
-  private def active_logins
-    logins.select &.active?
+    html IndexPage, logins: logins, pages: pages
   end
 end

@@ -8,19 +8,13 @@ module Shield::Api::BearerLogins::Index
     #   json({
     #     status: "success",
     #     data: {
-    #       bearer_logins: BearerLoginSerializer.for_collection(
-    #         active_bearer_logins
-    #       )
+    #       bearer_logins: BearerLoginSerializer.for_collection(bearer_logins)
     #     },
     #     pages: {
     #       current: page,
     #       total: pages.total
     #     }
     #   })
-    # end
-
-    # private def active_bearer_logins
-    #   bearer_logins.select &.active?
     # end
 
     def pages
@@ -37,7 +31,7 @@ module Shield::Api::BearerLogins::Index
       Lucky::Paginator,
       BearerLoginQuery
     )
-      paginate(BearerLoginQuery.new.user_id(user.id))
+      paginate BearerLoginQuery.new.user_id(user.id).is_active
     end
 
     def user
