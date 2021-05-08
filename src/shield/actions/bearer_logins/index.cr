@@ -17,7 +17,7 @@ module Shield::BearerLogins::Index
 
     @[Memoize]
     def bearer_logins : Array(BearerLogin)
-      paginated_bearer_logins[1].map &.itself
+      paginated_bearer_logins[1].results
     end
 
     @[Memoize]

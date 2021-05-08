@@ -21,7 +21,7 @@ module Shield::Api::Users::Index
 
     @[Memoize]
     def users : Array(User)
-      paginated_users[1].map &.itself
+      paginated_users[1].results
     end
 
     @[Memoize]

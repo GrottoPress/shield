@@ -14,7 +14,7 @@ module Shield::Logins::Index
 
     @[Memoize]
     def logins : Array(Login)
-      paginated_logins[1].map &.itself
+      paginated_logins[1].results
     end
 
     @[Memoize]
