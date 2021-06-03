@@ -13,7 +13,7 @@ crystal: ~> 1.0
 development_dependencies:
   carbon:
     github: luckyframework/carbon
-    version: ~> 0.1.4
+    version: ~> 0.2.0
   lucky:
     github: luckyframework/lucky
     version: ~> 0.27.0
