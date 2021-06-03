@@ -5,7 +5,20 @@ module Shield::Deactivate
     end
 
     private def set_inactive_at
-      inactive_at.value = Time.utc if record.try &.active?
+      return if inactive_at.value &&
+        inactive_at.changed? &&
+        !inactive_lt_active?
+
+      if record.try &.active? || inactive_lt_active?
+        inactive_at.value = Time.utc
+      end
+    end
+
+    private def inactive_lt_active?
+      inactive_at.value.try do |inactive|
+        return unless active = active_at.value
+        inactive < active
+      end
     end
   end
 end

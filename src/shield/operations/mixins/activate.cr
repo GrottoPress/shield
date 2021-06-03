@@ -6,6 +6,7 @@ module Shield::Activate
     end
 
     private def set_active_at
+      return if active_at.value
       active_at.value = Time.utc
     end
 
