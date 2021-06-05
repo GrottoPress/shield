@@ -11,7 +11,7 @@ module Shield::FakeNestedParams
       params.to_h.each do |key, value|
         @hash[key.to_s] = value.to_h
           .transform_keys(&.to_s)
-          .transform_values(&.to_s)
+          .transform_values { |value| self.class.value_to_s(value) }
       end
     end
 
@@ -20,7 +20,7 @@ module Shield::FakeNestedParams
       params.nil? ? Hash(String, String).new : params
     end
 
-    def nested(key : String) : Hash(String, String)
+    def nested(key) : Hash(String, String)
       nested?(key)
     end
 
@@ -46,6 +46,15 @@ module Shield::FakeNestedParams
 
     def nested_file(key)
       raise "Not implemented"
+    end
+
+    def self.value_to_s(value)
+      case value
+      when Time
+        value.to_utc.to_s("%Y-%m-%dT%H:%M:%S")
+      else
+        value.to_s
+      end
     end
   end
 end

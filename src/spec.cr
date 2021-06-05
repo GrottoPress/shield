@@ -43,7 +43,7 @@ end
 def params(**named_args)
   Avram::Params.new named_args.to_h
     .transform_keys(&.to_s)
-    .transform_values &.to_s
+    .transform_values { |value| FakeNestedParams.value_to_s(value) }
 end
 
 def nested_params(**named_args)
