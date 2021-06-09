@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Allow setting custom time for `Shield::Activate` and `Shield::Deactivate`
+- Add `Shield::StatusQuery#is_active_at`
 
 ### Fixed
 - Fix wrong pagination for active records in `Index` actions.
