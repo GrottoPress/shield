@@ -11,6 +11,8 @@ module Shield::SaveEmail
     end
 
     private def set_user_email
+      return unless valid?
+
       email.value.try do |value|
         @user_email = !!UserQuery.new
           .id.not.eq(record.try(&.id) || 0_i64)

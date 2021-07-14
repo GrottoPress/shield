@@ -19,6 +19,8 @@ module Shield::CreateBearerLogin
     # Prevents a user from using a bearer login `name`
     # more than once.
     private def validate_name_unique
+      return unless valid?
+
       name.value.try do |value|
         return unless uid = user_id.value
 
