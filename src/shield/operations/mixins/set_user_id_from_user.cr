@@ -14,7 +14,7 @@ module Shield::SetUserIdFromUser
     end
 
     private def validate_user_exists
-      return unless valid?
+      return unless valid? && user_id.changed?
       validate_primary_key(user_id, query: UserQuery) unless user
     end
   end
