@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0]
+        crystal: [1.0.0, 1.1.0]
         experimental: [false]
         include:
           - crystal: nightly
