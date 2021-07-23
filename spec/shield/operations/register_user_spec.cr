@@ -53,7 +53,7 @@ describe Shield::RegisterUser do
 
     RegisterRegularCurrentUser2.create(params) do |operation, user|
       operation.saved?.should be_false
-      UserQuery.new.first?.should be_nil
+      UserQuery.new.any?.should be_false
     end
   end
 end

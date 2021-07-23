@@ -7,7 +7,7 @@ module Shield::Logins::Delete
     # end
 
     def run_operation
-      DeleteLogin.destroy(login) do |operation, deleted_login|
+      DeleteLogin.delete(login) do |operation, deleted_login|
         if operation.deleted?
           do_run_operation_succeeded(operation, deleted_login.not_nil!)
         else

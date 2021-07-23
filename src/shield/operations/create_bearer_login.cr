@@ -24,7 +24,7 @@ module Shield::CreateBearerLogin
       name.value.try do |value|
         return unless uid = user_id.value
 
-        if BearerLoginQuery.new.user_id(uid).name(value).first?
+        if BearerLoginQuery.new.user_id(uid).name(value).any?
           name.add_error("is already used")
         end
       end

@@ -7,7 +7,7 @@ module Shield::BearerLogins::Delete
     # end
 
     def run_operation
-      DeleteBearerLogin.destroy(
+      DeleteBearerLogin.delete(
         bearer_login
       ) do |operation, deleted_bearer_login|
         if operation.deleted?

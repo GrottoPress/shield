@@ -7,8 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased] - 
 
+### Added
+- Add support for *Lucky* v0.28
+
 ### Fixed
 - Avoid making queries in validations if operation already invalid
+
+### Removed
+- Drop support for *Lucky* v0.27
 
 ## [0.10.0] - 2021-06-17
 

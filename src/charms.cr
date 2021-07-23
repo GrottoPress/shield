@@ -339,7 +339,7 @@ module Avram
       message : Attribute::ErrorMessage = "does not exist"
     )
       attribute.value.try do |value|
-        unless query.where(query.primary_key_name, value).first?
+        unless query.where(query.primary_key_name, value).any?
           attribute.add_error(message)
         end
       end

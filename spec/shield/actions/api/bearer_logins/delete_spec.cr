@@ -17,7 +17,7 @@ describe Shield::Api::BearerLogins::Delete do
     ))
 
     response.should send_json(200, {status: "success"})
-    BearerLoginQuery.new.id(bearer_login.id).first?.should be_nil
+    BearerLoginQuery.new.id(bearer_login.id).any?.should be_false
   end
 
   it "requires logged in" do

@@ -54,7 +54,7 @@ describe ".__enum" do
 
     it "works with queries" do
       UserFactory.create &.level(:admin)
-      UserQuery.new.level(:admin).first?.should be_a(User)
+      UserQuery.new.level(:admin).any?.should be_true
     end
   end
 

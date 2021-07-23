@@ -16,4 +16,4 @@ development_dependencies:
     version: ~> 0.2.0
   lucky:
     github: luckyframework/lucky
-    version: ~> 0.27.0
+    version: ~> 0.28.0
