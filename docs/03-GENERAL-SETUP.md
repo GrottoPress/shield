@@ -27,3 +27,16 @@
      # ...
    end
    ```
+
+1. Set up base types:
+
+   ---
+   ```crystal
+   # ->>> src/models/user.cr
+
+   abstract class BaseModel < Avram::Model
+     # ...
+     include Shield::Model
+     # ...
+   end
+   ```

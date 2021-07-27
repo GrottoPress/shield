@@ -46,6 +46,17 @@
 
    ---
    ```crystal
+   # ->>> src/models/user.cr
+
+   class User < BaseModel
+     # ...
+     include Shield::HasManyLogins
+     # ...
+   end
+   ```
+
+   ---
+   ```crystal
    # ->>> src/models/user_options.cr
 
    class UserOptions < BaseModel

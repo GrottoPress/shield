@@ -74,6 +74,17 @@ This token is revoked when the user logs out.
 
    ---
    ```crystal
+   # ->>> src/models/user.cr
+
+   class User < BaseModel
+     # ...
+     include Shield::HasManyBearerLogins
+     # ...
+   end
+   ```
+
+   ---
+   ```crystal
    # ->>> src/models/user_options.cr
 
    class UserOptions < BaseModel

@@ -51,6 +51,17 @@ This is particularly important, since email addresses are usually the only means
 
    You may add other columns and associations specific to your application.
 
+   ---
+   ```crystal
+   # ->>> src/models/user.cr
+
+   class User < BaseModel
+     # ...
+     include Shield::HasManyEmailConfirmations
+     # ...
+   end
+   ```
+
 1. Set up the migration:
 
    ```crystal

@@ -41,6 +41,17 @@
 
    You may add other columns and associations specific to your application.
 
+   ---
+   ```crystal
+   # ->>> src/models/user.cr
+
+   class User < BaseModel
+     # ...
+     include Shield::HasManyPasswordResets
+     # ...
+   end
+   ```
+
 1. Set up the migration:
 
    ```crystal
