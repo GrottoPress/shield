@@ -374,8 +374,8 @@ module Avram
   end
 end
 
-# There's `avram_enum`, but that saves the enum value as
-# `Int32` in the database. The problem is, enum member values are
+# There's `enum`, but that saves the enum value as `Int32` in
+# the database. The problem is, enum member values are
 # order-dependent -- the values change when the member ordering
 # changes.
 #
