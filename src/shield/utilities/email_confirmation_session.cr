@@ -3,16 +3,16 @@ module Shield::EmailConfirmationSession
     include Shield::Session
     include Shield::EmailConfirmationVerifier
 
-    def email_confirmation_id : Int64?
+    def email_confirmation_id? : Int64?
       @session.get?(:email_confirmation_id).try &.to_i64?
     end
 
-    def email_confirmation_token : String?
+    def email_confirmation_token? : String?
       @session.get?(:email_confirmation_token)
     end
 
     def delete(email_confirmation : EmailConfirmation) : self
-      delete if email_confirmation.id == email_confirmation_id
+      delete if email_confirmation.id == email_confirmation_id?
       self
     end
 
@@ -31,7 +31,7 @@ module Shield::EmailConfirmationSession
 
     def set(token : String) : self
       bearer_token = BearerToken.new(token)
-      set(bearer_token.token, bearer_token.id)
+      set(bearer_token.token, bearer_token.id?)
     end
 
     def set(token : String, id) : self

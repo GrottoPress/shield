@@ -25,12 +25,12 @@ describe Shield::PasswordResets::Show do
 
       PasswordResetSession
         .new(session)
-        .password_reset_id
+        .password_reset_id?
         .should eq(password_reset.id)
 
       PasswordResetSession
         .new(session)
-        .password_reset_token
+        .password_reset_token?
         .should eq(operation.token)
     end
   end

@@ -15,13 +15,16 @@ module Shield::LogUserIn
     include Shield::SetSession
 
     private def set_inactive_at
-      inactive_at.value = active_at.value! + Shield.settings.login_expiry
+      inactive_at.value = active_at.value.not_nil! + \
+        Shield.settings.login_expiry
     end
 
     private def verify_login
       return unless email.value && password.value
 
-      if user = PasswordAuthentication.new(email.value!).verify(password.value!)
+      if user = PasswordAuthentication.new(email.value.not_nil!)
+        .verify(password.value.not_nil!)
+
         user_id.value = user.id
       else
         email.add_error "may be incorrect"

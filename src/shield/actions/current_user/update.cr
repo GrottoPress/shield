@@ -10,7 +10,7 @@ module Shield::CurrentUser::Update
       UpdateCurrentUser.update(
         user,
         params,
-        current_login: current_login
+        current_login: current_login?
       ) do |operation, updated_user|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)
@@ -21,7 +21,7 @@ module Shield::CurrentUser::Update
     end
 
     def user
-      current_user!
+      current_user
     end
 
     def do_run_operation_succeeded(operation, user)

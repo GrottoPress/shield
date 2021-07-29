@@ -27,7 +27,7 @@ module Shield::BearerLogins::Index
     end
 
     def user
-      current_user!
+      current_user
     end
 
     def authorize?(user : User) : Bool

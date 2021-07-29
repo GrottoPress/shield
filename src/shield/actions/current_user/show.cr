@@ -7,7 +7,7 @@ module Shield::CurrentUser::Show
     # end
 
     def user
-      current_user!
+      current_user
     end
 
     def authorize?(user : User) : Bool

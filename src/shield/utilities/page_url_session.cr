@@ -2,11 +2,11 @@ module Shield::PageUrlSession
   macro included
     include Shield::Session
 
-    def previous_page_url! : String
-      previous_page_url.not_nil!
+    def previous_page_url : String
+      previous_page_url?.not_nil!
     end
 
-    def previous_page_url : String?
+    def previous_page_url? : String?
       @session.get?(:previous_page_url).try do |url|
         delete
         url

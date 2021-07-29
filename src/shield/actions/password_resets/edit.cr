@@ -23,7 +23,7 @@ module Shield::PasswordResets::Edit
       operation = ResetPassword.new(
         password_reset.user!,
         session: session,
-        current_login: current_login
+        current_login: current_login?
       )
 
       html EditPage, operation: operation

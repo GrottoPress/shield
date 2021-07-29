@@ -13,7 +13,7 @@ module Shield::EmailConfirmations::Create
     def run_operation
       StartEmailConfirmation.create(
         params,
-        remote_ip: remote_ip
+        remote_ip: remote_ip?
       ) do |operation, email_confirmation|
         if email_confirmation
           do_run_operation_succeeded(operation, email_confirmation.not_nil!)

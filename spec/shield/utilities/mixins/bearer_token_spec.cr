@@ -18,7 +18,7 @@ describe Shield::BearerToken do
       ]
 
       all_headers.each do |headers|
-        BearerToken.from_headers(headers).should be_a(BearerToken)
+        BearerToken.from_headers?(headers).should be_a(BearerToken)
       end
     end
 
@@ -31,7 +31,7 @@ describe Shield::BearerToken do
       ]
 
       all_headers.each do |headers|
-        BearerToken.from_headers(headers).should be_nil
+        BearerToken.from_headers?(headers).should be_nil
       end
     end
   end

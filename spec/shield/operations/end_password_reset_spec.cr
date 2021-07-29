@@ -28,7 +28,7 @@ describe Shield::EndPasswordReset do
       end
     end
 
-    PasswordResetSession.new(session).password_reset_id.should be_nil
-    PasswordResetSession.new(session).password_reset_token.should be_nil
+    PasswordResetSession.new(session).password_reset_id?.should be_nil
+    PasswordResetSession.new(session).password_reset_token?.should be_nil
   end
 end

@@ -2,16 +2,20 @@ module Shield::Api::LoginHelpers
   macro included
     include Shield::LoginHelpers
 
-    getter current_login : Login? do
+    def current_login
+      current_login?.not_nil!
+    end
+
+    getter? current_login : Login? do
       LoginHeaders.new(request.headers).verify
     end
 
-    def current_or_bearer_user! : User
-      current_or_bearer_user.not_nil!
+    def current_or_bearer_user
+      current_or_bearer_user?.not_nil!
     end
 
-    def current_or_bearer_user : User?
-      current_user || current_bearer_user
+    getter? current_or_bearer_user : User? do
+      current_user? || current_bearer_user?
     end
 
     def bearer_logged_in? : Bool
@@ -19,22 +23,22 @@ module Shield::Api::LoginHelpers
     end
 
     def bearer_logged_out? : Bool
-      current_bearer_user.nil?
+      current_bearer_user?.nil?
     end
 
-    def current_bearer_user! : User
-      current_bearer_user.not_nil!
+    def current_bearer_user
+      current_bearer_user?.not_nil!
     end
 
-    getter current_bearer_user : User? do
-      current_bearer_login.try &.user!
+    getter? current_bearer_user : User? do
+      current_bearer_login?.try &.user!
     end
 
-    def current_bearer_login! : BearerLogin
-      current_bearer_login.not_nil!
+    def current_bearer_login
+      current_bearer_login?.not_nil!
     end
 
-    getter current_bearer_login : BearerLogin? do
+    getter? current_bearer_login : BearerLogin? do
       BearerLoginHeaders.new(request.headers).verify
     end
   end

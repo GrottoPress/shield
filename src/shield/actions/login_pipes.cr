@@ -26,10 +26,10 @@ module Shield::LoginPipes
 
     def pin_login_to_ip_address
       if logged_out? ||
-        current_login!.ip_address == remote_ip.try &.address
+        current_login.ip_address == remote_ip?.try &.address
         continue
       else
-        LogUserOut.update!(current_login!, session: session)
+        LogUserOut.update!(current_login, session: session)
         response.status_code = 403
         do_pin_login_to_ip_address_failed
       end
@@ -42,7 +42,7 @@ module Shield::LoginPipes
         timeout_session.delete
         continue
       elsif timeout_session.expired?
-        LogUserOut.update!(current_login!, session: session)
+        LogUserOut.update!(current_login, session: session)
         response.status_code = 403
         do_enforce_login_idle_timeout_failed
       else

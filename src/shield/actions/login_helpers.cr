@@ -5,22 +5,22 @@ module Shield::LoginHelpers
     end
 
     def logged_out? : Bool
-      current_user.nil?
+      current_user?.nil?
     end
 
-    def current_user! : User
-      current_user.not_nil!
+    def current_user
+      current_user?.not_nil!
     end
 
-    getter current_user : User? do
-      current_login.try &.user!
+    getter? current_user : User? do
+      current_login?.try &.user!
     end
 
-    def current_login! : Login
-      current_login.not_nil!
+    def current_login
+      current_login?.not_nil!
     end
 
-    getter current_login : Login? do
+    getter? current_login : Login? do
       LoginSession.new(session).verify
     end
   end

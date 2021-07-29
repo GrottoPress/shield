@@ -123,30 +123,16 @@ module Lucky
 end
 
 module Avram
-  class Attribute(T)
-    def value!
-      value.not_nil!
-    end
-  end
-
   abstract class Operation
     include MailHelpers
   end
 
   abstract class DeleteOperation(T)
     include MailHelpers
-
-    def record!
-      record.not_nil!
-    end
   end
 
   abstract class SaveOperation(T)
     include MailHelpers
-
-    def record!
-      record.not_nil!
-    end
 
     # Getting rid of default validations in Avram
     #

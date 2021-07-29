@@ -24,7 +24,10 @@ describe Shield::EndEmailConfirmation do
       end
     end
 
-    EmailConfirmationSession.new(session).email_confirmation_id.should be_nil
-    EmailConfirmationSession.new(session).email_confirmation_token.should be_nil
+    EmailConfirmationSession.new(session).email_confirmation_id?.should be_nil
+
+    EmailConfirmationSession.new(session)
+      .email_confirmation_token?
+      .should(be_nil)
   end
 end

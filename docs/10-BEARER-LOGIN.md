@@ -420,10 +420,10 @@ This token is revoked when the user logs out.
 
 - `#bearer_logged_in?`
 - `#bearer_logged_out?`
+- `#current_bearer_login?`
 - `#current_bearer_login`
-- `#current_bearer_login!`
+- `#current_bearer_user?`
 - `#current_bearer_user`
-- `#current_bearer_user!`
 
 Other helpers are provided as follows:
 

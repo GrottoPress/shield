@@ -9,7 +9,7 @@ module Shield::Api::CurrentLogin::Create
     def run_operation
       LogUserIn.create(
         params,
-        remote_ip: remote_ip,
+        remote_ip: remote_ip?,
         session: nil
       ) do |operation, login|
         if login
