@@ -1,6 +1,10 @@
 module Shield::ActionHelpers
   macro included
-    def remote_ip : Socket::IPAddress?
+    def remote_ip : Socket::IPAddress
+      remote_ip?.not_nil!
+    end
+
+    def remote_ip? : Socket::IPAddress?
       request.remote_address.as(Socket::IPAddress)
     rescue
     end

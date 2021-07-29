@@ -17,7 +17,7 @@ module Shield::CurrentLogin::Destroy
     end
 
     def login
-      current_login!
+      current_login
     end
 
     def do_run_operation_succeeded(operation, login)

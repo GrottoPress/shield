@@ -20,8 +20,8 @@ describe Shield::LogUserIn do
     login.active?.should be_true
     login.ip_address.should eq(ip_address.address)
 
-    LoginSession.new(session).login_id!.should eq(login.id)
-    LoginSession.new(session).login_token!.should_not be_empty
+    LoginSession.new(session).login_id.should eq(login.id)
+    LoginSession.new(session).login_token.should_not be_empty
   end
 
   it "requires valid IP address" do

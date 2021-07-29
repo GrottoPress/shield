@@ -35,7 +35,7 @@ module Shield::Api::EmailConfirmations::Edit
     end
 
     def user
-      current_or_bearer_user!
+      current_or_bearer_user
     end
 
     def do_verify_operation_failed(utility)

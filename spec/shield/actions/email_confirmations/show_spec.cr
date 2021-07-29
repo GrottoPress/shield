@@ -19,8 +19,8 @@ describe Shield::EmailConfirmations::Show do
 
       from_session = EmailConfirmationSession.new(session)
 
-      from_session.email_confirmation_id.should(eq email_confirmation.id)
-      from_session.email_confirmation_token.should eq(operation.token)
+      from_session.email_confirmation_id?.should(eq email_confirmation.id)
+      from_session.email_confirmation_token?.should eq(operation.token)
     end
   end
 end

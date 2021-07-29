@@ -10,7 +10,7 @@ module Shield::CurrentLogin::Create
       LogUserIn.create(
         params,
         session: session,
-        remote_ip: remote_ip
+        remote_ip: remote_ip?
       ) do |operation, login|
         if login
           do_run_operation_succeeded(operation, login.not_nil!)

@@ -35,7 +35,7 @@ module Shield::EmailConfirmations::Edit
     end
 
     def user
-      current_user!
+      current_user
     end
 
     def do_verify_operation_failed(utility)

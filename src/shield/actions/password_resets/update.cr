@@ -29,7 +29,7 @@ module Shield::PasswordResets::Update
         password_reset.user!,
         params,
         session: session,
-        current_login: current_login
+        current_login: current_login?
       ) do |operation, updated_user|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)

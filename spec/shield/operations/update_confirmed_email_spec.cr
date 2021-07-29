@@ -22,15 +22,15 @@ describe Shield::UpdateConfirmedEmail do
 
       UpdateConfirmedEmail.update(
         from_session.verify!.user!.not_nil!,
-        email_confirmation: from_session.email_confirmation!,
+        email_confirmation: from_session.email_confirmation,
         session: session
       ) do |operation, updated_user|
         operation.saved?.should be_true
 
         user.reload.email = new_email
 
-        from_session.email_confirmation_id.should be_nil
-        from_session.email_confirmation_token.should be_nil
+        from_session.email_confirmation_id?.should be_nil
+        from_session.email_confirmation_token?.should be_nil
       end
     end
   end

@@ -10,8 +10,8 @@ module Shield::EmailConfirmationCurrentUser::Update
       UpdateCurrentUser.update(
         user,
         params,
-        current_login: current_login,
-        remote_ip: remote_ip
+        current_login: current_login?,
+        remote_ip: remote_ip?
       ) do |operation, updated_user|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)

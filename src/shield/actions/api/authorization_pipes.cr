@@ -7,9 +7,9 @@ module Shield::Api::AuthorizationPipes
     def check_authorization
       if logged_out? && bearer_logged_out?
         continue
-      elsif logged_in? && authorize?(current_user!)
+      elsif logged_in? && authorize?(current_user)
         continue
-      elsif authorize_bearer_login? && authorize?(current_bearer_user!)
+      elsif authorize_bearer_login? && authorize?(current_bearer_user)
         continue
       else
         send_insufficient_scope_response
@@ -25,7 +25,7 @@ module Shield::Api::AuthorizationPipes
     end
 
     private def authorize_bearer_login?
-      current_bearer_login.try &.scopes.includes?(bearer_scope)
+      current_bearer_login?.try &.scopes.includes?(bearer_scope)
     end
 
     private def send_insufficient_scope_response

@@ -22,7 +22,7 @@ module Shield::BearerLogins::Create
     end
 
     def user
-      current_user!
+      current_user
     end
 
     def do_run_operation_succeeded(operation, bearer_login)

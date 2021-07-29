@@ -69,14 +69,14 @@ module Shield::HttpClient
     end
 
     def set_cookie_from_session(session : Lucky::Session)
-      headers("Cookie": self.class.cookie_from_session(session).to_s)
-    end
-
-    def self.cookie_from_session!(session : Lucky::Session)
-      cookie_from_session(session).not_nil!
+      headers("Cookie": self.class.cookie_from_session?(session).to_s)
     end
 
     def self.cookie_from_session(session : Lucky::Session)
+      cookie_from_session?(session).not_nil!
+    end
+
+    def self.cookie_from_session?(session : Lucky::Session)
       cookies = Lucky::CookieJar.empty_jar
       cookies.set(Lucky::Session.settings.key, session.to_json)
       cookies.updated.add_response_headers(HTTP::Headers.new)["Set-Cookie"]?

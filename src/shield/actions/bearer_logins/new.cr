@@ -12,7 +12,7 @@ module Shield::BearerLogins::New
     # end
 
     def user
-      current_user!
+      current_user
     end
 
     def authorize?(user : User) : Bool

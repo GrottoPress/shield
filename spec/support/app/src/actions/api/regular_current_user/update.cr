@@ -11,7 +11,7 @@ class Api::RegularCurrentUser::Update < ApiAction
     UpdateRegularCurrentUser.update(
       user,
       params,
-      current_login: current_login
+      current_login: current_login?
     ) do |operation, updated_user|
       if operation.saved?
         do_run_operation_succeeded(operation, updated_user)

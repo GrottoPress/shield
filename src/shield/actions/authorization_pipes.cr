@@ -3,7 +3,7 @@ module Shield::AuthorizationPipes
     before :check_authorization
 
     def check_authorization
-      if logged_out? || authorize?(current_user!)
+      if logged_out? || authorize?(current_user)
         continue
       else
         response.status_code = 403

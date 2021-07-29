@@ -22,7 +22,7 @@ module Shield::StartPasswordReset
     include Shield::StartAuthentication
 
     private def set_inactive_at
-      inactive_at.value = active_at.value! +
+      inactive_at.value = active_at.value.not_nil! +
         Shield.settings.password_reset_expiry
     end
 

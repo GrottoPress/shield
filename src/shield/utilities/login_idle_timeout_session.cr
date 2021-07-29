@@ -3,23 +3,23 @@ module Shield::LoginIdleTimeoutSession
     include Shield::Session
 
     def expired? : Bool?
-      login_last_active.try do |time|
+      login_last_active?.try do |time|
         Time.utc - time >= Shield.settings.login_idle_timeout
       end
     end
 
-    def login_last_active! : Time
-      login_last_active.not_nil!
+    def login_last_active : Time
+      login_last_active?.not_nil!
     end
 
-    def login_last_active : Time?
+    def login_last_active? : Time?
       @session.get?(:login_last_active).try &.to_i64?.try do |time|
         Time.unix(time)
       end
     end
 
     def delete(login : Login) : self
-      delete if login.id == LoginSession.new(@session).login_id
+      delete if login.id == LoginSession.new(@session).login_id?
       self
     end
 

@@ -1,6 +1,7 @@
 module Shield::BearerToken
   macro included
-    getter :id, :token
+    getter! :id
+    getter :token
 
     def self.new(operation, record)
       new(operation.token, record.id)
@@ -25,8 +26,8 @@ module Shield::BearerToken
     end
 
     def to_s(io)
-      io << @id
-      io << '.' if @id
+      io << id?
+      io << '.' if id?
       io << @token
     end
 
@@ -34,17 +35,32 @@ module Shield::BearerToken
       json.string(to_s)
     end
 
-    def self.from_headers(request : HTTP::Request) : self?
+    def self.from_headers(request : HTTP::Request) : self
       from_headers(request.headers)
     end
 
-    def self.from_headers(headers : HTTP::Headers) : self?
+    def self.from_headers(headers : HTTP::Headers) : self
+      from_headers?(headers).not_nil!
+    end
+
+    def self.from_headers?(request : HTTP::Request) : self?
+      from_headers?(request.headers)
+    end
+
+    def self.from_headers?(headers : HTTP::Headers) : self?
       header = headers["Authorization"]?.try &.split
       return unless header.try(&.size) == 2 && header.try(&.[0]?) == "Bearer"
       header.try &.[1]?.try { |token| new(token) }
     end
 
     def self.from_params(
+      params : Avram::Paramable,
+      key : String | Symbol = "token"
+    ) : self
+      from_params?(params, key).not_nil!
+    end
+
+    def self.from_params?(
       params : Avram::Paramable,
       key : String | Symbol = "token"
     ) : self?
