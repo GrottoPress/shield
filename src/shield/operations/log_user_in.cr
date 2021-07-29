@@ -22,7 +22,7 @@ module Shield::LogUserIn
       return unless email.value && password.value
 
       if user = PasswordAuthentication.new(email.value!).verify(password.value!)
-        user_id.value = user.not_nil!.id
+        user_id.value = user.id
       else
         email.add_error "may be incorrect"
         password.add_error "may be incorrect"
