@@ -18,7 +18,7 @@ describe Shield::Deactivate do
 
         updated_email_confirmation.inactive_at.should be_a(Time)
         updated_email_confirmation.inactive_at
-          .try &.should(be_close Time.utc, 1.second)
+          .try &.should(be_close Time.utc, 2.seconds)
       end
     end
   end
@@ -67,7 +67,7 @@ describe Shield::Deactivate do
         updated_email_confirmation.inactive_at.should be_a(Time)
 
         updated_email_confirmation.inactive_at
-          .try &.should be_close(Time.utc, 1.second)
+          .try &.should be_close(Time.utc, 2.seconds)
       end
     end
   end

@@ -12,7 +12,7 @@ describe Shield::Activate do
       user: user
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
-      bearer_login.try &.active_at.should be_close(Time.utc, 1.second)
+      bearer_login.try &.active_at.should be_close(Time.utc, 2.seconds)
     end
   end
 
