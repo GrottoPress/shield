@@ -28,8 +28,7 @@ module Shield::BearerLogins::Destroy
       redirect_back fallback: Index
     end
 
-    @[Memoize]
-    def bearer_login : BearerLogin
+    getter bearer_login : BearerLogin do
       BearerLoginQuery.find(bearer_login_id)
     end
 

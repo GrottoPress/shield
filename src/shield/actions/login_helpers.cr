@@ -12,8 +12,7 @@ module Shield::LoginHelpers
       current_user.not_nil!
     end
 
-    @[Memoize]
-    def current_user : User?
+    getter current_user : User? do
       current_login.try &.user!
     end
 
@@ -21,8 +20,7 @@ module Shield::LoginHelpers
       current_login.not_nil!
     end
 
-    @[Memoize]
-    def current_login : Login?
+    getter current_login : Login? do
       LoginSession.new(session).verify
     end
   end

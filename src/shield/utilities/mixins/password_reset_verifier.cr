@@ -21,8 +21,7 @@ module Shield::PasswordResetVerifier
       password_reset.not_nil!
     end
 
-    @[Memoize]
-    def password_reset : PasswordReset?
+    getter password_reset : PasswordReset? do
       password_reset_id.try { |id| PasswordResetQuery.new.id(id).first? }
     end
 

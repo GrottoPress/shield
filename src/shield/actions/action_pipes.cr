@@ -7,13 +7,11 @@ module Shield::ActionPipes
       continue
     end
 
-    @[Memoize]
-    def previous_page_url : String?
+    getter previous_page_url : String? do
       PageUrlSession.new(session).previous_page_url
     end
 
-    @[Memoize]
-    def return_url : String?
+    getter return_url : String? do
       ReturnUrlSession.new(session).return_url
     end
 

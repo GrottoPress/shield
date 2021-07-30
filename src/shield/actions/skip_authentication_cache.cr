@@ -1,11 +1,11 @@
 module Shield::SkipAuthenticationCache
   macro included
     def current_user : User?
-      current_user__uncached
+      current_login.try &.user!
     end
 
     def current_login : Login?
-      current_login__uncached
+      LoginSession.new(session).verify
     end
   end
 end

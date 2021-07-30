@@ -34,8 +34,7 @@ module Shield::Api::BearerLogins::Destroy
       })
     end
 
-    @[Memoize]
-    def bearer_login : BearerLogin
+    getter bearer_login : BearerLogin do
       BearerLoginQuery.find(bearer_login_id)
     end
 

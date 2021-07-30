@@ -32,8 +32,7 @@ module Shield::Api::Logins::Destroy
       })
     end
 
-    @[Memoize]
-    def login : Login
+    getter login : Login do
       LoginQuery.find(login_id)
     end
 

@@ -12,13 +12,11 @@ module Shield::Users::Index
       paginated_users[0]
     end
 
-    @[Memoize]
-    def users : Array(User)
+    getter users : Array(User) do
       paginated_users[1].results
     end
 
-    @[Memoize]
-    private def paginated_users : Tuple(Lucky::Paginator, UserQuery)
+    private getter paginated_users : Tuple(Lucky::Paginator, UserQuery) do
       paginate(UserQuery.new)
     end
   end

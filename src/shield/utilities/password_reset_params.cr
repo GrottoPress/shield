@@ -13,8 +13,7 @@ module Shield::PasswordResetParams
       token_from_params.try &.token
     end
 
-    @[Memoize]
-    private def token_from_params : BearerToken?
+    private getter token_from_params : BearerToken? do
       BearerToken.from_params(@params)
     end
   end

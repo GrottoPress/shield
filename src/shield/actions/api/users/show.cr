@@ -9,8 +9,7 @@ module Shield::Api::Users::Show
     #   })
     # end
 
-    @[Memoize]
-    def user : User
+    getter user : User do
       UserQuery.find(user_id)
     end
   end

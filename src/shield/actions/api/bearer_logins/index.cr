@@ -21,16 +21,14 @@ module Shield::Api::BearerLogins::Index
       paginated_bearer_logins[0]
     end
 
-    @[Memoize]
-    def bearer_logins : Array(BearerLogin)
+    getter bearer_logins : Array(BearerLogin) do
       paginated_bearer_logins[1].results
     end
 
-    @[Memoize]
-    private def paginated_bearer_logins : Tuple(
+    getter paginated_bearer_logins : Tuple(
       Lucky::Paginator,
       BearerLoginQuery
-    )
+    ) do
       paginate BearerLoginQuery.new.user_id(user.id).is_active
     end
 

@@ -26,8 +26,7 @@ module Shield::Logins::Destroy
       redirect_back fallback: Index
     end
 
-    @[Memoize]
-    def login : Login
+    getter login : Login do
       LoginQuery.find(login_id)
     end
 

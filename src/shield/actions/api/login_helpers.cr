@@ -2,8 +2,7 @@ module Shield::Api::LoginHelpers
   macro included
     include Shield::LoginHelpers
 
-    @[Memoize]
-    def current_login : Login?
+    getter current_login : Login? do
       LoginHeaders.new(request.headers).verify
     end
 
@@ -27,8 +26,7 @@ module Shield::Api::LoginHelpers
       current_bearer_user.not_nil!
     end
 
-    @[Memoize]
-    def current_bearer_user : User?
+    getter current_bearer_user : User? do
       current_bearer_login.try &.user!
     end
 
@@ -36,8 +34,7 @@ module Shield::Api::LoginHelpers
       current_bearer_login.not_nil!
     end
 
-    @[Memoize]
-    def current_bearer_login : BearerLogin?
+    getter current_bearer_login : BearerLogin? do
       BearerLoginHeaders.new(request.headers).verify
     end
   end

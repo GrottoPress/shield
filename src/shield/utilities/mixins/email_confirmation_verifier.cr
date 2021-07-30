@@ -21,8 +21,7 @@ module Shield::EmailConfirmationVerifier
       email_confirmation.not_nil!
     end
 
-    @[Memoize]
-    def email_confirmation : EmailConfirmation?
+    getter email_confirmation : EmailConfirmation? do
       email_confirmation_id.try do |id|
         EmailConfirmationQuery.new.id(id).first?
       end

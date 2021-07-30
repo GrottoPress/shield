@@ -21,8 +21,7 @@ module Shield::BearerLoginVerifier
       bearer_login.not_nil!
     end
 
-    @[Memoize]
-    def bearer_login : BearerLogin?
+    getter bearer_login : BearerLogin? do
       bearer_login_id.try { |id| BearerLoginQuery.new.id(id).first? }
     end
 

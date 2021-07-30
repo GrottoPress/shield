@@ -19,13 +19,11 @@ module Shield::Api::Logins::Index
       paginated_logins[0]
     end
 
-    @[Memoize]
-    def logins : Array(Login)
+    getter logins : Array(Login) do
       paginated_logins[1].results
     end
 
-    @[Memoize]
-    private def paginated_logins : Tuple(Lucky::Paginator, LoginQuery)
+    private getter paginated_logins : Tuple(Lucky::Paginator, LoginQuery) do
       paginate LoginQuery.new.user_id(user.id).is_active
     end
 

@@ -7,8 +7,7 @@ module Shield::Users::Edit
     #   html EditPage, operation: operation
     # end
 
-    @[Memoize]
-    def user : User
+    getter user : User do
       UserQuery.find(user_id)
     end
   end

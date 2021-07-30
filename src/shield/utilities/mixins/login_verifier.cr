@@ -21,8 +21,7 @@ module Shield::LoginVerifier
       login.not_nil!
     end
 
-    @[Memoize]
-    def login : Login?
+    getter login : Login? do
       login_id.try { |id| LoginQuery.new.id(id).first? }
     end
 

@@ -6,8 +6,7 @@ module Shield::Users::Show
     #   html ShowPage, user: user
     # end
 
-    @[Memoize]
-    def user : User
+    getter user : User do
       UserQuery.find(user_id)
     end
   end

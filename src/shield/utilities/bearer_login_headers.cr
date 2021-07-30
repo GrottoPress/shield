@@ -13,8 +13,7 @@ module Shield::BearerLoginHeaders
       token_from_headers.try &.token
     end
 
-    @[Memoize]
-    private def token_from_headers : BearerToken?
+    private getter token_from_headers : BearerToken? do
       BearerToken.from_headers(@headers)
     end
   end
