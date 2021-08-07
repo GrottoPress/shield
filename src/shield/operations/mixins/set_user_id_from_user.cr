@@ -7,6 +7,10 @@ module Shield::SetUserIdFromUser
       validate_user_exists
     end
 
+    def user!
+      user || user_id.value.try { |value| UserQuery.new.id(value).first? }
+    end
+
     private def set_user_id
       user.try do |user|
         user_id.value = user.id

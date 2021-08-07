@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Add support for *Lucky* v0.28
+- Add `Shield::SetUserIdFromUser#user!` method
 
 ### Changed
 - Rename *bang* counterparts of nilable methods to their non-bang equivalents
