@@ -4,12 +4,12 @@ module Shield::HttpClient
       api_auth(BearerToken.new token)
     end
 
-    def api_auth(token : BearerToken)
+    def api_auth(token : Shield::BearerToken)
       headers("Authorization": token.to_header)
     end
 
     def api_auth(
-      user : User,
+      user : Shield::User,
       password : String,
       remote_ip = Socket::IPAddress.new("1.2.3.4", 5),
     )
@@ -40,7 +40,7 @@ module Shield::HttpClient
     end
 
     def browser_auth(
-      user : User,
+      user : Shield::User,
       password : String,
       remote_ip = Socket::IPAddress.new("1.2.3.4", 5),
       session = Lucky::Session.new

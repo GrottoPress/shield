@@ -11,7 +11,7 @@ module Shield::PasswordResetSession
       @session.get?(:password_reset_token)
     end
 
-    def delete(password_reset : PasswordReset) : self
+    def delete(password_reset : Shield::PasswordReset) : self
       delete if password_reset.id == password_reset_id?
       self
     end
@@ -23,8 +23,8 @@ module Shield::PasswordResetSession
     end
 
     def set(
-      operation : StartPasswordReset,
-      password_reset : PasswordReset
+      operation : Shield::StartPasswordReset,
+      password_reset : Shield::PasswordReset
     ) : self
       set(operation.token, password_reset.id)
     end

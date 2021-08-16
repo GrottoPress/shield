@@ -36,7 +36,7 @@ module Shield::Api::Logins::Destroy
       LoginQuery.find(login_id)
     end
 
-    def authorize?(user : User) : Bool
+    def authorize?(user : Shield::User) : Bool
       super || user.id == login.user_id
     end
   end

@@ -1,6 +1,6 @@
 module Shield::DeleteLoginsOnPasswordChange
   macro included
-    private def log_out_everywhere(user : User)
+    private def log_out_everywhere(user : Shield::User)
       return unless password_digest.changed?
 
       LoginQuery.new

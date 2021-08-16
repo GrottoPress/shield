@@ -11,7 +11,7 @@ module Shield::SendWelcomeEmail
       mail_later UserWelcomeEmail, self
     end
 
-    private def send_welcome_email(user : User)
+    private def send_welcome_email(user : Shield::User)
       mail_later WelcomeEmail, self, user
     end
   end

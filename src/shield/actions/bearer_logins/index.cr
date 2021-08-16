@@ -30,7 +30,7 @@ module Shield::BearerLogins::Index
       current_user
     end
 
-    def authorize?(user : User) : Bool
+    def authorize?(user : Shield::User) : Bool
       user.id == self.user.id
     end
   end

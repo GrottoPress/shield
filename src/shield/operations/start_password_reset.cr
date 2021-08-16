@@ -47,7 +47,7 @@ module Shield::StartPasswordReset
       mail_later GuestPasswordResetRequestEmail, self
     end
 
-    private def send_email(password_reset : PasswordReset)
+    private def send_email(password_reset : Shield::PasswordReset)
       mail_later PasswordResetRequestEmail, self, password_reset
     end
   end

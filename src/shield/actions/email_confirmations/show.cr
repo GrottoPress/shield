@@ -27,7 +27,7 @@ module Shield::EmailConfirmations::Show
       redirect(email_confirmation_session) # <= IMPORTANT!
     end
 
-    private def redirect(email_confirmation_session : EmailConfirmationSession)
+    private def redirect(email_confirmation_session)
       if email_confirmation_session.email_confirmation.try &.user_id
         redirect to: EmailConfirmations::Edit
       else
@@ -35,7 +35,7 @@ module Shield::EmailConfirmations::Show
       end
     end
 
-    def authorize?(user : User) : Bool
+    def authorize?(user : Shield::User) : Bool
       user.id == current_user?.try &.id
     end
   end

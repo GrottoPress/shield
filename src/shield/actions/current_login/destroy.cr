@@ -30,7 +30,7 @@ module Shield::CurrentLogin::Destroy
       redirect to: CurrentUser::Show
     end
 
-    def authorize?(user : User) : Bool
+    def authorize?(user : Shield::User) : Bool
       user.id == login.user_id
     end
   end

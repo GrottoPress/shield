@@ -32,7 +32,7 @@ module Shield::LogUserIn
       end
     end
 
-    private def set_session(login : Login)
+    private def set_session(login : Shield::Login)
       session.try do |session|
         LoginSession.new(session).set(self, login)
         LoginIdleTimeoutSession.new(session).set

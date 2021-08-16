@@ -44,7 +44,7 @@ module Shield::Api::BearerLogins::Create
       })
     end
 
-    def authorize?(user : User) : Bool
+    def authorize?(user : Shield::User) : Bool
       user.id == self.user.id
     end
   end

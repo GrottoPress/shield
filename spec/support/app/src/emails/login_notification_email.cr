@@ -1,5 +1,5 @@
 class LoginNotificationEmail < BaseEmail
-  def initialize(@operation : LogUserIn, @login : Login)
+  def initialize(@operation : Shield::LogUserIn, @login : Login)
   end
 
   private def receivers

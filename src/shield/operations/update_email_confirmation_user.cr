@@ -29,7 +29,7 @@ module Shield::UpdateEmailConfirmationUser
       email.value = email.original_value
     end
 
-    private def start_email_confirmation(user : User)
+    private def start_email_confirmation(user : Shield::User)
       new_email.try do |email|
         @start_email_confirmation = StartEmailConfirmation.new(
           user_id: user.id,

@@ -11,7 +11,7 @@ module Shield::AuthorizationPipes
       end
     end
 
-    def authorize?(user : User) : Bool
+    def authorize?(user : Shield::User) : Bool
       false
     end
 

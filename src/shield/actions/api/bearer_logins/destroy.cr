@@ -38,7 +38,7 @@ module Shield::Api::BearerLogins::Destroy
       BearerLoginQuery.find(bearer_login_id)
     end
 
-    def authorize?(user : User) : Bool
+    def authorize?(user : Shield::User) : Bool
       super || user.id == bearer_login.user_id
     end
   end

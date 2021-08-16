@@ -2,7 +2,7 @@ module Shield::PasswordAuthentication
   macro included
     @user : User?
 
-    def initialize(@user : User)
+    def initialize(@user : Shield::User)
     end
 
     def initialize(email : String)

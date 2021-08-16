@@ -11,7 +11,7 @@ module Shield::EmailConfirmationSession
       @session.get?(:email_confirmation_token)
     end
 
-    def delete(email_confirmation : EmailConfirmation) : self
+    def delete(email_confirmation : Shield::EmailConfirmation) : self
       delete if email_confirmation.id == email_confirmation_id?
       self
     end
@@ -23,8 +23,8 @@ module Shield::EmailConfirmationSession
     end
 
     def set(
-      operation : StartEmailConfirmation,
-      email_confirmation : EmailConfirmation
+      operation : Shield::StartEmailConfirmation,
+      email_confirmation : Shield::EmailConfirmation
     ) : self
       set(operation.token, email_confirmation.id)
     end

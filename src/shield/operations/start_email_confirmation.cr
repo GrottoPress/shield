@@ -22,7 +22,7 @@ module Shield::StartEmailConfirmation
       mail_later UserEmailConfirmationRequestEmail, self
     end
 
-    private def send_email(email_confirmation : EmailConfirmation)
+    private def send_email(email_confirmation : Shield::EmailConfirmation)
       mail_later EmailConfirmationRequestEmail, self, email_confirmation
     end
   end

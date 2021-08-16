@@ -3,7 +3,7 @@ module Shield::LogUserOut
     include Shield::EndAuthentication
     include Shield::DeleteSession
 
-    private def delete_session(login : Login)
+    private def delete_session(login : Shield::Login)
       session.try do |session|
         LoginSession.new(session).delete(login)
         LoginIdleTimeoutSession.new(session).delete(login)

@@ -11,7 +11,7 @@ module Shield::LoginSession
       @session.get?(:login_token)
     end
 
-    def delete(login : Login) : self
+    def delete(login : Shield::Login) : self
       delete if login.id == login_id?
       self
     end
@@ -22,7 +22,7 @@ module Shield::LoginSession
       self
     end
 
-    def set(operation : LogUserIn, login : Login) : self
+    def set(operation : Shield::LogUserIn, login : Shield::Login) : self
       set(operation.token, login.id)
     end
 

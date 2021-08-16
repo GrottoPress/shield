@@ -1,5 +1,8 @@
 class BearerLoginNotificationEmail < BaseEmail
-  def initialize(@operation : CreateBearerLogin, @bearer_login : BearerLogin)
+  def initialize(
+    @operation : Shield::CreateBearerLogin,
+    @bearer_login : BearerLogin
+  )
   end
 
   private def receivers
