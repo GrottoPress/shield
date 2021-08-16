@@ -766,10 +766,31 @@ describe Avram::Validations do
 
   describe "#validate_not_pwned" do
     it "accepts safe password" do
+      response = IO::Memory.new <<-TEXT
+        0330BEB91D911BB8680BAE4FF3AFE0530E2:2
+        037069DD15159F0BDF6F7AAE2AFA827EAB5:5
+        0449BAC928BFA1474E4498A89AECD944A52:3
+        04CCD4EA9D14A1ED27B010633E86745A9CB:1
+        04D89372AC3DD345C9F858C5F97A86BB941:2
+        06069AD3C96CBA5A855734090B94F519BC4:11
+        075393E15A29D30D7365640D6A84A160EEF:2
+        0777AFC3C0D55CDA8A8D007E9233924B581:1
+        078DF28C8B30B46A151297215FC53AF2B7A:6
+        07AEDFF9FA3DA39F92344ADB6532F5F7F5D:15
+        08EA5DE7C3A765C4F0755FDE8561117CA4A:2
+        09E94A79C701D3845A052AB508C9C4E6AF1:1
+        09F1B61E9BA766489A2BEE4E03CA8321A3E:2
+        0A1CC53F7B21BFF7122D2493A6DB98D748D:1
+        0A5F9CCB30538C4337B7BC43DF7077CCB29:1
+        TEXT
+
+      WebMock.stub(:get, "https://api.pwnedpasswords.com/range/91613")
+        .to_return(body_io: response)
+
       password = Avram::Attribute(String).new(
         :password,
         param: nil,
-        value: "msksieie565iww1id*slLF",
+        value: "ZWkWBX3deXkU29TdYUeGVh8n",
         param_key: "login"
       )
 
@@ -778,6 +799,25 @@ describe Avram::Validations do
     end
 
     it "rejects unsafe password" do
+      response = IO::Memory.new <<-TEXT
+        1D2DA4053E34E76F6576ED1DA63134B5E2A:2
+        1D72CD07550416C216D8AD296BF5C0AE8E0:10
+        1DE027315DE413921A63F1700938AF80965:1
+        1E2AAA439972480CEC7F16C795BBB429372:1
+        1E3687A61BFCE35F69B7408158101C8E414:1
+        1E4C9B93F3F0682250B6CF8331B7EE68FD8:3861493
+        1F15311317129463049803B0F5AE31A31C4:1
+        1F2B668E8AABEF1C59E9EC6F82E3F3CD786:1
+        2028CB7ABE16047F9FFB0699E25655236E0:1
+        20597F5AC10A2F67701B4AD1D3A09F72250:3
+        20AEBCE40E55EDA1CE07D175EC293150A7E:1
+        20FFB975547F6A33C2882CFF8CE2BC49720:1
+        21901C19C92442A5B1C45419F7887722FCF:2
+        TEXT
+
+      WebMock.stub(:get, "https://api.pwnedpasswords.com/range/5baa6")
+        .to_return(body_io: response)
+
       password = Avram::Attribute(String).new(
         :password,
         param: nil,
@@ -785,7 +825,6 @@ describe Avram::Validations do
         param_key: "login"
       )
 
-      sleep 1 # So we're not rate-limited
       Avram::Validations.validate_not_pwned password
       password.valid?.should be_false
     end
