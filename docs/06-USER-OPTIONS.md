@@ -1,5 +1,7 @@
 ## User Options
 
+`UserOptions` model may be used, as an alternative to `UserSettings` column on the `User` model. You may use either `UserOptions` or `UserSettings`, but not both, in a single application.
+
 1. Set up models:
 
    ```crystal
@@ -72,7 +74,7 @@
    end
    ```
 
-   `SaveUserOptions` saves `login_notify` and `password_notify`. If you added other columns and associations to the model, you may have to add callbacks for dealing with those.
+   `SaveUserOptions` saves `password_notify`. If you added other columns and associations to the model, you may have to add callbacks for dealing with those.
 
 1. Set up actions:
 
@@ -82,7 +84,6 @@
 
    User edit forms, are therefore, required to include user options parameters, nested under its own key (`user_options`):
 
-   - `login_notify : Bool`
    - `password_notify : Bool`
 
 1. Set up emails:

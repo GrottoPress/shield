@@ -11,5 +11,11 @@ class UserFactory < Avram::Factory
     email "useR@dom4iN.TLd"
     level :author
     password "password12U~password"
+
+    settings UserSettings.from_json({
+      bearer_login_notify: true,
+      login_notify: true,
+      password_notify: true
+    }.to_json)
   end
 end

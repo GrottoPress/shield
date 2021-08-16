@@ -1,12 +1,14 @@
 class User < BaseModel
   include Shield::User
-  include Carbon::Emailable
+  include Shield::UserSettingsColumn
 
   include Shield::HasOneUserOptions
   include Shield::HasManyBearerLogins
   include Shield::HasManyEmailConfirmations
   include Shield::HasManyLogins
   include Shield::HasManyPasswordResets
+
+  include Carbon::Emailable
 
   __enum Level do
     Admin

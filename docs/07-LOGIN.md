@@ -57,6 +57,23 @@
 
    ---
    ```crystal
+   # ->>> src/models/user_settings.cr
+
+   class UserSettings
+     # ...
+     include Shield::LoginUserSettings
+     # ...
+   end
+   ```
+
+   `Shield::LoginUserSettings` adds the following properties:
+
+   - `login_notify : Bool`
+
+   ---
+   \* *Skip this if using `UserSettings`* \*
+
+   ```crystal
    # ->>> src/models/user_options.cr
 
    class UserOptions < BaseModel
@@ -101,6 +118,8 @@
    Add any columns you added to the model here.
 
    ---
+   \* *Skip this if using `UserSettings`* \*
+
    ```crystal
    # ->>> db/migrations/XXXXXXXXXXXXXX_add_login_user_options.cr
 

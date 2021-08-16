@@ -85,6 +85,23 @@ This token is revoked when the user logs out.
 
    ---
    ```crystal
+   # ->>> src/models/user_settings.cr
+
+   class UserSettings
+     # ...
+     include Shield::BearerLoginUserSettings
+     # ...
+   end
+   ```
+
+   `Shield::BearerLoginUserSettings` adds the following properties:
+
+   - `bearer_login_notify : Bool`
+
+   ---
+   \* *Skip this if using `UserSettings`* \*
+
+   ```crystal
    # ->>> src/models/user_options.cr
 
    class UserOptions < BaseModel
@@ -131,6 +148,8 @@ This token is revoked when the user logs out.
    Add any columns you added to the model here.
 
    ---
+   \* *Skip this if using `UserSettings`* \*
+
    ```crystal
    # ->>> db/migrations/XXXXXXXXXXXXXX_add_bearer_login_user_options.cr
 

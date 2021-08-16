@@ -11,6 +11,7 @@
 - `PasswordReset`
 - `User`
 - `UserOptions`
+- `UserSettings`
 
 ### Queries
 

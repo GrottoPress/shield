@@ -17,7 +17,7 @@
    ```
 
    `Shield::User` adds the following columns:
-   
+
    - `email : String`
    - `password_digest : String`
 
