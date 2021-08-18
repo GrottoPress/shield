@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Rename *bang* counterparts of nilable methods to their non-bang equivalents
 - Append `?` to names of methods with nilable return values
+- Prefer lazy loading for model associations
 
 ### Fixed
 - Avoid making queries in validations if operation already invalid

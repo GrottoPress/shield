@@ -30,7 +30,9 @@ describe Shield::CreateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
-      BearerLoginNotificationEmail.new(operation, bearer_login.not_nil!)
+      bearer_login = BearerLoginQuery.preload_user(bearer_login.not_nil!)
+
+      BearerLoginNotificationEmail.new(operation, bearer_login)
         .should(be_delivered)
     end
   end
@@ -48,7 +50,7 @@ describe Shield::CreateBearerLogin do
       bearer_login.should be_a(BearerLogin)
 
       BearerLoginNotificationEmail.new(operation, bearer_login.not_nil!)
-      .should_not(be_delivered)
+        .should_not(be_delivered)
     end
   end
 

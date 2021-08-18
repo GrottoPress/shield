@@ -3,7 +3,7 @@ class LoginNotificationEmail < BaseEmail
   end
 
   private def receivers
-    @login.user!
+    @login.user
   end
 
   private def heading

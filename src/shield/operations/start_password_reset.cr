@@ -48,6 +48,7 @@ module Shield::StartPasswordReset
     end
 
     private def send_email(password_reset : Shield::PasswordReset)
+      password_reset = PasswordResetQuery.preload_user(password_reset)
       mail_later PasswordResetRequestEmail, self, password_reset
     end
   end

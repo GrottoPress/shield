@@ -25,7 +25,7 @@ module Shield::Api::PasswordResets::Update
 
     private def reset_password(password_reset)
       ResetPassword.update(
-        password_reset.user!,
+        password_reset.user,
         params,
         session: nil,
         current_login: current_login?

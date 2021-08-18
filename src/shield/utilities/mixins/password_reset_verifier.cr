@@ -22,7 +22,9 @@ module Shield::PasswordResetVerifier
     end
 
     getter? password_reset : PasswordReset? do
-      password_reset_id?.try { |id| PasswordResetQuery.new.id(id).first? }
+      password_reset_id?.try do |id|
+        PasswordResetQuery.new.id(id).preload_user.first?
+      end
     end
 
     def password_reset_id : Int64

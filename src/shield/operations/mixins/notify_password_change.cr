@@ -4,7 +4,9 @@ module Shield::NotifyPasswordChange
 
     private def notify_password_change(user : Shield::User)
       return unless password_digest.changed?
-      return unless user.options!.password_notify
+
+      user = UserQuery.preload_options(user)
+      return unless user.options.password_notify
 
       mail_later PasswordChangeNotificationEmail, self, user
     end

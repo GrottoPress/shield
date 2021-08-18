@@ -22,7 +22,7 @@ module Shield::LoginVerifier
     end
 
     getter? login : Login? do
-      login_id?.try { |id| LoginQuery.new.id(id).first? }
+      login_id?.try { |id| LoginQuery.new.id(id).preload_user.first? }
     end
 
     def login_id : Int64

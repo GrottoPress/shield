@@ -44,7 +44,7 @@ module Shield::Api::EmailConfirmations::Edit
 
     private def update_email(email_confirmation)
       UpdateConfirmedEmail.update(
-        email_confirmation.user!.not_nil!,
+        email_confirmation.user.not_nil!,
         email_confirmation: email_confirmation,
         session: nil
       ) do |operation, updated_user|

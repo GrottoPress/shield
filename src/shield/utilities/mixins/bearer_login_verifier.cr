@@ -22,7 +22,9 @@ module Shield::BearerLoginVerifier
     end
 
     getter? bearer_login : BearerLogin? do
-      bearer_login_id?.try { |id| BearerLoginQuery.new.id(id).first? }
+      bearer_login_id?.try do |id|
+        BearerLoginQuery.new.id(id).preload_user.first?
+      end
     end
 
     def bearer_login_id : Int64

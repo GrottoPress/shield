@@ -13,7 +13,7 @@ module Shield::LoginHelpers
     end
 
     getter? current_user : User? do
-      current_login?.try &.user!
+      current_login?.try &.user
     end
 
     def current_login

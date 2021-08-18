@@ -23,7 +23,8 @@ describe Shield::NotifyLoginIfSet do
     ) do |operation, login|
       operation.saved?.should be_true
 
-      LoginNotificationEmail.new(operation, login.not_nil!).should(be_delivered)
+      login = LoginQuery.preload_user(login.not_nil!)
+      LoginNotificationEmail.new(operation, login).should(be_delivered)
     end
   end
 

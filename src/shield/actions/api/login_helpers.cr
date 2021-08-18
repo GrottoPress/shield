@@ -31,7 +31,7 @@ module Shield::Api::LoginHelpers
     end
 
     getter? current_bearer_user : User? do
-      current_bearer_login?.try &.user!
+      current_bearer_login?.try &.user
     end
 
     def current_bearer_login

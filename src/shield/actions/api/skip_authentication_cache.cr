@@ -7,7 +7,7 @@ module Shield::Api::SkipAuthenticationCache
     end
 
     def current_bearer_user? : User?
-      current_bearer_login?.try &.user!
+      current_bearer_login?.try &.user
     end
 
     def current_bearer_login? : BearerLogin?

@@ -23,7 +23,7 @@ module Shield::EmailConfirmationVerifier
 
     getter? email_confirmation : EmailConfirmation? do
       email_confirmation_id?.try do |id|
-        EmailConfirmationQuery.new.id(id).first?
+        EmailConfirmationQuery.new.id(id).preload_user.first?
       end
     end
 

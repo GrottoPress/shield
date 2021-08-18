@@ -6,7 +6,7 @@ class BearerLoginNotificationEmail < BaseEmail
   end
 
   private def receivers
-    @bearer_login.user!
+    @bearer_login.user
   end
 
   private def heading

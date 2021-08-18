@@ -3,7 +3,8 @@ module Shield::NotifyLoginIfSet
     after_commit notify_login
 
     private def notify_login(login : Shield::Login)
-      return unless login.user!.settings.login_notify?
+      login = LoginQuery.preload_user(login)
+      return unless login.user.settings.login_notify?
 
       mail_later LoginNotificationEmail, self, login
     end

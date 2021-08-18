@@ -85,8 +85,9 @@ describe Shield::StartPasswordReset do
     ) do |operation, password_reset|
       GuestPasswordResetRequestEmail.new(operation).should_not be_delivered
 
-      PasswordResetRequestEmail
-        .new(operation, password_reset.not_nil!)
+      password_reset = PasswordResetQuery.preload_user(password_reset.not_nil!)
+
+      PasswordResetRequestEmail.new(operation, password_reset)
         .should(be_delivered)
     end
   end
