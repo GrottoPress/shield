@@ -3,6 +3,8 @@ require "digest/sha1"
 require "digest/sha256"
 require "http/client"
 
+require "lucille"
+
 require "./shield/version"
 require "./config"
 require "./charms"

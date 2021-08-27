@@ -10,6 +10,11 @@ license: MIT
 
 crystal: ~> 1.0
 
+dependencies:
+  lucille:
+    github: GrottoPress/lucille
+    version: ~> 0.1.0
+
 development_dependencies:
   carbon:
     github: luckyframework/carbon

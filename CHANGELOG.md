@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Use descending order for queries in index actions
+- Integrate with [*Lucille*](https://github.com/GrottoPress/lucille)
 
 ## [0.11.0] - 2021-08-24
 
