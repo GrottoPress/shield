@@ -9,7 +9,7 @@ This posture makes it difficult for an application to be *insecure by accident*.
 ### Requirements
 
 - *Crystal* `~> 1.0`: Learn to install *Crystal* [here &raquo;](https://crystal-lang.org/install/)
-- *Lucky* `~> 0.27.0`: Learn to install *Lucky* [here &raquo;](https://luckyframework.org/guides/getting-started/installing)
+- *Lucky* `~> 0.28.0`: Learn to install *Lucky* [here &raquo;](https://luckyframework.org/guides/getting-started/installing)
 
 ### Generating a new *Lucky* project
 
