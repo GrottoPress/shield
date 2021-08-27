@@ -29,7 +29,10 @@ module Shield::Api::BearerLogins::Index
       Lucky::Paginator,
       BearerLoginQuery
     ) do
-      paginate BearerLoginQuery.new.user_id(user.id).is_active
+      paginate BearerLoginQuery.new
+        .user_id(user.id)
+        .is_active
+        .active_at.desc_order
     end
 
     def user

@@ -17,7 +17,7 @@ module Shield::Logins::Index
     end
 
     private getter paginated_logins : Tuple(Lucky::Paginator, LoginQuery) do
-      paginate LoginQuery.new.user_id(user.id).is_active
+      paginate LoginQuery.new.user_id(user.id).is_active.active_at.desc_order
     end
 
     def user
