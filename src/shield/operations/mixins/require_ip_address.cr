@@ -4,6 +4,10 @@ module Shield::RequireIpAddress
 
     before_save do
       set_ip_address
+      validate_ip_address_required
+    end
+
+    private def validate_ip_address_required
       validate_required ip_address, message: "could not be determined"
     end
 

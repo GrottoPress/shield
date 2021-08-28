@@ -8,10 +8,7 @@ module Shield::ValidatePassword
       require_uppercase
       require_number
       require_special_char
-      validate_size_of password,
-        min: Shield.settings.password_min_length,
-        max: 64, # To mitigate DOS. Also cuz bcrypt has a max length
-        allow_nil: true
+      validate_password_length
     end
 
     private def require_lowercase
@@ -48,6 +45,13 @@ module Shield::ValidatePassword
         value.each_char { |char| return unless char.ascii_alphanumeric? }
         password.add_error("must contain a special character")
       end
+    end
+
+    private def validate_password_length
+      validate_size_of password,
+        min: Shield.settings.password_min_length,
+        max: 64, # To mitigate DoS. Also cuz bcrypt has a max length
+        allow_nil: true
     end
   end
 end

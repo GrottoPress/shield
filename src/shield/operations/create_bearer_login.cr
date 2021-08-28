@@ -5,12 +5,21 @@ module Shield::CreateBearerLogin
     include Shield::SetUserIdFromUser
 
     before_save do
-      validate_required name, user_id
+      validate_name_required
+      validate_user_id_required
       validate_name_unique
     end
 
     include Shield::ValidateScopes
     include Shield::StartAuthentication
+
+    private def validate_name_required
+      validate_required name
+    end
+
+    private def validate_user_id_required
+      validate_required user_id
+    end
 
     private def set_inactive_at
       inactive_at.value = active_at.value.not_nil! + \

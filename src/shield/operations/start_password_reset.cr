@@ -5,8 +5,8 @@ module Shield::StartPasswordReset
     attribute email : String
 
     before_save do
-      validate_required email
-      validate_email email
+      validate_email_required
+      validate_email_valid
 
       set_user_id
       set_guest_email
@@ -20,6 +20,14 @@ module Shield::StartPasswordReset
 
     include Shield::RequireIpAddress
     include Shield::StartAuthentication
+
+    private def validate_email_required
+      validate_required email
+    end
+
+    private def validate_email_valid
+      validate_email email
+    end
 
     private def set_inactive_at
       inactive_at.value = active_at.value.not_nil! +

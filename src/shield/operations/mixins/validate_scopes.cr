@@ -3,13 +3,20 @@ module Shield::ValidateScopes
     needs allowed_scopes : Array(String)
 
     before_save do
-      validate_required scopes
-      validate_scopes
+      validate_scopes_required
+      validate_scopes_valid
     end
 
-    private def validate_scopes
+    private def validate_scopes_required
+      validate_required scopes
+
       scopes.value.try do |value|
         scopes.add_error("is required") if value.empty?
+      end
+    end
+
+    private def validate_scopes_valid
+      scopes.value.try do |value|
         scopes.add_error("is invalid") unless value.all? &.in?(allowed_scopes)
       end
     end

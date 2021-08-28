@@ -3,13 +3,17 @@ module Shield::ResetPassword
     attribute password : String
 
     before_save do
-      validate_required password
+      validate_password_required
     end
 
     after_save end_password_resets
 
     include Shield::UpdatePassword
     include Shield::DeleteSession
+
+    private def validate_password_required
+      validate_required password
+    end
 
     private def end_password_resets(user : Shield::User)
       PasswordResetQuery.new

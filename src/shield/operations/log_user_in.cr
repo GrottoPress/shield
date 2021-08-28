@@ -4,8 +4,9 @@ module Shield::LogUserIn
     attribute password : String
 
     before_save do
-      validate_required email, password
-      validate_email email
+      validate_email_required
+      validate_password_required
+      validate_email_valid
 
       verify_login
     end
@@ -13,6 +14,18 @@ module Shield::LogUserIn
     include Shield::RequireIpAddress
     include Shield::StartAuthentication
     include Shield::SetSession
+
+    private def validate_email_required
+      validate_required email
+    end
+
+    private def validate_password_required
+      validate_required password
+    end
+
+    private def validate_email_valid
+      validate_email email
+    end
 
     private def set_inactive_at
       inactive_at.value = active_at.value.not_nil! + \
