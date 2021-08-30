@@ -1,25 +1,30 @@
 require "../../../spec_helper"
 
+private class SaveUser < User::SaveOperation
+  permit_columns :email, :level, :password_digest
+
+  include Shield::SaveEmail
+end
+
 describe Shield::SaveEmail do
   it "saves email" do
     email = "user@exaMple.tlD"
 
-    user = RegisterRegularCurrentUser.create!(nested_params(
-      user: {email: email, password: "password12U)password"},
-      user_options: {
-        login_notify: true,
-        password_notify: true,
-        bearer_login_notify: false
-      }
-    ))
-
-    user.email.should eq(email)
+    SaveUser.create(params(
+      email: email,
+      password_digest: "abc",
+      level: "Author"
+    )) do |_, user|
+      user.should be_a(User)
+      user.try &.email.should eq(email)
+    end
   end
 
   it "requires email" do
-    RegisterRegularCurrentUser.create(
-      nested_params(user: {email: ""})
-    ) do |operation, user|
+    SaveUser.create(params(
+      password_digest: "abc",
+      level: "Author"
+    )) do |operation, user|
       user.should be_nil
 
       assert_invalid(operation.email, " required")
@@ -27,9 +32,11 @@ describe Shield::SaveEmail do
   end
 
   it "rejects invalid email" do
-    RegisterRegularCurrentUser.create(
-      nested_params(user: {email: "user"})
-    ) do |operation, user|
+    SaveUser.create(params(
+        email: "email",
+        password_digest: "abc",
+        level: "Author"
+    )) do |operation, user|
       user.should be_nil
 
       assert_invalid(operation.email, "is invalid")
@@ -41,9 +48,11 @@ describe Shield::SaveEmail do
 
     UserFactory.create &.email(email)
 
-    RegisterRegularCurrentUser.create(
-      nested_params(user: {email: email})
-    ) do |operation, user|
+    SaveUser.create(params(
+      email: email,
+      password_digest: "abc",
+      level: "Author"
+    )) do |operation, user|
       user.should be_nil
 
       operation.user_email?.should be_true

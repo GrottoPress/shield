@@ -1,31 +1,35 @@
 require "../../../spec_helper"
 
+private class CreateUser < User::SaveOperation
+  permit_columns :email, :level
+  attribute password : String
+
+  include Shield::CreatePassword
+end
+
 describe Shield::CreatePassword do
   it "saves password" do
     password = "password12U-password"
 
-    user = RegisterRegularCurrentUser.create!(nested_params(
-      user: {email: "user@example.tld", password: password},
-      user_options: {
-        login_notify: true,
-        password_notify: true,
-        bearer_login_notify: true
-      }
-    ))
+    CreateUser.create(params(
+      email: "user@example.tld",
+      level: "Author",
+      password: password
+    )) do |_, user|
+      user.should be_a(User)
 
-    BcryptHash.new(password)
-      .verify?(user.password_digest)
-      .should(be_true)
+      user.try do |user|
+        BcryptHash.new(password)
+          .verify?(user.password_digest)
+          .should(be_true)
+      end
+    end
   end
 
   it "requires password" do
-    RegisterRegularCurrentUser.create(nested_params(
-      user: {email: "user@domain.tld", password: ""},
-      user_options: {
-        login_notify: true,
-        password_notify: true,
-        bearer_login_notify: true
-      }
+    CreateUser.create(params(
+      email: "user@domain.tld",
+      level: "Author"
     )) do |operation, user|
       user.should be_nil
 

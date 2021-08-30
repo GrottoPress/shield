@@ -1,10 +1,27 @@
 require "../../../spec_helper"
 
+private class SaveUser < User::SaveOperation
+  permit_columns :email, :level
+  attribute password : String
+
+  before_save do
+    set_password_digest
+  end
+
+  include Shield::ValidatePassword
+
+  private def set_password_digest
+    password_digest.value = password.value
+  end
+end
+
 describe Shield::ValidatePassword do
   it "rejects short passwords" do
-    RegisterRegularCurrentUser.create(
-      nested_params(user: {password: "pAssword1!"})
-    ) do |operation, user|
+    SaveUser.create(params(
+      email: "user@example.tld",
+      level: "Author",
+      password: "pAssword1!"
+    )) do |operation, user|
       user.should be_nil
 
       assert_invalid(operation.password, "too short")
@@ -12,24 +29,23 @@ describe Shield::ValidatePassword do
   end
 
   it "enforces number in password" do
-    RegisterRegularCurrentUser.create(
-      nested_params(user: {password: "passwordAPASSWORD-"})
-    ) do |operation, user|
+    SaveUser.create(params(
+      email: "user@example.tld",
+      level: "Author",
+      password: "passwordAPASSWORD-"
+    )) do |operation, user|
       user.should be_nil
 
       assert_invalid(operation.password, " number")
     end
   end
 
-  it "does not enforce number in password" do
+  it "does not enforce number in password if setting is false" do
     Shield.temp_config(password_require_number: false) do
-      RegisterRegularCurrentUser.create(nested_params(
-        user: {email: "user@example.net", password: "passwordAPASSWORD-"},
-        user_options: {
-          login_notify: true,
-          password_notify: true,
-          bearer_login_notify: false
-        }
+      SaveUser.create(params(
+        email: "user@example.tld",
+        level: "Author",
+        password: "passwordAPASSWORD-"
       )) do |operation, user|
         user.should be_a(User)
       end
@@ -37,24 +53,23 @@ describe Shield::ValidatePassword do
   end
 
   it "enforces lowercase letter in password" do
-    RegisterRegularCurrentUser.create(nested_params(user: {
+    SaveUser.create(params(
+      email: "user@example.tld",
+      level: "Author",
       password: "PASSWORD1AP%ASSWORD"
-    })) do |operation, user|
+    )) do |operation, user|
       user.should be_nil
 
       assert_invalid(operation.password, "lowercase letter")
     end
   end
 
-  it "does not enforce lowercase letter in password" do
+  it "does not enforce lowercase letter in password if setting is false" do
     Shield.temp_config(password_require_lowercase: false) do
-      RegisterRegularCurrentUser.create(nested_params(
-        user: {email: "user@example.org", password: "PASSWORD1AP%ASSWORD"},
-        user_options: {
-          login_notify: true,
-          password_notify: true,
-          bearer_login_notify: false
-        }
+      SaveUser.create(params(
+        email: "user@example.tld",
+        level: "Author",
+        password: "PASSWORD1AP%ASSWORD"
       )) do |operation, user|
         user.should be_a(User)
       end
@@ -62,24 +77,23 @@ describe Shield::ValidatePassword do
   end
 
   it "enforces uppercase letter in password" do
-    RegisterRegularCurrentUser.create(
-      nested_params(user: {password: "pa(ssword1apassword"})
-    ) do |operation, user|
+    SaveUser.create(params(
+      email: "user@example.tld",
+      level: "Author",
+      password: "pa(ssword1apassword"
+    )) do |operation, user|
       user.should be_nil
 
       assert_invalid(operation.password, "uppercase letter")
     end
   end
 
-  it "does not enforce uppercase letter in password" do
+  it "does not enforce uppercase letter in password if setting is false" do
     Shield.temp_config(password_require_uppercase: false) do
-      RegisterRegularCurrentUser.create(nested_params(
-        user: {email: "user@domain.com", password: "pa(ssword1apassword"},
-        user_options: {
-          login_notify: true,
-          password_notify: true,
-          bearer_login_notify: false
-        }
+      SaveUser.create(params(
+        email: "user@example.tld",
+        level: "Author",
+        password: "pa(ssword1apassword"
       )) do |operation, user|
         user.should be_a(User)
       end
@@ -87,24 +101,23 @@ describe Shield::ValidatePassword do
   end
 
   it "enforces special character in password" do
-    RegisterRegularCurrentUser.create(nested_params(user: {
+    SaveUser.create(params(
+      email: "user@example.tld",
+      level: "Author",
       password: "password1Apassword"
-    })) do |operation, user|
+    )) do |operation, user|
       user.should be_nil
 
       assert_invalid(operation.password, "special character")
     end
   end
 
-  it "does not enforce special character in password" do
+  it "does not enforce special character in password if setting is false" do
     Shield.temp_config(password_require_special_char: false) do
-      RegisterRegularCurrentUser.create(nested_params(
-        user: {email: "user@domain.net", password: "password1Apassword"},
-        user_options: {
-          login_notify: true,
-          password_notify: true,
-          bearer_login_notify: false
-        }
+      SaveUser.create(params(
+        email: "user@example.tld",
+        level: "Author",
+        password: "password1Apassword"
       )) do |operation, user|
         user.should be_a(User)
       end

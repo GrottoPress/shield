@@ -1,15 +1,19 @@
 require "../../../spec_helper"
 
+private class SaveBearerLogin < BearerLogin::SaveOperation
+  permit_columns :user_id, :active_at, :name, :token_digest
+
+  include Shield::Activate
+end
+
 describe Shield::Activate do
   it "sets active time" do
     user = UserFactory.create
     UserOptionsFactory.create &.user_id(user.id)
 
-    CreateBearerLogin.create(
-      params(name: "some token"),
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index"],
-      user: user
+    SaveBearerLogin.create(
+      params(name: "some token", user_id: user.id, token_digest: "abc"),
+      scopes: ["posts.index"]
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
       bearer_login.try &.active_at.should be_close(Time.utc, 2.seconds)
@@ -21,12 +25,14 @@ describe Shield::Activate do
     user = UserFactory.create
     UserOptionsFactory.create &.user_id(user.id)
 
-    CreateBearerLogin.create(
-      params(name: "some token"),
-      active_at: time,
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index"],
-      user: user
+    SaveBearerLogin.create(
+      params(
+        name: "some token",
+        user_id: user.id,
+        token_digest: "abc",
+        active_at: time
+      ),
+      scopes: ["posts.index"]
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
       bearer_login.try(&.active_at).should eq(time)

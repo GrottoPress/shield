@@ -1,5 +1,5 @@
 class WelcomeEmail < BaseEmail
-  def initialize(@operation : RegisterCurrentUser, @user : User) : Nil
+  def initialize(@operation : User::SaveOperation, @user : User) : Nil
   end
 
   private def receivers

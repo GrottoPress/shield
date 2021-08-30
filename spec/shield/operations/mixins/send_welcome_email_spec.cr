@@ -1,49 +1,39 @@
 require "../../../spec_helper"
 
+private class SaveUser < User::SaveOperation
+  permit_columns :email, :level, :password_digest
+
+  include Shield::SaveEmail
+  include Shield::SendWelcomeEmail
+end
+
 describe Shield::SendWelcomeEmail do
-  it "sends welcome email for existing user" do
-    email = "mary@company.com"
+  it "sends welcome email" do
+    SaveUser.create(params(
+      email: "abc@def.ghi",
+      password_digest: "abc",
+      level: "Author"
+    )) do |operation, user|
+      user.should be_a(User)
 
-    user = UserFactory.create &.email(email)
-    email_confirmation = EmailConfirmationFactory.create &.email(email)
-
-    params = nested_params(
-      user: {password: "password12U.password"},
-      user_options: {
-        login_notify: true,
-        password_notify: true,
-        bearer_login_notify: false
-      }
-    )
-
-    RegisterCurrentUser.create(
-      params,
-      email_confirmation: email_confirmation,
-      session: Lucky::Session.new,
-    ) do |operation, user|
-      user.should be_nil
-
-      UserWelcomeEmail.new(operation).should be_delivered
+      UserWelcomeEmail.new(operation).should_not be_delivered
+      WelcomeEmail.new(operation, user.not_nil!).should be_delivered
     end
   end
 
-  it "sends welcome email for new user" do
-    params = nested_params(
-      user: {password: "password12U.password"},
-      user_options: {
-        login_notify: true,
-        password_notify: true,
-        bearer_login_notify: false
-      }
-    )
+  it "sends welcome email if user already exists" do
+    email = "user@example.tld"
 
-    RegisterCurrentUser.create(
-      params,
-      email_confirmation: EmailConfirmationFactory.create,
-      session: Lucky::Session.new,
-    ) do |operation, user|
-      UserWelcomeEmail.new(operation).should_not be_delivered
-      WelcomeEmail.new(operation, user.not_nil!).should be_delivered
+    UserFactory.create &.email(email)
+
+    SaveUser.create(params(
+      email: email,
+      password_digest: "abc",
+      level: "Author"
+    )) do |operation, user|
+      user.should be_nil
+
+      UserWelcomeEmail.new(operation).should be_delivered
     end
   end
 end
