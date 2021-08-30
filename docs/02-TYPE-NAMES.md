@@ -135,6 +135,5 @@ API equivalents, where applicable, are prefixed with `Api::`
 - `PasswordResetParams`
 - `PasswordResetSession`
 - `PasswordResetUrl`
-- `PwnedPasswords`
 - `ReturnUrlSession`
 - `Sha256Hash`

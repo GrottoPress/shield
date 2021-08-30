@@ -33,7 +33,3 @@ end
 struct Sha256Hash
   include Shield::Sha256Hash
 end
-
-struct PwnedPasswords
-  include Shield::PwnedPasswords
-end
