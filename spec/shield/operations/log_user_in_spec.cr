@@ -72,42 +72,4 @@ describe Shield::LogUserIn do
       assert_invalid(operation.password, " incorrect")
     end
   end
-
-  it "sends login notification" do
-    email = "user@example.tld"
-    password = "pass)word1Apassword"
-
-    user = UserFactory.create &.email(email).password(password)
-    UserOptionsFactory.create &.user_id(user.id).login_notify(true)
-
-    LogUserIn.create(
-      params(email: email, password: password),
-      session: Lucky::Session.new,
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    ) do |operation, login|
-      operation.saved?.should be_true
-
-      login = LoginQuery.preload_user(login.not_nil!)
-      LoginNotificationEmail.new(operation, login).should(be_delivered)
-    end
-  end
-
-  it "does not send login notification" do
-    password = "pass)word1Apassword"
-    email = "user@example.tld"
-
-    user = UserFactory.create &.email(email).password(password)
-    UserOptionsFactory.create &.user_id(user.id).login_notify(false)
-
-    LogUserIn.create(
-      params(email: email, password: password),
-      session: Lucky::Session.new,
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    ) do |operation, login|
-      operation.saved?.should be_true
-
-      LoginNotificationEmail.new(operation, login.not_nil!)
-        .should_not(be_delivered)
-    end
-  end
 end

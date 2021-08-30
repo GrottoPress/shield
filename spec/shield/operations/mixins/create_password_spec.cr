@@ -33,21 +33,4 @@ describe Shield::CreatePassword do
       assert_valid(operation.password_digest, " required")
     end
   end
-
-  it "does not send password change notification" do
-    RegisterRegularCurrentUser.create(nested_params(
-      user: {email: "user@domain.tld", password: "password1=Apassword"},
-      user_options: {
-        login_notify: true,
-        password_notify: false,
-        bearer_login_notify: true
-      }
-    )) do |operation, user|
-      user.should be_a(User)
-
-      PasswordChangeNotificationEmail
-        .new(operation, user.not_nil!)
-        .should_not(be_delivered)
-    end
-  end
 end

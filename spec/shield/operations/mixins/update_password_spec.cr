@@ -33,67 +33,6 @@ describe Shield::UpdatePassword do
     end
   end
 
-  it "sends password change notification" do
-    password = "pass)word1Apassword"
-    new_password = "ass)word1Apasswor"
-
-    user = UserFactory.create &.password(password)
-    UserOptionsFactory.create &.user_id(user.id).password_notify(true)
-
-    UpdateRegularCurrentUser.update(
-      user,
-      nested_params(user: {password: new_password}),
-      current_login: nil
-    ) do |operation, updated_user|
-      operation.saved?.should be_true
-
-      PasswordChangeNotificationEmail
-        .new(operation, updated_user)
-        .should(be_delivered)
-    end
-  end
-
-  it "does not send password change notification" do
-    password = "pass)word1Apassword"
-    new_password = "ass)word1Apassword"
-
-    user = UserFactory.create &.password(password)
-    UserOptionsFactory.create &.user_id(user.id)
-
-    UpdateRegularCurrentUser.update(
-      user,
-      nested_params(
-        user: {password: new_password},
-        user_options: {password_notify: false}
-      ),
-      current_login: nil
-    ) do |operation, updated_user|
-      operation.saved?.should be_true
-      PasswordChangeNotificationEmail
-        .new(operation, updated_user)
-        .should_not(be_delivered)
-    end
-  end
-
-  it "does not send password change notification if password did not change" do
-    password = "pass)word1Apassword"
-
-    user = UserFactory.create &.password(password)
-    UserOptionsFactory.create &.user_id(user.id).password_notify(true)
-
-    UpdateRegularCurrentUser.update(
-      user,
-      nested_params(user: {email: "user2@example.tld", password: password}),
-      current_login: nil
-    ) do |operation, updated_user|
-      operation.saved?.should be_true
-
-      PasswordChangeNotificationEmail
-        .new(operation, updated_user)
-        .should_not(be_delivered)
-    end
-  end
-
   it "logs out everywhere when password changes" do
     email = "user@example.tld"
     password = "password12U-password"

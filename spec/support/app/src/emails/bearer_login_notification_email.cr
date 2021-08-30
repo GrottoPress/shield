@@ -1,6 +1,6 @@
 class BearerLoginNotificationEmail < BaseEmail
   def initialize(
-    @operation : Shield::CreateBearerLogin,
+    @operation : BearerLogin::SaveOperation,
     @bearer_login : BearerLogin
   )
   end

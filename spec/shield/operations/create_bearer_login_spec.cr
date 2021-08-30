@@ -18,42 +18,6 @@ describe Shield::CreateBearerLogin do
     end
   end
 
-  it "sends login notification" do
-    user = UserFactory.create
-    UserOptionsFactory.create &.user_id(user.id).bearer_login_notify(true)
-
-    CreateBearerLogin.create(
-      params(name: "some token"),
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
-      user: user
-    ) do |operation, bearer_login|
-      bearer_login.should be_a(BearerLogin)
-
-      bearer_login = BearerLoginQuery.preload_user(bearer_login.not_nil!)
-
-      BearerLoginNotificationEmail.new(operation, bearer_login)
-        .should(be_delivered)
-    end
-  end
-
-  it "does not send login notification" do
-    user = UserFactory.create
-    UserOptionsFactory.create &.user_id(user.id).bearer_login_notify(false)
-
-    CreateBearerLogin.create(
-      params(name: "some token"),
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
-      user: user
-    ) do |operation, bearer_login|
-      bearer_login.should be_a(BearerLogin)
-
-      BearerLoginNotificationEmail.new(operation, bearer_login.not_nil!)
-        .should_not(be_delivered)
-    end
-  end
-
   it "requires user id" do
     CreateBearerLogin.create(
       params(name: "some token"),
