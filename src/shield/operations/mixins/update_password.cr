@@ -21,11 +21,9 @@ module Shield::UpdatePassword
     private def log_out_everywhere(user : Shield::User)
       return unless password_digest.changed?
 
-      LoginQuery.new
-        .user_id(user.id)
-        .id.not.eq(current_login.try(&.id) || 0_i64)
-        .is_active
-        .update(inactive_at: Time.utc)
+      query = LoginQuery.new.user_id(user.id).is_active
+      current_login.try { |login| query = query.id.not.eq(login.id) }
+      query.update(inactive_at: Time.utc)
     end
   end
 end

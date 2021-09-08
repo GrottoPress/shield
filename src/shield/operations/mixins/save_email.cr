@@ -20,9 +20,9 @@ module Shield::SaveEmail
 
     private def set_user_email
       email.value.try do |value|
-        @user_email = UserQuery.new
-          .id.not.eq(record.try(&.id) || 0_i64)
-          .email(value).any?
+        query = UserQuery.new.email(value)
+        record.try { |record| query = query.id.not.eq(record.id) }
+        @user_email = query.any?
       end
     end
 

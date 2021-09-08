@@ -3,10 +3,9 @@ module Shield::DeleteLoginsOnPasswordChange
     private def log_out_everywhere(user : Shield::User)
       return unless password_digest.changed?
 
-      LoginQuery.new
-        .user_id(user.id)
-        .id.not.eq(current_login.try(&.id) || 0_i64)
-        .delete
+      query = LoginQuery.new.user_id(user.id)
+      current_login.try { |login| query = query.id.not.eq(login.id) }
+      query.delete
     end
   end
 end
