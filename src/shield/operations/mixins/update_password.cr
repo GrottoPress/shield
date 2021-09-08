@@ -12,9 +12,7 @@ module Shield::UpdatePassword
 
     private def set_password_digest
       password.value.try do |value|
-        bcrypt = BcryptHash.new(value)
-        return if bcrypt.verify?(password_digest.original_value.to_s)
-        password_digest.value = bcrypt.hash
+        password_digest.value = BcryptHash.new(value).hash
       end
     end
 
