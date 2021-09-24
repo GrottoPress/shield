@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Use descending order for queries in index actions
 - Integrate with [*Lucille*](https://github.com/GrottoPress/lucille)
 
+### Removed
+- Revert avoiding queries in validations if operation already invalid
+
 ## [0.11.0] - 2021-08-24
 
 ### Added

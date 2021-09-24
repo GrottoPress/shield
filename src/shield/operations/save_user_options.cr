@@ -17,7 +17,7 @@ module Shield::SaveUserOptions
     end
 
     private def validate_user_exists
-      return unless valid? && user_id.changed?
+      return unless user_id.changed?
       validate_primary_key(user_id, query: UserQuery)
     end
   end
