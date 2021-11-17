@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Add support for *Crystal* v1.2
+- Allow including `Shield::ValidatePassword` in `Avram::Operation` operations
 
 ### Changed
 - Use descending order for queries in index actions

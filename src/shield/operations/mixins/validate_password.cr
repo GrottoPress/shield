@@ -3,13 +3,23 @@ module Shield::ValidatePassword
   #
   # - https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
   macro included
-    before_save do
-      require_lowercase
-      require_uppercase
-      require_number
-      require_special_char
-      validate_password_length
-    end
+    {% if @type < Avram::Operation %}
+      before_run do
+        require_lowercase
+        require_uppercase
+        require_number
+        require_special_char
+        validate_password_length
+      end
+    {% else %}
+      before_save do
+        require_lowercase
+        require_uppercase
+        require_number
+        require_special_char
+        validate_password_length
+      end
+    {% end %}
 
     private def require_lowercase
       return unless Shield.settings.password_require_lowercase
