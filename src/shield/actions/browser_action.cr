@@ -3,7 +3,7 @@ module Shield::BrowserAction
     include Lucky::ProtectFromForgery
     include Lucky::Paginator::BackendHelpers
 
-    include Shield::ActionHelpers
+    include Lucille::ActionHelpers
     include Shield::ActionPipes
   end
 end

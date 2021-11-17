@@ -10,7 +10,7 @@ module Shield::BearerLogins::Create
       CreateBearerLogin.create(
         params,
         user: user,
-        scopes: array_param(CreateBearerLogin, :scopes),
+        scopes: array_param(CreateBearerLogin.param_key, :scopes),
         allowed_scopes: BearerScope.action_scopes.map(&.name)
       ) do |operation, bearer_login|
         if bearer_login
