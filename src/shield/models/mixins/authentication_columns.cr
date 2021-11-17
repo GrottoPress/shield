@@ -1,6 +1,6 @@
 module Shield::AuthenticationColumns
   macro included
-    include Shield::StatusColumns
+    include Lucille::StatusColumns
 
     column token_digest : String
   end

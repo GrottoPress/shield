@@ -1,5 +1,5 @@
 module Shield::EndAuthentication
   macro included
-    include Shield::Deactivate
+    include Lucille::Deactivate
   end
 end

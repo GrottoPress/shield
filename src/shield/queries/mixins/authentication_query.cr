@@ -1,5 +1,5 @@
 module Shield::AuthenticationQuery
   macro included
-    include Shield::StatusQuery
+    include Lucille::StatusQuery
   end
 end

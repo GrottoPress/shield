@@ -1,6 +1,6 @@
 module Shield::StartAuthentication
   macro included
-    include Shield::Activate
+    include Lucille::Activate
     include Shield::SetToken
   end
 end
