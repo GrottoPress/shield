@@ -11,7 +11,11 @@ describe Shield::StartEmailConfirmation do
       email_confirmation.should be_a(EmailConfirmation)
       operation.token.should_not be_empty
 
-      email_confirmation.try(&.ip_address).should(eq ip_address.address)
+      email_confirmation.try do |email_confirmation|
+        email_confirmation.status.active?.should be_true
+        email_confirmation.inactive_at.should_not be_nil
+        email_confirmation.ip_address.should(eq ip_address.address)
+      end
     end
   end
 
@@ -28,8 +32,13 @@ describe Shield::StartEmailConfirmation do
       email_confirmation.should be_a(EmailConfirmation)
       operation.token.should_not be_empty
 
-      email_confirmation.try(&.ip_address).should(eq ip_address.address)
-      email_confirmation.try(&.user_id).try &.should(eq user.id)
+      email_confirmation.try do |email_confirmation|
+        email_confirmation.status.active?.should be_true
+        email_confirmation.inactive_at.should_not be_nil
+        email_confirmation.ip_address.should(eq ip_address.address)
+        email_confirmation.user_id.should_not be_nil
+        email_confirmation.user_id.try &.should(eq user.id)
+      end
     end
   end
 

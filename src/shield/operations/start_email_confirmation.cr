@@ -12,9 +12,10 @@ module Shield::StartEmailConfirmation
       send_user_email
     end
 
-    private def set_inactive_at
-      inactive_at.value = active_at.value.not_nil! +
-        Shield.settings.email_confirmation_expiry
+    private def set_default_inactive_at
+      active_at.value.try do |value|
+        inactive_at.value = value + Shield.settings.email_confirmation_expiry
+      end
     end
 
     private def send_user_email

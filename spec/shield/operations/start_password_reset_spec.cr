@@ -14,10 +14,13 @@ describe Shield::StartPasswordReset do
       password_reset.should be_a(PasswordReset)
       operation.token.should_not be_empty
 
-      password_reset.try &.status.active?.should be_true
-      password_reset.try &.ip_address.should(eq ip_address.address)
-      password_reset.try &.token_digest.should_not(be_empty)
-      password_reset.try &.user_id.should(eq user.id)
+      password_reset.try do |password_reset|
+        password_reset.status.active?.should be_true
+        password_reset.inactive_at.should_not be_nil
+        password_reset.ip_address.should(eq ip_address.address)
+        password_reset.token_digest.should_not(be_empty)
+        password_reset.user_id.should(eq user.id)
+      end
     end
   end
 

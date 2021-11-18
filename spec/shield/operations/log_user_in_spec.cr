@@ -18,6 +18,7 @@ describe Shield::LogUserIn do
     )
 
     login.status.active?.should be_true
+    login.inactive_at.should_not be_nil
     login.ip_address.should eq(ip_address.address)
 
     LoginSession.new(session).login_id.should eq(login.id)

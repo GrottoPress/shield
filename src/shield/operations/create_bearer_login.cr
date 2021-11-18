@@ -21,9 +21,10 @@ module Shield::CreateBearerLogin
       validate_required user_id
     end
 
-    private def set_inactive_at
-      inactive_at.value = active_at.value.not_nil! + \
-        Shield.settings.bearer_login_expiry
+    private def set_default_inactive_at
+      active_at.value.try do |value|
+        inactive_at.value = value + Shield.settings.bearer_login_expiry
+      end
     end
 
     # Prevents a user from using a bearer login `name`

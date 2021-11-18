@@ -29,9 +29,10 @@ module Shield::StartPasswordReset
       validate_email email
     end
 
-    private def set_inactive_at
-      inactive_at.value = active_at.value.not_nil! +
-        Shield.settings.password_reset_expiry
+    private def set_default_inactive_at
+      active_at.value.try do |value|
+        inactive_at.value = value + Shield.settings.password_reset_expiry
+      end
     end
 
     private def set_user_id
