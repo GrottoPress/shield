@@ -17,7 +17,7 @@ describe Shield::Api::BearerLogins::Destroy do
     ))
 
     response.should send_json(200, {status: "success"})
-    bearer_login.reload.inactive?.should be_true
+    bearer_login.reload.status.inactive?.should be_true
   end
 
   it "requires logged in" do

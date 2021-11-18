@@ -13,7 +13,7 @@ describe Shield::CreateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
-      bearer_login.try(&.active?).should be_true
+      bearer_login.try(&.status.active?).should be_true
       operation.token.should_not be_empty
     end
   end

@@ -4,7 +4,7 @@ module Shield::PasswordResetPipes
       password_reset = PasswordResetSession.new(session).password_reset?
 
       if password_reset.nil? ||
-        !password_reset.not_nil!.active? ||
+        !password_reset.not_nil!.status.active? ||
         password_reset.not_nil!.ip_address == remote_ip?.try &.address
         continue
       else

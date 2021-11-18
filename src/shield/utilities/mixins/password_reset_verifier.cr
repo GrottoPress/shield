@@ -10,7 +10,7 @@ module Shield::PasswordResetVerifier
       return unless password_reset_id? && password_reset_token?
       sha256 = Sha256Hash.new(password_reset_token)
 
-      if password_reset?.try(&.active?)
+      if password_reset?.try(&.status.active?)
         sha256.verify?(password_reset.token_digest)
       else
         sha256.fake_verify

@@ -10,7 +10,7 @@ module Shield::BearerLoginVerifier
       return unless bearer_login_id? && bearer_login_token?
       sha256 = Sha256Hash.new(bearer_login_token)
 
-      if bearer_login?.try(&.active?)
+      if bearer_login?.try(&.status.active?)
         sha256.verify?(bearer_login.token_digest)
       else
         sha256.fake_verify

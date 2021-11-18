@@ -10,7 +10,7 @@ module Shield::LoginVerifier
       return unless login_id? && login_token?
       sha256 = Sha256Hash.new(login_token)
 
-      if login?.try(&.active?)
+      if login?.try(&.status.active?)
         sha256.verify?(login.token_digest)
       else
         sha256.fake_verify

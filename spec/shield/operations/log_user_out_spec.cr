@@ -18,7 +18,7 @@ describe Shield::LogUserOut do
 
     LoginSession.new(session).login_id?.should_not be_nil
 
-    login.active?.should be_true
+    login.status.active?.should be_true
 
     LogUserOut.update(
       LoginSession.new(session).login,
@@ -26,7 +26,7 @@ describe Shield::LogUserOut do
     ) do |operation, updated_login|
       operation.saved?.should be_true
 
-      updated_login.active?.should be_false
+      updated_login.status.active?.should be_false
       LoginSession.new(session).login_id?.should be_nil
     end
   end

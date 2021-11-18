@@ -12,7 +12,7 @@ describe Shield::EndEmailConfirmation do
 
       EmailConfirmationSession.new(session).set(operation, email_confirmation)
 
-      email_confirmation.active?.should be_true
+      email_confirmation.status.active?.should be_true
 
       EndEmailConfirmation.update(
         email_confirmation,
@@ -20,7 +20,7 @@ describe Shield::EndEmailConfirmation do
       ) do |operation, updated_email_confirmation|
         operation.saved?.should be_true
 
-        updated_email_confirmation.active?.should be_false
+        updated_email_confirmation.status.active?.should be_false
       end
     end
 

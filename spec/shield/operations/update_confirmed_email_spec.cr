@@ -54,11 +54,11 @@ describe Shield::UpdateConfirmedEmail do
 
     email_confirmation_5 = EmailConfirmationFactory.create &.email("def@domain.com")
 
-    email_confirmation.active?.should be_true
-    email_confirmation_2.active?.should be_true
-    email_confirmation_3.active?.should be_true
-    email_confirmation_4.active?.should be_true
-    email_confirmation_5.active?.should be_true
+    email_confirmation.status.active?.should be_true
+    email_confirmation_2.status.active?.should be_true
+    email_confirmation_3.status.active?.should be_true
+    email_confirmation_4.status.active?.should be_true
+    email_confirmation_5.status.active?.should be_true
 
     UpdateConfirmedEmail.update!(
       user,
@@ -66,10 +66,10 @@ describe Shield::UpdateConfirmedEmail do
       session: nil
     )
 
-    email_confirmation.reload.active?.should be_false
-    email_confirmation_2.reload.active?.should be_false
-    email_confirmation_3.reload.active?.should be_false
-    email_confirmation_4.reload.active?.should be_true
-    email_confirmation_5.reload.active?.should be_true
+    email_confirmation.reload.status.active?.should be_false
+    email_confirmation_2.reload.status.active?.should be_false
+    email_confirmation_3.reload.status.active?.should be_false
+    email_confirmation_4.reload.status.active?.should be_true
+    email_confirmation_5.reload.status.active?.should be_true
   end
 end

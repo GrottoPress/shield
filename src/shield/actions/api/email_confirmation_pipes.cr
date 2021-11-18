@@ -7,7 +7,7 @@ module Shield::Api::EmailConfirmationPipes
       email_confirmation = email_confirmation_params.email_confirmation?
 
       if email_confirmation.nil? ||
-        !email_confirmation.not_nil!.active? ||
+        !email_confirmation.not_nil!.status.active? ||
         email_confirmation.not_nil!.ip_address == remote_ip?.try &.address
         continue
       else

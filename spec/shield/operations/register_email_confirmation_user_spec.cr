@@ -32,9 +32,9 @@ describe Shield::RegisterEmailConfirmationUser do
     email_confirmation_2 = EmailConfirmationFactory.create &.email(email)
     email_confirmation_3 = EmailConfirmationFactory.create &.email("abc@domain.net")
 
-    email_confirmation.active?.should be_true
-    email_confirmation_2.active?.should be_true
-    email_confirmation_3.active?.should be_true
+    email_confirmation.status.active?.should be_true
+    email_confirmation_2.status.active?.should be_true
+    email_confirmation_3.status.active?.should be_true
 
     email_confirmation.user_id.should be_nil
     email_confirmation_2.user_id.should be_nil
@@ -57,9 +57,9 @@ describe Shield::RegisterEmailConfirmationUser do
     email_confirmation_2 = email_confirmation_2.reload
     email_confirmation_3 = email_confirmation_3.reload
 
-    email_confirmation.active?.should be_false
-    email_confirmation_2.active?.should be_false
-    email_confirmation_3.active?.should be_true
+    email_confirmation.status.active?.should be_false
+    email_confirmation_2.status.active?.should be_false
+    email_confirmation_3.status.active?.should be_true
 
     email_confirmation.user_id.should eq(user.id)
     email_confirmation_2.user_id.should be_nil

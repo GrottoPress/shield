@@ -49,8 +49,8 @@ describe Shield::UpdatePassword do
     login_1 = LoginFactory.create &.user_id(user.id)
     login_2 = LoginFactory.create &.user_id(user.id)
 
-    login_1.active?.should be_true
-    login_2.active?.should be_true
+    login_1.status.active?.should be_true
+    login_2.status.active?.should be_true
 
     UpdateUser.update(
       user,
@@ -59,8 +59,8 @@ describe Shield::UpdatePassword do
     ) do |operation, _|
       operation.saved?.should be_true
 
-      login_1.reload.active?.should be_false
-      login_2.reload.active?.should be_false
+      login_1.reload.status.active?.should be_false
+      login_2.reload.status.active?.should be_false
     end
   end
 
@@ -74,18 +74,18 @@ describe Shield::UpdatePassword do
     login_2 = LoginFactory.create &.user_id(user.id)
     current_login = LoginFactory.create &.user_id(user.id)
 
-    login_1.active?.should be_true
-    login_2.active?.should be_true
-    current_login.active?.should be_true
+    login_1.status.active?.should be_true
+    login_2.status.active?.should be_true
+    current_login.status.active?.should be_true
 
     UpdateUser.update(
       user,
       params(password: new_password),
       current_login: current_login
     ) do |operation, _|
-      login_1.reload.active?.should be_false
-      login_2.reload.active?.should be_false
-      current_login.reload.active?.should be_true
+      login_1.reload.status.active?.should be_false
+      login_2.reload.status.active?.should be_false
+      current_login.reload.status.active?.should be_true
     end
   end
 
@@ -103,8 +103,8 @@ describe Shield::UpdatePassword do
     john = UserFactory.create &.email(john_email).password(john_password)
     john_login = LoginFactory.create &.user_id(john.id)
 
-    mary_login.active?.should be_true
-    john_login.active?.should be_true
+    mary_login.status.active?.should be_true
+    john_login.status.active?.should be_true
 
     UpdateUser.update(
       mary,
@@ -113,8 +113,8 @@ describe Shield::UpdatePassword do
     ) do |operation, _|
       operation.saved?.should be_true
 
-      mary_login.reload.active?.should be_false
-      john_login.reload.active?.should be_true
+      mary_login.reload.status.active?.should be_false
+      john_login.reload.status.active?.should be_true
     end
   end
 end

@@ -16,7 +16,7 @@ describe Shield::EndPasswordReset do
 
       PasswordResetSession.new(session).set(operation, password_reset)
 
-      password_reset.active?.should be_true
+      password_reset.status.active?.should be_true
 
       EndPasswordReset.update(
         password_reset,
@@ -24,7 +24,7 @@ describe Shield::EndPasswordReset do
       ) do |operation, updated_password_reset|
         operation.saved?.should be_true
 
-        updated_password_reset.active?.should be_false
+        updated_password_reset.status.active?.should be_false
       end
     end
 
