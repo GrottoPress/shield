@@ -8,6 +8,7 @@ describe Shield::EndEmailConfirmation do
       params(email: "james@domain.net"),
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     ) do |operation, email_confirmation|
+      email_confirmation.should be_a(EmailConfirmation)
       email_confirmation =  email_confirmation.not_nil!
 
       EmailConfirmationSession.new(session).set(operation, email_confirmation)

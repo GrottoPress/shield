@@ -12,6 +12,7 @@ describe Shield::EndPasswordReset do
       params(email: email),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
+      password_reset.should be_a(PasswordReset)
       password_reset =  password_reset.not_nil!
 
       PasswordResetSession.new(session).set(operation, password_reset)
