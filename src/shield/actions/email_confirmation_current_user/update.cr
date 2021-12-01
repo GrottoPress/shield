@@ -24,7 +24,7 @@ module Shield::EmailConfirmationCurrentUser::Update
     def do_run_operation_succeeded(operation, user)
       flash.success = success_message(operation)
 
-      if Lucky::Env.production? || operation.new_email.nil?
+      if LuckyEnv.production? || operation.new_email.nil?
         redirect to: Show
       else
         redirect to: EmailConfirmationUrl.new(
@@ -36,7 +36,7 @@ module Shield::EmailConfirmationCurrentUser::Update
 
     private def success_message(operation)
       if operation.new_email
-        Lucky::Env.production? ?
+        LuckyEnv.production? ?
           "Account updated successfully. \
             Check '#{operation.new_email}' for further instructions." :
           "Development mode: No need to check your mail."

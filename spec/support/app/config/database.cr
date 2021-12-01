@@ -4,5 +4,5 @@ end
 
 Avram.configure do |settings|
   settings.database_to_migrate = AppDatabase
-  settings.lazy_load_enabled = Lucky::Env.production?
+  settings.lazy_load_enabled = LuckyEnv.production?
 end

@@ -22,7 +22,7 @@ module Shield::Api::EmailConfirmationCurrentUser::Update
     end
 
     def do_run_operation_succeeded(operation, user)
-      if Lucky::Env.production? || operation.new_email.nil?
+      if LuckyEnv.production? || operation.new_email.nil?
         json({
           status: "success",
           message: success_message(operation),
@@ -45,7 +45,7 @@ module Shield::Api::EmailConfirmationCurrentUser::Update
 
     private def success_message(operation)
       if operation.new_email
-        Lucky::Env.production? ?
+        LuckyEnv.production? ?
           "Account updated successfully. \
             Check '#{operation.new_email}' for further instructions." :
           "Development mode: No need to check your mail."

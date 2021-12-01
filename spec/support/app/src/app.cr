@@ -1,3 +1,4 @@
+require "lucky_env"
 require "lucky"
 require "carbon"
 require "../../../../src/shield"

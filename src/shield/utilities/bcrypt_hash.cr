@@ -3,7 +3,7 @@ module Shield::BcryptHash
     include Shield::Hash
 
     def initialize(@plaintext : String)
-      @cost = Lucky::Env.production? ? 12 : 4
+      @cost = LuckyEnv.production? ? 12 : 4
     end
 
     def initialize(@plaintext : String, @cost : Int32)

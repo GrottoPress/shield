@@ -24,7 +24,7 @@ module Shield::EmailConfirmations::Create
     end
 
     def do_run_operation_succeeded(operation, email_confirmation)
-      if Lucky::Env.production?
+      if LuckyEnv.production?
         success_action(operation)
       else
         flash.success = "Development mode: No need to check your mail."

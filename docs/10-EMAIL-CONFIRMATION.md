@@ -257,7 +257,7 @@ This is particularly important, since email addresses are usually the only means
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, email_confirmation)
-     #  if Lucky::Env.production?
+     #  if LuckyEnv.production?
      #    success_action(operation)
      #  else
      #    flash.success = "Development mode: No need to check your mail."
@@ -503,7 +503,7 @@ This is particularly important, since email addresses are usually the only means
      #def do_run_operation_succeeded(operation, user)
      #  flash.success = success_message(operation)
      #
-     #  if Lucky::Env.production? || operation.new_email.nil?
+     #  if LuckyEnv.production? || operation.new_email.nil?
      #    redirect to: Show
      #  else
      #    redirect to: EmailConfirmationUrl.new(

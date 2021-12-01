@@ -201,7 +201,7 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, password_reset)
-     #  if Lucky::Env.production?
+     #  if LuckyEnv.production?
      #    success_action(operation)
      #  else
      #    flash.success = "Development mode: No need to check your mail."
