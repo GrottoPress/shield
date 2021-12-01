@@ -22,7 +22,7 @@ development_dependencies:
     version: ~> 0.2.0
   lucky:
     github: luckyframework/lucky
-    version: ~> 0.28.0
+    version: ~> 0.29.0
   lucky_env:
     github: luckyframework/lucky_env
     version: ~> 0.1.4
