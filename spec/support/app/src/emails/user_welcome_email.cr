@@ -3,7 +3,7 @@ class UserWelcomeEmail < BaseEmail
   end
 
   private def receivers
-    Carbon::Address.new(@operation.email.to_s)
+    Carbon::Address.new(@operation.email.value.to_s)
   end
 
   private def heading

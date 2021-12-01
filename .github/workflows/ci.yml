@@ -49,4 +49,5 @@ jobs:
       - name: Run tests
         env:
           DATABASE_URL: postgres://postgres:password@localhost:5432/shield_spec
+          SKIP_LOAD_ENV: "true"
         run: crystal spec --error-on-warnings

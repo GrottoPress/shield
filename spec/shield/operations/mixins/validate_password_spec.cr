@@ -24,7 +24,7 @@ describe Shield::ValidatePassword do
     )) do |operation, user|
       user.should be_nil
 
-      assert_invalid(operation.password, "too short")
+      assert_invalid(operation.password, "at least")
     end
   end
 
