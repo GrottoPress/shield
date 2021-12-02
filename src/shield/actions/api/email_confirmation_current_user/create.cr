@@ -44,17 +44,5 @@ module Shield::Api::EmailConfirmationCurrentUser::Create
     def do_verify_operation_failed(utility)
       json({status: "failure", message: "Invalid token"})
     end
-
-    def do_run_operation_failed(operation)
-      if operation.user_email?
-        success_action(operation) # <= IMPORTANT!
-      else
-        json({
-          status: "failure",
-          message: "Could not create your account",
-          data: {errors: operation.errors}
-        })
-      end
-    end
   end
 end

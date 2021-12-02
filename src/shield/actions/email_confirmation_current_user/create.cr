@@ -45,14 +45,5 @@ module Shield::EmailConfirmationCurrentUser::Create
       flash.failure = "Invalid token"
       redirect to: EmailConfirmations::New
     end
-
-    def do_run_operation_failed(operation)
-      if operation.user_email?
-        success_action(operation) # <= IMPORTANT!
-      else
-        flash.failure = "Could not create your account"
-        html NewPage, operation: operation
-      end
-    end
   end
 end
