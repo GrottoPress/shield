@@ -34,15 +34,15 @@ module Shield::LogUserIn
     end
 
     private def verify_login
-      return unless email.value && password.value
-
-      if user = PasswordAuthentication.new(email.value.not_nil!)
-        .verify(password.value.not_nil!)
-
-        user_id.value = user.id
-      else
-        email.add_error "may be incorrect"
-        password.add_error "may be incorrect"
+      email.value.try do |_email|
+        password.value.try do |_password|
+          if user = PasswordAuthentication.new(_email).verify(_password)
+            user_id.value = user.id
+          else
+            email.add_error "may be incorrect"
+            password.add_error "may be incorrect"
+          end
+        end
       end
     end
 
