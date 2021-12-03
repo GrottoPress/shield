@@ -41,8 +41,7 @@ module Shield::LogUserIn
           if user = PasswordAuthentication.new(_email).verify(_password)
             user_id.value = user.id
           else
-            email.add_error "may be incorrect"
-            password.add_error "may be incorrect"
+            password.add_error "or email is incorrect"
           end
         end
       end

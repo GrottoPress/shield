@@ -51,7 +51,7 @@ describe Shield::LogUserIn do
       login.should be_nil
 
       assert_invalid(operation.email, " invalid")
-      assert_valid(operation.email, " incorrect")
+      assert_valid(operation.password, " incorrect")
     end
   end
 
@@ -70,7 +70,7 @@ describe Shield::LogUserIn do
 
       # operation.user_id.errors.should be_empty
       assert_valid(operation.user_id)
-      assert_invalid(operation.email, " incorrect")
+      assert_invalid(operation.password, " incorrect")
     end
   end
 
