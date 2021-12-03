@@ -37,6 +37,24 @@ describe Shield::LogUserIn do
     end
   end
 
+  it "requires valid email format" do
+    password = "password12U~password"
+
+    user = UserFactory.create &.password(password)
+    UserOptionsFactory.create &.user_id(user.id)
+
+    LogUserIn.create(
+      params(email: "invalid-email", password: password),
+      session: Lucky::Session.new,
+      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
+    ) do |operation, login|
+      login.should be_nil
+
+      assert_invalid(operation.email, " invalid")
+      assert_valid(operation.email, " incorrect")
+    end
+  end
+
   it "rejects incorrect email" do
     password = "password12U~password"
 
