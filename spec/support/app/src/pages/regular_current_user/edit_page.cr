@@ -1,4 +1,4 @@
-class RegularCurrentUser::EditPage < MainLayout
+struct RegularCurrentUser::EditPage < MainLayout
   needs operation : UpdateRegularCurrentUser
 
   def content

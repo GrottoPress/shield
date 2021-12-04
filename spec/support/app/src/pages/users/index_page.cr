@@ -1,4 +1,4 @@
-class Users::IndexPage < MainLayout
+struct Users::IndexPage < MainLayout
   needs users : Array(User)
   needs pages : Lucky::Paginator
 

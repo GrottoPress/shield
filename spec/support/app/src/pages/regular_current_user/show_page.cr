@@ -1,4 +1,4 @@
-class RegularCurrentUser::ShowPage < MainLayout
+struct RegularCurrentUser::ShowPage < MainLayout
   needs user : User
 
   def content

@@ -1,4 +1,4 @@
-abstract class MainLayout
+abstract struct MainLayout
   include Lucky::HTMLPage
 
   def render

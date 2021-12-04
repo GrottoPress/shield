@@ -1,4 +1,4 @@
-class Users::ShowPage < MainLayout
+struct Users::ShowPage < MainLayout
   needs user : User
 
   def content

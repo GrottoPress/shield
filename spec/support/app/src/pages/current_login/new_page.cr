@@ -1,4 +1,4 @@
-class CurrentLogin::NewPage < MainLayout
+struct CurrentLogin::NewPage < MainLayout
   needs operation : LogUserIn
 
   def content

@@ -1,4 +1,4 @@
-class EmailConfirmations::NewPage < MainLayout
+struct EmailConfirmations::NewPage < MainLayout
   needs operation : StartEmailConfirmation
 
   def content

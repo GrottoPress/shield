@@ -1,4 +1,4 @@
-class CurrentUser::NewPage < MainLayout
+struct CurrentUser::NewPage < MainLayout
   needs operation : RegisterCurrentUser
 
   def content

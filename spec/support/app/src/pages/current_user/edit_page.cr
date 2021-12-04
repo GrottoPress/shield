@@ -1,4 +1,4 @@
-class CurrentUser::EditPage < MainLayout
+struct CurrentUser::EditPage < MainLayout
   needs operation : UpdateCurrentUser
 
   def content

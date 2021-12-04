@@ -1,4 +1,4 @@
-class BearerLogins::ShowPage < MainLayout
+struct BearerLogins::ShowPage < MainLayout
   needs bearer_login : BearerLogin
   needs operation : CreateBearerLogin
 

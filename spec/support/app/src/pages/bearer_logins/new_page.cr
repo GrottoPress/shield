@@ -1,4 +1,4 @@
-class BearerLogins::NewPage < MainLayout
+struct BearerLogins::NewPage < MainLayout
   needs operation : CreateBearerLogin
 
   def content
