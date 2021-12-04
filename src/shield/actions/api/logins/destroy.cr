@@ -19,7 +19,7 @@ module Shield::Api::Logins::Destroy
     def do_run_operation_succeeded(operation, login)
       json({
         status: "success",
-        message: "Login revoked successfully",
+        message: Rex.t(:"action.login.destroy.success"),
         data: {login: LoginSerializer.new(login)}
       })
     end
@@ -27,7 +27,7 @@ module Shield::Api::Logins::Destroy
     def do_run_operation_failed(operation)
       json({
         status: "failure",
-        message: "Could not revoke login",
+        message: Rex.t(:"action.login.destroy.failure"),
         data: {errors: operation.errors}
       })
     end

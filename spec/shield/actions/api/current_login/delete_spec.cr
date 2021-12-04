@@ -11,7 +11,9 @@ describe Shield::Api::CurrentLogin::Delete do
 
     response = client.exec(Api::CurrentLogin::Delete)
 
-    response.should send_json(200, {status: "success"})
+    response.should send_json(200, {
+      message: "action.current_login.destroy.success"
+    })
   end
 
   it "requires logged in" do

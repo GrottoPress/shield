@@ -8,7 +8,8 @@ module Shield::RequireIpAddress
     end
 
     private def validate_ip_address_required
-      validate_required ip_address, message: "could not be determined"
+      validate_required ip_address,
+        message: Rex.t(:"operation.error.ip_address_required")
     end
 
     private def set_ip_address

@@ -7,7 +7,7 @@ describe Shield::DeleteUser do
     DeleteUser.delete(user, current_user: user) do |operation, deleted_user|
       operation.deleted?.should be_false
 
-      assert_invalid(operation.id, "current user")
+      assert_invalid(operation.id, "operation.error.self_delete_forbidden")
       UserQuery.new.id(user.id).any?.should be_true
     end
   end

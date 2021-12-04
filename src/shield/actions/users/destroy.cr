@@ -21,12 +21,12 @@ module Shield::Users::Destroy
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.success = "User deleted successfully"
+      flash.success = Rex.t(:"action.user.destroy.success")
       redirect to: Index
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = "Could not delete user"
+      flash.failure = Rex.t(:"action.user.destroy.failure")
       redirect_back fallback: Index
     end
   end

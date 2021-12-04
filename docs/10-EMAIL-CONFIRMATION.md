@@ -209,7 +209,7 @@ This is particularly important, since email addresses are usually the only means
      # the email confirmation.
      #
      #def do_pin_email_confirmation_to_ip_address_failed
-     #  flash.failure = "Your IP address has changed. Please try again."
+     #  flash.failure = Rex.t(:"action.pipe.ip_address_changed")
      #  redirect to: EmailConfirmations::New
      #end
      # ...
@@ -260,7 +260,7 @@ This is particularly important, since email addresses are usually the only means
      #  if LuckyEnv.production?
      #    success_action(operation)
      #  else
-     #    flash.success = "Development mode: No need to check your mail."
+     #    flash.success = Rex.t(:"action.misc.dev_mode_skip_email")
      #    redirect to: EmailConfirmationUrl.new(operation, email_confirmation)
      #  end
      #end
@@ -276,12 +276,12 @@ This is particularly important, since email addresses are usually the only means
      #end
 
      #private def success_action(operation)
-     #  flash.success = "Done! Check your email for further instructions."
+     #  flash.success = Rex.t(:"action.email_confirmation.create.success")
      #  redirect to: CurrentLogin::New
      #end
 
      #private def failure_action(operation)
-     #  flash.failure = "Email confirmation request failed"
+     #  flash.failure = Rex.t(:"action.email_confirmation.create.failure")
      #  html NewPage, operation: operation
      #end
      # ...
@@ -332,21 +332,21 @@ This is particularly important, since email addresses are usually the only means
      # What to do if token verification fails
      #
      #def do_verify_operation_failed(utility)
-     #  flash.failure = "Invalid token"
+     #  flash.failure = Rex.t(:"action.misc.token_invalid")
      #  redirect to: New
      #end
 
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.success = "Email changed successfully"
+     #  flash.success = Rex.t(:"action.email_confirmation.edit.success")
      #  redirect to: CurrentUser::Show
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.failure = "Could not change email"
+     #  flash.failure = Rex.t(:"action.email_confirmation.edit.failure")
      #  redirect to: CurrentUser::Edit
      #end
      # ...
@@ -374,7 +374,7 @@ This is particularly important, since email addresses are usually the only means
      # What to do if token verification fails
      #
      #def do_verify_operation_failed(utility)
-     #  flash.failure = "Invalid token"
+     #  flash.failure = Rex.t(:"action.misc.token_invalid")
      #  redirect to: EmailConfirmations::New
      #end
      # ...
@@ -410,14 +410,14 @@ This is particularly important, since email addresses are usually the only means
      # What to do if token verification fails
      #
      #def do_verify_operation_failed(utility)
-     #  flash.failure = "Invalid token"
+     #  flash.failure = Rex.t(:"action.misc.token_invalid")
      #  redirect to: EmailConfirmations::New
      #end
 
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.success = "Congratulations! Log in to access your account..."
+     #  flash.success = Rex.t(:"action.current_user.create.success")
      #  redirect to: CurrentLogin::New
      #end
 
@@ -427,7 +427,7 @@ This is particularly important, since email addresses are usually the only means
      #  if operation.user_email?
      #    success_action(operation)
      #  else
-     #    flash.failure = "Could not create your account"
+     #    flash.failure = Rex.t(:"action.current_user.create.failure")
      #    html NewPage, operation: operation
      #  end
      #end
@@ -516,7 +516,7 @@ This is particularly important, since email addresses are usually the only means
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.failure = "Could not update your account"
+     #  flash.failure = Rex.t(:"action.current_user.update.failure")
      #  html EditPage, operation: operation
      #end
      # ...

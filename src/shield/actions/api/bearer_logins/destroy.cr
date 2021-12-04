@@ -21,7 +21,7 @@ module Shield::Api::BearerLogins::Destroy
     def do_run_operation_succeeded(operation, bearer_login)
       json({
         status: "success",
-        message: "Bearer login revoked successfully",
+        message: Rex.t(:"action.bearer_login.destroy.success"),
         data: {bearer_login: BearerLoginSerializer.new(bearer_login)}
       })
     end
@@ -29,7 +29,7 @@ module Shield::Api::BearerLogins::Destroy
     def do_run_operation_failed(operation)
       json({
         status: "failure",
-        message: "Could not revoke bearer login",
+        message: Rex.t(:"action.bearer_login.destroy.failure"),
         data: {errors: operation.errors}
       })
     end

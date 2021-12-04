@@ -8,7 +8,8 @@ module Shield::CreatePassword
     include Shield::ValidatePassword
 
     private def validate_password_required
-      validate_required password
+      validate_required password,
+        message: Rex.t(:"operation.error.password_required")
     end
 
     private def set_password_digest

@@ -25,12 +25,12 @@ module Shield::Users::Update
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.success = "User updated successfully"
+      flash.success = Rex.t(:"action.user.update.success")
       redirect to: Show.with(user_id: user.id)
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = "Could not update user"
+      flash.failure = Rex.t(:"action.user.update.failure")
       html EditPage, operation: operation
     end
   end

@@ -35,12 +35,12 @@ module Shield::CurrentUser::Create
     end
 
     private def success_action(operation)
-      flash.success = "Done! Check your email for further instructions."
+      flash.success = Rex.t(:"action.current_user.create.success")
       redirect to: CurrentLogin::New
     end
 
     private def failure_action(operation)
-      flash.failure = "Could not create your account"
+      flash.failure = Rex.t(:"action.current_user.create.failure")
       html NewPage, operation: operation
     end
   end

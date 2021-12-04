@@ -20,7 +20,7 @@ module Shield::Api::AuthorizationPipes
     def do_check_authorization_failed
       json({
         status: "failure",
-        message: "You are not allowed to perform this action!"
+        message: Rex.t(:"action.pipe.authorization_failed")
       })
     end
 

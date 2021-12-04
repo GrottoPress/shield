@@ -155,7 +155,7 @@
      # the password reset.
      #
      #def do_pin_password_reset_to_ip_address_failed
-     #  flash.failure = "Your IP address has changed. Please try again."
+     #  flash.failure = Rex.t(:"action.pipe.ip_address_changed")
      #  redirect to: PasswordResets::New
      #end
      # ...
@@ -204,7 +204,7 @@
      #  if LuckyEnv.production?
      #    success_action(operation)
      #  else
-     #    flash.success = "Development mode: No need to check your mail."
+     #    flash.success = Rex.t(:"action.misc.dev_mode_skip_email")
      #    redirect to: PasswordResetUrl.new(operation, password_reset)
      #  end
      #end
@@ -220,12 +220,12 @@
      #end
 
      #private def success_action(operation)
-     #  flash.success = "Done! Check your email for further instructions."
+     #  flash.success = Rex.t(:"action.password_reset.create.success")
      #  redirect to: CurrentLogin::New
      #end
 
      #private def failure_action(operation)
-     #  flash.failure = "Password reset request failed"
+     #  flash.failure = Rex.t(:"action.password_reset.create.failure")
      #  html NewPage, operation: operation
      #end
      # ...
@@ -276,7 +276,7 @@
      # What to do if token verification fails
      #
      #def do_verify_operation_failed(utility)
-     #  flash.failure = "Invalid token"
+     #  flash.failure = Rex.t(:"action.misc.token_invalid")
      #  redirect to: New
      #end
      # ...
@@ -310,21 +310,21 @@
      # What to do if token verification fails
      #
      #def do_verify_operation_failed(utility)
-     #  flash.failure = "Invalid token"
+     #  flash.failure = Rex.t(:"action.misc.token_invalid")
      #  redirect to: New
      #end
 
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.success = "Password changed successfully"
+     #  flash.success = Rex.t(:"action.password_reset.update.success")
      #  redirect to: CurrentLogin::New
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.failure = "Could not change password"
+     #  flash.failure = Rex.t(:"action.password_reset.update.failure")
      #  html EditPage, operation: operation
      #end
      # ...

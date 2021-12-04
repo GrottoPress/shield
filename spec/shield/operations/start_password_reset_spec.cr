@@ -27,7 +27,7 @@ describe Shield::StartPasswordReset do
   it "requires email" do
     StartPasswordReset.create(remote_ip: nil) do |operation, password_reset|
       password_reset.should be_nil
-      assert_invalid(operation.email, " required")
+      assert_invalid(operation.email, "operation.error.email_required")
     end
   end
 
@@ -40,7 +40,7 @@ describe Shield::StartPasswordReset do
       operation.guest_email?.should be_true
 
       assert_valid(operation.user_id)
-      assert_invalid(operation.email, "not exist")
+      assert_invalid(operation.email, "operation.error.email_not_found")
     end
   end
 
@@ -51,7 +51,10 @@ describe Shield::StartPasswordReset do
     ) do |operation, password_reset|
       password_reset.should be_nil
 
-      assert_invalid(operation.ip_address, "not be determined")
+      assert_invalid(
+        operation.ip_address,
+        "operation.error.ip_address_required"
+      )
     end
   end
 
@@ -63,7 +66,7 @@ describe Shield::StartPasswordReset do
       password_reset.should be_nil
       operation.guest_email?.should be_false
 
-      assert_invalid(operation.email, "is invalid")
+      assert_invalid(operation.email, "operation.error.email_invalid")
     end
   end
 

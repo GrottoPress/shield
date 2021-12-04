@@ -33,7 +33,10 @@ describe Shield::LogUserIn do
     ) do |operation, login|
       login.should be_nil
 
-      assert_invalid(operation.ip_address, "not be determined")
+      assert_invalid(
+        operation.ip_address,
+        "operation.error.ip_address_required"
+      )
     end
   end
 
@@ -50,8 +53,8 @@ describe Shield::LogUserIn do
     ) do |operation, login|
       login.should be_nil
 
-      assert_invalid(operation.email, " invalid")
-      assert_valid(operation.password, " incorrect")
+      assert_invalid(operation.email, "operation.error.email_invalid")
+      assert_valid(operation.password, "operation.error.login_failed")
     end
   end
 
@@ -70,7 +73,7 @@ describe Shield::LogUserIn do
 
       # operation.user_id.errors.should be_empty
       assert_valid(operation.user_id)
-      assert_invalid(operation.password, " incorrect")
+      assert_invalid(operation.password, "operation.error.login_failed")
     end
   end
 
@@ -88,7 +91,7 @@ describe Shield::LogUserIn do
     ) do |operation, login|
       login.should be_nil
 
-      assert_invalid(operation.password, " incorrect")
+      assert_invalid(operation.password, "operation.error.login_failed")
     end
   end
 end

@@ -18,7 +18,7 @@ describe Shield::Api::Users::Update do
       user_options: {login_notify: true}
     )
 
-    response.should send_json(200, {status: "success"})
+    response.should send_json(200, {message: "action.user.update.success"})
   end
 
   it "requires logged in" do

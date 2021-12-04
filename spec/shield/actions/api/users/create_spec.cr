@@ -22,7 +22,7 @@ describe Shield::Api::Users::Create do
       }
     )
 
-    response.should send_json(200, {status: "success"})
+    response.should send_json(200, {message: "action.user.create.success"})
   end
 
   it "requires logged in" do

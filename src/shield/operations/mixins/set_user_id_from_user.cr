@@ -19,7 +19,14 @@ module Shield::SetUserIdFromUser
 
     private def validate_user_exists
       return unless user_id.changed?
-      validate_foreign_key(user_id, query: UserQuery) unless user
+      return if user
+
+      validate_foreign_key user_id,
+        query: UserQuery,
+        message: Rex.t(
+          :"operation.error.user_not_found",
+          user_id: user_id.value
+        )
     end
   end
 end

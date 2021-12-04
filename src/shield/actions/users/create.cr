@@ -17,12 +17,12 @@ module Shield::Users::Create
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.success = "User added successfully"
+      flash.success = Rex.t(:"action.user.create.success")
       redirect to: Show.with(user_id: user.id)
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = "Could not add user"
+      flash.failure = Rex.t(:"action.user.create.failure")
       html NewPage, operation: operation
     end
   end

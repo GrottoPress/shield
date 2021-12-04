@@ -14,7 +14,7 @@ describe Shield::Api::Logins::Destroy do
 
     response = client.exec(Api::Logins::Destroy.with(login_id: login.id))
 
-    response.should send_json(200, {status: "success"})
+    response.should send_json(200, {message: "action.login.destroy.success"})
     login.reload.status.inactive?.should be_true
   end
 

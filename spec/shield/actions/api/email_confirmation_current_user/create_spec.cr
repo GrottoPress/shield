@@ -25,7 +25,9 @@ describe Shield::Api::EmailConfirmationCurrentUser::Create do
         }
       )
 
-      response.should send_json(200, {status: "success"})
+      response.should send_json(200, {
+        message: "action.current_user.create.success"
+      })
     end
   end
 

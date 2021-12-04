@@ -9,7 +9,9 @@ module Shield::SaveUserSettings
 
     private def validate_password_notify_required
       return unless new_record?
-      validate_required password_notify
+
+      validate_required password_notify,
+        message: Rex.t(:"operation.error.password_notify_required")
     end
 
     private def set_password_notify

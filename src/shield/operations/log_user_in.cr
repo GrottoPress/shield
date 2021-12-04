@@ -16,15 +16,20 @@ module Shield::LogUserIn
     include Shield::SetSession
 
     private def validate_email_required
-      validate_required email
+      validate_required email,
+        message: Rex.t(:"operation.error.email_required")
     end
 
     private def validate_password_required
-      validate_required password
+      validate_required password,
+        message: Rex.t(:"operation.error.password_required")
     end
 
     private def validate_email_valid
-      validate_email email
+      validate_email email, message: Rex.t(
+        :"operation.error.email_invalid",
+        email: email.value
+      )
     end
 
     private def set_default_inactive_at
@@ -41,7 +46,7 @@ module Shield::LogUserIn
           if user = PasswordAuthentication.new(_email).verify(_password)
             user_id.value = user.id
           else
-            password.add_error "or email is incorrect"
+            password.add_error Rex.t(:"operation.error.login_failed")
           end
         end
       end

@@ -11,11 +11,15 @@ module Shield::SaveEmail
     end
 
     private def validate_email_required
-      validate_required email
+      validate_required email,
+        message: Rex.t(:"operation.error.email_required")
     end
 
     private def validate_email_valid
-      validate_email email
+      validate_email email, message: Rex.t(
+        :"operation.error.email_invalid",
+        email: email.value
+      )
     end
 
     private def set_user_email
@@ -28,7 +32,8 @@ module Shield::SaveEmail
 
     private def validate_email_unique
       email.value.try do |value|
-        email.add_error("is already taken") if user_email?
+        return unless user_email?
+        email.add_error Rex.t(:"operation.error.email_taken", email: value)
       end
     end
   end

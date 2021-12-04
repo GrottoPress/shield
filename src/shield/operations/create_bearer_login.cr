@@ -14,11 +14,12 @@ module Shield::CreateBearerLogin
     include Shield::StartAuthentication
 
     private def validate_name_required
-      validate_required name
+      validate_required name, message: Rex.t(:"operation.error.name_required")
     end
 
     private def validate_user_id_required
-      validate_required user_id
+      validate_required user_id,
+        message: Rex.t(:"operation.error.user_id_required")
     end
 
     private def set_default_inactive_at
@@ -36,7 +37,7 @@ module Shield::CreateBearerLogin
         return unless uid = user_id.value
 
         if BearerLoginQuery.new.user_id(uid).name(value).any?
-          name.add_error("is already used")
+          name.add_error Rex.t(:"operation.error.name_taken", name: value)
         end
       end
     end

@@ -31,7 +31,7 @@ module Shield::PasswordResets::Create
       if LuckyEnv.production?
         success_action(operation)
       else
-        flash.success = "Development mode: No need to check your mail."
+        flash.success = Rex.t(:"action.misc.dev_mode_skip_email")
         redirect to: PasswordResetUrl.new(operation, password_reset)
       end
     end
@@ -45,12 +45,12 @@ module Shield::PasswordResets::Create
     end
 
     private def success_action(operation)
-      flash.success = "Done! Check your email for further instructions."
+      flash.success = Rex.t(:"action.password_reset.create.success")
       redirect to: CurrentLogin::New
     end
 
     private def failure_action(operation)
-      flash.failure = "Password reset request failed"
+      flash.failure = Rex.t(:"action.password_reset.create.failure")
       html NewPage, operation: operation
     end
   end

@@ -26,13 +26,12 @@ module Shield::BearerLogins::Create
     end
 
     def do_run_operation_succeeded(operation, bearer_login)
-      flash.success = "Bearer login created successfully"
-      flash.info = "Copy the token now; it will only be shown once!"
+      flash.success = Rex.t(:"action.bearer_login.create.success")
       html ShowPage, operation: operation, bearer_login: bearer_login
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = "Could not create bearer login"
+      flash.failure = Rex.t(:"action.bearer_login.create.failure")
       html NewPage, operation: operation
     end
 

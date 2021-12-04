@@ -8,7 +8,12 @@ module Shield::DeleteUser
 
     private def validate_not_current_user
       current_user.try do |current_user|
-        id.add_error("is current user") if current_user.id == record.id
+        return if current_user.id != record.id
+
+        id.add_error Rex.t(
+          :"operation.error.self_delete_forbidden",
+          user_id: record.id
+        )
       end
     end
   end

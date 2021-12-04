@@ -37,14 +37,14 @@ module Shield::Api::CurrentUser::Create
     private def success_action(operation)
       json({
         status: "success",
-        message: "Done! Check your email for further instructions."
+        message: Rex.t(:"action.current_user.create.success")
       })
     end
 
     private def failure_action(operation)
       json({
         status: "failure",
-        message: "Could not create your account",
+        message: Rex.t(:"action.current_user.create.failure"),
         data: {errors: operation.errors}
       })
     end

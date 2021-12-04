@@ -24,7 +24,7 @@ module Shield::Api::CurrentLogin::Create
     def do_run_operation_succeeded(operation, login)
       json({
         status: "success",
-        message: "Copy the token now; it will only be shown once!",
+        message: Rex.t(:"action.misc.token_generated"),
         data: {
           login: LoginSerializer.new(login),
           token: BearerToken.new(operation, login)
@@ -35,7 +35,7 @@ module Shield::Api::CurrentLogin::Create
     def do_run_operation_failed(operation)
       json({
         status: "failure",
-        message: "Invalid email or password",
+        message: Rex.t(:"action.current_login.create.failure"),
         data: {errors: operation.errors}
       })
     end

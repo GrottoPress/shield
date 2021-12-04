@@ -198,7 +198,7 @@
      # but the action requires user to be logged in.
      #
      #def do_require_logged_in_failed
-     #  flash.failure = "You are not logged in"
+     #  flash.failure = Rex.t(:"action.pipe.not_logged_in")
      #  redirect to: CurrentLogin::New
      #end
 
@@ -206,7 +206,7 @@
      # requires user to **not** be logged in.
      #
      #def do_require_logged_out_failed
-     #  flash.info = "You are already logged in"
+     #  flash.info = Rex.t(:"action.pipe.not_logged_out")
      #  redirect_back fallback: CurrentUser::Show
      #end
 
@@ -215,7 +215,7 @@
      # log in.
      #
      #def do_pin_login_to_ip_address_failed
-     #  flash.failure = "Your IP address has changed. Please log in again."
+     #  flash.failure = Rex.t(:"action.pipe.ip_address_changed")
      #  redirect to: CurrentLogin::New
      #end
 
@@ -223,7 +223,7 @@
      # `Shield.settings.login_idle_timeout`, if the action enforces login timeouts.
      #
      #def do_enforce_login_idle_timeout_failed
-     #  flash.failure = "Your login timed out"
+     #  flash.failure = Rex.t(:"action.pipe.login_timed_out")
      #  redirect to: CurrentLogin::New
      #end
      # ...
@@ -279,14 +279,14 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, login)
-     #  flash.success = "Successfully logged in"
+     #  flash.success = Rex.t(:"action.current_login.create.success")
      #  redirect_back fallback: CurrentUser::Show
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.failure = "Invalid email or password"
+     #  flash.failure = Rex.t(:"action.current_login.create.failure")
      #  html NewPage, operation: operation
      #end
      # ...
@@ -312,14 +312,14 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, login)
-     #  flash.success = "You logged out"
+     #  flash.success = Rex.t(:"action.current_login.destroy.success")
      #  redirect to: New
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.failure = "Something went wrong"
+     #  flash.failure = Rex.t(:"action.current_login.destroy.failure")
      #  redirect_back fallback: CurrentUser::Show
      #end
      # ...

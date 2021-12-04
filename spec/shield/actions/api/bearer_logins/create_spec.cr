@@ -13,7 +13,9 @@ describe Shield::Api::BearerLogins::Create do
       scopes: ["api.posts.index"]
     })
 
-    response.should send_json(200, {status: "success"})
+    response.should send_json(200, {
+      message: "action.bearer_login.create.success"
+    })
   end
 
   it "requires logged in" do

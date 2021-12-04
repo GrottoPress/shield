@@ -15,7 +15,7 @@ module Shield::PasswordResetPipes
     end
 
     def do_pin_password_reset_to_ip_address_failed
-      flash.failure = "Your IP address has changed. Please try again."
+      flash.failure = Rex.t(:"action.pipe.ip_address_changed")
       redirect to: PasswordResets::New
     end
   end

@@ -39,7 +39,7 @@ module Shield::EmailConfirmations::Edit
     end
 
     def do_verify_operation_failed(utility)
-      flash.failure = "Invalid token"
+      flash.failure = Rex.t(:"action.misc.token_invalid")
       redirect to: New
     end
 
@@ -58,12 +58,12 @@ module Shield::EmailConfirmations::Edit
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.success = "Email changed successfully"
+      flash.success = Rex.t(:"action.email_confirmation.edit.success")
       redirect to: CurrentUser::Show
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = "Could not change email"
+      flash.failure = Rex.t(:"action.email_confirmation.edit.failure")
       redirect to: CurrentUser::Edit
     end
 

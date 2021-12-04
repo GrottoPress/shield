@@ -26,7 +26,11 @@ module Shield::ValidatePassword
 
       password.value.try do |value|
         value.each_char { |char| return if char.ascii_lowercase? }
-        password.add_error("must contain a lowercase letter")
+
+        password.add_error Rex.t(
+          :"operation.error.password_lowercase_required",
+          value
+        )
       end
     end
 
@@ -35,7 +39,11 @@ module Shield::ValidatePassword
 
       password.value.try do |value|
         value.each_char { |char| return if char.ascii_uppercase? }
-        password.add_error("must contain an uppercase letter")
+
+        password.add_error Rex.t(
+          :"operation.error.password_uppercase_required",
+          value
+        )
       end
     end
 
@@ -44,7 +52,11 @@ module Shield::ValidatePassword
 
       password.value.try do |value|
         value.each_char { |char| return if char.ascii_number? }
-        password.add_error("must contain a number")
+
+        password.add_error Rex.t(
+          :"operation.error.password_number_required",
+          value
+        )
       end
     end
 
@@ -53,15 +65,27 @@ module Shield::ValidatePassword
 
       password.value.try do |value|
         value.each_char { |char| return unless char.ascii_alphanumeric? }
-        password.add_error("must contain a special character")
+
+        password.add_error Rex.t(
+          :"operation.error.password_special_char_required",
+          value
+        )
       end
     end
 
     private def validate_password_length
+      min = Shield.settings.password_min_length
+      max = 64 # To mitigate DoS. Also cuz bcrypt has a max length
+
       validate_size_of password,
-        min: Shield.settings.password_min_length,
-        max: 64, # To mitigate DoS. Also cuz bcrypt has a max length
-        allow_nil: true
+        min: min,
+        max: max,
+        allow_nil: true,
+        message: Rex.t(
+          :"operation.error.password_length_invalid",
+          min: min,
+          max: max
+        )
     end
   end
 end

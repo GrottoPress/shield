@@ -21,7 +21,10 @@ describe Shield::Api::EmailConfirmationCurrentUser::Update do
       user_options: {password_notify: true}
     )
 
-    response.should send_json(200, {status: "success"})
+    response.should send_json(200, {
+      message: "action.current_user.update.success"
+    })
+
     user.reload.level.should eq(new_level)
   end
 

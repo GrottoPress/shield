@@ -39,7 +39,7 @@ module Shield::Api::EmailConfirmations::Edit
     end
 
     def do_verify_operation_failed(utility)
-      json({status: "failure", message: "Invalid token"})
+      json({status: "failure", message: Rex.t(:"action.misc.token_invalid")})
     end
 
     private def update_email(email_confirmation)
@@ -59,7 +59,7 @@ module Shield::Api::EmailConfirmations::Edit
     def do_run_operation_succeeded(operation, user)
       json({
         status: "success",
-        message: "Email changed successfully",
+        message: Rex.t(:"action.email_confirmation.edit.success"),
         data: {user: UserSerializer.new(user)}
       })
     end
@@ -67,7 +67,7 @@ module Shield::Api::EmailConfirmations::Edit
     def do_run_operation_failed(operation)
       json({
         status: "failure",
-        message: "Could not change email",
+        message: Rex.t(:"action.email_confirmation.edit.failure"),
         data: {errors: operation.errors}
       })
     end

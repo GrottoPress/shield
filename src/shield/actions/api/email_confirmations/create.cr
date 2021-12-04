@@ -29,7 +29,7 @@ module Shield::Api::EmailConfirmations::Create
       else
         json({
           status: "success",
-          message: "Development mode: No need to check your mail.",
+          message: Rex.t(:"action.misc.dev_mode_skip_email"),
           data: {token: BearerToken.new(operation, email_confirmation)}
         })
       end
@@ -46,14 +46,14 @@ module Shield::Api::EmailConfirmations::Create
     private def success_action(operation)
       json({
         status: "success",
-        message: "Done! Check your email for further instructions."
+        message: Rex.t(:"action.email_confirmation.create.success")
       })
     end
 
     private def failure_action(operation)
       json({
         status: "failure",
-        message: "Email confirmation request failed",
+        message: Rex.t(:"action.email_confirmation.create.failure"),
         data: {errors: operation.errors}
       })
     end

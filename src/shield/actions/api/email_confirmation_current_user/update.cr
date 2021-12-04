@@ -44,14 +44,12 @@ module Shield::Api::EmailConfirmationCurrentUser::Update
     end
 
     private def success_message(operation)
-      if operation.new_email
-        LuckyEnv.production? ?
-          "Account updated successfully. \
-            Check '#{operation.new_email}' for further instructions." :
-          "Development mode: No need to check your mail."
-      else
-        "Account updated successfully"
-      end
+      email = operation.new_email
+      return Rex.t(:"action.current_user.update.success") unless email
+
+      LuckyEnv.production? ?
+        Rex.t(:"action.current_user.update.success_confirm", email: email) :
+        Rex.t(:"action.misc.dev_mode_skip_email", email: email)
     end
   end
 end

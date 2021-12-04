@@ -23,7 +23,7 @@ module Shield::Api::CurrentLogin::Destroy
     def do_run_operation_succeeded(operation, login)
       json({
         status: "success",
-        message: "You logged out",
+        message: Rex.t(:"action.current_login.destroy.success"),
         data: {login: LoginSerializer.new(login)}
       })
     end
@@ -31,7 +31,7 @@ module Shield::Api::CurrentLogin::Destroy
     def do_run_operation_failed(operation)
       json({
         status: "failure",
-        message: "Something went wrong",
+        message: Rex.t(:"action.current_login.destroy.failure"),
         data: {errors: operation.errors}
       })
     end

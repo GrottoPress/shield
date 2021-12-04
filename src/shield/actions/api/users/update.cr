@@ -27,7 +27,7 @@ module Shield::Api::Users::Update
     def do_run_operation_succeeded(operation, user)
       json({
         status: "success",
-        message: "User updated successfully",
+        message: Rex.t(:"action.user.update.success"),
         data: {user: UserSerializer.new(user)}
       })
     end
@@ -35,7 +35,7 @@ module Shield::Api::Users::Update
     def do_run_operation_failed(operation)
       json({
         status: "failure",
-        message: "Could not update user",
+        message: Rex.t(:"action.user.update.failure"),
         data: {errors: operation.errors}
       })
     end

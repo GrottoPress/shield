@@ -20,7 +20,7 @@ module Shield::Api::EmailConfirmationPipes
     def do_pin_email_confirmation_to_ip_address_failed
       json({
         status: "failure",
-        message: "Your IP address has changed. Please try again."
+        message: Rex.t(:"action.pipe.ip_address_changed")
       })
     end
   end

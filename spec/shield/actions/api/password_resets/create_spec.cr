@@ -11,7 +11,7 @@ describe Shield::Api::PasswordResets::Create do
       email: email
     })
 
-    response.should send_json(200, {status: "success"})
+    response.should send_json(200, {message: "action.misc.dev_mode_skip_email"})
   end
 
   it "requires logged out" do

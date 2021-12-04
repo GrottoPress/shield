@@ -228,14 +228,14 @@ This token is revoked when the user logs out.
      # but the action requires user to be logged in.
      #
      #def do_require_logged_in_failed
-     #  json({status: "failure", message: "You are not logged in"})
+     #  json({status: "failure", message: Rex.t(:"action.pipe.not_logged_in")})
      #end
 
      # What to do if user is logged in but the action
      # requires user to **not** be logged in.
      #
      #def do_require_logged_out_failed
-     #  json({status: "failure", message: "You are already logged in"})
+     #  json({status: "failure", message: Rex.t(:"action.pipe.not_logged_out")})
      #end
 
      # What to do if user is not allowed to perform action
@@ -243,7 +243,7 @@ This token is revoked when the user logs out.
      #def do_check_authorization_failed
      #  json({
      #    status: "failure",
-     #    message: "You are not allowed to perform this action!"
+     #    message: Rex.t(:"action.pipe.authorization_failed")
      #  })
      #end
 
@@ -254,7 +254,7 @@ This token is revoked when the user logs out.
      #def do_pin_login_to_ip_address_failed
      #  json({
      #    status: "failure",
-     #    message: "Your IP address has changed. Please log in again."
+     #    message: Rex.t(:"action.pipe.ip_address_changed")
      #  })
      #end
 
@@ -265,7 +265,7 @@ This token is revoked when the user logs out.
      #def do_pin_password_reset_to_ip_address_failed
      #  json({
      #    status: "failure",
-     #    message: "Your IP address has changed. Please try again."
+     #    message: Rex.t(:"action.pipe.ip_address_changed")
      #  })
      #end
 
@@ -276,7 +276,7 @@ This token is revoked when the user logs out.
      #def do_pin_email_confirmation_to_ip_address_failed
      #  json({
      #    status: "failure",
-     #    message: "Your IP address has changed. Please try again."
+     #    message: Rex.t(:"action.pipe.ip_address_changed")
      #  })
      #end
      # ...
@@ -325,15 +325,14 @@ This token is revoked when the user logs out.
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, bearer_login)
-     #  flash.success = "Bearer login created successfully"
-     #  flash.info = "Copy the token now; it will only be shown once!"
+     #  flash.success = Rex.t(:"action.bearer_login.create.success")
      #  html ShowPage, operation: operation, bearer_login: bearer_login
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.failure = "Could not create bearer login"
+     #  flash.failure = Rex.t(:"action.bearer_login.create.failure")
      #  html NewPage, operation: operation
      #end
      # ...
@@ -380,14 +379,14 @@ This token is revoked when the user logs out.
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, login)
-     #  flash.success = "Bearer login revoked successfully"
+     #  flash.success = Rex.t(:"action.bearer_login.destroy.success")
      #  redirect to: Index
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.failure = "Could not revoke bearer login"
+     #  flash.failure = Rex.t(:"action.bearer_login.destroy.failure")
      #  redirect_back fallback: Index
      #end
      # ...

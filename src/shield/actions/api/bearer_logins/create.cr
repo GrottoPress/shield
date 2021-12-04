@@ -28,7 +28,7 @@ module Shield::Api::BearerLogins::Create
     def do_run_operation_succeeded(operation, bearer_login)
       json({
         status: "success",
-        message: "Copy the token now; it will only be shown once!",
+        message: Rex.t(:"action.bearer_login.create.success"),
         data: {
           bearer_login: BearerLoginSerializer.new(bearer_login),
           token: BearerToken.new(operation, bearer_login)
@@ -39,7 +39,7 @@ module Shield::Api::BearerLogins::Create
     def do_run_operation_failed(operation)
       json({
         status: "failure",
-        message: "Could not create bearer login",
+        message: Rex.t(:"action.bearer_login.create.failure"),
         data: {errors: operation.errors}
       })
     end

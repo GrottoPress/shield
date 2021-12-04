@@ -143,12 +143,12 @@
 
      # This assumes you are sending welcome emails.
      #private def success_action(operation)
-     #  flash.success = "Done! Check your email for further instructions."
+     #  flash.success = Rex.t(:"action.current_user.create.success")
      #  redirect to: CurrentLogin::New
      #end
 
      #private def failure_action(operation)
-     #  flash.failure = "Could not create your account"
+     #  flash.failure = Rex.t(:"action.current_user.create.failure")
      #  html NewPage, operation: operation
      #end
      # ...
@@ -210,14 +210,14 @@
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, user)
-     #  flash.success = "Account updated successfully"
+     #  flash.success = Rex.t(:"action.current_user.update.success")
      #  redirect to: Show
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.failure = "Could not update your account"
+     #  flash.failure = Rex.t(:"action.current_user.update.failure")
      #  html EditPage, operation: operation
      #end
      # ...

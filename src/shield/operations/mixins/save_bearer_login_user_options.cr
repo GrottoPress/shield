@@ -7,7 +7,8 @@ module Shield::SaveBearerLoginUserOptions
     end
 
     private def validate_bearer_login_notify_required
-      validate_required bearer_login_notify
+      validate_required bearer_login_notify,
+        message: Rex.t(:"operation.error.bearer_login_notify_required")
     end
   end
 end

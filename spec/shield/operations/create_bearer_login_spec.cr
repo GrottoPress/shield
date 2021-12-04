@@ -31,7 +31,7 @@ describe Shield::CreateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.user_id, " required")
+      assert_invalid(operation.user_id, "operation.error.user_id_required")
     end
   end
 
@@ -45,7 +45,7 @@ describe Shield::CreateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.user_id, "not exist")
+      assert_invalid(operation.user_id, "operation.error.user_not_found")
     end
   end
 
@@ -58,7 +58,7 @@ describe Shield::CreateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.name, " required")
+      assert_invalid(operation.name, "operation.error.name_required")
     end
   end
 
@@ -77,7 +77,7 @@ describe Shield::CreateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.name, "already used")
+      assert_invalid(operation.name, "operation.error.name_taken")
     end
   end
 

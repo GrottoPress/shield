@@ -23,7 +23,7 @@ module Shield::Api::Users::Destroy
     def do_run_operation_succeeded(operation, user)
       json({
         status: "success",
-        message: "User deleted successfully",
+        message: Rex.t(:"action.user.destroy.success"),
         data: {user: UserSerializer.new(user)}
       })
     end
@@ -31,7 +31,7 @@ module Shield::Api::Users::Destroy
     def do_run_operation_failed(operation)
       json({
         status: "failure",
-        message: "Could not delete user",
+        message: Rex.t(:"action.user.destroy.failure"),
         data: {errors: operation.errors}
       })
     end

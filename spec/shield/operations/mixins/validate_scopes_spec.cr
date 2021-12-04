@@ -21,7 +21,7 @@ describe Shield::ValidateScopes do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.scopes, " required")
+      assert_invalid(operation.scopes, "operation.error.bearer_scopes_required")
     end
   end
 
@@ -40,7 +40,7 @@ describe Shield::ValidateScopes do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.scopes, " required")
+      assert_invalid(operation.scopes, "operation.error.bearer_scopes_empty")
     end
   end
 
@@ -59,7 +59,7 @@ describe Shield::ValidateScopes do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.scopes, " invalid")
+      assert_invalid(operation.scopes, "operation.error.bearer_scopes_invalid")
     end
   end
 end

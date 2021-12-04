@@ -27,7 +27,7 @@ module Shield::EmailConfirmations::Create
       if LuckyEnv.production?
         success_action(operation)
       else
-        flash.success = "Development mode: No need to check your mail."
+        flash.success = Rex.t(:"action.misc.dev_mode_skip_email")
         redirect to: EmailConfirmationUrl.new(operation, email_confirmation)
       end
     end
@@ -41,12 +41,12 @@ module Shield::EmailConfirmations::Create
     end
 
     private def success_action(operation)
-      flash.success = "Done! Check your email for further instructions."
+      flash.success = Rex.t(:"action.email_confirmation.create.success")
       redirect to: CurrentLogin::New
     end
 
     private def failure_action(operation)
-      flash.failure = "Email confirmation request failed"
+      flash.failure = Rex.t(:"action.email_confirmation.create.failure")
       html NewPage, operation: operation
     end
   end

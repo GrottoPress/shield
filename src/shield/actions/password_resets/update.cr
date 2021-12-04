@@ -20,7 +20,7 @@ module Shield::PasswordResets::Update
     end
 
     def do_verify_operation_failed(utility)
-      flash.failure = "Invalid token"
+      flash.failure = Rex.t(:"action.misc.token_invalid")
       redirect to: New
     end
 
@@ -40,12 +40,12 @@ module Shield::PasswordResets::Update
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.success = "Password changed successfully"
+      flash.success = Rex.t(:"action.password_reset.update.success")
       redirect to: CurrentLogin::New
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = "Could not change password"
+      flash.failure = Rex.t(:"action.password_reset.update.failure")
       html EditPage, operation: operation
     end
   end

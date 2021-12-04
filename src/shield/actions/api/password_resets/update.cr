@@ -20,7 +20,7 @@ module Shield::Api::PasswordResets::Update
     end
 
     def do_verify_operation_failed(utility)
-      json({status: "failure", message: "Invalid token"})
+      json({status: "failure", message: Rex.t(:"action.misc.token_invalid")})
     end
 
     private def reset_password(password_reset)
@@ -41,7 +41,7 @@ module Shield::Api::PasswordResets::Update
     def do_run_operation_succeeded(operation, user)
       json({
         status: "success",
-        message: "Password changed successfully",
+        message: Rex.t(:"action.password_reset.update.success"),
         data: {user: UserSerializer.new(user)}
       })
     end
@@ -49,7 +49,7 @@ module Shield::Api::PasswordResets::Update
     def do_run_operation_failed(operation)
       json({
         status: "failure",
-        message: "Could not change password",
+        message: Rex.t(:"action.password_reset.update.failure"),
         data: {errors: operation.errors}
       })
     end

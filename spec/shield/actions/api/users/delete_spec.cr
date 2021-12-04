@@ -13,7 +13,7 @@ describe Shield::Api::Users::Delete do
 
     response = client.exec(Api::Users::Delete.with(user_id: user.id))
 
-    response.should send_json(200, {status: "success"})
+    response.should send_json(200, {message: "action.user.destroy.success"})
   end
 
   it "requires logged in" do

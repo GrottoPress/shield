@@ -63,22 +63,22 @@ module Shield::LoginPipes
     end
 
     def do_require_logged_in_failed
-      flash.failure = "You are not logged in"
+      flash.failure = Rex.t(:"action.pipe.not_logged_in")
       redirect to: CurrentLogin::New
     end
 
     def do_require_logged_out_failed
-      flash.info = "You are logged in"
+      flash.info = Rex.t(:"action.pipe.not_logged_out")
       redirect_back fallback: CurrentUser::Show
     end
 
     def do_pin_login_to_ip_address_failed
-      flash.failure = "Your IP address has changed. Please log in again."
+      flash.failure = Rex.t(:"action.pipe.ip_address_changed")
       redirect to: CurrentLogin::New
     end
 
     def do_enforce_login_idle_timeout_failed
-      flash.failure = "Your login timed out"
+      flash.failure = Rex.t(:"action.pipe.login_timed_out")
       redirect to: CurrentLogin::New
     end
   end

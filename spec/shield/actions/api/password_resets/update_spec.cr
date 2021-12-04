@@ -22,7 +22,9 @@ describe Shield::Api::PasswordResets::Update do
         user: {password: new_password}
       )
 
-      response.should send_json(200, {status: "success"})
+      response.should send_json(200, {
+        message: "action.password_reset.update.success"
+      })
 
       BcryptHash.new(new_password)
         .verify?(user.reload.password_digest)

@@ -7,7 +7,8 @@ module Shield::SaveLoginUserOptions
     end
 
     private def validate_login_notify_required
-      validate_required login_notify
+      validate_required login_notify,
+        message: Rex.t(:"operation.error.login_notify_required")
     end
   end
 end

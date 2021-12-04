@@ -15,7 +15,9 @@ describe Shield::Api::CurrentUser::Create do
       }
     )
 
-    response.should send_json(200, {status: "success"})
+    response.should send_json(200, {
+      message: "action.current_user.create.success"
+    })
   end
 
   it "requires logged out" do

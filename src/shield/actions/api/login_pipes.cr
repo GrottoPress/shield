@@ -37,24 +37,24 @@ module Shield::Api::LoginPipes
     end
 
     def do_require_logged_in_failed
-      json({status: "failure", message: "Invalid token"})
+      json({status: "failure", message: Rex.t(:"action.pipe.not_logged_in")})
     end
 
     def do_require_logged_out_failed
-      json({status: "failure", message: "You already have a valid token"})
+      json({status: "failure", message: Rex.t(:"action.pipe.not_logged_out")})
     end
 
     def do_pin_login_to_ip_address_failed
       json({
         status: "failure",
-        message: "Your IP address has changed. Please log in again."
+        message: Rex.t(:"action.pipe.ip_address_changed")
       })
     end
 
     def do_enforce_login_idle_timeout_failed
       json({
         status: "failure",
-        message: "Your login timed out"
+        message: Rex.t(:"action.pipe.login_timed_out")
       })
     end
 

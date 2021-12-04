@@ -33,8 +33,8 @@ describe Shield::CreatePassword do
     )) do |operation, user|
       user.should be_nil
 
-      assert_invalid(operation.password, " required")
-      assert_valid(operation.password_digest, " required")
+      assert_invalid(operation.password, "operation.error.password_required")
+      assert_valid(operation.password_digest)
     end
   end
 end

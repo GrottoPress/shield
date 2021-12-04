@@ -22,12 +22,12 @@ module Shield::CurrentLogin::Create
     end
 
     def do_run_operation_succeeded(operation, login)
-      flash.success = "Successfully logged in"
+      flash.success = Rex.t(:"action.current_login.create.success")
       redirect_back fallback: CurrentUser::Show
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = "Invalid email or password"
+      flash.failure = Rex.t(:"action.current_login.create.failure")
       html NewPage, operation: operation
     end
   end

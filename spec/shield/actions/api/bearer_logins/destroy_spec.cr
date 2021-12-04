@@ -16,7 +16,10 @@ describe Shield::Api::BearerLogins::Destroy do
       bearer_login_id: bearer_login.id
     ))
 
-    response.should send_json(200, {status: "success"})
+    response.should send_json(200, {
+      message: "action.bearer_login.destroy.success"
+    })
+
     bearer_login.reload.status.inactive?.should be_true
   end
 

@@ -9,7 +9,8 @@ module Shield::SaveBearerLoginUserSettings
 
     private def validate_bearer_login_notify_required
       return unless new_record?
-      validate_required bearer_login_notify
+      validate_required bearer_login_notify,
+        message: Rex.t(:"operation.error.bearer_login_notify_required")
     end
 
     private def set_bearer_login_notify

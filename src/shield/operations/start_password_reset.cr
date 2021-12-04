@@ -22,11 +22,15 @@ module Shield::StartPasswordReset
     include Shield::StartAuthentication
 
     private def validate_email_required
-      validate_required email
+      validate_required email,
+        message: Rex.t(:"operation.error.email_required")
     end
 
     private def validate_email_valid
-      validate_email email
+      validate_email email, message: Rex.t(
+        :"operation.error.email_invalid",
+        email.value
+      )
     end
 
     private def set_default_inactive_at
@@ -48,7 +52,12 @@ module Shield::StartPasswordReset
     end
 
     private def validate_email_exists
-      email.add_error("does not exist") if guest_email?
+      return unless guest_email?
+
+      email.add_error Rex.t(
+        :"operation.error.email_not_found",
+        email: email.value
+      )
     end
 
     private def send_guest_email

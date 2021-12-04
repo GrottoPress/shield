@@ -12,7 +12,8 @@ module Shield::ResetPassword
     include Shield::DeleteSession
 
     private def validate_password_required
-      validate_required password
+      validate_required password,
+        message: Rex.t(:"operation.error.password_required")
     end
 
     private def end_password_resets(user : Shield::User)

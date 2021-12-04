@@ -9,7 +9,9 @@ module Shield::SaveLoginUserSettings
 
     private def validate_login_notify_required
       return unless new_record?
-      validate_required login_notify
+
+      validate_required login_notify,
+        message: Rex.t(:"operation.error.login_notify_required")
     end
 
     private def set_login_notify
