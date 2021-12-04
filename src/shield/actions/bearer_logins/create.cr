@@ -27,7 +27,10 @@ module Shield::BearerLogins::Create
 
     def do_run_operation_succeeded(operation, bearer_login)
       flash.success = Rex.t(:"action.bearer_login.create.success")
-      html ShowPage, operation: operation, bearer_login: bearer_login
+
+      html ShowPage,
+        bearer_login: bearer_login,
+        token: BearerToken.new(operation, bearer_login).to_s
     end
 
     def do_run_operation_failed(operation)

@@ -1,6 +1,6 @@
 struct BearerLogins::ShowPage < MainLayout
   needs bearer_login : BearerLogin
-  needs operation : CreateBearerLogin
+  needs token : String
 
   def content
     text "BearerLogins::ShowPage"
