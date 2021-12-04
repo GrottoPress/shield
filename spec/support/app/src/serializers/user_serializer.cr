@@ -1,4 +1,4 @@
-class UserSerializer < BaseSerializer
+struct UserSerializer < BaseSerializer
   def initialize(@user : User)
   end
 

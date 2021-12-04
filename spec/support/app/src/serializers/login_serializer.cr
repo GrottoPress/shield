@@ -1,4 +1,4 @@
-class LoginSerializer < BaseSerializer
+struct LoginSerializer < BaseSerializer
   def initialize(@login : Login)
   end
 

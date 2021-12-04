@@ -1,4 +1,4 @@
-class ErrorSerializer < BaseSerializer
+struct ErrorSerializer < BaseSerializer
   def initialize(
     @message : String,
     @details : String? = nil,

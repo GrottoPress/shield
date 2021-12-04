@@ -1,4 +1,4 @@
-class BearerLoginSerializer < BaseSerializer
+struct BearerLoginSerializer < BaseSerializer
   def initialize(@bearer_login : BearerLogin)
   end
 
