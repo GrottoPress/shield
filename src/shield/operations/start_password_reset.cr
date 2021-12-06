@@ -52,12 +52,10 @@ module Shield::StartPasswordReset
     end
 
     private def validate_email_exists
-      return unless guest_email?
-
-      email.add_error Rex.t(
-        :"operation.error.email_not_found",
-        email: email.value
-      )
+      email.value.try do |value|
+        return unless guest_email?
+        email.add_error Rex.t(:"operation.error.email_not_found", email: value)
+      end
     end
 
     private def send_guest_email
