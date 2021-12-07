@@ -33,7 +33,7 @@ module Shield::SaveEmail
     private def validate_email_unique
       email.value.try do |value|
         return unless user_email?
-        email.add_error Rex.t(:"operation.error.email_taken", email: value)
+        email.add_error Rex.t(:"operation.error.email_exists", email: value)
       end
     end
   end

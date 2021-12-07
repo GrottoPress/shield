@@ -56,7 +56,7 @@ describe Shield::SaveEmail do
       user.should be_nil
 
       operation.user_email?.should be_true
-      assert_invalid(operation.email, "operation.error.email_taken")
+      assert_invalid(operation.email, "operation.error.email_exists")
     end
   end
 end

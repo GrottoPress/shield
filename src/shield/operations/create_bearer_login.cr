@@ -37,7 +37,7 @@ module Shield::CreateBearerLogin
         return unless uid = user_id.value
 
         if BearerLoginQuery.new.user_id(uid).name(value).any?
-          name.add_error Rex.t(:"operation.error.name_taken", name: value)
+          name.add_error Rex.t(:"operation.error.name_exists", name: value)
         end
       end
     end

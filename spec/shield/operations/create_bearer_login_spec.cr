@@ -77,7 +77,7 @@ describe Shield::CreateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.name, "operation.error.name_taken")
+      assert_invalid(operation.name, "operation.error.name_exists")
     end
   end
 
