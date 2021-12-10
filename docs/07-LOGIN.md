@@ -59,7 +59,7 @@
    ```crystal
    # ->>> src/models/user_settings.cr
 
-   class UserSettings
+   struct UserSettings
      # ...
      include Shield::LoginUserSettings
      # ...

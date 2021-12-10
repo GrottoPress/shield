@@ -9,7 +9,7 @@ You may use either `UserSettings` or `UserOptions`, but not both, in a single ap
    ```crystal
    # ->>> src/models/user_settings.cr
 
-   class UserSettings
+   struct UserSettings
      # ...
      include Shield::UserSettings
      # ...

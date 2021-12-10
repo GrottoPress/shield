@@ -15,14 +15,13 @@ module Shield::SaveBearerLoginUserSettings
 
     private def set_bearer_login_notify
       bearer_login_notify.value.try do |value|
-        if settings.value
-          settings.value.try &.bearer_login_notify = value
-          settings.value = settings.value.dup # Ensures `#changed?` is `true`
-        else
-          settings.value = UserSettings.from_json(
-            {bearer_login_notify: value}.to_json
-          )
+        settings.value.try do |_settings|
+          return settings.value = _settings.merge(bearer_login_notify: value)
         end
+
+        settings.value = UserSettings.from_json(
+          {bearer_login_notify: value}.to_json
+        )
       end
     end
   end

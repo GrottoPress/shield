@@ -87,7 +87,7 @@ This token is revoked when the user logs out.
    ```crystal
    # ->>> src/models/user_settings.cr
 
-   class UserSettings
+   struct UserSettings
      # ...
      include Shield::BearerLoginUserSettings
      # ...

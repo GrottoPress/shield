@@ -16,14 +16,13 @@ module Shield::SaveUserSettings
 
     private def set_password_notify
       password_notify.value.try do |value|
-        if settings.value
-          settings.value.try &.password_notify = value
-          settings.value = settings.value.dup # Ensures `#changed?` is `true`
-        else
-          settings.value = UserSettings.from_json(
-            {password_notify: value}.to_json
-          )
+        settings.value.try do |_settings|
+          return settings.value = _settings.merge(password_notify: value)
         end
+
+        settings.value = UserSettings.from_json(
+          {password_notify: value}.to_json
+        )
       end
     end
   end

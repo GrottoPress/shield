@@ -1,8 +1,8 @@
 module Shield::UserSettings
   macro included
-    include JSON::Serializable
+    include Lucille::JSON
 
-    property? password_notify : Bool = true
+    getter? password_notify : Bool = true
 
     def password_notify
       password_notify?

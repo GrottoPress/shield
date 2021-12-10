@@ -3,7 +3,7 @@
   .includes?("UserOptions")
 %}
 
-{% skip_file unless Reference.subclasses
+{% skip_file unless Lucille::JSON.includers
   .map(&.stringify)
   .includes?("UserSettings")
 %}
@@ -26,7 +26,7 @@ class UpdateUser < User::SaveOperation
 end
 
 {% if Avram::Model.all_subclasses.map(&.stringify).includes?("BearerLogin") %}
-  class UserSettings
+  struct UserSettings
     include Shield::BearerLoginUserSettings
   end
 
@@ -52,7 +52,7 @@ end
 {% end %}
 
 {% if Avram::Model.all_subclasses.map(&.stringify).includes?("Login") %}
-  class UserSettings
+  struct UserSettings
     include Shield::LoginUserSettings
   end
 
