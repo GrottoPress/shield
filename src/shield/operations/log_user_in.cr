@@ -3,7 +3,12 @@ module Shield::LogUserIn
     attribute email : String
     attribute password : String
 
+    include Shield::StartAuthentication
+    include Shield::SetSession
+
     before_save do
+      set_inactive_at
+
       validate_email_required
       validate_password_required
       validate_email_valid
@@ -12,8 +17,6 @@ module Shield::LogUserIn
     end
 
     include Shield::RequireIpAddress
-    include Shield::StartAuthentication
-    include Shield::SetSession
 
     private def validate_email_required
       validate_required email,
@@ -32,7 +35,7 @@ module Shield::LogUserIn
       )
     end
 
-    private def set_default_inactive_at
+    private def set_inactive_at
       active_at.value.try do |value|
         inactive_at.value = value + Shield.settings.login_expiry
       end

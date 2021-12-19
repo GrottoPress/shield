@@ -3,15 +3,17 @@ module Shield::CreateBearerLogin
     permit_columns :name
 
     include Shield::SetUserIdFromUser
+    include Shield::StartAuthentication
 
     before_save do
+      set_inactive_at
+
       validate_name_required
       validate_user_id_required
       validate_name_unique
     end
 
     include Shield::ValidateScopes
-    include Shield::StartAuthentication
 
     private def validate_name_required
       validate_required name, message: Rex.t(:"operation.error.name_required")
@@ -22,7 +24,7 @@ module Shield::CreateBearerLogin
         message: Rex.t(:"operation.error.user_id_required")
     end
 
-    private def set_default_inactive_at
+    private def set_inactive_at
       active_at.value.try do |value|
         inactive_at.value = value + Shield.settings.bearer_login_expiry
       end
