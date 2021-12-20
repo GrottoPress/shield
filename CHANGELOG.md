@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Convert `UserSettings` to a `struct`
 - Extract bearer login validations into `Shield::ValidateBearerLogin`
 - Extract email confirmation validations into `Shield::ValidateEmailConfirmation`
+- Extract login validations into `Shield::ValidateLogin`
 
 ### Removed
 - Drop support for *Lucky* v0.28
