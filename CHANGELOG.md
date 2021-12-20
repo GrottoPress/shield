@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Restrict login verification error to password attribute only
 - Convert `UserSettings` to a `struct`
 - Extract bearer login validations into `Shield::ValidateBearerLogin`
+- Extract email confirmation validations into `Shield::ValidateEmailConfirmation`
 
 ### Removed
 - Drop support for *Lucky* v0.28
