@@ -3,10 +3,10 @@ module Shield::SaveEmail
     getter? user_email = false
 
     before_save do
+      set_user_email
+
       validate_email_required
       validate_email_valid
-
-      set_user_email
       validate_email_unique
     end
 
@@ -22,18 +22,18 @@ module Shield::SaveEmail
       )
     end
 
+    private def validate_email_unique
+      email.value.try do |value|
+        return unless user_email?
+        email.add_error Rex.t(:"operation.error.email_exists", email: value)
+      end
+    end
+
     private def set_user_email
       email.value.try do |value|
         query = UserQuery.new.email(value)
         record.try { |record| query = query.id.not.eq(record.id) }
         @user_email = query.any?
-      end
-    end
-
-    private def validate_email_unique
-      email.value.try do |value|
-        return unless user_email?
-        email.add_error Rex.t(:"operation.error.email_exists", email: value)
       end
     end
   end

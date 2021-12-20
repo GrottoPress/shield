@@ -3,8 +3,8 @@ module Shield::SaveBearerLoginUserSettings
     attribute bearer_login_notify : Bool
 
     before_save do
-      validate_bearer_login_notify_required
       set_bearer_login_notify
+      validate_bearer_login_notify_required
     end
 
     private def validate_bearer_login_notify_required

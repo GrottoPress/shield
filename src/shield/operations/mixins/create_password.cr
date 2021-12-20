@@ -1,8 +1,8 @@
 module Shield::CreatePassword
   macro included
     before_save do
-      validate_password_required
       set_password_digest
+      validate_password_required
     end
 
     include Shield::ValidatePassword

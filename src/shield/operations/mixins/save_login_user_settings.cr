@@ -3,8 +3,8 @@ module Shield::SaveLoginUserSettings
     attribute login_notify : Bool
 
     before_save do
-      validate_login_notify_required
       set_login_notify
+      validate_login_notify_required
     end
 
     private def validate_login_notify_required
