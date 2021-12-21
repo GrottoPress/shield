@@ -1,10 +1,4 @@
 module Shield::EmailConfirmationCurrentUser::Create
-  # IMPORTANT!
-  #
-  # Prevent user enumeration by showing the same response
-  # even if the email address is already registered.
-  #
-  # This assumes we're sending welcome emails.
   macro included
     include Shield::CurrentUser::Create
 
