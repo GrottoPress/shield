@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Extract email confirmation validations into `Shield::ValidateEmailConfirmation`
 - Extract login validations into `Shield::ValidateLogin`
 - Extract password reset validations into `Shield::ValidatePasswordReset`
+- Extract user validations into `Shield::ValidateUser`
 
 ### Removed
 - Drop support for *Lucky* v0.28

@@ -4,7 +4,7 @@ module Shield::RegisterUser
 
     attribute password : String
 
-    include Shield::SaveEmail
-    include Shield::CreatePassword
+    include Shield::SetPasswordDigestFromPassword
+    include Shield::ValidateUser
   end
 end

@@ -1,20 +1,8 @@
-module Shield::UpdatePassword
+module Shield::LogOutEverywhere
   macro included
     needs current_login : Login?
 
-    before_save do
-      set_password_digest
-    end
-
     after_save log_out_everywhere
-
-    include Shield::ValidatePassword
-
-    private def set_password_digest
-      password.value.try do |value|
-        password_digest.value = BcryptHash.new(value).hash
-      end
-    end
 
     private def log_out_everywhere(user : Shield::User)
       return unless password_digest.changed?

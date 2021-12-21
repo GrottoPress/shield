@@ -8,8 +8,10 @@ module Shield::ResetPassword
 
     after_save end_password_resets
 
-    include Shield::UpdatePassword
+    include Shield::SetPasswordDigestFromPassword
+    include Shield::LogOutEverywhere
     include Shield::DeleteSession
+    include Shield::ValidatePassword
 
     private def validate_password_required
       validate_required password,

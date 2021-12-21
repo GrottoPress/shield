@@ -1,40 +1,23 @@
 module Shield::UpdateEmailConfirmationUser
   macro included
-    getter new_email : String?
-
     getter email_confirmation : EmailConfirmation?
+    getter new_email : String?
     getter start_email_confirmation : StartEmailConfirmation?
-
-    permit_columns :email
-
-    attribute password : String
 
     needs remote_ip : Socket::IPAddress?
 
-    before_save do
-      validate_email_required
-      validate_email_valid
-
-      reset_email
-    end
-
     after_save start_email_confirmation
 
-    include Shield::UpdatePassword
+    include Shield::UpdateUser
 
-    private def validate_email_required
-      validate_required email,
-        message: Rex.t(:"operation.error.email_required")
+    before_save do
+      revert_email
     end
 
-    private def validate_email_valid
-      validate_email email, message: Rex.t(
-        :"operation.error.email_invalid",
-        email: email.value
-      )
+    private def validate_email_unique
     end
 
-    private def reset_email
+    private def revert_email
       return unless email.changed?
 
       @new_email = email.value
