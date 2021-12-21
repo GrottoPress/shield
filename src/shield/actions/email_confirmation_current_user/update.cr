@@ -35,8 +35,9 @@ module Shield::EmailConfirmationCurrentUser::Update
     end
 
     private def success_message(operation)
-      email = operation.new_email
-      return Rex.t(:"action.current_user.update.success") unless email
+      unless email = operation.new_email
+        return Rex.t(:"action.current_user.update.success")
+      end
 
       LuckyEnv.production? ?
         Rex.t(:"action.current_user.update.success_confirm", email: email) :
