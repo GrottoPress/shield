@@ -1,11 +1,14 @@
 require "../../spec_helper"
 
 describe Shield::RegisterUser do
+  email = "user@example.tld"
+  password = "password12U password"
+
   it "creates user" do
     params = nested_params(
       user: {
-        email: "user@example.tld",
-        password: "password12U password",
+        email: email,
+        password: password,
         level: User::Level.new(:editor)
       },
       user_options: {
@@ -17,6 +20,11 @@ describe Shield::RegisterUser do
 
     RegisterUser.create(params) do |operation, user|
       user.should be_a(User)
+
+      user.try do |user|
+        user.email.should eq(email)
+        BcryptHash.new(password).verify?(user.password_digest).should be_true
+      end
     end
   end
 

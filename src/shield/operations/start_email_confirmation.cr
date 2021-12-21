@@ -2,14 +2,18 @@ module Shield::StartEmailConfirmation
   macro included
     permit_columns :email
 
-    after_commit send_email
-
-    include Shield::SaveEmail
-    include Shield::RequireIpAddress
+    include Shield::SetIpAddressFromRemoteAddress
     include Shield::StartAuthentication
 
     before_save do
       set_inactive_at
+    end
+
+    after_commit send_email
+
+    include Shield::ValidateEmailConfirmation
+
+    before_save do
       send_user_email
     end
 

@@ -21,7 +21,6 @@ describe Shield::StartEmailConfirmation do
 
   it "starts email confirmation for existing user" do
     ip_address = Socket::IPAddress.new("1.2.3.4", 5)
-
     user = UserFactory.create &.email("useR@examplE.tLd")
 
     StartEmailConfirmation.create(
@@ -39,56 +38,6 @@ describe Shield::StartEmailConfirmation do
         email_confirmation.user_id.should_not be_nil
         email_confirmation.user_id.try &.should(eq user.id)
       end
-    end
-  end
-
-  it "requires email" do
-    StartEmailConfirmation.create(
-      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
-    ) do |operation, email_confirmation|
-      email_confirmation.should be_nil
-
-      assert_invalid(operation.email, "operation.error.email_required")
-    end
-  end
-
-  it "rejects invalid email" do
-    StartEmailConfirmation.create(
-      params(email: "email"),
-      remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
-    ) do |operation, email_confirmation|
-      email_confirmation.should be_nil
-
-      assert_invalid(operation.email, "operation.error.email_invalid")
-    end
-  end
-
-  it "rejects existing email" do
-    email = "user@example.tld"
-
-    UserFactory.create &.email(email)
-
-    StartEmailConfirmation.create(
-      params(email: email),
-      remote_ip: nil
-    ) do |operation, email_confirmation|
-      email_confirmation.should be_nil
-
-      assert_invalid(operation.email, "operation.error.email_exists")
-    end
-  end
-
-  it "requires valid IP address" do
-    StartEmailConfirmation.create(
-      params(email: "user@example.tld"),
-      remote_ip: nil
-    ) do |operation, email_confirmation|
-      email_confirmation.should be_nil
-
-      assert_invalid(
-        operation.ip_address,
-        "operation.error.ip_address_required"
-      )
     end
   end
 

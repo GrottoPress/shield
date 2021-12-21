@@ -3,8 +3,18 @@ require "../../../spec_helper"
 private class SaveUser < User::SaveOperation
   permit_columns :email, :level, :password_digest
 
-  include Shield::SaveEmail
+  include Shield::SetUserEmail
+
+  before_save do
+    validate_email_unique
+  end
+
   include Shield::SendWelcomeEmail
+
+  private def validate_email_unique
+    return unless email.value
+    email.add_error("exists") if user_email?
+  end
 end
 
 describe Shield::SendWelcomeEmail do

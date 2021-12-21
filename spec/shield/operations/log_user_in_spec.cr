@@ -25,39 +25,6 @@ describe Shield::LogUserIn do
     LoginSession.new(session).login_token.should_not be_empty
   end
 
-  it "requires valid IP address" do
-    LogUserIn.create(
-      params(email: "incorrect@example.tld", password: "password12U~password"),
-      session: Lucky::Session.new,
-      remote_ip: nil
-    ) do |operation, login|
-      login.should be_nil
-
-      assert_invalid(
-        operation.ip_address,
-        "operation.error.ip_address_required"
-      )
-    end
-  end
-
-  it "requires valid email format" do
-    password = "password12U~password"
-
-    user = UserFactory.create &.password(password)
-    UserOptionsFactory.create &.user_id(user.id)
-
-    LogUserIn.create(
-      params(email: "invalid-email", password: password),
-      session: Lucky::Session.new,
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    ) do |operation, login|
-      login.should be_nil
-
-      assert_invalid(operation.email, "operation.error.email_invalid")
-      assert_valid(operation.password, "operation.error.login_failed")
-    end
-  end
-
   it "rejects incorrect email" do
     password = "password12U~password"
 
@@ -71,7 +38,6 @@ describe Shield::LogUserIn do
     ) do |operation, login|
       login.should be_nil
 
-      # operation.user_id.errors.should be_empty
       assert_valid(operation.user_id)
       assert_invalid(operation.password, "operation.error.login_failed")
     end

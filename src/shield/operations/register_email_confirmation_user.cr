@@ -6,9 +6,9 @@ module Shield::RegisterEmailConfirmationUser
     after_save end_email_confirmations
 
     include Shield::SetEmailFromEmailConfirmation
-    include Shield::SaveEmail
-    include Shield::CreatePassword
+    include Shield::SetPasswordDigestFromPassword
     include Shield::DeleteSession
+    include Shield::ValidateUser
 
     private def set_email_confirmation_user(user : Shield::User)
       EmailConfirmationQuery.new

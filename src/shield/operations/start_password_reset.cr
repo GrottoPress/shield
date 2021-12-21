@@ -5,33 +5,19 @@ module Shield::StartPasswordReset
     attribute email : String
 
     include Shield::StartAuthentication
+    include Shield::SetIpAddressFromRemoteAddress
 
     before_save do
       set_inactive_at
       set_user_id
-      set_guest_email
-
-      validate_email_required
-      validate_email_valid
-      validate_email_exists
-
-      send_guest_email
     end
 
     after_commit send_email
 
-    include Shield::RequireIpAddress
+    include Shield::ValidatePasswordReset
 
-    private def validate_email_required
-      validate_required email,
-        message: Rex.t(:"operation.error.email_required")
-    end
-
-    private def validate_email_valid
-      validate_email email, message: Rex.t(
-        :"operation.error.email_invalid",
-        email.value
-      )
+    before_save do
+      send_guest_email
     end
 
     private def set_inactive_at
@@ -43,19 +29,6 @@ module Shield::StartPasswordReset
     private def set_user_id
       email.value.try do |value|
         user_id.value = UserQuery.new.email(value).first?.try(&.id)
-      end
-    end
-
-    private def set_guest_email
-      email.value.try do |value|
-        @guest_email = user_id.value.nil? && value.email?
-      end
-    end
-
-    private def validate_email_exists
-      email.value.try do |value|
-        return unless guest_email?
-        email.add_error Rex.t(:"operation.error.email_not_found", email: value)
       end
     end
 

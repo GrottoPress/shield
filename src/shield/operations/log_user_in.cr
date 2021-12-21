@@ -5,34 +5,16 @@ module Shield::LogUserIn
 
     include Shield::StartAuthentication
     include Shield::SetSession
+    include Shield::SetIpAddressFromRemoteAddress
 
     before_save do
       set_inactive_at
+    end
 
-      validate_email_required
-      validate_password_required
-      validate_email_valid
+    include Shield::ValidateLogin
 
+    before_save do
       verify_login
-    end
-
-    include Shield::RequireIpAddress
-
-    private def validate_email_required
-      validate_required email,
-        message: Rex.t(:"operation.error.email_required")
-    end
-
-    private def validate_password_required
-      validate_required password,
-        message: Rex.t(:"operation.error.password_required")
-    end
-
-    private def validate_email_valid
-      validate_email email, message: Rex.t(
-        :"operation.error.email_invalid",
-        email: email.value
-      )
     end
 
     private def set_inactive_at

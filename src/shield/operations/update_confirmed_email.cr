@@ -1,10 +1,9 @@
 module Shield::UpdateConfirmedEmail
   macro included
-    after_save end_email_confirmations
-
     include Shield::SetEmailFromEmailConfirmation
-    include Shield::SaveEmail
     include Shield::DeleteSession
+
+    after_save end_email_confirmations
 
     private def end_email_confirmations(user : Shield::User)
       EmailConfirmationQuery.new
