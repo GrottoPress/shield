@@ -13,8 +13,7 @@ crystal: ~> 1.0
 dependencies:
   lucille:
     github: GrottoPress/lucille
-    # version: ~> 0.2.0
-    branch: master
+    version: ~> 0.3.0
 
 development_dependencies:
   carbon:
