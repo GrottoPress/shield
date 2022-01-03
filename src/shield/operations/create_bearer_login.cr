@@ -17,8 +17,8 @@ module Shield::CreateBearerLogin
     end
 
     private def set_inactive_at
-      active_at.value.try do |value|
-        inactive_at.value = value + Shield.settings.bearer_login_expiry
+      Shield.settings.bearer_login_expiry.try do |expiry|
+        active_at.value.try { |value| inactive_at.value = value + expiry }
       end
     end
   end

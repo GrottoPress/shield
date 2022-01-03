@@ -105,13 +105,6 @@ This is particularly important, since email addresses are usually the only means
 
    class StartEmailConfirmation < EmailConfirmation::SaveOperation
      # ...
-     # By default, *Shield* sets the `inactive_at` time here, using
-     # the expiry setting above.
-     #
-     # Use this, if you would like to never expire email confirmations,
-     # irrespective of the expiry setting.
-     #include Shield::NeverExpires
-     # ...
    end
    ```
 
@@ -551,13 +544,21 @@ This is particularly important, since email addresses are usually the only means
 
        #{EmailConfirmationUrl.new(@operation, @email_confirmation)}
 
-       This email confirmation link will expire in #{Shield.settings.email_confirmation_expiry.total_minutes.to_i} minutes.
+       #{link_expiry_minutes.try do |expiry|
+         "This email confirmation link will expire in #{expiry} minutes."
+       end}
 
        If you did not initiate this request, ignore this email.
 
        Regards,
        <app name here>.
        MESSAGE
+     end
+
+     private def link_expiry_minutes
+        @email_confirmation.inactive_at.try do |inactive_at|
+          (inactive_at - @email_confirmation.active_at).total_minutes.to_i
+        end
      end
      # ...
    end

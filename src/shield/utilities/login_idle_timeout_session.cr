@@ -3,8 +3,8 @@ module Shield::LoginIdleTimeoutSession
     include Shield::Session
 
     def expired? : Bool?
-      login_last_active?.try do |time|
-        Time.utc - time >= Shield.settings.login_idle_timeout
+      Shield.settings.login_idle_timeout.try do |timeout|
+        login_last_active?.try { |time| Time.utc - time >= timeout }
       end
     end
 

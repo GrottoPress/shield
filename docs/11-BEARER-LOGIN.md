@@ -38,7 +38,7 @@ This token is revoked when the user logs out.
    Shield.configure do |settings|
      # ...
      # How long should bearer login last before it expires?
-     #settings.bearer_login_expiry = 90.days
+     #settings.bearer_login_expiry = 90.days # Set to `nil` to disable
      # ...
    end
    ```
@@ -176,13 +176,6 @@ This token is revoked when the user logs out.
    # ->>> src/operations/create_bearer_login.cr
 
    class CreateBearerLogin < BearerLogin::SaveOperation
-     # ...
-     # By default, *Shield* sets the `inactive_at` time here, using
-     # the expiry setting above.
-     #
-     # Use this, if you would like to never expire bearer logins,
-     # irrespective of the expiry setting.
-     #include Shield::NeverExpires
      # ...
    end
    ```

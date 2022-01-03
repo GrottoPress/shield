@@ -9,10 +9,10 @@
      # ...
      # How long should a login last before it is expired?
      # The login will unconditionally expire after this time span.
-     #settings.login_expiry = 24.hours
+     #settings.login_expiry = 24.hours # Set to `nil` to disable
      #
      # How long can a login remain idle before it is timed out.
-     #settings.login_idle_timeout = 30.minutes
+     #settings.login_idle_timeout = 30.minutes # Set to `nil` to disable
      # ...
    end
    ```
@@ -147,13 +147,6 @@
 
    class LogUserIn < Login::SaveOperation
      # ...
-     # By default, *Shield* sets the `inactive_at` time here, using
-     # the expiry setting above.
-     #
-     # Use this, if you would like to never expire logins,
-     # irrespective of the expiry setting.
-     #include Shield::NeverExpires
-     # ...
    end
    ```
 
@@ -220,7 +213,7 @@
      #end
 
      # What to do when a login has been idle for as long as defined in
-     # `Shield.settings.login_idle_timeout`, if the action enforces login timeouts.
+     # `Shield.settings.login_idle_timeout`.
      #
      #def do_enforce_login_idle_timeout_failed
      #  flash.failure = Rex.t(:"action.pipe.login_timed_out")

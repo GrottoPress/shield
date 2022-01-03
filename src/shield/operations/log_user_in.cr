@@ -18,8 +18,8 @@ module Shield::LogUserIn
     end
 
     private def set_inactive_at
-      active_at.value.try do |value|
-        inactive_at.value = value + Shield.settings.login_expiry
+      Shield.settings.login_expiry.try do |expiry|
+        active_at.value.try { |value| inactive_at.value = value + expiry }
       end
     end
 

@@ -20,9 +20,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Extract login validations into `Shield::ValidateLogin`
 - Extract password reset validations into `Shield::ValidatePasswordReset`
 - Extract user validations into `Shield::ValidateUser`
+- Allow setting `bearer_login_expiry` to `nil` to disable expiry
+- Allow setting `login_expiry` to `nil` to disable expiry
+- Allow setting `login_idle_timeout` to `nil` to disable timeout
 
 ### Removed
 - Drop support for *Lucky* v0.28
+- Remove `Shield::NeverExpires` operation mixin
 
 ## [0.12.0] - 2021-11-22
 
