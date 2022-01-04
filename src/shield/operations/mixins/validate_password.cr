@@ -26,11 +26,7 @@ module Shield::ValidatePassword
 
       password.value.try do |value|
         value.each_char { |char| return if char.ascii_lowercase? }
-
-        password.add_error Rex.t(
-          :"operation.error.password_lowercase_required",
-          value
-        )
+        password.add_error Rex.t(:"operation.error.password_lowercase_required")
       end
     end
 
@@ -39,11 +35,7 @@ module Shield::ValidatePassword
 
       password.value.try do |value|
         value.each_char { |char| return if char.ascii_uppercase? }
-
-        password.add_error Rex.t(
-          :"operation.error.password_uppercase_required",
-          value
-        )
+        password.add_error Rex.t(:"operation.error.password_uppercase_required")
       end
     end
 
@@ -52,11 +44,7 @@ module Shield::ValidatePassword
 
       password.value.try do |value|
         value.each_char { |char| return if char.ascii_number? }
-
-        password.add_error Rex.t(
-          :"operation.error.password_number_required",
-          value
-        )
+        password.add_error Rex.t(:"operation.error.password_number_required")
       end
     end
 
@@ -68,7 +56,6 @@ module Shield::ValidatePassword
 
         password.add_error Rex.t(
           :"operation.error.password_special_char_required",
-          value
         )
       end
     end
