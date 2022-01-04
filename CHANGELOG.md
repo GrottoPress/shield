@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased] - 
 
+### Changed
+- Redirect **back** if log out fails
+
 ### Fix
 - Don't allow access to password in translations
 

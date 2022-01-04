@@ -27,7 +27,7 @@ module Shield::CurrentLogin::Destroy
 
     def do_run_operation_failed(operation)
       flash.failure = Rex.t(:"action.current_login.destroy.failure")
-      redirect to: CurrentUser::Show
+      redirect_back fallback: CurrentUser::Show
     end
 
     def authorize?(user : Shield::User) : Bool
