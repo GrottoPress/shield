@@ -12,7 +12,7 @@ module Shield::Api::CurrentLogin::Create
         remote_ip: remote_ip?,
         session: nil
       ) do |operation, login|
-        if login
+        if operation.saved?
           do_run_operation_succeeded(operation, login.not_nil!)
         else
           response.status_code = 403

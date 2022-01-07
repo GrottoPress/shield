@@ -12,7 +12,7 @@ module Shield::CurrentLogin::Create
         session: session,
         remote_ip: remote_ip?
       ) do |operation, login|
-        if login
+        if operation.saved?
           do_run_operation_succeeded(operation, login.not_nil!)
         else
           response.status_code = 403

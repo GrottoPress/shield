@@ -13,7 +13,7 @@ module Shield::Api::BearerLogins::Create
         scopes: array_param(CreateBearerLogin.param_key, :scopes),
         allowed_scopes: BearerScope.action_scopes.map(&.name)
       ) do |operation, bearer_login|
-        if bearer_login
+        if operation.saved?
           do_run_operation_succeeded(operation, bearer_login.not_nil!)
         else
           do_run_operation_failed(operation)

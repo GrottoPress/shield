@@ -33,7 +33,7 @@ module Shield::Api::EmailConfirmationCurrentUser::Create
         email_confirmation: email_confirmation,
         session: nil
       ) do |operation, user|
-        if user
+        if operation.saved?
           do_run_operation_succeeded(operation, user.not_nil!)
         else
           do_run_operation_failed(operation)

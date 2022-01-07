@@ -15,7 +15,7 @@ module Shield::EmailConfirmations::Create
         params,
         remote_ip: remote_ip?
       ) do |operation, email_confirmation|
-        if email_confirmation
+        if operation.saved?
           do_run_operation_succeeded(operation, email_confirmation.not_nil!)
         else
           do_run_operation_failed(operation)

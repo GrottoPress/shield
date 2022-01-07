@@ -8,7 +8,7 @@ module Shield::Users::Create
 
     def run_operation
       RegisterUser.create(params) do |operation, user|
-        if user
+        if operation.saved?
           do_run_operation_succeeded(operation, user.not_nil!)
         else
           do_run_operation_failed(operation)
