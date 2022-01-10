@@ -35,8 +35,8 @@ describe Shield::LogUserIn do
       params(email: "incorrect@example.tld", password: password),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    ) do |operation, login|
-      login.should be_nil
+    ) do |operation, _|
+      operation.saved?.should be_false
 
       assert_valid(operation.user_id)
       assert_invalid(operation.password, "operation.error.login_failed")
@@ -54,8 +54,8 @@ describe Shield::LogUserIn do
       params(email: email, password: "assword12U~passwor"),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    ) do |operation, login|
-      login.should be_nil
+    ) do |operation, _|
+      operation.saved?.should be_false
 
       assert_invalid(operation.password, "operation.error.login_failed")
     end
