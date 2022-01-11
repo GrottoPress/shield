@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased] - 
 
+### Added
+- Ensure support for *Crystal* v1.3
+
 ### Changed
 - Use saved status to determine status of create operations
 
