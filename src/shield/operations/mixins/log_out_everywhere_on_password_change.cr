@@ -1,4 +1,4 @@
-module Shield::LogOutEverywhere
+module Shield::LogOutEverywhereOnPasswordChange
   macro included
     needs current_login : Login?
 

@@ -5,7 +5,7 @@ module Shield::UpdateUser
     attribute password : String
 
     include Shield::SetPasswordDigestFromPassword
-    include Shield::LogOutEverywhere
+    include Shield::LogOutEverywhereOnPasswordChange
     include Shield::ValidateUser
   end
 end

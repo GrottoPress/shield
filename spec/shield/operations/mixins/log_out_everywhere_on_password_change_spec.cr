@@ -3,10 +3,10 @@ require "../../../spec_helper"
 private class SaveUser < User::SaveOperation
   permit_columns :email, :level, :password_digest
 
-  include Shield::LogOutEverywhere
+  include Shield::LogOutEverywhereOnPasswordChange
 end
 
-describe Shield::LogOutEverywhere do
+describe Shield::LogOutEverywhereOnPasswordChange do
   it "logs out everywhere when password changes" do
     password = "password12U-password"
     new_password = "assword12U-passwor"
