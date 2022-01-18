@@ -11,6 +11,7 @@ module Shield::Logins::Destroy
         if operation.saved?
           do_run_operation_succeeded(operation, updated_login)
         else
+          response.status_code = 400
           do_run_operation_failed(operation)
         end
       end

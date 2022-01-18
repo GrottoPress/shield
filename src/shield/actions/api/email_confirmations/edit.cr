@@ -51,6 +51,7 @@ module Shield::Api::EmailConfirmations::Edit
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)
         else
+          response.status_code = 400
           do_run_operation_failed(operation)
         end
       end

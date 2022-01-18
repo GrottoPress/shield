@@ -11,6 +11,7 @@ module Shield::Api::Users::Create
         if operation.saved?
           do_run_operation_succeeded(operation, user.not_nil!)
         else
+          response.status_code = 400
           do_run_operation_failed(operation)
         end
       end

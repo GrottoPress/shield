@@ -22,6 +22,7 @@ module Shield::Api::PasswordResets::Create
         if operation.saved?
           do_run_operation_succeeded(operation, password_reset.not_nil!)
         else
+          response.status_code = 400
           do_run_operation_failed(operation)
         end
       end

@@ -14,6 +14,7 @@ module Shield::Api::Users::Delete
         if operation.deleted?
           do_run_operation_succeeded(operation, deleted_user.not_nil!)
         else
+          response.status_code = 400
           do_run_operation_failed(operation)
         end
       end

@@ -11,6 +11,7 @@ module Shield::Api::Logins::Delete
         if operation.deleted?
           do_run_operation_succeeded(operation, deleted_login.not_nil!)
         else
+          response.status_code = 400
           do_run_operation_failed(operation)
         end
       end

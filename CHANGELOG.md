@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Use saved status to determine status of create operations
+- Respond with HTTP status code `400` in actions if operation failed
 
 ## [0.13.1] - 2022-01-04
 
