@@ -9,11 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Ensure support for *Crystal* v1.3
+- Add a new `Shield::LogOutEverywhere` operation
+- Add `Shield::Api::LoginsEverywhere::*` actions that log user out on all devices
+- Add `Shield::LoginsEverywhere::*` actions that log user out on all devices
 
 ### Changed
 - Use saved status to determine status of create operations
 - Respond with HTTP status code `400` in actions if operation failed
-- Rename `Shield::LogOutEverywhere` operation mixin to `LogOutEverywhereOnPasswordChange`
+- Rename the old `Shield::LogOutEverywhere` mixin to `LogOutEverywhereOnPasswordChange`
 
 ## [0.13.1] - 2022-01-04
 
