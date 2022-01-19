@@ -337,7 +337,7 @@
      # Sample message
      def text_body
        <<-MESSAGE
-       Hi User ##{@password_reset.user!.id},
+       Hi User ##{@password_reset.user.id},
 
        You (or someone else) recently requested to reset the password
        for your <app name here> account.

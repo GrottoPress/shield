@@ -332,7 +332,7 @@
      # Sample message
      def text_body
        <<-MESSAGE
-       Hi User ##{@login.user!.id},
+       Hi User ##{@login.user.id},
 
        This is to let you know that your <app name here> account has just been
        accessed.

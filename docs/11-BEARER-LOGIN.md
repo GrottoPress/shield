@@ -401,7 +401,7 @@ This token is revoked when the user logs out.
      # Sample message
      def text_body
        <<-MESSAGE
-       Hi User ##{@bearer_login.user!.id},
+       Hi User ##{@bearer_login.user.id},
 
        This is to let you know that a new bearer login token was created for your
        <app name here> account.
