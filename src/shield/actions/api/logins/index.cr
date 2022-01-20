@@ -24,15 +24,7 @@ module Shield::Api::Logins::Index
     end
 
     private getter paginated_logins : Tuple(Lucky::Paginator, LoginQuery) do
-      paginate LoginQuery.new.user_id(user.id).is_active.active_at.desc_order
-    end
-
-    def user
-      current_or_bearer_user
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
+      paginate LoginQuery.new.is_active.active_at.desc_order
     end
   end
 end

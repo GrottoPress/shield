@@ -2,11 +2,13 @@ require "../../../../spec_helper"
 
 describe Shield::Api::Logins::Index do
   it "renders index page" do
-    email = "user@example.tld"
     password = "password4APASSWORD<"
 
+    user = UserFactory.create &.password(password).level(:admin)
+    UserOptionsFactory.create &.user_id(user.id)
+
     client = ApiClient.new
-    client.api_auth(email, password)
+    client.api_auth(user, password)
 
     response = client.exec(Api::Logins::Index)
 
