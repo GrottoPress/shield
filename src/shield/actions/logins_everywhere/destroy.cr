@@ -25,12 +25,12 @@ module Shield::LoginsEverywhere::Destroy
 
     def do_run_operation_succeeded(operation, login)
       flash.success = Rex.t(:"action.login_everywhere.destroy.success")
-      redirect_back fallback: CurrentUser::Show
+      redirect to: Index
     end
 
     def do_run_operation_failed(operation)
       flash.failure = Rex.t(:"action.login_everywhere.destroy.failure")
-      redirect_back fallback: CurrentUser::Show
+      redirect_back fallback: Index
     end
 
     def authorize?(user : Shield::User) : Bool
