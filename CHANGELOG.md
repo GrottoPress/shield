@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Repurpose `Shield::Api::Logins::Index` to return all active logins for all users
 - Repurpose `Shield::Logins::Index` to return all active logins for all users
 
+### Removed
+- Remove `Shield::VerificationUrl#route`
+
 ## [0.13.1] - 2022-01-04
 
 ### Changed

@@ -3,7 +3,7 @@ module Shield::EmailConfirmationUrl
     include Shield::VerificationUrl
 
     def initialize(token : String)
-      @route = EmailConfirmations::Show.with(token: token)
+      @url = EmailConfirmations::Show.with(token: token).url
     end
   end
 end

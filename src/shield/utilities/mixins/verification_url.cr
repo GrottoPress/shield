@@ -1,6 +1,6 @@
 module Shield::VerificationUrl
   macro included
-    getter route : Lucky::RouteHelper
+    @url : String
 
     def self.new(operation, record)
       new(operation.token, record.id)
@@ -15,7 +15,7 @@ module Shield::VerificationUrl
     end
 
     def to_s(io)
-      io << @route.url
+      io << @url
     end
 
     def to_json(json)

@@ -3,7 +3,7 @@ module Shield::PasswordResetUrl
     include Shield::VerificationUrl
 
     def initialize(token : String)
-      @route = PasswordResets::Show.with(token: token)
+      @url = PasswordResets::Show.with(token: token).url
     end
   end
 end
