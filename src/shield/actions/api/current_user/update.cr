@@ -21,9 +21,18 @@ module Shield::Api::CurrentUser::Update
       end
     end
 
-    def user
-      current_user_or_bearer
-    end
+    {% if Avram::Model.all_subclasses
+      .map(&.stringify)
+      .includes?("BearerLogin") %}
+
+      def user
+        current_user_or_bearer
+      end
+    {% else %}
+      def user
+        current_user
+      end
+    {% end %}
 
     def do_run_operation_succeeded(operation, user)
       json({

@@ -34,9 +34,18 @@ module Shield::Api::EmailConfirmations::Edit
       end
     end
 
-    def user
-      current_user_or_bearer
-    end
+    {% if Avram::Model.all_subclasses
+      .map(&.stringify)
+      .includes?("BearerLogin") %}
+
+      def user
+        current_user_or_bearer
+      end
+    {% else %}
+      def user
+        current_user
+      end
+    {% end %}
 
     def do_verify_operation_failed(utility)
       json({status: "failure", message: Rex.t(:"action.misc.token_invalid")})
