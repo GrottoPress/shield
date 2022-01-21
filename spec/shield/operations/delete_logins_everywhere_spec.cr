@@ -10,12 +10,12 @@ describe Shield::DeleteLoginsEverywhere do
     login_2.status.active?.should be_true
 
     DeleteLoginsEverywhere.update(
-      login_1,
-      skip_current: false
-    ) do |operation, updated_login|
+      user,
+      current_login: nil
+    ) do |operation, _|
       operation.saved?.should be_true
 
-      LoginQuery.new.id(updated_login.id).first?.should be_nil
+      LoginQuery.new.id(login_1.id).first?.should be_nil
       LoginQuery.new.id(login_2.id).first?.should be_nil
     end
   end
@@ -29,12 +29,12 @@ describe Shield::DeleteLoginsEverywhere do
     login_2.status.active?.should be_true
 
     DeleteLoginsEverywhere.update(
-      login_1,
-      skip_current: true
-    ) do |operation, updated_login|
+      user,
+      current_login: login_1
+    ) do |operation, _|
       operation.saved?.should be_true
 
-      LoginQuery.new.id(updated_login.id).first?.should be_a(Login)
+      LoginQuery.new.id(login_1.id).first?.should be_a(Login)
       LoginQuery.new.id(login_2.id).first?.should be_nil
     end
   end
@@ -53,12 +53,12 @@ describe Shield::DeleteLoginsEverywhere do
     john_login.status.active?.should be_true
 
     DeleteLoginsEverywhere.update(
-      mary_login,
-      skip_current: false
-    ) do |operation, updated_login|
+      mary,
+      current_login: nil
+    ) do |operation, _|
       operation.saved?.should be_true
 
-      LoginQuery.new.id(updated_login.id).first?.should be_nil
+      LoginQuery.new.id(mary_login.id).first?.should be_nil
       LoginQuery.new.id(john_login.id).first?.should be_a(Login)
     end
   end

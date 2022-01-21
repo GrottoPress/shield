@@ -19,11 +19,11 @@ class LogUserIn < Login::SaveOperation
   include Shield::LogUserIn
 end
 
-class LogOutEverywhere < Login::SaveOperation
+class LogOutEverywhere < User::SaveOperation
   include Shield::LogOutEverywhere
 end
 
-class DeleteLoginsEverywhere < Login::SaveOperation
+class DeleteLoginsEverywhere < User::SaveOperation
   include Shield::DeleteLoginsEverywhere
 end
 

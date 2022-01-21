@@ -8,22 +8,22 @@ module Shield::LoginsEverywhere::Destroy
 
     def run_operation
       LogOutEverywhere.update(
-        login,
-        skip_current: true
-      ) do |operation, updated_login|
+        user,
+        current_login: current_login?
+      ) do |operation, updated_user|
         if operation.saved?
-          do_run_operation_succeeded(operation, updated_login)
+          do_run_operation_succeeded(operation, updated_user)
         else
           do_run_operation_failed(operation)
         end
       end
     end
 
-    def login
-      current_login
+    def user
+      current_user
     end
 
-    def do_run_operation_succeeded(operation, login)
+    def do_run_operation_succeeded(operation, user)
       flash.success = Rex.t(:"action.login_everywhere.destroy.success")
       redirect to: Index
     end
@@ -34,7 +34,7 @@ module Shield::LoginsEverywhere::Destroy
     end
 
     def authorize?(user : Shield::User) : Bool
-      user.id == login.user_id
+      user.id == self.user.id
     end
   end
 end

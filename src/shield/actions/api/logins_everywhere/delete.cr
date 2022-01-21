@@ -8,11 +8,11 @@ module Shield::Api::LoginsEverywhere::Delete
 
     def run_operation
       DeleteLoginsEverywhere.update(
-        login,
-        skip_current: true
-      ) do |operation, updated_login|
+        user,
+        current_login: current_login?
+      ) do |operation, updated_user|
         if operation.saved?
-          do_run_operation_succeeded(operation, updated_login)
+          do_run_operation_succeeded(operation, updated_user)
         else
           do_run_operation_failed(operation)
         end

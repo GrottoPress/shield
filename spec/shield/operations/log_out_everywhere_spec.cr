@@ -10,12 +10,12 @@ describe Shield::LogOutEverywhere do
     login_2.status.active?.should be_true
 
     LogOutEverywhere.update(
-      login_1,
-      skip_current: false
-    ) do |operation, updated_login|
+      user,
+      current_login: nil
+    ) do |operation, _|
       operation.saved?.should be_true
 
-      updated_login.status.active?.should be_false
+      login_1.reload.status.active?.should be_false
       login_2.reload.status.active?.should be_false
     end
   end
@@ -29,12 +29,12 @@ describe Shield::LogOutEverywhere do
     login_2.status.active?.should be_true
 
     LogOutEverywhere.update(
-      login_1,
-      skip_current: true
-    ) do |operation, updated_login|
+      user,
+      current_login: login_1
+    ) do |operation, _|
       operation.saved?.should be_true
 
-      updated_login.status.active?.should be_true
+      login_1.reload.status.active?.should be_true
       login_2.reload.status.active?.should be_false
     end
   end
@@ -53,12 +53,12 @@ describe Shield::LogOutEverywhere do
     john_login.status.active?.should be_true
 
     LogOutEverywhere.update(
-      mary_login,
-      skip_current: false
-    ) do |operation, updated_login|
+      mary,
+      current_login: nil
+    ) do |operation, _|
       operation.saved?.should be_true
 
-      updated_login.status.active?.should be_false
+      mary_login.reload.status.active?.should be_false
       john_login.reload.status.active?.should be_true
     end
   end

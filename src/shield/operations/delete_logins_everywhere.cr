@@ -1,12 +1,12 @@
 module Shield::DeleteLoginsEverywhere
   macro included
-    needs skip_current : Bool
+    needs current_login : Login?
 
-    after_commit delete_logins_everywhere
+    after_save delete_logins_everywhere
 
-    private def delete_logins_everywhere(login : Shield::Login)
-      query = LoginQuery.new.user_id(login.user_id)
-      query = query.id.not.eq(login.id) if skip_current
+    private def delete_logins_everywhere(user : Shield::User)
+      query = LoginQuery.new.user_id(user.id)
+      current_login.try { |login| query = query.id.not.eq(login.id) }
       query.delete
     end
   end
