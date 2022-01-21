@@ -433,14 +433,14 @@ This token is revoked when the user logs out.
 - `#bearer_logged_out?`
 - `#current_bearer_login?`
 - `#current_bearer_login`
-- `#current_bearer_user?`
-- `#current_bearer_user`
+- `#current_bearer?`
+- `#current_bearer`
 
 Other helpers are provided as follows:
 
-- `#current_or_bearer_user`:
+- `#current_user_or_bearer`:
 
-   Returns `#current_user` if available, otherwise returns `#current_bearer_user`. This is useful for dealing with the current user in APIs.
+   Returns `#current_user` if available, otherwise returns `#current_bearer`. This is useful for dealing with the current user in APIs.
 
 ### Authentication actions via API endpoints
 

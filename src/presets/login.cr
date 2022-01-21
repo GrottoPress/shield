@@ -38,13 +38,19 @@ end
 abstract class BrowserAction < Lucky::Action
   include Shield::LoginHelpers
   include Shield::LoginPipes
+end
 
-  include Shield::AuthorizationHelpers
-  include Shield::AuthorizationPipes
+abstract class ApiAction < Lucky::Action
+  include Shield::Api::LoginHelpers
+  include Shield::Api::LoginPipes
 end
 
 struct LoginSession
   include Shield::LoginSession
+end
+
+struct LoginHeaders
+  include Shield::LoginHeaders
 end
 
 struct LoginIdleTimeoutSession

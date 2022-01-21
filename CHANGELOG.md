@@ -19,9 +19,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Rename the old `Shield::LogOutEverywhere` mixin to `LogOutEverywhereOnPasswordChange`
 - Repurpose `Shield::Api::Logins::Index` to return all active logins for all users
 - Repurpose `Shield::Logins::Index` to return all active logins for all users
+- Rename API action's `#current_bearer_user` to `#current_bearer`
+- Rename API action's `#current_or_bearer_user` to `#current_user_or_bearer`
 
 ### Fixed
 - Prevent bearer users from deleting themselves
+- Allow API logins with email and password without setting up bearer logins
 
 ### Removed
 - Remove `Shield::VerificationUrl#route`

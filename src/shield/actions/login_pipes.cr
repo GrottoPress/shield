@@ -5,6 +5,7 @@ module Shield::LoginPipes
     before :require_logged_out
     before :pin_login_to_ip_address
     before :enforce_login_idle_timeout
+    before :check_authorization
 
     def require_logged_in
       if logged_in?
@@ -51,6 +52,15 @@ module Shield::LoginPipes
       end
     end
 
+    def check_authorization
+      if logged_out? || authorize?(current_user)
+        continue
+      else
+        response.status_code = 403
+        do_check_authorization_failed
+      end
+    end
+
     def set_no_referrer_policy
       response.headers["Referrer-Policy"] = "no-referrer"
       continue
@@ -80,6 +90,15 @@ module Shield::LoginPipes
     def do_enforce_login_idle_timeout_failed
       flash.failure = Rex.t(:"action.pipe.login_timed_out")
       redirect to: CurrentLogin::New
+    end
+
+    def do_check_authorization_failed
+      flash.failure = Rex.t(:"action.pipe.authorization_failed")
+      redirect_back fallback: CurrentUser::Show
+    end
+
+    def authorize?(user : Shield::User) : Bool
+      false
     end
   end
 end

@@ -1,3 +1,5 @@
 require "./shield"
 require "./presets/common"
+require "./presets/login"
+require "./presets/bearer_login"
 require "./presets/**"

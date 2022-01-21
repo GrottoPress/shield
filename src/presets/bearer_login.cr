@@ -24,42 +24,10 @@ class DeleteBearerLogin < BearerLogin::DeleteOperation
 end
 
 abstract class ApiAction < Lucky::Action
-  include Shield::Api::LoginHelpers
-  include Shield::Api::LoginPipes
-
-  include Shield::Api::AuthorizationHelpers
-  include Shield::Api::AuthorizationPipes
+  include Shield::Api::BearerLoginHelpers
+  include Shield::Api::BearerLoginPipes
 end
 
 struct BearerLoginHeaders
   include Shield::BearerLoginHeaders
 end
-
-struct LoginHeaders
-  include Shield::LoginHeaders
-end
-
-{% if Avram::Model.all_subclasses
-  .map(&.stringify)
-  .includes?("EmailConfirmation") %}
-
-  abstract class ApiAction < Lucky::Action
-    include Shield::Api::EmailConfirmationHelpers
-    include Shield::Api::EmailConfirmationPipes
-  end
-
-  struct EmailConfirmationParams
-    include Shield::EmailConfirmationParams
-  end
-{% end %}
-
-{% if Avram::Model.all_subclasses.map(&.stringify).includes?("PasswordReset") %}
-  abstract class ApiAction < Lucky::Action
-    include Shield::Api::PasswordResetHelpers
-    include Shield::Api::PasswordResetPipes
-  end
-
-  struct PasswordResetParams
-    include Shield::PasswordResetParams
-  end
-{% end %}

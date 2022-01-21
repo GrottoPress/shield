@@ -32,8 +32,17 @@ abstract class BrowserAction < Lucky::Action
   include Shield::PasswordResetPipes
 end
 
+abstract class ApiAction < Lucky::Action
+  include Shield::Api::PasswordResetHelpers
+  include Shield::Api::PasswordResetPipes
+end
+
 struct PasswordResetSession
   include Shield::PasswordResetSession
+end
+
+struct PasswordResetParams
+  include Shield::PasswordResetParams
 end
 
 struct PasswordResetUrl

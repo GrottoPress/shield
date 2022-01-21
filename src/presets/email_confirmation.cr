@@ -40,8 +40,17 @@ abstract class BrowserAction < Lucky::Action
   include Shield::EmailConfirmationPipes
 end
 
+abstract class ApiAction < Lucky::Action
+  include Shield::Api::EmailConfirmationHelpers
+  include Shield::Api::EmailConfirmationPipes
+end
+
 struct EmailConfirmationSession
   include Shield::EmailConfirmationSession
+end
+
+struct EmailConfirmationParams
+  include Shield::EmailConfirmationParams
 end
 
 struct EmailConfirmationUrl
