@@ -3,7 +3,14 @@ module Shield::Api::LoginPipes
     include Shield::LoginPipes
 
     def pin_login_to_ip_address
-      continue
+      if logged_out? ||
+        current_login.ip_address == remote_ip?.try &.address
+        continue
+      else
+        LogUserOut.update!(current_login, session: nil)
+        response.status_code = 403
+        do_pin_login_to_ip_address_failed
+      end
     end
 
     def enforce_login_idle_timeout

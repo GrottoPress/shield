@@ -34,6 +34,45 @@ describe Shield::Api::LoginPipes do
     end
   end
 
+  describe "#pin_login_to_ip_address" do
+    it "accepts login from same IP" do
+      email = "user@example.tld"
+      password = "password4APASSWORD<"
+      ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
+
+      user = UserFactory.create &.email(email)
+        .level(:admin)
+        .password(password)
+
+      UserOptionsFactory.create &.user_id(user.id)
+
+      client = ApiClient.new
+      client.api_auth(user, password, ip_address)
+
+      response = client.exec(Api::Posts::Index)
+
+      response.should send_json(200, current_user: user.id)
+    end
+
+    it "rejects login from different IP" do
+      email = "user@example.tld"
+      password = "password4APASSWORD<"
+
+      user = UserFactory.create &.email(email)
+        .level(:admin)
+        .password(password)
+
+      UserOptionsFactory.create &.user_id(user.id)
+
+      client = ApiClient.new
+      client.api_auth(user, password)
+
+      response = client.exec(Api::Posts::Index)
+
+      response.should send_json(403, ip_address_changed: true)
+    end
+  end
+
   describe "#check_authorization" do
     it "denies authorization" do
       password = "password_1Apassword"
