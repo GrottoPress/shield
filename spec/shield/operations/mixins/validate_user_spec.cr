@@ -20,7 +20,7 @@ describe Shield::ValidateUser do
     SaveUser.create(params(password: "secret")) do |operation, user|
       user.should be_nil
 
-      assert_invalid(operation.email, "operation.error.email_required")
+      operation.email.should have_error("operation.error.email_required")
     end
   end
 
@@ -28,10 +28,8 @@ describe Shield::ValidateUser do
     SaveUser.create(params(email: "user@example.tld")) do |operation, user|
       user.should be_nil
 
-      assert_invalid(
-        operation.password_digest,
-        "operation.error.password_required"
-      )
+      operation.password_digest
+        .should have_error("operation.error.password_required")
     end
   end
 
@@ -42,7 +40,7 @@ describe Shield::ValidateUser do
     )) do |operation, user|
       user.should be_nil
 
-      assert_invalid(operation.email, "operation.error.email_invalid")
+      operation.email.should have_error("operation.error.email_invalid")
     end
   end
 
@@ -57,7 +55,7 @@ describe Shield::ValidateUser do
     )) do |operation, user|
       user.should be_nil
 
-      assert_invalid(operation.email, "operation.error.email_exists")
+      operation.email.should have_error("operation.error.email_exists")
     end
   end
 end

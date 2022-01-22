@@ -21,7 +21,8 @@ describe Shield::ValidateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.scopes, "operation.error.bearer_scopes_required")
+      operation.scopes
+        .should have_error("operation.error.bearer_scopes_required")
     end
   end
 
@@ -37,7 +38,7 @@ describe Shield::ValidateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.user_id, "operation.error.user_id_required")
+      operation.user_id.should have_error("operation.error.user_id_required")
     end
   end
 
@@ -54,7 +55,7 @@ describe Shield::ValidateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.user_id, "operation.error.user_not_found")
+      operation.user_id.should have_error("operation.error.user_not_found")
     end
   end
 
@@ -72,7 +73,7 @@ describe Shield::ValidateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.name, "operation.error.name_required")
+      operation.name.should have_error("operation.error.name_required")
     end
   end
 
@@ -94,7 +95,7 @@ describe Shield::ValidateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.name, "operation.error.name_exists")
+      operation.name.should have_error("operation.error.name_exists")
     end
   end
 
@@ -138,7 +139,7 @@ describe Shield::ValidateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.scopes, "operation.error.bearer_scopes_empty")
+      operation.scopes.should have_error("operation.error.bearer_scopes_empty")
     end
   end
 
@@ -157,7 +158,8 @@ describe Shield::ValidateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.scopes, "operation.error.bearer_scopes_invalid")
+      operation.scopes
+        .should have_error("operation.error.bearer_scopes_invalid")
     end
   end
 
@@ -175,7 +177,7 @@ describe Shield::ValidateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      assert_invalid(operation.token_digest, "operation.error.token_required")
+      operation.token_digest.should have_error("operation.error.token_required")
     end
   end
 end

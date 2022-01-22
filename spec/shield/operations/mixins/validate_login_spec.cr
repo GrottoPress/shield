@@ -19,7 +19,7 @@ describe Shield::ValidateLogin do
     )) do |operation, login|
       login.should be_nil
 
-      assert_invalid(operation.email, "operation.error.email_required")
+      operation.email.should have_error("operation.error.email_required")
     end
   end
 
@@ -32,7 +32,7 @@ describe Shield::ValidateLogin do
     )) do |operation, login|
       login.should be_nil
 
-      assert_invalid(operation.password, "operation.error.password_required")
+      operation.password.should have_error("operation.error.password_required")
     end
   end
 
@@ -45,10 +45,8 @@ describe Shield::ValidateLogin do
     )) do |operation, login|
       login.should be_nil
 
-      assert_invalid(
-        operation.ip_address,
-        "operation.error.ip_address_required"
-      )
+      operation.ip_address
+        .should have_error("operation.error.ip_address_required")
     end
   end
 
@@ -62,7 +60,7 @@ describe Shield::ValidateLogin do
     )) do |operation, login|
       login.should be_nil
 
-      assert_invalid(operation.email, "operation.error.email_invalid")
+      operation.email.should have_error("operation.error.email_invalid")
     end
   end
 end

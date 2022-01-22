@@ -37,10 +37,8 @@ describe Shield::SaveUserSettings do
       RegisterUserWithSettings.create(params) do |operation, user|
         user.should be_nil
 
-        assert_invalid(
-          operation.password_notify,
-          "operation.error.password_notify_required"
-        )
+        operation.password_notify
+          .should have_error("operation.error.password_notify_required")
       end
     end
 
@@ -58,10 +56,8 @@ describe Shield::SaveUserSettings do
       RegisterUserWithSettings.create(params) do |operation, user|
         user.should be_nil
 
-        assert_invalid(
-          operation.bearer_login_notify,
-          "operation.error.bearer_login_notify_required"
-        )
+        operation.bearer_login_notify
+          .should have_error("operation.error.bearer_login_notify_required")
       end
     end
 
@@ -79,10 +75,8 @@ describe Shield::SaveUserSettings do
       RegisterUserWithSettings.create(params) do |operation, user|
         user.should be_nil
 
-        assert_invalid(
-          operation.login_notify,
-          "operation.error.login_notify_required"
-        )
+        operation.login_notify
+          .should have_error("operation.error.login_notify_required")
       end
     end
   end

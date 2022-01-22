@@ -18,7 +18,7 @@ describe Shield::ValidateEmailConfirmation do
     )) do |operation, email_confirmation|
       email_confirmation.should be_nil
 
-      assert_invalid(operation.email, "operation.error.email_required")
+      operation.email.should have_error("operation.error.email_required")
     end
   end
 
@@ -34,7 +34,7 @@ describe Shield::ValidateEmailConfirmation do
     )) do |operation, email_confirmation|
       email_confirmation.should be_nil
 
-      assert_invalid(operation.email, "operation.error.email_invalid")
+      operation.email.should have_error("operation.error.email_invalid")
     end
   end
 
@@ -54,7 +54,7 @@ describe Shield::ValidateEmailConfirmation do
       email_confirmation.should be_nil
 
       operation.user_email?.should be_true
-      assert_invalid(operation.email, "operation.error.email_exists")
+      operation.email.should have_error("operation.error.email_exists")
     end
   end
 
@@ -69,10 +69,8 @@ describe Shield::ValidateEmailConfirmation do
     )) do |operation, email_confirmation|
       email_confirmation.should be_nil
 
-      assert_invalid(
-        operation.ip_address,
-        "operation.error.ip_address_required"
-      )
+      operation.ip_address
+        .should have_error("operation.error.ip_address_required")
     end
   end
 end

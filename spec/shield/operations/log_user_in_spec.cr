@@ -38,8 +38,8 @@ describe Shield::LogUserIn do
     ) do |operation, _|
       operation.saved?.should be_false
 
-      assert_valid(operation.user_id)
-      assert_invalid(operation.password, "operation.error.login_failed")
+      operation.user_id.should_not have_error
+      operation.password.should have_error("operation.error.login_failed")
     end
   end
 
@@ -57,7 +57,7 @@ describe Shield::LogUserIn do
     ) do |operation, _|
       operation.saved?.should be_false
 
-      assert_invalid(operation.password, "operation.error.login_failed")
+      operation.password.should have_error("operation.error.login_failed")
     end
   end
 end

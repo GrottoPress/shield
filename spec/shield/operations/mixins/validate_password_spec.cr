@@ -24,10 +24,8 @@ describe Shield::ValidatePassword do
     )) do |operation, user|
       user.should be_nil
 
-      assert_invalid(
-        operation.password,
-        "operation.error.password_length_invalid"
-      )
+      operation.password
+        .should have_error("operation.error.password_length_invalid")
     end
   end
 
@@ -39,10 +37,8 @@ describe Shield::ValidatePassword do
     )) do |operation, user|
       user.should be_nil
 
-      assert_invalid(
-        operation.password,
-        "operation.error.password_number_required"
-      )
+      operation.password
+        .should have_error("operation.error.password_number_required")
     end
   end
 
@@ -66,10 +62,8 @@ describe Shield::ValidatePassword do
     )) do |operation, user|
       user.should be_nil
 
-      assert_invalid(
-        operation.password,
-        "operation.error.password_lowercase_required"
-      )
+      operation.password
+        .should have_error("operation.error.password_lowercase_required")
     end
   end
 
@@ -93,10 +87,8 @@ describe Shield::ValidatePassword do
     )) do |operation, user|
       user.should be_nil
 
-      assert_invalid(
-        operation.password,
-        "operation.error.password_uppercase_required"
-      )
+      operation.password
+        .should have_error("operation.error.password_uppercase_required")
     end
   end
 
@@ -120,10 +112,8 @@ describe Shield::ValidatePassword do
     )) do |operation, user|
       user.should be_nil
 
-      assert_invalid(
-        operation.password,
-        "operation.error.password_special_char_required"
-      )
+      operation.password
+        .should have_error("operation.error.password_special_char_required")
     end
   end
 

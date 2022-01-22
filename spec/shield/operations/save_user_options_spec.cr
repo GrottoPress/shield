@@ -38,7 +38,7 @@ describe Shield::SaveUserOptions do
     )) do |operation, user_options|
       user_options.should be_nil
 
-      assert_invalid(operation.user_id, "operation.error.user_id_required")
+      operation.user_id.should have_error("operation.error.user_id_required")
     end
   end
 
@@ -49,7 +49,7 @@ describe Shield::SaveUserOptions do
     ) do |operation, user_options|
       user_options.should be_nil
 
-      assert_invalid(operation.user_id, "operation.error.user_not_found")
+      operation.user_id.should have_error("operation.error.user_not_found")
     end
   end
 
@@ -59,10 +59,8 @@ describe Shield::SaveUserOptions do
     )) do |operation, user_options|
       user_options.should be_nil
 
-      assert_invalid(
-        operation.password_notify,
-        "operation.error.password_notify_required"
-      )
+      operation.password_notify
+        .should have_error("operation.error.password_notify_required")
     end
   end
 end
