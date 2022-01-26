@@ -27,7 +27,8 @@ module Shield::Api::CurrentLogin::Create
         message: Rex.t(:"action.misc.token_generated"),
         data: {
           login: LoginSerializer.new(login),
-          token: BearerToken.new(operation, login)
+          token: BearerToken.new(operation, login),
+          user: UserSerializer.new(login.user!)
         }
       })
     end

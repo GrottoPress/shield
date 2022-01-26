@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add a new `Shield::LogOutEverywhere` operation
 - Add `Shield::Api::LoginsEverywhere::*` actions that log user out on all devices
 - Add `Shield::LoginsEverywhere::*` actions that log user out on all devices
+- Include the logged in user in the login API response data
 
 ### Changed
 - Use saved status to determine status of create operations
