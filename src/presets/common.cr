@@ -10,6 +10,10 @@ abstract class ApiAction < Lucky::Action
   include Shield::ApiAction
 end
 
+module Lucky::HTMLPage
+  include Shield::LoginHelpers
+end
+
 struct PageUrlSession
   include Shield::PageUrlSession
 end
