@@ -50,6 +50,8 @@ describe Shield::LogOutEverywhereOnPasswordChange do
       params(password_digest: new_password),
       current_login: current_login
     ) do |operation, _|
+      operation.saved?.should be_true
+
       login_1.reload.status.active?.should be_false
       login_2.reload.status.active?.should be_false
       current_login.reload.status.active?.should be_true
