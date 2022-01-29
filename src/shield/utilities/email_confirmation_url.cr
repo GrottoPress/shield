@@ -3,7 +3,7 @@ module Shield::EmailConfirmationUrl
     include Shield::VerificationUrl
 
     def initialize(token : String)
-      @url = EmailConfirmations::Show.with(token: token).url
+      @url = Shield.settings.email_confirmation_url.call(token)
     end
   end
 end

@@ -10,5 +10,9 @@ module Shield
     setting password_require_number : Bool = true
     setting password_require_special_char : Bool = true
     setting password_reset_expiry : Time::Span = 30.minutes
+
+    setting email_confirmation_url : String -> String = ->(token : String) do
+      ::EmailConfirmations::Show.with(token: token).url
+    end
   end
 end

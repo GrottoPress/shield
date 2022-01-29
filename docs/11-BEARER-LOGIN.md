@@ -39,6 +39,11 @@ This token is revoked when the user logs out.
      # ...
      # How long should bearer login last before it expires?
      #settings.bearer_login_expiry = 90.days # Set to `nil` to disable
+
+     # Email confirmation URL to mail to user (useful for API-only apps)
+     #settings.email_confirmation_url = ->(token : String) do
+     #  "https://my-frontend-app.com/auth/ec?token=#{token}"
+     #end
      # ...
    end
    ```
