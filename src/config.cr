@@ -11,12 +11,29 @@ module Shield
     setting password_require_special_char : Bool = true
     setting password_reset_expiry : Time::Span = 30.minutes
 
-    setting email_confirmation_url : String -> String = ->(token : String) do
-      ::EmailConfirmations::Show.with(token: token).url
-    end
+    macro finished
+      {% if Lucky::Action.all_subclasses
+        .map(&.stringify)
+        .includes?("EmailConfirmations::Show") %}
 
-    setting password_reset_url : String -> String = ->(token : String) do
-      ::PasswordResets::Show.with(token: token).url
+        setting email_confirmation_url : String -> String =
+          ->(token : String) do
+            ::EmailConfirmations::Show.with(token: token).url
+          end
+      {% else %}
+        setting email_confirmation_url : String -> String
+      {% end %}
+
+      {% if Lucky::Action.all_subclasses
+        .map(&.stringify)
+        .includes?("PasswordResets::Show") %}
+
+        setting password_reset_url : String -> String = ->(token : String) do
+          ::PasswordResets::Show.with(token: token).url
+        end
+      {% else %}
+        setting password_reset_url : String -> String
+      {% end %}
     end
   end
 end
