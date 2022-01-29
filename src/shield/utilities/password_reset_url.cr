@@ -3,7 +3,7 @@ module Shield::PasswordResetUrl
     include Shield::VerificationUrl
 
     def initialize(token : String)
-      @url = PasswordResets::Show.with(token: token).url
+      @url = Shield.settings.password_reset_url.call(token)
     end
   end
 end

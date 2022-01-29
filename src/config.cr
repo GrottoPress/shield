@@ -14,5 +14,9 @@ module Shield
     setting email_confirmation_url : String -> String = ->(token : String) do
       ::EmailConfirmations::Show.with(token: token).url
     end
+
+    setting password_reset_url : String -> String = ->(token : String) do
+      ::PasswordResets::Show.with(token: token).url
+    end
   end
 end

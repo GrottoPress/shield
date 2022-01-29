@@ -44,6 +44,11 @@ This token is revoked when the user logs out.
      #settings.email_confirmation_url = ->(token : String) do
      #  "https://my-frontend-app.com/auth/ec?token=#{token}"
      #end
+
+     # Password reset URL to mail to user (useful for API-only apps)
+     #settings.password_reset_url = ->(token : String) do
+     #  "https://my-frontend-app.com/auth/pr?token=#{token}"
+     #end
      # ...
    end
    ```
