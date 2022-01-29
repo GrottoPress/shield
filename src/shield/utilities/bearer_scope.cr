@@ -19,10 +19,10 @@ module Shield::BearerScope
 
     def self.action_scopes : Array(self)
       actions = \{{
-        Lucky::Action
+        "#{Lucky::Action
           .all_subclasses
           .reject(&.abstract?)
-          .select { |k| k < Shield::ApiAction }
+          .select { |k| k < Shield::ApiAction }} of Lucky::Action.class".id
       }}
 
       actions.map { |action| new(action) }
