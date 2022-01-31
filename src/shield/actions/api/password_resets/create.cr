@@ -35,7 +35,10 @@ module Shield::Api::PasswordResets::Create
         json({
           status: "success",
           message: Rex.t(:"action.misc.dev_mode_skip_email"),
-          data: {token: BearerToken.new(operation, password_reset)}
+          data: {
+            password_reset: PasswordResetSerializer.new(password_reset),
+            token: BearerToken.new(operation, password_reset)
+          }
         })
       end
     end
