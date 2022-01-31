@@ -478,7 +478,7 @@ For these purposes, *Shield* provides the following modules:
 - `Shield::Api::EmailConfirmationCurrentUser::Show`
 - `Shield::Api::EmailConfirmationCurrentUser::Update`
 - `Shield::Api::EmailConfirmations::Create`
-- `Shield::Api::EmailConfirmations::Edit`
+- `Shield::Api::EmailConfirmations::Update`
 - `Shield::Api::PasswordResets::Create`
 - `Shield::Api::PasswordResets::Update`
 - `Shield::Api::SkipAuthenticationCache`

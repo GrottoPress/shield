@@ -74,9 +74,9 @@
 - `CurrentUser::Show`
 - `CurrentUser::Update`
 - `EmailConfirmations::Create`
-- `EmailConfirmations::Edit`
 - `EmailConfirmations::New`
 - `EmailConfirmations::Show`
+- `EmailConfirmations::Update`
 - `Logins::Delete`
 - `Logins::Destroy`
 - `Logins::Index`

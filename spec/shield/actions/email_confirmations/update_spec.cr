@@ -1,6 +1,6 @@
 require "../../../spec_helper"
 
-describe Shield::EmailConfirmations::Edit do
+describe Shield::EmailConfirmations::Update do
   it "updates email confirmation user" do
     email = "user@example.tld"
     new_email = "user@domain.net"
@@ -23,7 +23,7 @@ describe Shield::EmailConfirmations::Edit do
       client = ApiClient.new
       client.browser_auth(user, password, session: session)
 
-      response = client.exec(EmailConfirmations::Edit)
+      response = client.exec(EmailConfirmations::Update)
 
       user.reload.email.should eq(new_email)
     end
@@ -39,14 +39,14 @@ describe Shield::EmailConfirmations::Edit do
     client = ApiClient.new
     client.browser_auth(email, password, session: session)
 
-    response = client.exec(EmailConfirmations::Edit)
+    response = client.exec(EmailConfirmations::Update)
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Email-Confirmation-Status"]?.should eq("failure")
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(EmailConfirmations::Edit)
+    response = ApiClient.exec(EmailConfirmations::Update)
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"].should eq("false")

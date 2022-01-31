@@ -29,7 +29,7 @@ module Shield::EmailConfirmations::Show
 
     private def redirect(email_confirmation_session)
       if email_confirmation_session.email_confirmation.try &.user_id
-        redirect to: EmailConfirmations::Edit
+        redirect to: EmailConfirmations::Update
       else
         redirect to: CurrentUser::New
       end

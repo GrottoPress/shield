@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Rename API action's `#current_bearer_user` to `#current_bearer`
 - Rename API action's `#current_or_bearer_user` to `#current_user_or_bearer`
 - Make `Shield::LoginHelpers` available in pages and components
+- Rename `Shield::Api::EmailConfirmation::Edit` to `Shield::Api::EmailConfirmation::Update`
+- Rename `Shield::EmailConfirmation::Edit` to `Shield::EmailConfirmation::Update`
 
 ### Fixed
 - Prevent bearer users from deleting themselves

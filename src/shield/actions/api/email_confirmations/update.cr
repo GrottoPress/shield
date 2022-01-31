@@ -1,4 +1,4 @@
-module Shield::EmailConfirmations::Edit
+module Shield::Api::EmailConfirmations::Update
   # IMPORTANT!
   #
   # This requires the user to be logged in to update their email address.
@@ -17,13 +17,13 @@ module Shield::EmailConfirmations::Edit
 
     before :pin_email_confirmation_to_ip_address
 
-    # get "/email-confirmations/edit" do
+    # get "/email-confirmations/update" do
     #   run_operation
     # end
 
     def run_operation
-      EmailConfirmationSession.new(
-        session
+      EmailConfirmationParams.new(
+        params
       ).verify do |utility, email_confirmation|
         if email_confirmation.try &.user_id == user.id # <= IMPORTANT!
           update_email(email_confirmation.not_nil!)
@@ -34,20 +34,28 @@ module Shield::EmailConfirmations::Edit
       end
     end
 
-    def user
-      current_user
-    end
+    {% if Avram::Model.all_subclasses
+      .map(&.stringify)
+      .includes?("BearerLogin") %}
+
+      def user
+        current_user_or_bearer
+      end
+    {% else %}
+      def user
+        current_user
+      end
+    {% end %}
 
     def do_verify_operation_failed(utility)
-      flash.failure = Rex.t(:"action.misc.token_invalid")
-      redirect to: New
+      json({status: "failure", message: Rex.t(:"action.misc.token_invalid")})
     end
 
     private def update_email(email_confirmation)
       UpdateConfirmedEmail.update(
         email_confirmation.user.not_nil!,
         email_confirmation: email_confirmation,
-        session: session
+        session: nil
       ) do |operation, updated_user|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)
@@ -59,13 +67,19 @@ module Shield::EmailConfirmations::Edit
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.success = Rex.t(:"action.email_confirmation.edit.success")
-      redirect to: CurrentUser::Show
+      json({
+        status: "success",
+        message: Rex.t(:"action.email_confirmation.edit.success"),
+        data: {user: UserSerializer.new(user)}
+      })
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = Rex.t(:"action.email_confirmation.edit.failure")
-      redirect to: CurrentUser::Edit
+      json({
+        status: "failure",
+        message: Rex.t(:"action.email_confirmation.edit.failure"),
+        data: {errors: operation.errors}
+      })
     end
 
     def authorize?(user : Shield::User) : Bool

@@ -1,6 +1,6 @@
 require "../../../../spec_helper"
 
-describe Shield::Api::EmailConfirmations::Edit do
+describe Shield::Api::EmailConfirmations::Update do
   it "updates email confirmation user" do
     email = "user@example.tld"
     new_email = "user@domain.net"
@@ -22,7 +22,7 @@ describe Shield::Api::EmailConfirmations::Edit do
       client = ApiClient.new
       client.api_auth(user, password)
 
-      response = client.exec(Api::EmailConfirmations::Edit, token: token)
+      response = client.exec(Api::EmailConfirmations::Update, token: token)
 
       response.should send_json(200, {
         message: "action.email_confirmation.edit.success"
@@ -41,13 +41,16 @@ describe Shield::Api::EmailConfirmations::Edit do
     client = ApiClient.new
     client.api_auth(email, password)
 
-    response = client.exec(Api::EmailConfirmations::Edit, token: token)
+    response = client.exec(Api::EmailConfirmations::Update, token: token)
 
     response.should send_json(403, {status: "failure"})
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(Api::EmailConfirmations::Edit, token: "1.abcdef")
+    response = ApiClient.exec(
+      Api::EmailConfirmations::Update,
+      token: "1.abcdef"
+    )
 
     response.should send_json(401, logged_in: false)
   end
