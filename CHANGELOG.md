@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Api::LoginsEverywhere::*` actions that log user out on all devices
 - Add `Shield::LoginsEverywhere::*` actions that log user out on all devices
 - Include the logged in user in the login API response data
+- Include email confirmation in its API response data
 - Add `BearerToken#authenticate` methods
 
 ### Changed

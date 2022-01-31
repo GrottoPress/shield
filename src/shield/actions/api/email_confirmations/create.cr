@@ -31,7 +31,12 @@ module Shield::Api::EmailConfirmations::Create
         json({
           status: "success",
           message: Rex.t(:"action.misc.dev_mode_skip_email"),
-          data: {token: BearerToken.new(operation, email_confirmation)}
+          data: {
+            email_confirmation: EmailConfirmationSerializer.new(
+              email_confirmation
+            ),
+            token: BearerToken.new(operation, email_confirmation)
+          }
         })
       end
     end
