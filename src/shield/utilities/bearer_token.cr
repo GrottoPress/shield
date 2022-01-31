@@ -21,8 +21,12 @@ module Shield::BearerToken
       new(tkn, id.to_i64?)
     end
 
-    def to_header : String
-      "Bearer #{to_s}"
+    def authenticate(headers : HTTP::Headers) : Nil
+      headers["Authorization"] = "Bearer #{to_s}"
+    end
+
+    def authenticate(client) : Nil
+      client.before_request { |request| authenticate(request.headers) }
     end
 
     def to_s(io)

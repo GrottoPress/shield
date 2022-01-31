@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Api::LoginsEverywhere::*` actions that log user out on all devices
 - Add `Shield::LoginsEverywhere::*` actions that log user out on all devices
 - Include the logged in user in the login API response data
+- Add `BearerToken#authenticate` methods
 
 ### Changed
 - Use saved status to determine status of create operations
@@ -30,6 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 - Remove `Shield::VerificationUrl#route`
+- Remove `BearerToken#to_header`
 
 ## [0.13.1] - 2022-01-04
 

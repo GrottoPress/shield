@@ -1,9 +1,12 @@
 require "../../../spec_helper"
 
 describe Shield::BearerToken do
-  describe "#to_header" do
-    it "works" do
-      BearerToken.new("abcdef", 1).to_header.should eq("Bearer 1.abcdef")
+  describe "#authenticate" do
+    it "sets authorization header" do
+      headers = HTTP::Headers.new
+      BearerToken.new("abcdef", 1).authenticate(headers)
+
+      headers["Authorization"].should eq("Bearer 1.abcdef")
     end
   end
 

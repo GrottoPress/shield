@@ -5,7 +5,7 @@ module Shield::HttpClient
     end
 
     def api_auth(token : Shield::BearerToken)
-      headers("Authorization": token.to_header)
+      token.authenticate(client)
     end
 
     def api_auth(
@@ -30,10 +30,9 @@ module Shield::HttpClient
         remote_ip: remote_ip,
         session: nil
       ) do |operation, login|
-        headers("Authorization": BearerToken.new(
-          operation,
-          login.not_nil!
-        ).to_header)
+        login.try do |login|
+          BearerToken.new(operation, login).authenticate(client)
+        end
       end
 
       self
