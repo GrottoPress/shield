@@ -65,7 +65,7 @@ module Shield::EmailConfirmations::Update
 
     def do_run_operation_failed(operation)
       flash.failure = Rex.t(:"action.email_confirmation.edit.failure")
-      redirect to: CurrentUser::Update
+      redirect to: CurrentUser::Edit
     end
 
     def authorize?(user : Shield::User) : Bool
