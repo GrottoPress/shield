@@ -4,7 +4,7 @@ class Api::EmailConfirmations::Update < ApiAction
   skip :pin_login_to_ip_address
   skip :pin_email_confirmation_to_ip_address
 
-  get "/email-confirmations/update" do
+  patch "/email-confirmations" do
     run_operation
   end
 end

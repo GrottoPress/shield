@@ -17,7 +17,7 @@ module Shield::Api::EmailConfirmations::Update
 
     before :pin_email_confirmation_to_ip_address
 
-    # get "/email-confirmations/update" do
+    # patch "/email-confirmations" do
     #   run_operation
     # end
 
