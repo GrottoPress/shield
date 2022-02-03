@@ -482,6 +482,7 @@ For these purposes, *Shield* provides the following modules:
 - `Shield::Api::EmailConfirmations::Update`
 - `Shield::Api::PasswordResets::Create`
 - `Shield::Api::PasswordResets::Update`
+- `Shield::Api::PasswordResets::Verify`
 - `Shield::Api::SkipAuthenticationCache`
 
 If your application decides to allow any of these functionalities via its API, the modules above should be `include`d in their respective API actions.

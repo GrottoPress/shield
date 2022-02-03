@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Include password reset in its API response data
 - Add `BearerToken#authenticate` methods
 - Add `Shield::Api::EmailConfirmations::Verify` action
+- Add `Shield::Api::PasswordResets::Verify` action
 
 ### Changed
 - Use saved status to determine status of create operations
