@@ -15,6 +15,17 @@ describe Shield::PasswordResets::Create do
     response.headers["X-Password-Reset-ID"].should eq("pr_id")
   end
 
+  it "succeeds even if email does not exist" do
+    email = "user@example.tld"
+
+    response = ApiClient.exec(PasswordResets::Create, password_reset: {
+      email: email
+    })
+
+    response.status.should eq(HTTP::Status::FOUND)
+    response.headers["X-Password-Reset-Status"].should eq("success")
+  end
+
   it "requires logged out" do
     email = "user@example.tld"
     password = "password4APASSWORD<"

@@ -19,6 +19,26 @@ describe Shield::CurrentUser::Create do
     response.headers["X-User-ID"]?.should eq("current_user_id")
   end
 
+  it "succeeds even if email already taken" do
+    email = "user@example.tld"
+    password = "password4APASSWORD<"
+
+    user = UserFactory.create &.email(email)
+
+    response = ApiClient.exec(
+      RegularCurrentUser::Create,
+      user: {email: email, password: password},
+      user_options: {
+        password_notify: true,
+        login_notify: true,
+        bearer_login_notify: true
+      }
+    )
+
+    response.status.should eq(HTTP::Status::FOUND)
+    response.headers["X-User-Created"]?.should eq("true")
+  end
+
   it "requires logged out" do
     email = "user@example.tld"
     password = "password4APASSWORD<"

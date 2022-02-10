@@ -10,6 +10,22 @@ describe Shield::Api::EmailConfirmations::Create do
     response.should send_json(200, {message: "action.misc.dev_mode_skip_email"})
   end
 
+  it "succeeds even if email already taken" do
+    email = "user@domain.net"
+
+    user = UserFactory.create &.email(email)
+
+    response = ApiClient.exec(
+      Api::EmailConfirmations::Create,
+      email_confirmation: {email: email}
+    )
+
+    response.should send_json(
+      200,
+      {message: "action.email_confirmation.create.success"}
+    )
+  end
+
   it "requires logged out" do
     email = "user@example.tld"
     password = "password4APASSWORD<"

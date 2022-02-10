@@ -9,4 +9,9 @@ class EmailConfirmations::Create < BrowserAction
     response.headers["X-Email-Confirmation-ID"] = "ec_id"
     previous_def
   end
+
+  private def success_action(operation)
+    response.headers["X-Email-Confirmation-Status"] = "success"
+    previous_def
+  end
 end

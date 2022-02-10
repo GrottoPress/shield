@@ -19,4 +19,9 @@ class RegularCurrentUser::Create < BrowserAction
     response.headers["X-User-ID"] = "current_user_id"
     previous_def
   end
+
+  private def success_action(operation)
+    response.headers["X-User-Created"] = "true"
+    previous_def
+  end
 end

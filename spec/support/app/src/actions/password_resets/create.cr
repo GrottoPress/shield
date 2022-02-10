@@ -9,4 +9,9 @@ class PasswordResets::Create < BrowserAction
     response.headers["X-Password-Reset-ID"] = "pr_id"
     previous_def
   end
+
+  private def success_action(operation)
+    response.headers["X-Password-Reset-Status"] = "success"
+    previous_def
+  end
 end
