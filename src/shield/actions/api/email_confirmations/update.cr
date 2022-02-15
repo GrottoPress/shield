@@ -69,7 +69,7 @@ module Shield::Api::EmailConfirmations::Update
     def do_run_operation_succeeded(operation, user)
       json({
         status: "success",
-        message: Rex.t(:"action.email_confirmation.edit.success"),
+        message: Rex.t(:"action.email_confirmation.update.success"),
         data: {user: UserSerializer.new(user)}
       })
     end
@@ -77,7 +77,7 @@ module Shield::Api::EmailConfirmations::Update
     def do_run_operation_failed(operation)
       json({
         status: "failure",
-        message: Rex.t(:"action.email_confirmation.edit.failure"),
+        message: Rex.t(:"action.email_confirmation.update.failure"),
         data: {errors: operation.errors}
       })
     end

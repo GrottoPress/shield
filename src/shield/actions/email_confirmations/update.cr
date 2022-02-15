@@ -59,12 +59,12 @@ module Shield::EmailConfirmations::Update
     end
 
     def do_run_operation_succeeded(operation, user)
-      flash.success = Rex.t(:"action.email_confirmation.edit.success")
+      flash.success = Rex.t(:"action.email_confirmation.update.success")
       redirect to: CurrentUser::Show
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = Rex.t(:"action.email_confirmation.edit.failure")
+      flash.failure = Rex.t(:"action.email_confirmation.update.failure")
       redirect to: CurrentUser::Edit
     end
 

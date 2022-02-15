@@ -25,7 +25,7 @@ describe Shield::Api::EmailConfirmations::Update do
       response = client.exec(Api::EmailConfirmations::Update, token: token)
 
       response.should send_json(200, {
-        message: "action.email_confirmation.edit.success"
+        message: "action.email_confirmation.update.success"
       })
 
       user.reload.email.should eq(new_email)
