@@ -89,8 +89,8 @@ describe Shield::SaveUserSettings do
         user,
         params(bearer_login_notify: false, login_notify: false),
         current_login: nil
-      ) do |operation, user|
-        user.should be_a(User)
+      ) do |_, updated_user|
+        updated_user.should be_a(User)
       end
     end
 
@@ -101,8 +101,8 @@ describe Shield::SaveUserSettings do
         user,
         params(password_notify: false, login_notify: false),
         current_login: nil
-      ) do |operation, user|
-        user.should be_a(User)
+      ) do |_, updated_user|
+        updated_user.should be_a(User)
       end
     end
 
@@ -113,8 +113,8 @@ describe Shield::SaveUserSettings do
         user,
         params(bearer_login_notify: false, password_notify: false),
         current_login: nil
-      ) do |operation, user|
-        user.should be_a(User)
+      ) do |_, updated_user|
+        updated_user.should be_a(User)
       end
     end
   end

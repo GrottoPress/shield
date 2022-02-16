@@ -24,8 +24,8 @@ describe Shield::UpdateConfirmedEmail do
         from_session.verify!.user!.not_nil!,
         email_confirmation: from_session.email_confirmation,
         session: session
-      ) do |operation, updated_user|
-        operation.saved?.should be_true
+      ) do |_operation, _|
+        _operation.saved?.should be_true
 
         user.reload.email = new_email
 
@@ -39,7 +39,7 @@ describe Shield::UpdateConfirmedEmail do
     email = "user@example.tld"
 
     user = UserFactory.create &.email("another_user@example.net")
-    user_2 = UserFactory.create &.email("yet_another_user@edomain.com")
+    UserFactory.create &.email("yet_another_user@edomain.com")
 
     email_confirmation = EmailConfirmationFactory.create &.user_id(user.id)
       .email(email)

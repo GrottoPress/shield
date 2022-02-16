@@ -3,7 +3,6 @@ require "../../../spec_helper"
 describe Shield::EmailConfirmationCurrentUser::New do
   it "renders new page" do
     email = "user@example.tld"
-    password = "password4APASSWORD<"
     ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
     StartEmailConfirmation.create(
@@ -25,8 +24,6 @@ describe Shield::EmailConfirmationCurrentUser::New do
   end
 
   it "rejects invalid email confirmation token" do
-    password = "password4APASSWORD<"
-
     session = Lucky::Session.new
     EmailConfirmationSession.new(session).set("abcdef", 1)
 

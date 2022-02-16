@@ -1,3 +1,4 @@
+# ameba:disable Style/TypeNames
 class Rename_HashTo_Digest::V20200828163411 < Avram::Migrator::Migration::V1
   def migrate
     alter :logins do

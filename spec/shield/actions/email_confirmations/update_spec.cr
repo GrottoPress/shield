@@ -22,8 +22,7 @@ describe Shield::EmailConfirmations::Update do
 
       client = ApiClient.new
       client.browser_auth(user, password, session: session)
-
-      response = client.exec(EmailConfirmations::Update)
+      client.exec(EmailConfirmations::Update)
 
       user.reload.email.should eq(new_email)
     end

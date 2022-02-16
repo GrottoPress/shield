@@ -6,7 +6,7 @@ describe Shield::UpdateEmailConfirmationUser do
     new_email = "user@domain.com"
 
     user = UserFactory.create &.email(email)
-    user_options = UserOptionsFactory.create &.user_id(user.id)
+    UserOptionsFactory.create &.user_id(user.id)
 
     UpdateCurrentUser.update(
       user,

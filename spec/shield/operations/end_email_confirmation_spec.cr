@@ -18,8 +18,8 @@ describe Shield::EndEmailConfirmation do
       EndEmailConfirmation.update(
         email_confirmation,
         session: session
-      ) do |operation, updated_email_confirmation|
-        operation.saved?.should be_true
+      ) do |_operation, updated_email_confirmation|
+        _operation.saved?.should be_true
 
         updated_email_confirmation.status.active?.should be_false
       end

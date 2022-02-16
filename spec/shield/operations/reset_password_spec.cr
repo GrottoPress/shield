@@ -23,8 +23,8 @@ describe Shield::ResetPassword do
         params(password: new_password),
         session: session,
         current_login: nil
-      ) do |operation, updated_user|
-        operation.saved?.should be_true
+      ) do |_operation, updated_user|
+        _operation.saved?.should be_true
 
         PasswordAuthentication.new(updated_user)
           .verify(new_password)
@@ -49,7 +49,7 @@ describe Shield::ResetPassword do
       params(password: new_password),
       session: Lucky::Session.new,
       current_login: nil
-    ) do |operation, updated_user|
+    ) do |operation, _|
       operation.saved?.should be_false
 
       operation.password.should have_error("operation.error.password_required")
@@ -69,7 +69,7 @@ describe Shield::ResetPassword do
       params(password: new_password),
       session: Lucky::Session.new,
       current_login: nil
-    ) do |operation, updated_user|
+    ) do |operation, _|
       operation.saved?.should be_true
 
       password_reset.reload.status.active?.should be_false

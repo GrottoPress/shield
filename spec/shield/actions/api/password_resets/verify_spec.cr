@@ -4,7 +4,7 @@ describe Shield::Api::PasswordResets::Verify do
   it "verifies password reset" do
     email = "user@example.tld"
 
-    user = UserFactory.create &.email(email)
+    UserFactory.create &.email(email)
 
     StartPasswordReset.create(
       params(email: email),
@@ -22,7 +22,6 @@ describe Shield::Api::PasswordResets::Verify do
   end
 
   it "rejects invalid password reset token" do
-    new_password = "assword4APASSWOR<"
     token = BearerToken.new("abcdef", 1)
 
     response = ApiClient.exec(Api::PasswordResets::Verify, token: token)

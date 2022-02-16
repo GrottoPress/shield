@@ -48,7 +48,7 @@ describe Shield::ValidatePasswordReset do
   end
 
   it "requires existing email" do
-    user = UserFactory.create &.email("who@where.how")
+    UserFactory.create &.email("who@where.how")
 
     SavePasswordReset.create(params(
       active_at: Time.utc,

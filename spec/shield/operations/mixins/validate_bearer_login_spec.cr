@@ -119,7 +119,7 @@ describe Shield::ValidateBearerLogin do
       ),
       scopes: ["current_user.show"],
       allowed_scopes: ["current_user.show", "posts.index"],
-    ) do |operation, bearer_login|
+    ) do |_, bearer_login|
       bearer_login.should be_a(BearerLogin)
     end
   end

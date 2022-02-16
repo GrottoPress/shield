@@ -1,2 +1,2 @@
-Shield.configure do |settings|
+Shield.configure do |_|
 end

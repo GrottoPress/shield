@@ -12,7 +12,7 @@ describe Shield::EmailConfirmations::Create do
   it "succeeds even if email already taken" do
     email = "user@domain.net"
 
-    user = UserFactory.create &.email(email)
+    UserFactory.create &.email(email)
 
     response = ApiClient.exec(
       EmailConfirmations::Create,

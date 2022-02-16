@@ -12,7 +12,7 @@ describe Shield::LoginVerifier do
       session = Lucky::Session.new
       session_2 = Lucky::Session.new
 
-      login = LogUserIn.create!(
+      LogUserIn.create!(
         params(email: email, password: password),
         session: session,
         remote_ip: Socket::IPAddress.new("1.2.3.4", 5)

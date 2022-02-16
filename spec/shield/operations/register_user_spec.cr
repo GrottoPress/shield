@@ -18,10 +18,10 @@ describe Shield::RegisterUser do
       }
     )
 
-    RegisterUser.create(params) do |operation, user|
+    RegisterUser.create(params) do |_, user|
       user.should be_a(User)
 
-      user.try do |user|
+      user.try do |user| # ameba:disable Lint/ShadowingOuterLocalVar
         user.email.should eq(email)
         BcryptHash.new(password).verify?(user.password_digest).should be_true
       end
@@ -59,8 +59,10 @@ describe Shield::RegisterUser do
       }
     )
 
-    RegisterRegularCurrentUser2.create(params) do |operation, user|
+    RegisterRegularCurrentUser2.create(params) do |operation, _|
       operation.saved?.should be_false
+
+      # ameba:disable Performance/AnyInsteadOfEmpty
       UserQuery.new.any?.should be_false
     end
   end

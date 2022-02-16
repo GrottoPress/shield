@@ -40,7 +40,6 @@ describe Shield::ValidateEmailConfirmation do
 
   it "rejects existing email" do
     email = "user@example.tld"
-    ip_address = Socket::IPAddress.new("1.2.3.4", 5)
 
     user = UserFactory.create
     UserFactory.create &.email(email)

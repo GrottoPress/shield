@@ -20,6 +20,7 @@ describe Shield::Api::BearerLogins::Delete do
       message: "action.bearer_login.destroy.success"
     })
 
+    # ameba:disable Performance/AnyInsteadOfEmpty
     BearerLoginQuery.new.id(bearer_login.id).any?.should be_false
   end
 

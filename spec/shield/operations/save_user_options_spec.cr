@@ -9,7 +9,7 @@ describe Shield::SaveUserOptions do
         bearer_login_notify: false
       ),
       user_id: UserFactory.create.id
-    ) do |operation, user_options|
+    ) do |_, user_options|
       user_options.should be_a(UserOptions)
 
       user_options = user_options.not_nil!
@@ -25,7 +25,7 @@ describe Shield::SaveUserOptions do
     SaveUserOptions.update(
       user_options,
       params(login_notify: false, password_notify: true)
-    ) do |operation, updated_user_options|
+    ) do |_, updated_user_options|
       updated_user_options.login_notify.should be_false
       updated_user_options.password_notify.should be_true
     end

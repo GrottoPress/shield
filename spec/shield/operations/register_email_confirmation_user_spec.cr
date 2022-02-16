@@ -17,7 +17,7 @@ describe Shield::RegisterEmailConfirmationUser do
       params,
       email_confirmation: email_confirmation,
       session: Lucky::Session.new,
-    ) do |operation, user|
+    ) do |_, user|
       user.should be_a(User)
 
       user.try(&.email).should eq(email_confirmation.email)
@@ -98,7 +98,7 @@ describe Shield::RegisterEmailConfirmationUser do
       ),
       email_confirmation: EmailConfirmationFactory.create,
       session: Lucky::Session.new,
-    ) do |operation, user|
+    ) do |operation, _|
       operation.saved?.should be_false
     end
   end

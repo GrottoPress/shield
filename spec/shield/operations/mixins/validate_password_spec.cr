@@ -48,7 +48,7 @@ describe Shield::ValidatePassword do
         email: "user@example.tld",
         level: "Author",
         password: "passwordAPASSWORD-"
-      )) do |operation, user|
+      )) do |_, user|
         user.should be_a(User)
       end
     end
@@ -73,7 +73,7 @@ describe Shield::ValidatePassword do
         email: "user@example.tld",
         level: "Author",
         password: "PASSWORD1AP%ASSWORD"
-      )) do |operation, user|
+      )) do |_, user|
         user.should be_a(User)
       end
     end
@@ -98,7 +98,7 @@ describe Shield::ValidatePassword do
         email: "user@example.tld",
         level: "Author",
         password: "pa(ssword1apassword"
-      )) do |operation, user|
+      )) do |_, user|
         user.should be_a(User)
       end
     end
@@ -123,7 +123,7 @@ describe Shield::ValidatePassword do
         email: "user@example.tld",
         level: "Author",
         password: "password1Apassword"
-      )) do |operation, user|
+      )) do |_, user|
         user.should be_a(User)
       end
     end

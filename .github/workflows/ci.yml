@@ -12,6 +12,24 @@ on:
   schedule:
     - cron: '0 6 * * 6'
 jobs:
+  checks:
+    strategy:
+      fail-fast: false
+      matrix:
+        crystal: [latest]
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    steps:
+      - name: Download source
+        uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: ${{ matrix.crystal }}
+      - name: Install shards
+        run: shards install
+      - name: Lint code
+        run: ./bin/ameba
   specs:
     strategy:
       fail-fast: false

@@ -23,7 +23,7 @@ describe Shield::CurrentUser::Create do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
-    user = UserFactory.create &.email(email)
+    UserFactory.create &.email(email)
 
     response = ApiClient.exec(
       RegularCurrentUser::Create,

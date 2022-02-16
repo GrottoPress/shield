@@ -13,6 +13,7 @@ describe Shield::CreateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
+      # ameba:disable Lint/ShadowingOuterLocalVar
       bearer_login.try do |bearer_login|
         bearer_login.status.active?.should be_true
         bearer_login.inactive_at.should_not be_nil

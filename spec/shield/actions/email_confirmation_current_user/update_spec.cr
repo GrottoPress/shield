@@ -15,7 +15,7 @@ describe Shield::EmailConfirmationCurrentUser::Update do
     client = ApiClient.new
     client.browser_auth(user, password)
 
-    response = client.exec(
+    client.exec(
       CurrentUser::Update,
       user: {level: new_level.to_s},
       user_options: {password_notify: true}

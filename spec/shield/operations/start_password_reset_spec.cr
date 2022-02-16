@@ -14,6 +14,7 @@ describe Shield::StartPasswordReset do
       password_reset.should be_a(PasswordReset)
       operation.token.should_not be_empty
 
+      # ameba:disable Lint/ShadowingOuterLocalVar
       password_reset.try do |password_reset|
         password_reset.status.active?.should be_true
         password_reset.inactive_at.should_not be_nil
