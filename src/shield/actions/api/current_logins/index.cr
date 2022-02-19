@@ -1,10 +1,10 @@
-module Shield::Api::LoginsEverywhere::Index
+module Shield::Api::CurrentLogins::Index
   macro included
     skip :require_logged_out
 
     # param page : Int32 = 1
 
-    # get "/login/all" do
+    # get "/account/logins" do
     #   json({
     #     status: "success",
     #     data: {logins: LoginSerializer.for_collection(logins)},

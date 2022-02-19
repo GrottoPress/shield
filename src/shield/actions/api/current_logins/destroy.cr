@@ -1,8 +1,8 @@
-module Shield::Api::LoginsEverywhere::Destroy
+module Shield::Api::CurrentLogins::Destroy
   macro included
     skip :require_logged_out
 
-    # delete "/login/all" do
+    # delete "/account/logins" do
     #   run_operation
     # end
 

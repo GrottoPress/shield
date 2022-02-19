@@ -1,8 +1,8 @@
-module Shield::Api::LoginsEverywhere::Delete
+module Shield::Api::CurrentLogins::Delete
   macro included
-    include Shield::Api::LoginsEverywhere::Destroy
+    include Shield::Api::CurrentLogins::Destroy
 
-    # delete "/login/all" do
+    # delete "/account/logins" do
     #   run_operation
     # end
 

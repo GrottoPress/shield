@@ -1,8 +1,8 @@
-struct LoginsEverywhere::IndexPage < MainLayout
+struct CurrentLogins::IndexPage < MainLayout
   needs logins : Array(Login)
   needs pages : Lucky::Paginator
 
   def content
-    text "LoginsEverywhere::IndexPage"
+    text "CurrentLogins::IndexPage"
   end
 end

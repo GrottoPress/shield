@@ -1,10 +1,10 @@
-module Shield::LoginsEverywhere::Index
+module Shield::CurrentLogins::Index
   macro included
     skip :require_logged_out
 
     # param page : Int32 = 1
 
-    # get "/login/all" do
+    # get "/account/logins" do
     #   html IndexPage, logins: logins, pages: pages
     # end
 

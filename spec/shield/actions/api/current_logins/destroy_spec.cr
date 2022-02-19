@@ -1,6 +1,6 @@
 require "../../../../spec_helper"
 
-describe Shield::Api::LoginsEverywhere::Delete do
+describe Shield::Api::CurrentLogins::Destroy do
   it "logs user out everywhere" do
     email = "user@example.tld"
     password = "password4APASSWORD<"
@@ -9,7 +9,7 @@ describe Shield::Api::LoginsEverywhere::Delete do
     client = ApiClient.new
     client.api_auth(email, password, ip_address)
 
-    response = client.exec(Api::LoginsEverywhere::Delete)
+    response = client.exec(Api::CurrentLogins::Destroy)
 
     response.should send_json(200, {
       message: "action.login_everywhere.destroy.success"
@@ -17,7 +17,7 @@ describe Shield::Api::LoginsEverywhere::Delete do
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(Api::LoginsEverywhere::Delete)
+    response = ApiClient.exec(Api::CurrentLogins::Destroy)
 
     response.should send_json(401, logged_in: false)
   end

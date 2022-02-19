@@ -1,11 +1,11 @@
-class Api::LoginsEverywhere::Index < ApiAction
-  include Shield::Api::LoginsEverywhere::Index
+class Api::CurrentLogins::Index < ApiAction
+  include Shield::Api::CurrentLogins::Index
 
   skip :pin_login_to_ip_address
 
   param page : Int32 = 1
 
-  get "/login/all" do
+  get "/account/logins" do
     json({
       status: "success",
       data: {logins: LoginSerializer.for_collection(logins)},

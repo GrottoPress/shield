@@ -1,7 +1,7 @@
-class LoginsEverywhere::Destroy < BrowserAction
-  include Shield::LoginsEverywhere::Destroy
+class CurrentLogins::Destroy < BrowserAction
+  include Shield::CurrentLogins::Destroy
 
-  delete "/login/all" do
+  delete "/account/logins" do
     run_operation
   end
 

@@ -1,5 +1,5 @@
-class Api::LoginsEverywhere::Delete < ApiAction
-  include Shield::Api::LoginsEverywhere::Delete
+class Api::CurrentLogins::Delete < ApiAction
+  include Shield::Api::CurrentLogins::Delete
 
   delete "/login/delete/all" do
     run_operation

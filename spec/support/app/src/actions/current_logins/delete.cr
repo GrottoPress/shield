@@ -1,5 +1,5 @@
-class LoginsEverywhere::Delete < BrowserAction
-  include Shield::LoginsEverywhere::Delete
+class CurrentLogins::Delete < BrowserAction
+  include Shield::CurrentLogins::Delete
 
   delete "/login/delete/all" do
     run_operation
