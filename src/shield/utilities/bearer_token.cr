@@ -7,10 +7,12 @@ module Shield::BearerToken
       new(operation.token, record.id)
     end
 
-    def self.new(token : String, id)
+    def self.new(token : String, id : Number)
       new(token, id.to_i64)
-    rescue ArgumentError
-      new(token, nil)
+    end
+
+    def self.new(token : String, id)
+      new(token, id.to_i64?)
     end
 
     def initialize(@token : String, @id : Int64?)
