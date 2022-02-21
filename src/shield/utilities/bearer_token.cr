@@ -3,8 +3,7 @@ module Shield::BearerToken
     getter! :id
     getter :token
 
-    def self.new(operation, record)
-      new(operation.token, record.id)
+    def initialize(@token : String, @id : Int64?)
     end
 
     def self.new(token : String, id : Number)
@@ -15,7 +14,8 @@ module Shield::BearerToken
       new(token, id.to_i64?)
     end
 
-    def initialize(@token : String, @id : Int64?)
+    def self.new(operation, record)
+      new(operation.token, record.id)
     end
 
     def self.new(token : String)
