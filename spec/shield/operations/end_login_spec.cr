@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-describe Shield::LogUserOut do
+describe Shield::EndLogin do
   it "logs user out" do
     email = "user@example.tld"
     password = "password12U//password"

@@ -16,7 +16,7 @@ class LogUserIn < Login::SaveOperation
 end
 
 class LogUserOut < Login::SaveOperation
-  include Shield::LogUserOut
+  include Shield::EndLogin
 end
 
 class StartCurrentLogin < Login::SaveOperation
@@ -24,11 +24,11 @@ class StartCurrentLogin < Login::SaveOperation
 end
 
 class EndCurrentLogin < Login::SaveOperation
-  include Shield::LogUserOut
+  include Shield::EndLogin
 end
 
 class EndLogin < Login::SaveOperation
-  include Shield::LogUserOut
+  include Shield::EndLogin
 end
 
 class LogOutEverywhere < User::SaveOperation

@@ -1,4 +1,4 @@
-module Shield::LogUserOut
+module Shield::EndLogin
   macro included
     include Shield::EndAuthentication
     include Shield::DeleteSession
