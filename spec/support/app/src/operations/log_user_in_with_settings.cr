@@ -1,4 +1,4 @@
 class LogUserInWithSettings < Login::SaveOperation
-  include Shield::LogUserIn
+  include Shield::StartLogin
   include Shield::NotifyLoginIfSet
 end

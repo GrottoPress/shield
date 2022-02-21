@@ -22,7 +22,7 @@ module Shield::LoginSession
       self
     end
 
-    def set(operation : Shield::LogUserIn, login : Shield::Login) : self
+    def set(operation : Shield::StartLogin, login : Shield::Login) : self
       set(operation.token, login.id)
     end
 

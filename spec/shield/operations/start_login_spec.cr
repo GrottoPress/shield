@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-describe Shield::LogUserIn do
+describe Shield::StartLogin do
   it "logs user in" do
     email = "user@example.tld"
     password = "password12U password"

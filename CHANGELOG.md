@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Make `Shield::LoginHelpers` available in pages and components
 - Rename `Shield::Api::EmailConfirmations::Edit` to `Shield::Api::EmailConfirmations::Update`
 - Rename `Shield::EmailConfirmations::Edit` to `Shield::EmailConfirmations::Update`
+- Rename `Shield::LogUserIn` operation mixin to `Shield::StartLogin`
 
 ### Fixed
 - Prevent bearer users from deleting themselves

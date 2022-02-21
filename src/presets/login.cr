@@ -12,7 +12,7 @@ class LoginQuery < Login::BaseQuery
 end
 
 class LogUserIn < Login::SaveOperation
-  include Shield::LogUserIn
+  include Shield::StartLogin
 end
 
 class LogUserOut < Login::SaveOperation
@@ -20,7 +20,7 @@ class LogUserOut < Login::SaveOperation
 end
 
 class StartCurrentLogin < Login::SaveOperation
-  include Shield::LogUserIn
+  include Shield::StartLogin
 end
 
 class EndCurrentLogin < Login::SaveOperation
