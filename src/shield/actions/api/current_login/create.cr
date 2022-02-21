@@ -7,7 +7,7 @@ module Shield::Api::CurrentLogin::Create
     # end
 
     def run_operation
-      LogUserIn.create(
+      StartCurrentLogin.create(
         params,
         remote_ip: remote_ip?,
         session: nil

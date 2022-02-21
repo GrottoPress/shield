@@ -56,7 +56,7 @@ end
     include Shield::LoginUserSettings
   end
 
-  class LogUserIn < Login::SaveOperation
+  class StartCurrentLogin < Login::SaveOperation
     include Shield::NotifyLoginIfSet
   end
 

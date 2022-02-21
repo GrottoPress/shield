@@ -7,7 +7,7 @@ module Shield::CurrentLogin::Create
     # end
 
     def run_operation
-      LogUserIn.create(
+      StartCurrentLogin.create(
         params,
         session: session,
         remote_ip: remote_ip?

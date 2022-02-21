@@ -39,11 +39,17 @@
 - `CreateBearerLogin`
 - `DeleteBearerLogin`
 - `DeleteCurrentLogin`
+- `DeleteCurrentUserLogins`
 - `DeleteEmailConfirmation`
+- `DeleteLoginsEverywhere`
 - `DeletePasswordReset`
 - `DeleteUser`
+- `EndCurrentLogin`
+- `EndCurrentUserLogins`
 - `EndEmailConfirmation`
+- `EndLogin`
 - `EndPasswordReset`
+- `LogOutEverywhere`
 - `LogUserIn`
 - `LogUserOut`
 - `RegisterCurrentUser`
@@ -51,6 +57,7 @@
 - `ResetPassword`
 - `RevokeBearerLogin`
 - `SaveUserOptions`
+- `StartCurrentLogin`
 - `StartEmailConfirmation`
 - `StartPasswordReset`
 - `UpdateConfirmedEmail`

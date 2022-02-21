@@ -11,12 +11,24 @@ class LoginQuery < Login::BaseQuery
   include Shield::LoginQuery
 end
 
+class LogUserIn < Login::SaveOperation
+  include Shield::LogUserIn
+end
+
 class LogUserOut < Login::SaveOperation
   include Shield::LogUserOut
 end
 
-class LogUserIn < Login::SaveOperation
+class StartCurrentLogin < Login::SaveOperation
   include Shield::LogUserIn
+end
+
+class EndCurrentLogin < Login::SaveOperation
+  include Shield::LogUserOut
+end
+
+class EndLogin < Login::SaveOperation
+  include Shield::LogUserOut
 end
 
 class LogOutEverywhere < User::SaveOperation
@@ -24,6 +36,14 @@ class LogOutEverywhere < User::SaveOperation
 end
 
 class DeleteLoginsEverywhere < User::SaveOperation
+  include Shield::DeleteLoginsEverywhere
+end
+
+class EndCurrentUserLogins < User::SaveOperation
+  include Shield::LogOutEverywhere
+end
+
+class DeleteCurrentUserLogins < User::SaveOperation
   include Shield::DeleteLoginsEverywhere
 end
 

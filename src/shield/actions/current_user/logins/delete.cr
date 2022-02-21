@@ -7,7 +7,7 @@ module Shield::CurrentUser::Logins::Delete
     # end
 
     def run_operation
-      DeleteLoginsEverywhere.update(
+      DeleteCurrentUserLogins.update(
         user,
         current_login: current_login?
       ) do |operation, updated_user|

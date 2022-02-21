@@ -7,7 +7,10 @@ module Shield::CurrentLogin::Destroy
     # end
 
     def run_operation
-      LogUserOut.update(login, session: session) do |operation, updated_login|
+      EndCurrentLogin.update(
+        login,
+        session: session
+      ) do |operation, updated_login|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_login)
         else

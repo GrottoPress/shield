@@ -3,7 +3,7 @@ module Shield::CurrentLogin::New
     skip :require_logged_in
 
     # get "/login" do
-    #   operation = LogUserIn.new(remote_ip: remote_ip?, session: session)
+    #   operation = StartCurrentLogin.new(remote_ip: remote_ip?, session: session)
     #   html NewPage, operation: operation
     # end
   end

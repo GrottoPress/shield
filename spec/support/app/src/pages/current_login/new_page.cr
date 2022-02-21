@@ -1,5 +1,5 @@
 struct CurrentLogin::NewPage < MainLayout
-  needs operation : LogUserIn
+  needs operation : StartCurrentLogin
 
   def content
     text "CurrentLogin::NewPage"

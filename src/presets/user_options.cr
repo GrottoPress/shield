@@ -37,7 +37,7 @@ end
     include Shield::SaveLoginUserOptions
   end
 
-  class LogUserIn < Login::SaveOperation
+  class StartCurrentLogin < Login::SaveOperation
     include Shield::NotifyLogin
   end
 {% end %}

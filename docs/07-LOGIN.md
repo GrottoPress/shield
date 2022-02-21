@@ -143,27 +143,27 @@
    All operations are already set up. You may reopen an operation to add new functionality.
 
    ```crystal
-   # ->>> src/operations/log_user_in.cr
+   # ->>> src/operations/start_current_login.cr
 
-   class LogUserIn < Login::SaveOperation
+   class StartCurrentLogin < Login::SaveOperation
      # ...
    end
    ```
 
-   `LogUserIn` receives `email` and `password` parameters, and creates a login entry with a unique ID and hashed token in the database.
+   `StartCurrentLogin` receives `email` and `password` parameters, and creates a login entry with a unique ID and hashed token in the database.
 
    For a client to be considered logged in, it must present a matching login ID and token from session.
 
    ---
    ```crystal
-   # ->>> src/operations/log_user_out.cr
+   # ->>> src/operations/end_current_login.cr
 
-   class LogUserOut < Login::SaveOperation
+   class EndCurrentLogin < Login::SaveOperation
      # ...
    end
    ```
 
-   `LogUserOut` deletes session values related to the login, and updates the relevant columns in the database to mark the login as inactive.
+   `EndCurrentLogin` deletes session values related to the login, and updates the relevant columns in the database to mark the login as inactive.
 
    ---
    ```crystal
@@ -174,7 +174,7 @@
    end
    ```
 
-   `DeleteCurrentLogin` actually deletes a given login from the database. Use this instead of `LogUserOut` if you intend to actually delete logins, rather than mark them as inactive.
+   `DeleteCurrentLogin` actually deletes a given login from the database. Use this instead of `EndCurrentLogin` if you intend to actually delete logins, rather than mark them as inactive.
 
 1. Set up actions:
 
@@ -232,7 +232,7 @@
      include Shield::CurrentLogin::New
 
      get "/login" do
-       operation = LogUserIn.new(remote_ip: remote_ip?, session: session)
+       operation = StartCurrentLogin.new(remote_ip: remote_ip?, session: session)
        html NewPage, operation: operation
      end
      # ...
@@ -326,7 +326,7 @@
 
    class LoginNotificationEmail < BaseEmail
      # ...
-     def initialize(@operation : LogUserIn, @login : Login)
+     def initialize(@operation : StartCurrentLogin, @login : Login)
      end
 
      # Sample message

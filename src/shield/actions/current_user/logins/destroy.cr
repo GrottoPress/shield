@@ -7,7 +7,7 @@ module Shield::CurrentUser::Logins::Destroy
     # end
 
     def run_operation
-      LogOutEverywhere.update(
+      EndCurrentUserLogins.update(
         user,
         current_login: current_login?
       ) do |operation, updated_user|

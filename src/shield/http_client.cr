@@ -25,7 +25,7 @@ module Shield::HttpClient
     )
       create_user(email, password) if create_user
 
-      LogUserIn.create(
+      StartCurrentLogin.create(
         params(email: email, password: password),
         remote_ip: remote_ip,
         session: nil
@@ -57,7 +57,7 @@ module Shield::HttpClient
     )
       create_user(email, password) if create_user
 
-      LogUserIn.create!(
+      StartCurrentLogin.create!(
         params(email: email, password: password),
         session: session,
         remote_ip: remote_ip
