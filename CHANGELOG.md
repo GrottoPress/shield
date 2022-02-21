@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Ensure support for *Crystal* v1.3
 - Add a new `Shield::LogOutEverywhere` operation
+- Add a new `Shield::DeleteLoginsEverywhere` operation
 - Add `Shield::Api::CurrentUser::Logins::*` actions for user logins on all devices
 - Add `Shield::CurrentUser::Logins::*` actions for user logins on all devices
 - Include the logged in user in the login API response data
