@@ -1,6 +1,6 @@
-require "../../../spec_helper"
+require "../../../../spec_helper"
 
-describe Shield::CurrentLogins::Index do
+describe Shield::CurrentUser::Logins::Index do
   it "renders index page" do
     email = "user@example.tld"
     password = "password4APASSWORD<"
@@ -8,13 +8,13 @@ describe Shield::CurrentLogins::Index do
     client = ApiClient.new
     client.browser_auth(email, password)
 
-    response = client.exec(CurrentLogins::Index)
+    response = client.exec(CurrentUser::Logins::Index)
 
-    response.body.should eq("CurrentLogins::IndexPage")
+    response.body.should eq("CurrentUser::Logins::IndexPage")
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(CurrentLogins::Index)
+    response = ApiClient.exec(CurrentUser::Logins::Index)
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"]?.should eq("false")

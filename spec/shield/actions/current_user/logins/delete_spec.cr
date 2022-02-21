@@ -1,6 +1,6 @@
-require "../../../spec_helper"
+require "../../../../spec_helper"
 
-describe Shield::CurrentLogins::Delete do
+describe Shield::CurrentUser::Logins::Delete do
   it "logs user out everywhere" do
     email = "user@example.tld"
     password = "password4APASSWORD<"
@@ -9,14 +9,14 @@ describe Shield::CurrentLogins::Delete do
     client = ApiClient.new
     client.browser_auth(email, password, ip_address)
 
-    response = client.exec(CurrentLogins::Delete)
+    response = client.exec(CurrentUser::Logins::Delete)
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Log-Out-Everywhere"]?.should eq("true")
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(CurrentLogins::Delete)
+    response = ApiClient.exec(CurrentUser::Logins::Delete)
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"]?.should eq("false")

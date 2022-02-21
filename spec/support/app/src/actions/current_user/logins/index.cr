@@ -1,5 +1,5 @@
-class CurrentLogins::Index < BrowserAction
-  include Shield::CurrentLogins::Index
+class CurrentUser::Logins::Index < BrowserAction
+  include Shield::CurrentUser::Logins::Index
 
   skip :pin_login_to_ip_address
 

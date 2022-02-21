@@ -1,4 +1,4 @@
-module Shield::CurrentLogins::Destroy
+module Shield::Api::CurrentUser::Logins::Destroy
   macro included
     skip :require_logged_out
 
@@ -19,18 +19,33 @@ module Shield::CurrentLogins::Destroy
       end
     end
 
-    def user
-      current_user
-    end
+    {% if Avram::Model.all_subclasses
+      .map(&.stringify)
+      .includes?("BearerLogin") %}
+
+      def user
+        current_user_or_bearer
+      end
+    {% else %}
+      def user
+        current_user
+      end
+    {% end %}
 
     def do_run_operation_succeeded(operation, user)
-      flash.success = Rex.t(:"action.login_everywhere.destroy.success")
-      redirect to: Index
+      json({
+        status: "success",
+        message: Rex.t(:"action.current_user.login.destroy.success"),
+        data: {user: UserSerializer.new(user)}
+      })
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = Rex.t(:"action.login_everywhere.destroy.failure")
-      redirect_back fallback: Index
+      json({
+        status: "failure",
+        message: Rex.t(:"action.current_user.login.destroy.failure"),
+        data: {errors: operation.errors}
+      })
     end
 
     def authorize?(user : Shield::User) : Bool

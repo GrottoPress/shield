@@ -1,6 +1,6 @@
-module Shield::CurrentLogins::Delete
+module Shield::CurrentUser::Logins::Delete
   macro included
-    include Shield::CurrentLogins::Destroy
+    include Shield::CurrentUser::Logins::Destroy
 
     # delete "/account/logins" do
     #   run_operation

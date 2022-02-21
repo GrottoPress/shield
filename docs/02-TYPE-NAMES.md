@@ -73,6 +73,9 @@
 - `CurrentUser::New`
 - `CurrentUser::Show`
 - `CurrentUser::Update`
+- `CurrentUser::Logins::Create`
+- `CurrentUser::Logins::Destroy`
+- `CurrentUser::Logins::New`
 - `EmailConfirmations::Create`
 - `EmailConfirmations::New`
 - `EmailConfirmations::Show`

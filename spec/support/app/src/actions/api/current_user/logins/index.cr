@@ -1,5 +1,5 @@
-class Api::CurrentLogins::Index < ApiAction
-  include Shield::Api::CurrentLogins::Index
+class Api::CurrentUser::Logins::Index < ApiAction
+  include Shield::Api::CurrentUser::Logins::Index
 
   skip :pin_login_to_ip_address
 

@@ -1,11 +1,18 @@
-module Shield::CurrentLogins::Index
+module Shield::Api::CurrentUser::Logins::Index
   macro included
     skip :require_logged_out
 
     # param page : Int32 = 1
 
     # get "/account/logins" do
-    #   html IndexPage, logins: logins, pages: pages
+    #   json({
+    #     status: "success",
+    #     data: {logins: LoginSerializer.for_collection(logins)},
+    #     pages: {
+    #       current: page,
+    #       total: pages.total
+    #     }
+    #   })
     # end
 
     def pages
@@ -20,9 +27,18 @@ module Shield::CurrentLogins::Index
       paginate LoginQuery.new.user_id(user.id).is_active.active_at.desc_order
     end
 
-    def user
-      current_user
-    end
+    {% if Avram::Model.all_subclasses
+      .map(&.stringify)
+      .includes?("BearerLogin") %}
+
+      def user
+        current_user_or_bearer
+      end
+    {% else %}
+      def user
+        current_user
+      end
+    {% end %}
 
     def authorize?(user : Shield::User) : Bool
       user.id == self.user.id
