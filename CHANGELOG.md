@@ -9,8 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Ensure support for *Crystal* v1.3
-- Add a new `Shield::LogOutEverywhere` operation for user logins on all devices
-- Add a new `Shield::DeleteLoginsEverywhere` operation for user logins on all devices
+- Add a new `Shield::LogOutEverywhere` operation
+- Add `Shield::Api::CurrentLogins::*` actions for user logins on all devices
+- Add `Shield::CurrentLogins::*` actions for user logins on all devices
 - Include the logged in user in the login API response data
 - Include email confirmation in its API response data
 - Include password reset in its API response data
