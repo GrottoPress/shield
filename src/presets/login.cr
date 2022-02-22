@@ -36,7 +36,7 @@ class LogOutEverywhere < User::SaveOperation
 end
 
 class DeleteLoginsEverywhere < User::SaveOperation
-  include Shield::DeleteLoginsEverywhere
+  include Shield::DeleteUserLogins
 end
 
 class EndCurrentUserLogins < User::SaveOperation
@@ -44,7 +44,7 @@ class EndCurrentUserLogins < User::SaveOperation
 end
 
 class DeleteCurrentUserLogins < User::SaveOperation
-  include Shield::DeleteLoginsEverywhere
+  include Shield::DeleteUserLogins
 end
 
 class DeleteCurrentLogin < Login::DeleteOperation

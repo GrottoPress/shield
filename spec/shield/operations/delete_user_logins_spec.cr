@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-describe Shield::DeleteLoginsEverywhere do
+describe Shield::DeleteUserLogins do
   it "logs user out everywhere" do
     user = UserFactory.create
     login_1 = LoginFactory.create &.user_id(user.id)

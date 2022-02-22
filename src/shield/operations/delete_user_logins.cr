@@ -1,4 +1,4 @@
-module Shield::DeleteLoginsEverywhere
+module Shield::DeleteUserLogins
   macro included
     needs current_login : Login?
 
