@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Ensure support for *Crystal* v1.3
-- Add a new `Shield::LogOutEverywhere` operation
-- Add a new `Shield::DeleteLoginsEverywhere` operation
+- Add `Shield::EndUserLogins` operation
+- Add `Shield::DeleteUserLogins` operation
 - Add `Shield::Api::CurrentUser::Logins::*` actions for user logins on all devices
 - Add `Shield::CurrentUser::Logins::*` actions for user logins on all devices
 - Include the logged in user in the login API response data
@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Use saved status to determine status of create operations
 - Respond with HTTP status code `400` in actions if operation failed
-- Rename the old `Shield::LogOutEverywhere` mixin to `LogOutEverywhereOnPasswordChange`
+- Rename `Shield::LogOutEverywhere` operation mixin to `LogOutEverywhereOnPasswordChange`
 - Repurpose `Shield::Api::Logins::Index` to return all active logins for all users
 - Repurpose `Shield::Logins::Index` to return all active logins for all users
 - Rename API action's `#current_bearer_user` to `#current_bearer`
