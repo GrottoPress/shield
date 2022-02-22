@@ -9,7 +9,7 @@ module Shield::ResetPassword
     after_save end_password_resets
 
     include Shield::SetPasswordDigestFromPassword
-    include Shield::LogOutEverywhereOnPasswordChange
+    include Shield::EndUserLoginsOnPasswordChange
     include Shield::DeleteSession
     include Shield::ValidatePassword
 

@@ -3,7 +3,7 @@ require "../../../spec_helper"
 private class SaveUser < User::SaveOperation
   permit_columns :email, :level, :password_digest
 
-  include Shield::LogOutEverywhereOnPasswordChange
+  include Shield::EndUserLoginsOnPasswordChange
   include Shield::DeleteLoginsOnPasswordChange
 end
 
