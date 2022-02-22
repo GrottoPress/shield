@@ -3,6 +3,8 @@
   .includes?("EmailConfirmation")
 %}
 
+require "../compat/email_confirmation"
+
 class User < BaseModel
   include Shield::HasManyEmailConfirmations
 end

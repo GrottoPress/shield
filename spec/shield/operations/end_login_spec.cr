@@ -10,7 +10,7 @@ describe Shield::EndLogin do
 
     session = Lucky::Session.new
 
-    login = LogUserIn.create!(
+    login = StartCurrentLogin.create!(
       params(email: email, password: password),
       session: session,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
@@ -20,7 +20,7 @@ describe Shield::EndLogin do
 
     login.status.active?.should be_true
 
-    LogUserOut.update(
+    EndCurrentLogin.update(
       LoginSession.new(session).login,
       session: session
     ) do |operation, updated_login|

@@ -11,7 +11,7 @@ describe Shield::StartLogin do
     session = Lucky::Session.new
     ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
 
-    login = LogUserIn.create!(
+    login = StartCurrentLogin.create!(
       params(email: email, password: password),
       session: session,
       remote_ip: ip_address
@@ -31,7 +31,7 @@ describe Shield::StartLogin do
     user = UserFactory.create &.password(password)
     UserOptionsFactory.create &.user_id(user.id)
 
-    LogUserIn.create(
+    StartCurrentLogin.create(
       params(email: "incorrect@example.tld", password: password),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
@@ -50,7 +50,7 @@ describe Shield::StartLogin do
     user = UserFactory.create &.email(email).password(password)
     UserOptionsFactory.create &.user_id(user.id)
 
-    LogUserIn.create(
+    StartCurrentLogin.create(
       params(email: email, password: "assword12U~passwor"),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)

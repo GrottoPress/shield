@@ -3,6 +3,8 @@
   .includes?("BearerLogin")
 %}
 
+require "../compat/bearer_login"
+
 class User < BaseModel
   include Shield::HasManyBearerLogins
 end

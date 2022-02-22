@@ -3,20 +3,14 @@
   .includes?("Login")
 %}
 
+require "../compat/login"
+
 class User < BaseModel
   include Shield::HasManyLogins
 end
 
 class LoginQuery < Login::BaseQuery
   include Shield::LoginQuery
-end
-
-class LogUserIn < Login::SaveOperation
-  include Shield::StartLogin
-end
-
-class LogUserOut < Login::SaveOperation
-  include Shield::EndLogin
 end
 
 class StartCurrentLogin < Login::SaveOperation

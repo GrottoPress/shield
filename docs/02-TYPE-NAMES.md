@@ -50,8 +50,6 @@
 - `EndLogin`
 - `EndPasswordReset`
 - `LogOutEverywhere`
-- `LogUserIn`
-- `LogUserOut`
 - `RegisterCurrentUser`
 - `RegisterUser`
 - `ResetPassword`
