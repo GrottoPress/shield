@@ -47,6 +47,14 @@ class DeleteCurrentUserLogins < User::SaveOperation
   include Shield::DeleteUserLogins
 end
 
+class EndUserLogins < User::SaveOperation
+  include Shield::EndUserLogins
+end
+
+class DeleteUserLogins < User::SaveOperation
+  include Shield::DeleteUserLogins
+end
+
 class DeleteCurrentLogin < Login::DeleteOperation
   include Shield::DeleteLogin
 end
