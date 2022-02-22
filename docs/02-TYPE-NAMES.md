@@ -132,6 +132,7 @@ API equivalents, where applicable, are prefixed with `Api::`
 - `BearerLoginHeaders`
 - `BearerScope`
 - `BearerToken`
+- `BearerTokenSession`
 - `EmailConfirmationParams`
 - `EmailConfirmationSession`
 - `EmailConfirmationUrl`

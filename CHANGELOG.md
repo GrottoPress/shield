@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `BearerToken#authenticate` methods
 - Add `Shield::Api::EmailConfirmations::Verify` action
 - Add `Shield::Api::PasswordResets::Verify` action
+- Add `Shield::BearerLogins::Show` action
 
 ### Changed
 - Use saved status to determine status of create operations

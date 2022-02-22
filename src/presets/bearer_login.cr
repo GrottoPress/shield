@@ -33,3 +33,7 @@ end
 struct BearerLoginHeaders
   include Shield::BearerLoginHeaders
 end
+
+struct BearerTokenSession
+  include Shield::BearerTokenSession
+end

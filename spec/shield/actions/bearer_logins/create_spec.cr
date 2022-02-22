@@ -13,7 +13,8 @@ describe Shield::BearerLogins::Create do
       scopes: ["api.posts.index"]
     })
 
-    response.body.should eq("BearerLogins::ShowPage")
+    response.status.should eq(HTTP::Status::FOUND)
+    response.headers["X-Bearer-Login-ID"]?.should_not be_nil
   end
 
   it "requires logged in" do

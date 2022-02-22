@@ -3,6 +3,6 @@ struct BearerLogins::ShowPage < MainLayout
   needs token : String
 
   def content
-    text "BearerLogins::ShowPage"
+    text "BearerLogins::ShowPage:#{token}"
   end
 end

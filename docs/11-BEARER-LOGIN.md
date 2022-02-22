@@ -329,7 +329,7 @@ This token is revoked when the user logs out.
      #
      #def do_run_operation_succeeded(operation, bearer_login)
      #  flash.success = Rex.t(:"action.bearer_login.create.success")
-     #  html ShowPage, operation: operation, bearer_login: bearer_login
+     #  redirect to: Show.with(bearer_login_id: bearer_login.id)
      #end
 
      # What to do if `run_operation` fails
