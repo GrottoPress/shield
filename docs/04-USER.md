@@ -79,7 +79,7 @@
      #
      # Enable this to delete them from the database instead.
      #
-     #include Shield::DeleteLoginsOnPasswordChange
+     #include Shield::DeleteUserLoginsOnPasswordChange
      # ...
    end
    ```

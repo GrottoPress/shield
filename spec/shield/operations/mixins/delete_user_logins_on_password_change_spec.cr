@@ -4,10 +4,10 @@ private class SaveUser < User::SaveOperation
   permit_columns :email, :level, :password_digest
 
   include Shield::EndUserLoginsOnPasswordChange
-  include Shield::DeleteLoginsOnPasswordChange
+  include Shield::DeleteUserLoginsOnPasswordChange
 end
 
-describe Shield::DeleteLoginsOnPasswordChange do
+describe Shield::DeleteUserLoginsOnPasswordChange do
   it "logs out everywhere when password changes" do
     password = "password12U-password"
     new_password = "assword12U-passwor"

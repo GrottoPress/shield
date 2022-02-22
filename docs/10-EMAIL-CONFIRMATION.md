@@ -165,7 +165,7 @@ This is particularly important, since email addresses are usually the only means
      #
      # Enable this to delete them from the database instead.
      #
-     #include Shield::DeleteLoginsOnPasswordChange
+     #include Shield::DeleteUserLoginsOnPasswordChange
      # ...
    end
    ```

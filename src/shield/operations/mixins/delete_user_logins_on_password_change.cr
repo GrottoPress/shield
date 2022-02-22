@@ -1,4 +1,4 @@
-module Shield::DeleteLoginsOnPasswordChange
+module Shield::DeleteUserLoginsOnPasswordChange
   macro included
     private def log_out_everywhere(user : Shield::User)
       return unless password_digest.changed?

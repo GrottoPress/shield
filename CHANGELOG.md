@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Use saved status to determine status of create operations
 - Respond with HTTP status code `400` in actions if operation failed
 - Rename `Shield::LogOutEverywhere` operation mixin to `EndUserLoginsOnPasswordChange`
+- Rename `Shield::DeleteLoginsOnPasswordChange` operation mixin to `DeleteUserLoginsOnPasswordChange`
 - Repurpose `Shield::Api::Logins::Index` to return all active logins for all users
 - Repurpose `Shield::Logins::Index` to return all active logins for all users
 - Rename API action's `#current_bearer_user` to `#current_bearer`
