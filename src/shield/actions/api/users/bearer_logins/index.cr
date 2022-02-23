@@ -11,7 +11,8 @@ module Shield::Api::Users::BearerLogins::Index
     #   json({
     #     status: "success",
     #     data: {
-    #       bearer_logins: BearerLoginSerializer.for_collection(bearer_logins)
+    #       bearer_logins: BearerLoginSerializer.for_collection(bearer_logins),
+    #       user: UserSerializer.new(user)
     #     },
     #     pages: {
     #       current: page,
