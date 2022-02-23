@@ -7,10 +7,10 @@ module Shield::Api::CurrentUser::BearerLogins::Create
     # end
 
     def run_operation
-      CreateCurrentUserBearerLogin.create(
+      CreateBearerLogin.create(
         params,
         user: user,
-        scopes: array_param(CreateCurrentUserBearerLogin.param_key, :scopes),
+        scopes: array_param(CreateBearerLogin.param_key, :scopes),
         allowed_scopes: BearerScope.action_scopes.map(&.name)
       ) do |operation, bearer_login|
         if operation.saved?

@@ -4,7 +4,7 @@ class CurrentUser::BearerLogins::New < BrowserAction
   skip :pin_login_to_ip_address
 
   get "/account/bearer-logins/new" do
-    operation = CreateCurrentUserBearerLogin.new(
+    operation = CreateBearerLogin.new(
       user: user,
       allowed_scopes: BearerScope.action_scopes.map(&.name)
     )

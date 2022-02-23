@@ -1,5 +1,5 @@
 struct CurrentUser::BearerLogins::NewPage < MainLayout
-  needs operation : CreateCurrentUserBearerLogin
+  needs operation : CreateBearerLogin
 
   def content
     text "CurrentUser::BearerLogins::NewPage"

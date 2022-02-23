@@ -5,7 +5,7 @@ describe Shield::CreateBearerLogin do
     user = UserFactory.create
     UserOptionsFactory.create &.user_id(user.id)
 
-    CreateCurrentUserBearerLogin.create(
+    CreateBearerLogin.create(
       params(name: "some token"),
       scopes: ["posts.index"],
       allowed_scopes: ["posts.update", "posts.index", "current_user.show"],

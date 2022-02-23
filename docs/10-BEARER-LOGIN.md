@@ -183,14 +183,14 @@ This token is revoked when the user logs out.
    All operations are already set up. You may reopen an operation to add new functionality.
 
    ```crystal
-   # ->>> src/operations/create_current_user_bearer_login.cr
+   # ->>> src/operations/create_bearer_login.cr
 
-   class CreateCurrentUserBearerLogin < BearerLogin::SaveOperation
+   class CreateBearerLogin < BearerLogin::SaveOperation
      # ...
    end
    ```
 
-   `CreateCurrentUserBearerLogin` receives `name : String` and `scopes : Array(String)` parameters, and creates a database entry with a unique ID and hashed token.
+   `CreateBearerLogin` receives `name : String` and `scopes : Array(String)` parameters, and creates a database entry with a unique ID and hashed token.
 
    ---
    ```crystal
@@ -295,7 +295,7 @@ This token is revoked when the user logs out.
      include Shield::CurrentUser::BearerLogins::New
 
      get "/account/bearer-logins/new" do
-       operation = CreateCurrentUserBearerLogin.new(
+       operation = CreateBearerLogin.new(
          user: user,
          allowed_scopes: BearerScope.action_scopes.map(&.name)
        )

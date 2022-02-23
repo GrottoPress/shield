@@ -6,7 +6,7 @@ describe Shield::BearerLoginVerifier do
       user = UserFactory.create
       UserOptionsFactory.create &.user_id(user.id)
 
-      CreateCurrentUserBearerLogin.create(
+      CreateBearerLogin.create(
         params(name: "some token"),
         user: user,
         scopes: ["posts.new", "posts.create"],

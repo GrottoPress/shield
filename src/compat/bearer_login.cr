@@ -21,8 +21,3 @@ module Shield::LoginHelpers
     end
   end
 end
-
-@[Deprecated("Use `CreateCurrentUserBearerLogin` instead")]
-class CreateBearerLogin < BearerLogin::SaveOperation
-  include Shield::CreateBearerLogin
-end

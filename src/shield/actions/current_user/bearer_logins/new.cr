@@ -3,7 +3,7 @@ module Shield::CurrentUser::BearerLogins::New
     skip :require_logged_out
 
     # get "/account/bearer-logins/new" do
-    #   operation = CreateCurrentUserBearerLogin.new(
+    #   operation = CreateBearerLogin.new(
     #     user: user,
     #     allowed_scopes: BearerScope.action_scopes.map(&.name)
     #   )

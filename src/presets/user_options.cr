@@ -47,7 +47,7 @@ end
     include Shield::SaveBearerLoginUserOptions
   end
 
-  class CreateCurrentUserBearerLogin < BearerLogin::SaveOperation
+  class CreateBearerLogin < BearerLogin::SaveOperation
     include Shield::NotifyBearerLogin
   end
 {% end %}

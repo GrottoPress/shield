@@ -13,7 +13,7 @@ class BearerLoginQuery < BearerLogin::BaseQuery
   include Shield::BearerLoginQuery
 end
 
-class CreateCurrentUserBearerLogin < BearerLogin::SaveOperation
+class CreateBearerLogin < BearerLogin::SaveOperation
   include Shield::CreateBearerLogin
 end
 
