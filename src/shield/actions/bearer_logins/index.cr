@@ -23,7 +23,7 @@ module Shield::BearerLogins::Index
       Lucky::Paginator,
       BearerLoginQuery
     ) do
-      paginate BearerLoginQuery.new.is_active.active_at.desc_order
+      paginate BearerLoginQuery.new.is_active.preload_user.active_at.desc_order
     end
   end
 end
