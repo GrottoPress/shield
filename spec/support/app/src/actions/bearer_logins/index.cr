@@ -1,6 +1,7 @@
 class BearerLogins::Index < BrowserAction
   include Shield::BearerLogins::Index
 
+  skip :check_authorization
   skip :pin_login_to_ip_address
 
   param page : Int32 = 1

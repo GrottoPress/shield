@@ -9,7 +9,7 @@ describe Shield::Api::BearerLoginPipes do
       user = UserFactory.create &.email(email).password(password)
       UserOptionsFactory.create &.user_id(user.id)
 
-      CreateBearerLogin.create(
+      CreateCurrentUserBearerLogin.create(
         params(name: "secret token"),
         scopes: ["api.posts.index"],
         allowed_scopes: ["api.posts.update", "api.posts.index"],
@@ -43,7 +43,7 @@ describe Shield::Api::BearerLoginPipes do
       user = UserFactory.create &.email(email).password(password)
       UserOptionsFactory.create &.user_id(user.id)
 
-      CreateBearerLogin.create(
+      CreateCurrentUserBearerLogin.create(
         params(name: "secret token"),
         scopes: ["api.posts.new"],
         allowed_scopes: ["api.posts.new", "api.posts.index"],
@@ -67,7 +67,7 @@ describe Shield::Api::BearerLoginPipes do
       user = UserFactory.create &.level(:admin)
       UserOptionsFactory.create &.user_id(user.id)
 
-      CreateBearerLogin.create(
+      CreateCurrentUserBearerLogin.create(
         params(name: "secret token"),
         scopes: ["api.posts.index"],
         allowed_scopes: ["api.posts.update", "api.posts.index"],
@@ -90,7 +90,7 @@ describe Shield::Api::BearerLoginPipes do
       user = UserFactory.create
       UserOptionsFactory.create &.user_id(user.id)
 
-      CreateBearerLogin.create(
+      CreateCurrentUserBearerLogin.create(
         params(name: "secret token"),
         scopes: ["api.posts.create"],
         allowed_scopes: ["api.posts.update", "api.posts.create"],
@@ -113,7 +113,7 @@ describe Shield::Api::BearerLoginPipes do
       user = UserFactory.create &.level(:admin)
       UserOptionsFactory.create &.user_id(user.id)
 
-      CreateBearerLogin.create(
+      CreateCurrentUserBearerLogin.create(
         params(name: "secret token"),
         scopes: ["api.posts.create"],
         allowed_scopes: ["api.posts.update", "api.posts.create"],

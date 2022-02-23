@@ -36,7 +36,7 @@
 
 ### Operations
 
-- `CreateBearerLogin`
+- `CreateCurrentUserBearerLogin`
 - `DeleteBearerLogin`
 - `DeleteCurrentLogin`
 - `DeleteCurrentUserLogins`
@@ -53,7 +53,7 @@
 - `RegisterCurrentUser`
 - `RegisterUser`
 - `ResetPassword`
-- `RevokeBearerLogin`
+- `RevokeCurrentUserBearerLogin`
 - `SaveUserOptions`
 - `StartCurrentLogin`
 - `StartEmailConfirmation`
@@ -65,10 +65,9 @@
 ### Actions
 
 - `ApiAction`
-- `BearerLogins::Create`
 - `BearerLogins::Destroy`
 - `BearerLogins::Index`
-- `BearerLogins::New`
+- `BearerLogins::Show`
 - `BrowserAction`
 - `CurrentLogin::Create`
 - `CurrentLogin::Destroy`
@@ -81,6 +80,10 @@
 - `CurrentUser::Logins::Create`
 - `CurrentUser::Logins::Destroy`
 - `CurrentUser::Logins::New`
+- `CurrentUser::BearerLogins::Create`
+- `CurrentUser::BearerLogins::Destroy`
+- `CurrentUser::BearerLogins::Index`
+- `CurrentUser::BearerLogins::New`
 - `EmailConfirmations::Create`
 - `EmailConfirmations::New`
 - `EmailConfirmations::Show`

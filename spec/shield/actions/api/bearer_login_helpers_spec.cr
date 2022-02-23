@@ -9,7 +9,7 @@ describe Shield::Api::BearerLoginHelpers do
       user = UserFactory.create &.email(email).password(password)
       UserOptionsFactory.create &.user_id(user.id)
 
-      CreateBearerLogin.create(
+      CreateCurrentUserBearerLogin.create(
         params(name: "secret token"),
         scopes: ["api.posts.index"],
         allowed_scopes: ["api.posts.update", "api.posts.index"],

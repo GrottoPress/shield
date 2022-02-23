@@ -183,14 +183,14 @@ This token is revoked when the user logs out.
    All operations are already set up. You may reopen an operation to add new functionality.
 
    ```crystal
-   # ->>> src/operations/create_bearer_login.cr
+   # ->>> src/operations/create_current_user_bearer_login.cr
 
-   class CreateBearerLogin < BearerLogin::SaveOperation
+   class CreateCurrentUserBearerLogin < BearerLogin::SaveOperation
      # ...
    end
    ```
 
-   `CreateBearerLogin` receives `name : String` and `scopes : Array(String)` parameters, and creates a database entry with a unique ID and hashed token.
+   `CreateCurrentUserBearerLogin` receives `name : String` and `scopes : Array(String)` parameters, and creates a database entry with a unique ID and hashed token.
 
    ---
    ```crystal
@@ -288,14 +288,14 @@ This token is revoked when the user logs out.
 
    ---
    ```crystal
-   # ->>> src/actions/bearer_logins/new.cr
+   # ->>> src/actions/current_user/bearer_logins/new.cr
 
-   class BearerLogins::New < BrowserAction
+   class CurrentUser::BearerLogins::New < BrowserAction
      # ...
-     include Shield::BearerLogins::New
+     include Shield::CurrentUser::BearerLogins::New
 
-     get "/bearer-logins/new" do
-       operation = CreateBearerLogin.new(
+     get "/account/bearer-logins/new" do
+       operation = CreateCurrentUserBearerLogin.new(
          user: user,
          allowed_scopes: BearerScope.action_scopes.map(&.name)
        )
@@ -306,62 +306,62 @@ This token is revoked when the user logs out.
    end
    ```
 
-   You may need to add `BearerLogins::NewPage` in `src/pages/bearer_logins/new_page.cr`, containing your *bearer login* form.
+   You may need to add `CurrentUser::BearerLogins::NewPage` in `src/pages/current_user/bearer_logins/new_page.cr`, containing your *bearer login* form.
 
-   The form should be `POST`ed to `BearerLogins::Create`, with the following parameters:
+   The form should be `POST`ed to `CurrentUser::BearerLogins::Create`, with the following parameters:
 
    - `name : String`
    - `scopes : Array(String)`
 
    ---
    ```crystal
-   # ->>> src/actions/bearer_logins/create.cr
+   # ->>> src/actions/current_user/bearer_logins/create.cr
 
-   class BearerLogins::Create < BrowserAction
+   class CurrentUser::BearerLogins::Create < BrowserAction
      # ...
-     include Shield::BearerLogins::Create
+     include Shield::CurrentUser::BearerLogins::Create
 
-     post "/bearer-logins" do
+     post "/account/bearer-logins" do
        run_operation
      end
 
      # What to do if `run_operation` succeeds
      #
      #def do_run_operation_succeeded(operation, bearer_login)
-     #  flash.success = Rex.t(:"action.bearer_login.create.success")
+     #  flash.success = Rex.t(:"action.current_user.bearer_login.create.success")
      #  redirect to: Show.with(bearer_login_id: bearer_login.id)
      #end
 
      # What to do if `run_operation` fails
      #
      #def do_run_operation_failed(operation)
-     #  flash.failure = Rex.t(:"action.bearer_login.create.failure")
+     #  flash.failure = Rex.t(:"action.current_user.bearer_login.create.failure")
      #  html NewPage, operation: operation
      #end
      # ...
    end
    ```
 
-   You may need to add `BearerLogins::ShowPage` in `src/pages/bearer_logins/show_page.cr`, that displays the generated login token, thus: `BearerToken.new(operation, bearer_login).to_s`
+   You may need to add `CurrentUser::BearerLogins::ShowPage` in `src/pages/current_user/bearer_logins/show_page.cr`, that displays the generated login token, thus: `BearerToken.new(operation, bearer_login).to_s`
 
    ---
    ```crystal
-   # ->>> src/actions/bearer_logins/index.cr
+   # ->>> src/actions/current_user/bearer_logins/index.cr
 
-   class BearerLogins::Index < BrowserAction
+   class CurrentUser::BearerLogins::Index < BrowserAction
      # ...
-     include Shield::BearerLogins::Index
+     include Shield::CurrentUser::BearerLogins::Index
 
      param page : Int32 = 1
 
-     get "/bearer-logins" do
+     get "/account/bearer-logins" do
        html IndexPage, bearer_logins: bearer_logins, pages: pages
      end
      # ...
    end
    ```
 
-   You may need to add `BearerLogins::IndexPage` in `src/pages/bearer_logins/index_page.cr`, that displays all of the current user's active tokens, ideally with buttons to revoke them.
+   You may need to add `CurrentUser::BearerLogins::IndexPage` in `src/pages/current_user/bearer_logins/index_page.cr`, that displays all of the current user's active tokens, ideally with buttons to revoke them.
 
    ---
    ```crystal
@@ -405,7 +405,10 @@ This token is revoked when the user logs out.
 
    class BearerLoginNotificationEmail < BaseEmail
      # ...
-     def initialize(@operation : CreateBearerLogin, @bearer_login : BearerLogin)
+     def initialize(
+       @operation : Shield::CreateBearerLogin,
+       @bearer_login : BearerLogin
+     )
      end
 
      # Sample message
@@ -474,6 +477,9 @@ For these purposes, *Shield* provides the following modules:
 - `Shield::Api::CurrentUser::Create`
 - `Shield::Api::CurrentUser::Show`
 - `Shield::Api::CurrentUser::Update`
+- `Shield::Api::CurrentUser::BearerLogins::Create`
+- `Shield::Api::CurrentUser::BearerLogins::Show`
+- `Shield::Api::CurrentUser::BearerLogins::Update`
 - `Shield::Api::EmailConfirmationCurrentUser::Create`
 - `Shield::Api::EmailConfirmationCurrentUser::Show`
 - `Shield::Api::EmailConfirmationCurrentUser::Update`

@@ -17,5 +17,9 @@ module Shield::BearerLogins::Show
     getter? token : String? do
       BearerTokenSession.new(session).bearer_token?
     end
+
+    def authorize?(user : Shield::User) : Bool
+      super || user.id == bearer_login.user_id
+    end
   end
 end

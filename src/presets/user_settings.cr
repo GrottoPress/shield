@@ -30,7 +30,7 @@ end
     include Shield::BearerLoginUserSettings
   end
 
-  class CreateBearerLogin < BearerLogin::SaveOperation
+  class CreateCurrentUserBearerLogin < BearerLogin::SaveOperation
     include Shield::NotifyBearerLoginIfSet
   end
 

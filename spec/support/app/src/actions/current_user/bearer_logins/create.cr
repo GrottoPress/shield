@@ -1,9 +1,9 @@
-class BearerLogins::Create < BrowserAction
-  include Shield::BearerLogins::Create
+class CurrentUser::BearerLogins::Create < BrowserAction
+  include Shield::CurrentUser::BearerLogins::Create
 
   skip :pin_login_to_ip_address
 
-  post "/bearer-logins" do
+  post "/account/bearer-logins" do
     run_operation
   end
 

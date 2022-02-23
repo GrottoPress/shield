@@ -1,20 +1,19 @@
-module Shield::BearerLogins::Create
+module Shield::Api::CurrentUser::BearerLogins::Create
   macro included
     skip :require_logged_out
 
-    # post "/bearer-logins" do
+    # post "/account/bearer-logins" do
     #   run_operation
     # end
 
     def run_operation
-      CreateBearerLogin.create(
+      CreateCurrentUserBearerLogin.create(
         params,
         user: user,
-        scopes: array_param(CreateBearerLogin.param_key, :scopes),
+        scopes: array_param(CreateCurrentUserBearerLogin.param_key, :scopes),
         allowed_scopes: BearerScope.action_scopes.map(&.name)
       ) do |operation, bearer_login|
         if operation.saved?
-          BearerTokenSession.new(session).set(operation, bearer_login.not_nil!)
           do_run_operation_succeeded(operation, bearer_login.not_nil!)
         else
           response.status_code = 400
@@ -24,17 +23,26 @@ module Shield::BearerLogins::Create
     end
 
     def user
-      current_user
+      current_user_or_bearer
     end
 
     def do_run_operation_succeeded(operation, bearer_login)
-      flash.success = Rex.t(:"action.bearer_login.create.success")
-      redirect to: Show.with(bearer_login_id: bearer_login.id)
+      json({
+        status: "success",
+        message: Rex.t(:"action.current_user.bearer_login.create.success"),
+        data: {
+          bearer_login: BearerLoginSerializer.new(bearer_login),
+          token: BearerToken.new(operation, bearer_login)
+        }
+      })
     end
 
     def do_run_operation_failed(operation)
-      flash.failure = Rex.t(:"action.bearer_login.create.failure")
-      html NewPage, operation: operation
+      json({
+        status: "failure",
+        message: Rex.t(:"action.current_user.bearer_login.create.failure"),
+        data: {errors: operation.errors}
+      })
     end
 
     def authorize?(user : Shield::User) : Bool

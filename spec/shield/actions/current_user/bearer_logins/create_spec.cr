@@ -1,6 +1,6 @@
-require "../../../spec_helper"
+require "../../../../spec_helper"
 
-describe Shield::BearerLogins::Create do
+describe Shield::CurrentUser::BearerLogins::Create do
   it "creates bearer login" do
     email = "user@example.tld"
     password = "password4APASSWORD<"
@@ -8,7 +8,7 @@ describe Shield::BearerLogins::Create do
     client = ApiClient.new
     client.browser_auth(email, password)
 
-    response = client.exec(BearerLogins::Create, bearer_login: {
+    response = client.exec(CurrentUser::BearerLogins::Create, bearer_login: {
       name: "some token",
       scopes: ["api.posts.index"]
     })
@@ -18,7 +18,7 @@ describe Shield::BearerLogins::Create do
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(BearerLogins::Create, bearer_login: {
+    response = ApiClient.exec(CurrentUser::BearerLogins::Create, bearer_login: {
       name: "some token",
       scopes: ["api.posts.index"]
     })

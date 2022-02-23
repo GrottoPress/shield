@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Api::EmailConfirmations::Verify` action
 - Add `Shield::Api::PasswordResets::Verify` action
 - Add `Shield::BearerLogins::Show` action
+- Add `Shield::CurrentUser::BearerLogins::*` actions
 
 ### Changed
 - Use saved status to determine status of create operations
@@ -45,6 +46,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
 - Remove `Shield::VerificationUrl#route`
 - Remove `BearerToken#to_header`
+- Remove `Shield::BearerLogin::Create` action
+- Remove `Shield::BearerLogin::New` action
 
 ## [0.13.1] - 2022-01-04
 
