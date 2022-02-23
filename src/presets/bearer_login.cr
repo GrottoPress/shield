@@ -33,6 +33,14 @@ class DeleteCurrentUserBearerLogins < User::SaveOperation
   include Shield::DeleteUserBearerLogins
 end
 
+class RevokeUserBearerLogins < User::SaveOperation
+  include Shield::RevokeUserBearerLogins
+end
+
+class DeleteUserBearerLogins < User::SaveOperation
+  include Shield::DeleteUserBearerLogins
+end
+
 abstract class ApiAction < Lucky::Action
   include Shield::Api::BearerLoginHelpers
   include Shield::Api::BearerLoginPipes

@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Api::PasswordResets::Verify` action
 - Add `Shield::BearerLogins::Show` action
 - Add `Shield::CurrentUser::BearerLogins::*` actions
+- Add `Shield::Users::BearerLogins::*` actions
 
 ### Changed
 - Use saved status to determine status of create operations
