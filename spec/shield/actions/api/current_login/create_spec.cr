@@ -15,7 +15,10 @@ describe Shield::Api::CurrentLogin::Create do
       password: password
     })
 
-    response.should send_json(200, {message: "action.misc.token_generated"})
+    response.should send_json(
+      200,
+      {message: "action.current_login.create.success"}
+    )
   end
 
   it "requires logged out" do

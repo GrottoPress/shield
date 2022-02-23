@@ -24,7 +24,7 @@ module Shield::Api::CurrentLogin::Create
     def do_run_operation_succeeded(operation, login)
       json({
         status: "success",
-        message: Rex.t(:"action.misc.token_generated"),
+        message: Rex.t(:"action.current_login.create.success"),
         data: {
           login: LoginSerializer.new(login),
           token: BearerToken.new(operation, login),
