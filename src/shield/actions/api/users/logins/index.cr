@@ -7,7 +7,10 @@ module Shield::Api::Users::Logins::Index
     # get "/users/:user_id/logins" do
     #   json({
     #     status: "success",
-    #     data: {logins: LoginSerializer.for_collection(logins)},
+    #     data: {
+    #       logins: LoginSerializer.for_collection(logins),
+    #       user: UserSerializer.new(user)
+    #     },
     #     pages: {
     #       current: page,
     #       total: pages.total
