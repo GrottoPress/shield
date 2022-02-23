@@ -463,51 +463,7 @@ For instance, an application may allow a user to register or log in or start a p
 
 *Shield* even supports creating bearer logins from APIs. A user may log in with a regular password via API, and use the token they receive to create bearer logins. They could even create a bearer login via the browser, assigning it `scopes` that allow it to create other bearer logins via API.
 
-For these purposes, *Shield* provides the following modules:
-
-#### Actions
-
-- `Shield::Api::BearerLogins::Create`
-- `Shield::Api::BearerLogins::Destroy`
-- `Shield::Api::BearerLogins::Delete`
-- `Shield::Api::BearerLogins::Index`
-- `Shield::Api::CurrentLogin::Create`
-- `Shield::Api::CurrentLogin::Destroy`
-- `Shield::Api::CurrentLogin::Delete`
-- `Shield::Api::CurrentUser::Create`
-- `Shield::Api::CurrentUser::Show`
-- `Shield::Api::CurrentUser::Update`
-- `Shield::Api::CurrentUser::BearerLogins::Create`
-- `Shield::Api::CurrentUser::BearerLogins::Show`
-- `Shield::Api::CurrentUser::BearerLogins::Update`
-- `Shield::Api::EmailConfirmationCurrentUser::Create`
-- `Shield::Api::EmailConfirmationCurrentUser::Show`
-- `Shield::Api::EmailConfirmationCurrentUser::Update`
-- `Shield::Api::EmailConfirmationCurrentUser::Verify`
-- `Shield::Api::EmailConfirmations::Create`
-- `Shield::Api::EmailConfirmations::Update`
-- `Shield::Api::PasswordResets::Create`
-- `Shield::Api::PasswordResets::Update`
-- `Shield::Api::PasswordResets::Verify`
-- `Shield::Api::SkipAuthenticationCache`
-
-If your application decides to allow any of these functionalities via its API, the modules above should be `include`d in their respective API actions.
-
-### Other Types
-
-1. Actions:
-
-   - `Shield::Api::Logins::Delete`
-   - `Shield::Api::Logins::Destroy`
-   - `Shield::Api::Logins::Index`
-   - `Shield::Api::Users::Create`
-   - `Shield::Api::Users::Delete`
-   - `Shield::Api::Users::Destroy`
-   - `Shield::Api::Users::Index`
-   - `Shield::Api::Users::Show`
-   - `Shield::Api::Users::Update`
-
-   `Shield::Api::Users::*` actions are reserved for situations where admins would like to perform certain operations on other registered users.
+For these purposes and more, *Shield* provides API equivalents for all browser action modules.
 
 ### Rate limiting
 
