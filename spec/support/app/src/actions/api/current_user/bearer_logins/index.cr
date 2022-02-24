@@ -11,10 +11,7 @@ class Api::CurrentUser::BearerLogins::Index < ApiAction
       data: {
         bearer_logins: BearerLoginSerializer.for_collection(bearer_logins)
       },
-      pages: {
-        current: page,
-        total: pages.total
-      }
+      pages: PaginationSerializer.new(pages)
     })
   end
 end

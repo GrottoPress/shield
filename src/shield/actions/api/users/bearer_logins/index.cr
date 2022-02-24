@@ -14,10 +14,7 @@ module Shield::Api::Users::BearerLogins::Index
     #       bearer_logins: BearerLoginSerializer.for_collection(bearer_logins),
     #       user: UserSerializer.new(user)
     #     },
-    #     pages: {
-    #       current: page,
-    #       total: pages.total
-    #     }
+    #     pages: PaginationSerializer.new(pages)
     #   })
     # end
 

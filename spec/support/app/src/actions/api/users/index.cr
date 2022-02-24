@@ -10,10 +10,7 @@ class Api::Users::Index < ApiAction
     json({
       status: "success",
       data: {users: UserSerializer.for_collection(users)},
-      pages: {
-        current: page,
-        total: pages.total
-      }
+      pages: PaginationSerializer.new(pages)
     })
   end
 end

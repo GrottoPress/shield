@@ -8,10 +8,7 @@ module Shield::Api::CurrentUser::Logins::Index
     #   json({
     #     status: "success",
     #     data: {logins: LoginSerializer.for_collection(logins)},
-    #     pages: {
-    #       current: page,
-    #       total: pages.total
-    #     }
+    #     pages: PaginationSerializer.new(pages)
     #   })
     # end
 

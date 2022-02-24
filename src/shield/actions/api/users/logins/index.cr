@@ -11,10 +11,7 @@ module Shield::Api::Users::Logins::Index
     #       logins: LoginSerializer.for_collection(logins),
     #       user: UserSerializer.new(user)
     #     },
-    #     pages: {
-    #       current: page,
-    #       total: pages.total
-    #     }
+    #     pages: PaginationSerializer.new(pages)
     #   })
     # end
 
