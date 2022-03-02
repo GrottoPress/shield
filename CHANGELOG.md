@@ -11,11 +11,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Ensure support for *Crystal* v1.3
 - Add `Shield::EndUserLogins` operation
 - Add `Shield::DeleteUserLogins` operation
+- Add `Shield::Api::CurrentUser::BearerLogins::*` actions
 - Add `Shield::Api::CurrentUser::Logins::*` actions for user logins on all devices
 - Add `Shield::Api::CurrentUser::PasswordResets::*` actions
+- Add `Shield::Api::Users::BearerLogins::*` actions
 - Add `Shield::Api::Users::Logins::*` actions for user logins on all devices
+- Add `Shield::CurrentUser::BearerLogins::*` actions
 - Add `Shield::CurrentUser::Logins::*` actions for user logins on all devices
 - Add `Shield::CurrentUser::PasswordResets::*` actions
+- Add `Shield::Users::BearerLogins::*` actions
 - Add `Shield::Users::Logins::*` actions for user logins on all devices
 - Include the logged in user in the login API response data
 - Include email confirmation in its API response data
@@ -24,8 +28,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Api::EmailConfirmations::Verify` action
 - Add `Shield::Api::PasswordResets::Verify` action
 - Add `Shield::BearerLogins::Show` action
-- Add `Shield::CurrentUser::BearerLogins::*` actions
-- Add `Shield::Users::BearerLogins::*` actions
 - Add `UpdatePassword` operation
 - Add `success : Bool` column to password resets
 - Add `success : Bool` column to email confirmations
