@@ -19,7 +19,7 @@ describe Shield::Api::PasswordResets::Update do
       response = ApiClient.exec(
         Api::PasswordResets::Update,
         token: token,
-        user: {password: new_password}
+        password_reset: {password: new_password}
       )
 
       response.should send_json(200, {

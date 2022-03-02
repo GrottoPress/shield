@@ -32,6 +32,10 @@ class DeleteUser < User::DeleteOperation
   include Shield::DeleteUser
 end
 
+class UpdatePassword < User::SaveOperation
+  include Shield::UpdatePassword
+end
+
 struct PasswordAuthentication
   include Shield::PasswordAuthentication
 end

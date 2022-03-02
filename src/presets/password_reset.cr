@@ -23,7 +23,7 @@ class DeletePasswordReset < PasswordReset::DeleteOperation
   include Shield::DeletePasswordReset
 end
 
-class ResetPassword < User::SaveOperation
+class ResetPassword < PasswordReset::SaveOperation
   include Shield::ResetPassword
 end
 

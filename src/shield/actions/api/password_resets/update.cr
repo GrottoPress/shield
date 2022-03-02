@@ -25,13 +25,13 @@ module Shield::Api::PasswordResets::Update
 
     private def reset_password(password_reset)
       ResetPassword.update(
-        password_reset.user,
+        password_reset,
         params,
         session: nil,
         current_login: current_login?
-      ) do |operation, updated_user|
+      ) do |operation, updated_password_reset|
         if operation.saved?
-          do_run_operation_succeeded(operation, updated_user)
+          do_run_operation_succeeded(operation, updated_password_reset)
         else
           response.status_code = 400
           do_run_operation_failed(operation)
@@ -39,11 +39,11 @@ module Shield::Api::PasswordResets::Update
       end
     end
 
-    def do_run_operation_succeeded(operation, user)
+    def do_run_operation_succeeded(operation, password_reset)
       json({
         status: "success",
         message: Rex.t(:"action.password_reset.update.success"),
-        data: {user: UserSerializer.new(user)}
+        data: {password_reset: PasswordResetSerializer.new(password_reset)}
       })
     end
 

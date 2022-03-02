@@ -20,7 +20,11 @@ describe Shield::PasswordResets::Update do
 
       client = ApiClient.new
       client.set_cookie_from_session(session)
-      client.exec(PasswordResets::Update, user: {password: new_password})
+
+      client.exec(
+        PasswordResets::Update,
+        password_reset: {password: new_password}
+      )
 
       BcryptHash.new(new_password)
         .verify?(user.reload.password_digest)

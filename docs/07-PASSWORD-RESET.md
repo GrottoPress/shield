@@ -122,7 +122,7 @@
    ```crystal
    # ->>> src/operations/reset_password.cr
 
-   class ResetPassword < User::SaveOperation
+   class ResetPassword < PasswordReset::SaveOperation
      # ...
      # By default, *Shield* marks all password resets as inactive,
      # after a successful reset, without deleting them.

@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::BearerLogins::Show` action
 - Add `Shield::CurrentUser::BearerLogins::*` actions
 - Add `Shield::Users::BearerLogins::*` actions
+- Add `UpdatePassword` operation
 
 ### Changed
 - Use saved status to determine status of create operations
@@ -39,6 +40,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Rename `Shield::EmailConfirmations::Edit` to `Shield::EmailConfirmations::Update`
 - Rename `Shield::LogUserIn` operation mixin to `Shield::StartLogin`
 - Rename `Shield::LogUserOut` operation mixin to `Shield::EndLogin`
+- Convert `ResetPassword` from a `User::SaveOperation` to a `PasswordReset::SaveOperation`
 
 ### Fixed
 - Prevent bearer users from deleting themselves

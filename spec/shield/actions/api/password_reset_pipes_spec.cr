@@ -21,7 +21,7 @@ describe Shield::Api::PasswordResetPipes do
         response = ApiClient.exec(
           Api::PasswordResets::Update,
           token: token,
-          user: {
+          password_reset: {
             password: password,
             password_notify: true,
             login_notify: true

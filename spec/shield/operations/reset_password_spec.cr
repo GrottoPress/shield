@@ -19,18 +19,18 @@ describe Shield::ResetPassword do
       PasswordResetSession.new(session).set(operation, password_reset)
 
       ResetPassword.update(
-        PasswordResetSession.new(session).verify!.user!,
+        PasswordResetSession.new(session).verify!,
         params(password: new_password),
         session: session,
         current_login: nil
-      ) do |_operation, updated_user|
+      ) do |_operation, updated_password_reset|
         _operation.saved?.should be_true
 
-        PasswordAuthentication.new(updated_user)
+        PasswordAuthentication.new(updated_password_reset.user!)
           .verify(new_password)
           .should(be_a User)
 
-        password_reset.reload.status.active?.should be_false
+        updated_password_reset.status.active?.should be_false
         PasswordResetSession.new(session).password_reset_id?.should be_nil
         PasswordResetSession.new(session).password_reset_token?.should be_nil
       end
@@ -43,9 +43,10 @@ describe Shield::ResetPassword do
     new_password = ""
 
     user = UserFactory.create &.email(email).password(password)
+    password_reset = PasswordResetFactory.create &.user_id(user.id)
 
     ResetPassword.update(
-      user,
+      password_reset,
       params(password: new_password),
       session: Lucky::Session.new,
       current_login: nil
@@ -65,7 +66,7 @@ describe Shield::ResetPassword do
     password_reset = PasswordResetFactory.create &.user_id(user.id)
 
     ResetPassword.update(
-      user,
+      password_reset,
       params(password: new_password),
       session: Lucky::Session.new,
       current_login: nil
@@ -91,15 +92,17 @@ describe Shield::ResetPassword do
     password_reset_2.status.active?.should be_true
     password_reset_3.status.active?.should be_true
 
-    ResetPassword.update!(
-      user,
+    ResetPassword.update(
+      password_reset_1,
       params(password: new_password),
       session: Lucky::Session.new,
       current_login: nil
-    )
+    ) do |operation, updated_password_reset|
+      operation.saved?.should be_true
 
-    password_reset_1.reload.status.active?.should be_false
-    password_reset_2.reload.status.active?.should be_false
-    password_reset_3.reload.status.active?.should be_true
+      updated_password_reset.status.active?.should be_false
+      password_reset_2.reload.status.active?.should be_false
+      password_reset_3.reload.status.active?.should be_true
+    end
   end
 end
