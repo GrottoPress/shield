@@ -7,6 +7,7 @@ module Shield::StartEmailConfirmation
 
     before_save do
       set_inactive_at
+      set_success
     end
 
     after_commit send_email
@@ -21,6 +22,10 @@ module Shield::StartEmailConfirmation
       active_at.value.try do |value|
         inactive_at.value = value + Shield.settings.email_confirmation_expiry
       end
+    end
+
+    private def set_success
+      success.value = false
     end
 
     private def send_user_email

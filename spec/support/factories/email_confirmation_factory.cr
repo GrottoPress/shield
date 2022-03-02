@@ -8,9 +8,10 @@ class EmailConfirmationFactory < Avram::Factory
   end
 
   private def set_defaults
+    active_at Time.utc
     email "Us3R@ExampLe.tld"
     ip_address "1.2.3.4"
-    active_at Time.utc
+    success true
     token "123abcdefghijklmnopqrst"
   end
 end

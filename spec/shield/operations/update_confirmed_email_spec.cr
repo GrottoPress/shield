@@ -30,6 +30,8 @@ describe Shield::UpdateConfirmedEmail do
         user.reload.email = new_email
 
         updated_email_confirmation.status.active?.should be_false
+        updated_email_confirmation.success?.should be_true
+
         from_session.email_confirmation_id?.should be_nil
         from_session.email_confirmation_token?.should be_nil
       end

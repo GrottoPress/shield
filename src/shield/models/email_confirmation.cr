@@ -6,5 +6,6 @@ module Shield::EmailConfirmation
     include Shield::OptionalBelongsToUser
 
     column email : String
+    column success : Bool
   end
 end

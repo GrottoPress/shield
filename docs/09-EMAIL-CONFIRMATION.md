@@ -45,6 +45,7 @@ This is particularly important, since email addresses are usually the only means
    - `email : String`
    - `inactive_at : Time?`
    - `ip_address : String`
+   - `success : Bool`
    - `token_digest : String`
 
    It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
@@ -84,6 +85,7 @@ This is particularly important, since email addresses are usually the only means
          add ip_address : String
          add active_at : Time
          add inactive_at : Time?
+         add success : Bool
          # ...
        end
      end

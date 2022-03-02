@@ -20,8 +20,15 @@ describe Shield::RegisterEmailConfirmationUser do
     ) do |_, user|
       user.should be_a(User)
 
-      user.try(&.email).should eq(email_confirmation.email)
-      email_confirmation.reload.user_id.should eq(user.try(&.id))
+      user.try do |user| # ameba:disable Lint/ShadowingOuterLocalVar
+        user.email.should eq(email_confirmation.email)
+
+        # ameba:disable Lint/ShadowingOuterLocalVar
+        email_confirmation.reload.tap do |email_confirmation|
+          email_confirmation.user_id.should eq(user.id)
+          email_confirmation.success?.should be_true
+        end
+      end
     end
   end
 

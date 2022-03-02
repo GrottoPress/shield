@@ -15,6 +15,7 @@ module Shield::RegisterEmailConfirmationUser
       EndEmailConfirmation.update!(
         email_confirmation,
         user_id: user.id,
+        success: true,
         session: session
       )
     end

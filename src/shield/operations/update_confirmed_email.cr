@@ -1,6 +1,7 @@
 module Shield::UpdateConfirmedEmail
   macro included
     before_save do
+      set_success
       validate_user_id_required
     end
 
@@ -12,6 +13,10 @@ module Shield::UpdateConfirmedEmail
     private def validate_user_id_required
       validate_required user_id,
         message: Rex.t(:"operation.error.user_id_required")
+    end
+
+    private def set_success
+      success.value = true
     end
 
     private def update_email(email_confirmation : Shield::EmailConfirmation)

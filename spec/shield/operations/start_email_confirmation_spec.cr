@@ -16,6 +16,7 @@ describe Shield::StartEmailConfirmation do
         email_confirmation.status.active?.should be_true
         email_confirmation.inactive_at.should_not be_nil
         email_confirmation.ip_address.should(eq ip_address.address)
+        email_confirmation.success?.should be_false
       end
     end
   end
