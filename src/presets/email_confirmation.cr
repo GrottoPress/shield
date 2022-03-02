@@ -25,16 +25,16 @@ class DeleteEmailConfirmation < EmailConfirmation::DeleteOperation
   include Shield::DeleteEmailConfirmation
 end
 
+class UpdateConfirmedEmail < EmailConfirmation::SaveOperation
+  include Shield::UpdateConfirmedEmail
+end
+
 class RegisterCurrentUser < User::SaveOperation
   include Shield::RegisterEmailConfirmationUser
 end
 
 class UpdateCurrentUser < User::SaveOperation
   include Shield::UpdateEmailConfirmationUser
-end
-
-class UpdateConfirmedEmail < User::SaveOperation
-  include Shield::UpdateConfirmedEmail
 end
 
 abstract class BrowserAction < Lucky::Action

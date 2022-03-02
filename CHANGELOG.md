@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Rename `Shield::LogUserIn` operation mixin to `Shield::StartLogin`
 - Rename `Shield::LogUserOut` operation mixin to `Shield::EndLogin`
 - Convert `ResetPassword` from a `User::SaveOperation` to a `PasswordReset::SaveOperation`
+- Convert `UpdateConfirmedEmail` from a `User::SaveOperation` to a `EmailConfirmation::SaveOperation`
 
 ### Fixed
 - Prevent bearer users from deleting themselves

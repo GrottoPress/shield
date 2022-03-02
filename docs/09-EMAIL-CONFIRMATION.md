@@ -176,7 +176,7 @@ This is particularly important, since email addresses are usually the only means
    ```crystal
    # ->>> src/operations/update_confirmed_email.cr
 
-   class UpdateConfirmedEmail < User::SaveOperation
+   class UpdateConfirmedEmail < EmailConfirmation::SaveOperation
      # ...
      # By default, *Shield* marks all email confirmations as inactive,
      # after successful update, without deleting them.

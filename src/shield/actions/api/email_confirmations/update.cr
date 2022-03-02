@@ -53,12 +53,11 @@ module Shield::Api::EmailConfirmations::Update
 
     private def update_email(email_confirmation)
       UpdateConfirmedEmail.update(
-        email_confirmation.user.not_nil!,
-        email_confirmation: email_confirmation,
+        email_confirmation,
         session: nil
-      ) do |operation, updated_user|
+      ) do |operation, updated_email_confirmation|
         if operation.saved?
-          do_run_operation_succeeded(operation, updated_user)
+          do_run_operation_succeeded(operation, updated_email_confirmation)
         else
           response.status_code = 400
           do_run_operation_failed(operation)
@@ -66,11 +65,13 @@ module Shield::Api::EmailConfirmations::Update
       end
     end
 
-    def do_run_operation_succeeded(operation, user)
+    def do_run_operation_succeeded(operation, email_confirmation)
       json({
         status: "success",
         message: Rex.t(:"action.email_confirmation.update.success"),
-        data: {user: UserSerializer.new(user)}
+        data: {email_confirmation: EmailConfirmationSerializer.new(
+          email_confirmation
+        )}
       })
     end
 

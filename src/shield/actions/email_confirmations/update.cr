@@ -45,12 +45,11 @@ module Shield::EmailConfirmations::Update
 
     private def update_email(email_confirmation)
       UpdateConfirmedEmail.update(
-        email_confirmation.user.not_nil!,
-        email_confirmation: email_confirmation,
+        email_confirmation,
         session: session
-      ) do |operation, updated_user|
+      ) do |operation, updated_email_confirmation|
         if operation.saved?
-          do_run_operation_succeeded(operation, updated_user)
+          do_run_operation_succeeded(operation, updated_email_confirmation)
         else
           response.status_code = 400
           do_run_operation_failed(operation)
@@ -58,7 +57,7 @@ module Shield::EmailConfirmations::Update
       end
     end
 
-    def do_run_operation_succeeded(operation, user)
+    def do_run_operation_succeeded(operation, email_confirmation)
       flash.success = Rex.t(:"action.email_confirmation.update.success")
       redirect to: CurrentUser::Show
     end

@@ -1,7 +1,16 @@
 module Shield::DeleteEmailConfirmationsAfterUpdateEmail
   macro included
-    private def end_email_confirmations(user : Shield::User)
-      EmailConfirmationQuery.new.email(user.email).delete
+    after_commit delete_email_confirmations
+
+    private def end_email_confirmations(
+      email_confirmation : Shield::EmailConfirmation
+    )
+    end
+
+    private def delete_email_confirmations(
+      email_confirmation : Shield::EmailConfirmation
+    )
+      EmailConfirmationQuery.new.email(email_confirmation.email).delete
     end
   end
 end
