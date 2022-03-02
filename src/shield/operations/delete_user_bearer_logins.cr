@@ -2,7 +2,7 @@ module Shield::DeleteUserBearerLogins
   macro included
     needs current_bearer_login : BearerLogin?
 
-    after_save delete_bearer_logins
+    after_commit delete_bearer_logins
 
     private def delete_bearer_logins(user : Shield::User)
       query = BearerLoginQuery.new.user_id(user.id)
