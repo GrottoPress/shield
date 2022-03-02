@@ -27,6 +27,14 @@ class ResetPassword < PasswordReset::SaveOperation
   include Shield::ResetPassword
 end
 
+class EndCurrentUserPasswordResets < User::SaveOperation
+  include Shield::EndUserPasswordResets
+end
+
+class DeleteCurrentUserPasswordResets < User::SaveOperation
+  include Shield::DeleteUserPasswordResets
+end
+
 abstract class BrowserAction < Lucky::Action
   include Shield::PasswordResetHelpers
   include Shield::PasswordResetPipes
