@@ -21,6 +21,7 @@ describe Shield::StartPasswordReset do
         password_reset.ip_address.should(eq ip_address.address)
         password_reset.token_digest.should_not(be_empty)
         password_reset.user_id.should(eq user.id)
+        password_reset.success?.should be_false
       end
     end
   end

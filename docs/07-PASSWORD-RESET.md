@@ -35,6 +35,7 @@
    - `active_at : Time`
    - `inactive_at : Time?`
    - `ip_address : String`
+   - `success : Bool`
    - `token_digest : String`
 
    It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
@@ -70,6 +71,7 @@
          add ip_address : String
          add active_at : Time
          add inactive_at : Time?
+         add success : Bool
          # ...
        end
      end

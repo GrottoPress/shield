@@ -9,6 +9,7 @@ module Shield::StartPasswordReset
 
     before_save do
       set_inactive_at
+      set_success
       set_user_id
     end
 
@@ -24,6 +25,10 @@ module Shield::StartPasswordReset
       active_at.value.try do |value|
         inactive_at.value = value + Shield.settings.password_reset_expiry
       end
+    end
+
+    private def set_success
+      success.value = false
     end
 
     private def set_user_id

@@ -5,6 +5,7 @@ module Shield::ResetPassword
     attribute password : String
 
     before_save do
+      set_success
       validate_password_required
     end
 
@@ -17,6 +18,10 @@ module Shield::ResetPassword
     private def validate_password_required
       validate_required password,
         message: Rex.t(:"operation.error.password_required")
+    end
+
+    private def set_success
+      success.value = true
     end
 
     private def update_password(password_reset : Shield::PasswordReset)

@@ -31,6 +31,8 @@ describe Shield::ResetPassword do
           .should(be_a User)
 
         updated_password_reset.status.active?.should be_false
+        updated_password_reset.success?.should be_true
+
         PasswordResetSession.new(session).password_reset_id?.should be_nil
         PasswordResetSession.new(session).password_reset_token?.should be_nil
       end

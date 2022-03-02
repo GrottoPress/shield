@@ -8,8 +8,9 @@ class PasswordResetFactory < Avram::Factory
   end
 
   private def set_defaults
-    ip_address "1.2.3.4"
     active_at Time.utc
+    ip_address "1.2.3.4"
+    success false
     token "123abcdefghijklmnopqrst"
   end
 end

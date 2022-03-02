@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::CurrentUser::BearerLogins::*` actions
 - Add `Shield::Users::BearerLogins::*` actions
 - Add `UpdatePassword` operation
+- Add `success : Bool` column to password resets
 
 ### Changed
 - Use saved status to determine status of create operations
