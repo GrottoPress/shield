@@ -16,11 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Api::CurrentUser::PasswordResets::*` actions
 - Add `Shield::Api::Users::BearerLogins::*` actions
 - Add `Shield::Api::Users::Logins::*` actions for user logins on all devices
+- Add `Shield::Api::Users::PasswordResets::*` actions
 - Add `Shield::CurrentUser::BearerLogins::*` actions
 - Add `Shield::CurrentUser::Logins::*` actions for user logins on all devices
 - Add `Shield::CurrentUser::PasswordResets::*` actions
 - Add `Shield::Users::BearerLogins::*` actions
 - Add `Shield::Users::Logins::*` actions for user logins on all devices
+- Add `Shield::Users::PasswordResets::*` actions
 - Include the logged in user in the login API response data
 - Include email confirmation in its API response data
 - Include password reset in its API response data
