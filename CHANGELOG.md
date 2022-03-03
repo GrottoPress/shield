@@ -31,6 +31,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Include email confirmation in its API response data
 - Include password reset in its API response data
 - Add `BearerToken#authenticate` methods
+- Add `Shield::Api::EmailConfirmations::Delete` action
+- Add `Shield::Api::EmailConfirmations::Destroy` action
 - Add `Shield::Api::EmailConfirmations::Index` action
 - Add `Shield::Api::EmailConfirmations::Verify` action
 - Add `Shield::Api::PasswordResets::Delete` action
@@ -38,6 +40,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Api::PasswordResets::Index` action
 - Add `Shield::Api::PasswordResets::Verify` action
 - Add `Shield::BearerLogins::Show` action
+- Add `Shield::EmailConfirmations::Delete` action
+- Add `Shield::EmailConfirmations::Destroy` action
 - Add `Shield::EmailConfirmations::Index` action
 - Add `Shield::PasswordResets::Delete` action
 - Add `Shield::PasswordResets::Destroy` action
