@@ -295,9 +295,7 @@ This is particularly important, since email addresses are usually the only means
      # ...
      include Shield::EmailConfirmations::Show
 
-     param token : String
-
-     get "/email-confirmations" do
+     get "/email-confirmations/:token" do
        run_operation
      end
      # ...

@@ -14,9 +14,7 @@ module Shield::EmailConfirmations::Show
 
     before :set_no_referrer_policy # <= IMPORTANT!
 
-    # param token : String
-
-    # get "/email-confirmations" do
+    # get "/email-confirmations/:token" do
     #   run_operation
     # end
 
