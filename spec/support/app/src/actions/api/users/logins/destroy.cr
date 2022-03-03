@@ -6,8 +6,4 @@ class Api::Users::Logins::Destroy < ApiAction
   delete "/users/:user_id/logins" do
     run_operation
   end
-
-  def remote_ip? : Socket::IPAddress?
-    Socket::IPAddress.new("128.0.0.2", 5000)
-  end
 end

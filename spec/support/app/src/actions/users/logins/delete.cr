@@ -11,8 +11,4 @@ class Users::Logins::Delete < BrowserAction
     response.headers["X-Log-Out-Everywhere"] = "true"
     previous_def
   end
-
-  def remote_ip? : Socket::IPAddress?
-    Socket::IPAddress.new("128.0.0.2", 5000)
-  end
 end
