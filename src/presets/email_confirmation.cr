@@ -37,6 +37,14 @@ class DeleteCurrentUserEmailConfirmations < User::SaveOperation
   include Shield::DeleteUserEmailConfirmations
 end
 
+class EndUserEmailConfirmations < User::SaveOperation
+  include Shield::EndUserEmailConfirmations
+end
+
+class DeleteUserEmailConfirmations < User::SaveOperation
+  include Shield::DeleteUserEmailConfirmations
+end
+
 class RegisterCurrentUser < User::SaveOperation
   include Shield::RegisterEmailConfirmationUser
 end
