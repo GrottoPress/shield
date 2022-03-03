@@ -16,7 +16,7 @@ describe Shield::Api::Logins::Delete do
 
     response.should send_json(200, {message: "action.login.destroy.success"})
 
-      # ameba:disable Performance/AnyInsteadOfEmpty
+    # ameba:disable Performance/AnyInsteadOfEmpty
     LoginQuery.new.id(login.id).any?.should be_false
   end
 
