@@ -33,7 +33,7 @@ module Shield::EmailConfirmationCurrentUser::New
 
     def do_verify_operation_failed(utility)
       flash.failure = Rex.t(:"action.misc.token_invalid")
-      redirect to: EmailConfirmations::New
+      redirect to: ::EmailConfirmations::New
     end
   end
 end

@@ -12,12 +12,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::EndUserLogins` operation
 - Add `Shield::DeleteUserLogins` operation
 - Add `Shield::Api::CurrentUser::BearerLogins::*` actions
+- Add `Shield::Api::CurrentUser::EmailConfirmations::*` actions
 - Add `Shield::Api::CurrentUser::Logins::*` actions for user logins on all devices
 - Add `Shield::Api::CurrentUser::PasswordResets::*` actions
 - Add `Shield::Api::Users::BearerLogins::*` actions
 - Add `Shield::Api::Users::Logins::*` actions for user logins on all devices
 - Add `Shield::Api::Users::PasswordResets::*` actions
 - Add `Shield::CurrentUser::BearerLogins::*` actions
+- Add `Shield::CurrentUser::EmailConfirmations::*` actions
 - Add `Shield::CurrentUser::Logins::*` actions for user logins on all devices
 - Add `Shield::CurrentUser::PasswordResets::*` actions
 - Add `Shield::Users::BearerLogins::*` actions

@@ -21,7 +21,7 @@ module Shield::EmailConfirmationPipes
 
     def do_pin_email_confirmation_to_ip_address_failed
       flash.failure = Rex.t(:"action.pipe.ip_address_changed")
-      redirect to: EmailConfirmations::New
+      redirect to: ::EmailConfirmations::New
     end
   end
 end
