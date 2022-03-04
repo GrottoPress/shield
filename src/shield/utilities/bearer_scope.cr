@@ -9,12 +9,16 @@ module Shield::BearerScope
       new(action.name.gsub("::", '.').underscore)
     end
 
-    def to_s(io)
-      io << @name
+    def to_param : String
+      to_s
     end
 
     def to_json(json)
       json.string(to_s)
+    end
+
+    def to_s(io)
+      io << @name
     end
 
     def self.action_scopes : Array(self)
