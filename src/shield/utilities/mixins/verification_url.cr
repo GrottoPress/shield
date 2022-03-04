@@ -14,12 +14,16 @@ module Shield::VerificationUrl
       new(token.to_s)
     end
 
-    def to_s(io)
-      io << @url
+    def to_param : String
+      to_s
     end
 
     def to_json(json)
       json.string(to_s)
+    end
+
+    def to_s(io)
+      io << @url
     end
   end
 end
