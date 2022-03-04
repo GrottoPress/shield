@@ -69,9 +69,12 @@ module Shield::Api::EmailConfirmations::Update
       json({
         status: "success",
         message: Rex.t(:"action.email_confirmation.update.success"),
-        data: {email_confirmation: EmailConfirmationSerializer.new(
-          email_confirmation
-        )}
+        data: {
+          email_confirmation: EmailConfirmationSerializer.new(
+            email_confirmation
+          ),
+          user: UserSerializer.new(user.reload)
+        }
       })
     end
 
