@@ -31,14 +31,18 @@ module Shield::BearerToken
       client.before_request { |request| authenticate(request.headers) }
     end
 
-    def to_s(io)
-      io << id?
-      io << '.' if id?
-      io << @token
+    def to_param : String
+      to_s
     end
 
     def to_json(json)
       json.string(to_s)
+    end
+
+    def to_s(io)
+      io << id?
+      io << '.' if id?
+      io << @token
     end
 
     def self.from_headers(request : HTTP::Request) : self
