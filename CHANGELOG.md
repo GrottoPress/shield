@@ -34,10 +34,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Api::EmailConfirmations::Delete` action
 - Add `Shield::Api::EmailConfirmations::Destroy` action
 - Add `Shield::Api::EmailConfirmations::Index` action
+- Add `Shield::Api::EmailConfirmations::Show` action
 - Add `Shield::Api::EmailConfirmations::Verify` action
 - Add `Shield::Api::PasswordResets::Delete` action
 - Add `Shield::Api::PasswordResets::Destroy` action
 - Add `Shield::Api::PasswordResets::Index` action
+- Add `Shield::Api::PasswordResets::Show` action
 - Add `Shield::Api::PasswordResets::Verify` action
 - Add `Shield::BearerLogins::Show` action
 - Add `Shield::EmailConfirmations::Delete` action
