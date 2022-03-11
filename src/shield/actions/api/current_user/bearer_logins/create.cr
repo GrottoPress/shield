@@ -27,22 +27,18 @@ module Shield::Api::CurrentUser::BearerLogins::Create
     end
 
     def do_run_operation_succeeded(operation, bearer_login)
-      json({
-        status: "success",
-        message: Rex.t(:"action.current_user.bearer_login.create.success"),
-        data: {
-          bearer_login: BearerLoginSerializer.new(bearer_login),
-          token: BearerToken.new(operation, bearer_login)
-        }
-      })
+      json ItemResponse.new(
+        bearer_login: bearer_login,
+        token: BearerToken.new(operation, bearer_login).to_s,
+        message: Rex.t(:"action.current_user.bearer_login.create.success")
+      )
     end
 
     def do_run_operation_failed(operation)
-      json({
-        status: "failure",
-        message: Rex.t(:"action.current_user.bearer_login.create.failure"),
-        data: {errors: operation.errors}
-      })
+      json FailureResponse.new(
+        errors: operation.errors,
+        message: Rex.t(:"action.current_user.bearer_login.create.failure")
+      )
     end
 
     def authorize?(user : Shield::User) : Bool

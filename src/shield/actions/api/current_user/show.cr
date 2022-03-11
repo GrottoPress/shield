@@ -3,10 +3,7 @@ module Shield::Api::CurrentUser::Show
     skip :require_logged_out
 
     # get "/account" do
-    #   json({
-    #     status: "success",
-    #     data: {user: UserSerializer.new(user)}
-    #   })
+    #   json ItemResponse.new(user: user)
     # end
 
     {% if Avram::Model.all_subclasses

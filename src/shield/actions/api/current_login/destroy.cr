@@ -22,19 +22,17 @@ module Shield::Api::CurrentLogin::Destroy
     end
 
     def do_run_operation_succeeded(operation, login)
-      json({
-        status: "success",
-        message: Rex.t(:"action.current_login.destroy.success"),
-        data: {login: LoginSerializer.new(login)}
-      })
+      json ItemResponse.new(
+        login: login,
+        message: Rex.t(:"action.current_login.destroy.success")
+      )
     end
 
     def do_run_operation_failed(operation)
-      json({
-        status: "failure",
-        message: Rex.t(:"action.current_login.destroy.failure"),
-        data: {errors: operation.errors}
-      })
+      json FailureResponse.new(
+        errors: operation.errors,
+        message: Rex.t(:"action.current_login.destroy.failure")
+      )
     end
 
     def authorize?(user : Shield::User) : Bool

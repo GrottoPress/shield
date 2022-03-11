@@ -36,18 +36,16 @@ module Shield::Api::CurrentUser::Create
     end
 
     private def success_action(operation)
-      json({
-        status: "success",
+      json ItemResponse.new(
         message: Rex.t(:"action.current_user.create.success")
-      })
+      )
     end
 
     private def failure_action(operation)
-      json({
-        status: "failure",
-        message: Rex.t(:"action.current_user.create.failure"),
-        data: {errors: operation.errors}
-      })
+      json FailureResponse.new(
+        errors: operation.errors,
+        message: Rex.t(:"action.current_user.create.failure")
+      )
     end
   end
 end

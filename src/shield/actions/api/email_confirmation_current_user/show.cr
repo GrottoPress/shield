@@ -3,10 +3,7 @@ module Shield::Api::EmailConfirmationCurrentUser::Show
     include Shield::Api::CurrentUser::Show
 
     # get "/account" do
-    #   json({
-    #     status: "success",
-    #     data: {user: UserSerializer.new(user)}
-    #   })
+    #   json ItemResponse.new(user: user)
     # end
   end
 end

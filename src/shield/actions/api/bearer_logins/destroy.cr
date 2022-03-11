@@ -20,19 +20,17 @@ module Shield::Api::BearerLogins::Destroy
     end
 
     def do_run_operation_succeeded(operation, bearer_login)
-      json({
-        status: "success",
-        message: Rex.t(:"action.bearer_login.destroy.success"),
-        data: {bearer_login: BearerLoginSerializer.new(bearer_login)}
-      })
+      json ItemResponse.new(
+        bearer_login: bearer_login,
+        message: Rex.t(:"action.bearer_login.destroy.success")
+      )
     end
 
     def do_run_operation_failed(operation)
-      json({
-        status: "failure",
-        message: Rex.t(:"action.bearer_login.destroy.failure"),
-        data: {errors: operation.errors}
-      })
+      json FailureResponse.new(
+        errors: operation.errors,
+        message: Rex.t(:"action.bearer_login.destroy.failure")
+      )
     end
 
     getter bearer_login : BearerLogin do

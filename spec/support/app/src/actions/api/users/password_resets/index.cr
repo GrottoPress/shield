@@ -6,12 +6,10 @@ class Api::Users::PasswordResets::Index < ApiAction
   param page : Int32 = 1
 
   get "/users/:user_id/password-resets" do
-    json({
-      status: "success",
-      data: {
-        password_resets: PasswordResetSerializer.for_collection(password_resets)
-      },
-      pages: PaginationSerializer.new(pages)
-    })
+    json ListResponse.new(
+      password_resets: password_resets,
+      user: user,
+      pages: pages
+    )
   end
 end

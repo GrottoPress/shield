@@ -17,19 +17,17 @@ module Shield::Api::Users::EmailConfirmations::Destroy
     end
 
     def do_run_operation_succeeded(operation, user)
-      json({
-        status: "success",
-        message: Rex.t(:"action.user.email_confirmation.destroy.success"),
-        data: {user: UserSerializer.new(user)}
-      })
+      json ItemResponse.new(
+        user: user,
+        message: Rex.t(:"action.user.email_confirmation.destroy.success")
+      )
     end
 
     def do_run_operation_failed(operation)
-      json({
-        status: "failure",
-        message: Rex.t(:"action.user.email_confirmation.destroy.failure"),
-        data: {errors: operation.errors}
-      })
+      json FailureResponse.new(
+        errors: operation.errors,
+        message: Rex.t(:"action.user.email_confirmation.destroy.failure")
+      )
     end
 
     getter user : User do

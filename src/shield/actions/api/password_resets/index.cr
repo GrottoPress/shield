@@ -5,13 +5,7 @@ module Shield::Api::PasswordResets::Index
     # param page : Int32 = 1
 
     # get "/password-resets" do
-    #   json({
-    #     status: "success",
-    #     data: {password_resets: PasswordResetSerializer.for_collection(
-    #       password_resets
-    #     )},
-    #     pages: PaginationSerializer.new(pages)
-    #   })
+    #   json ListResponse.new(password_resets: password_resets, pages: pages)
     # end
 
     def pages

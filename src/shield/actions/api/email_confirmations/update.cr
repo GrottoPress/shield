@@ -48,7 +48,7 @@ module Shield::Api::EmailConfirmations::Update
     {% end %}
 
     def do_verify_operation_failed(utility)
-      json({status: "failure", message: Rex.t(:"action.misc.token_invalid")})
+      json FailureResponse.new(message: Rex.t(:"action.misc.token_invalid"))
     end
 
     private def update_email(email_confirmation)
@@ -66,24 +66,18 @@ module Shield::Api::EmailConfirmations::Update
     end
 
     def do_run_operation_succeeded(operation, email_confirmation)
-      json({
-        status: "success",
-        message: Rex.t(:"action.email_confirmation.update.success"),
-        data: {
-          email_confirmation: EmailConfirmationSerializer.new(
-            email_confirmation
-          ),
-          user: UserSerializer.new(user.reload)
-        }
-      })
+      json ItemResponse.new(
+        email_confirmation: email_confirmation,
+        user: user.reload,
+        message: Rex.t(:"action.email_confirmation.update.success")
+      )
     end
 
     def do_run_operation_failed(operation)
-      json({
-        status: "failure",
-        message: Rex.t(:"action.email_confirmation.update.failure"),
-        data: {errors: operation.errors}
-      })
+      json FailureResponse.new(
+        errors: operation.errors,
+        message: Rex.t(:"action.email_confirmation.update.failure")
+      )
     end
 
     def authorize?(user : Shield::User) : Bool

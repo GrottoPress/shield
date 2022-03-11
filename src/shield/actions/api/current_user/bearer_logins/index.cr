@@ -8,13 +8,7 @@ module Shield::Api::CurrentUser::BearerLogins::Index
     # param page : Int32 = 1
 
     # get "/account/bearer-logins" do
-    #   json({
-    #     status: "success",
-    #     data: {
-    #       bearer_logins: BearerLoginSerializer.for_collection(bearer_logins)
-    #     },
-    #     pages: PaginationSerializer.new(pages)
-    #   })
+    #   json ListResponse.new(bearer_logins: bearer_logins, pages: pages)
     # end
 
     def pages

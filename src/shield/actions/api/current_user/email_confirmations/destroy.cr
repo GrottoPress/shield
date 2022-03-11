@@ -30,23 +30,21 @@ module Shield::Api::CurrentUser::EmailConfirmations::Destroy
     {% end %}
 
     def do_run_operation_succeeded(operation, user)
-      json({
-        status: "success",
+      json ItemResponse.new(
+        user: user,
         message: Rex.t(
           :"action.current_user.email_confirmation.destroy.success"
-        ),
-        data: {user: UserSerializer.new(user)}
-      })
+        )
+      )
     end
 
     def do_run_operation_failed(operation)
-      json({
-        status: "failure",
+      json FailureResponse.new(
+        errors: operation.errors,
         message: Rex.t(
           :"action.current_user.email_confirmation.destroy.failure"
-        ),
-        data: {errors: operation.errors}
-      })
+        )
+      )
     end
 
     def authorize?(user : Shield::User) : Bool

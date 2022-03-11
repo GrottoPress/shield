@@ -24,23 +24,19 @@ module Shield::Api::EmailConfirmationCurrentUser::Update
 
     def do_run_operation_succeeded(operation, user)
       if LuckyEnv.production? || operation.new_email.nil?
-        json({
-          status: "success",
-          message: success_message(operation),
-          data: {user: UserSerializer.new(user)}
-        })
+        json ItemResponse.new(
+          user: user,
+          message: success_message(operation)
+        )
       else
-        json({
-          status: "success",
-          message: success_message(operation),
-          data: {
-            user: UserSerializer.new(user),
-            token: BearerToken.new(
-              operation.start_email_confirmation.not_nil!,
-              operation.email_confirmation.not_nil!
-            )
-          }
-        })
+        json ItemResponse.new(
+          user: user,
+          token: BearerToken.new(
+            operation.start_email_confirmation.not_nil!,
+            operation.email_confirmation.not_nil!
+          ).to_s,
+          message: success_message(operation)
+        )
       end
     end
 

@@ -5,16 +5,11 @@ module Shield::Api::Users::EmailConfirmations::Index
     # param page : Int32 = 1
 
     # get "/users/:user_id/email-confirmations" do
-    #   json({
-    #     status: "success",
-    #     data: {
-    #       email_confirmations: EmailConfirmationSerializer.for_collection(
-    #         email_confirmations
-    #       ),
-    #       user: UserSerializer.new(user)
-    #     },
-    #     pages: PaginationSerializer.new(pages)
-    #   })
+    #   json ListResponse.new(
+    #     email_confirmations: email_confirmations,
+    #     user: user,
+    #     pages: pages
+    #   )
     # end
 
     def pages

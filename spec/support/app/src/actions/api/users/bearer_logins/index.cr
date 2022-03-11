@@ -6,12 +6,10 @@ class Api::Users::BearerLogins::Index < ApiAction
   param page : Int32 = 1
 
   get "/users/:user_id/bearer-logins" do
-    json({
-      status: "success",
-      data: {
-        bearer_logins: BearerLoginSerializer.for_collection(bearer_logins)
-      },
-      pages: PaginationSerializer.new(pages)
-    })
+    json ListResponse.new(
+      bearer_logins: bearer_logins,
+      user: user,
+      pages: pages
+    )
   end
 end

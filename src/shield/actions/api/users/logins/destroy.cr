@@ -20,19 +20,17 @@ module Shield::Api::Users::Logins::Destroy
     end
 
     def do_run_operation_succeeded(operation, user)
-      json({
-        status: "success",
-        message: Rex.t(:"action.user.login.destroy.success"),
-        data: {user: UserSerializer.new(user)}
-      })
+      json ItemResponse.new(
+        user: user,
+        message: Rex.t(:"action.user.login.destroy.success")
+      )
     end
 
     def do_run_operation_failed(operation)
-      json({
-        status: "failure",
-        message: Rex.t(:"action.user.login.destroy.failure"),
-        data: {errors: operation.errors}
-      })
+      json FailureResponse.new(
+        errors: operation.errors,
+        message: Rex.t(:"action.user.login.destroy.failure")
+      )
     end
 
     getter user : User do

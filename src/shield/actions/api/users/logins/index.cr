@@ -5,14 +5,7 @@ module Shield::Api::Users::Logins::Index
     # param page : Int32 = 1
 
     # get "/users/:user_id/logins" do
-    #   json({
-    #     status: "success",
-    #     data: {
-    #       logins: LoginSerializer.for_collection(logins),
-    #       user: UserSerializer.new(user)
-    #     },
-    #     pages: PaginationSerializer.new(pages)
-    #   })
+    #   json ListResponse.new(logins: logins, user: user, pages: pages)
     # end
 
     def pages

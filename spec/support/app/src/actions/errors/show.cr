@@ -33,7 +33,7 @@ class Errors::Show < Lucky::ErrorAction
     param = nil
   )
     json(
-      ErrorSerializer.new(message: message, details: details, param: param),
+      ErrorResponse.new(error_message: message, details: details, param: param),
       status: status
     )
   end

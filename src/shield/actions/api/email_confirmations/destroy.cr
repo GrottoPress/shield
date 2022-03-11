@@ -21,21 +21,17 @@ module Shield::Api::EmailConfirmations::Destroy
     end
 
     def do_run_operation_succeeded(operation, email_confirmation)
-      json({
-        status: "success",
-        message: Rex.t(:"action.email_confirmation.destroy.success"),
-        data: {email_confirmation: EmailConfirmationSerializer.new(
-          email_confirmation
-        )}
-      })
+      json ItemResponse.new(
+        email_confirmation: email_confirmation,
+        message: Rex.t(:"action.email_confirmation.destroy.success")
+      )
     end
 
     def do_run_operation_failed(operation)
-      json({
-        status: "failure",
-        message: Rex.t(:"action.email_confirmation.destroy.failure"),
-        data: {errors: operation.errors}
-      })
+      json FailureResponse.new(
+        errors: operation.errors,
+        message: Rex.t(:"action.email_confirmation.destroy.failure")
+      )
     end
 
     getter email_confirmation : EmailConfirmation do

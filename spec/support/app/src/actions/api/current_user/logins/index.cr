@@ -6,10 +6,6 @@ class Api::CurrentUser::Logins::Index < ApiAction
   param page : Int32 = 1
 
   get "/account/logins" do
-    json({
-      status: "success",
-      data: {logins: LoginSerializer.for_collection(logins)},
-      pages: PaginationSerializer.new(pages)
-    })
+    json ListResponse.new(logins: logins, pages: pages)
   end
 end

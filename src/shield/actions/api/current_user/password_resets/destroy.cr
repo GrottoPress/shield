@@ -30,19 +30,17 @@ module Shield::Api::CurrentUser::PasswordResets::Destroy
     {% end %}
 
     def do_run_operation_succeeded(operation, user)
-      json({
-        status: "success",
-        message: Rex.t(:"action.current_user.password_reset.destroy.success"),
-        data: {user: UserSerializer.new(user)}
-      })
+      json ItemResponse.new(
+        user: user,
+        message: Rex.t(:"action.current_user.password_reset.destroy.success")
+      )
     end
 
     def do_run_operation_failed(operation)
-      json({
-        status: "failure",
-        message: Rex.t(:"action.current_user.password_reset.destroy.failure"),
-        data: {errors: operation.errors}
-      })
+      json FailureResponse.new(
+        errors: operation.errors,
+        message: Rex.t(:"action.current_user.password_reset.destroy.failure")
+      )
     end
 
     def authorize?(user : Shield::User) : Bool
