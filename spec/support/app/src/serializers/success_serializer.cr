@@ -16,7 +16,7 @@ abstract struct SuccessSerializer < BaseSerializer
   end
 
   def self.list(list : Array, *args, **named_args)
-    list.map { |item| new(item, *args, **named_args) }
+    list.map { |item| item(item, *args, **named_args) }
   end
 
   private def status : Status
