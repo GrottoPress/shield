@@ -18,25 +18,25 @@ module Shield::Api::LoginPipes
     end
 
     def do_require_logged_in_failed
-      json FailureResponse.new(message: Rex.t(:"action.pipe.not_logged_in"))
+      json FailureSerializer.new(message: Rex.t(:"action.pipe.not_logged_in"))
     end
 
     def do_require_logged_out_failed
-      json FailureResponse.new(message: Rex.t(:"action.pipe.not_logged_out"))
+      json FailureSerializer.new(message: Rex.t(:"action.pipe.not_logged_out"))
     end
 
     def do_pin_login_to_ip_address_failed
-      json FailureResponse.new(
+      json FailureSerializer.new(
         message: Rex.t(:"action.pipe.ip_address_changed")
       )
     end
 
     def do_enforce_login_idle_timeout_failed
-      json FailureResponse.new(message: Rex.t(:"action.pipe.login_timed_out"))
+      json FailureSerializer.new(message: Rex.t(:"action.pipe.login_timed_out"))
     end
 
     def do_check_authorization_failed
-      json FailureResponse.new(
+      json FailureSerializer.new(
         message: Rex.t(:"action.pipe.authorization_failed")
       )
     end

@@ -23,14 +23,14 @@ module Shield::Api::EmailConfirmations::Verify
     end
 
     def do_verify_operation_succeeded(utility, email_confirmation)
-      json ItemResponse.new(
+      json EmailConfirmationSerializer.new(
         email_confirmation: email_confirmation,
         message: Rex.t(:"action.email_confirmation.verify.success")
       )
     end
 
     def do_verify_operation_failed(utility)
-      json FailureResponse.new(message: Rex.t(:"action.misc.token_invalid"))
+      json FailureSerializer.new(message: Rex.t(:"action.misc.token_invalid"))
     end
 
     def authorize?(user : User) : Bool

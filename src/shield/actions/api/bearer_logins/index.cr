@@ -5,7 +5,7 @@ module Shield::Api::BearerLogins::Index
     # param page : Int32 = 1
 
     # get "/bearer-logins" do
-    #   json ListResponse.new(bearer_logins: bearer_logins, pages: pages)
+    #   json BearerLoginSerializer.new(bearer_logins: bearer_logins, pages: pages)
     # end
 
     def pages

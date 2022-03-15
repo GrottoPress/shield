@@ -32,7 +32,7 @@ module Shield::Api::PasswordResets::Create
       if LuckyEnv.production?
         success_action(operation)
       else
-        json ItemResponse.new(
+        json PasswordResetSerializer.new(
           password_reset: password_reset,
           token: BearerToken.new(operation, password_reset).to_s,
           message: Rex.t(:"action.misc.dev_mode_skip_email")
@@ -49,13 +49,13 @@ module Shield::Api::PasswordResets::Create
     end
 
     private def success_action(operation)
-      json ItemResponse.new(
+      json PasswordResetSerializer.new(
         message: Rex.t(:"action.password_reset.create.success")
       )
     end
 
     private def failure_action(operation)
-      json FailureResponse.new(
+      json FailureSerializer.new(
         errors: operation.errors,
         message: Rex.t(:"action.password_reset.create.failure")
       )

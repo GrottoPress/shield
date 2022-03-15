@@ -27,7 +27,7 @@ module Shield::Api::CurrentUser::BearerLogins::Create
     end
 
     def do_run_operation_succeeded(operation, bearer_login)
-      json ItemResponse.new(
+      json BearerLoginSerializer.new(
         bearer_login: bearer_login,
         token: BearerToken.new(operation, bearer_login).to_s,
         message: Rex.t(:"action.current_user.bearer_login.create.success")
@@ -35,7 +35,7 @@ module Shield::Api::CurrentUser::BearerLogins::Create
     end
 
     def do_run_operation_failed(operation)
-      json FailureResponse.new(
+      json FailureSerializer.new(
         errors: operation.errors,
         message: Rex.t(:"action.current_user.bearer_login.create.failure")
       )

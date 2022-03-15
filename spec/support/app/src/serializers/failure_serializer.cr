@@ -1,4 +1,4 @@
-struct FailureResponse < ApiResponse
+struct FailureSerializer < BaseSerializer
   def initialize(
     @errors : Hash(Symbol, Array(String))? = nil,
     @message : String? = nil
@@ -11,7 +11,11 @@ struct FailureResponse < ApiResponse
 
   private def data_json : NamedTuple
     data = super
-    @errors.try { |errors| data = data.merge({errors: errors}) }
+
+    @errors.try do |errors|
+      data = data.merge({errors: errors}) unless errors.empty?
+    end
+
     data
   end
 end

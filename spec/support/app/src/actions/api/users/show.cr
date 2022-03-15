@@ -5,6 +5,6 @@ class Api::Users::Show < ApiAction
   skip :check_authorization
 
   get "/users/:user_id" do
-    json ItemResponse.new(user: user)
+    json UserSerializer.new(user: user)
   end
 end

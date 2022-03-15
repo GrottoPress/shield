@@ -36,13 +36,13 @@ module Shield::Api::CurrentUser::Create
     end
 
     private def success_action(operation)
-      json ItemResponse.new(
+      json UserSerializer.new(
         message: Rex.t(:"action.current_user.create.success")
       )
     end
 
     private def failure_action(operation)
-      json FailureResponse.new(
+      json FailureSerializer.new(
         errors: operation.errors,
         message: Rex.t(:"action.current_user.create.failure")
       )

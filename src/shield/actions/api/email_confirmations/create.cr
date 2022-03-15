@@ -28,7 +28,7 @@ module Shield::Api::EmailConfirmations::Create
       if LuckyEnv.production?
         success_action(operation)
       else
-        json ItemResponse.new(
+        json EmailConfirmationSerializer.new(
           email_confirmation: email_confirmation,
           token: BearerToken.new(operation, email_confirmation).to_s,
           message: Rex.t(:"action.misc.dev_mode_skip_email")
@@ -45,13 +45,13 @@ module Shield::Api::EmailConfirmations::Create
     end
 
     private def success_action(operation)
-      json ItemResponse.new(
+      json EmailConfirmationSerializer.new(
         message: Rex.t(:"action.email_confirmation.create.success")
       )
     end
 
     private def failure_action(operation)
-      json FailureResponse.new(
+      json FailureSerializer.new(
         errors: operation.errors,
         message: Rex.t(:"action.email_confirmation.create.failure")
       )

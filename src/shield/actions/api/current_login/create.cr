@@ -22,16 +22,15 @@ module Shield::Api::CurrentLogin::Create
     end
 
     def do_run_operation_succeeded(operation, login)
-      json ItemResponse.new(
+      json LoginSerializer.new(
         login: login,
         token: BearerToken.new(operation, login).to_s,
-        user: login.user!,
         message: Rex.t(:"action.current_login.create.success")
       )
     end
 
     def do_run_operation_failed(operation)
-      json FailureResponse.new(
+      json FailureSerializer.new(
         errors: operation.errors,
         message: Rex.t(:"action.current_login.create.failure")
       )

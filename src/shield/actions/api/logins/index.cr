@@ -5,7 +5,7 @@ module Shield::Api::Logins::Index
     # param page : Int32 = 1
 
     # get "/logins" do
-    #   json ListResponse.new(logins: logins, pages: pages)
+    #   json LoginSerializer.new(logins: logins, pages: pages)
     # end
 
     def pages

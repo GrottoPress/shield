@@ -18,14 +18,14 @@ module Shield::Api::Logins::Destroy
     end
 
     def do_run_operation_succeeded(operation, login)
-      json ItemResponse.new(
+      json LoginSerializer.new(
         login: login,
         message: Rex.t(:"action.login.destroy.success")
       )
     end
 
     def do_run_operation_failed(operation)
-      json FailureResponse.new(
+      json FailureSerializer.new(
         errors: operation.errors,
         message: Rex.t(:"action.login.destroy.failure")
       )

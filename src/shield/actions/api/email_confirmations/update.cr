@@ -48,7 +48,7 @@ module Shield::Api::EmailConfirmations::Update
     {% end %}
 
     def do_verify_operation_failed(utility)
-      json FailureResponse.new(message: Rex.t(:"action.misc.token_invalid"))
+      json FailureSerializer.new(message: Rex.t(:"action.misc.token_invalid"))
     end
 
     private def update_email(email_confirmation)
@@ -66,7 +66,7 @@ module Shield::Api::EmailConfirmations::Update
     end
 
     def do_run_operation_succeeded(operation, email_confirmation)
-      json ItemResponse.new(
+      json EmailConfirmationSerializer.new(
         email_confirmation: email_confirmation,
         user: user.reload,
         message: Rex.t(:"action.email_confirmation.update.success")
@@ -74,7 +74,7 @@ module Shield::Api::EmailConfirmations::Update
     end
 
     def do_run_operation_failed(operation)
-      json FailureResponse.new(
+      json FailureSerializer.new(
         errors: operation.errors,
         message: Rex.t(:"action.email_confirmation.update.failure")
       )

@@ -231,20 +231,20 @@ This token is revoked when the user logs out.
      # but the action requires user to be logged in.
      #
      #def do_require_logged_in_failed
-     #  json FailureResponse.new(message: Rex.t(:"action.pipe.not_logged_in"))
+     #  json FailureSerializer.new(message: Rex.t(:"action.pipe.not_logged_in"))
      #end
 
      # What to do if user is logged in but the action
      # requires user to **not** be logged in.
      #
      #def do_require_logged_out_failed
-     #  json FailureResponse.new(message: Rex.t(:"action.pipe.not_logged_out"))
+     #  json FailureSerializer.new(message: Rex.t(:"action.pipe.not_logged_out"))
      #end
 
      # What to do if user is not allowed to perform action
      #
      #def do_check_authorization_failed
-     #  json FailureResponse.new(
+     #  json FailureSerializer.new(
      #    message: Rex.t(:"action.pipe.authorization_failed")
      #  )
      #end
@@ -254,7 +254,7 @@ This token is revoked when the user logs out.
      # log in.
      #
      #def do_pin_login_to_ip_address_failed
-     #  json FailureResponse.new(
+     #  json FailureSerializer.new(
      #    message: Rex.t(:"action.pipe.ip_address_changed")
      #  )
      #end
@@ -264,7 +264,7 @@ This token is revoked when the user logs out.
      # the password reset.
      #
      #def do_pin_password_reset_to_ip_address_failed
-     #  json FailureResponse.new(
+     #  json FailureSerializer.new(
      #    message: Rex.t(:"action.pipe.ip_address_changed")
      #  )
      #end
@@ -274,7 +274,7 @@ This token is revoked when the user logs out.
      # the email confirmation.
      #
      #def do_pin_email_confirmation_to_ip_address_failed
-     #  json FailureResponse.new(
+     #  json FailureSerializer.new(
      #    message: Rex.t(:"action.pipe.ip_address_changed")
      #  )
      #end

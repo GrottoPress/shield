@@ -43,7 +43,7 @@ module Shield::Api::EmailConfirmationCurrentUser::Create
     end
 
     def do_verify_operation_failed(utility)
-      json FailureResponse.new(message: Rex.t(:"action.misc.token_invalid"))
+      json FailureSerializer.new(message: Rex.t(:"action.misc.token_invalid"))
     end
   end
 end

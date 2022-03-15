@@ -21,14 +21,14 @@ module Shield::Api::PasswordResets::Destroy
     end
 
     def do_run_operation_succeeded(operation, password_reset)
-      json ItemResponse.new(
+      json PasswordResetSerializer.new(
         password_reset: password_reset,
         message: Rex.t(:"action.password_reset.destroy.success")
       )
     end
 
     def do_run_operation_failed(operation)
-      json FailureResponse.new(
+      json FailureSerializer.new(
         errors: operation.errors,
         message: Rex.t(:"action.password_reset.destroy.failure")
       )

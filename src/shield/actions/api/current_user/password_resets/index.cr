@@ -5,7 +5,10 @@ module Shield::Api::CurrentUser::PasswordResets::Index
     # param page : Int32 = 1
 
     # get "/account/password-resets" do
-    #   json ListResponse.new(password_resets: password_resets, pages: pages)
+    #   json PasswordResetSerializer.new(
+    #     password_resets: password_resets,
+    #     pages: pages
+    #   )
     # end
 
     def pages

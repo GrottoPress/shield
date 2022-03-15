@@ -6,7 +6,7 @@ class Api::Users::EmailConfirmations::Index < ApiAction
   param page : Int32 = 1
 
   get "/users/:user_id/email-confirmations" do
-    json ListResponse.new(
+    json EmailConfirmationSerializer.new(
       email_confirmations: email_confirmations,
       user: user,
       pages: pages

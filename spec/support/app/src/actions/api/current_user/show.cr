@@ -4,6 +4,6 @@ class Api::CurrentUser::Show < ApiAction
   skip :pin_login_to_ip_address
 
   get "/ec/profile" do
-    json ItemResponse.new(user: user)
+    json UserSerializer.new(user: user)
   end
 end

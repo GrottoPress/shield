@@ -18,7 +18,7 @@ module Shield::Api::EmailConfirmationPipes
     end
 
     def do_pin_email_confirmation_to_ip_address_failed
-      json FailureResponse.new(
+      json FailureSerializer.new(
         message: Rex.t(:"action.pipe.ip_address_changed")
       )
     end

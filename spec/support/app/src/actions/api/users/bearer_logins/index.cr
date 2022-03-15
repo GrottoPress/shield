@@ -6,7 +6,7 @@ class Api::Users::BearerLogins::Index < ApiAction
   param page : Int32 = 1
 
   get "/users/:user_id/bearer-logins" do
-    json ListResponse.new(
+    json BearerLoginSerializer.new(
       bearer_logins: bearer_logins,
       user: user,
       pages: pages

@@ -35,14 +35,14 @@ module Shield::Api::CurrentUser::Update
     {% end %}
 
     def do_run_operation_succeeded(operation, user)
-      json ItemResponse.new(
+      json UserSerializer.new(
         user: user,
         message: Rex.t(:"action.current_user.update.success")
       )
     end
 
     def do_run_operation_failed(operation)
-      json FailureResponse.new(
+      json FailureSerializer.new(
         errors: operation.errors,
         message: Rex.t(:"action.current_user.update.failure")
       )
