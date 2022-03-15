@@ -27,8 +27,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Users::EmailConfirmations::*` actions
 - Add `Shield::Users::Logins::*` actions for user logins on all devices
 - Add `Shield::Users::PasswordResets::*` actions
-- Include email confirmation in its API response data
-- Include password reset in its API response data
 - Add `BearerToken#authenticate` methods
 - Add `Shield::Api::EmailConfirmations::Delete` action
 - Add `Shield::Api::EmailConfirmations::Destroy` action
@@ -67,7 +65,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Rename `Shield::LogUserOut` operation mixin to `Shield::EndLogin`
 - Convert `ResetPassword` from a `User::SaveOperation` to a `PasswordReset::SaveOperation`
 - Convert `UpdateConfirmedEmail` from a `User::SaveOperation` to a `EmailConfirmation::SaveOperation`
-- Replace `NamedTuple` responses in API with serializers
+- Replace `NamedTuple` responses in APIs entirely with serializers
 
 ### Fixed
 - Prevent bearer users from deleting themselves
