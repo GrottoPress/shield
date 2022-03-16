@@ -68,7 +68,6 @@ module Shield::Api::EmailConfirmations::Update
     def do_run_operation_succeeded(operation, email_confirmation)
       json EmailConfirmationSerializer.new(
         email_confirmation: email_confirmation,
-        user: user.reload,
         message: Rex.t(:"action.email_confirmation.update.success")
       )
     end
