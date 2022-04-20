@@ -48,6 +48,6 @@ describe Shield::EmailConfirmations::Update do
     response = ApiClient.exec(EmailConfirmations::Update)
 
     response.status.should eq(HTTP::Status::FOUND)
-    response.headers["X-Logged-In"].should eq("false")
+    response.headers["X-Logged-In"]?.should eq("false")
   end
 end

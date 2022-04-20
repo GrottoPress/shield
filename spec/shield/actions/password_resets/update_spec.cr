@@ -70,6 +70,6 @@ describe Shield::PasswordResets::Update do
     })
 
     response.status.should eq(HTTP::Status::FOUND)
-    response.headers["X-Logged-In"].should eq("true")
+    response.headers["X-Logged-In"]?.should eq("true")
   end
 end

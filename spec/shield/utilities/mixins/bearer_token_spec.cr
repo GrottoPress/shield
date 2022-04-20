@@ -6,7 +6,7 @@ describe Shield::BearerToken do
       headers = HTTP::Headers.new
       BearerToken.new("abcdef", 1).authenticate(headers)
 
-      headers["Authorization"].should eq("Bearer 1.abcdef")
+      headers["Authorization"]?.should eq("Bearer 1.abcdef")
     end
   end
 

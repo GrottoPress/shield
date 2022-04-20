@@ -37,7 +37,7 @@ describe Shield::EmailConfirmationPipes do
         response = client.exec(CurrentUser::New)
 
         response.status.should eq(HTTP::Status::FOUND)
-        response.headers["X-Ip-Address-Changed"].should eq("true")
+        response.headers["X-Ip-Address-Changed"]?.should eq("true")
       end
     end
   end

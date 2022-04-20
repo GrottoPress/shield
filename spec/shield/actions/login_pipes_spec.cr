@@ -6,7 +6,7 @@ describe Shield::LoginPipes do
       response = ApiClient.exec(CurrentLogin::Destroy)
 
       response.status.should eq(HTTP::Status::FOUND)
-      response.headers["X-Logged-In"].should eq("false")
+      response.headers["X-Logged-In"]?.should eq("false")
     end
   end
 
@@ -22,7 +22,7 @@ describe Shield::LoginPipes do
       response = client.exec(CurrentLogin::Create)
 
       response.status.should eq(HTTP::Status::FOUND)
-      response.headers["X-Logged-In"].should eq("true")
+      response.headers["X-Logged-In"]?.should eq("true")
     end
   end
 
@@ -56,7 +56,7 @@ describe Shield::LoginPipes do
       response = client.exec(Users::Edit.with(user_id: user.id))
 
       response.status.should eq(HTTP::Status::FOUND)
-      response.headers["X-Ip-Address-Changed"].should eq("true")
+      response.headers["X-Ip-Address-Changed"]?.should eq("true")
     end
   end
 
@@ -103,7 +103,7 @@ describe Shield::LoginPipes do
         response = client.exec(Users::Show.with(user_id: user.id))
 
         response.status.should eq(HTTP::Status::FOUND)
-        response.headers["X-Login-Timed-Out"].should eq("true")
+        response.headers["X-Login-Timed-Out"]?.should eq("true")
       end
     end
 

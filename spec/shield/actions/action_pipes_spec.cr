@@ -40,7 +40,7 @@ describe Shield::ActionPipes do
 
       client.headers("Cookie": response.headers["Set-Cookie"]?)
       response = client.exec(Home::Show)
-      response.headers["Location"].should eq(Home::Index.path)
+      response.headers["Location"]?.should eq(Home::Index.path)
     end
 
     it "does not use previous page url for PATCH requests" do
@@ -51,7 +51,7 @@ describe Shield::ActionPipes do
 
       client.headers("Cookie": response.headers["Set-Cookie"]?)
       response = client.exec(Home::Update)
-      response.headers["Location"].should eq(Home::Show.path)
+      response.headers["Location"]?.should eq(Home::Show.path)
     end
 
     it "does not use previous page url for POST requests" do
@@ -62,7 +62,7 @@ describe Shield::ActionPipes do
 
       client.headers("Cookie": response.headers["Set-Cookie"]?)
       response = client.exec(About::Create)
-      response.headers["Location"].should eq(Home::Show.path)
+      response.headers["Location"]?.should eq(Home::Show.path)
     end
 
     it "does not use previous page url for PUT requests" do
@@ -73,7 +73,7 @@ describe Shield::ActionPipes do
 
       client.headers("Cookie": response.headers["Set-Cookie"]?)
       response = client.exec(About::Update)
-      response.headers["Location"].should eq(Home::Show.path)
+      response.headers["Location"]?.should eq(Home::Show.path)
     end
 
     it "does not use the referrer URL" do
@@ -85,7 +85,7 @@ describe Shield::ActionPipes do
       client.headers("Cookie": response.headers["Set-Cookie"]?)
       client.headers("Referer": "http://abc.def/gh")
       response = client.exec(Home::Edit)
-      response.headers["Location"].should eq(Home::Index.path)
+      response.headers["Location"]?.should eq(Home::Index.path)
     end
   end
 end

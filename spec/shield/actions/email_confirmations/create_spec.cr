@@ -6,7 +6,7 @@ describe Shield::EmailConfirmations::Create do
       email: "user@domain.tld"
     })
 
-    response.headers["X-Email-Confirmation-ID"].should eq("ec_id")
+    response.headers["X-Email-Confirmation-ID"]?.should eq("ec_id")
   end
 
   it "succeeds even if email already taken" do
@@ -20,7 +20,7 @@ describe Shield::EmailConfirmations::Create do
     )
 
     response.status.should eq(HTTP::Status::FOUND)
-    response.headers["X-Email-Confirmation-Status"].should eq("success")
+    response.headers["X-Email-Confirmation-Status"]?.should eq("success")
   end
 
   it "requires logged out" do
@@ -35,6 +35,6 @@ describe Shield::EmailConfirmations::Create do
     })
 
     response.status.should eq(HTTP::Status::FOUND)
-    response.headers["X-Logged-In"].should eq("true")
+    response.headers["X-Logged-In"]?.should eq("true")
   end
 end

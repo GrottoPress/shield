@@ -12,7 +12,7 @@ describe Shield::PasswordResets::Create do
       email: email
     })
 
-    response.headers["X-Password-Reset-ID"].should eq("pr_id")
+    response.headers["X-Password-Reset-ID"]?.should eq("pr_id")
   end
 
   it "succeeds even if email does not exist" do
@@ -23,7 +23,7 @@ describe Shield::PasswordResets::Create do
     })
 
     response.status.should eq(HTTP::Status::FOUND)
-    response.headers["X-Password-Reset-Status"].should eq("success")
+    response.headers["X-Password-Reset-Status"]?.should eq("success")
   end
 
   it "requires logged out" do
@@ -38,6 +38,6 @@ describe Shield::PasswordResets::Create do
     })
 
     response.status.should eq(HTTP::Status::FOUND)
-    response.headers["X-Logged-In"].should eq("true")
+    response.headers["X-Logged-In"]?.should eq("true")
   end
 end

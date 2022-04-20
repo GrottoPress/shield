@@ -47,7 +47,7 @@ describe Shield::PasswordResetPipes do
         response = client.exec(PasswordResets::Update)
 
         response.status.should eq(HTTP::Status::FOUND)
-        response.headers["X-Ip-Address-Changed"].should eq("true")
+        response.headers["X-Ip-Address-Changed"]?.should eq("true")
       end
     end
   end

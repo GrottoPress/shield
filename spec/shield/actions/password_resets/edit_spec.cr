@@ -58,6 +58,6 @@ describe Shield::PasswordResets::Edit do
     response = client.exec(PasswordResets::Edit)
 
     response.status.should eq(HTTP::Status::FOUND)
-    response.headers["X-Logged-In"].should eq("true")
+    response.headers["X-Logged-In"]?.should eq("true")
   end
 end

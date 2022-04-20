@@ -45,6 +45,6 @@ describe Shield::PasswordResets::Show do
     response = client.get(PasswordResetUrl.new("abcdef", 1_i64).to_s)
 
     response.status.should eq(HTTP::Status::FOUND)
-    response.headers["X-Logged-In"].should eq("true")
+    response.headers["X-Logged-In"]?.should eq("true")
   end
 end
