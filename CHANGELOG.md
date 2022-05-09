@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Add support for *Lucky* v0.30
 - Add `Shield::Api::BearerLogins::Show` action
+- Add `Shield::Api::BearerLogins::Update` action
+- Add `Shield::BearerLogins::Edit` action
+- Add `Shield::BearerLogins::Update` action
 - Add `Shield::UpdateBearerLogin` operation
 
 ## [0.14.0] - 2022-13-17
