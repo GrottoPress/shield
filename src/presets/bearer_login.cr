@@ -17,6 +17,10 @@ class CreateBearerLogin < BearerLogin::SaveOperation
   include Shield::CreateBearerLogin
 end
 
+class UpdateBearerLogin < BearerLogin::SaveOperation
+  include Shield::UpdateBearerLogin
+end
+
 class RevokeBearerLogin < BearerLogin::SaveOperation
   include Shield::RevokeBearerLogin
 end
