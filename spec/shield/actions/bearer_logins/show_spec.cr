@@ -1,7 +1,7 @@
 require "../../../spec_helper"
 
 describe Shield::BearerLogins::Show do
-  it "creates bearer login" do
+  it "renders show page" do
     password = "password4APASSWORD<"
     token = "123.a1b2c3"
 
