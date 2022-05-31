@@ -99,6 +99,25 @@ describe Shield::ValidateBearerLogin do
     end
   end
 
+  it "requires a valid name format" do
+    user = UserFactory.create
+
+    SaveBearerLogin.create(
+      params(
+        name: "in/valid;",
+        user_id: user.id,
+        active_at: Time.utc,
+        token_digest: "abc"
+      ),
+      scopes: ["posts.index"],
+      allowed_scopes: ["posts.update", "posts.index"],
+    ) do |operation, bearer_login|
+      bearer_login.should be_nil
+
+      operation.name.should have_error("operation.error.name_invalid")
+    end
+  end
+
   it "rejects existing name by same user" do
     name = "some token"
 

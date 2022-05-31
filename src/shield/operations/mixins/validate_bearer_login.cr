@@ -7,6 +7,7 @@ module Shield::ValidateBearerLogin
 
       validate_name_required
       validate_user_id_required
+      validate_name_valid
       validate_name_unique
       validate_user_exists
 
@@ -28,6 +29,11 @@ module Shield::ValidateBearerLogin
     private def validate_user_id_required
       validate_required user_id,
         message: Rex.t(:"operation.error.user_id_required")
+    end
+
+    private def validate_name_valid
+      validate_name name,
+        message: Rex.t(:"operation.error.name_invalid")
     end
 
     private def validate_name_unique
