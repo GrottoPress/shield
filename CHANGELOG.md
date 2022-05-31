@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::BearerLogins::Update` action
 - Add `Shield::UpdateBearerLogin` operation
 
+### Fixed
+- Ensure a bearer login has no duplicate scopes
+
 ## [0.14.0] - 2022-13-17
 
 ### Added

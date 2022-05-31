@@ -7,6 +7,28 @@ private class SaveBearerLogin < BearerLogin::SaveOperation
 end
 
 describe Shield::ValidateBearerLogin do
+  it "enusres scopes are unique" do
+    user = UserFactory.create
+
+    SaveBearerLogin.create(
+      params(
+        name: "some token",
+        user_id: user.id,
+        active_at: Time.utc,
+        token_digest: "abc"
+      ),
+      allowed_scopes: ["posts.update", "posts.index"],
+      scopes: ["posts.update", "posts.index", "posts.update"]
+    ) do |operation, bearer_login|
+      bearer_login.should be_a(BearerLogin)
+
+      # ameba:disable Lint/ShadowingOuterLocalVar
+      bearer_login.try do |bearer_login|
+        bearer_login.scopes.should eq(["posts.update", "posts.index"])
+      end
+    end
+  end
+
   it "requires scopes" do
     user = UserFactory.create
 

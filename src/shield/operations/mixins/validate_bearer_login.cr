@@ -3,6 +3,8 @@ module Shield::ValidateBearerLogin
     needs allowed_scopes : Array(String)
 
     before_save do
+      ensure_scopes_unique
+
       validate_name_required
       validate_user_id_required
       validate_name_unique
@@ -14,6 +16,10 @@ module Shield::ValidateBearerLogin
     end
 
     include Shield::ValidateAuthenticationColumns
+
+    private def ensure_scopes_unique
+      scopes.value = scopes.value.try(&.uniq)
+    end
 
     private def validate_name_required
       validate_required name, message: Rex.t(:"operation.error.name_required")
