@@ -19,7 +19,7 @@ describe Shield::ValidateBearerLogin do
       ),
       allowed_scopes: ["posts.update", "posts.index"],
       scopes: ["posts.update", "posts.index", "posts.update"]
-    ) do |operation, bearer_login|
+    ) do |_, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
       # ameba:disable Lint/ShadowingOuterLocalVar
