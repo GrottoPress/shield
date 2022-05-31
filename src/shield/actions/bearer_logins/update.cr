@@ -9,6 +9,7 @@ module Shield::BearerLogins::Update
     def run_operation
       UpdateBearerLogin.update(
         bearer_login,
+        params,
         scopes: array_param(UpdateBearerLogin.param_key, :scopes),
         allowed_scopes: BearerScope.action_scopes.map(&.name)
       ) do |operation, updated_bearer_login|
