@@ -2,6 +2,15 @@ module Shield::Api::LoginPipes
   macro included
     include Shield::LoginPipes
 
+    def require_logged_in
+      if logged_in?
+        continue
+      else
+        response.status_code = 403
+        do_require_logged_in_failed
+      end
+    end
+
     def pin_login_to_ip_address
       if logged_out? ||
         current_login.ip_address == remote_ip?.try &.address
