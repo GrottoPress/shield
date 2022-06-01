@@ -37,7 +37,7 @@ describe Shield::UpdateBearerLogin do
       params(name: "super duper secret"),
       scopes: ["current_user.show"],
       allowed_scopes: ["posts.update", "current_user.show"]
-    ) do |operation, updated_bearer_login|
+    ) do |operation, _|
       operation.saved?.should be_false
 
       operation.name.should have_error("operation.error.bearer_login_inactive")
