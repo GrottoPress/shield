@@ -1,7 +1,7 @@
 require "../../spec_helper"
 
 describe Shield::UpdateBearerLogin do
-  it "creates bearer login" do
+  it "updates bearer login" do
     new_name = "super duper secret"
     new_scopes = ["current_user.show"]
 
