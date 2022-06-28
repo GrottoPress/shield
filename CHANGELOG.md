@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Ensure a bearer login has no duplicate scopes
 - Validate bearer login name format
 
-## [0.14.0] - 2022-13-17
+## [0.14.0] - 2022-03-17
 
 ### Added
 - Ensure support for *Crystal* v1.3
