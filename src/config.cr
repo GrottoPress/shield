@@ -26,10 +26,10 @@ module Shield
 
       {% if Lucky::Action.all_subclasses
         .map(&.stringify)
-        .includes?("PasswordResets::Show") %}
+        .includes?("PasswordResets::Token::Show") %}
 
         setting password_reset_url : String -> String = ->(token : String) do
-          ::PasswordResets::Show.with(token: token).url
+          ::PasswordResets::Token::Show.with(token: token).url
         end
       {% else %}
         setting password_reset_url : String -> String

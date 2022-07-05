@@ -1,50 +1,27 @@
 require "../../../spec_helper"
 
 describe Shield::PasswordResets::Show do
-  it "sets session" do
-    email = "user@example.tld"
+  it "shows password reset" do
     password = "password4APASSWORD<"
 
-    user = UserFactory.create &.email(email).password(password)
+    user = UserFactory.create &.password(password)
+    password_reset = PasswordResetFactory.create &.user_id(user.id)
     UserOptionsFactory.create &.user_id(user.id)
 
-    StartPasswordReset.create(
-      params(email: email),
-      remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
-    ) do |operation, password_reset|
-      password_reset = password_reset.not_nil!
+    client = ApiClient.new
+    client.browser_auth(user, password)
 
-      response = ApiClient.get(PasswordResetUrl.new(
-        operation,
-        password_reset
-      ).to_s)
+    response = client.exec(PasswordResets::Show.with(
+      password_reset_id: password_reset.id
+    ))
 
-      response.status.should eq(HTTP::Status::FOUND)
-
-      session = ApiClient.session_from_cookies(response.cookies)
-
-      PasswordResetSession
-        .new(session)
-        .password_reset_id?
-        .should eq(password_reset.id)
-
-      PasswordResetSession
-        .new(session)
-        .password_reset_token?
-        .should eq(operation.token)
-    end
+    response.body.should eq("PasswordResets::ShowPage")
   end
 
-  it "requires logged out" do
-    email = "user@example.tld"
-    password = "password4APASSWORD<"
-
-    client = ApiClient.new
-    client.browser_auth(email, password)
-
-    response = client.get(PasswordResetUrl.new("abcdef", 1_i64).to_s)
+  it "requires logged in" do
+    response = ApiClient.exec(PasswordResets::Show.with(password_reset_id: 5))
 
     response.status.should eq(HTTP::Status::FOUND)
-    response.headers["X-Logged-In"]?.should eq("true")
+    response.headers["X-Logged-In"]?.should eq("false")
   end
 end

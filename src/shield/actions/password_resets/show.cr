@@ -1,25 +1,17 @@
 module Shield::PasswordResets::Show
-  # IMPORTANT!
-  #
-  # Ensure tokens are not leaked in HTTP Referer header
-  #
-  # REFERENCES:
-  #
-  # - https://developer.mozilla.org/en-US/docs/Web/Security/Referer_header:_privacy_and_security_concerns
-  # - https://twitter.com/HusseiN98D/status/1254888748216655872
-  # - https://github.com/thoughtbot/clearance/pull/707
   macro included
-    skip :require_logged_in
+    skip :require_logged_out
 
-    before :set_no_referrer_policy # <= IMPORTANT!
-
-    # get "/password-resets/:token" do
-    #   run_operation
+    # get "/password-resets/:password_reset_id" do
+    #   html ShowPage, password_reset: password_reset
     # end
 
-    def run_operation
-      PasswordResetSession.new(session).set(token)
-      redirect to: Edit # <= IMPORTANT!
+    getter password_reset : PasswordReset do
+      PasswordResetQuery.find(password_reset_id)
+    end
+
+    def authorize?(user : Shield::User) : Bool
+      super || user.id == password_reset.user_id
     end
   end
 end
