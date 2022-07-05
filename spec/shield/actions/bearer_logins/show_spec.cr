@@ -3,23 +3,19 @@ require "../../../spec_helper"
 describe Shield::BearerLogins::Show do
   it "renders show page" do
     password = "password4APASSWORD<"
-    token = "123.a1b2c3"
 
     user = UserFactory.create &.password(password)
     bearer_login = BearerLoginFactory.create &.user_id(user.id)
     UserOptionsFactory.create &.user_id(user.id)
 
-    session = Lucky::Session.new
-    BearerTokenSession.new(session).set(token)
-
     client = ApiClient.new
-    client.browser_auth(user, password, session: session)
+    client.browser_auth(user, password)
 
     response = client.exec(BearerLogins::Show.with(
       bearer_login_id: bearer_login.id
     ))
 
-    response.body.should eq("BearerLogins::ShowPage:#{token}")
+    response.body.should eq("BearerLogins::ShowPage")
   end
 
   it "requires logged in" do

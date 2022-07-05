@@ -25,7 +25,7 @@ module Shield::CurrentUser::BearerLogins::Create
 
     def do_run_operation_succeeded(operation, bearer_login)
       flash.success = Rex.t(:"action.current_user.bearer_login.create.success")
-      redirect to: ::BearerLogins::Show.with(bearer_login_id: bearer_login.id)
+      redirect to: ::BearerLogins::Token::Show
     end
 
     def do_run_operation_failed(operation)

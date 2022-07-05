@@ -5,6 +5,6 @@ class BearerLogins::Show < BrowserAction
   skip :pin_login_to_ip_address
 
   get "/bearer-logins/:bearer_login_id" do
-    html ShowPage, bearer_login: bearer_login, token: token?
+    html ShowPage, bearer_login: bearer_login
   end
 end
