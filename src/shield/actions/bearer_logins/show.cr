@@ -2,7 +2,7 @@ module Shield::BearerLogins::Show
   macro included
     skip :require_logged_out
 
-    # get "/bearer_logins/:bearer_login_id" do
+    # get "/bearer-logins/:bearer_login_id" do
     #   html ShowPage, bearer_login: bearer_login, token: token?
     # end
 

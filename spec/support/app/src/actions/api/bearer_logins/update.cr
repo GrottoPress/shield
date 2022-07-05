@@ -4,7 +4,7 @@ class Api::BearerLogins::Update < ApiAction
   skip :check_authorization
   skip :pin_login_to_ip_address
 
-  patch "/bearer_logins/:bearer_login_id" do
+  patch "/bearer-logins/:bearer_login_id" do
     run_operation
   end
 end

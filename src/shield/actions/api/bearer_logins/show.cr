@@ -2,7 +2,7 @@ module Shield::Api::BearerLogins::Show
   macro included
     skip :require_logged_out
 
-    # get "/bearer_logins/:bearer_login_id" do
+    # get "/bearer-logins/:bearer_login_id" do
     #   json BearerLoginSerializer.new(bearer_login: bearer_login)
     # end
 
