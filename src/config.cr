@@ -14,11 +14,11 @@ module Shield
     macro finished
       {% if Lucky::Action.all_subclasses
         .map(&.stringify)
-        .includes?("EmailConfirmations::Show") %}
+        .includes?("EmailConfirmations::Token::Show") %}
 
         setting email_confirmation_url : String -> String =
           ->(token : String) do
-            ::EmailConfirmations::Show.with(token: token).url
+            ::EmailConfirmations::Token::Show.with(token: token).url
           end
       {% else %}
         setting email_confirmation_url : String -> String

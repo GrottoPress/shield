@@ -11,9 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::BearerToken#bearer_login`
 - Add `Shield::BearerToken#bearer_login?`
 - Add `Shield::BearerLogins::Token::Show` action
+- Add `Shield::EmailConfirmations::Token::Show` action
 
 ### Changed
 - Remove showing bearer token from `Shield::BearerLogins::Show` action
+- Change `Shield::EmailConfirmations::Show` to show email confirmation by ID
 
 ## [0.15.0] - 2022-06-28
 
