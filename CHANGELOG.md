@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::BearerToken#bearer_login?`
 - Add `Shield::BearerLogins::Token::Show` action
 - Add `Shield::EmailConfirmations::Token::Show` action
+- Add `Shield::Logins::Show` action
 - Add `Shield::PasswordResets::Token::Show` action
 
 ### Changed
