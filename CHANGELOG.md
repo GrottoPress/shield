@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Remove showing bearer token from `Shield::BearerLogins::Show` action
 - Change `Shield::Api::EmailConfirmations::Show` to accept ID as path param
+- Change `Shield::Api::PasswordResets::Show` to accept ID as path param
 - Change `Shield::EmailConfirmations::Show` to show email confirmation by ID
 - Change `Shield::PasswordResets::Show` to show password reset by ID
 

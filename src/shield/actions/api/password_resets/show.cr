@@ -1,17 +1,17 @@
 module Shield::Api::PasswordResets::Show
   macro included
-    skip :require_logged_in
+    skip :require_logged_out
 
-    # get "/password-resets/:token" do
+    # get "/password-resets/:password_reset_id" do
     #   json PasswordResetSerializer.new(password_reset: password_reset)
     # end
 
-    def password_reset
-      password_reset?.not_nil!
+    getter password_reset : PasswordReset do
+      PasswordResetQuery.find(password_reset_id)
     end
 
-    getter? password_reset : PasswordReset? do
-      PasswordResetParams.new(params).password_reset?
+    def authorize?(user : Shield::User) : Bool
+      super || user.id == password_reset.user_id
     end
   end
 end
