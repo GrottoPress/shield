@@ -74,3 +74,7 @@ end
 struct EmailConfirmationUrl
   include Shield::EmailConfirmationUrl
 end
+
+struct SuccessStatus
+  include Shield::SuccessStatus
+end

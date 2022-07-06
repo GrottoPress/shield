@@ -4,8 +4,8 @@ module Shield::EmailConfirmation
     include Shield::IpAddressColumn
 
     include Shield::OptionalBelongsToUser
+    include Shield::SuccessColumn
 
     column email : String
-    column success : Bool
   end
 end

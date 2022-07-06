@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::EmailConfirmations::Token::Show` action
 - Add `Shield::Logins::Show` action
 - Add `Shield::PasswordResets::Token::Show` action
+- Add `Shield::SuccessColumn` model mixin
+- Add `Shield::SuccessQuery` query mixin
+- Add `Shield::SuccessStatus` utility
 
 ### Changed
 - Remove showing bearer token from `Shield::BearerLogins::Show` action

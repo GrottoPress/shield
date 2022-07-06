@@ -4,7 +4,6 @@ module Shield::PasswordReset
     include Shield::IpAddressColumn
 
     include Shield::BelongsToUser
-
-    column success : Bool
+    include Shield::SuccessColumn
   end
 end

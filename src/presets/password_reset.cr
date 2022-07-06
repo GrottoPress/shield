@@ -64,3 +64,7 @@ end
 struct PasswordResetUrl
   include Shield::PasswordResetUrl
 end
+
+struct SuccessStatus
+  include Shield::SuccessStatus
+end
