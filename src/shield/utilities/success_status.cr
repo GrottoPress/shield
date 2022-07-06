@@ -29,5 +29,13 @@ module Shield::SuccessStatus
     def failure?(at time : Time = Time.utc) : Bool
       !success? && @record.status.inactive?(time)
     end
+
+    def pending?(at time : Time = Time.utc) : Bool
+      !success? && @record.status.pending?(time)
+    end
+
+    def unactive?(at time : Time = Time.utc) : Bool
+      !success? && @record.status.unactive?(time)
+    end
   end
 end
