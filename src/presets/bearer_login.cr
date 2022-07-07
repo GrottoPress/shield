@@ -50,6 +50,10 @@ abstract class ApiAction < Lucky::Action
   include Shield::Api::BearerLoginPipes
 end
 
+struct BearerToken
+  include Shield::BearerLoginToken
+end
+
 struct BearerLoginHeaders
   include Shield::BearerLoginHeaders
 end

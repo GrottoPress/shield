@@ -35,14 +35,6 @@ module Shield::BearerToken
       to_s
     end
 
-    def bearer_login : BearerLogin
-      bearer_login?.not_nil!
-    end
-
-    getter? bearer_login : BearerLogin? do
-      id?.try { |id| BearerLoginQuery.new.id(id).first? }
-    end
-
     def to_json(json)
       json.string(to_s)
     end
