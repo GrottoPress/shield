@@ -14,7 +14,7 @@ module Shield::CurrentUser::BearerLogins::Create
         allowed_scopes: BearerScope.action_scopes.map(&.name)
       ) do |operation, bearer_login|
         if operation.saved?
-          BearerTokenSession.new(session).set(operation, bearer_login.not_nil!)
+          BearerLoginSession.new(session).set(operation, bearer_login.not_nil!)
           do_run_operation_succeeded(operation, bearer_login.not_nil!)
         else
           response.status_code = 400

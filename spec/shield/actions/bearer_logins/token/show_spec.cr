@@ -9,7 +9,7 @@ describe Shield::BearerLogins::Token::Show do
     UserOptionsFactory.create &.user_id(user.id)
 
     session = Lucky::Session.new
-    BearerTokenSession.new(session).set(token)
+    BearerLoginSession.new(session).set(token)
 
     client = ApiClient.new
     client.browser_auth(user, password, session: session)

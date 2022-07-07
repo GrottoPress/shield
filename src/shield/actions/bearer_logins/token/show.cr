@@ -19,7 +19,7 @@ module Shield::BearerLogins::Token::Show
     end
 
     getter? token : String? do
-      BearerTokenSession.new(session).bearer_token?
+      BearerLoginSession.new(session).bearer_token?
     end
 
     def authorize?(user : Shield::User) : Bool
