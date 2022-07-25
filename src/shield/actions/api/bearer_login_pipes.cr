@@ -46,8 +46,12 @@ module Shield::Api::BearerLoginPipes
 
     private def send_invalid_token_response
       response.status_code = 401
-      response.headers["WWW-Authenticate"] =
-        %(Bearer error="invalid_token", scope="#{bearer_scope}")
+
+      if BearerToken.from_headers?(request)
+        response.headers["WWW-Authenticate"] = %(Bearer error="invalid_token")
+      else
+        response.headers["WWW-Authenticate"] = %(Bearer)
+      end
     end
 
     private def bearer_scope

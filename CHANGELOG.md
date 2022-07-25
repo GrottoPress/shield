@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Change `Shield::PasswordResets::Show` to show password reset by ID
 - Rename `Shield::BearerTokenSession` to `Shield::BearerLoginSession`
 - Restrict bearer login names to alphanumeric words, hyphens, underscores and parentheses.
+- Omit `error` from `WWW-Authenticate` response header if request lacks token
 
 ## [0.15.0] - 2022-06-28
 
