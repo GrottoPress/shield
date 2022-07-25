@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Change `Shield::EmailConfirmations::Show` to show email confirmation by ID
 - Change `Shield::PasswordResets::Show` to show password reset by ID
 - Rename `Shield::BearerTokenSession` to `Shield::BearerLoginSession`
+- Restrict bearer login names to alphanumeric words, hyphens, underscores and parentheses.
 
 ## [0.15.0] - 2022-06-28
 

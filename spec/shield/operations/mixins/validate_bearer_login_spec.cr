@@ -12,7 +12,7 @@ describe Shield::ValidateBearerLogin do
 
     SaveBearerLogin.create(
       params(
-        name: "some token",
+        name: "some token (number 2)",
         user_id: user.id,
         active_at: Time.utc,
         token_digest: "abc"
@@ -141,7 +141,7 @@ describe Shield::ValidateBearerLogin do
   end
 
   it "accepts existing name by different user" do
-    name = "some token"
+    name = "a-screcret_token"
 
     user = UserFactory.create &.email("user@example.tld")
     user_2 = UserFactory.create &.email("someone@example.net")
