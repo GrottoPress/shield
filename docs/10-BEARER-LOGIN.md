@@ -63,6 +63,8 @@ This token is revoked when the user logs out.
      # ...
      include Shield::BearerLogin
 
+     skip_default_columns # Optional
+
      table :bearer_logins do
        # You may add more columns here
      end
@@ -77,8 +79,6 @@ This token is revoked when the user logs out.
    - `name : String`
    - `scopes : Array(String)`
    - `token_digest : String`
-
-   It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
 
    You may add other columns and associations specific to your application.
 

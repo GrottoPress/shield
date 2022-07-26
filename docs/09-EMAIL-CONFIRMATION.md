@@ -32,6 +32,8 @@ This is particularly important, since email addresses are usually the only means
      # ...
      include Shield::EmailConfirmation
 
+     skip_default_columns # Optional
+
      table :email_confirmations do
        # You may add more columns here
      end
@@ -47,8 +49,6 @@ This is particularly important, since email addresses are usually the only means
    - `ip_address : String`
    - `success : Bool`
    - `token_digest : String`
-
-   It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
 
    You may add other columns and associations specific to your application.
 

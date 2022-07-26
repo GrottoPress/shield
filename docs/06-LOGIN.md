@@ -26,6 +26,8 @@
      # ...
      include Shield::Login
 
+     skip_default_columns # Optional
+
      table :logins do
        # You may add more columns here
      end
@@ -39,8 +41,6 @@
    - `inactive_at : Time?`
    - `ip_address : String`
    - `token_digest : String`
-
-   It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
 
    You may add other columns and associations specific to your application.
 

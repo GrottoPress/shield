@@ -23,6 +23,8 @@
      # ...
      include Shield::PasswordReset
 
+     skip_default_columns # Optional
+
      table :password_resets do
        # You may add more columns here
      end
@@ -37,8 +39,6 @@
    - `ip_address : String`
    - `success : Bool`
    - `token_digest : String`
-
-   It removes *Lucky*'s default `created_at : Time` and `update_at : Time` columns.
 
    You may add other columns and associations specific to your application.
 
