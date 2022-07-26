@@ -7,8 +7,7 @@ describe Shield::CreateBearerLogin do
 
     CreateBearerLogin.create(
       params(name: "some token"),
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
+      scopes: [BearerScope.new(Api::Posts::Index).to_s],
       user: user
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)

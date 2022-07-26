@@ -1,7 +1,5 @@
 module Shield::ValidateBearerLogin
   macro included
-    needs allowed_scopes : Array(String)
-
     before_save do
       ensure_scopes_unique
 
@@ -64,7 +62,9 @@ module Shield::ValidateBearerLogin
 
     private def validate_scopes_valid
       scopes.value.try do |value|
+        allowed_scopes = Shield.settings.bearer_login_allowed_scopes
         return if value.all? &.in?(allowed_scopes)
+
         scopes.add_error Rex.t(:"operation.error.bearer_scopes_invalid")
       end
     end

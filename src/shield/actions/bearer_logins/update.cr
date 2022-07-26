@@ -10,8 +10,7 @@ module Shield::BearerLogins::Update
       UpdateBearerLogin.update(
         bearer_login,
         params,
-        scopes: array_param(UpdateBearerLogin.param_key, :scopes),
-        allowed_scopes: BearerScope.action_scopes.map(&.name)
+        scopes: array_param(UpdateBearerLogin.param_key, :scopes)
       ) do |operation, updated_bearer_login|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_bearer_login)

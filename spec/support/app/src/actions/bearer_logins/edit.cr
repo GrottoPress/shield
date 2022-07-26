@@ -5,11 +5,7 @@ class BearerLogins::Edit < BrowserAction
   skip :pin_login_to_ip_address
 
   get "/bearer-logins/:bearer_login_id/edit" do
-    operation = UpdateBearerLogin.new(
-      bearer_login,
-      allowed_scopes: BearerScope.action_scopes.map(&.name)
-    )
-
+    operation = UpdateBearerLogin.new(bearer_login)
     html EditPage, operation: operation
   end
 end

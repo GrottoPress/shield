@@ -1,5 +1,6 @@
 module Shield
   Habitat.create do
+    setting bearer_login_allowed_scopes : Array(String) = [] of String
     setting bearer_login_expiry : Time::Span? = 90.days
     setting email_confirmation_expiry : Time::Span = 1.hour
     setting login_expiry : Time::Span? = 24.hours

@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::SuccessColumn` model mixin
 - Add `Shield::SuccessQuery` query mixin
 - Add `Shield::SuccessStatus` utility
+- Add `.bearer_login_allowed_scopes` setting
 
 ### Changed
 - Remove showing bearer token from `Shield::BearerLogins::Show` action

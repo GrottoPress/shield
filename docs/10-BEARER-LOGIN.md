@@ -291,11 +291,7 @@ This token is revoked when the user logs out.
      include Shield::CurrentUser::BearerLogins::New
 
      get "/account/bearer-logins/new" do
-       operation = CreateBearerLogin.new(
-         user: user,
-         allowed_scopes: BearerScope.action_scopes.map(&.name)
-       )
-
+       operation = CreateBearerLogin.new(user: user)
        html NewPage, operation: operation
      end
      # ...

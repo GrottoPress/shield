@@ -9,8 +9,7 @@ describe Shield::BearerLoginVerifier do
       CreateBearerLogin.create(
         params(name: "some token"),
         user: user,
-        scopes: ["posts.new", "posts.create"],
-        allowed_scopes: ["posts.new", "posts.create"]
+        scopes: [BearerScope.new(Api::Posts::Index).to_s],
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
 

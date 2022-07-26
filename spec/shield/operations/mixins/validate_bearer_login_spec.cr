@@ -17,14 +17,20 @@ describe Shield::ValidateBearerLogin do
         active_at: Time.utc,
         token_digest: "abc"
       ),
-      allowed_scopes: ["posts.update", "posts.index"],
-      scopes: ["posts.update", "posts.index", "posts.update"]
+      scopes: [
+        BearerScope.new(Api::Posts::Index).to_s,
+        BearerScope.new(Api::Posts::New).to_s,
+        BearerScope.new(Api::Posts::Index).to_s
+      ]
     ) do |_, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
       # ameba:disable Lint/ShadowingOuterLocalVar
       bearer_login.try do |bearer_login|
-        bearer_login.scopes.should eq(["posts.update", "posts.index"])
+        bearer_login.scopes.should eq([
+          BearerScope.new(Api::Posts::Index).to_s,
+          BearerScope.new(Api::Posts::New).to_s
+        ])
       end
     end
   end
@@ -39,7 +45,6 @@ describe Shield::ValidateBearerLogin do
         active_at: Time.utc,
         token_digest: "abc"
       ),
-      allowed_scopes: ["posts.update", "posts.index"]
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -55,8 +60,7 @@ describe Shield::ValidateBearerLogin do
         active_at: Time.utc,
         token_digest: "abc"
       ),
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
+      scopes: [BearerScope.new(Api::Posts::Index).to_s],
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -72,8 +76,7 @@ describe Shield::ValidateBearerLogin do
         active_at: Time.utc,
         token_digest: "abc"
       ),
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
+      scopes: [BearerScope.new(Api::Posts::Index).to_s],
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -90,8 +93,7 @@ describe Shield::ValidateBearerLogin do
         active_at: Time.utc,
         token_digest: "abc"
       ),
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index", "current_user.show"],
+      scopes: [BearerScope.new(Api::Posts::Index).to_s],
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -109,8 +111,7 @@ describe Shield::ValidateBearerLogin do
         active_at: Time.utc,
         token_digest: "abc"
       ),
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index"],
+      scopes: [BearerScope.new(Api::Posts::Index).to_s],
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -131,8 +132,7 @@ describe Shield::ValidateBearerLogin do
         active_at: Time.utc,
         token_digest: "abc"
       ),
-      scopes: ["current_user.show"],
-      allowed_scopes: ["current_user.show", "posts.index"],
+      scopes: [BearerScope.new(Api::Posts::Index).to_s],
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -158,8 +158,7 @@ describe Shield::ValidateBearerLogin do
         active_at: Time.utc,
         token_digest: "abc"
       ),
-      scopes: ["current_user.show"],
-      allowed_scopes: ["current_user.show", "posts.index"],
+      scopes: [BearerScope.new(Api::Posts::Index).to_s],
     ) do |_, bearer_login|
       bearer_login.should be_a(BearerLogin)
     end
@@ -176,7 +175,6 @@ describe Shield::ValidateBearerLogin do
         token_digest: "abc"
       ),
       scopes: Array(String).new,
-      allowed_scopes: ["posts.update", "posts.index"]
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
@@ -185,22 +183,26 @@ describe Shield::ValidateBearerLogin do
   end
 
   it "requires valid scopes" do
-    user = UserFactory.create
+    Shield.temp_config(bearer_login_allowed_scopes: [
+      BearerScope.new(Api::Posts::New).to_s,
+      BearerScope.new(Api::CurrentUser::Show).to_s
+    ]) do
+      user = UserFactory.create
 
-    SaveBearerLogin.create(
-      params(
-        name: "some token",
-        user_id: user.id,
-        active_at: Time.utc,
-        token_digest: "abc"
-      ),
-      scopes: ["current_user.show"],
-      allowed_scopes: ["posts.update", "posts.index"]
-    ) do |operation, bearer_login|
-      bearer_login.should be_nil
+      SaveBearerLogin.create(
+        params(
+          name: "some token",
+          user_id: user.id,
+          active_at: Time.utc,
+          token_digest: "abc"
+        ),
+        scopes: [BearerScope.new(Api::Posts::Index).to_s],
+      ) do |operation, bearer_login|
+        bearer_login.should be_nil
 
-      operation.scopes
-        .should have_error("operation.error.bearer_scopes_invalid")
+        operation.scopes
+          .should have_error("operation.error.bearer_scopes_invalid")
+      end
     end
   end
 
@@ -213,8 +215,7 @@ describe Shield::ValidateBearerLogin do
         user_id: user.id,
         active_at: Time.utc
       ),
-      scopes: ["posts.index"],
-      allowed_scopes: ["posts.update", "posts.index"]
+      scopes: [BearerScope.new(Api::Posts::Index).to_s],
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 

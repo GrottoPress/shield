@@ -2,7 +2,7 @@ require "../../../spec_helper"
 
 describe Shield::Api::BearerLoginHelpers do
   describe "#current_bearer" do
-    it "return current token bearer" do
+    it "return current bearer" do
       email = "user@example.tld"
       password = "password4APASSWORD<"
 
@@ -11,8 +11,7 @@ describe Shield::Api::BearerLoginHelpers do
 
       CreateBearerLogin.create(
         params(name: "secret token"),
-        scopes: ["api.posts.index"],
-        allowed_scopes: ["api.posts.update", "api.posts.index"],
+        scopes: [BearerScope.new(Api::Posts::Index).to_s],
         user: user
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!

@@ -11,8 +11,7 @@ describe Shield::Api::BearerLoginPipes do
 
       CreateBearerLogin.create(
         params(name: "secret token"),
-        scopes: ["api.posts.index"],
-        allowed_scopes: ["api.posts.update", "api.posts.index"],
+        scopes: [BearerScope.new(Api::Posts::Index).to_s],
         user: user
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
@@ -45,8 +44,7 @@ describe Shield::Api::BearerLoginPipes do
 
       CreateBearerLogin.create(
         params(name: "secret token"),
-        scopes: ["api.posts.new"],
-        allowed_scopes: ["api.posts.new", "api.posts.index"],
+        scopes: [BearerScope.new(Api::Posts::New).to_s],
         user: user
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
@@ -69,8 +67,7 @@ describe Shield::Api::BearerLoginPipes do
 
       CreateBearerLogin.create(
         params(name: "secret token"),
-        scopes: ["api.posts.index"],
-        allowed_scopes: ["api.posts.update", "api.posts.index"],
+        scopes: [BearerScope.new(Api::Posts::Index).to_s],
         user: user
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
@@ -92,8 +89,7 @@ describe Shield::Api::BearerLoginPipes do
 
       CreateBearerLogin.create(
         params(name: "secret token"),
-        scopes: ["api.posts.create"],
-        allowed_scopes: ["api.posts.update", "api.posts.create"],
+        scopes: [BearerScope.new(Api::Posts::Create).to_s],
         user: user
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
@@ -115,8 +111,7 @@ describe Shield::Api::BearerLoginPipes do
 
       CreateBearerLogin.create(
         params(name: "secret token"),
-        scopes: ["api.posts.create"],
-        allowed_scopes: ["api.posts.update", "api.posts.create"],
+        scopes: [BearerScope.new(Api::Posts::Create).to_s],
         user: user
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
