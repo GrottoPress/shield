@@ -334,7 +334,7 @@ This token is revoked when the user logs out.
    end
    ```
 
-   You may need to add `CurrentUser::BearerLogins::ShowPage` in `src/pages/current_user/bearer_logins/show_page.cr`, that displays the generated login token, thus: `BearerToken.new(operation, bearer_login).to_s`
+   You may need to add `CurrentUser::BearerLogins::ShowPage` in `src/pages/current_user/bearer_logins/show_page.cr`, that displays the generated login token, thus: `BearerCredentials.new(operation, bearer_login).to_s`
 
    ---
    ```crystal

@@ -16,7 +16,7 @@ describe Shield::Api::EmailConfirmations::Verify do
     ) do |operation, email_confirmation|
       email_confirmation = email_confirmation.not_nil!
 
-      token = BearerToken.new(operation, email_confirmation)
+      token = BearerCredentials.new(operation, email_confirmation)
       response = ApiClient.exec(Api::EmailConfirmations::Verify, token: token)
 
       response.should send_json(200, {
@@ -29,7 +29,7 @@ describe Shield::Api::EmailConfirmations::Verify do
     email = "user@domain.tld"
     password = "password4APASSWORD<"
 
-    token = BearerToken.new("abcdef", 1)
+    token = BearerCredentials.new("abcdef", 1)
 
     client = ApiClient.new
     client.api_auth(email, password)

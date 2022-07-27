@@ -1,10 +1,10 @@
 module Shield::HttpClient
   macro included
     def api_auth(token : String)
-      api_auth(BearerToken.new token)
+      api_auth(BearerCredentials.new token)
     end
 
-    def api_auth(token : Shield::BearerToken)
+    def api_auth(token : Shield::BearerCredentials)
       token.authenticate(client)
     end
 
@@ -31,7 +31,7 @@ module Shield::HttpClient
         session: nil
       ) do |operation, login|
         login.try do |login|
-          BearerToken.new(operation, login).authenticate(client)
+          BearerCredentials.new(operation, login).authenticate(client)
         end
       end
 

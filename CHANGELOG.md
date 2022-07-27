@@ -19,8 +19,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::SuccessQuery` query mixin
 - Add `Shield::SuccessStatus` utility
 - Add `.bearer_login_allowed_scopes` setting
-- Add `BearerToken.from_token(String)`
-- Add `BearerToken.from_token?(String)`
 
 ### Changed
 - Remove showing bearer token from `Shield::BearerLogins::Show` action
@@ -31,11 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Rename `Shield::BearerTokenSession` to `Shield::BearerLoginSession`
 - Restrict bearer login names to alphanumeric words, hyphens, underscores and parentheses.
 - Omit `error` from `WWW-Authenticate` response header if request lacks token
-- Rename `BearerToken#token` to `#password`
-
-### Removed
-- Remove `BearerToken#id?`
-- Remove `BearerToken.new(String)`
+- Replace `BearerToken` with `BearerCredentials`
 
 ## [0.15.0] - 2022-06-28
 

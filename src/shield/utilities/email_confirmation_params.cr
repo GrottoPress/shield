@@ -6,15 +6,15 @@ module Shield::EmailConfirmationParams
     end
 
     def email_confirmation_id? : Int64?
-      token_from_params.try &.id
+      bearer_credentials.try(&.id)
     end
 
     def email_confirmation_token? : String?
-      token_from_params.try(&.password)
+      bearer_credentials.try(&.password)
     end
 
-    private getter token_from_params : BearerToken? do
-      BearerToken.from_params?(@params)
+    private getter bearer_credentials : BearerCredentials? do
+      BearerCredentials.from_params?(@params)
     end
   end
 end

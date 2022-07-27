@@ -30,7 +30,7 @@ module Shield::EmailConfirmationSession
     end
 
     def set(token : String) : self
-      BearerToken.from_token?(token).try do |bearer_token|
+      BearerCredentials.from_token?(token).try do |bearer_token|
         set(bearer_token.password, bearer_token.id)
       end
 

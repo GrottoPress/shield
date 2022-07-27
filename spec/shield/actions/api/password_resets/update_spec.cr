@@ -14,7 +14,7 @@ describe Shield::Api::PasswordResets::Update do
     ) do |operation, password_reset|
       password_reset = password_reset.not_nil!
 
-      token = BearerToken.new(operation, password_reset)
+      token = BearerCredentials.new(operation, password_reset)
 
       response = ApiClient.exec(
         Api::PasswordResets::Update,
@@ -34,7 +34,7 @@ describe Shield::Api::PasswordResets::Update do
 
   it "rejects invalid password reset token" do
     new_password = "assword4APASSWOR<"
-    token = BearerToken.new("abcdef", 1)
+    token = BearerCredentials.new("abcdef", 1)
 
     response = ApiClient.exec(
       Api::PasswordResets::Update,

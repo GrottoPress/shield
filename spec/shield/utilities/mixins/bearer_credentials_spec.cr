@@ -1,10 +1,10 @@
 require "../../../spec_helper"
 
-describe Shield::BearerToken do
+describe Shield::BearerCredentials do
   describe "#authenticate" do
     it "sets authorization header" do
       headers = HTTP::Headers.new
-      BearerToken.new("abcdef", 1).authenticate(headers)
+      BearerCredentials.new("abcdef", 1).authenticate(headers)
 
       headers["Authorization"]?.should eq("Bearer 1.abcdef")
     end
@@ -13,7 +13,7 @@ describe Shield::BearerToken do
   describe ".from_headers" do
     it "works" do
       headers = HTTP::Headers{"Authorization" => "Bearer 123.abcdef"}
-      BearerToken.from_headers?(headers).should be_a(BearerToken)
+      BearerCredentials.from_headers?(headers).should be_a(BearerCredentials)
     end
 
     it "rejects invalid header" do
@@ -30,7 +30,7 @@ describe Shield::BearerToken do
       ]
 
       all_headers.each do |headers|
-        BearerToken.from_headers?(headers).should be_nil
+        BearerCredentials.from_headers?(headers).should be_nil
       end
     end
   end

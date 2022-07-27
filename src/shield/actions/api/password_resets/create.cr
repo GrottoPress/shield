@@ -34,7 +34,7 @@ module Shield::Api::PasswordResets::Create
       else
         json PasswordResetSerializer.new(
           password_reset: password_reset,
-          token: BearerToken.new(operation, password_reset).to_s,
+          token: BearerCredentials.new(operation, password_reset).to_s,
           message: Rex.t(:"action.misc.dev_mode_skip_email")
         )
       end

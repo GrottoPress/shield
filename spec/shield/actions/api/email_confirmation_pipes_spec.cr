@@ -11,7 +11,7 @@ describe Shield::Api::EmailConfirmationPipes do
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!
 
-        token = BearerToken.new(operation, email_confirmation)
+        token = BearerCredentials.new(operation, email_confirmation)
 
         response = ApiClient.exec(
           Api::CurrentUser::Create,
@@ -37,7 +37,7 @@ describe Shield::Api::EmailConfirmationPipes do
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!
 
-        token = BearerToken.new(operation, email_confirmation)
+        token = BearerCredentials.new(operation, email_confirmation)
 
         response = ApiClient.exec(
           Api::CurrentUser::Create,

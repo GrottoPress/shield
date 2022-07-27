@@ -14,8 +14,8 @@ describe Shield::PasswordResetVerifier do
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
 
-        token = BearerToken.new(operation, password_reset)
-        token_2 = BearerToken.new("abcdef", 1)
+        token = BearerCredentials.new(operation, password_reset)
+        token_2 = BearerCredentials.new("abcdef", 1)
 
         PasswordResetParams.new(params(token: token))
           .verify

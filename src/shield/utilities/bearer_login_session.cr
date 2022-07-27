@@ -22,10 +22,10 @@ module Shield::BearerLoginSession
       operation : Shield::CreateBearerLogin,
       bearer_login : Shield::BearerLogin
     ) : self
-      set BearerToken.new(operation, bearer_login)
+      set BearerCredentials.new(operation, bearer_login)
     end
 
-    def set(token : Shield::BearerToken) : self
+    def set(token : Shield::BearerCredentials) : self
       set(token.to_s)
     end
 

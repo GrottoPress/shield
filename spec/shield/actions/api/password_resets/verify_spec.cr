@@ -12,7 +12,7 @@ describe Shield::Api::PasswordResets::Verify do
     ) do |operation, password_reset|
       password_reset = password_reset.not_nil!
 
-      token = BearerToken.new(operation, password_reset)
+      token = BearerCredentials.new(operation, password_reset)
       response = ApiClient.exec(Api::PasswordResets::Verify, token: token)
 
       response.should send_json(200, {
@@ -22,7 +22,7 @@ describe Shield::Api::PasswordResets::Verify do
   end
 
   it "rejects invalid password reset token" do
-    token = BearerToken.new("abcdef", 1)
+    token = BearerCredentials.new("abcdef", 1)
 
     response = ApiClient.exec(Api::PasswordResets::Verify, token: token)
     response.should send_json(403, {status: "failure"})
