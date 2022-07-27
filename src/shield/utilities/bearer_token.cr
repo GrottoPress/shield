@@ -1,26 +1,14 @@
 module Shield::BearerToken
   macro included
-    getter! :id
+    getter id : Int64
     getter :token
 
-    def initialize(@token : String, @id : Int64?)
-    end
-
-    def self.new(token : String, id : Number)
-      new(token, id.to_i64)
-    end
-
-    def self.new(token : String, id)
-      new(token, id.to_i64?)
+    def initialize(@token : String, id : Number)
+      @id = id.to_i64
     end
 
     def self.new(operation, record)
       new(operation.token, record.id)
-    end
-
-    def self.new(token : String)
-      id, _, tkn = token.partition('.')
-      new(tkn, id.to_i64?)
     end
 
     def authenticate(headers : HTTP::Headers) : Nil
@@ -40,9 +28,18 @@ module Shield::BearerToken
     end
 
     def to_s(io)
-      io << id?
-      io << '.' if id?
-      io << @token
+      io << "#{id}.#{token}"
+    end
+
+    def self.from_token(token) : self
+      from_token?(token).not_nil!
+    end
+
+    def self.from_token?(token : String) : self?
+      id, _, rest = token.partition('.')
+      return if rest.empty?
+
+      id.to_i64?.try { |id| new(rest, id) }
     end
 
     def self.from_headers(request : HTTP::Request) : self
@@ -60,7 +57,7 @@ module Shield::BearerToken
     def self.from_headers?(headers : HTTP::Headers) : self?
       header = headers["Authorization"]?.try &.split
       return unless header.try(&.size) == 2 && header.try(&.[0]?) == "Bearer"
-      header.try &.[1]?.try { |token| new(token) }
+      header.try &.[1]?.try { |token| from_token?(token) }
     end
 
     def self.from_params(
@@ -74,7 +71,7 @@ module Shield::BearerToken
       params : Avram::Paramable,
       key : String | Symbol = "token"
     ) : self?
-      params.get?(key.to_s).try { |token| new(token) }
+      params.get?(key.to_s).try { |token| from_token?(token) }
     end
   end
 end

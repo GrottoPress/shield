@@ -5,7 +5,7 @@ module Shield::BearerLoginToken
     end
 
     getter? bearer_login : BearerLogin? do
-      id?.try { |id| BearerLoginQuery.new.id(id).first? }
+      BearerLoginQuery.new.id(id).first?
     end
   end
 end
