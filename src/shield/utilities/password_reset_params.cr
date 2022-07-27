@@ -10,7 +10,7 @@ module Shield::PasswordResetParams
     end
 
     def password_reset_token? : String?
-      token_from_params.try &.token
+      token_from_params.try(&.password)
     end
 
     private getter token_from_params : BearerToken? do

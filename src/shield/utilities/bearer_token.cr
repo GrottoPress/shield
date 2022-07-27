@@ -1,9 +1,9 @@
 module Shield::BearerToken
   macro included
     getter id : Int64
-    getter :token
+    getter :password
 
-    def initialize(@token : String, id : Number)
+    def initialize(@password : String, id : Number)
       @id = id.to_i64
     end
 
@@ -32,7 +32,7 @@ module Shield::BearerToken
     end
 
     def to_s(io)
-      io << "#{id}.#{token}"
+      io << "#{id}.#{password}"
     end
 
     def self.from_token(token) : self
@@ -40,10 +40,10 @@ module Shield::BearerToken
     end
 
     def self.from_token?(token : String) : self?
-      id, _, rest = token.partition('.')
-      return if rest.empty?
+      id, _, password = token.partition('.')
+      return if password.empty?
 
-      id.to_i64?.try { |id| new(rest, id) }
+      id.to_i64?.try { |id| new(password, id) }
     end
 
     def self.from_headers(request : HTTP::Request) : self

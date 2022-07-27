@@ -10,7 +10,7 @@ module Shield::LoginHeaders
     end
 
     def login_token? : String?
-      token_from_headers.try &.token
+      token_from_headers.try(&.password)
     end
 
     private getter token_from_headers : BearerToken? do

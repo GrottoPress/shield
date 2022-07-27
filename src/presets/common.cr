@@ -1,3 +1,5 @@
+require "../compat/common"
+
 abstract class BaseModel < Avram::Model
   include Shield::Model
 end
