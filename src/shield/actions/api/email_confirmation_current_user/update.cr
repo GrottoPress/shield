@@ -31,7 +31,7 @@ module Shield::Api::EmailConfirmationCurrentUser::Update
       else
         json UserSerializer.new(
           user: user,
-          token: BearerCredentials.new(
+          token: BearerToken.new(
             operation.start_email_confirmation.not_nil!,
             operation.email_confirmation.not_nil!
           ).to_s,

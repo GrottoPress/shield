@@ -6,15 +6,15 @@ module Shield::PasswordResetParams
     end
 
     def password_reset_id? : Int64?
-      bearer_credentials.try(&.id)
+      token_from_params.try &.id
     end
 
     def password_reset_token? : String?
-      bearer_credentials.try(&.password)
+      token_from_params.try(&.password)
     end
 
-    private getter bearer_credentials : BearerCredentials? do
-      BearerCredentials.from_params?(@params)
+    private getter token_from_params : BearerToken? do
+      BearerToken.from_params?(@params)
     end
   end
 end

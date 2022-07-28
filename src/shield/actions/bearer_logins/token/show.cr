@@ -11,9 +11,7 @@ module Shield::BearerLogins::Token::Show
     end
 
     getter? bearer_login : BearerLogin? do
-      token?.try do |token|
-        BearerCredentials.from_token?(token).try(&.bearer_login?)
-      end
+      token?.try { |token| BearerToken.from_token?(token).try(&.bearer_login?) }
     end
 
     def token : String

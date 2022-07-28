@@ -16,7 +16,7 @@ describe Shield::Api::BearerLoginPipes do
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
 
-        token = BearerCredentials.new(operation, bearer_login)
+        token = BearerToken.new(operation, bearer_login)
 
         client = ApiClient.new
         client.api_auth(token)
@@ -49,7 +49,7 @@ describe Shield::Api::BearerLoginPipes do
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
 
-        token = BearerCredentials.new(operation, bearer_login)
+        token = BearerToken.new(operation, bearer_login)
 
         client = ApiClient.new
         client.api_auth(token)
@@ -72,7 +72,7 @@ describe Shield::Api::BearerLoginPipes do
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
 
-        token = BearerCredentials.new(operation, bearer_login)
+        token = BearerToken.new(operation, bearer_login)
 
         client = ApiClient.new
         client.api_auth(token)
@@ -94,7 +94,7 @@ describe Shield::Api::BearerLoginPipes do
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
 
-        token = BearerCredentials.new(operation, bearer_login)
+        token = BearerToken.new(operation, bearer_login)
 
         client = ApiClient.new
         client.api_auth(token)
@@ -116,7 +116,7 @@ describe Shield::Api::BearerLoginPipes do
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
 
-        token = BearerCredentials.new(operation, bearer_login)
+        token = BearerToken.new(operation, bearer_login)
 
         client = ApiClient.new
         client.api_auth(token)

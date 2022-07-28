@@ -7,10 +7,10 @@ module Shield::VerificationUrl
     end
 
     def self.new(token : String, id)
-      new BearerCredentials.new(token, id)
+      new BearerToken.new(token, id)
     end
 
-    def self.new(token : Shield::BearerCredentials)
+    def self.new(token : Shield::BearerToken)
       new(token.to_s)
     end
 

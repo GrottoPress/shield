@@ -24,8 +24,8 @@ struct ReturnUrlSession
   include Shield::ReturnUrlSession
 end
 
-struct BearerCredentials
-  include Shield::BearerCredentials
+struct BearerToken
+  include Shield::BearerToken
 end
 
 struct BearerScope

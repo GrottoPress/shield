@@ -30,7 +30,7 @@ module Shield::PasswordResetSession
     end
 
     def set(token : String) : self
-      BearerCredentials.from_token?(token).try do |bearer_token|
+      BearerToken.from_token?(token).try do |bearer_token|
         set(bearer_token.password, bearer_token.id)
       end
 

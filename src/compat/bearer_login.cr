@@ -22,10 +22,6 @@ module Shield::LoginHelpers
   end
 end
 
-struct BearerToken
-  include Shield::BearerLoginToken
-end
-
 struct BearerTokenSession
   include Shield::BearerLoginSession
 end

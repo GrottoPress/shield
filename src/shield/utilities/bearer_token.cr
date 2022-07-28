@@ -1,4 +1,4 @@
-module Shield::BearerCredentials
+module Shield::BearerToken
   macro included
     getter id : Int64
     getter :password
