@@ -51,7 +51,7 @@ abstract class ApiAction < Lucky::Action
 end
 
 struct BearerCredentials
-  include Shield::BearerLoginToken
+  include Shield::BearerLoginBearerCredentials
 end
 
 struct BearerLoginHeaders

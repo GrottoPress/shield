@@ -1,4 +1,4 @@
-module Shield::BearerLoginToken
+module Shield::BearerLoginBearerCredentials
   macro included
     def bearer_login : BearerLogin
       bearer_login?.not_nil!
