@@ -22,13 +22,12 @@ module Shield::LoginHelpers
   end
 end
 
-module Shield::BearerLoginToken
-  macro included
-    {% puts "Warning: Deprecated `Shield::BearerLoginToken`. \
-      Use `Shield::BearerLoginBearerCredentials` instead" %}
+struct BearerToken
+  include Shield::BearerLoginToken
+end
 
-    include Shield::BearerLoginBearerCredentials
-  end
+struct BearerTokenSession
+  include Shield::BearerLoginSession
 end
 
 module Shield::BearerTokenSession
@@ -38,12 +37,4 @@ module Shield::BearerTokenSession
 
     include Shield::BearerLoginSession
   end
-end
-
-struct BearerToken
-  include Shield::BearerLoginBearerCredentials
-end
-
-struct BearerTokenSession
-  include Shield::BearerLoginSession
 end
