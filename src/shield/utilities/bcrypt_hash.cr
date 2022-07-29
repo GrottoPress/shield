@@ -15,7 +15,7 @@ module Shield::BcryptHash
 
     def verify?(digest : String) : Bool
       Crypto::Bcrypt::Password.new(digest).verify(@plaintext)
-    rescue
+    rescue Crypto::Bcrypt::Error
       false
     end
 
