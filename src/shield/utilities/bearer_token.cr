@@ -11,16 +11,12 @@ module Shield::BearerToken
       new(operation.token, record.id)
     end
 
-    def authenticate(client : HTTP::Client) : Nil
-      client.before_request { |request| authenticate(request) }
-    end
-
-    def authenticate(request : HTTP::Request) : Nil
-      authenticate(request.headers)
-    end
-
     def authenticate(headers : HTTP::Headers) : Nil
       headers["Authorization"] = "Bearer #{to_s}"
+    end
+
+    def authenticate(client) : Nil
+      client.before_request { |request| authenticate(request.headers) }
     end
 
     def to_param : String
