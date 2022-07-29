@@ -27,7 +27,7 @@ module Shield::PasswordResetVerifier
       end
     end
 
-    def password_reset_id : Int64
+    def password_reset_id
       password_reset_id?.not_nil!
     end
 

@@ -5,16 +5,16 @@ module Shield::EmailConfirmationParams
     def initialize(@params : Avram::Paramable)
     end
 
-    def email_confirmation_id? : Int64?
-      token_from_params.try &.id
+    def email_confirmation_id?
+      credentials?.try(&.id)
     end
 
     def email_confirmation_token? : String?
-      token_from_params.try &.token
+      credentials?.try(&.password)
     end
 
-    private getter token_from_params : BearerToken? do
-      BearerToken.from_params?(@params)
+    private getter? credentials : EmailConfirmationCredentials? do
+      EmailConfirmationCredentials.from_params?(@params)
     end
   end
 end

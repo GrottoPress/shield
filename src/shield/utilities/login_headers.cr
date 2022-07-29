@@ -5,16 +5,16 @@ module Shield::LoginHeaders
     def initialize(@headers : HTTP::Headers)
     end
 
-    def login_id? : Int64?
-      token_from_headers.try &.id?
+    def login_id?
+      credentials?.try(&.id)
     end
 
     def login_token? : String?
-      token_from_headers.try &.token
+      credentials?.try(&.password)
     end
 
-    private getter token_from_headers : BearerToken? do
-      BearerToken.from_headers?(@headers)
+    private getter? credentials : LoginCredentials? do
+      LoginCredentials.from_headers?(@headers)
     end
   end
 end

@@ -3,8 +3,10 @@ module Shield::EmailConfirmationSession
     include Shield::Session
     include Shield::EmailConfirmationVerifier
 
-    def email_confirmation_id? : Int64?
-      @session.get?(:email_confirmation_id).try &.to_i64?
+    def email_confirmation_id?
+      @session.get?(:email_confirmation_id).try do |id|
+        EmailConfirmation::PRIMARY_KEY_TYPE.adapter.parse(id).value
+      end
     end
 
     def email_confirmation_token? : String?
@@ -30,8 +32,11 @@ module Shield::EmailConfirmationSession
     end
 
     def set(token : String) : self
-      bearer_token = BearerToken.new(token)
-      set(bearer_token.token, bearer_token.id?)
+      EmailConfirmationCredentials.from_token?(token).try do |credentials|
+        set(credentials.password, credentials.id)
+      end
+
+      self
     end
 
     def set(token : String, id) : self

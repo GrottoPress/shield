@@ -3,7 +3,7 @@ require "../../../../spec_helper"
 describe Shield::BearerLogins::Token::Show do
   it "renders show page" do
     password = "password4APASSWORD<"
-    token = "123.a1b2c3"
+    token = BearerLoginCredentials.new("a1b2c3", 123).to_s
 
     user = UserFactory.create &.password(password)
     UserOptionsFactory.create &.user_id(user.id)

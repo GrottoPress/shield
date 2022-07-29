@@ -25,7 +25,7 @@ module Shield::LoginVerifier
       login_id?.try { |id| LoginQuery.new.id(id).preload_user.first? }
     end
 
-    def login_id : Int64
+    def login_id
       login_id?.not_nil!
     end
 

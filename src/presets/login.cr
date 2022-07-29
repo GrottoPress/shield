@@ -78,3 +78,7 @@ end
 struct LoginIdleTimeoutSession
   include Shield::LoginIdleTimeoutSession
 end
+
+struct LoginCredentials
+  include Shield::LoginCredentials
+end

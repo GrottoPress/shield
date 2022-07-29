@@ -3,8 +3,10 @@ module Shield::PasswordResetSession
     include Shield::Session
     include Shield::PasswordResetVerifier
 
-    def password_reset_id? : Int64?
-      @session.get?(:password_reset_id).try &.to_i64?
+    def password_reset_id?
+      @session.get?(:password_reset_id).try do |id|
+        PasswordReset::PRIMARY_KEY_TYPE.adapter.parse(id).value
+      end
     end
 
     def password_reset_token? : String?
@@ -30,8 +32,11 @@ module Shield::PasswordResetSession
     end
 
     def set(token : String) : self
-      bearer_token = BearerToken.new(token)
-      set(bearer_token.token, bearer_token.id?)
+      PasswordResetCredentials.from_token?(token).try do |credentials|
+        set(credentials.password, credentials.id)
+      end
+
+      self
     end
 
     def set(token : String, id) : self

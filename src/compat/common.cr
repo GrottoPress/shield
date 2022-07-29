@@ -1,5 +1,41 @@
+module Shield::VerificationUrl
+  macro included
+    {% puts "Warning: Deprecated `Shield::VerificationUrl`. \
+      Use `Shield::ParamCredentials#url` method instead" %}
+
+    @url : String
+
+    def self.new(operation, record)
+      new(operation.token, record.id)
+    end
+
+    def self.new(token : String, id)
+      new BearerToken.new(token, id)
+    end
+
+    def self.new(token : Shield::BearerToken)
+      new(token.to_s)
+    end
+
+    def to_param : String
+      to_s
+    end
+
+    def to_json(json)
+      json.string(to_s)
+    end
+
+    def to_s(io)
+      io << @url
+    end
+  end
+end
+
 module Shield::BearerToken
   macro included
+    {% puts "Warning: Deprecated `Shield::BearerToken`. \
+      Use the appropriate `Shield::BearerCredentials` subtype instead" %}
+
     getter! :id
     getter :token
 
@@ -19,8 +55,11 @@ module Shield::BearerToken
     end
 
     def self.new(token : String)
-      id, _, tkn = token.partition('.')
-      new(tkn, id.to_i64?)
+      decoded = Base64.decode_string(token)
+      id, _, _token = decoded.partition(':')
+      new(_token, id.to_i64?)
+    rescue Base64::Error
+      new(token, nil)
     end
 
     def authenticate(headers : HTTP::Headers) : Nil
@@ -40,9 +79,7 @@ module Shield::BearerToken
     end
 
     def to_s(io)
-      io << id?
-      io << '.' if id?
-      io << @token
+      io << Base64.urlsafe_encode("#{id?}:#{token}", false)
     end
 
     def self.from_headers(request : HTTP::Request) : self
@@ -77,4 +114,8 @@ module Shield::BearerToken
       params.get?(key.to_s).try { |token| new(token) }
     end
   end
+end
+
+struct BearerToken
+  include Shield::BearerToken
 end

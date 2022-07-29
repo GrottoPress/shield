@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::SuccessQuery` query mixin
 - Add `Shield::SuccessStatus` utility
 - Add `.bearer_login_allowed_scopes` setting
+- Add `BearerLoginCredentials` utility
+- Add `EmailConfirmationCredentials` utility
+- Add `LoginCredentials` utility
+- Add `PasswordResetCredentials` utility
+- Add support for all database primary key types (not just `Int64`)
 
 ### Changed
 - Remove showing bearer token from `Shield::BearerLogins::Show` action
@@ -28,6 +33,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Restrict bearer login names to alphanumeric words, hyphens, underscores and parentheses.
 - Omit `error` from `WWW-Authenticate` response header if request lacks token
 - Rename `Shield::LoginIdleTimeoutSession#expired?` to `#login_expired?`
+
+### Removed
+- Remove `EmailConfirmationUrl` utility
+- Remove `PasswordResetUrl` utility
+- Remove `Shield::VerificationUrl` utility mixin
+- Remove `BearerToken` utility
 
 ## [0.15.0] - 2022-06-28
 

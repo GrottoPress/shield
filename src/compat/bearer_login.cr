@@ -22,6 +22,21 @@ module Shield::LoginHelpers
   end
 end
 
+module Shield::BearerLoginToken
+  macro included
+    {% puts "Warning: Deprecated `Shield::BearerLoginToken`. \
+      Use `BearerLoginCredentials` utility instead" %}
+
+    def bearer_login : BearerLogin
+      bearer_login?.not_nil!
+    end
+
+    getter? bearer_login : BearerLogin? do
+      id?.try { |id| BearerLoginQuery.new.id(id).first? }
+    end
+  end
+end
+
 struct BearerTokenSession
   include Shield::BearerLoginSession
 end
@@ -33,4 +48,8 @@ module Shield::BearerTokenSession
 
     include Shield::BearerLoginSession
   end
+end
+
+struct BearerToken
+  include Shield::BearerLoginToken
 end

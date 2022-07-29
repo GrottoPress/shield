@@ -71,8 +71,8 @@ struct EmailConfirmationParams
   include Shield::EmailConfirmationParams
 end
 
-struct EmailConfirmationUrl
-  include Shield::EmailConfirmationUrl
+struct EmailConfirmationCredentials
+  include Shield::EmailConfirmationCredentials
 end
 
 struct SuccessStatus

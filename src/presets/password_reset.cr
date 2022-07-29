@@ -3,6 +3,8 @@
   .includes?("PasswordReset")
 %}
 
+require "../compat/password_reset"
+
 class User < BaseModel
   include Shield::HasManyPasswordResets
 end
@@ -61,8 +63,8 @@ struct PasswordResetParams
   include Shield::PasswordResetParams
 end
 
-struct PasswordResetUrl
-  include Shield::PasswordResetUrl
+struct PasswordResetCredentials
+  include Shield::PasswordResetCredentials
 end
 
 struct SuccessStatus

@@ -1,3 +1,5 @@
+require "../compat/common"
+
 abstract class BaseModel < Avram::Model
   include Shield::Model
 end
@@ -20,10 +22,6 @@ end
 
 struct ReturnUrlSession
   include Shield::ReturnUrlSession
-end
-
-struct BearerToken
-  include Shield::BearerToken
 end
 
 struct BearerScope

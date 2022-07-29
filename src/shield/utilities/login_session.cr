@@ -3,8 +3,10 @@ module Shield::LoginSession
     include Shield::Session
     include Shield::LoginVerifier
 
-    def login_id? : Int64?
-      @session.get?(:login_id).try &.to_i64?
+    def login_id?
+      @session.get?(:login_id).try do |id|
+        Login::PRIMARY_KEY_TYPE.adapter.parse(id).value
+      end
     end
 
     def login_token? : String?
@@ -27,8 +29,11 @@ module Shield::LoginSession
     end
 
     def set(token : String) : self
-      bearer_token = BearerToken.new(token)
-      set(bearer_token.token, bearer_token.id?)
+      LoginCredentials.from_token?(token).try do |credentials|
+        set(credentials.password, credentials.id)
+      end
+
+      self
     end
 
     def set(token : String, id) : self

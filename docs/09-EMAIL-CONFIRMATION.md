@@ -110,7 +110,7 @@ This is particularly important, since email addresses are usually the only means
    end
    ```
 
-   `StartEmailConfirmation` kicks off the entire process of confirming a given email address. It receives `email : String` and an optional `user_id : Int64?` (for an existing user), and generates a link that it sends to the email address supplied.
+   `StartEmailConfirmation` kicks off the entire process of confirming a given email address. It receives `email : String` and an optional `user_id` (for an existing user), and generates a link that it sends to the email address supplied.
 
    ---
    ```crystal
@@ -256,7 +256,7 @@ This is particularly important, since email addresses are usually the only means
      #    success_action(operation)
      #  else
      #    flash.success = Rex.t(:"action.misc.dev_mode_skip_email")
-     #    redirect to: EmailConfirmationUrl.new(operation, email_confirmation)
+     #    redirect to: EmailConfirmationCredentials.new(operation, email_confirmation).url
      #  end
      #end
 
@@ -295,7 +295,7 @@ This is particularly important, since email addresses are usually the only means
      # ...
      include Shield::EmailConfirmations::Show
 
-     get "/email-confirmations/:token" do
+     get "/email-confirmations/:email_confirmation_token" do
        run_operation
      end
      # ...
@@ -499,10 +499,10 @@ This is particularly important, since email addresses are usually the only means
      #  if LuckyEnv.production? || operation.new_email.nil?
      #    redirect to: Show
      #  else
-     #    redirect to: EmailConfirmationUrl.new(
+     #    redirect to: EmailConfirmationCredentials.new(
      #      operation.start_email_confirmation.not_nil!,
      #      operation.email_confirmation.not_nil!
-     #    )
+     #    ).url
      #  end
      #end
 
@@ -542,7 +542,7 @@ This is particularly important, since email addresses are usually the only means
 
        To proceed to confirm your email, click the link below:
 
-       #{EmailConfirmationUrl.new(@operation, @email_confirmation)}
+       #{EmailConfirmationCredentials.new(@operation, @email_confirmation).url}
 
        #{link_expiry_minutes.try do |expiry|
          "This email confirmation link will expire in #{expiry} minutes."

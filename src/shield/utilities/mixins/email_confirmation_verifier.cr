@@ -27,7 +27,7 @@ module Shield::EmailConfirmationVerifier
       end
     end
 
-    def email_confirmation_id : Int64
+    def email_confirmation_id
       email_confirmation_id?.not_nil!
     end
 

@@ -5,16 +5,16 @@ module Shield::PasswordResetParams
     def initialize(@params : Avram::Paramable)
     end
 
-    def password_reset_id? : Int64?
-      token_from_params.try &.id
+    def password_reset_id?
+      credentials?.try(&.id)
     end
 
     def password_reset_token? : String?
-      token_from_params.try &.token
+      credentials?.try(&.password)
     end
 
-    private getter token_from_params : BearerToken? do
-      BearerToken.from_params?(@params)
+    private getter? credentials : PasswordResetCredentials? do
+      PasswordResetCredentials.from_params?(@params)
     end
   end
 end

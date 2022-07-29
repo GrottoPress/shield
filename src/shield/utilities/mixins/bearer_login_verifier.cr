@@ -27,7 +27,7 @@ module Shield::BearerLoginVerifier
       end
     end
 
-    def bearer_login_id : Int64
+    def bearer_login_id
       bearer_login_id?.not_nil!
     end
 

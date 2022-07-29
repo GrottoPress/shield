@@ -200,7 +200,7 @@
      #    success_action(operation)
      #  else
      #    flash.success = Rex.t(:"action.misc.dev_mode_skip_email")
-     #    redirect to: PasswordResetUrl.new(operation, password_reset)
+     #    redirect PasswordResetCredentials.new(operation, password_reset).url
      #  end
      #end
 
@@ -239,7 +239,7 @@
      # ...
      include Shield::PasswordResets::Show
 
-     get "/password-resets/:token" do
+     get "/password-resets/:password_reset_token" do
        run_operation
      end
      # ...
@@ -344,7 +344,7 @@
 
        To proceed with the password reset process, click the link below:
 
-       #{PasswordResetUrl.new(@operation, @password_reset)}
+       #{PasswordResetCredentials.new(@operation, @password_reset).url}
 
        #{link_expiry_minutes.try do |expiry|
          "This password reset link will expire in #{expiry} minutes."
