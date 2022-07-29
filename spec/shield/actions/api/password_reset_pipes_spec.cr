@@ -21,11 +21,7 @@ describe Shield::Api::PasswordResetPipes do
         response = ApiClient.exec(
           Api::PasswordResets::Update,
           token: token,
-          password_reset: {
-            password: password,
-            password_notify: true,
-            login_notify: true
-          }
+          password_reset: {password: password}
         )
 
         response.should send_json(200, {status: "success"})
