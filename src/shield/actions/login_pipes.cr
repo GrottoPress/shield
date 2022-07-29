@@ -42,7 +42,7 @@ module Shield::LoginPipes
       if logged_out?
         timeout_session.delete
         continue
-      elsif timeout_session.expired?
+      elsif timeout_session.login_expired?
         EndCurrentLogin.update!(current_login, session: session)
         response.status_code = 403
         do_enforce_login_idle_timeout_failed

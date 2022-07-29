@@ -16,3 +16,12 @@ module Shield::DeleteLoginsOnPasswordChange
     include Shield::DeleteUserLoginsOnPasswordChange
   end
 end
+
+module Shield::LoginIdleTimeoutSession
+  macro included
+    @[Deprecated("Use `#login_expired?` instead")]
+    def expired? : Bool?
+      login_expired?
+    end
+  end
+end

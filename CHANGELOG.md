@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Omit `error` from `WWW-Authenticate` response header if request lacks token
 - Replace `BearerToken` with `BearerCredentials`
 - Rename `BearerLoginToken` to `BearerLoginBearerCredentials`
+- Rename `Shield::LoginIdleTimeoutSession#expired?` to `#login_expired?`
 
 ## [0.15.0] - 2022-06-28
 
