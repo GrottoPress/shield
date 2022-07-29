@@ -32,7 +32,7 @@ module Shield::ValidateBearerLogin
     private def validate_name_valid
       name.value.try do |value|
         return if value.matches?(/^[a-z\_][a-z0-9\s\_\-\(\)]*$/i)
-        name.add_error Rex.t(:"operation.error.name_invalid")
+        name.add_error Rex.t(:"operation.error.name_invalid", name: value)
       end
     end
 
