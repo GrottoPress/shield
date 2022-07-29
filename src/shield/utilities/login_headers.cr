@@ -6,7 +6,7 @@ module Shield::LoginHeaders
     end
 
     def login_id? : Int64?
-      token_from_headers.try(&.id)
+      token_from_headers.try &.id?
     end
 
     def login_token? : String?

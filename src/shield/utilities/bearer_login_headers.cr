@@ -6,7 +6,7 @@ module Shield::BearerLoginHeaders
     end
 
     def bearer_login_id? : Int64?
-      token_from_headers.try(&.id)
+      token_from_headers.try &.id?
     end
 
     def bearer_login_token? : String?

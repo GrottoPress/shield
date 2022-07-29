@@ -30,14 +30,11 @@ module Shield::PasswordResetSession
     end
 
     def set(token : String) : self
-      BearerToken.from_token?(token).try do |bearer_token|
-        set(bearer_token.token, bearer_token.id)
-      end
-
-      self
+      bearer_token = BearerToken.new(token)
+      set(bearer_token.token, bearer_token.id?)
     end
 
-    def set(token : String, id : Number) : self
+    def set(token : String, id) : self
       @session.set(:password_reset_id, id.to_s)
       @session.set(:password_reset_token, token)
       self
