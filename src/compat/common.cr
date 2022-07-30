@@ -1,8 +1,5 @@
 module Shield::VerificationUrl
   macro included
-    {% puts "Warning: Deprecated `Shield::VerificationUrl`. \
-      Use `Shield::ParamCredentials#url` method instead" %}
-
     @url : String
 
     def self.new(operation, record)
@@ -33,9 +30,6 @@ end
 
 module Shield::BearerToken
   macro included
-    {% puts "Warning: Deprecated `Shield::BearerToken`. \
-      Use the appropriate `Shield::BearerCredentials` subtype instead" %}
-
     getter! :id
     getter :token
 

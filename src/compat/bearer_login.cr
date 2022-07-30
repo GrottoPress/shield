@@ -24,9 +24,6 @@ end
 
 module Shield::BearerLoginToken
   macro included
-    {% puts "Warning: Deprecated `Shield::BearerLoginToken`. \
-      Use `BearerLoginCredentials` utility instead" %}
-
     def bearer_login : BearerLogin
       bearer_login?.not_nil!
     end
