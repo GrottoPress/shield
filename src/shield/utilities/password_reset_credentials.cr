@@ -10,9 +10,9 @@ module Shield::PasswordResetCredentials
 
     def self.new(
       operation : Shield::StartPasswordReset,
-      record : Shield::PasswordReset
+      password_reset : Shield::PasswordReset
     )
-      new(operation.token, record.id)
+      new(operation.token, password_reset.id)
     end
 
     def password_reset : PasswordReset

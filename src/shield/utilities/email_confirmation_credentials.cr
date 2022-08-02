@@ -10,9 +10,9 @@ module Shield::EmailConfirmationCredentials
 
     def self.new(
       operation : Shield::StartEmailConfirmation,
-      record : Shield::EmailConfirmation
+      email_confirmation : Shield::EmailConfirmation
     )
-      new(operation.token, record.id)
+      new(operation.token, email_confirmation.id)
     end
 
     def email_confirmation : EmailConfirmation
