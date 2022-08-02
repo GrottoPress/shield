@@ -4,7 +4,7 @@ module Shield::PasswordResetCredentials
 
     def initialize(
       @password : String,
-      @id : {{ PasswordReset::PRIMARY_KEY_TYPE }}
+      @id : PasswordReset::PrimaryKeyType
     )
     end
 

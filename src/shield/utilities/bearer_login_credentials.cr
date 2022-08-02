@@ -4,7 +4,7 @@ module Shield::BearerLoginCredentials
 
     def initialize(
       @password : String,
-      @id : {{ BearerLogin::PRIMARY_KEY_TYPE }}
+      @id : BearerLogin::PrimaryKeyType
     )
     end
 

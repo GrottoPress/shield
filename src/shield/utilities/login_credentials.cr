@@ -2,7 +2,7 @@ module Shield::LoginCredentials
   macro included
     include Shield::BearerCredentials
 
-    def initialize(@password : String, @id : {{ Login::PRIMARY_KEY_TYPE }})
+    def initialize(@password : String, @id : Login::PrimaryKeyType)
     end
 
     def self.new(operation : Shield::StartLogin, login : Shield::Login)

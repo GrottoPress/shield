@@ -5,7 +5,7 @@ module Shield::PasswordResetSession
 
     def password_reset_id?
       @session.get?(:password_reset_id).try do |id|
-        PasswordReset::PRIMARY_KEY_TYPE.adapter.parse(id).value
+        PasswordReset::PrimaryKeyType.adapter.parse(id).value
       end
     end
 

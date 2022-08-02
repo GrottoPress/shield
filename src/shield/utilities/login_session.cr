@@ -5,7 +5,7 @@ module Shield::LoginSession
 
     def login_id?
       @session.get?(:login_id).try do |id|
-        Login::PRIMARY_KEY_TYPE.adapter.parse(id).value
+        Login::PrimaryKeyType.adapter.parse(id).value
       end
     end
 

@@ -5,7 +5,7 @@ module Shield::EmailConfirmationSession
 
     def email_confirmation_id?
       @session.get?(:email_confirmation_id).try do |id|
-        EmailConfirmation::PRIMARY_KEY_TYPE.adapter.parse(id).value
+        EmailConfirmation::PrimaryKeyType.adapter.parse(id).value
       end
     end
 

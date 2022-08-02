@@ -4,7 +4,7 @@ module Shield::EmailConfirmationCredentials
 
     def initialize(
       @password : String,
-      @id : {{ EmailConfirmation::PRIMARY_KEY_TYPE }}
+      @id : EmailConfirmation::PrimaryKeyType
     )
     end
 
