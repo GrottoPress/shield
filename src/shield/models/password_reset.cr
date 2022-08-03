@@ -1,9 +1,9 @@
 module Shield::PasswordReset
   macro included
-    include Shield::AuthenticationColumns
     include Shield::IpAddressColumn
-
     include Shield::BelongsToUser
-    include Shield::SuccessColumn
+    include Lucille::SuccessStatusColumns
+
+    column token_digest : String
   end
 end

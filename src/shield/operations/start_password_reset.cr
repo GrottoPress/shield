@@ -4,8 +4,9 @@ module Shield::StartPasswordReset
 
     attribute email : String
 
-    include Shield::StartAuthentication
     include Shield::SetIpAddressFromRemoteAddress
+    include Lucille::Activate
+    include Shield::SetToken
 
     before_save do
       set_inactive_at

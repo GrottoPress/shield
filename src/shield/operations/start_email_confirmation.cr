@@ -3,7 +3,8 @@ module Shield::StartEmailConfirmation
     permit_columns :email
 
     include Shield::SetIpAddressFromRemoteAddress
-    include Shield::StartAuthentication
+    include Lucille::Activate
+    include Shield::SetToken
 
     before_save do
       set_inactive_at

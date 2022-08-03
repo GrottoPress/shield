@@ -3,7 +3,8 @@ module Shield::CreateBearerLogin
     permit_columns :name
 
     include Shield::SetUserIdFromUser
-    include Shield::StartAuthentication
+    include Lucille::Activate
+    include Shield::SetToken
 
     before_save do
       set_inactive_at

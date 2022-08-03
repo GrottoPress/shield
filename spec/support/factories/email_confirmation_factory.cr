@@ -11,7 +11,7 @@ class EmailConfirmationFactory < Avram::Factory
     active_at Time.utc
     email "Us3R@ExampLe.tld"
     ip_address "1.2.3.4"
-    success true
+    success false
     token "123abcdefghijklmnopqrst"
   end
 end

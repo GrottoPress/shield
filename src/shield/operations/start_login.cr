@@ -3,7 +3,8 @@ module Shield::StartLogin
     attribute email : String
     attribute password : String
 
-    include Shield::StartAuthentication
+    include Lucille::Activate
+    include Shield::SetToken
     include Shield::SetSession
     include Shield::SetIpAddressFromRemoteAddress
 

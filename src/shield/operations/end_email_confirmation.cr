@@ -1,6 +1,6 @@
 module Shield::EndEmailConfirmation
   macro included
-    include Shield::EndAuthentication
+    include Lucille::Deactivate
     include Shield::DeleteSession
 
     private def delete_session(email_confirmation : Shield::EmailConfirmation)

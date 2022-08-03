@@ -1,11 +1,10 @@
 module Shield::EmailConfirmation
   macro included
-    include Shield::AuthenticationColumns
     include Shield::IpAddressColumn
-
     include Shield::OptionalBelongsToUser
-    include Shield::SuccessColumn
+    include Lucille::SuccessStatusColumns
 
     column email : String
+    column token_digest : String
   end
 end

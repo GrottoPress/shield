@@ -9,9 +9,10 @@ module Shield::ValidatePasswordReset
       validate_ip_address_required
       validate_email_valid
       validate_email_exists
+      validate_token_digest_required
     end
 
-    include Shield::ValidateAuthenticationColumns
+    include Lucille::ValidateStatus
 
     private def validate_email_required
       validate_required email,
@@ -41,6 +42,11 @@ module Shield::ValidatePasswordReset
       email.value.try do |value|
         @guest_email = user_id.value.nil? && value.email?
       end
+    end
+
+    private def validate_token_digest_required
+      validate_required token_digest,
+        message: Rex.t(:"operation.error.token_required")
     end
   end
 end

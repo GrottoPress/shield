@@ -1,6 +1,5 @@
 module Shield::PasswordResetQuery
   macro included
-    include Shield::AuthenticationQuery
-    include Shield::SuccessQuery
+    include Lucille::SuccessStatusQuery
   end
 end

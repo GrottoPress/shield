@@ -12,9 +12,10 @@ module Shield::ValidateBearerLogin
       validate_scopes_required
       validate_scopes_not_empty
       validate_scopes_valid
+      validate_token_digest_required
     end
 
-    include Shield::ValidateAuthenticationColumns
+    include Lucille::ValidateStatus
 
     private def ensure_scopes_unique
       scopes.value = scopes.value.try(&.uniq)
@@ -78,6 +79,11 @@ module Shield::ValidateBearerLogin
           :"operation.error.user_not_found",
           user_id: user_id.value
         )
+    end
+
+    private def validate_token_digest_required
+      validate_required token_digest,
+        message: Rex.t(:"operation.error.token_required")
     end
   end
 end

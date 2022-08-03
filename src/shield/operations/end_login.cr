@@ -1,6 +1,6 @@
 module Shield::EndLogin
   macro included
-    include Shield::EndAuthentication
+    include Lucille::Deactivate
     include Shield::DeleteSession
 
     private def delete_session(login : Shield::Login)

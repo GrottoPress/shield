@@ -74,7 +74,3 @@ end
 struct EmailConfirmationCredentials
   include Shield::EmailConfirmationCredentials
 end
-
-struct SuccessStatus
-  include Shield::SuccessStatus
-end

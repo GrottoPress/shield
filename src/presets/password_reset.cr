@@ -66,7 +66,3 @@ end
 struct PasswordResetCredentials
   include Shield::PasswordResetCredentials
 end
-
-struct SuccessStatus
-  include Shield::SuccessStatus
-end

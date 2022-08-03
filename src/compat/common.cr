@@ -110,6 +110,58 @@ module Shield::BearerToken
   end
 end
 
+module Shield::AuthenticationQuery
+  macro included
+    {% puts "Warning: Deprecated Shield::AuthenticationQuery" %}
+
+    include Lucille::StatusQuery
+  end
+end
+
+module Shield::AuthenticationColumns
+  macro included
+    {% puts "Warning: Deprecated Shield::AuthenticationColumns" %}
+
+    include Lucille::StatusColumns
+
+    column token_digest : String
+  end
+end
+
+module Shield::EndAuthentication
+  macro included
+    {% puts "Warning: Deprecated Shield::EndAuthentication" %}
+
+    include Lucille::Deactivate
+  end
+end
+
+module Shield::StartAuthentication
+  macro included
+    {% puts "Warning: Deprecated Shield::StartAuthentication" %}
+
+    include Lucille::Activate
+    include Shield::SetToken
+  end
+end
+
+module Shield::ValidateAuthenticationColumns
+  macro included
+    {% puts "Warning: Deprecated Shield::ValidateAuthenticationColumns" %}
+
+    before_save do
+      validate_token_digest_required
+    end
+
+    include Lucille::ValidateStatus
+
+    private def validate_token_digest_required
+      validate_required token_digest,
+        message: Rex.t(:"operation.error.token_required")
+    end
+  end
+end
+
 struct BearerToken
   include Shield::BearerToken
 end
