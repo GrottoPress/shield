@@ -162,6 +162,16 @@ module Shield::ValidateAuthenticationColumns
   end
 end
 
+module Shield::SetUserIdFromUser
+  macro included
+    {% puts "Warning: Deprecated Shield::SetUserIdFromUser. \
+      Use Lucille::SetUserIdFromUser instead" %}
+
+    include Lucille::SetUserIdFromUser
+  end
+end
+
+
 struct BearerToken
   include Shield::BearerToken
 end

@@ -2,7 +2,7 @@ module Shield::CreateBearerLogin
   macro included
     permit_columns :name
 
-    include Shield::SetUserIdFromUser
+    include Lucille::SetUserIdFromUser
     include Lucille::Activate
     include Shield::SetToken
 
