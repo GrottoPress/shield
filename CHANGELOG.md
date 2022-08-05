@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Restrict bearer login names to alphanumeric words, hyphens, underscores and parentheses.
 - Omit `error` from `WWW-Authenticate` response header if request lacks token
 - Rename `Shield::LoginIdleTimeoutSession#expired?` to `#login_expired?`
+- Increase cryptographic token sizes from 24 to 32 bytes
 
 ### Removed
 - Remove `EmailConfirmationUrl` utility
