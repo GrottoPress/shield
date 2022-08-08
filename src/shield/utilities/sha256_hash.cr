@@ -8,7 +8,7 @@ module Shield::Sha256Hash
 
     def hash(*, salt : Bool) : String
       salt = salt ? Random::Secure.hex(16) : ""
-      digest = Digest::SHA256.hexdigest { |ctx| ctx << salt << @plaintext }
+      digest = Digest::SHA256.hexdigest("#{salt}#{@plaintext}")
       "#{salt}#{digest}"
     end
 
