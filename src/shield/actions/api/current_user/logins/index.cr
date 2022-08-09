@@ -20,18 +20,16 @@ module Shield::Api::CurrentUser::Logins::Index
       paginate LoginQuery.new.user_id(user.id).is_active.active_at.desc_order
     end
 
-    {% if Avram::Model.all_subclasses
-      .map(&.stringify)
-      .includes?("BearerLogin") %}
+    def user
+      {% if Avram::Model.all_subclasses
+        .map(&.stringify)
+        .includes?("BearerLogin") %}
 
-      def user
         current_user_or_bearer
-      end
-    {% else %}
-      def user
+      {% else %}
         current_user
-      end
-    {% end %}
+      {% end %}
+    end
 
     def authorize?(user : Shield::User) : Bool
       user.id == self.user.id

@@ -34,18 +34,16 @@ module Shield::Api::EmailConfirmations::Update
       end
     end
 
-    {% if Avram::Model.all_subclasses
-      .map(&.stringify)
-      .includes?("BearerLogin") %}
+    def user
+      {% if Avram::Model.all_subclasses
+        .map(&.stringify)
+        .includes?("BearerLogin") %}
 
-      def user
         current_user_or_bearer
-      end
-    {% else %}
-      def user
+      {% else %}
         current_user
-      end
-    {% end %}
+      {% end %}
+    end
 
     def do_verify_operation_failed(utility)
       json FailureSerializer.new(message: Rex.t(:"action.misc.token_invalid"))

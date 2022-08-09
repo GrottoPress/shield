@@ -21,18 +21,16 @@ module Shield::Api::CurrentUser::Update
       end
     end
 
-    {% if Avram::Model.all_subclasses
-      .map(&.stringify)
-      .includes?("BearerLogin") %}
+    def user
+      {% if Avram::Model.all_subclasses
+        .map(&.stringify)
+        .includes?("BearerLogin") %}
 
-      def user
         current_user_or_bearer
-      end
-    {% else %}
-      def user
+      {% else %}
         current_user
-      end
-    {% end %}
+      {% end %}
+    end
 
     def do_run_operation_succeeded(operation, user)
       json UserSerializer.new(

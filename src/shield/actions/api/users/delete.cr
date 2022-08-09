@@ -20,17 +20,15 @@ module Shield::Api::Users::Delete
       end
     end
 
-    {% if Avram::Model.all_subclasses
-      .map(&.stringify)
-      .includes?("BearerLogin") %}
+    def _current_user?
+      {% if Avram::Model.all_subclasses
+        .map(&.stringify)
+        .includes?("BearerLogin") %}
 
-      private def _current_user?
         current_user_or_bearer?
-      end
-    {% else %}
-      private def _current_user?
+      {% else %}
         current_user?
-      end
-    {% end %}
+      {% end %}
+    end
   end
 end
