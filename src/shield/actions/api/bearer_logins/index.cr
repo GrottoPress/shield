@@ -16,7 +16,7 @@ module Shield::Api::BearerLogins::Index
       paginated_bearer_logins[1].results
     end
 
-    getter paginated_bearer_logins : Tuple(
+    private getter paginated_bearer_logins : Tuple(
       Lucky::Paginator,
       BearerLoginQuery
     ) do
