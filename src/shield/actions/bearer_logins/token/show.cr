@@ -25,7 +25,7 @@ module Shield::BearerLogins::Token::Show
     end
 
     def authorize?(user : Shield::User) : Bool
-      super || user.id == bearer_login?.try(&.user_id)
+      user.id == bearer_login?.try(&.user_id)
     end
   end
 end

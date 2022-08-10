@@ -32,6 +32,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Rename `Shield::LoginIdleTimeoutSession#expired?` to `#login_expired?`
 - Increase cryptographic token sizes from 24 to 32 bytes
 
+### Fixed
+- Ensure admins cannot view bearer tokens of others
+
 ### Removed
 - Remove `EmailConfirmationUrl` utility
 - Remove `PasswordResetUrl` utility
