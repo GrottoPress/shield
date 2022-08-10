@@ -2,6 +2,7 @@ struct UserSerializer < SuccessSerializer
   def initialize(
     @user : User? = nil,
     @users : Array(User)? = nil,
+    @oauth_client : OauthClient? = nil,
     @message : String? = nil,
     @pages : Lucky::Paginator? = nil,
     @token : String? = nil,

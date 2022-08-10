@@ -42,9 +42,23 @@ module Shield::ValidateBearerLogin
 
       name.value.try do |_name|
         user_id.value.try do |_user_id|
-          if BearerLoginQuery.new.user_id(_user_id).name(_name).any?
-            name.add_error Rex.t(:"operation.error.name_exists", name: _name)
-          end
+          {% begin %}
+            {% if Avram::Model.all_subclasses
+              .map(&.stringify)
+              .includes?("OauthClient") %}
+
+              if BearerLoginQuery.new
+                .user_id(_user_id)
+                .name(_name)
+                .oauth_client_id.is_nil
+                .any?
+            {% else %}
+              if BearerLoginQuery.new.user_id(_user_id).name(_name).any?
+            {% end %}
+
+              name.add_error Rex.t(:"operation.error.name_exists", name: _name)
+            end
+          {% end %}
         end
       end
     end

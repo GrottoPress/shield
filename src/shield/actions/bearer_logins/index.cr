@@ -23,7 +23,21 @@ module Shield::BearerLogins::Index
       Lucky::Paginator,
       BearerLoginQuery
     ) do
-      paginate BearerLoginQuery.new.is_active.preload_user.active_at.desc_order
+      {% if Avram::Model.all_subclasses
+        .map(&.stringify)
+        .includes?("OauthClient") %}
+
+        paginate BearerLoginQuery.new
+          .oauth_client_id.is_nil
+          .is_active
+          .preload_user
+          .active_at.desc_order
+      {% else %}
+        paginate BearerLoginQuery.new
+          .is_active
+          .preload_user
+          .active_at.desc_order
+      {% end %}
     end
   end
 end

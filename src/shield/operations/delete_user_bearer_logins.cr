@@ -7,6 +7,14 @@ module Shield::DeleteUserBearerLogins
     private def delete_bearer_logins(user : Shield::User)
       query = BearerLoginQuery.new.user_id(user.id)
       current_bearer_login.try { |login| query = query.id.not.eq(login.id) }
+
+      {% if Avram::Model.all_subclasses
+        .map(&.stringify)
+        .includes?("OauthClient") %}
+
+        query = query.oauth_client_id.is_nil
+      {% end %}
+
       query.delete
     end
   end
