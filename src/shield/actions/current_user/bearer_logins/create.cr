@@ -13,7 +13,7 @@ module Shield::CurrentUser::BearerLogins::Create
         scopes: array_param(CreateBearerLogin.param_key, :scopes)
       ) do |operation, bearer_login|
         if operation.saved?
-          BearerLoginSession.new(session).set(operation, bearer_login.not_nil!)
+          BearerTokenSession.new(session).set(operation, bearer_login.not_nil!)
           do_run_operation_succeeded(operation, bearer_login.not_nil!)
         else
           response.status_code = 400

@@ -54,8 +54,8 @@ struct BearerLoginHeaders
   include Shield::BearerLoginHeaders
 end
 
-struct BearerLoginSession
-  include Shield::BearerLoginSession
+struct BearerTokenSession
+  include Shield::BearerTokenSession
 end
 
 struct BearerLoginCredentials

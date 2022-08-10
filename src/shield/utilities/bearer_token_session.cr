@@ -1,4 +1,4 @@
-module Shield::BearerLoginSession
+module Shield::BearerTokenSession
   macro included
     include Shield::Session
 
