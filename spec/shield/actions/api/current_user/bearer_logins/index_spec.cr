@@ -1,7 +1,7 @@
 require "../../../../../spec_helper"
 
 describe Shield::Api::CurrentUser::BearerLogins::Index do
-  it "deletes bearer logins" do
+  it "lists bearer logins" do
     email = "user@example.tld"
     password = "password4APASSWORD<"
 
