@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `LoginCredentials` utility
 - Add `PasswordResetCredentials` utility
 - Add support for all database primary key types (not just `Int64`)
+- Set `Pragma: no-cache` response header in `Shield::LoginPipes#disable_cache`
 
 ### Changed
 - Remove showing bearer token from `Shield::BearerLogins::Show` action

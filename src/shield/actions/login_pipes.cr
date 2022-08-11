@@ -69,6 +69,8 @@ module Shield::LoginPipes
     def disable_caching
       response.headers["Cache-Control"] = "no-store"
       response.headers["Expires"] = "Sun, 16 Aug 1987 07:00:00 GMT"
+      response.headers["Pragma"] = "no-cache"
+
       continue
     end
 
