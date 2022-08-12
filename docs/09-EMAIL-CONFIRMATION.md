@@ -556,9 +556,7 @@ This is particularly important, since email addresses are usually the only means
      end
 
      private def link_expiry_minutes
-        @email_confirmation.inactive_at.try do |inactive_at|
-          (inactive_at - @email_confirmation.active_at).total_minutes.to_i
-        end
+        @email_confirmation.status.span?.try(&.total_minutes.to_i)
      end
      # ...
    end

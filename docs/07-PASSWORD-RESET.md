@@ -359,9 +359,7 @@
      end
 
      private def link_expiry_minutes
-        @password_reset.inactive_at.try do |inactive_at|
-          (inactive_at - @password_reset.active_at).total_minutes.to_i
-        end
+        @password_reset.status.span?.try(&.total_minutes.to_i)
      end
      # ...
    end
