@@ -17,6 +17,13 @@ describe Shield::Api::LoginPipes do
 
       response.should send_json(200, current_user: user.id)
     end
+
+    it "requires logged in" do
+      response = ApiClient.exec(Api::Posts::Index)
+
+      response.headers["WWW-Authenticate"]?.should_not be_nil
+      response.should send_json(401, logged_in: false)
+    end
   end
 
   describe "#require_logged_out" do

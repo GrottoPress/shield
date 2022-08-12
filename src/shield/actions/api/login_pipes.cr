@@ -6,7 +6,7 @@ module Shield::Api::LoginPipes
       if logged_in?
         continue
       else
-        response.status_code = 403
+        send_invalid_token_response
         do_require_logged_in_failed
       end
     end
@@ -48,6 +48,16 @@ module Shield::Api::LoginPipes
       json FailureSerializer.new(
         message: Rex.t(:"action.pipe.authorization_failed")
       )
+    end
+
+    private def send_invalid_token_response
+      response.status_code = 401
+
+      if LoginCredentials.from_headers?(request)
+        response.headers["WWW-Authenticate"] = %(Bearer error="invalid_token")
+      else
+        response.headers["WWW-Authenticate"] = %(Bearer)
+      end
     end
   end
 end

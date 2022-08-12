@@ -5,11 +5,10 @@ module Shield::Api::BearerLoginPipes
     include Shield::Api::LoginPipes
 
     def require_logged_in
-      if logged_in? || bearer_logged_in?
+      if bearer_logged_in?
         continue
       else
-        send_invalid_token_response
-        do_require_logged_in_failed
+        previous_def
       end
     end
 
