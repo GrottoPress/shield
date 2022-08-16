@@ -5,6 +5,8 @@ module Shield
     setting email_confirmation_expiry : Time::Span = 1.hour
     setting login_expiry : Time::Span? = 24.hours
     setting login_idle_timeout : Time::Span? = 30.minutes
+    setting oauth_authorization_expiry : Time::Span = 3.minutes
+    setting oauth_code_challenge_methods_allowed : Array(String) = ["S256"]
     setting password_min_length : Int32 = 12
     setting password_require_lowercase : Bool = true
     setting password_require_uppercase : Bool = true
