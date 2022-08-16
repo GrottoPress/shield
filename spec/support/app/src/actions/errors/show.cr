@@ -45,7 +45,7 @@ class Errors::Show < Lucky::ErrorAction
   def report(error : Exception) : Nil
     puts
     puts "===== ERROR ====="
-    puts "#{error.class} -> #{error.message}"
+    puts "#{error.inspect_with_backtrace}"
     puts "===== ERROR ====="
     puts
   end
