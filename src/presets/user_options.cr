@@ -51,3 +51,12 @@ end
     include Shield::NotifyBearerLogin
   end
 {% end %}
+
+{% if Avram::Model.all_subclasses
+  .map(&.stringify)
+  .includes?("OauthAuthorization") %}
+
+  class CreateOauthAccessToken < BearerLogin::SaveOperation
+    include Shield::NotifyBearerLogin
+  end
+{% end %}

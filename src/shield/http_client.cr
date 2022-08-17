@@ -40,6 +40,10 @@ module Shield::HttpClient
       credentials.authenticate(client)
     end
 
+    def basic_auth(credentials : Shield::BasicCredentials)
+      credentials.authenticate(client)
+    end
+
     def browser_auth(
       user : Shield::User,
       password : String,

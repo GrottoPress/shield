@@ -62,3 +62,7 @@ end
 struct OauthAuthorizationCredentials
   include Shield::OauthAuthorizationCredentials
 end
+
+struct OauthAuthorizationParams
+  include Shield::OauthAuthorizationParams
+end

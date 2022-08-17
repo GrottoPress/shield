@@ -1,5 +1,13 @@
 module Shield::OauthHelpers
   macro included
+    def oauth_authorization
+      oauth_authorization?.not_nil!
+    end
+
+    getter? oauth_authorization : OauthAuthorization? do
+      OauthAuthorizationParams.new(code).verify(oauth_client, code_verifier)
+    end
+
     def oauth_redirect_uri(**params)
       oauth_redirect_uri?(**params).not_nil!
     end
