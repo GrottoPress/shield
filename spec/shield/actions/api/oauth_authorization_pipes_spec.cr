@@ -54,7 +54,6 @@ describe Shield::Api::OauthAuthorizationPipes do
 
   describe "#oauth_require_params" do
     it "requires response type" do
-      resource_owner = UserFactory.create &.email("resource@owner.com")
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
@@ -75,7 +74,6 @@ describe Shield::Api::OauthAuthorizationPipes do
     end
 
     it "requires scope" do
-      resource_owner = UserFactory.create &.email("resource@owner.com")
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
@@ -96,7 +94,6 @@ describe Shield::Api::OauthAuthorizationPipes do
     end
 
     it "requires state" do
-      resource_owner = UserFactory.create &.email("resource@owner.com")
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
@@ -119,7 +116,6 @@ describe Shield::Api::OauthAuthorizationPipes do
 
   describe "#oauth_validate_response_type" do
     it "ensures response type is valid" do
-      resource_owner = UserFactory.create &.email("resource@owner.com")
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
@@ -143,7 +139,6 @@ describe Shield::Api::OauthAuthorizationPipes do
 
   describe "#oauth_require_code_challenge" do
     it "requires code challenge" do
-      resource_owner = UserFactory.create &.email("resource@owner.com")
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
@@ -166,7 +161,6 @@ describe Shield::Api::OauthAuthorizationPipes do
 
   describe "#oauth_validate_code_challenge_method" do
     it "ensures code challenge method is valid" do
-      resource_owner = UserFactory.create &.email("resource@owner.com")
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 

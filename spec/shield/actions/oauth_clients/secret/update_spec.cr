@@ -24,10 +24,10 @@ describe Shield::OauthClients::Secret::Update do
 
     response.headers["X-OAuth-Client-ID"]?.should eq(oauth_client.id.to_s)
 
-    oauth_client.reload.tap do |client|
-      client.secret_digest.should be_truthy
+    oauth_client.reload.tap do |_client|
+      _client.secret_digest.should be_truthy
 
-      client.secret_digest.try do |digest|
+      _client.secret_digest.try do |digest|
         Sha256Hash.new(secret).verify?(digest).should be_false
       end
     end

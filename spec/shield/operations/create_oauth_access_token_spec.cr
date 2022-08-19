@@ -66,15 +66,14 @@ describe Shield::CreateOauthAccessToken do
 
     CreateOauthAccessToken.create(
       oauth_authorization: oauth_authorization
-    ) do |_, bearer_login|
-      bearer_login.should be_nil
+    ) do |_, _bearer_login|
+      _bearer_login.should be_nil
     end
 
-    # ameba:disable Performance/AnyInsteadOfEmpty
     BearerLoginQuery.new
       .oauth_client_id(oauth_client.id)
       .is_active
-      .any?
+      .any? # ameba:disable Performance/AnyInsteadOfEmpty
       .should(be_false)
 
     # ameba:disable Performance/AnyInsteadOfEmpty

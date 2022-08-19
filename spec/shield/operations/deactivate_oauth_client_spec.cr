@@ -19,18 +19,16 @@ describe Shield::DeactivateOauthClient do
       updated_oauth_client.status.inactive?.should be_true
     end
 
-    # ameba:disable Performance/AnyInsteadOfEmpty
     BearerLoginQuery.new
       .oauth_client_id(oauth_client.id)
       .is_active
-      .any?
+      .any? # ameba:disable Performance/AnyInsteadOfEmpty
       .should(be_false)
 
-    # ameba:disable Performance/AnyInsteadOfEmpty
     OauthAuthorizationQuery.new
       .oauth_client_id(oauth_client.id)
       .is_active
-      .any?
+      .any? # ameba:disable Performance/AnyInsteadOfEmpty
       .should(be_false)
   end
 end

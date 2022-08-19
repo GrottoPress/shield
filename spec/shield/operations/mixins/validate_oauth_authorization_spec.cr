@@ -276,7 +276,7 @@ describe Shield::ValidateOauthAuthorization do
         success: false,
       ),
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-    ) do |operation, oauth_authorization|
+    ) do |_, oauth_authorization|
       oauth_authorization.should be_a(OauthAuthorization)
     end
   end

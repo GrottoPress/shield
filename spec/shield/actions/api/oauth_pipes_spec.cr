@@ -34,7 +34,6 @@ end
 describe Shield::Api::OauthPipes do
   pending "#oauth_handle_errors" do
     it "handles server errors" do
-      resource_owner = UserFactory.create &.email("resource@owner.com")
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
@@ -58,18 +57,17 @@ describe Shield::Api::OauthPipes do
 
   describe "#oauth_check_duplicate_params" do
     it "rejects requests with duplicated params" do
-      resource_owner = UserFactory.create &.email("resource@owner.com")
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-      response = ApiClient.get URI.encode("#{Spec::Api::OauthPipes.path}?\
+      response = ApiClient.get "#{Spec::Api::OauthPipes.path}?\
         client_id=#{oauth_client.id}&\
         client_id=23&\
         code_challenge=a1b2c3&\
         redirect_uri=#{oauth_client.redirect_uri}&\
         response_type=code&\
         scope=api.current_user.show&\
-        state=abc123")
+        state=abc123"
 
       response.should send_json(
         400,
@@ -101,7 +99,6 @@ describe Shield::Api::OauthPipes do
 
   describe "#oauth_validate_scope" do
     it "ensures scopes are valid" do
-      resource_owner = UserFactory.create &.email("resource@owner.com")
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
@@ -125,7 +122,6 @@ describe Shield::Api::OauthPipes do
 
   describe "#oauth_validate_redirect_uri" do
     it "ensures redirect URIs match" do
-      resource_owner = UserFactory.create &.email("resource@owner.com")
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
         .redirect_uri("https://example.com/oauth/callback")

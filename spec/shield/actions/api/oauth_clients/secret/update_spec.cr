@@ -27,10 +27,10 @@ describe Shield::Api::OauthClients::Secret::Update do
       {message: "action.oauth_client.secret.update.success"}
     )
 
-    oauth_client.reload.tap do |client|
-      client.secret_digest.should be_truthy
+    oauth_client.reload.tap do |_client|
+      _client.secret_digest.should be_truthy
 
-      client.secret_digest.try do |digest|
+      _client.secret_digest.try do |digest|
         Sha256Hash.new(secret).verify?(digest).should be_false
       end
     end

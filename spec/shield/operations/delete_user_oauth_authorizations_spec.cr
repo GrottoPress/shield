@@ -21,16 +21,14 @@ describe Shield::DeleteUserOauthAuthorizations do
       operation.saved?.should be_true
     end
 
-    # ameba:disable Performance/AnyInsteadOfEmpty
     OauthAuthorizationQuery.new
       .id(oauth_authorization_1.id)
-      .any?
+      .any? # ameba:disable Performance/AnyInsteadOfEmpty
       .should(be_false)
 
-    # ameba:disable Performance/AnyInsteadOfEmpty
     OauthAuthorizationQuery.new
       .id(oauth_authorization_2.id)
-      .any?
+      .any? # ameba:disable Performance/AnyInsteadOfEmpty
       .should(be_false)
   end
 
@@ -60,16 +58,14 @@ describe Shield::DeleteUserOauthAuthorizations do
       operation.saved?.should be_true
     end
 
-    # ameba:disable Performance/AnyInsteadOfEmpty
     OauthAuthorizationQuery.new
       .id(mary_oauth_authorization.id)
-      .any?
+      .any? # ameba:disable Performance/AnyInsteadOfEmpty
       .should(be_false)
 
-    # ameba:disable Performance/AnyInsteadOfEmpty
     OauthAuthorizationQuery.new
       .id(john_oauth_authorization.id)
-      .any?
+      .any? # ameba:disable Performance/AnyInsteadOfEmpty
       .should(be_true)
   end
 end

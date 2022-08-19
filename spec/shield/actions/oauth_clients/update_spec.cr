@@ -4,7 +4,6 @@ describe Shield::OauthClients::Update do
   it "updates OAuth client" do
     password = "password4APASSWORD<"
     new_name = "New Client"
-    new_scopes = ["api.current_user.show"]
 
     user = UserFactory.create &.password(password)
     UserOptionsFactory.create &.user_id(user.id)

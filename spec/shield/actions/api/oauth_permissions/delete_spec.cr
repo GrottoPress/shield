@@ -25,11 +25,10 @@ describe Shield::Api::OauthPermissions::Delete do
       message: "action.oauth_permission.destroy.success"
     })
 
-    # ameba:disable Performance/AnyInsteadOfEmpty
     BearerLoginQuery.new
       .oauth_client_id(oauth_client.id)
       .user_id(resource_owner.id)
-      .any?
+      .any? # ameba:disable Performance/AnyInsteadOfEmpty
       .should(be_false)
   end
 

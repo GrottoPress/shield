@@ -23,12 +23,11 @@ describe Shield::OauthPermissions::Destroy do
 
     response.headers["X-User-ID"]?.should eq(resource_owner.id.to_s)
 
-    # ameba:disable Performance/AnyInsteadOfEmpty
     BearerLoginQuery.new
       .oauth_client_id(oauth_client.id)
       .user_id(resource_owner.id)
       .is_active
-      .any?
+      .any? # ameba:disable Performance/AnyInsteadOfEmpty
       .should(be_false)
   end
 
