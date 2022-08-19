@@ -72,6 +72,22 @@ describe Shield::ValidateOauthClient do
     end
   end
 
+  it "rejects disallowed names" do
+    user = UserFactory.create
+
+    SaveOauthClient.create(params(
+      active_at: Time.utc,
+      name: "GrottoPress Client",
+      redirect_uri: "https://example.com/oauth/callback",
+      secret_digest: "a1b2c3",
+      user_id: user.id
+    )) do |operation, oauth_client|
+      oauth_client.should be_nil
+
+      operation.name.should have_error("operation.error.name_not_allowed")
+    end
+  end
+
   it "rejects duplicate name by same user" do
     name = "Awesome Client"
 

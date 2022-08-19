@@ -14,6 +14,9 @@
      # How long should authorization codes last before expiring?
      #settings.oauth_authorization_expiry : Time::Span = 3.minutes
 
+     # A regex of client names to disallow
+     #settings.oauth_client_name_filter = /^grotto.*$/i
+
      # Allowed code challenge methods
      # Valid values: "plain", "S256"
      #settings.oauth_code_challenge_methods_allowed : Array(String) = ["S256"]

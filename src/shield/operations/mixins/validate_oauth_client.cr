@@ -4,6 +4,7 @@ module Shield::ValidateOauthClient
       validate_name_required
       validate_name_unique
       validate_name_valid
+      validate_name_allowed
 
       validate_redirect_uri_required
       validate_redirect_uri_unique
@@ -36,6 +37,15 @@ module Shield::ValidateOauthClient
       name.value.try do |value|
         return if value.matches?(/^[a-z\_][a-z0-9\s\_\-\(\)]*$/i)
         name.add_error Rex.t(:"operation.error.name_invalid", name: value)
+      end
+    end
+
+    private def validate_name_allowed
+      name.value.try do |value|
+        return unless filter = Shield.settings.oauth_client_name_filter
+        return unless value =~ filter
+
+        name.add_error Rex.t(:"operation.error.name_not_allowed", name: value)
       end
     end
 
