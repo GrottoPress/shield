@@ -192,7 +192,7 @@ describe Shield::ValidateOauthAuthorization do
   end
 
   it "requires valid scopes" do
-    Shield.temp_config(bearer_login_allowed_scopes: [
+    Shield.temp_config(bearer_login_scopes_allowed: [
       BearerScope.new(Api::Posts::New).to_s,
       BearerScope.new(Api::CurrentUser::Show).to_s
     ]) do

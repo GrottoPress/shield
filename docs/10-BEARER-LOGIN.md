@@ -37,6 +37,9 @@ This token is revoked when the user logs out.
 
    Shield.configure do |settings|
      # ...
+     # What scopes can be assigned to bearer logins?
+     settings.bearer_login_scopes_allowed = ["api.current_user.show"]
+
      # How long should bearer login last before it expires?
      #settings.bearer_login_expiry = 90.days # Set to `nil` to disable
 

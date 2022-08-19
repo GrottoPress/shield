@@ -36,7 +36,7 @@ module Shield::OauthPipes
     end
 
     def oauth_validate_scope
-      allowed_scopes = Shield.settings.bearer_login_allowed_scopes
+      allowed_scopes = Shield.settings.bearer_login_scopes_allowed
 
       if scopes.all?(&.in? allowed_scopes)
         continue
