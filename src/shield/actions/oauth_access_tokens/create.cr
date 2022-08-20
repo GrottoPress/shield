@@ -4,6 +4,7 @@ module Shield::OauthAccessTokens::Create
 
     skip :require_logged_in
     skip :require_logged_out
+    skip :check_authorization
 
     before :oauth_validate_client_id
     # before :oauth_handle_errors
@@ -75,10 +76,6 @@ module Shield::OauthAccessTokens::Create
       else
         params.get?(:client_secret)
       end
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      true
     end
   end
 end

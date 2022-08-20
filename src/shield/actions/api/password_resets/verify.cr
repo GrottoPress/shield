@@ -2,6 +2,7 @@ module Shield::Api::PasswordResets::Verify
   macro included
     skip :require_logged_in
     skip :require_logged_out
+    skip :check_authorization
 
     before :pin_password_reset_to_ip_address
 
@@ -29,10 +30,6 @@ module Shield::Api::PasswordResets::Verify
 
     def do_verify_operation_failed(utility)
       json FailureSerializer.new(message: Rex.t(:"action.misc.token_invalid"))
-    end
-
-    def authorize?(user : User) : Bool
-      user.id == current_user_or_bearer?.try(&.id)
     end
   end
 end

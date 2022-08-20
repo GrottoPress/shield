@@ -11,6 +11,7 @@ module Shield::EmailConfirmations::Token::Show
   macro included
     skip :require_logged_in
     skip :require_logged_out
+    skip :check_authorization
 
     before :set_no_referrer_policy # <= IMPORTANT!
 
@@ -31,10 +32,6 @@ module Shield::EmailConfirmations::Token::Show
       else
         redirect to: CurrentUser::New
       end
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == current_user?.try &.id
     end
   end
 end

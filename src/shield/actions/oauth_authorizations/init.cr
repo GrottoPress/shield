@@ -11,6 +11,7 @@ module Shield::OauthAuthorizations::Init
   macro included
     skip :require_logged_in
     skip :require_logged_out
+    skip :check_authorization
 
     param client_id : String?
     param code_challenge : String?
@@ -37,10 +38,6 @@ module Shield::OauthAuthorizations::Init
         response_type: response_type,
         scope: scope,
       )
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      true
     end
   end
 end
