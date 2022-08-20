@@ -95,13 +95,13 @@ module Shield::OauthAccessTokenPipes
     end
 
     def do_oauth_handle_errors(error)
-      json(
+      json({
         error: "server_error",
         error_description: Rex.t(
           :"action.pipe.oauth.server_error",
           message: error.message
         ),
-      )
+      })
     end
 
     def do_oauth_validate_client_secret_failed
