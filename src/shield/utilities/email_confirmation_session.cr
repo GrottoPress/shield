@@ -41,7 +41,7 @@ module Shield::EmailConfirmationSession
       self
     end
 
-    def set(token : String, id) : self
+    def set(token : String, id : EmailConfirmation::PrimaryKeyType) : self
       @session.set(:email_confirmation_id, id.to_s)
       @session.set(:email_confirmation_token, token)
       self

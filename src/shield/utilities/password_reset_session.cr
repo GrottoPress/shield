@@ -41,7 +41,7 @@ module Shield::PasswordResetSession
       self
     end
 
-    def set(token : String, id) : self
+    def set(token : String, id : PasswordReset::PrimaryKeyType) : self
       @session.set(:password_reset_id, id.to_s)
       @session.set(:password_reset_token, token)
       self

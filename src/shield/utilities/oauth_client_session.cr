@@ -41,7 +41,7 @@ module Shield::OauthClientSession
       set(operation.secret, oauth_client.id)
     end
 
-    def set(secret : String, id) : self
+    def set(secret : String, id : OauthClient::PrimaryKeyType) : self
       @session.set(:oauth_client_id, id.to_s)
       @session.set(:oauth_client_secret, secret)
       self

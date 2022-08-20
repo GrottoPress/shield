@@ -38,7 +38,7 @@ module Shield::LoginSession
       self
     end
 
-    def set(token : String, id) : self
+    def set(token : String, id : Login::PrimaryKeyType) : self
       @session.set(:login_id, id.to_s)
       @session.set(:login_token, token)
       self
