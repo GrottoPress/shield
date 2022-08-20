@@ -82,6 +82,6 @@ end
   .includes?("OauthAuthorization") %}
 
   class CreateOauthAccessToken < BearerLogin::SaveOperation
-    include Shield::NotifyBearerLoginIfSet
+    include Shield::NotifyOauthAccessTokenIfSet
   end
 {% end %}
