@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Add OAuth 2.0 - Authorization Code Grant + PKCE
+- Add `Shield::Api::BearerLogins::Verify` action
 - Add `Shield::Api::Logins::Show` action
 - Add `Shield::BearerLogins::Token::Show` action
 - Add `Shield::EmailConfirmations::Token::Show` action
