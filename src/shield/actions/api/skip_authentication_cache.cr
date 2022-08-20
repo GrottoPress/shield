@@ -3,7 +3,7 @@ module Shield::Api::SkipAuthenticationCache
     include Shield::SkipAuthenticationCache
 
     def current_login? : Login?
-      LoginHeaders.new(request.headers).verify
+      LoginHeaders.new(request).verify
     end
 
     {% if Avram::Model.all_subclasses
@@ -15,7 +15,7 @@ module Shield::Api::SkipAuthenticationCache
       end
 
       def current_bearer_login? : BearerLogin?
-        BearerLoginHeaders.new(request.headers).verify
+        BearerLoginHeaders.new(request).verify
       end
     {% end %}
   end

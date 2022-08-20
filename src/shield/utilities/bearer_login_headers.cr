@@ -5,6 +5,10 @@ module Shield::BearerLoginHeaders
     def initialize(@headers : HTTP::Headers)
     end
 
+    def self.new(request : HTTP::Request)
+      new(request.headers)
+    end
+
     def bearer_login_id?
       credentials?.try(&.id)
     end

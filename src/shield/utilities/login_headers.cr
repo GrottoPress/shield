@@ -5,6 +5,10 @@ module Shield::LoginHeaders
     def initialize(@headers : HTTP::Headers)
     end
 
+    def self.new(request : HTTP::Request)
+      new(request.headers)
+    end
+
     def login_id?
       credentials?.try(&.id)
     end
