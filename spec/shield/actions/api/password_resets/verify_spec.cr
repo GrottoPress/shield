@@ -27,16 +27,4 @@ describe Shield::Api::PasswordResets::Verify do
     response = ApiClient.exec(Api::PasswordResets::Verify, token: token)
     response.should send_json(403, {status: "failure"})
   end
-
-  it "requires logged out" do
-    email = "user@example.tld"
-    password = "password4APASSWORD<"
-
-    client = ApiClient.new
-    client.api_auth(email, password)
-
-    response = client.exec(Api::PasswordResets::Verify)
-
-    response.should send_json(200, logged_in: true)
-  end
 end
