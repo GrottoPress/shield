@@ -1,6 +1,7 @@
 module Shield::OauthClientSession
   macro included
-    include Shield::Session
+    def initialize(@session : Lucky::Session)
+    end
 
     getter? oauth_client : OauthClient? do
       oauth_client_id?.try do |id|

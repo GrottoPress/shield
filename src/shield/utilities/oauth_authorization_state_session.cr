@@ -1,6 +1,7 @@
 module Shield::OauthAuthorizationStateSession
   macro included
-    include Shield::Session
+    def initialize(@session : Lucky::Session)
+    end
 
     def state : String
       state?.not_nil!

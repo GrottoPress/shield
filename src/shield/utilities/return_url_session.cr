@@ -1,6 +1,7 @@
 module Shield::ReturnUrlSession
   macro included
-    include Shield::Session
+    def initialize(@session : Lucky::Session)
+    end
 
     def return_url : String
       return_url?.not_nil!

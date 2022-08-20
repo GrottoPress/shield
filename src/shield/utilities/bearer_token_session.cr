@@ -1,6 +1,7 @@
 module Shield::BearerTokenSession
   macro included
-    include Shield::Session
+    def initialize(@session : Lucky::Session)
+    end
 
     def bearer_token : String
       bearer_token?.not_nil!

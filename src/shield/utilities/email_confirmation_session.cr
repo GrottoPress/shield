@@ -1,7 +1,9 @@
 module Shield::EmailConfirmationSession
   macro included
-    include Shield::Session
     include Shield::EmailConfirmationVerifier
+
+    def initialize(@session : Lucky::Session)
+    end
 
     def email_confirmation_id?
       @session.get?(:email_confirmation_id).try do |id|

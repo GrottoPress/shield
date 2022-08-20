@@ -171,6 +171,20 @@ module Shield::SetUserIdFromUser
   end
 end
 
+module Shield::Session
+  macro included
+    {% puts "Warning: Deprecated Shield::Session" %}
+
+    def initialize(@session : Lucky::Session)
+    end
+
+    def delete : self
+    end
+
+    def set(*values) : self
+    end
+  end
+end
 
 struct BearerToken
   include Shield::BearerToken

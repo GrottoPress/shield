@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove `PasswordResetUrl` utility
 - Remove `Shield::VerificationUrl` utility mixin
 - Remove `BearerToken` utility
+- Remove `Shield::Session` utility mixin
 
 ## [0.15.0] - 2022-06-28
 

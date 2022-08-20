@@ -1,6 +1,7 @@
 module Shield::LoginIdleTimeoutSession
   macro included
-    include Shield::Session
+    def initialize(@session : Lucky::Session)
+    end
 
     def login_expired? : Bool?
       Shield.settings.login_idle_timeout.try do |timeout|

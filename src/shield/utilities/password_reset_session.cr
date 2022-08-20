@@ -1,7 +1,9 @@
 module Shield::PasswordResetSession
   macro included
-    include Shield::Session
     include Shield::PasswordResetVerifier
+
+    def initialize(@session : Lucky::Session)
+    end
 
     def password_reset_id?
       @session.get?(:password_reset_id).try do |id|

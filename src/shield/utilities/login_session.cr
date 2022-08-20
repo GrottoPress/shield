@@ -1,7 +1,9 @@
 module Shield::LoginSession
   macro included
-    include Shield::Session
     include Shield::LoginVerifier
+
+    def initialize(@session : Lucky::Session)
+    end
 
     def login_id?
       @session.get?(:login_id).try do |id|
