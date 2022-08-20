@@ -707,11 +707,11 @@
 
    ---
    ```crystal
-   # ->>> src/actions/oauth_access_tokens/create.cr
+   # ->>> src/actions/api/oauth_access_tokens/create.cr
 
-   class OauthAccessTokens::Create < BrowserAction
+   class Api::OauthAccessTokens::Create < ApiAction
      # ...
-     include Shield::OauthAccessTokens::Create
+     include Shield::Api::OauthAccessTokens::Create
 
      post "/oauth/tokens" do
        run_operation
