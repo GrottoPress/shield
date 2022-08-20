@@ -3,6 +3,5 @@
 module Shield::Api::OauthAccessTokenPipes
   macro included
     include Shield::OauthAccessTokenPipes
-    include Shield::Api::OauthPipes
   end
 end

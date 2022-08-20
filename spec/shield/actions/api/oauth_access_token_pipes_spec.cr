@@ -85,7 +85,7 @@ describe Shield::Api::OauthAccessTokenPipes do
 
       response.should send_json(
         400,
-        error: "invalid_request",
+        error: "invalid_client",
         error_description: "action.pipe.oauth.client_id_invalid"
       )
     end
