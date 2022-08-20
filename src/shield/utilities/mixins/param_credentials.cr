@@ -2,9 +2,6 @@ module Shield::ParamCredentials
   macro included
     include Shield::Credentials
 
-    def url : String
-    end
-
     def to_param : String
       to_s
     end
