@@ -29,10 +29,10 @@ module Shield::ActionPipes
       status : Int32 = 302,
       allow_external : Bool = false
     )
-      if request.method.in?({"PATCH", "POST", "PUT"})
-        url = return_url? || fallback
-      else
+      if request.method.in?({"GET", "HEAD", "DELETE"})
         url = return_url? || previous_page_url? || fallback
+      else
+        url = return_url? || fallback
       end
 
       redirect to: url, status: status
