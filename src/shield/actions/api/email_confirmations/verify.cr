@@ -34,7 +34,7 @@ module Shield::Api::EmailConfirmations::Verify
     end
 
     def authorize?(user : User) : Bool
-      user.id == current_user?.try &.id
+      user.id == current_user_or_bearer?.try(&.id)
     end
   end
 end
