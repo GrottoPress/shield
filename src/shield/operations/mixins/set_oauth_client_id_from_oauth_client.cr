@@ -7,7 +7,7 @@ module Shield::SetOauthClientIdFromOauthClient
     end
 
     def oauth_client! : OauthClient?
-      oauth_client || oauth_client_id.value.try do |value|
+      self.oauth_client ||= oauth_client_id.value.try do |value|
         OauthClientQuery.new.id(value).first?
       end
     end
