@@ -55,56 +55,6 @@ module Shield::OauthPipes
       end
     end
 
-    def do_oauth_validate_client_id_failed
-      json({
-        error: "invalid_request",
-        error_description: Rex.t(
-          :"action.pipe.oauth.client_id_invalid",
-          client_id: client_id
-        )
-      })
-    end
-
-    def do_oauth_validate_redirect_uri_failed
-      json({
-        error: "invalid_request",
-        error_description: Rex.t(
-          :"action.pipe.oauth.redirect_uri_invalid",
-          redirect_uri: redirect_uri
-        )
-      })
-    end
-
-    def do_oauth_check_duplicate_params_failed
-      redirect to: oauth_redirect_uri(
-        error: "invalid_request",
-        error_description: Rex.t(:"action.pipe.oauth.duplicate_params"),
-        state: state
-      ).to_s
-    end
-
-    def do_oauth_validate_scope_failed
-      redirect to: oauth_redirect_uri(
-        error: "invalid_scope",
-        error_description: Rex.t(
-          :"action.pipe.oauth.scope_invalid",
-          scope: scope
-        ),
-        state: state
-      ).to_s
-    end
-
-    def do_oauth_handle_errors(error)
-      redirect to: oauth_redirect_uri(
-        error: "server_error",
-        error_description: Rex.t(
-          :"action.pipe.oauth.server_error",
-          message: error.message
-        ),
-        state: state
-      ).to_s
-    end
-
     private def has_duplicate_params
       params.from_query.any? { |name, _| name.size > 1 }
     end
