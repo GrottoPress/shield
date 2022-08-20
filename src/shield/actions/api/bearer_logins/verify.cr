@@ -9,7 +9,7 @@ module Shield::Api::BearerLogins::Verify
     # end
 
     def run_operation
-      BearerLoginHeaders.new(request).verify do |utility, bearer_login|
+      BearerLoginParams.new(params).verify do |utility, bearer_login|
         if bearer_login
           do_verify_operation_succeeded(utility, bearer_login.not_nil!)
         else

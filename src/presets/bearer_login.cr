@@ -54,6 +54,10 @@ struct BearerLoginHeaders
   include Shield::BearerLoginHeaders
 end
 
+struct BearerLoginParams
+  include Shield::BearerLoginParams
+end
+
 struct BearerTokenSession
   include Shield::BearerTokenSession
 end

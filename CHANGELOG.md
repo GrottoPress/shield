@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::PasswordResets::Token::Show` action
 - Add `.bearer_login_scopes_allowed` setting
 - Add `BearerLoginCredentials` utility
+- Add `BearerLoginParams` utility
 - Add `EmailConfirmationCredentials` utility
 - Add `LoginCredentials` utility
 - Add `PasswordResetCredentials` utility

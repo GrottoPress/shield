@@ -1,6 +1,7 @@
 module Shield::BearerLoginCredentials
   macro included
     include Shield::BearerCredentials
+    include Shield::ParamCredentials
 
     def initialize(
       @password : String,
