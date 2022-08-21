@@ -38,7 +38,8 @@ module Shield::Api::OauthAccessTokens::Create
         access_token: operation.token,
         token_type: "Bearer",
         expires_in: bearer_login.status.span?.try(&.total_seconds.to_i64),
-        scope: bearer_login.scopes.join(' ')
+        scope: bearer_login.scopes.join(' '),
+        user_id: bearer_login.user_id
       })
     end
 
