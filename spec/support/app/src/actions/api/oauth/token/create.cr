@@ -1,5 +1,5 @@
-class Api::OauthAccessTokens::Create < ApiAction
-  include Shield::Api::OauthAccessTokens::Create
+class Api::Oauth::Token::Create < ApiAction
+  include Shield::Api::Oauth::Token::Create
 
   skip :pin_login_to_ip_address
   skip :oauth_validate_client_id
@@ -12,7 +12,7 @@ class Api::OauthAccessTokens::Create < ApiAction
   skip :oauth_check_multiple_client_auth
   skip :oauth_validate_client_secret
 
-  post "/oauth/tokens" do
+  post "/oauth/token" do
     run_operation
   end
 end

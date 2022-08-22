@@ -1,6 +1,6 @@
-require "../../../../spec_helper"
+require "../../../../../spec_helper"
 
-describe Shield::CurrentUser::OauthAuthorizations::Create do
+describe Shield::Api::Oauth::Authorization::Create do
   it "creates OAuth authorization" do
     password = "password4APASSWORD<"
 
@@ -13,10 +13,10 @@ describe Shield::CurrentUser::OauthAuthorizations::Create do
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
     client = ApiClient.new
-    client.browser_auth(resource_owner, password)
+    client.api_auth(resource_owner, password)
 
     response = client.exec(
-      CurrentUser::OauthAuthorizations::Create,
+      Api::Oauth::Authorization::Create,
       oauth_authorization: {
         granted: true,
         code_challenge: "a1b2c3",
@@ -27,13 +27,12 @@ describe Shield::CurrentUser::OauthAuthorizations::Create do
       }
     )
 
-    response.status.should eq(HTTP::Status::FOUND)
-    response.headers["X-OAuth-Authorization-ID"]?.should_not be_nil
+    response.should send_json(200)
   end
 
   it "requires logged in" do
     response = ApiClient.exec(
-      CurrentUser::OauthAuthorizations::Create,
+      Api::Oauth::Authorization::Create,
       oauth_authorization: {
         granted: true,
         code_challenge: "a1b2c3",
@@ -44,7 +43,6 @@ describe Shield::CurrentUser::OauthAuthorizations::Create do
       }
     )
 
-    response.status.should eq(HTTP::Status::FOUND)
-    response.headers["X-Logged-In"]?.should eq("false")
+    response.should send_json(401, logged_in: false)
   end
 end

@@ -1,5 +1,5 @@
-class CurrentUser::OauthAuthorizations::New < BrowserAction
-  include Shield::CurrentUser::OauthAuthorizations::New
+class Oauth::Authorization::New < BrowserAction
+  include Shield::Oauth::Authorization::New
 
   skip :pin_login_to_ip_address
   skip :oauth_validate_client_id
@@ -12,7 +12,7 @@ class CurrentUser::OauthAuthorizations::New < BrowserAction
   skip :oauth_require_code_challenge
   skip :oauth_validate_code_challenge_method
 
-  get "/account/oauth/authorizations/new" do
+  get "/oauth/authorization" do
     operation = StartOauthAuthorization.new(
       redirect_uri: redirect_uri.to_s,
       response_type: response_type.to_s,

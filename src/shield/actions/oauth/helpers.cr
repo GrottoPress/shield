@@ -1,4 +1,4 @@
-module Shield::OauthHelpers
+module Shield::Oauth::Helpers
   macro included
     def oauth_authorization
       oauth_authorization?.not_nil!

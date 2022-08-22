@@ -1,6 +1,6 @@
-module Shield::CurrentUser::OauthAuthorizations::New
+module Shield::Oauth::Authorization::New
   macro included
-    include Shield::OauthAuthorizationPipes
+    include Shield::Oauth::Authorization::Pipes
 
     before :oauth_validate_client_id
     # before :oauth_handle_errors
@@ -20,7 +20,7 @@ module Shield::CurrentUser::OauthAuthorizations::New
     param response_type : String?
     param scope : String?
 
-    # get "/account/oauth/authorizations/new" do
+    # get "/oauth/authorization" do
     #   operation = StartOauthAuthorization.new(
     #     redirect_uri: redirect_uri.to_s,
     #     response_type: response_type.to_s,

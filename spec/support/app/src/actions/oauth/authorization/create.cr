@@ -1,5 +1,5 @@
-class CurrentUser::OauthAuthorizations::Create < BrowserAction
-  include Shield::CurrentUser::OauthAuthorizations::Create
+class Oauth::Authorization::Create < BrowserAction
+  include Shield::Oauth::Authorization::Create
 
   skip :pin_login_to_ip_address
   skip :oauth_validate_client_id
@@ -12,7 +12,7 @@ class CurrentUser::OauthAuthorizations::Create < BrowserAction
   skip :oauth_require_code_challenge
   skip :oauth_validate_code_challenge_method
 
-  post "/account/oauth/authorizations" do
+  post "/oauth/authorization" do
     run_operation
   end
 

@@ -1,8 +1,8 @@
 # Implements the OAuth 2.0 authorization framework as defined
 # in [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749)
-module Shield::Api::OauthAccessTokenPipes
+module Shield::Api::Oauth::Token::Pipes
   macro included
-    include Shield::OauthPipes
+    include Shield::Oauth::Pipes
 
     def oauth_require_access_token_params
       if grant_type && code

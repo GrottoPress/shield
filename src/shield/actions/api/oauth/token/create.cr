@@ -1,6 +1,8 @@
-module Shield::Api::OauthAccessTokens::Create
+# The Token endpoint
+#
+module Shield::Api::Oauth::Token::Create
   macro included
-    include Shield::Api::OauthAccessTokenPipes
+    include Shield::Api::Oauth::Token::Pipes
 
     before :oauth_validate_client_id
     # before :oauth_handle_errors
@@ -12,7 +14,7 @@ module Shield::Api::OauthAccessTokens::Create
     before :oauth_check_multiple_client_auth
     before :oauth_validate_client_secret
 
-    # post "/oauth/tokens" do
+    # post "/oauth/token" do
     #   run_operation
     # end
 

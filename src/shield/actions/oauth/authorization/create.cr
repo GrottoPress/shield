@@ -1,19 +1,19 @@
-module Shield::Api::CurrentUser::OauthAuthorizations::Create
+module Shield::Oauth::Authorization::Create
   macro included
-    include Shield::Api::OauthAuthorizationPipes
+    include Shield::Oauth::Authorization::Pipes
 
-    before :oauth_validate_redirect_uri
+    before :oauth_validate_client_id
     # before :oauth_handle_errors
     before :oauth_check_duplicate_params
     before :oauth_require_authorization_params
     before :oauth_validate_response_type
-    before :oauth_validate_client_id
+    before :oauth_validate_redirect_uri
     before :oauth_validate_scope
     before :oauth_require_code_challenge
     before :oauth_validate_code_challenge_method
     before :oauth_require_logged_in
 
-    # post "/account/oauth/authorizations" do
+    # post "/oauth/authorization" do
     #   run_operation
     # end
 
@@ -35,19 +35,12 @@ module Shield::Api::CurrentUser::OauthAuthorizations::Create
 
     def do_run_operation_succeeded(operation, oauth_authorization)
       code = OauthAuthorizationCredentials.new(operation, oauth_authorization)
-
-      json({
-        code: code.to_s,
-        redirect_to: oauth_redirect_uri(code: code.to_s, state: state).to_s,
-        state: state
-      })
+      redirect to: oauth_redirect_uri(code: code.to_s, state: state).to_s
     end
 
     def do_run_operation_failed(operation)
-      json({
-        error: operation.granted.value ? "invalid_request" : "access_denied",
-        state: state,
-      })
+      error = operation.granted.value ? "invalid_request" : "access_denied"
+      redirect to: oauth_redirect_uri(error: error, state: state).to_s
     end
 
     def user

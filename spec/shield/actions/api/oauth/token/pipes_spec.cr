@@ -1,7 +1,7 @@
-require "../../../spec_helper"
+require "../../../../../spec_helper"
 
-class Spec::Api::OauthAccessTokenPipes < ApiAction
-  include Shield::Api::OauthAccessTokenPipes
+class Spec::Api::Oauth::Token::Pipes < ApiAction
+  include Shield::Api::Oauth::Token::Pipes
 
   skip :require_logged_in
   skip :require_logged_out
@@ -44,7 +44,7 @@ class Spec::Api::OauthAccessTokenPipes < ApiAction
   end
 end
 
-describe Shield::Api::OauthAccessTokenPipes do
+describe Shield::Api::Oauth::Token::Pipes do
   describe "#oauth_validate_client_id" do
     it "validates client ID" do
       code = "a1b2c3"
@@ -74,7 +74,7 @@ describe Shield::Api::OauthAccessTokenPipes do
       ).to_s
 
       response = ApiClient.exec(
-        Spec::Api::OauthAccessTokenPipes,
+        Spec::Api::Oauth::Token::Pipes,
         client_id: 23,
         code: code_final,
         redirect_uri: oauth_client.redirect_uri,
@@ -120,7 +120,7 @@ describe Shield::Api::OauthAccessTokenPipes do
       ).to_s
 
       response = ApiClient.exec(
-        Spec::Api::OauthAccessTokenPipes,
+        Spec::Api::Oauth::Token::Pipes,
         client_id: oauth_client.id,
         code: code_final,
         redirect_uri: oauth_client.redirect_uri,
@@ -144,7 +144,7 @@ describe Shield::Api::OauthAccessTokenPipes do
         .secret(client_secret)
 
       response = ApiClient.exec(
-        Spec::Api::OauthAccessTokenPipes,
+        Spec::Api::Oauth::Token::Pipes,
         client_id: oauth_client.id,
         redirect_uri: oauth_client.redirect_uri,
         grant_type: "authorization_code",
@@ -189,7 +189,7 @@ describe Shield::Api::OauthAccessTokenPipes do
       ).to_s
 
       response = ApiClient.exec(
-        Spec::Api::OauthAccessTokenPipes,
+        Spec::Api::Oauth::Token::Pipes,
         client_id: oauth_client.id,
         code: code_final,
         redirect_uri: oauth_client.redirect_uri,
@@ -234,7 +234,7 @@ describe Shield::Api::OauthAccessTokenPipes do
       ).to_s
 
       response = ApiClient.exec(
-        Spec::Api::OauthAccessTokenPipes,
+        Spec::Api::Oauth::Token::Pipes,
         client_id: oauth_client.id,
         code: code_final,
         redirect_uri: oauth_client.redirect_uri,
@@ -276,7 +276,7 @@ describe Shield::Api::OauthAccessTokenPipes do
       ).to_s
 
       response = ApiClient.exec(
-        Spec::Api::OauthAccessTokenPipes,
+        Spec::Api::Oauth::Token::Pipes,
         client_id: oauth_client.id,
         code: code_final,
         redirect_uri: oauth_client.redirect_uri,
@@ -312,7 +312,7 @@ describe Shield::Api::OauthAccessTokenPipes do
       ).to_s
 
       response = ApiClient.exec(
-        Spec::Api::OauthAccessTokenPipes,
+        Spec::Api::Oauth::Token::Pipes,
         client_id: oauth_client.id,
         code: code_final,
         redirect_uri: oauth_client.redirect_uri,
@@ -350,7 +350,7 @@ describe Shield::Api::OauthAccessTokenPipes do
       ).to_s
 
       response = ApiClient.exec(
-        Spec::Api::OauthAccessTokenPipes,
+        Spec::Api::Oauth::Token::Pipes,
         client_id: oauth_client.id,
         code: code_final,
         redirect_uri: oauth_client.redirect_uri,
@@ -396,7 +396,7 @@ describe Shield::Api::OauthAccessTokenPipes do
       ).to_s
 
       response = ApiClient.exec(
-        Spec::Api::OauthAccessTokenPipes,
+        Spec::Api::Oauth::Token::Pipes,
         client_id: oauth_client_2.id,
         code: code_final,
         redirect_uri: oauth_client.redirect_uri,
@@ -441,7 +441,7 @@ describe Shield::Api::OauthAccessTokenPipes do
       ).to_s
 
       response = ApiClient.exec(
-        Spec::Api::OauthAccessTokenPipes,
+        Spec::Api::Oauth::Token::Pipes,
         client_id: oauth_client.id,
         code: code_final,
         redirect_uri: oauth_client.redirect_uri,
@@ -484,7 +484,7 @@ describe Shield::Api::OauthAccessTokenPipes do
       ).to_s
 
       response = ApiClient.exec(
-        Spec::Api::OauthAccessTokenPipes,
+        Spec::Api::Oauth::Token::Pipes,
         client_id: oauth_client.id,
         code: code_final,
         redirect_uri: oauth_client.redirect_uri,
@@ -520,7 +520,7 @@ describe Shield::Api::OauthAccessTokenPipes do
       )
 
       response = api_client.exec(
-        Spec::Api::OauthAccessTokenPipes,
+        Spec::Api::Oauth::Token::Pipes,
         client_id: oauth_client.id,
         code: OauthAuthorizationCredentials.new(
           code,

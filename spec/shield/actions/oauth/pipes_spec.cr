@@ -1,7 +1,7 @@
-require "../../spec_helper"
+require "../../../spec_helper"
 
-class Spec::OauthPipes < ApiAction
-  include Shield::Api::OauthAccessTokenPipes
+class Spec::Oauth::Pipes < ApiAction
+  include Shield::Api::Oauth::Token::Pipes
 
   skip :require_logged_in
   skip :require_logged_out
@@ -31,14 +31,14 @@ class Spec::OauthPipes < ApiAction
   end
 end
 
-describe Shield::OauthPipes do
+describe Shield::Oauth::Pipes do
   pending "#oauth_handle_errors" do
     it "handles server errors" do
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
       response = ApiClient.exec(
-        Spec::OauthPipes,
+        Spec::Oauth::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
         redirect_uri: oauth_client.redirect_uri,
@@ -60,7 +60,7 @@ describe Shield::OauthPipes do
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-      response = ApiClient.get "#{Spec::OauthPipes.path}?\
+      response = ApiClient.get "#{Spec::Oauth::Pipes.path}?\
         client_id=#{oauth_client.id}&\
         client_id=23&\
         code_challenge=a1b2c3&\
@@ -80,7 +80,7 @@ describe Shield::OauthPipes do
   describe "#oauth_validate_client_id" do
     it "validates client ID" do
       response = ApiClient.exec(
-        Spec::OauthPipes,
+        Spec::Oauth::Pipes,
         client_id: 23,
         code_challenge: "a1b2c3",
         redirect_uri: "myapp://callback",
@@ -103,7 +103,7 @@ describe Shield::OauthPipes do
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
       response = ApiClient.exec(
-        Spec::OauthPipes,
+        Spec::Oauth::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
         redirect_uri: oauth_client.redirect_uri,
@@ -127,7 +127,7 @@ describe Shield::OauthPipes do
         .redirect_uri("https://example.com/oauth/callback")
 
       response = ApiClient.exec(
-        Spec::OauthPipes,
+        Spec::Oauth::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
         redirect_uri: "myapp://callback",

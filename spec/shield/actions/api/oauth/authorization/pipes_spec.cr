@@ -1,7 +1,7 @@
-require "../../../spec_helper"
+require "../../../../../spec_helper"
 
-class Spec::Api::OauthAuthorizationPipes < ApiAction
-  include Shield::Api::OauthAuthorizationPipes
+class Spec::Api::Oauth::Authorization::Pipes < ApiAction
+  include Shield::Api::Oauth::Authorization::Pipes
 
   skip :require_logged_in
   skip :require_logged_out
@@ -31,11 +31,11 @@ class Spec::Api::OauthAuthorizationPipes < ApiAction
   end
 end
 
-describe Shield::Api::OauthAuthorizationPipes do
+describe Shield::Api::Oauth::Authorization::Pipes do
   describe "#oauth_validate_client_id" do
     it "validates client ID" do
       response = ApiClient.exec(
-        Spec::Api::OauthAuthorizationPipes,
+        Spec::Api::Oauth::Authorization::Pipes,
         client_id: 23,
         code_challenge: "a1b2c3",
         redirect_uri: "myapp://callback",
@@ -58,7 +58,7 @@ describe Shield::Api::OauthAuthorizationPipes do
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
       response = ApiClient.exec(
-        Spec::Api::OauthAuthorizationPipes,
+        Spec::Api::Oauth::Authorization::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
         redirect_uri: oauth_client.redirect_uri,
@@ -78,7 +78,7 @@ describe Shield::Api::OauthAuthorizationPipes do
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
       response = ApiClient.exec(
-        Spec::Api::OauthAuthorizationPipes,
+        Spec::Api::Oauth::Authorization::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
         redirect_uri: oauth_client.redirect_uri,
@@ -98,7 +98,7 @@ describe Shield::Api::OauthAuthorizationPipes do
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
       response = ApiClient.exec(
-        Spec::Api::OauthAuthorizationPipes,
+        Spec::Api::Oauth::Authorization::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
         redirect_uri: oauth_client.redirect_uri,
@@ -120,7 +120,7 @@ describe Shield::Api::OauthAuthorizationPipes do
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
       response = ApiClient.exec(
-        Spec::Api::OauthAuthorizationPipes,
+        Spec::Api::Oauth::Authorization::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
         redirect_uri: oauth_client.redirect_uri,
@@ -143,7 +143,7 @@ describe Shield::Api::OauthAuthorizationPipes do
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
       response = ApiClient.exec(
-        Spec::Api::OauthAuthorizationPipes,
+        Spec::Api::Oauth::Authorization::Pipes,
         client_id: oauth_client.id,
         redirect_uri: oauth_client.redirect_uri,
         response_type: "code",
@@ -165,7 +165,7 @@ describe Shield::Api::OauthAuthorizationPipes do
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
       response = ApiClient.exec(
-        Spec::Api::OauthAuthorizationPipes,
+        Spec::Api::Oauth::Authorization::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
         code_challenge_method: "S512",

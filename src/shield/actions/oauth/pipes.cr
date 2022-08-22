@@ -1,8 +1,8 @@
 # Implements the OAuth 2.0 authorization framework as defined
 # in [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749)
-module Shield::OauthPipes
+module Shield::Oauth::Pipes
   macro included
-    include Shield::OauthHelpers
+    include Shield::Oauth::Helpers
 
     skip :require_logged_in
     skip :require_logged_out

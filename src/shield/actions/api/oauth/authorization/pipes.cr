@@ -1,8 +1,8 @@
 # Implements the OAuth 2.0 authorization framework as defined
 # in [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749)
-module Shield::Api::OauthAuthorizationPipes
+module Shield::Api::Oauth::Authorization::Pipes
   macro included
-    include Shield::OauthAuthorizationPipes
+    include Shield::Oauth::Authorization::Pipes
 
     def do_oauth_check_duplicate_params_failed
       json({

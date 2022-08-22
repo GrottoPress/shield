@@ -1,6 +1,6 @@
-require "../../../../spec_helper"
+require "../../../../../spec_helper"
 
-describe Shield::Api::OauthAccessTokens::Create do
+describe Shield::Api::Oauth::Token::Create do
   it "creates OAuth access token" do
     code = "a1b2c3"
     client_secret = "def456"
@@ -30,7 +30,7 @@ describe Shield::Api::OauthAccessTokens::Create do
     ).to_s
 
     response = ApiClient.exec(
-      Api::OauthAccessTokens::Create,
+      Api::Oauth::Token::Create,
       client_id: oauth_client.id,
       code: code_final,
       redirect_uri: oauth_client.redirect_uri,

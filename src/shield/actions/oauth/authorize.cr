@@ -1,4 +1,6 @@
-module Shield::OauthAuthorizations::Init
+# The Authorization endpoint
+#
+module Shield::Oauth::Authorize
   # IMPORTANT!
   #
   # Ensure tokens are not leaked in HTTP Referer header
@@ -9,7 +11,7 @@ module Shield::OauthAuthorizations::Init
   # - https://twitter.com/HusseiN98D/status/1254888748216655872
   # - https://github.com/thoughtbot/clearance/pull/707
   macro included
-    include Shield::OauthAuthorizationPipes
+    include Shield::Oauth::Authorization::Pipes
 
     param client_id : String?
     param code_challenge : String?
@@ -28,7 +30,7 @@ module Shield::OauthAuthorizations::Init
         OauthAuthorizationStateSession.new(session).set(_state)
       end
 
-      redirect to: CurrentUser::OauthAuthorizations::New.with( # <= IMPORTANT!
+      redirect to: Oauth::Authorization::New.with( # <= IMPORTANT!
         client_id: client_id,
         code_challenge: code_challenge,
         code_challenge_method: code_challenge_method,

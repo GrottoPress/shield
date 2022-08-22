@@ -527,11 +527,11 @@
 
    ---
    ```crystal
-   # ->>> src/actions/oauth_authorizations/init.cr
+   # ->>> src/actions/oauth/authorize.cr
 
-   class OauthAuthorizations::Init < BrowserAction
+   class Oauth::Authorize < BrowserAction
      # ...
-     include Shield::OauthAuthorizations::Init
+     include Shield::Oauth::Authorize
 
      get "/oauth/authorize" do
        run_operation
@@ -552,14 +552,14 @@
 
    ---
    ```crystal
-   # ->>> src/actions/current_user/oauth_authorizations/new.cr
+   # ->>> src/actions/oauth/authorization/new.cr
 
-   class CurrentUser::OauthAuthorizations::New < BrowserAction
+   class Oauth::Authorization::New < BrowserAction
      # ...
-     include Shield::CurrentUser::OauthAuthorizations::New
-     include OauthAuthorizationPipeCallbacks
+     include Shield::Oauth::Authorization::New
+     include Oauth::Authorization::PipeCallbacks
 
-     get "/account/oauth/authorizations/new" do
+     get "oauth/authorization/new" do
        operation = StartOauthAuthorization.new(
          redirect_uri: redirect_uri.to_s,
          response_type: response_type.to_s,
@@ -577,9 +577,9 @@
    end
    ```
 
-   You may need to add `CurrentUser::OauthAuthorizations::NewPage` in `src/pages/current_user/oauth_authorizations/new_page.cr`, containing your *authorization* form.
+   You may need to add `Oauth::Authorization::NewPage` in `src/pages/oauth/authorization/new_page.cr`, containing your *authorization* form.
 
-   The form should be `POST`ed to `CurrentUser::OauthAuthorizations::Create`, with the following **nested** parameters, preferrably as hidden input fields with allow/deny button(s):
+   The form should be `POST`ed to `Oauth::Authorization::Create`, with the following **nested** parameters, preferrably as hidden input fields with allow/deny button(s):
 
    - `client_id : String`
    - `code_challenge : String?` (Required for public clients)
@@ -596,14 +596,14 @@
 
    ---
    ```crystal
-   # ->>> src/actions/current_user/oauth_authorizations/create.cr
+   # ->>> src/actions/oauth/authorization/create.cr
 
-   class CurrentUser::OauthAuthorizations::Create < BrowserAction
+   class Oauth::Authorization::Create < BrowserAction
      # ...
-     include Shield::CurrentUser::OauthAuthorizations::Create
-     include OauthAuthorizationPipeCallbacks
+     include Shield::Oauth::Authorization::Create
+     include Oauth::Authorization::PipeCallbacks
 
-     post "/account/oauth/authorizations" do
+     post "/oauth/authorization" do
        run_operation
      end
 
@@ -622,9 +622,9 @@
 
    ---
    ```crystal
-   # ->>> src/actions/oauth_authorization_pipe_callbacks.cr
+   # ->>> src/actions/oauth/authorization/pipe_callbacks.cr
 
-   module OauthAuthorizationPipeCallbacks
+   module Oauth::Authorization::PipeCallbacks
      macro included
        #def do_oauth_validate_client_id_failed
        #  json({
@@ -707,13 +707,13 @@
 
    ---
    ```crystal
-   # ->>> src/actions/api/oauth_access_tokens/create.cr
+   # ->>> src/actions/api/oauth/access_token/create.cr
 
-   class Api::OauthAccessTokens::Create < ApiAction
+   class Api::Oauth::AccessToken::Create < ApiAction
      # ...
-     include Shield::Api::OauthAccessTokens::Create
+     include Shield::Api::Oauth::AccessToken::Create
 
-     post "/oauth/tokens" do
+     post "/oauth/token" do
        run_operation
      end
 
