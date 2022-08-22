@@ -2,9 +2,6 @@ module Shield::Api::OauthAccessTokens::Create
   macro included
     include Shield::Api::OauthAccessTokenPipes
 
-    skip :require_logged_in
-    skip :require_logged_out
-
     before :oauth_validate_client_id
     # before :oauth_handle_errors
     before :oauth_check_duplicate_params

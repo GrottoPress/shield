@@ -2,8 +2,6 @@ module Shield::Api::CurrentUser::OauthAuthorizations::Create
   macro included
     include Shield::Api::OauthAuthorizationPipes
 
-    skip :require_logged_out
-
     before :oauth_validate_redirect_uri
     # before :oauth_handle_errors
     before :oauth_check_duplicate_params
@@ -13,6 +11,7 @@ module Shield::Api::CurrentUser::OauthAuthorizations::Create
     before :oauth_validate_scope
     before :oauth_require_code_challenge
     before :oauth_validate_code_challenge_method
+    before :oauth_require_logged_in
 
     # post "/account/oauth/authorizations" do
     #   run_operation

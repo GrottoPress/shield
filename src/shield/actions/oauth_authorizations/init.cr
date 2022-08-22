@@ -9,9 +9,7 @@ module Shield::OauthAuthorizations::Init
   # - https://twitter.com/HusseiN98D/status/1254888748216655872
   # - https://github.com/thoughtbot/clearance/pull/707
   macro included
-    skip :require_logged_in
-    skip :require_logged_out
-    skip :check_authorization
+    include Shield::OauthAuthorizationPipes
 
     param client_id : String?
     param code_challenge : String?

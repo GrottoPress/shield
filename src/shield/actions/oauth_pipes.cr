@@ -4,7 +4,16 @@ module Shield::OauthPipes
   macro included
     include Shield::OauthHelpers
 
+    skip :require_logged_in
+    skip :require_logged_out
     skip :check_authorization
+
+    # We are defining a require logged in pipe so we can add that
+    # *after* all oauth pipes. The resource owner should be prompted
+    # for login only after all checks have passed
+    def oauth_require_logged_in
+      require_logged_in
+    end
 
     # TODO:
     #
