@@ -665,7 +665,7 @@
        #  ).to_s
        #end
 
-       #def do_oauth_require_params_failed
+       #def do_oauth_require_authorization_params_failed
        #  redirect to: oauth_redirect_uri(
        #    error: "invalid_request",
        #    error_description: Rex.t(:"action.pipe.oauth.params_missing"),

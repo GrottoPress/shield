@@ -4,12 +4,12 @@ module Shield::OauthAuthorizationPipes
   macro included
     include Shield::OauthPipes
 
-    def oauth_require_params
+    def oauth_require_authorization_params
       if response_type && !scopes.empty? && state
         continue
       else
         response.status_code = 400
-        do_oauth_require_params_failed
+        do_oauth_require_authorization_params_failed
       end
     end
 
@@ -92,7 +92,7 @@ module Shield::OauthAuthorizationPipes
       ).to_s
     end
 
-    def do_oauth_require_params_failed
+    def do_oauth_require_authorization_params_failed
       redirect to: oauth_redirect_uri(
         error: "invalid_request",
         error_description: Rex.t(:"action.pipe.oauth.params_missing"),

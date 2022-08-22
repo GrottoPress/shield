@@ -9,7 +9,7 @@ class Spec::Api::OauthAuthorizationPipes < ApiAction
   skip :check_authorization
 
   before :oauth_validate_client_id
-  before :oauth_require_params
+  before :oauth_require_authorization_params
   before :oauth_validate_response_type
   before :oauth_require_code_challenge
   before :oauth_validate_code_challenge_method
@@ -52,7 +52,7 @@ describe Shield::Api::OauthAuthorizationPipes do
     end
   end
 
-  describe "#oauth_require_params" do
+  describe "#oauth_require_authorization_params" do
     it "requires response type" do
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
