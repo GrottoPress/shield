@@ -5,7 +5,10 @@ module Shield::OauthHelpers
     end
 
     getter? oauth_authorization : OauthAuthorization? do
-      OauthAuthorizationParams.new(code).verify(oauth_client, code_verifier)
+      code.try do |_code|
+        return unless client = oauth_client?
+        OauthAuthorizationParams.new(_code).verify(client, code_verifier)
+      end
     end
 
     def oauth_redirect_uri(**params)
