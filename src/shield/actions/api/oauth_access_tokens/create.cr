@@ -9,7 +9,7 @@ module Shield::Api::OauthAccessTokens::Create
     before :oauth_validate_client_id
     # before :oauth_handle_errors
     before :oauth_check_duplicate_params
-    before :oauth_require_params
+    before :oauth_require_access_token_params
     before :oauth_validate_redirect_uri
     before :oauth_validate_grant_type
     before :oauth_validate_code

@@ -9,7 +9,7 @@ class Spec::Api::OauthAccessTokenPipes < ApiAction
   skip :check_authorization
 
   before :oauth_validate_client_id
-  before :oauth_require_params
+  before :oauth_require_access_token_params
   before :oauth_validate_grant_type
   before :oauth_validate_code
   before :oauth_validate_client_secret
@@ -91,7 +91,7 @@ describe Shield::Api::OauthAccessTokenPipes do
     end
   end
 
-  describe "#oauth_require_params" do
+  describe "#oauth_require_access_token_params" do
     it "requires grant type" do
       code = "a1b2c3"
       code_challenge = "abc123"

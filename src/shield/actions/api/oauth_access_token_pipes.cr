@@ -4,12 +4,12 @@ module Shield::Api::OauthAccessTokenPipes
   macro included
     include Shield::OauthPipes
 
-    def oauth_require_params
+    def oauth_require_access_token_params
       if grant_type && code
         continue
       else
         response.status_code = 400
-        do_oauth_require_params_failed
+        do_oauth_require_access_token_params_failed
       end
     end
 
@@ -114,7 +114,7 @@ module Shield::Api::OauthAccessTokenPipes
       })
     end
 
-    def do_oauth_require_params_failed
+    def do_oauth_require_access_token_params_failed
       json({
         error: "invalid_request",
         error_description: Rex.t(:"action.pipe.oauth.params_missing")
