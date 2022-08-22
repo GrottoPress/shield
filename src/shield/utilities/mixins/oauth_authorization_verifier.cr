@@ -2,6 +2,20 @@ module Shield::OauthAuthorizationVerifier
   macro included
     include Shield::Verifier
 
+    def verify!(
+      oauth_client : OauthClient,
+      code_verifier : String? = nil
+    )
+      verify(oauth_client, code_verifier).not_nil!
+    end
+
+    def verify(
+      oauth_client : OauthClient,
+      code_verifier : String? = nil
+    )
+      yield self, verify(oauth_client, code_verifier)
+    end
+
     def verify(
       oauth_client : OauthClient,
       code_verifier : String? = nil
