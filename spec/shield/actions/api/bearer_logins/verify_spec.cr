@@ -28,6 +28,6 @@ describe Shield::Api::BearerLogins::Verify do
     token = BearerLoginCredentials.new("abcdef", 1)
 
     response = ApiClient.exec(Api::BearerLogins::Verify, token: token)
-    response.should send_json(403, {status: "failure"})
+    response.should send_json(200, {status: "failure"})
   end
 end

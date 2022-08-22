@@ -36,6 +36,6 @@ describe Shield::Api::EmailConfirmations::Verify do
 
     response = client.exec(Api::EmailConfirmations::Verify, token: token)
 
-    response.should send_json(403, {status: "failure"})
+    response.should send_json(200, {status: "failure"})
   end
 end

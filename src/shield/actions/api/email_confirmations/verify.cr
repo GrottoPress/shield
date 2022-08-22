@@ -17,7 +17,6 @@ module Shield::Api::EmailConfirmations::Verify
         if email_confirmation
           do_verify_operation_succeeded(utility, email_confirmation.not_nil!)
         else
-          response.status_code = 403
           do_verify_operation_failed(utility)
         end
       end

@@ -13,7 +13,6 @@ module Shield::Api::BearerLogins::Verify
         if bearer_login
           do_verify_operation_succeeded(utility, bearer_login.not_nil!)
         else
-          response.status_code = 403
           do_verify_operation_failed(utility)
         end
       end

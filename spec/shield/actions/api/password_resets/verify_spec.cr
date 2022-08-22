@@ -25,6 +25,6 @@ describe Shield::Api::PasswordResets::Verify do
     token = PasswordResetCredentials.new("abcdef", 1)
 
     response = ApiClient.exec(Api::PasswordResets::Verify, token: token)
-    response.should send_json(403, {status: "failure"})
+    response.should send_json(200, {status: "failure"})
   end
 end
