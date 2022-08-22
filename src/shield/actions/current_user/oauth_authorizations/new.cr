@@ -47,9 +47,5 @@ module Shield::CurrentUser::OauthAuthorizations::New
     def scopes : Array(String)
       scope.try(&.split) || Array(String).new
     end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
-    end
   end
 end

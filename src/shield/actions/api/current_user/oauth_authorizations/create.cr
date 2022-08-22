@@ -90,9 +90,5 @@ module Shield::Api::CurrentUser::OauthAuthorizations::Create
     private def nested_param?(param)
       params.nested?(StartOauthAuthorization.param_key)[param.to_s]?
     end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
-    end
   end
 end

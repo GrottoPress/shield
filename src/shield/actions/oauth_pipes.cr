@@ -4,6 +4,8 @@ module Shield::OauthPipes
   macro included
     include Shield::OauthHelpers
 
+    skip :check_authorization
+
     # TODO:
     #
     # This doesn't work; `Lucky::ErrorHandler` catches the error
