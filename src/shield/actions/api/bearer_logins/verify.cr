@@ -9,7 +9,7 @@ module Shield::Api::BearerLogins::Verify
     # end
 
     def run_operation
-      BearerLoginParams.new(params).verify do |utility, bearer_login|
+      BearerLoginParams.new(params).verify(scope) do |utility, bearer_login|
         if bearer_login
           do_verify_operation_succeeded(utility, bearer_login.not_nil!)
         else
@@ -27,6 +27,10 @@ module Shield::Api::BearerLogins::Verify
 
     def do_verify_operation_failed(utility)
       json FailureSerializer.new(message: Rex.t(:"action.misc.token_invalid"))
+    end
+
+    private def scope
+      params.get?(:scope)
     end
   end
 end

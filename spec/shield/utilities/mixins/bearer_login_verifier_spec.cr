@@ -3,13 +3,15 @@ require "../../../spec_helper"
 describe Shield::BearerLoginVerifier do
   describe "#verify" do
     it "verifies bearer login" do
+      scope = BearerScope.new(Api::Posts::Index).to_s
+
       user = UserFactory.create
       UserOptionsFactory.create &.user_id(user.id)
 
       CreateBearerLogin.create(
         params(name: "some token"),
         user: user,
-        scopes: [BearerScope.new(Api::Posts::Index).to_s],
+        scopes: [scope],
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
 
@@ -22,6 +24,9 @@ describe Shield::BearerLoginVerifier do
         BearerLoginCredentials.new("abcdefghij", 1).authenticate(headers_2)
 
         BearerLoginHeaders.new(headers).verify.should be_a(BearerLogin)
+        BearerLoginHeaders.new(headers).verify(scope).should be_a(BearerLogin)
+
+        BearerLoginHeaders.new(headers).verify("invalid").should be_nil
         BearerLoginHeaders.new(headers_2).verify.should be_nil
       end
     end
