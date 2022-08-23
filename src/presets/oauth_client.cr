@@ -75,6 +75,10 @@ class DeleteOauthPermission < User::SaveOperation
   include Shield::DeleteOauthPermission
 end
 
+module Shield::BearerLoginVerifier
+  include Shield::OauthAccessTokenVerifier
+end
+
 struct OauthClientSession
   include Shield::OauthClientSession
 end

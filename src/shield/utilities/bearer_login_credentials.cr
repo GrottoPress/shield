@@ -10,7 +10,7 @@ module Shield::BearerLoginCredentials
     end
 
     def self.new(
-      operation : Shield::CreateBearerLogin,
+      operation : BearerLogin::SaveOperation,
       bearer_login : Shield::BearerLogin
     )
       new(operation.token, bearer_login.id)

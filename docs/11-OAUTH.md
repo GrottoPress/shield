@@ -707,11 +707,12 @@
 
    ---
    ```crystal
-   # ->>> src/actions/api/oauth/access_token/create.cr
+   # ->>> src/actions/api/oauth/token/create.cr
 
-   class Api::Oauth::AccessToken::Create < ApiAction
+   class Api::Oauth::Token::Create < ApiAction
      # ...
-     include Shield::Api::Oauth::AccessToken::Create
+     include Shield::Api::Oauth::Token::Create
+     include Api::Oauth::Token::PipeCallbacks
 
      post "/oauth/token" do
        run_operation
@@ -730,6 +731,82 @@
      #  json({
      #    error: "invalid_grant",
      #    error_description: Rex.t(:"action.pipe.oauth.auth_code_invalid"),
+     #  })
+     #end
+     # ...
+   end
+   ```
+
+   This action represents the token endpoint, where the client exchanges the authorization code for an access token. The following body parameters are required:
+
+   - `code : String`
+   - `code_verifier : String?`
+   - `client_id : String` (Optional if using HTTP basic authentication)
+   - `client_secret : String` (Optional if using HTTP basic authentication)
+   - `grant_type : String`
+   - `redirect_uri : String`
+
+   Code verifier is required for public clients, and for confidential clients if `code_challenge` was set during authorization request. Client secret is not required for public clients.
+
+   ---
+   ```crystal
+   # ->>> src/actions/api/oauth/token/verify.cr
+
+   class Api::Oauth::Token::Verify < ApiAction
+     # ...
+     include Shield::Api::Oauth::Token::Verify
+     include Api::Oauth::Token::PipeCallbacks
+
+     post "/oauth/token/verify" do
+       run_operation
+     end
+
+     #def do_verify_operation_succeeded(utility, bearer_login)
+     #  json({
+     #    active: true,
+     #    client_id: bearer_login.oauth_client_id.to_s,
+     #    exp: bearer_login.inactive_at.try(&.to_unix),
+     #    iat: bearer_login.active_at.to_unix,
+     #    jti: bearer_login.id.to_s,
+     #    scope: bearer_login.scopes.join(' '),
+     #    sub: bearer_login.user_id.to_s,
+     #    token_type: "Bearer",
+     #  })
+     #end
+
+     #def do_verify_operation_failed(utility)
+     #  json({active: false})
+     #end
+     # ...
+   end
+   ```
+
+   This action is the token **introspection** endpoint, where a resource server may check with the authorization server for the validity of a token. The following body parameters are expected:
+
+   - `client_id : String` (Optional if using HTTP basic authentication)
+   - `client_secret : String` (Optional if using HTTP basic authentication)
+   - `scope : String?`
+   - `token : String`
+
+   The action requires confidential clients to authenticate via HTTP Basic authentication, the same way as for the token endpoint. Public clients should send only the client ID along with the request.
+
+   In addition to checking the validity of the token, the action will check that the token was issued to the same client requesting the verification.
+
+   If `scope` parameter is provided, the action will further check that the token's scopes include the given scope.
+
+   ---
+   ```crystal
+   # ->>> src/actions/api/oauth/token/pipe_callbacks.cr
+
+   class Api::Oauth::Token::PipeCallbacks < ApiAction
+     # ...
+     #def do_oauth_validate_client_id_failed
+     #  json({
+     #    error: "invalid_client",
+     #    error_description: Rex.t(
+     #      :"action.pipe.oauth.client_id_invalid",
+     #      client_id: client_id
+     #    )
      #  })
      #end
 
@@ -803,17 +880,6 @@
      # ...
    end
    ```
-
-   This action represents the token endpoint, where the client exchanges the authorization code for an access token. The following body parameters are required:
-
-   - `code : String`
-   - `code_verifier : String?`
-   - `client_id : String` (Optional if using HTTP basic authentication)
-   - `client_secret : String` (Optional if using HTTP basic authentication)
-   - `grant_type : String`
-   - `redirect_uri : String`
-
-  Code verifier is required for public clients, and for confidential clients if `code_challenge` was set during authorization request.
 
 ### References:
 
