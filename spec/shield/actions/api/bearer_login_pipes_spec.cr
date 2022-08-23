@@ -32,6 +32,28 @@ describe Shield::Api::BearerLoginPipes do
       response.headers["WWW-Authenticate"]?.should_not be_nil
       response.should send_json(401, logged_in: false)
     end
+
+    it "rejects login when scopes insufficient" do
+      user = UserFactory.create &.level(:admin)
+      UserOptionsFactory.create &.user_id(user.id)
+
+      CreateBearerLogin.create(
+        params(name: "secret token"),
+        scopes: [BearerScope.new(Api::Posts::Index).to_s],
+        user: user
+      ) do |operation, bearer_login|
+        bearer_login = bearer_login.not_nil!
+
+        token = BearerLoginCredentials.new(operation, bearer_login)
+
+        client = ApiClient.new
+        client.api_auth(token)
+
+        response = client.exec(Api::Posts::Create)
+
+        response.should send_json(403, logged_in: false)
+      end
+    end
   end
 
   describe "#require_logged_out" do
@@ -61,29 +83,7 @@ describe Shield::Api::BearerLoginPipes do
   end
 
   describe "#check_authorization" do
-    it "denies authorization when scopes insufficient" do
-      user = UserFactory.create &.level(:admin)
-      UserOptionsFactory.create &.user_id(user.id)
-
-      CreateBearerLogin.create(
-        params(name: "secret token"),
-        scopes: [BearerScope.new(Api::Posts::Index).to_s],
-        user: user
-      ) do |operation, bearer_login|
-        bearer_login = bearer_login.not_nil!
-
-        token = BearerLoginCredentials.new(operation, bearer_login)
-
-        client = ApiClient.new
-        client.api_auth(token)
-
-        response = client.exec(Api::Posts::Create)
-
-        response.should send_json(403, authorized: false)
-      end
-    end
-
-    it "denies authorization when user not allowed access to route" do
+    it "denies authorization" do
       user = UserFactory.create
       UserOptionsFactory.create &.user_id(user.id)
 

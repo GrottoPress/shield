@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Omit `error` from `WWW-Authenticate` response header if request lacks token
 - Rename `Shield::LoginIdleTimeoutSession#expired?` to `#login_expired?`
 - Increase cryptographic token sizes from 24 to 32 bytes
+- Treat a valid bearer login with invalid scopes as logged out
 
 ### Fixed
 - Ensure admins cannot view bearer tokens of others

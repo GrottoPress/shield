@@ -31,7 +31,11 @@ module Shield::Api::BearerLoginHelpers
     end
 
     getter? current_bearer_login : BearerLogin? do
-      BearerLoginHeaders.new(request).verify
+      BearerLoginHeaders.new(request).verify(bearer_scope)
+    end
+
+    def bearer_scope : String
+      BearerScope.new(self.class).name
     end
   end
 end
