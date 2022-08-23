@@ -20,7 +20,7 @@ module Shield::EmailConfirmationCredentials
     end
 
     getter? email_confirmation : EmailConfirmation? do
-      EmailConfirmationQuery.new.id(id).first?
+      EmailConfirmationQuery.new.id(id).preload_user.first?
     end
 
     def url : String

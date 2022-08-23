@@ -17,7 +17,11 @@ module Shield::OauthAuthorizationCredentials
     end
 
     getter? oauth_authorization : OauthAuthorization? do
-      OauthAuthorizationQuery.new.id(id).first?
+      OauthAuthorizationQuery.new
+        .id(id)
+        .preload_user
+        .preload_oauth_client
+        .first?
     end
 
     def self.from_params?(params : Avram::Paramable) : self?

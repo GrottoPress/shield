@@ -79,6 +79,10 @@ module Shield::BearerLoginVerifier
   include Shield::OauthAccessTokenVerifier
 end
 
+struct BearerLoginCredentials
+  include Shield::OauthAccessTokenCredentials
+end
+
 struct OauthClientSession
   include Shield::OauthClientSession
 end

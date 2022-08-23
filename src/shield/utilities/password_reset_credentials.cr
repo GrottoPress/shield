@@ -20,7 +20,7 @@ module Shield::PasswordResetCredentials
     end
 
     getter? password_reset : PasswordReset? do
-      PasswordResetQuery.new.id(id).first?
+      PasswordResetQuery.new.id(id).preload_user.first?
     end
 
     def url : String

@@ -18,7 +18,7 @@ module Shield::OauthClientCredentials
     end
 
     getter? oauth_client : OauthClient? do
-      OauthClientQuery.new.id(id).first?
+      OauthClientQuery.new.id(id).preload_user.first?
     end
 
     def self.from_params?(params : Avram::Paramable) : self?

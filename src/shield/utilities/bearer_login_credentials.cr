@@ -21,7 +21,7 @@ module Shield::BearerLoginCredentials
     end
 
     getter? bearer_login : BearerLogin? do
-      BearerLoginQuery.new.id(id).first?
+      BearerLoginQuery.new.id(id).preload_user.first?
     end
   end
 end

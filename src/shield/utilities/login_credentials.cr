@@ -14,7 +14,7 @@ module Shield::LoginCredentials
     end
 
     getter? login : Login? do
-      LoginQuery.new.id(id).first?
+      LoginQuery.new.id(id).preload_user.first?
     end
   end
 end
