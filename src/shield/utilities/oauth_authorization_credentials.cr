@@ -20,6 +20,10 @@ module Shield::OauthAuthorizationCredentials
       OauthAuthorizationQuery.new.id(id).first?
     end
 
+    def self.from_params?(params : Avram::Paramable) : self?
+      from_params?(params.get? "code")
+    end
+
     def self.from_params?(code : String?) : self?
       code.try { |code| from_token?(code) }
     end
