@@ -48,7 +48,7 @@ module Shield::Api::Oauth::Token::Pipes
       if !oauth_client? ||
         oauth_client.public? ||
         !OauthClientCredentials.from_headers?(request) ||
-        !OauthClientCredentials.from_params?(client_secret, client_id)
+        !OauthClientCredentials.from_params?(params)
 
         continue
       else

@@ -22,7 +22,11 @@ module Shield::OauthClientCredentials
     end
 
     def self.from_params?(params : Avram::Paramable) : self?
-      # DISABLED
+      params.get?("client_secret").try do |client_secret|
+        params.get?("client_id").try do |client_id|
+          from_params?(client_secret, client_id)
+        end
+      end
     end
 
     def self.from_params?(client_secret : String?, client_id : String?) : self?
