@@ -261,6 +261,12 @@
    ```crystal
    class RevokeOauthPermission < User::SaveOperation
      # ...
+     # By default, *Shield* marks all authorizations as inactive,
+     # after permission is revoked, without deleting them.
+     #
+     # Enable this to delete them from the database instead.
+     #include Shield::DeleteOauthAuthorizationAfterRevokeOauthPermission
+     # ...
    end
    ```
 
@@ -269,6 +275,13 @@
    ---
    ```crystal
    class DeleteOauthPermission < User::SaveOperation
+     # ...
+     # By default, *Shield* deletes all authorizations from the database,
+     # after permission is deleted.
+     #
+     # Enable this to mark them as inactive instead, without deleting them
+     # from the database.
+     #include Shield::RevokeOauthAuthorizationAfterDeleteOauthPermission
      # ...
    end
    ```
