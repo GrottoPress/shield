@@ -7,7 +7,7 @@ module Shield::OauthClientCredentials
     end
 
     def self.new(
-      operation : Shield::CreateOauthClient,
+      operation : Shield::RegisterOauthClient,
       oauth_client : Shield::OauthClient
     )
       new(operation.secret, oauth_client.id)

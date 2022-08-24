@@ -1,13 +1,13 @@
 require "../../spec_helper"
 
-describe Shield::CreateOauthClient do
+describe Shield::RegisterOauthClient do
   it "creates OAuth client" do
     name = "Awesome Client"
     redirect_uri = "https://example.com/oauth/callback"
 
     user = UserFactory.create
 
-    CreateOauthClient.create(
+    RegisterOauthClient.create(
       params(name: name, redirect_uri: redirect_uri, public: false),
       user: user
     ) do |operation, oauth_client|

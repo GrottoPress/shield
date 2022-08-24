@@ -15,8 +15,8 @@ class OauthClientQuery < OauthClient::BaseQuery
   include Shield::OauthClientQuery
 end
 
-class CreateOauthClient < OauthClient::SaveOperation
-  include Shield::CreateOauthClient
+class RegisterOauthClient < OauthClient::SaveOperation
+  include Shield::RegisterOauthClient
 end
 
 class RefreshOauthClientSecret < OauthClient::SaveOperation

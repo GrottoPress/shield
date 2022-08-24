@@ -4,7 +4,7 @@ class CurrentUser::OauthClients::New < BrowserAction
   skip :pin_login_to_ip_address
 
   get "/account/oauth/clients/new" do
-    operation = CreateOauthClient.new(user: user)
+    operation = RegisterOauthClient.new(user: user)
     html NewPage, operation: operation
   end
 end

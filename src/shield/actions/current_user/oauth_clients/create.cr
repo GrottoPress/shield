@@ -7,7 +7,10 @@ module Shield::CurrentUser::OauthClients::Create
     # end
 
     def run_operation
-      CreateOauthClient.create(params, user: user) do |operation, oauth_client|
+      RegisterOauthClient.create(
+        params,
+        user: user
+      ) do |operation, oauth_client|
         if operation.saved?
           OauthClientSession.new(session).set(operation, oauth_client.not_nil!)
           do_run_operation_succeeded(operation, oauth_client.not_nil!)

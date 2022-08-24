@@ -202,12 +202,12 @@
    ```crystal
    # ->>> src/operations/create_oauth_client.cr
 
-   class CreateOauthClient < OauthClient::SaveOperation
+   class RegisterOauthClient < OauthClient::SaveOperation
      # ...
    end
    ```
 
-   `CreateOauthClient` receives `name : String`, `public : Bool` and `redirect_uri : String` parameters, and creates a database entry with a unique ID and an optional hashed secret for *confidential* clients.
+   `RegisterOauthClient` receives `name : String`, `public : Bool` and `redirect_uri : String` parameters, and creates a database entry with a unique ID and an optional hashed secret for *confidential* clients.
 
    ---
    ```crystal
@@ -365,7 +365,7 @@
      include Shield::CurrentUser::OauthClients::New
 
      get "/account/oauth/clients/new" do
-       operation = CreateOauthClient.new(user: user)
+       operation = RegisterOauthClient.new(user: user)
        html NewPage, operation: operation
      end
      # ...

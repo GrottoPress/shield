@@ -1,5 +1,5 @@
 struct CurrentUser::OauthClients::NewPage < MainLayout
-  needs operation : CreateOauthClient
+  needs operation : RegisterOauthClient
 
   def content
     text "CurrentUser::OauthClients::NewPage"
