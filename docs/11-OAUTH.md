@@ -200,7 +200,7 @@
    All operations are already set up. You may reopen an operation to add new functionality.
 
    ```crystal
-   # ->>> src/operations/create_bearer_login.cr
+   # ->>> src/operations/create_oauth_client.cr
 
    class CreateOauthClient < OauthClient::SaveOperation
      # ...
@@ -211,7 +211,7 @@
 
    ---
    ```crystal
-   # ->>> src/operations/create_bearer_login.cr
+   # ->>> src/operations/refresh_oauth_client.cr
 
    class RefreshOauthClientSecret < OauthClient::SaveOperation
      # ...
@@ -222,7 +222,7 @@
 
    ---
    ```crystal
-   # ->>> src/operations/create_bearer_login.cr
+   # ->>> src/operations/deactivate_oauth_client.cr
 
    class DeactivateOauthClient < OauthClient::SaveOperation
      # ...
