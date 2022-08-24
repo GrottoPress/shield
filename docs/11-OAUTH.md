@@ -783,9 +783,6 @@
 
    class Api::Oauth::Token::Verify < ApiAction
      # ...
-     include Shield::Api::Oauth::Token::Verify
-     include Api::Oauth::Token::PipeCallbacks
-
      post "/oauth/token/verify" do
        run_operation
      end
@@ -812,16 +809,12 @@
 
    This action is the token **introspection** endpoint, where a resource server may check with the authorization server for the validity of a token. The following body parameters are expected:
 
-   - `client_id : String` (Optional if using HTTP basic authentication)
-   - `client_secret : String` (Optional if using HTTP basic authentication)
    - `scope : String?`
    - `token : String`
 
-   The action requires confidential clients to authenticate via HTTP Basic authentication, the same way as for the token endpoint. Public clients should send only the client ID along with the request.
-
-   In addition to checking the validity of the token, the action will check that the token was issued to the same client requesting the verification.
-
-   If `scope` parameter is provided, the action will further check that the token's scopes include the given scope.
+   If `scope` parameter is provided, the action will further check that the access token's scopes include the given scope.
+   
+   The action requires the requester to be logged in. Typically, this should be done by creating an API token (See *10-BEARER-LOGIN.md*) with the needed scope to access the introspection endpoint. This token is sent in the `Authorization` header during the request.
 
    ---
    ```crystal
