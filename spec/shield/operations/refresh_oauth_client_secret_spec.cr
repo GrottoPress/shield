@@ -21,7 +21,7 @@ describe Shield::RefreshOauthClientSecret do
     end
   end
 
-  it "requires public OAuth client" do
+  it "requires confidential OAuth client" do
     user = UserFactory.create
     oauth_client = OauthClientFactory.create &.user_id(user.id)
 
