@@ -54,11 +54,6 @@ describe Shield::Api::Oauth::Token::Verify do
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
       .secret(client_secret)
 
-    oauth_authorization =
-      OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-        .oauth_client_id(oauth_client.id)
-        .scopes([scope])
-
     token = BearerLoginCredentials.new("abcdef", 2)
 
     client = ApiClient.new
