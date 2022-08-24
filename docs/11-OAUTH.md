@@ -243,6 +243,8 @@
 
    ---
    ```crystal
+   # ->>> src/operations/delete_oauth_client.cr
+
    class DeleteOauthClient < OauthClient::DeleteOperation
      # ...
    end
@@ -252,6 +254,8 @@
 
    ---
    ```crystal
+   # ->>> src/operations/update_oauth_client.cr
+
    class UpdateOauthClient < OauthClient::SaveOperation
      # ...
    end
@@ -259,6 +263,8 @@
 
    ---
    ```crystal
+   # ->>> src/operations/revoke_oauth_permission.cr
+
    class RevokeOauthPermission < User::SaveOperation
      # ...
      # By default, *Shield* marks all authorizations as inactive,
@@ -274,6 +280,8 @@
 
    ---
    ```crystal
+   # ->>> src/operations/delete_oauth_permission.cr
+
    class DeleteOauthPermission < User::SaveOperation
      # ...
      # By default, *Shield* deletes all authorizations from the database,
@@ -290,6 +298,8 @@
 
    ---
    ```crystal
+   # ->>> src/operations/start_oauth_authorization.cr
+
    class StartOauthAuthorization < OauthAuthorization::SaveOperation
      # ...
    end
@@ -308,6 +318,8 @@
 
    ---
    ```crystal
+   # ->>> src/operations/end_oauth_authorization.cr
+
    class EndOauthAuthorization < OauthAuthorization::SaveOperation
      # ...
    end
@@ -317,6 +329,8 @@
 
    ---
    ```crystal
+   # ->>> src/operations/delete_oauth_authorization.cr
+
    class DeleteOauthAuthorization < OauthAuthorization::DeleteOperation
      # ...
    end
@@ -326,6 +340,8 @@
 
    ---
    ```crystal
+   # ->>> src/operations/create_oauth_access_token.cr
+
    class CreateOauthAccessToken < BearerLogin::SaveOperation
      # ...
      # By default, *Shield* revokes access tokens if an authorization code
