@@ -1,4 +1,4 @@
-module Shield::CreateOauthAccessToken
+module Shield::CreateOauthAccessTokenFromAuthorization
   # IMPORTANT
   #
   # Revoke access tokens if authorization code used more than once,

@@ -51,8 +51,8 @@ class DeleteUserOauthAuthorizations < User::SaveOperation
   include Shield::DeleteUserOauthAuthorizations
 end
 
-class CreateOauthAccessToken < BearerLogin::SaveOperation
-  include Shield::CreateOauthAccessToken
+class CreateOauthAccessTokenFromAuthorization < BearerLogin::SaveOperation
+  include Shield::CreateOauthAccessTokenFromAuthorization
 end
 
 struct OauthAuthorizationStateSession

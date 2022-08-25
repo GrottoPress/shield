@@ -401,7 +401,7 @@
    ```crystal
    # ->>> src/operations/create_oauth_access_token.cr
 
-   class CreateOauthAccessToken < BearerLogin::SaveOperation
+   class CreateOauthAccessTokenFromAuthorization < BearerLogin::SaveOperation
      # ...
      # By default, *Shield* revokes access tokens if an authorization code
      # is presented more than once.

@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-describe Shield::CreateOauthAccessToken do
+describe Shield::CreateOauthAccessTokenFromAuthorization do
   it "creates OAuth access token" do
     developer = UserFactory.create
     resource_owner = UserFactory.create &.email("resource@owner.com")
@@ -13,7 +13,7 @@ describe Shield::CreateOauthAccessToken do
 
     oauth_authorization.status.active?.should be_true
 
-    CreateOauthAccessToken.create(
+    CreateOauthAccessTokenFromAuthorization.create(
       oauth_authorization: oauth_authorization
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
@@ -39,7 +39,7 @@ describe Shield::CreateOauthAccessToken do
         .oauth_client_id(oauth_client.id)
         .inactive_at(Time.utc)
 
-    CreateOauthAccessToken.create(
+    CreateOauthAccessTokenFromAuthorization.create(
       oauth_authorization: oauth_authorization
     ) do |operation, bearer_login|
       bearer_login.should be_nil
@@ -64,7 +64,7 @@ describe Shield::CreateOauthAccessToken do
     BearerLoginFactory.create_pair &.user_id(resource_owner.id)
       .oauth_client_id(oauth_client.id)
 
-    CreateOauthAccessToken.create(
+    CreateOauthAccessTokenFromAuthorization.create(
       oauth_authorization: oauth_authorization
     ) do |_, _bearer_login|
       _bearer_login.should be_nil

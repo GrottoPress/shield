@@ -81,7 +81,7 @@ end
   .map(&.stringify)
   .includes?("OauthAuthorization") %}
 
-  class CreateOauthAccessToken < BearerLogin::SaveOperation
+  class CreateOauthAccessTokenFromAuthorization < BearerLogin::SaveOperation
     include Shield::NotifyOauthAccessTokenIfSet
   end
 {% end %}

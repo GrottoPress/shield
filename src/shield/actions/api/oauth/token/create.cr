@@ -19,7 +19,7 @@ module Shield::Api::Oauth::Token::Create
     # end
 
     def run_operation
-      CreateOauthAccessToken.create(
+      CreateOauthAccessTokenFromAuthorization.create(
         oauth_authorization: oauth_authorization?
       ) do |operation, bearer_login|
         if operation.saved?
