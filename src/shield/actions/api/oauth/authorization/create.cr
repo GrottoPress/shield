@@ -51,7 +51,7 @@ module Shield::Api::Oauth::Authorization::Create
     end
 
     def user
-      current_user
+      current_user_or_bearer
     end
 
     def client_id : String?

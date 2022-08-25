@@ -7,7 +7,7 @@ module Shield::Api::CurrentUser::OauthAccessTokens::Destroy
     # end
 
     def user
-      current_user
+      current_user_or_bearer
     end
 
     def run_operation

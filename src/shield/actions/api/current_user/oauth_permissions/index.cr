@@ -9,7 +9,7 @@ module Shield::Api::CurrentUser::OauthPermissions::Index
     # end
 
     def user
-      current_user
+      current_user_or_bearer
     end
 
     def pages
