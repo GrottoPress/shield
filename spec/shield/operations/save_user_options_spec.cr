@@ -5,6 +5,7 @@ describe Shield::SaveUserOptions do
     SaveUserOptions.create(
       params(
         login_notify: false,
+        oauth_access_token_notify: false,
         password_notify: true,
         bearer_login_notify: false
       ),
@@ -16,6 +17,7 @@ describe Shield::SaveUserOptions do
 
       user_options.bearer_login_notify.should be_false
       user_options.login_notify.should be_false
+      user_options.oauth_access_token_notify.should be_false
       user_options.password_notify.should be_true
     end
   end
@@ -36,6 +38,7 @@ describe Shield::SaveUserOptions do
     SaveUserOptions.create(params(
       bearer_login_notify: false,
       login_notify: true,
+      oauth_access_token_notify: false,
       password_notify: true
     )) do |operation, user_options|
       user_options.should be_nil
@@ -49,6 +52,7 @@ describe Shield::SaveUserOptions do
       params(
         bearer_login_notify: false,
         login_notify: true,
+        oauth_access_token_notify: false,
         password_notify: true
       ),
       user_id: 111
@@ -62,7 +66,8 @@ describe Shield::SaveUserOptions do
   it "requires password notification option" do
     SaveUserOptions.create(params(
       bearer_login_notify: false,
-      login_notify: true
+      login_notify: true,
+      oauth_access_token_notify: false
     )) do |operation, user_options|
       user_options.should be_nil
 
@@ -74,6 +79,7 @@ describe Shield::SaveUserOptions do
   it "requires login notification option" do
     SaveUserOptions.create(params(
       bearer_login_notify: false,
+      oauth_access_token_notify: false,
       password_notify: true
     )) do |operation, user_options|
       user_options.should be_nil
@@ -86,12 +92,26 @@ describe Shield::SaveUserOptions do
   it "requires bearer login notification option" do
     SaveUserOptions.create(params(
       login_notify: true,
+      oauth_access_token_notify: false,
       password_notify: true
     )) do |operation, user_options|
       user_options.should be_nil
 
       operation.bearer_login_notify
         .should have_error("operation.error.bearer_login_notify_required")
+    end
+  end
+
+  it "requires OAuth access token notification option" do
+    SaveUserOptions.create(params(
+      bearer_login_notify: false,
+      login_notify: true,
+      password_notify: true
+    )) do |operation, user_options|
+      user_options.should be_nil
+
+      operation.oauth_access_token_notify
+        .should(have_error "operation.error.oauth_access_token_notify_required")
     end
   end
 end

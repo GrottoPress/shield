@@ -9,6 +9,7 @@ describe Shield::SaveUserSettings do
         level: User::Level.new(:editor),
         bearer_login_notify: false,
         login_notify: false,
+        oauth_access_token_notify: false,
         password_notify: false,
       }
     )
@@ -18,6 +19,7 @@ describe Shield::SaveUserSettings do
 
       user.try &.settings.bearer_login_notify?.should eq(false)
       user.try &.settings.login_notify.should eq(false)
+      user.try &.settings.oauth_access_token_notify?.should eq(false)
       user.try &.settings.password_notify.should eq(false)
     end
   end
@@ -31,6 +33,7 @@ describe Shield::SaveUserSettings do
           level: User::Level.new(:editor),
           bearer_login_notify: false,
           login_notify: false,
+          oauth_access_token_notify: false,
         }
       )
 
@@ -48,6 +51,7 @@ describe Shield::SaveUserSettings do
           email: "user@example.tld",
           password: "password12U.password",
           level: User::Level.new(:editor),
+          oauth_access_token_notify: false,
           password_notify: false,
           login_notify: false,
         }
@@ -68,6 +72,7 @@ describe Shield::SaveUserSettings do
           password: "password12U.password",
           level: User::Level.new(:editor),
           bearer_login_notify: false,
+          oauth_access_token_notify: false,
           password_notify: false,
         }
       )
@@ -79,6 +84,27 @@ describe Shield::SaveUserSettings do
           .should have_error("operation.error.login_notify_required")
       end
     end
+
+    it "requires oauth_access_token_notify" do
+      params = nested_params(
+        user: {
+          email: "user@example.tld",
+          password: "password12U.password",
+          level: User::Level.new(:editor),
+          bearer_login_notify: false,
+          login_notify: false,
+          password_notify: false,
+        }
+      )
+
+      RegisterUserWithSettings.create(params) do |operation, user|
+        user.should be_nil
+
+        operation.oauth_access_token_notify.should have_error(
+          "operation.error.oauth_access_token_notify_required"
+        )
+      end
+    end
   end
 
   context "update operations" do
@@ -87,7 +113,11 @@ describe Shield::SaveUserSettings do
 
       UpdateUserWithSettings.update(
         user,
-        params(bearer_login_notify: false, login_notify: false),
+        params(
+          bearer_login_notify: false,
+          login_notify: false,
+          oauth_access_token_notify: false,
+        ),
         current_login: nil
       ) do |_, updated_user|
         updated_user.should be_a(User)
@@ -99,7 +129,11 @@ describe Shield::SaveUserSettings do
 
       UpdateUserWithSettings.update(
         user,
-        params(password_notify: false, login_notify: false),
+        params(
+          password_notify: false,
+          login_notify: false,
+          oauth_access_token_notify: false,
+        ),
         current_login: nil
       ) do |_, updated_user|
         updated_user.should be_a(User)
@@ -111,7 +145,27 @@ describe Shield::SaveUserSettings do
 
       UpdateUserWithSettings.update(
         user,
-        params(bearer_login_notify: false, password_notify: false),
+        params(
+          bearer_login_notify: false,
+          password_notify: false,
+          oauth_access_token_notify: false,
+        ),
+        current_login: nil
+      ) do |_, updated_user|
+        updated_user.should be_a(User)
+      end
+    end
+
+    it "does not require oauth_access_token_notify" do
+      user = UserFactory.create
+
+      UpdateUserWithSettings.update(
+        user,
+        params(
+          bearer_login_notify: false,
+          login_notify: false,
+          password_notify: false,
+        ),
         current_login: nil
       ) do |_, updated_user|
         updated_user.should be_a(User)

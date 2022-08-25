@@ -71,7 +71,7 @@ module Shield::ValidateOauthAuthorization
 
     private def validate_scopes_valid
       scopes.value.try do |value|
-        allowed_scopes = Shield.settings.bearer_login_scopes_allowed
+        allowed_scopes = Shield.settings.oauth_access_token_scopes_allowed
         return if value.all? &.in?(allowed_scopes)
 
         scopes.add_error Rex.t(:"operation.error.bearer_scopes_invalid")

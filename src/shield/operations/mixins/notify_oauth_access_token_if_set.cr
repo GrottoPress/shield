@@ -6,7 +6,7 @@ module Shield::NotifyOauthAccessTokenIfSet
       bearer_login = BearerLoginQuery.preload_user(bearer_login)
       bearer_login = BearerLoginQuery.preload_oauth_client(bearer_login)
 
-      return unless bearer_login.user.settings.bearer_login_notify?
+      return unless bearer_login.user.settings.oauth_access_token_notify?
 
       mail_later OauthAccessTokenNotificationEmail, self, bearer_login
     end

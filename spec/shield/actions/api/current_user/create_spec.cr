@@ -11,7 +11,8 @@ describe Shield::Api::CurrentUser::Create do
       user_options: {
         password_notify: true,
         login_notify: true,
-        bearer_login_notify: true
+        bearer_login_notify: true,
+        oauth_access_token_notify: true
       }
     )
 
@@ -32,7 +33,8 @@ describe Shield::Api::CurrentUser::Create do
       user_options: {
         password_notify: true,
         login_notify: true,
-        bearer_login_notify: true
+        bearer_login_notify: true,
+        oauth_access_token_notify: true
       }
     )
 
@@ -51,7 +53,12 @@ describe Shield::Api::CurrentUser::Create do
     response = client.exec(
       Api::RegularCurrentUser::Create,
       user: {email: "john@example.com", password: password},
-      user_options: {login_notify: true}
+      user_options: {
+        password_notify: true,
+        login_notify: true,
+        bearer_login_notify: true,
+        oauth_access_token_notify: true
+      }
     )
 
     response.should send_json(200, logged_in: true)

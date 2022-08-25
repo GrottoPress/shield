@@ -36,13 +36,15 @@ describe Shield::UpdateEmailConfirmationUser do
       .login_notify(true)
       .password_notify(false)
       .bearer_login_notify(true)
+      .oauth_access_token_notify(false)
 
     UpdateCurrentUser.update(
       user,
       nested_params(user_options: {
         login_notify: false,
         password_notify: true,
-        bearer_login_notify: false
+        bearer_login_notify: false,
+        oauth_access_token_notify: true
       }),
       current_login: nil,
       remote_ip: Socket::IPAddress.new("129.0.0.3", 5555)
@@ -54,6 +56,7 @@ describe Shield::UpdateEmailConfirmationUser do
       user_options.login_notify.should be_false
       user_options.password_notify.should be_true
       user_options.bearer_login_notify.should be_false
+      user_options.oauth_access_token_notify.should be_true
     end
   end
 
@@ -64,13 +67,15 @@ describe Shield::UpdateEmailConfirmationUser do
       .login_notify(true)
       .password_notify(true)
       .bearer_login_notify(true)
+      .oauth_access_token_notify(true)
 
     UpdateCurrentUser2.update(
       user,
       nested_params(user_options: {
         login_notify: false,
         password_notify: false,
-        bearer_login_notify: false
+        bearer_login_notify: false,
+        oauth_access_token_notify: false
       }),
       current_login: nil,
       remote_ip: Socket::IPAddress.new("129.0.0.3", 5555)
@@ -93,6 +98,7 @@ describe Shield::UpdateEmailConfirmationUser do
       .login_notify(true)
       .password_notify(true)
       .bearer_login_notify(true)
+      .oauth_access_token_notify(true)
 
     UpdateCurrentUser2.update(
       user,
@@ -101,7 +107,8 @@ describe Shield::UpdateEmailConfirmationUser do
         user_options: {
           login_notify: false,
           password_notify: false,
-          bearer_login_notify: false
+          bearer_login_notify: false,
+          oauth_access_token_notify: false
         }
       ),
       current_login: nil,

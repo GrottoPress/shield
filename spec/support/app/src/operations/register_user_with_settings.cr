@@ -9,4 +9,5 @@ class RegisterUserWithSettings < User::SaveOperation
   include Shield::SaveUserSettings
   include Shield::SaveBearerLoginUserSettings
   include Shield::SaveLoginUserSettings
+  include Shield::SaveOauthClientUserSettings
 end

@@ -11,7 +11,7 @@ describe Shield::NotifyOauthAccessToken do
     resource_owner = UserFactory.create
 
     UserOptionsFactory.create &.user_id(resource_owner.id)
-      .bearer_login_notify(true)
+      .oauth_access_token_notify(true)
 
     developer = UserFactory.create &.email("dev@app.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
@@ -39,7 +39,7 @@ describe Shield::NotifyOauthAccessToken do
     resource_owner = UserFactory.create
 
     UserOptionsFactory.create &.user_id(resource_owner.id)
-      .bearer_login_notify(false)
+      .oauth_access_token_notify(false)
 
     developer = UserFactory.create &.email("dev@app.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)

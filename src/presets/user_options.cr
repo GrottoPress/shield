@@ -60,3 +60,9 @@ end
     include Shield::NotifyOauthAccessToken
   end
 {% end %}
+
+{% if Avram::Model.all_subclasses.map(&.stringify).includes?("OauthClient") %}
+  class SaveUserOptions < UserOptions::SaveOperation
+    include Shield::SaveOauthClientUserOptions
+  end
+{% end %}

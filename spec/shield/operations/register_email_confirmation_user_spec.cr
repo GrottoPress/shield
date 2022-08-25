@@ -9,7 +9,8 @@ describe Shield::RegisterEmailConfirmationUser do
       user_options: {
         login_notify: true,
         password_notify: true,
-        bearer_login_notify: true
+        bearer_login_notify: true,
+        oauth_access_token_notify: true
       }
     )
 
@@ -53,7 +54,8 @@ describe Shield::RegisterEmailConfirmationUser do
         user_options: {
           login_notify: true,
           password_notify: true,
-          bearer_login_notify: true
+          bearer_login_notify: true,
+          oauth_access_token_notify: true
         }
       ),
       email_confirmation: email_confirmation,
@@ -80,7 +82,8 @@ describe Shield::RegisterEmailConfirmationUser do
         user_options: {
           login_notify: true,
           password_notify: false,
-          bearer_login_notify: true
+          bearer_login_notify: true,
+          oauth_access_token_notify: true
         }
       ),
       email_confirmation: EmailConfirmationFactory.create,
@@ -100,7 +103,8 @@ describe Shield::RegisterEmailConfirmationUser do
         user_options: {
           login_notify: false,
           password_notify: false,
-          bearer_login_notify: true
+          bearer_login_notify: true,
+          oauth_access_token_notify: true
         }
       ),
       email_confirmation: EmailConfirmationFactory.create,

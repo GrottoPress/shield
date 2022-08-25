@@ -85,3 +85,25 @@ end
     include Shield::NotifyOauthAccessTokenIfSet
   end
 {% end %}
+
+{% if Avram::Model.all_subclasses.map(&.stringify).includes?("OauthClient") %}
+  struct UserSettings
+    include Shield::OauthClientUserSettings
+  end
+
+  class RegisterCurrentUser < User::SaveOperation
+    include Shield::SaveOauthClientUserSettings
+  end
+
+  class UpdateCurrentUser < User::SaveOperation
+    include Shield::SaveOauthClientUserSettings
+  end
+
+  class RegisterUser < User::SaveOperation
+    include Shield::SaveOauthClientUserSettings
+  end
+
+  class UpdateUser < User::SaveOperation
+    include Shield::SaveOauthClientUserSettings
+  end
+{% end %}

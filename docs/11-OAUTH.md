@@ -11,6 +11,12 @@
 
    Shield.configure do |settings|
      # ...
+     # What scopes can be assigned to access tokens?
+     settings.oauth_access_token_scopes_allowed = ["api.current_user.show"]
+
+     # How long should access tokens last before expiring?
+     #settings.oauth_access_token_expiry = 90.days # Set to `nil` to disable
+
      # How long should authorization codes last before expiring?
      #settings.oauth_authorization_expiry = 3.minutes
 
@@ -110,6 +116,38 @@
 
    An access token is simply a *bearer login* with its `oauth_client_id` set, so many of the concepts explained in section *10-BEARER-LOGIN.md* applies.
 
+   ---
+   ```crystal
+   # ->>> src/models/user_settings.cr
+
+   struct UserSettings
+     # ...
+     include Shield::OauthClientUserSettings
+     # ...
+   end
+   ```
+
+   `Shield::OauthClientUserSettings` adds the following properties:
+
+   - `oauth_access_token_notify : Bool`
+
+   ---
+   \* *Skip this if using `UserSettings`* \*
+
+   ```crystal
+   # ->>> src/models/user_options.cr
+
+   class UserOptions < BaseModel
+     # ...
+     include Shield::OauthClientUserOptionsColumns
+     # ...
+   end
+   ```
+
+   `Shield::OauthClientOptionsColumns` adds the following columns:
+
+   - `oauth_access_token_notify : Bool`
+
 1. Set up migrations:
 
    ```crystal
@@ -139,6 +177,27 @@
    ```
 
    Add any columns you added to the model here.
+
+   ---
+   \* *Skip this if using `UserSettings`* \*
+
+   ```crystal
+   # ->>> db/migrations/XXXXXXXXXXXXXX_add_oauth_client_user_options.cr
+
+   class AddOauthClientUserOptions::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
+     def migrate
+       alter :user_options do
+         add oauth_access_token_notify : Bool, fill_existing_with: true
+       end
+     end
+
+     def rollback
+       alter :user_options do
+         remove :oauth_access_token_notify
+       end
+     end
+   end
+   ```
 
    ---
    ```crystal

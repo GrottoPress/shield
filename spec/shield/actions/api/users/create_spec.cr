@@ -18,7 +18,8 @@ describe Shield::Api::Users::Create do
       user_options: {
         password_notify: true,
         login_notify: true,
-        bearer_login_notify: true
+        bearer_login_notify: true,
+        oauth_access_token_notify: true
       }
     )
 
@@ -36,7 +37,8 @@ describe Shield::Api::Users::Create do
       user_options: {
         password_notify: true,
         login_notify: true,
-        bearer_login_notify: true
+        bearer_login_notify: true,
+        oauth_access_token_notify: true
       }
     )
 

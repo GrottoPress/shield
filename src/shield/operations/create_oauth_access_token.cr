@@ -31,7 +31,7 @@ module Shield::CreateOauthAccessToken
     end
 
     private def set_inactive_at
-      Shield.settings.bearer_login_expiry.try do |expiry|
+      Shield.settings.oauth_access_token_expiry.try do |expiry|
         active_at.value.try { |value| inactive_at.value = value + expiry }
       end
     end

@@ -11,6 +11,7 @@ describe Shield::NotifyOauthAccessTokenIfSet do
     resource_owner = UserFactory.create &.settings(UserSettings.from_json({
       bearer_login_notify: true,
       login_notify: false,
+      oauth_access_token_notify: true,
       password_notify: false,
     }.to_json))
 
@@ -40,6 +41,7 @@ describe Shield::NotifyOauthAccessTokenIfSet do
     resource_owner = UserFactory.create &.settings(UserSettings.from_json({
       bearer_login_notify: false,
       login_notify: false,
+      oauth_access_token_notify: false,
       password_notify: false,
     }.to_json))
 

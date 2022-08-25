@@ -5,6 +5,8 @@ module Shield
     setting email_confirmation_expiry : Time::Span = 1.hour
     setting login_expiry : Time::Span? = 24.hours
     setting login_idle_timeout : Time::Span? = 30.minutes
+    setting oauth_access_token_expiry : Time::Span? = 90.days
+    setting oauth_access_token_scopes_allowed : Array(String) = [] of String
     setting oauth_authorization_expiry : Time::Span = 1.minute
     setting oauth_client_name_filter : Regex?
     setting oauth_code_challenge_methods_allowed : Array(String) = ["S256"]
