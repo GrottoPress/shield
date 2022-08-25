@@ -14,6 +14,7 @@ describe Shield::SaveUserOptions do
 
       user_options = user_options.not_nil!
 
+      user_options.bearer_login_notify.should be_false
       user_options.login_notify.should be_false
       user_options.password_notify.should be_true
     end
@@ -33,6 +34,7 @@ describe Shield::SaveUserOptions do
 
   it "requires user id" do
     SaveUserOptions.create(params(
+      bearer_login_notify: false,
       login_notify: true,
       password_notify: true
     )) do |operation, user_options|
@@ -44,7 +46,11 @@ describe Shield::SaveUserOptions do
 
   it "requires valid user id" do
     SaveUserOptions.create(
-      params(login_notify: true, password_notify: true),
+      params(
+        bearer_login_notify: false,
+        login_notify: true,
+        password_notify: true
+      ),
       user_id: 111
     ) do |operation, user_options|
       user_options.should be_nil
@@ -55,12 +61,37 @@ describe Shield::SaveUserOptions do
 
   it "requires password notification option" do
     SaveUserOptions.create(params(
+      bearer_login_notify: false,
       login_notify: true
     )) do |operation, user_options|
       user_options.should be_nil
 
       operation.password_notify
         .should have_error("operation.error.password_notify_required")
+    end
+  end
+
+  it "requires login notification option" do
+    SaveUserOptions.create(params(
+      bearer_login_notify: false,
+      password_notify: true
+    )) do |operation, user_options|
+      user_options.should be_nil
+
+      operation.login_notify
+        .should have_error("operation.error.login_notify_required")
+    end
+  end
+
+  it "requires bearer login notification option" do
+    SaveUserOptions.create(params(
+      login_notify: true,
+      password_notify: true
+    )) do |operation, user_options|
+      user_options.should be_nil
+
+      operation.bearer_login_notify
+        .should have_error("operation.error.bearer_login_notify_required")
     end
   end
 end
