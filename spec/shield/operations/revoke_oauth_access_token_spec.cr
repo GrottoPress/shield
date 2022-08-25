@@ -23,9 +23,9 @@ describe Shield::RevokeOauthAccessToken do
     RevokeOauthAccessToken.run(
       params(token: access_token),
       oauth_client: oauth_client
-    ) do |operation, token|
+    ) do |operation, _token|
       operation.valid?.should be_true
-      token.should be_a(String)
+      _token.should be_a(String)
     end
 
     bearer_login.reload.status.active?.should be_false
@@ -52,9 +52,9 @@ describe Shield::RevokeOauthAccessToken do
     RevokeOauthAccessToken.run(
       params(token: token),
       oauth_client: nil
-    ) do |operation, token|
+    ) do |operation, _token|
       operation.valid?.should be_false
-      token.should be_nil
+      _token.should be_nil
 
       operation.token
         .should(have_error "operation.error.token_not_access_token")
@@ -78,9 +78,9 @@ describe Shield::RevokeOauthAccessToken do
     RevokeOauthAccessToken.run(
       params(token: access_token),
       oauth_client: oauth_client
-    ) do |operation, token|
+    ) do |operation, _token|
       operation.valid?.should be_false
-      token.should be_nil
+      _token.should be_nil
 
       operation.token
         .should(have_error "operation.error.oauth_client_not_authorized")
