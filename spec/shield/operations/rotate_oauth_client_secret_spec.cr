@@ -1,13 +1,13 @@
 require "../../spec_helper"
 
-describe Shield::RefreshOauthClientSecret do
+describe Shield::RotateOauthClientSecret do
   it "refreshes OAuth client secret" do
     secret = "a1b2c3"
 
     user = UserFactory.create
     oauth_client = OauthClientFactory.create &.user_id(user.id).secret(secret)
 
-    RefreshOauthClientSecret.update(
+    RotateOauthClientSecret.update(
       oauth_client
     ) do |operation, updated_oauth_client|
       operation.saved?.should be_true
@@ -25,7 +25,7 @@ describe Shield::RefreshOauthClientSecret do
     user = UserFactory.create
     oauth_client = OauthClientFactory.create &.user_id(user.id)
 
-    RefreshOauthClientSecret.update(oauth_client) do |operation, _|
+    RotateOauthClientSecret.update(oauth_client) do |operation, _|
       operation.saved?.should be_false
       operation.secret.should_not be_empty
 
@@ -40,7 +40,7 @@ describe Shield::RefreshOauthClientSecret do
     oauth_client = OauthClientFactory.create &.user_id(user.id)
       .inactive_at(Time.utc)
 
-    RefreshOauthClientSecret.update(oauth_client) do |operation, _|
+    RotateOauthClientSecret.update(oauth_client) do |operation, _|
       operation.saved?.should be_false
       operation.name.should have_error("operation.error.oauth_client_inactive")
     end

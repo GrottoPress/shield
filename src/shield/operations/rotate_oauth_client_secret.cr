@@ -1,4 +1,4 @@
-module Shield::RefreshOauthClientSecret
+module Shield::RotateOauthClientSecret
   macro included
     include Shield::SetSecret
 

@@ -211,14 +211,14 @@
 
    ---
    ```crystal
-   # ->>> src/operations/refresh_oauth_client.cr
+   # ->>> src/operations/rotate_oauth_client_secret.cr
 
-   class RefreshOauthClientSecret < OauthClient::SaveOperation
+   class RotateOauthClientSecret < OauthClient::SaveOperation
      # ...
    end
    ```
 
-   `RefreshOauthClientSecret` updates a client's secret to a new one, rendering the old secret invalid.
+   `RotateOauthClientSecret` updates a client's secret to a new one, rendering the old secret invalid.
 
    ---
    ```crystal

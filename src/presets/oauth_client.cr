@@ -19,8 +19,8 @@ class RegisterOauthClient < OauthClient::SaveOperation
   include Shield::RegisterOauthClient
 end
 
-class RefreshOauthClientSecret < OauthClient::SaveOperation
-  include Shield::RefreshOauthClientSecret
+class RotateOauthClientSecret < OauthClient::SaveOperation
+  include Shield::RotateOauthClientSecret
 end
 
 class DeactivateOauthClient < OauthClient::SaveOperation

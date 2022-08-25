@@ -7,7 +7,7 @@ module Shield::Api::OauthClients::Secret::Update
     # end
 
     def run_operation
-      RefreshOauthClientSecret.update(
+      RotateOauthClientSecret.update(
         oauth_client
       ) do |operation, updated_oauth_client|
         if operation.saved?
