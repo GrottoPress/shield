@@ -4,7 +4,7 @@ module Shield::CreateOauthAccessTokenFromAuthorization
   # Revoke access tokens if authorization code used more than once,
   # to mitigate replay attacks.
   macro included
-    needs oauth_authorization : OauthAuthorization?
+    needs oauth_authorization : OauthAuthorization
 
     include Lucille::Activate
     include Shield::SetToken
@@ -37,49 +37,37 @@ module Shield::CreateOauthAccessTokenFromAuthorization
     end
 
     private def set_name
-      oauth_authorization.try do |authorization|
-        return unless authorization.status.active?
-        name.value = "OAuth access token #{authorization.id}"
-      end
+      return unless oauth_authorization.status.active?
+      name.value = "OAuth access token #{oauth_authorization.id}"
     end
 
     private def set_scopes
-      oauth_authorization.try do |authorization|
-        return unless authorization.status.active?
-        scopes.value = authorization.scopes
-      end
+      return unless oauth_authorization.status.active?
+      scopes.value = oauth_authorization.scopes
     end
 
     private def set_user_id
-      oauth_authorization.try do |authorization|
-        return unless authorization.status.active?
-        user_id.value = authorization.user_id
-      end
+      return unless oauth_authorization.status.active?
+      user_id.value = oauth_authorization.user_id
     end
 
     private def set_oauth_client_id
-      oauth_authorization.try do |authorization|
-        return unless authorization.status.active?
-        oauth_client_id.value = authorization.oauth_client_id
-      end
+      return unless oauth_authorization.status.active?
+      oauth_client_id.value = oauth_authorization.oauth_client_id
     end
 
     private def revoke_access_tokens
-      oauth_authorization.try do |authorization|
-        return if authorization.status.active?
+      return if oauth_authorization.status.active?
 
-        BearerLoginQuery.new
-          .user_id(authorization.user_id)
-          .oauth_client_id(authorization.oauth_client_id)
-          .is_active
-          .update(inactive_at: Time.utc)
-      end
+      BearerLoginQuery.new
+        .user_id(oauth_authorization.user_id)
+        .oauth_client_id(oauth_authorization.oauth_client_id)
+        .is_active
+        .update(inactive_at: Time.utc)
     end
 
     private def end_oauth_authorization(bearer_login : Shield::BearerLogin)
-      oauth_authorization.try do |authorization|
-        EndOauthAuthorization.update!(authorization, success: true)
-      end
+      EndOauthAuthorization.update!(oauth_authorization, success: true)
     end
   end
 end
