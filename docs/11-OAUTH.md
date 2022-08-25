@@ -907,6 +907,47 @@
    
    The action requires the requester to be logged in. Typically, this should be done by creating an API token (See *10-BEARER-LOGIN.md*) with the needed scope to access the introspection endpoint. This token is sent in the `Authorization` header during the request.
 
+   ---
+   ```crystal
+   # ->>> src/actions/api/oauth/token/destroy.cr
+
+   class Api::Oauth::Token::Destroy < ApiAction
+     # ...
+     # By default, *Shield* marks the access tokens as inactive,
+     # without deleting them.
+     #
+     # To delete them, use `Shield::Api::Oauth::Token::Delete` instead.
+     include Shield::Api::Oauth::Token::Destroy
+
+     post "/oauth/token/revoke" do
+       run_operation
+     end
+
+     #def do_run_operation_succeeded(operation, token)
+     #  json({success: true})
+     #end
+
+     #def do_run_operation_failed(operation)
+     #  json({error: operation.client_authorized? ?
+     #    "invalid_request" :
+     #    "unauthorized_client"})
+     #end
+     # ...
+   end
+   ```
+
+   `Shield::Api::Oauth::Token::Destroy` is the token **revocation** endpoint, where a client may request the authorization server to revoke a token. The following body parameters are expected:
+
+   - `client_id : String` (Optional if using HTTP basic authentication)
+   - `client_secret : String` (Optional if using HTTP basic authentication)
+   - `token : String`
+
+   This action will check that the token was issued to the same client requesting the revocation, before processing the request.
+
+   The action requires confidential clients to authenticate, the same way as for the token endpoint. Public clients should send only the client ID along with the request.
+
+   In addition to revoking the token, all other access tokens issued to the same client for the same user are revoked.
+
 ### References:
 
 - [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749)

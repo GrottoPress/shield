@@ -51,6 +51,14 @@ class DeleteUserOauthClients < User::SaveOperation
   include Shield::DeleteUserOauthClients
 end
 
+class RevokeOauthAccessToken < Avram::Operation
+  include Shield::RevokeOauthAccessToken
+end
+
+class DeleteOauthAccessToken < Avram::Operation
+  include Shield::DeleteOauthAccessToken
+end
+
 class RevokeCurrentUserOauthAccessTokens < User::SaveOperation
   include Shield::RevokeUserOauthAccessTokens
 end
