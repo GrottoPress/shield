@@ -779,6 +779,95 @@
 
    ---
    ```crystal
+   # ->>> src/actions/api/oauth/token/pipe_callbacks.cr
+
+   module Api::Oauth::Token::PipeCallbacks
+     macro included
+       # ...
+       #def do_oauth_validate_client_id_failed
+       #  json({
+       #    error: "invalid_client",
+       #    error_description: Rex.t(
+       #      :"action.pipe.oauth.client_id_invalid",
+       #      client_id: client_id
+       #    )
+       #  })
+       #end
+
+       #def do_oauth_validate_redirect_uri_failed
+       #  json({
+       #    error: "invalid_request",
+       #    error_description: Rex.t(
+       #      :"action.pipe.oauth.redirect_uri_invalid",
+       #      redirect_uri: redirect_uri
+       #    )
+       #  })
+       #end
+
+       #def do_oauth_check_duplicate_params_failed
+       #  json({
+       #    error: "invalid_request",
+       #    error_description: Rex.t(:"action.pipe.oauth.duplicate_params"),
+       #  })
+       #end
+
+       #def do_oauth_validate_scope_failed
+       #  json({
+       #    error: "invalid_scope",
+       #    error_description: Rex.t(
+       #      :"action.pipe.oauth.scope_invalid",
+       #      scope: scope
+       #    ),
+       #  })
+       #end
+
+       #def do_oauth_validate_client_secret_failed
+       #  json({
+       #    error: "invalid_client",
+       #    error_description: Rex.t(
+       #      :"action.pipe.oauth.client_auth_failed",
+       #      client_id: client_id
+       #    )
+       #  })
+       #end
+
+       #def do_oauth_require_access_token_params_failed
+       #  json({
+       #    error: "invalid_request",
+       #    error_description: Rex.t(:"action.pipe.oauth.params_missing")
+       #  })
+       #end
+
+       #def do_oauth_validate_grant_type_failed
+       #  json({
+       #    error: "unsupported_grant_type",
+       #    error_description: Rex.t(
+       #      :"action.pipe.oauth.grant_type_invalid",
+       #      grant_type: grant_type
+       #    )
+       #  })
+       #end
+
+       #def do_oauth_validate_code_failed
+       #  json({
+       #    error: "invalid_grant",
+       #    error_description: Rex.t(:"action.pipe.oauth.auth_code_invalid"),
+       #  })
+       #end
+
+       #def do_oauth_check_multiple_client_auth_failed
+       #  json({
+       #    error: "invalid_request",
+       #    error_description: Rex.t(:"action.pipe.oauth.multiple_client_auth"),
+       #  })
+       #end
+       # ...
+     end
+   end
+   ```
+
+   ---
+   ```crystal
    # ->>> src/actions/api/oauth/token/verify.cr
 
    class Api::Oauth::Token::Verify < ApiAction
@@ -815,93 +904,6 @@
    If `scope` parameter is provided, the action will further check that the access token's scopes include the given scope.
    
    The action requires the requester to be logged in. Typically, this should be done by creating an API token (See *10-BEARER-LOGIN.md*) with the needed scope to access the introspection endpoint. This token is sent in the `Authorization` header during the request.
-
-   ---
-   ```crystal
-   # ->>> src/actions/api/oauth/token/pipe_callbacks.cr
-
-   class Api::Oauth::Token::PipeCallbacks < ApiAction
-     # ...
-     #def do_oauth_validate_client_id_failed
-     #  json({
-     #    error: "invalid_client",
-     #    error_description: Rex.t(
-     #      :"action.pipe.oauth.client_id_invalid",
-     #      client_id: client_id
-     #    )
-     #  })
-     #end
-
-     #def do_oauth_validate_redirect_uri_failed
-     #  json({
-     #    error: "invalid_request",
-     #    error_description: Rex.t(
-     #      :"action.pipe.oauth.redirect_uri_invalid",
-     #      redirect_uri: redirect_uri
-     #    )
-     #  })
-     #end
-
-     #def do_oauth_check_duplicate_params_failed
-     #  json({
-     #    error: "invalid_request",
-     #    error_description: Rex.t(:"action.pipe.oauth.duplicate_params"),
-     #  })
-     #end
-
-     #def do_oauth_validate_scope_failed
-     #  json({
-     #    error: "invalid_scope",
-     #    error_description: Rex.t(
-     #      :"action.pipe.oauth.scope_invalid",
-     #      scope: scope
-     #    ),
-     #  })
-     #end
-
-     #def do_oauth_validate_client_secret_failed
-     #  json({
-     #    error: "invalid_client",
-     #    error_description: Rex.t(
-     #      :"action.pipe.oauth.client_auth_failed",
-     #      client_id: client_id
-     #    )
-     #  })
-     #end
-
-     #def do_oauth_require_access_token_params_failed
-     #  json({
-     #    error: "invalid_request",
-     #    error_description: Rex.t(:"action.pipe.oauth.params_missing")
-     #  })
-     #end
-
-     #def do_oauth_validate_grant_type_failed
-     #  json({
-     #    error: "unsupported_grant_type",
-     #    error_description: Rex.t(
-     #      :"action.pipe.oauth.grant_type_invalid",
-     #      grant_type: grant_type
-     #    )
-     #  })
-     #end
-
-     #def do_oauth_validate_code_failed
-     #  json({
-     #    error: "invalid_grant",
-     #    error_description: Rex.t(:"action.pipe.oauth.auth_code_invalid"),
-     #  })
-     #end
-
-     #def do_oauth_check_multiple_client_auth_failed
-     #  json({
-     #    error: "invalid_request",
-     #    error_description: Rex.t(:"action.pipe.oauth.multiple_client_auth"),
-     #  })
-     #end
-     # ...
-   end
-   ```
 
 ### References:
 
