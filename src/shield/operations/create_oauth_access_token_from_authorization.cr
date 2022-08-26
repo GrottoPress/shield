@@ -17,18 +17,11 @@ module Shield::CreateOauthAccessTokenFromAuthorization
       set_scopes
       set_user_id
       set_oauth_client_id
-
-      validate_oauth_client_id_required
     end
 
     after_save end_oauth_authorization
 
-    include Shield::ValidateBearerLogin
-
-    private def validate_oauth_client_id_required
-      validate_required oauth_client_id,
-        message: Rex.t(:"operation.error.oauth_client_id_required")
-    end
+    include Shield::ValidateOauthAccessToken
 
     private def set_inactive_at
       Shield.settings.oauth_access_token_expiry.try do |expiry|
