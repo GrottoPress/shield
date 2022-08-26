@@ -39,7 +39,7 @@ module Shield::Api::BearerLoginPipes
         return response.headers["WWW-Authenticate"] = %(Bearer)
       end
 
-      if BearerLoginHeaders.new(request).verify?
+      if bearer_login_headers.verify?
         response.status_code = 403
         response.headers["WWW-Authenticate"] =
           %(Bearer error="insufficient_scope", scope="#{bearer_scope}")
