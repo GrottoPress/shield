@@ -834,10 +834,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
      #end
 
      #def do_run_operation_failed(operation)
-     #  json({
-     #    error: "invalid_grant",
-     #    error_description: Rex.t(:"action.pipe.oauth.auth_code_invalid"),
-     #  })
+     #  json({error: "invalid_grant"})
      #end
      # ...
    end
