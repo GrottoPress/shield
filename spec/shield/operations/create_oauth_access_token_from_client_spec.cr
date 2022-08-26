@@ -2,9 +2,6 @@ require "../../spec_helper"
 
 describe Shield::CreateOauthAccessTokenFromClient do
   it "creates OAuth access token" do
-    resource_owner = UserFactory.create &.email("resource@owner.com")
-    UserOptionsFactory.create &.user_id(resource_owner.id)
-
     developer = UserFactory.create
     oauth_client = OauthClientFactory.create &.user_id(developer.id)\
 
@@ -25,7 +22,6 @@ describe Shield::CreateOauthAccessTokenFromClient do
 
   it "requires active OAuth client" do
     developer = UserFactory.create
-    resource_owner = UserFactory.create &.email("resource@owner.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
       .inactive_at(Time.utc)
 
