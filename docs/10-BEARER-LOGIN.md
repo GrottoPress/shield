@@ -2,9 +2,11 @@
 
 *Shield* enables authentication via access tokens, per [RFC 6750](https://tools.ietf.org/html/rfc6750). Any registered user may create *bearer login*s, and assign capabilities to them in the form of `scopes`.
 
-In *Shield*, every action represents a single scope, which, if included in a *bearer login*'s assigned `scopes`, would allow a client possessing that *bearer login*'s token to access that action.
+Every action represents a single scope, which, if included in a *bearer login*'s assigned `scopes`, would allow a client possessing that *bearer login*'s token to access that action.
 
-An action's scope name is the action's class name underscored, with `::` replaced with `.`. For instance, `Api::Posts::Index` becomes `api.posts.index`, `Api::CurrentUser::Show` becomes `api.current_user.show`, etc.
+By default, an action's scope is the action's class name underscored, with `::` replaced with `.`. For instance, `Api::Posts::Index` becomes `api.posts.index`, `Api::CurrentUser::Show` becomes `api.current_user.show`, etc.
+
+This can be overridden for each action, by redefining the `#bearer_scope` method for that action. The method returns a `String`, representing the scope for that action.
 
 When a user creates a *bearer login*, they generate a token, and delegate some or all of their rights, to this token. Any client in possession of the token may access the application on behalf of the user, without needing login credentials of their own.
 
