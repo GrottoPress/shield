@@ -31,7 +31,9 @@ module Shield::CreateOauthAccessTokenFromAuthorization
 
     private def set_name
       return unless oauth_authorization.status.active?
-      name.value = "OAuth access token #{oauth_authorization.id}"
+
+      name.value = "OAuth access token --
+        Authorization #{oauth_authorization.id}"
     end
 
     private def set_scopes
