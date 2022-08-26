@@ -83,6 +83,10 @@ class DeleteOauthPermission < User::SaveOperation
   include Shield::DeleteOauthPermission
 end
 
+class CreateOauthAccessTokenFromClient < BearerLogin::SaveOperation
+  include Shield::CreateOauthAccessTokenFromClient
+end
+
 module Shield::BearerLoginVerifier
   include Shield::OauthAccessTokenVerifier
 end

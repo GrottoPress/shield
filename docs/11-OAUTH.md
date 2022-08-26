@@ -1,6 +1,24 @@
 ## OAuth 2.0
 
-*Shield* includes tools for building your own OAuth 2.0 authorization server, per [RFC 6749](https://www.rfc-editor.org/rfc/rfc6749.html). Currently, only the Authorization Code Grant type, with PKCE ([RFC 7636](https://datatracker.ietf.org/doc/html/rfc7636)), is supported.
+*Shield* includes tools for building your own OAuth 2.0 authorization server, per [RFC 6749](https://www.rfc-editor.org/rfc/rfc6749.html). The following grant types are supported:
+
+- Authorization Code Grant + PKCE
+- Client Credentials Grant
+
+The following grant types will **not** be supported:
+
+- Implicit Grant
+- Resource Owner Password Credentials Grant
+
+The following RFCs are implemented:
+
+- [The OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749.html)
+- [The OAuth 2.0 Authorization Framework: Bearer Token Usage](https://datatracker.ietf.org/doc/html/rfc6750)
+- [OAuth 2.0 Token Revocation](https://datatracker.ietf.org/doc/html/rfc7009)
+- [OAuth 2.0 Token Introspection](https://datatracker.ietf.org/doc/html/rfc7662)
+- [Proof Key for Code Exchange by OAuth Public Clients](https://datatracker.ietf.org/doc/html/rfc7636)
+
+PKCE is required for public clients using the Authorization Code Grant flow.
 
 ### Setting up
 
@@ -1009,7 +1027,5 @@
 
 ### References:
 
-- [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749)
-- [RFC 6750](https://datatracker.ietf.org/doc/html/rfc6750)
-- [RFC 6819](https://datatracker.ietf.org/doc/html/rfc6819)
+- [OAuth 2.0 Threat Model and Security Considerations](https://datatracker.ietf.org/doc/html/rfc6819)
 - [OAuth.com](https://www.oauth.com)

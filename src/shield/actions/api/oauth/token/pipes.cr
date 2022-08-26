@@ -5,16 +5,18 @@ module Shield::Api::Oauth::Token::Pipes
     include Shield::Oauth::Pipes
 
     def oauth_require_access_token_params
-      if grant_type && code
-        continue
-      else
+      if !grant_type || (grant_type == "authorization_code" && !code)
         response.status_code = 400
         do_oauth_require_access_token_params_failed
+      else
+        continue
       end
     end
 
     def oauth_validate_grant_type
-      if !grant_type || grant_type == "authorization_code"
+      if !grant_type ||
+        grant_type.in?({"authorization_code", "client_credentials"})
+
         continue
       else
         response.status_code = 400
@@ -23,7 +25,11 @@ module Shield::Api::Oauth::Token::Pipes
     end
 
     def oauth_validate_code
-      if !oauth_client? || oauth_authorization_params.verify?(oauth_client)
+      if !grant_type ||
+        !grant_type.in?({"authorization_code"}) ||
+        !oauth_client? ||
+        oauth_authorization_params.verify?(oauth_client)
+
         continue
       else
         response.status_code = 400
@@ -32,7 +38,10 @@ module Shield::Api::Oauth::Token::Pipes
     end
 
     def oauth_validate_code_verifier
-      if oauth_authorization_params.verify_pkce?(code_verifier)
+      if !grant_type ||
+        !grant_type.in?({"authorization_code"}) ||
+        oauth_authorization_params.verify_pkce?(code_verifier)
+
         continue
       else
         response.status_code = 400
@@ -63,6 +72,19 @@ module Shield::Api::Oauth::Token::Pipes
       else
         response.status_code = 400
         do_oauth_check_multiple_client_auth_failed
+      end
+    end
+
+    def oauth_require_confidential_client
+      if !grant_type ||
+        !grant_type.in?({"client_credentials"}) ||
+        !oauth_client? ||
+        oauth_client.confidential?
+
+        continue
+      else
+        response.status_code = 400
+        do_oauth_require_confidential_client_failed
       end
     end
 
@@ -158,6 +180,16 @@ module Shield::Api::Oauth::Token::Pipes
       json({
         error: "invalid_request",
         error_description: Rex.t(:"action.pipe.oauth.multiple_client_auth"),
+      })
+    end
+
+    def do_oauth_require_confidential_client_failed
+      json({
+        error: "invalid_client",
+        error_description: Rex.t(
+          :"action.pipe.oauth.client_public",
+          client_id: client_id
+        )
       })
     end
 
