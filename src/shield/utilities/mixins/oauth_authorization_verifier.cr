@@ -30,7 +30,7 @@ module Shield::OauthAuthorizationVerifier
       return unless oauth_authorization_id? && oauth_authorization_code?
       sha256 = Sha256Hash.new(oauth_authorization_code)
 
-      if verify_code_verifier(code_verifier) &&
+      if (!code_verifier || verify_pkce?(code_verifier)) &&
         oauth_authorization?.try(&.status.active?) &&
         oauth_authorization.oauth_client_id == oauth_client.id
 
@@ -38,6 +38,19 @@ module Shield::OauthAuthorizationVerifier
       else
         sha256.fake_verify
       end
+    end
+
+    def verify_pkce?(code_verifier : String?) : Bool
+      confidential = oauth_authorization?.try(&.oauth_client.confidential?)
+      challenge = oauth_authorization?.try(&.pkce.try &.code_challenge)
+      method = oauth_authorization?.try(&.pkce.try &.code_challenge_method)
+
+      return true if !challenge && confidential
+      return false unless challenge && code_verifier
+      return code_verifier == challenge if method == "plain"
+
+      digest = Base64.urlsafe_encode Digest::SHA256.digest(code_verifier), false
+      Crypto::Subtle.constant_time_compare(digest, challenge)
     end
 
     def oauth_authorization
@@ -60,19 +73,6 @@ module Shield::OauthAuthorizationVerifier
 
     def oauth_authorization_code : String
       oauth_authorization_code?.not_nil!
-    end
-
-    private def verify_code_verifier(code_verifier)
-      challenge = oauth_authorization?.try(&.pkce.try &.code_challenge)
-      confidential = oauth_authorization?.try(&.oauth_client.confidential?)
-      method = oauth_authorization?.try(&.pkce.try &.code_challenge_method)
-
-      return true if !challenge && confidential
-      return false unless challenge && code_verifier
-      return code_verifier == challenge if method == "plain"
-
-      digest = Base64.urlsafe_encode Digest::SHA256.digest(code_verifier), false
-      Crypto::Subtle.constant_time_compare(digest, challenge)
     end
   end
 end

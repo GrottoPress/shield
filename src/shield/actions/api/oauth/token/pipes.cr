@@ -23,11 +23,20 @@ module Shield::Api::Oauth::Token::Pipes
     end
 
     def oauth_validate_code
-      if !oauth_client? || oauth_authorization?
+      if !oauth_client? || oauth_authorization_params.verify?(oauth_client)
         continue
       else
         response.status_code = 400
         do_oauth_validate_code_failed
+      end
+    end
+
+    def oauth_validate_code_verifier
+      if oauth_authorization_params.verify_pkce?(code_verifier)
+        continue
+      else
+        response.status_code = 400
+        do_oauth_validate_code_verifier_failed
       end
     end
 
@@ -135,6 +144,13 @@ module Shield::Api::Oauth::Token::Pipes
       json({
         error: "invalid_grant",
         error_description: Rex.t(:"action.pipe.oauth.auth_code_invalid"),
+      })
+    end
+
+    def do_oauth_validate_code_verifier_failed
+      json({
+        error: "invalid_grant",
+        error_description: Rex.t(:"action.pipe.oauth.code_verifier_invalid"),
       })
     end
 

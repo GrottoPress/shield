@@ -5,10 +5,7 @@ module Shield::Oauth::Helpers
     end
 
     getter? oauth_authorization : OauthAuthorization? do
-      code.try do |_code|
-        return unless client = oauth_client?
-        OauthAuthorizationParams.new(_code).verify(client, code_verifier)
-      end
+      oauth_authorization_params.oauth_authorization?
     end
 
     def oauth_redirect_uri(**params)
@@ -39,6 +36,10 @@ module Shield::Oauth::Helpers
 
     getter? oauth_client : OauthClient? do
       oauth_client_id?.try { |id| OauthClientQuery.new.id(id).first? }
+    end
+
+    private getter oauth_authorization_params do
+      OauthAuthorizationParams.new(code)
     end
   end
 end

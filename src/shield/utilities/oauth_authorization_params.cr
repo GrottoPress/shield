@@ -2,7 +2,7 @@ module Shield::OauthAuthorizationParams
   macro included
     include Shield::OauthAuthorizationVerifier
 
-    def initialize(@code : String)
+    def initialize(@code : String?)
     end
 
     def oauth_authorization_id?

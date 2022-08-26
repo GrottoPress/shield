@@ -11,6 +11,7 @@ module Shield::Api::Oauth::Token::Create
     before :oauth_validate_redirect_uri
     before :oauth_validate_grant_type
     before :oauth_validate_code
+    before :oauth_validate_code_verifier
     before :oauth_check_multiple_client_auth
     before :oauth_validate_client_secret
 
