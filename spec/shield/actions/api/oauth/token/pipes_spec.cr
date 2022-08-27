@@ -10,6 +10,7 @@ class Spec::Api::Oauth::Token::Pipes < ApiAction
 
   before :oauth_validate_client_id
   before :oauth_require_access_token_params
+  before :oauth_validate_redirect_uri
   before :oauth_validate_grant_type
   before :oauth_validate_code
   before :oauth_validate_code_verifier
@@ -159,6 +160,53 @@ describe Shield::Api::Oauth::Token::Pipes do
           400,
           error: "invalid_request",
           error_description: "action.pipe.oauth.params_missing"
+        )
+      end
+    end
+
+    describe "#oauth_validate_redirect_uri" do
+      it "ensures redirect URIs match" do
+        code = "a1b2c3"
+        code_challenge = "abc123"
+        client_secret = "def456"
+
+        pkce = OauthAuthorizationPkce.from_json({
+          code_challenge: code_challenge,
+          code_challenge_method: "plain"
+        }.to_json)
+
+        developer = UserFactory.create
+        resource_owner = UserFactory.create &.email("resource@owner.com")
+
+        oauth_client = OauthClientFactory.create &.user_id(developer.id)
+          .secret(client_secret)
+          .redirect_uri("https://example.com/oauth/callback")
+
+        oauth_authorization =
+          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
+            .oauth_client_id(oauth_client.id)
+            .code(code)
+            .pkce(pkce)
+
+        code_final = OauthAuthorizationCredentials.new(
+          code,
+          oauth_authorization.id
+        ).to_s
+
+        response = ApiClient.exec(
+          Spec::Api::Oauth::Token::Pipes,
+          client_id: oauth_client.id,
+          code: code_final,
+          redirect_uri: "myapp://callback",
+          code_verifier: code_challenge,
+          client_secret: client_secret,
+          grant_type: "authorization_code"
+        )
+
+        response.should send_json(
+          400,
+          error: "invalid_request",
+          error_description: "action.pipe.oauth.redirect_uri_invalid"
         )
       end
     end

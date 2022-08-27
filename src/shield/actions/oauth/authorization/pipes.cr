@@ -42,6 +42,15 @@ module Shield::Oauth::Authorization::Pipes
       end
     end
 
+    def oauth_validate_redirect_uri
+      if !oauth_client? || oauth_client.redirect_uri == redirect_uri
+        continue
+      else
+        response.status_code = 400
+        do_oauth_validate_redirect_uri_failed
+      end
+    end
+
     def do_oauth_validate_client_id_failed
       json({
         error: "invalid_request",

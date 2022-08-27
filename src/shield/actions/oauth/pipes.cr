@@ -57,15 +57,6 @@ module Shield::Oauth::Pipes
       end
     end
 
-    def oauth_validate_redirect_uri
-      if !oauth_client? || oauth_client.redirect_uri == redirect_uri
-        continue
-      else
-        response.status_code = 400
-        do_oauth_validate_redirect_uri_failed
-      end
-    end
-
     private def has_duplicate_params
       params.from_query.any? { |name, _| name.size > 1 }
     end

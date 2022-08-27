@@ -10,6 +10,7 @@ class Spec::Api::Oauth::Authorization::Pipes < ApiAction
 
   before :oauth_validate_client_id
   before :oauth_require_authorization_params
+  before :oauth_validate_redirect_uri
   before :oauth_validate_response_type
   before :oauth_require_code_challenge
   before :oauth_validate_code_challenge_method
@@ -179,6 +180,31 @@ describe Shield::Api::Oauth::Authorization::Pipes do
         400,
         error: "invalid_request",
         error_description: "action.pipe.oauth.code_challenge_method_invalid"
+      )
+    end
+  end
+
+  describe "#oauth_validate_redirect_uri" do
+    it "ensures redirect URIs match" do
+      developer = UserFactory.create
+
+      oauth_client = OauthClientFactory.create &.user_id(developer.id)
+        .redirect_uri("https://example.com/oauth/callback")
+
+      response = ApiClient.exec(
+        Spec::Api::Oauth::Authorization::Pipes,
+        client_id: oauth_client.id,
+        code_challenge: "a1b2c3",
+        redirect_uri: "myapp://callback",
+        response_type: "code",
+        scope: "api.current_user.show",
+        state: "abc123"
+      )
+
+      response.should send_json(
+        400,
+        error: "invalid_request",
+        error_description: "action.pipe.oauth.redirect_uri_invalid"
       )
     end
   end

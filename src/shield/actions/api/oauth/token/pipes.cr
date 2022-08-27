@@ -86,6 +86,19 @@ module Shield::Api::Oauth::Token::Pipes
       end
     end
 
+    def oauth_validate_redirect_uri
+      if !grant_type ||
+        !oauth_grant_type.authorization_code? ||
+        !oauth_client? ||
+        oauth_client.redirect_uri == redirect_uri
+
+        continue
+      else
+        response.status_code = 400
+        do_oauth_validate_redirect_uri_failed
+      end
+    end
+
     # Requires logged in, but confidential clients may use their
     # credentials instead.
     #

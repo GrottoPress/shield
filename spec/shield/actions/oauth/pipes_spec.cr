@@ -12,7 +12,6 @@ class Spec::Oauth::Pipes < ApiAction
   # before :oauth_handle_errors
   before :oauth_check_duplicate_params
   before :oauth_validate_scope
-  before :oauth_validate_redirect_uri
 
   param client_id : String?
   param code_challenge : String?
@@ -116,30 +115,6 @@ describe Shield::Oauth::Pipes do
         400,
         error: "invalid_scope",
         error_description: "action.pipe.oauth.scope_invalid"
-      )
-    end
-  end
-
-  describe "#oauth_validate_redirect_uri" do
-    it "ensures redirect URIs match" do
-      developer = UserFactory.create
-      oauth_client = OauthClientFactory.create &.user_id(developer.id)
-        .redirect_uri("https://example.com/oauth/callback")
-
-      response = ApiClient.exec(
-        Spec::Oauth::Pipes,
-        client_id: oauth_client.id,
-        code_challenge: "a1b2c3",
-        redirect_uri: "myapp://callback",
-        response_type: "code",
-        scope: "api.current_user.show",
-        state: "abc123"
-      )
-
-      response.should send_json(
-        400,
-        error: "invalid_request",
-        error_description: "action.pipe.oauth.redirect_uri_invalid"
       )
     end
   end
