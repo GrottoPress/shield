@@ -2,17 +2,20 @@ require "../../../../../spec_helper"
 
 describe Shield::Api::Oauth::Token::Verify do
   it "verifies OAuth access token" do
-    scope = BearerScope.new(Api::CurrentUser::Show).to_s
+    scope_to_check = BearerScope.new(Api::CurrentUser::Show).to_s
     raw_login_token = "a1b2c3"
     raw_access_token = "d4e5f6"
 
-    user = UserFactory.create
+    login_user = UserFactory.create
 
-    bearer_login = BearerLoginFactory.create &.user_id(user.id)
+    login_bearer_login = BearerLoginFactory.create &.user_id(login_user.id)
       .token(raw_login_token)
       .scopes([BearerScope.new(Api::Oauth::Token::Verify).to_s])
 
-    login_token = BearerLoginCredentials.new(raw_login_token, bearer_login.id)
+    login_token = BearerLoginCredentials.new(
+      raw_login_token,
+      login_bearer_login.id
+    )
 
     resource_owner = UserFactory.create &.email("resource@owner.com")
     UserOptionsFactory.create &.user_id(resource_owner.id)
@@ -20,41 +23,43 @@ describe Shield::Api::Oauth::Token::Verify do
     developer = UserFactory.create &.email("dev@app.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-    bearer_login_2 = BearerLoginFactory.create &.user_id(resource_owner.id)
+    bearer_login = BearerLoginFactory.create &.user_id(resource_owner.id)
       .token(raw_access_token)
       .oauth_client_id(oauth_client.id)
-      .scopes([scope])
+      .scopes([scope_to_check])
 
     access_token = BearerLoginCredentials.new(
       raw_access_token,
-      bearer_login_2.id
+      bearer_login.id
     )
 
-    client = ApiClient.new
+    api_client = ApiClient.new
+    api_client.api_auth(login_token)
 
-    client.api_auth(login_token)
-
-    response = client.exec(
+    response = api_client.exec(
       Api::Oauth::Token::Verify,
       token: access_token,
-      scope: scope
+      scope: scope_to_check
     )
 
     response.should send_json(200, {active: true})
   end
 
   it "fails if token is invalid" do
-    scope = BearerScope.new(Api::CurrentUser::Show).to_s
+    scope_to_check = BearerScope.new(Api::CurrentUser::Show).to_s
     raw_login_token = "a1b2c3"
     raw_access_token = "d4e5f6"
 
-    user = UserFactory.create
+    login_user = UserFactory.create
 
-    bearer_login = BearerLoginFactory.create &.user_id(user.id)
+    login_bearer_login = BearerLoginFactory.create &.user_id(login_user.id)
       .token(raw_login_token)
       .scopes([BearerScope.new(Api::Oauth::Token::Verify).to_s])
 
-    login_token = BearerLoginCredentials.new(raw_login_token, bearer_login.id)
+    login_token = BearerLoginCredentials.new(
+      raw_login_token,
+      login_bearer_login.id
+    )
 
     resource_owner = UserFactory.create &.email("resource@owner.com")
     UserOptionsFactory.create &.user_id(resource_owner.id)
@@ -62,25 +67,24 @@ describe Shield::Api::Oauth::Token::Verify do
     developer = UserFactory.create &.email("dev@app.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-    bearer_login_2 = BearerLoginFactory.create &.user_id(resource_owner.id)
+    bearer_login = BearerLoginFactory.create &.user_id(resource_owner.id)
       .token(raw_access_token)
       .oauth_client_id(oauth_client.id)
-      .scopes([scope])
+      .scopes([scope_to_check])
       .inactive_at(Time.utc)
 
     access_token = BearerLoginCredentials.new(
       raw_access_token,
-      bearer_login_2.id
+      bearer_login.id
     )
 
-    client = ApiClient.new
+    api_client = ApiClient.new
+    api_client.api_auth(login_token)
 
-    client.api_auth(login_token)
-
-    response = client.exec(
+    response = api_client.exec(
       Api::Oauth::Token::Verify,
       token: access_token,
-      scope: scope
+      scope: scope_to_check
     )
 
     response.should send_json(200, {active: false})
