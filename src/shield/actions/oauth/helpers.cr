@@ -41,5 +41,9 @@ module Shield::Oauth::Helpers
     private getter oauth_authorization_params do
       OauthAuthorizationParams.new(code)
     end
+
+    private def oauth_grant_type
+      OauthGrantType.new(grant_type)
+    end
   end
 end

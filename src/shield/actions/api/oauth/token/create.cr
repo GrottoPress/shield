@@ -21,8 +21,8 @@ module Shield::Api::Oauth::Token::Create
     # end
 
     def run_operation
-      case grant_type
-      when "client_credentials"
+      case oauth_grant_type
+      when .client_credentials?
         create_oauth_access_token_from_client
       else
         create_oauth_access_token_from_authorization

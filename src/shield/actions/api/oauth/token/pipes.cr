@@ -5,7 +5,7 @@ module Shield::Api::Oauth::Token::Pipes
     include Shield::Oauth::Pipes
 
     def oauth_require_access_token_params
-      if !grant_type || (grant_type == "authorization_code" && !code)
+      if !grant_type || (oauth_grant_type.authorization_code? && !code)
         response.status_code = 400
         do_oauth_require_access_token_params_failed
       else
@@ -14,9 +14,7 @@ module Shield::Api::Oauth::Token::Pipes
     end
 
     def oauth_validate_grant_type
-      if !grant_type ||
-        grant_type.in?({"authorization_code", "client_credentials"})
-
+      if !grant_type || oauth_grant_type.valid?
         continue
       else
         response.status_code = 400
@@ -26,7 +24,7 @@ module Shield::Api::Oauth::Token::Pipes
 
     def oauth_validate_code
       if !grant_type ||
-        !grant_type.in?({"authorization_code"}) ||
+        !oauth_grant_type.authorization_code? ||
         !oauth_client? ||
         oauth_authorization_params.verify?(oauth_client)
 
@@ -39,7 +37,7 @@ module Shield::Api::Oauth::Token::Pipes
 
     def oauth_validate_code_verifier
       if !grant_type ||
-        !grant_type.in?({"authorization_code"}) ||
+        !oauth_grant_type.authorization_code? ||
         oauth_authorization_params.verify_pkce?(code_verifier)
 
         continue
@@ -77,7 +75,7 @@ module Shield::Api::Oauth::Token::Pipes
 
     def oauth_require_confidential_client
       if !grant_type ||
-        !grant_type.in?({"client_credentials"}) ||
+        !oauth_grant_type.client_credentials? ||
         !oauth_client? ||
         oauth_client.confidential?
 

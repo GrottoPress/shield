@@ -110,3 +110,7 @@ end
 struct OauthClientCredentials
   include Shield::OauthClientCredentials
 end
+
+struct OauthGrantType
+  include Shield::OauthGrantType
+end
