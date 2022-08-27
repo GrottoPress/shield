@@ -5,7 +5,7 @@ module Shield::LoginCredentials
     def initialize(@password : String, @id : Login::PrimaryKeyType)
     end
 
-    def self.new(operation : Shield::StartLogin, login : Shield::Login)
+    def self.new(operation : Login::SaveOperation, login : Shield::Login)
       new(operation.token, login.id)
     end
 

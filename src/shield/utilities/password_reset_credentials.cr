@@ -9,7 +9,7 @@ module Shield::PasswordResetCredentials
     end
 
     def self.new(
-      operation : Shield::StartPasswordReset,
+      operation : PasswordReset::SaveOperation,
       password_reset : Shield::PasswordReset
     )
       new(operation.token, password_reset.id)

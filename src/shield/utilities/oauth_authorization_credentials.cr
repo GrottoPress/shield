@@ -6,7 +6,7 @@ module Shield::OauthAuthorizationCredentials
     end
 
     def self.new(
-      operation : Shield::StartOauthAuthorization,
+      operation : OauthAuthorization::SaveOperation,
       oauth_authorization : Shield::OauthAuthorization
     )
       new(operation.code, oauth_authorization.id)
