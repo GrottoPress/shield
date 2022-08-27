@@ -1,14 +1,17 @@
 module Shield::OauthGrantType
   macro included
+    AUTHORIZATION_CODE = "authorization_code"
+    CLIENT_CREDENTIALS = "client_credentials"
+
     def initialize(@grant_type : String?)
     end
 
     def authorization_code? : Bool
-      @grant_type == "authorization_code"
+      @grant_type == AUTHORIZATION_CODE
     end
 
     def client_credentials? : Bool
-      @grant_type == "client_credentials"
+      @grant_type == CLIENT_CREDENTIALS
     end
 
     def valid? : Bool
