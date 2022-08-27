@@ -1,13 +1,14 @@
 module Shield::SetToken
   macro included
-    getter token = ""
+    getter token do
+      Random::Secure.urlsafe_base64(32)
+    end
 
     before_save do
       set_token
     end
 
     private def set_token
-      @token = Random::Secure.urlsafe_base64(32)
       token_digest.value = Sha256Hash.new(token).hash
     end
   end

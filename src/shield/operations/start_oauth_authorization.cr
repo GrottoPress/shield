@@ -1,6 +1,8 @@
 module Shield::StartOauthAuthorization
   macro included
-    getter code = ""
+    getter code do
+      Random::Secure.urlsafe_base64(24)
+    end
 
     attribute granted : Bool
     attribute code_challenge : String
@@ -74,7 +76,6 @@ module Shield::StartOauthAuthorization
     end
 
     private def set_code
-      @code = Random::Secure.urlsafe_base64(24)
       code_digest.value = Sha256Hash.new(code).hash
     end
 
