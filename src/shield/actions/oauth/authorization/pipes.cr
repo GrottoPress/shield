@@ -137,5 +137,9 @@ module Shield::Oauth::Authorization::Pipes
         state: state
       ).to_s
     end
+
+    private getter oauth_authorization_params do
+      OauthAuthorizationParams.new(code)
+    end
   end
 end

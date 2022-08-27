@@ -1,9 +1,5 @@
 module Shield::StartOauthAuthorization
   macro included
-    getter code do
-      Random::Secure.urlsafe_base64(24)
-    end
-
     attribute granted : Bool
     attribute code_challenge : String
     attribute code_challenge_method : String
@@ -15,10 +11,10 @@ module Shield::StartOauthAuthorization
     include Lucille::Activate
     include Lucille::SetUserIdFromUser
     include Shield::SetOauthClientIdFromOauthClient
+    include Shield::SetOauthAuthorizationCode
 
     before_save do
       set_inactive_at
-      set_code
       set_success
       set_code_challenge
       set_code_challenge_method
@@ -73,10 +69,6 @@ module Shield::StartOauthAuthorization
     private def set_inactive_at
       expiry = Shield.settings.oauth_authorization_code_expiry
       active_at.value.try { |value| inactive_at.value = value + expiry }
-    end
-
-    private def set_code
-      code_digest.value = Sha256Hash.new(code).hash
     end
 
     private def set_success

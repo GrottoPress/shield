@@ -1,10 +1,13 @@
 module Shield::CreateOauthAccessTokenFromAuthorization
   # IMPORTANT
   #
-  # Revoke access tokens if authorization code used more than once,
+  # Revoke access tokens if authorization used more than once,
   # to mitigate replay attacks.
   macro included
+    getter refresh_token : String?
+
     needs oauth_authorization : OauthAuthorization
+    needs oauth_grant_type : OauthGrantType
 
     include Lucille::Activate
     include Shield::SetToken
@@ -20,6 +23,7 @@ module Shield::CreateOauthAccessTokenFromAuthorization
     end
 
     after_save end_oauth_authorization
+    after_save rotate_oauth_authorization
 
     include Shield::ValidateOauthAccessToken
 
@@ -62,7 +66,27 @@ module Shield::CreateOauthAccessTokenFromAuthorization
     end
 
     private def end_oauth_authorization(bearer_login : Shield::BearerLogin)
-      EndOauthAuthorization.update!(oauth_authorization, success: true)
+      return if Shield.settings.oauth_access_token_expiry
+
+      EndOauthAuthorizationGracefully.update!(
+        oauth_authorization,
+        success: true,
+        oauth_grant_type: oauth_grant_type
+      )
+    end
+
+    private def rotate_oauth_authorization(bearer_login : Shield::BearerLogin)
+      return unless Shield.settings.oauth_access_token_expiry
+
+      operation = RotateOauthAuthorization.new(
+        oauth_authorization: oauth_authorization,
+        oauth_grant_type: oauth_grant_type
+      )
+
+      @refresh_token = OauthAuthorizationCredentials.new(
+        operation,
+        operation.save!
+      ).to_s
     end
   end
 end

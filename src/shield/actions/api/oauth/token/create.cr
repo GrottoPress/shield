@@ -35,6 +35,7 @@ module Shield::Api::Oauth::Token::Create
         expires_in: bearer_login.status.span?.try(&.total_seconds.to_i64),
         scope: bearer_login.scopes.join(' '),
         token_type: "Bearer",
+        refresh_token: operation.refresh_token
       })
     end
 
@@ -56,6 +57,10 @@ module Shield::Api::Oauth::Token::Create
 
     def code_verifier : String?
       params.get?(:code_verifier)
+    end
+
+    def refresh_token : String?
+      params.get?(:refresh_token)
     end
 
     def client_id : String?
@@ -91,7 +96,8 @@ module Shield::Api::Oauth::Token::Create
 
     private def create_oauth_access_token_from_authorization
       CreateOauthAccessTokenFromAuthorization.create(
-        oauth_authorization: oauth_authorization
+        oauth_authorization: oauth_authorization,
+        oauth_grant_type: oauth_grant_type
       ) do |operation, bearer_login|
         if operation.saved?
           do_run_operation_succeeded(operation, bearer_login.not_nil!)

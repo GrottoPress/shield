@@ -1,5 +1,7 @@
 module Shield::CreateOauthAccessTokenFromClient
   macro included
+    getter refresh_token : String?
+
     needs oauth_client : OauthClient
 
     include Lucille::Activate

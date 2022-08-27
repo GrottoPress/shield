@@ -4,6 +4,7 @@
 
 - Authorization Code Grant + PKCE
 - Client Credentials Grant
+- Refresh Token Grant
 
 The following grant types will **not** be supported:
 
@@ -33,10 +34,17 @@ PKCE is required for public clients using the Authorization Code Grant flow.
      settings.oauth_access_token_scopes_allowed = ["api.current_user.show"]
 
      # How long should access tokens last before expiring?
-     #settings.oauth_access_token_expiry = 90.days # Set to `nil` to disable
+     #settings.oauth_access_token_expiry = 24.hours # Set to `nil` to disable
 
-     # How long should authorization codes last before expiring?
+     # How long should unused authorization codes last before expiring?
      #settings.oauth_authorization_code_expiry = 1.minute
+
+     # How long should unused refresh tokens last before expiring?
+     #settings.oauth_refresh_token_expiry = 7.days # Set to `nil` to disable
+
+     # Shield automatically rotates a refresh token after first use.
+     # How long should a used refresh token remain active before deactivating?
+     #settings.oauth_refresh_token_grace = 30.seconds
 
      # A regex of client names to disallow
      #settings.oauth_client_name_filter = /^grotto.*$/i
@@ -828,6 +836,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
      #  json({
      #    access_token: BearerLoginCredentials.new(operation, bearer_login),
      #    expires_in: bearer_login.status.span?.try(&.total_seconds.to_i64),
+     #    refresh_token: operation.refresh_token,
      #    scope: bearer_login.scopes.join(' '),
      #    token_type: "Bearer"
      #  })

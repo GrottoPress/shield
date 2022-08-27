@@ -45,6 +45,10 @@ class Spec::Api::Oauth::Token::Pipes < ApiAction
   def client_secret : String?
     params.get?(:client_secret)
   end
+
+  def refresh_token : String?
+    params.get?(:refresh_token)
+  end
 end
 
 describe Shield::Api::Oauth::Token::Pipes do

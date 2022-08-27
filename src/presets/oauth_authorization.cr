@@ -31,6 +31,14 @@ class EndOauthAuthorization < OauthAuthorization::SaveOperation
   include Shield::EndOauthAuthorization
 end
 
+class EndOauthAuthorizationGracefully < OauthAuthorization::SaveOperation
+  include Shield::EndOauthAuthorizationGracefully
+end
+
+class RotateOauthAuthorization < OauthAuthorization::SaveOperation
+  include Shield::RotateOauthAuthorization
+end
+
 class DeleteOauthAuthorization < OauthAuthorization::DeleteOperation
   include Shield::DeleteOauthAuthorization
 end

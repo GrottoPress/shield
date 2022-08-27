@@ -37,13 +37,5 @@ module Shield::Oauth::Helpers
     getter? oauth_client : OauthClient? do
       oauth_client_id?.try { |id| OauthClientQuery.new.id(id).first? }
     end
-
-    private getter oauth_authorization_params do
-      OauthAuthorizationParams.new(code)
-    end
-
-    private def oauth_grant_type
-      OauthGrantType.new(grant_type)
-    end
   end
 end

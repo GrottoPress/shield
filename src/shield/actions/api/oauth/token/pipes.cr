@@ -5,7 +5,10 @@ module Shield::Api::Oauth::Token::Pipes
     include Shield::Oauth::Pipes
 
     def oauth_require_access_token_params
-      if !grant_type || (oauth_grant_type.authorization_code? && !code)
+      if !grant_type ||
+        (oauth_grant_type.authorization_code? && !code) ||
+        (oauth_grant_type.refresh_token? && !refresh_token)
+
         response.status_code = 400
         do_oauth_require_access_token_params_failed
       else
@@ -229,6 +232,15 @@ module Shield::Api::Oauth::Token::Pipes
     private def send_invalid_client_secret_response
       response.status_code = 401
       response.headers["WWW-Authenticate"] = %(Basic realm="oauth")
+    end
+
+    private getter oauth_authorization_params do
+      token = oauth_grant_type.refresh_token? ? refresh_token : code
+      OauthAuthorizationParams.new(token)
+    end
+
+    private def oauth_grant_type
+      OauthGrantType.new(grant_type)
     end
   end
 end
