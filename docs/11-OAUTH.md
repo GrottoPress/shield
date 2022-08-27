@@ -36,7 +36,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
      #settings.oauth_access_token_expiry = 90.days # Set to `nil` to disable
 
      # How long should authorization codes last before expiring?
-     #settings.oauth_authorization_expiry = 3.minutes
+     #settings.oauth_authorization_code_expiry = 1.minute
 
      # A regex of client names to disallow
      #settings.oauth_client_name_filter = /^grotto.*$/i

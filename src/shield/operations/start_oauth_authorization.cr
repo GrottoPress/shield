@@ -71,7 +71,7 @@ module Shield::StartOauthAuthorization
     end
 
     private def set_inactive_at
-      expiry = Shield.settings.oauth_authorization_expiry
+      expiry = Shield.settings.oauth_authorization_code_expiry
       active_at.value.try { |value| inactive_at.value = value + expiry }
     end
 
