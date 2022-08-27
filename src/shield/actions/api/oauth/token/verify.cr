@@ -4,7 +4,7 @@ module Shield::Api::Oauth::Token::Verify
   macro included
     include Shield::Api::Oauth::Token::Pipes
 
-    before :oauth_require_logged_in
+    before :oauth_maybe_require_logged_in
 
     # post "/oauth/token/verify" do
     #   run_operation
@@ -35,6 +35,19 @@ module Shield::Api::Oauth::Token::Verify
 
     def do_verify_operation_failed(utility)
       json({active: false})
+    end
+
+    def client_id : String?
+      OauthClientCredentials.from_headers?(request).try(&.id.to_s) ||
+        params.get?(:client_id)
+    end
+
+    def client_secret : String?
+      if OauthClientCredentials.from_headers?(request).try(&.id)
+        OauthClientCredentials.from_headers?(request).try(&.password)
+      else
+        params.get?(:client_secret)
+      end
     end
 
     def scope : String?

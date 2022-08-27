@@ -88,6 +88,28 @@ module Shield::Api::Oauth::Token::Pipes
       end
     end
 
+    # Requires logged in, but confidential clients may use their
+    # credentials instead.
+    #
+    # IMPORTANT!
+    #
+    # Force public clients to always require login, whether or not they
+    # present client credentials, because the `#oauth_validate_client_secret`
+    # pipe skips validation for public clients.
+    def oauth_maybe_require_logged_in
+      if !oauth_client?
+        continue
+      elsif oauth_client.public? # <= IMPORTANT!
+        oauth_require_logged_in
+      elsif OauthClientCredentials.from_headers?(request) ||
+        OauthClientCredentials.from_params?(params)
+
+        oauth_validate_client_secret
+      else
+        oauth_require_logged_in
+      end
+    end
+
     def do_oauth_validate_client_id_failed
       json({
         error: "invalid_client",

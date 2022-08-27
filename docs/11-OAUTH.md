@@ -981,6 +981,8 @@ PKCE is required for public clients using the Authorization Code Grant flow.
    
    The action requires the requester to be logged in. Typically, this should be done by creating an API token (See *10-BEARER-LOGIN.md*) with the needed scope to access the introspection endpoint. This token is sent in the `Authorization` header during the request.
 
+   Alternatively, resource servers may register as confidential clients and present their `client_id` and `client_secret` (or use HTTP basic authentication), instead of a bearer token.
+
    ---
    ```crystal
    # ->>> src/actions/api/oauth/token/destroy.cr
