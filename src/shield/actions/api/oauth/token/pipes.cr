@@ -27,7 +27,10 @@ module Shield::Api::Oauth::Token::Pipes
 
     def oauth_validate_code
       if !grant_type ||
-        !oauth_grant_type.authorization_code? ||
+        !grant_type.in?({
+          OauthGrantType::AUTHORIZATION_CODE,
+          OauthGrantType::REFRESH_TOKEN
+        }) ||
         !oauth_client? ||
         oauth_authorization_params.verify?(oauth_client)
 

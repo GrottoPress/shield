@@ -767,4 +767,81 @@ describe Shield::Api::Oauth::Token::Pipes do
       end
     end
   end
+
+  context "Refresh Token Grant" do
+    describe "#oauth_validate_code" do
+      it "verifies refresh token" do
+        client_secret = "def456"
+
+        resource_owner = UserFactory.create &.email("resource@owner.com")
+        UserOptionsFactory.create &.user_id(resource_owner.id)
+
+        developer = UserFactory.create
+        oauth_client = OauthClientFactory.create &.user_id(developer.id)
+          .secret(client_secret)
+
+        oauth_authorization =
+          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
+            .oauth_client_id(oauth_client.id)
+            .code("a1b2c3")
+
+        refresh_token_final = OauthAuthorizationCredentials.new(
+          "wrong-token",
+          oauth_authorization.id
+        ).to_s
+
+        response = ApiClient.exec(
+          Api::Oauth::Token::Create,
+          client_id: oauth_client.id,
+          refresh_token: refresh_token_final,
+          grant_type: "refresh_token",
+          client_secret: client_secret
+        )
+
+        response.should send_json(
+          400,
+          error: "invalid_grant",
+          error_description: "action.pipe.oauth.auth_code_invalid"
+        )
+      end
+
+      it "ensures token belongs to client" do
+        refresh_token = "a1b2c3"
+        client_secret = "def456"
+
+        resource_owner = UserFactory.create &.email("resource@owner.com")
+        UserOptionsFactory.create &.user_id(resource_owner.id)
+
+        developer = UserFactory.create
+        oauth_client = OauthClientFactory.create &.user_id(developer.id)
+          .secret(client_secret)
+
+        oauth_client_2 = OauthClientFactory.create &.user_id(developer.id)
+
+        oauth_authorization =
+          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
+            .oauth_client_id(oauth_client_2.id)
+            .code(refresh_token)
+
+        refresh_token_final = OauthAuthorizationCredentials.new(
+          refresh_token,
+          oauth_authorization.id
+        ).to_s
+
+        response = ApiClient.exec(
+          Api::Oauth::Token::Create,
+          client_id: oauth_client.id,
+          refresh_token: refresh_token_final,
+          grant_type: "refresh_token",
+          client_secret: client_secret
+        )
+
+        response.should send_json(
+          400,
+          error: "invalid_grant",
+          error_description: "action.pipe.oauth.auth_code_invalid"
+        )
+      end
+    end
+  end
 end
