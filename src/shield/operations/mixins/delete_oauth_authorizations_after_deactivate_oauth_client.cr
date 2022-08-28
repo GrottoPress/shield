@@ -1,4 +1,4 @@
-module Shield::DeleteOauthAuthAuthorizationsAfterDeactivateOauthClient
+module Shield::DeleteOauthAuthorizationsAfterDeactivateOauthClient
   macro included
     after_commit delete_oauth_authorizations
 

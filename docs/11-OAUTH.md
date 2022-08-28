@@ -315,7 +315,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
      # after a client is deactivated, without deleting them.
      #
      # Enable this to delete them from the database instead.
-     #include Shield::DeleteOauthAuthAuthorizationsAfterDeactivateOauthClient
+     #include Shield::DeleteOauthAuthorizationsAfterDeactivateOauthClient
 
      # By default, *Shield* marks all access tokens as inactive,
      # after a client is deactivated, without deleting them.
