@@ -61,7 +61,7 @@ module Shield::StartOauthAuthorization
 
     private def validate_response_type_valid
       response_type.value.try do |value|
-        return if value == "code"
+        return if OauthResponseType.new(value).code?
         response_type.add_error Rex.t(:"operation.error.response_type_invalid")
       end
     end

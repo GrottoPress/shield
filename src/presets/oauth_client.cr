@@ -114,3 +114,7 @@ end
 struct OauthGrantType
   include Shield::OauthGrantType
 end
+
+struct OauthResponseType
+  include Shield::OauthResponseType
+end

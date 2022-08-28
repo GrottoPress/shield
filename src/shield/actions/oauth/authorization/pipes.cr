@@ -14,7 +14,7 @@ module Shield::Oauth::Authorization::Pipes
     end
 
     def oauth_validate_response_type
-      if response_type == "code"
+      if !response_type || oauth_response_type.valid?
         continue
       else
         response.status_code = 400
@@ -140,6 +140,10 @@ module Shield::Oauth::Authorization::Pipes
 
     private getter oauth_authorization_params do
       OauthAuthorizationParams.new(code)
+    end
+
+    private def oauth_response_type
+      OauthResponseType.new(response_type)
     end
   end
 end
