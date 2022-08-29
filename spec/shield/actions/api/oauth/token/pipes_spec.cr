@@ -13,6 +13,7 @@ class Spec::Api::Oauth::Token::Pipes < ApiAction
   before :oauth_validate_redirect_uri
   before :oauth_validate_grant_type
   before :oauth_validate_code
+  before :oauth_validate_refresh_token
   before :oauth_validate_code_verifier
   before :oauth_check_multiple_client_auth
   before :oauth_require_confidential_client
@@ -59,7 +60,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
         client_secret = "def456"
 
-        pkce = OauthAuthorizationPkce.from_json({
+        metadata = OauthGrantMetadata.from_json({
           code_challenge: code_challenge,
           code_challenge_method: "plain"
         }.to_json)
@@ -70,16 +71,12 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code(code)
-            .pkce(pkce)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code(code)
+          .metadata(metadata)
 
-        code_final = OauthAuthorizationCredentials.new(
-          code,
-          oauth_authorization.id
-        ).to_s
+        code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
@@ -105,7 +102,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
         client_secret = "def456"
 
-        pkce = OauthAuthorizationPkce.from_json({
+        metadata = OauthGrantMetadata.from_json({
           code_challenge: code_challenge,
           code_challenge_method: "plain"
         }.to_json)
@@ -116,16 +113,12 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code(code)
-            .pkce(pkce)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code(code)
+          .metadata(metadata)
 
-        code_final = OauthAuthorizationCredentials.new(
-          code,
-          oauth_authorization.id
-        ).to_s
+        code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
@@ -174,7 +167,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
         client_secret = "def456"
 
-        pkce = OauthAuthorizationPkce.from_json({
+        metadata = OauthGrantMetadata.from_json({
           code_challenge: code_challenge,
           code_challenge_method: "plain"
         }.to_json)
@@ -186,16 +179,12 @@ describe Shield::Api::Oauth::Token::Pipes do
           .secret(client_secret)
           .redirect_uri("https://example.com/oauth/callback")
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code(code)
-            .pkce(pkce)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code(code)
+          .metadata(metadata)
 
-        code_final = OauthAuthorizationCredentials.new(
-          code,
-          oauth_authorization.id
-        ).to_s
+        code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
@@ -221,7 +210,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
         client_secret = "def456"
 
-        pkce = OauthAuthorizationPkce.from_json({
+        metadata = OauthGrantMetadata.from_json({
           code_challenge: code_challenge,
           code_challenge_method: "plain"
         }.to_json)
@@ -232,16 +221,12 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code(code)
-            .pkce(pkce)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code(code)
+          .metadata(metadata)
 
-        code_final = OauthAuthorizationCredentials.new(
-          code,
-          oauth_authorization.id
-        ).to_s
+        code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
@@ -266,7 +251,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
         client_secret = "def456"
 
-        pkce = OauthAuthorizationPkce.from_json({
+        metadata = OauthGrantMetadata.from_json({
           code_challenge: code_challenge,
           code_challenge_method: "plain"
         }.to_json)
@@ -277,16 +262,12 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code("a1b2c3")
-            .pkce(pkce)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code("a1b2c3")
+          .metadata(metadata)
 
-        code_final = OauthAuthorizationCredentials.new(
-          "wrong-code",
-          oauth_authorization.id
-        ).to_s
+        code_final = OauthGrantCredentials.new("wrong", oauth_grant.id).to_s
 
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
@@ -310,7 +291,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
         client_secret = "def456"
 
-        pkce = OauthAuthorizationPkce.from_json({
+        metadata = OauthGrantMetadata.from_json({
           code_challenge: code_challenge,
           code_challenge_method: "plain"
         }.to_json)
@@ -324,16 +305,12 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client_2 = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code(code)
-            .pkce(pkce)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code(code)
+          .metadata(metadata)
 
-        code_final = OauthAuthorizationCredentials.new(
-          code,
-          oauth_authorization.id
-        ).to_s
+        code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
@@ -358,7 +335,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code = "a1b2c3"
         code_challenge = "abc123"
 
-        pkce = OauthAuthorizationPkce.from_json({
+        metadata = OauthGrantMetadata.from_json({
           code_challenge: code_challenge,
           code_challenge_method: "plain"
         }.to_json)
@@ -368,16 +345,12 @@ describe Shield::Api::Oauth::Token::Pipes do
 
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code(code)
-            .pkce(pkce)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code(code)
+          .metadata(metadata)
 
-        code_final = OauthAuthorizationCredentials.new(
-          code,
-          oauth_authorization.id
-        ).to_s
+        code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
@@ -405,15 +378,11 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code(code)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code(code)
 
-        code_final = OauthAuthorizationCredentials.new(
-          code,
-          oauth_authorization.id
-        ).to_s
+        code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
@@ -431,7 +400,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code = "a1b2c3"
         client_secret = "def456"
 
-        pkce = OauthAuthorizationPkce.from_json({
+        metadata = OauthGrantMetadata.from_json({
           code_challenge: "abc123",
           code_challenge_method: "plain"
         }.to_json)
@@ -442,16 +411,12 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code(code)
-            .pkce(pkce)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code(code)
+          .metadata(metadata)
 
-        code_final = OauthAuthorizationCredentials.new(
-          code,
-          oauth_authorization.id
-        ).to_s
+        code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
@@ -475,7 +440,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code = "a1b2c3"
         code_challenge = "abc123"
 
-        pkce = OauthAuthorizationPkce.from_json({
+        metadata = OauthGrantMetadata.from_json({
           code_challenge: code_challenge,
           code_challenge_method: "plain"
         }.to_json)
@@ -486,16 +451,12 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret("def456")
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code(code)
-            .pkce(pkce)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code(code)
+          .metadata(metadata)
 
-        code_final = OauthAuthorizationCredentials.new(
-          code,
-          oauth_authorization.id
-        ).to_s
+        code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
@@ -520,7 +481,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code = "a1b2c3"
         code_challenge = "abc123"
 
-        pkce = OauthAuthorizationPkce.from_json({
+        metadata = OauthGrantMetadata.from_json({
           code_challenge: code_challenge,
           code_challenge_method: "plain"
         }.to_json)
@@ -529,16 +490,12 @@ describe Shield::Api::Oauth::Token::Pipes do
         resource_owner = UserFactory.create &.email("resource@owner.com")
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code(code)
-            .pkce(pkce)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code(code)
+          .metadata(metadata)
 
-        code_final = OauthAuthorizationCredentials.new(
-          code,
-          oauth_authorization.id
-        ).to_s
+        code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
@@ -564,10 +521,9 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code(code)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code(code)
 
         api_client = ApiClient.new
 
@@ -579,9 +535,9 @@ describe Shield::Api::Oauth::Token::Pipes do
         response = api_client.exec(
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
-          code: OauthAuthorizationCredentials.new(
+          code: OauthGrantCredentials.new(
             code,
-            oauth_authorization.id
+            oauth_grant.id
           ).to_s,
           redirect_uri: oauth_client.redirect_uri,
           grant_type: "authorization_code",
@@ -780,14 +736,13 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client.id)
-            .code("a1b2c3")
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code("a1b2c3")
 
-        refresh_token_final = OauthAuthorizationCredentials.new(
+        refresh_token_final = OauthGrantCredentials.new(
           "wrong-token",
-          oauth_authorization.id
+          oauth_grant.id
         ).to_s
 
         response = ApiClient.exec(
@@ -801,7 +756,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         response.should send_json(
           400,
           error: "invalid_grant",
-          error_description: "action.pipe.oauth.auth_code_invalid"
+          error_description: "action.pipe.oauth.refresh_token_invalid"
         )
       end
 
@@ -818,14 +773,13 @@ describe Shield::Api::Oauth::Token::Pipes do
 
         oauth_client_2 = OauthClientFactory.create &.user_id(developer.id)
 
-        oauth_authorization =
-          OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-            .oauth_client_id(oauth_client_2.id)
-            .code(refresh_token)
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client_2.id)
+          .code(refresh_token)
 
-        refresh_token_final = OauthAuthorizationCredentials.new(
+        refresh_token_final = OauthGrantCredentials.new(
           refresh_token,
-          oauth_authorization.id
+          oauth_grant.id
         ).to_s
 
         response = ApiClient.exec(
@@ -839,7 +793,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         response.should send_json(
           400,
           error: "invalid_grant",
-          error_description: "action.pipe.oauth.auth_code_invalid"
+          error_description: "action.pipe.oauth.refresh_token_invalid"
         )
       end
     end

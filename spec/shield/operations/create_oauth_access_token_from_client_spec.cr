@@ -3,10 +3,10 @@ require "../../spec_helper"
 describe Shield::CreateOauthAccessTokenFromClient do
   it "creates OAuth access token" do
     developer = UserFactory.create
-    oauth_client = OauthClientFactory.create &.user_id(developer.id)\
+    oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
     CreateOauthAccessTokenFromClient.create(
-      oauth_client: oauth_client,
+      oauth_client: OauthClientQuery.preload_user(oauth_client),
       scopes: [BearerScope.new(Api::CurrentUser::Show).to_s]
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
@@ -18,6 +18,12 @@ describe Shield::CreateOauthAccessTokenFromClient do
 
       operation.token.should_not be_empty
     end
+
+    OauthGrantQuery.new
+      .oauth_client_id(oauth_client.id)
+      .user_id(oauth_client.user_id)
+      .any? # ameba:disable Performance/AnyInsteadOfEmpty
+      .should(be_true)
   end
 
   it "requires active OAuth client" do

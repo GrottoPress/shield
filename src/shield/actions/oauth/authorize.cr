@@ -26,9 +26,7 @@ module Shield::Oauth::Authorize
     # end
 
     def run_operation
-      state.try do |_state|
-        OauthAuthorizationStateSession.new(session).set(_state)
-      end
+      state.try { |_state| OauthStateSession.new(session).set(_state) }
 
       redirect to: Oauth::Authorization::New.with( # <= IMPORTANT!
         client_id: client_id,

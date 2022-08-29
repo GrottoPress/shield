@@ -11,7 +11,7 @@ describe Shield::DeleteOauthPermission do
 
     bearer_login = BearerLoginFactory.create &.user_id(resource_owner.id)
 
-    OauthAuthorizationFactory.create_pair &.user_id(resource_owner.id)
+    OauthGrantFactory.create_pair &.user_id(resource_owner.id)
       .oauth_client_id(oauth_client.id)
 
     DeleteOauthPermission.update(
@@ -26,7 +26,7 @@ describe Shield::DeleteOauthPermission do
     # ameba:disable Performance/AnyInsteadOfEmpty
     BearerLoginQuery.new.id(bearer_login.id).any?.should be_true
 
-    OauthAuthorizationQuery.new
+    OauthGrantQuery.new
       .user_id(resource_owner.id)
       .oauth_client_id(oauth_client.id)
       .any? # ameba:disable Performance/AnyInsteadOfEmpty

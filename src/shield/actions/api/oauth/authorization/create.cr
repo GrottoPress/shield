@@ -18,14 +18,15 @@ module Shield::Api::Oauth::Authorization::Create
     # end
 
     def run_operation
-      StartOauthAuthorization.create(
+      StartOauthGrant.create(
         params,
         scopes: scopes,
+        type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE),
         oauth_client: oauth_client?,
         user: user
-      ) do |operation, oauth_authorization|
+      ) do |operation, oauth_grant|
         if operation.saved?
-          do_run_operation_succeeded(operation, oauth_authorization.not_nil!)
+          do_run_operation_succeeded(operation, oauth_grant.not_nil!)
         else
           response.status_code = 400
           do_run_operation_failed(operation)
@@ -33,8 +34,8 @@ module Shield::Api::Oauth::Authorization::Create
       end
     end
 
-    def do_run_operation_succeeded(operation, oauth_authorization)
-      code = OauthAuthorizationCredentials.new(operation, oauth_authorization)
+    def do_run_operation_succeeded(operation, oauth_grant)
+      code = OauthGrantCredentials.new(operation, oauth_grant)
 
       json({
         code: code.to_s,
@@ -63,8 +64,7 @@ module Shield::Api::Oauth::Authorization::Create
     end
 
     def code_challenge_method : String
-      nested_param?(:code_challenge_method) ||
-        OauthAuthorizationPkce::METHOD_PLAIN
+      nested_param?(:code_challenge_method) || OauthGrantPkce::METHOD_PLAIN
     end
 
     def redirect_uri : String?
@@ -76,7 +76,7 @@ module Shield::Api::Oauth::Authorization::Create
     end
 
     def scopes : Array(String)
-      array_param(StartOauthAuthorization.param_key, :scopes)
+      array_param(StartOauthGrant.param_key, :scopes)
     end
 
     def state : String?
@@ -88,7 +88,7 @@ module Shield::Api::Oauth::Authorization::Create
     end
 
     private def nested_param?(param)
-      params.nested?(StartOauthAuthorization.param_key)[param.to_s]?
+      params.nested?(StartOauthGrant.param_key)[param.to_s]?
     end
   end
 end

@@ -16,8 +16,8 @@ class Oauth::Authorization::Create < BrowserAction
     run_operation
   end
 
-  def do_run_operation_succeeded(operation, oauth_authorization)
-    response.headers["X-OAuth-Authorization-ID"] = oauth_authorization.id.to_s
+  def do_run_operation_succeeded(operation, oauth_grant)
+    response.headers["X-OAuth-Grant-ID"] = oauth_grant.id.to_s
     previous_def
   end
 end

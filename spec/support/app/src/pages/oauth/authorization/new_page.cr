@@ -1,5 +1,5 @@
 struct Oauth::Authorization::NewPage < MainLayout
-  needs operation : StartOauthAuthorization
+  needs operation : StartOauthGrant
 
   def content
     text "Oauth::Authorization::NewPage"

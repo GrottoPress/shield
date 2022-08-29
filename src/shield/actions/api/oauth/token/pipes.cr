@@ -27,12 +27,9 @@ module Shield::Api::Oauth::Token::Pipes
 
     def oauth_validate_code
       if !grant_type ||
-        !grant_type.in?({
-          OauthGrantType::AUTHORIZATION_CODE,
-          OauthGrantType::REFRESH_TOKEN
-        }) ||
+        !oauth_grant_type.authorization_code? ||
         !oauth_client? ||
-        oauth_authorization_params.verify?(oauth_client)
+        oauth_grant_params.verify?(oauth_client, oauth_grant_type)
 
         continue
       else
@@ -41,10 +38,23 @@ module Shield::Api::Oauth::Token::Pipes
       end
     end
 
+    def oauth_validate_refresh_token
+      if !grant_type ||
+        !oauth_grant_type.refresh_token? ||
+        !oauth_client? ||
+        oauth_grant_params.verify?(oauth_client, oauth_grant_type)
+
+        continue
+      else
+        response.status_code = 400
+        do_oauth_validate_refresh_token_failed
+      end
+    end
+
     def oauth_validate_code_verifier
       if !grant_type ||
         !oauth_grant_type.authorization_code? ||
-        oauth_authorization_params.verify_pkce?(code_verifier)
+        oauth_grant_params.verify_pkce?(code_verifier)
 
         continue
       else
@@ -208,6 +218,13 @@ module Shield::Api::Oauth::Token::Pipes
       })
     end
 
+    def do_oauth_validate_refresh_token_failed
+      json({
+        error: "invalid_grant",
+        error_description: Rex.t(:"action.pipe.oauth.refresh_token_invalid"),
+      })
+    end
+
     def do_oauth_validate_code_verifier_failed
       json({
         error: "invalid_grant",
@@ -237,9 +254,9 @@ module Shield::Api::Oauth::Token::Pipes
       response.headers["WWW-Authenticate"] = %(Basic realm="oauth")
     end
 
-    private getter oauth_authorization_params do
+    private getter oauth_grant_params do
       token = oauth_grant_type.refresh_token? ? refresh_token : code
-      OauthAuthorizationParams.new(token)
+      OauthGrantParams.new(token)
     end
 
     private def oauth_grant_type

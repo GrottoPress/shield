@@ -13,13 +13,14 @@ class Oauth::Authorization::New < BrowserAction
   skip :oauth_validate_code_challenge_method
 
   get "/oauth/authorization" do
-    operation = StartOauthAuthorization.new(
+    operation = StartOauthGrant.new(
       redirect_uri: redirect_uri.to_s,
       response_type: response_type.to_s,
       code_challenge: code_challenge.to_s,
       code_challenge_method: code_challenge_method,
       state: state.to_s,
       scopes: scopes,
+      type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE),
       user: user,
       oauth_client: oauth_client?,
     )

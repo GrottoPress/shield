@@ -1,7 +1,7 @@
 require "../../../../../spec_helper"
 
 describe Shield::Api::Oauth::Authorization::Create do
-  it "creates OAuth authorization" do
+  it "grants authorization" do
     password = "password4APASSWORD<"
 
     resource_owner = UserFactory.create &.email("resource@owner.com")
@@ -17,7 +17,7 @@ describe Shield::Api::Oauth::Authorization::Create do
 
     response = client.exec(
       Api::Oauth::Authorization::Create,
-      oauth_authorization: {
+      oauth_grant: {
         granted: true,
         code_challenge: "a1b2c3",
         code_challenge_method: "plain",
@@ -33,7 +33,7 @@ describe Shield::Api::Oauth::Authorization::Create do
   it "requires logged in" do
     response = ApiClient.exec(
       Api::Oauth::Authorization::Create,
-      oauth_authorization: {
+      oauth_grant: {
         granted: true,
         code_challenge: "a1b2c3",
         code_challenge_method: "plain",

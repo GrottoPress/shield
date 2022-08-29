@@ -9,7 +9,7 @@ describe Shield::DeactivateOauthClient do
     BearerLoginFactory.create_pair &.user_id(resource_owner.id)
       .oauth_client_id(oauth_client.id)
 
-    OauthAuthorizationFactory.create_pair &.user_id(resource_owner.id)
+    OauthGrantFactory.create_pair &.user_id(resource_owner.id)
       .oauth_client_id(oauth_client.id)
 
     DeactivateOauthClient.update(
@@ -25,7 +25,7 @@ describe Shield::DeactivateOauthClient do
       .any? # ameba:disable Performance/AnyInsteadOfEmpty
       .should(be_false)
 
-    OauthAuthorizationQuery.new
+    OauthGrantQuery.new
       .oauth_client_id(oauth_client.id)
       .is_active
       .any? # ameba:disable Performance/AnyInsteadOfEmpty

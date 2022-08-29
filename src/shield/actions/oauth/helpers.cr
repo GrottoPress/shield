@@ -1,11 +1,11 @@
 module Shield::Oauth::Helpers
   macro included
-    def oauth_authorization
-      oauth_authorization?.not_nil!
+    def oauth_grant
+      oauth_grant?.not_nil!
     end
 
-    getter? oauth_authorization : OauthAuthorization? do
-      oauth_authorization_params.oauth_authorization?
+    getter? oauth_grant : OauthGrant? do
+      oauth_grant_params.oauth_grant?
     end
 
     def oauth_redirect_uri(**params)
@@ -35,7 +35,9 @@ module Shield::Oauth::Helpers
     end
 
     getter? oauth_client : OauthClient? do
-      oauth_client_id?.try { |id| OauthClientQuery.new.id(id).first? }
+      oauth_client_id?.try do |id|
+        OauthClientQuery.new.id(id).preload_user.first?
+      end
     end
   end
 end

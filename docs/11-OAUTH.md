@@ -52,10 +52,10 @@ PKCE is required for public clients using the Authorization Code Grant flow.
      # Allowed code challenge methods
      #
      # Valid values:
-     #   OauthAuthorizationPkce::METHOD_PLAIN,
-     #   OauthAuthorizationPkce::METHOD_S256
+     #   OauthGrantPkce::METHOD_PLAIN,
+     #   OauthGrantPkce::METHOD_SHA256
      #settings.oauth_code_challenge_methods_allowed = [
-     #  OauthAuthorizationPkce::METHOD_S256,
+     #  OauthGrantPkce::METHOD_SHA256,
      #]
      # ...
    end
@@ -69,7 +69,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
    class OauthClient < BaseModel
      # ...
      include Shield::OauthClient
-     include Shield::HasManyOauthAuthorizations
+     include Shield::HasManyOauthGrants
 
      skip_default_columns
      primary_key id : UUID
@@ -94,28 +94,28 @@ PKCE is required for public clients using the Authorization Code Grant flow.
 
    ---
    ```crystal
-   # ->>> src/models/oauth_authorization.cr
+   # ->>> src/models/oauth_grant.cr
 
-   class OauthAuthorization < BaseModel
+   class OauthGrant < BaseModel
      # ...
-     include Shield::OauthAuthorization
+     include Shield::OauthGrant
 
      skip_default_columns # optional
 
-     table :oauth_authorizations do
+     table :oauth_grants do
        # You may add more columns here
      end
      # ...
    end
    ```
 
-   `Shield::OauthAuthorization` adds the following columns:
+   `Shield::OauthGrant` adds the following columns:
 
    - `active_at : Time`
    - `code_digest : String`
    - `inactive_at : Time?`
    - `oauth_client_id`
-   - `pkce : OauthAuthorizationPkce?` (JSON)
+   - `metadata : OauthGrantMetadata?` (JSON)
    - `scopes : Array(String)`
    - `success : Bool`
    - `user_id`
@@ -129,7 +129,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
    class User < BaseModel
      # ...
      include Shield::HasManyOauthClients
-     include Shield::HasManyOauthAuthorizations
+     include Shield::HasManyOauthGrants
      # ...
    end
    ```
@@ -253,11 +253,11 @@ PKCE is required for public clients using the Authorization Code Grant flow.
 
    ---
    ```crystal
-   # ->>> db/migrations/XXXXXXXXXXXXXX_create_oauth_authorizations.cr
+   # ->>> db/migrations/XXXXXXXXXXXXXX_create_oauth_grants.cr
 
-   class CreateOauthAuthorizations::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
+   class CreateOauthGrants::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
-       create :oauth_authorizations do
+       create :oauth_grants do
          # ...
          primary_key id : Int64
 
@@ -273,12 +273,13 @@ PKCE is required for public clients using the Authorization Code Grant flow.
          add pkce : JSON::Any?
          add scopes : Array(String)
          add success : Bool
+         add type : String
          # ...
        end
      end
 
      def rollback
-       drop :oauth_authorizations
+       drop :oauth_grants
      end
    end
    ```
@@ -320,7 +321,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
      # after a client is deactivated, without deleting them.
      #
      # Enable this to delete them from the database instead.
-     #include Shield::DeleteOauthAuthorizationsAfterDeactivateOauthClient
+     #include Shield::DeleteGrantsAfterDeactivateOauthClient
 
      # By default, *Shield* marks all access tokens as inactive,
      # after a client is deactivated, without deleting them.
@@ -357,11 +358,11 @@ PKCE is required for public clients using the Authorization Code Grant flow.
 
    class RevokeOauthPermission < User::SaveOperation
      # ...
-     # By default, *Shield* marks all authorizations as inactive,
+     # By default, *Shield* marks all grants as inactive,
      # after permission is revoked, without deleting them.
      #
      # Enable this to delete them from the database instead.
-     #include Shield::DeleteOauthAuthorizationAfterRevokeOauthPermission
+     #include Shield::DeleteGrantsAfterRevokeOauthPermission
      # ...
    end
    ```
@@ -374,12 +375,12 @@ PKCE is required for public clients using the Authorization Code Grant flow.
 
    class DeleteOauthPermission < User::SaveOperation
      # ...
-     # By default, *Shield* deletes all authorizations from the database,
+     # By default, *Shield* deletes all grants from the database,
      # after permission is deleted.
      #
      # Enable this to mark them as inactive instead, without deleting them
      # from the database.
-     #include Shield::RevokeOauthAuthorizationAfterDeleteOauthPermission
+     #include Shield::RevokeOauthGrantAfterDeleteOauthPermission
      # ...
    end
    ```
@@ -388,14 +389,14 @@ PKCE is required for public clients using the Authorization Code Grant flow.
 
    ---
    ```crystal
-   # ->>> src/operations/start_oauth_authorization.cr
+   # ->>> src/operations/start_oauth_grant.cr
 
-   class StartOauthAuthorization < OauthAuthorization::SaveOperation
+   class StartOauthGrant < OauthGrant::SaveOperation
      # ...
    end
    ```
 
-   `StartOauthAuthorization` creates a database entry with a unique ID and a hashed *code* for use by clients to obtain an access token. It expects the following parameters:
+   `StartOauthGrant` creates a database entry with a unique ID and a hashed *code* for use by clients to obtain an access token. It expects the following parameters:
 
    - `granted : Bool`
    - `code_challenge : String`
@@ -408,42 +409,42 @@ PKCE is required for public clients using the Authorization Code Grant flow.
 
    ---
    ```crystal
-   # ->>> src/operations/end_oauth_authorization.cr
+   # ->>> src/operations/end_oauth_grant.cr
 
-   class EndOauthAuthorization < OauthAuthorization::SaveOperation
+   class EndOauthGrant < OauthGrant::SaveOperation
      # ...
    end
    ```
 
-   `EndOauthAuthorization` marks an authorization as inactive, to ensure it is never reused.
+   `EndOauthGrant` marks a grant as inactive, to ensure it is never reused.
 
    ---
    ```crystal
-   # ->>> src/operations/delete_oauth_authorization.cr
+   # ->>> src/operations/delete_oauth_grant.cr
 
-   class DeleteOauthAuthorization < OauthAuthorization::DeleteOperation
+   class DeleteOauthGrant < OauthGrant::DeleteOperation
      # ...
    end
    ```
 
-   `DeleteOauthAuthorization` is an alternative to `EndOauthAuthorization` that actually deletes the record from the database.
+   `DeleteOauthGrant` is an alternative to `EndOauthGrant` that actually deletes the record from the database.
 
    ---
    ```crystal
-   # ->>> src/operations/create_oauth_access_token.cr
+   # ->>> src/operations/create_oauth_access_token_from_grant.cr
 
-   class CreateOauthAccessTokenFromAuthorization < BearerLogin::SaveOperation
+   class CreateOauthAccessTokenFromGrant < BearerLogin::SaveOperation
      # ...
-     # By default, *Shield* revokes access tokens if an authorization code
-     # is presented more than once.
+     # By default, *Shield* revokes access tokens if a grant is used
+     # a second time.
      #
      # Enable this to delete them from the database instead.
-     #include Shield::DeleteAccessTokensIfOauthAuthorizationReplayed
+     #include Shield::DeleteAccessTokensIfOauthGrantReplayed
      # ...
    end
    ```
 
-   This operation creates an access token from a given authorization.
+   This operation creates an access token from a given grant.
 
 1. Set up actions:
 
@@ -679,7 +680,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
      include Oauth::Authorization::PipeCallbacks
 
      get "oauth/authorization/new" do
-       operation = StartOauthAuthorization.new(
+       operation = StartOauthGrant.new(
          redirect_uri: redirect_uri.to_s,
          response_type: response_type.to_s,
          code_challenge: code_challenge.to_s,
@@ -726,8 +727,8 @@ PKCE is required for public clients using the Authorization Code Grant flow.
        run_operation
      end
 
-     #def do_run_operation_succeeded(operation, oauth_authorization)
-     #  code = OauthAuthorizationCredentials.new(operation, oauth_authorization)
+     #def do_run_operation_succeeded(operation, oauth_grant)
+     #  code = OauthGrantCredentials.new(operation, oauth_grant)
      #  redirect to: oauth_redirect_uri(code: code.to_s, state: state).to_s
      #end
 

@@ -15,19 +15,20 @@ module Shield::Oauth::Authorization::New
 
     param client_id : String?
     param code_challenge : String?
-    param code_challenge_method : String = OauthAuthorizationPkce::METHOD_PLAIN
+    param code_challenge_method : String = OauthGrantPkce::METHOD_PLAIN
     param redirect_uri : String?
     param response_type : String?
     param scope : String?
 
     # get "/oauth/authorization" do
-    #   operation = StartOauthAuthorization.new(
+    #   operation = StartOauthGrant.new(
     #     redirect_uri: redirect_uri.to_s,
     #     response_type: response_type.to_s,
     #     code_challenge: code_challenge.to_s,
     #     code_challenge_method: code_challenge_method,
     #     state: state.to_s,
     #     scopes: scopes,
+    #     type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE),
     #     user: user,
     #     oauth_client: oauth_client?,
     #   )
@@ -40,7 +41,7 @@ module Shield::Oauth::Authorization::New
     end
 
     getter state : String? do
-      OauthAuthorizationStateSession.new(session).state?
+      OauthStateSession.new(session).state?
     end
 
     def scopes : Array(String)

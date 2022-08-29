@@ -6,7 +6,7 @@ class User < BaseModel
   include Shield::HasManyBearerLogins
   include Shield::HasManyEmailConfirmations
   include Shield::HasManyLogins
-  include Shield::HasManyOauthAuthorizations
+  include Shield::HasManyOauthGrants
   include Shield::HasManyOauthClients
   include Shield::HasManyPasswordResets
 

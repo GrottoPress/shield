@@ -54,9 +54,9 @@ end
 
 {% if Avram::Model.all_subclasses
   .map(&.stringify)
-  .includes?("OauthAuthorization") %}
+  .includes?("OauthGrant") %}
 
-  class CreateOauthAccessTokenFromAuthorization < BearerLogin::SaveOperation
+  class CreateOauthAccessTokenFromGrant < BearerLogin::SaveOperation
     include Shield::NotifyOauthAccessToken
   end
 {% end %}

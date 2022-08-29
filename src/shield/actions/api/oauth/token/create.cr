@@ -11,6 +11,7 @@ module Shield::Api::Oauth::Token::Create
     before :oauth_validate_redirect_uri
     before :oauth_validate_grant_type
     before :oauth_validate_code
+    before :oauth_validate_refresh_token
     before :oauth_validate_code_verifier
     before :oauth_check_multiple_client_auth
     before :oauth_require_confidential_client
@@ -25,7 +26,7 @@ module Shield::Api::Oauth::Token::Create
       when .client_credentials?
         create_oauth_access_token_from_client
       else
-        create_oauth_access_token_from_authorization
+        create_oauth_access_token_from_grant
       end
     end
 
@@ -94,10 +95,9 @@ module Shield::Api::Oauth::Token::Create
       end
     end
 
-    private def create_oauth_access_token_from_authorization
-      CreateOauthAccessTokenFromAuthorization.create(
-        oauth_authorization: oauth_authorization,
-        oauth_grant_type: oauth_grant_type
+    private def create_oauth_access_token_from_grant
+      CreateOauthAccessTokenFromGrant.create(
+        oauth_grant: oauth_grant
       ) do |operation, bearer_login|
         if operation.saved?
           do_run_operation_succeeded(operation, bearer_login.not_nil!)

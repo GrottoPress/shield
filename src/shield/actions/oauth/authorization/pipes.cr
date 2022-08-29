@@ -138,8 +138,8 @@ module Shield::Oauth::Authorization::Pipes
       ).to_s
     end
 
-    private getter oauth_authorization_params do
-      OauthAuthorizationParams.new(code)
+    private getter oauth_grant_params do
+      OauthGrantParams.new(code)
     end
 
     private def oauth_response_type

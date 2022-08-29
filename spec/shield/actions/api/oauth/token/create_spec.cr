@@ -1,13 +1,13 @@
 require "../../../../../spec_helper"
 
 describe Shield::Api::Oauth::Token::Create do
-  context "Authorization Code grant" do
+  context "Authorization Code Grant" do
     it "creates OAuth access token" do
       code = "a1b2c3"
       client_secret = "def456"
       code_challenge = "abc123"
 
-      pkce = OauthAuthorizationPkce.from_json({
+      metadata = OauthGrantMetadata.from_json({
         code_challenge: code_challenge,
         code_challenge_method: "plain"
       }.to_json)
@@ -19,15 +19,15 @@ describe Shield::Api::Oauth::Token::Create do
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
         .secret(client_secret)
 
-      oauth_authorization =
-        OauthAuthorizationFactory.create &.user_id(resource_owner.id)
+      oauth_grant =
+        OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
           .code(code)
-          .pkce(pkce)
+          .metadata(metadata)
 
-      code_final = OauthAuthorizationCredentials.new(
+      code_final = OauthGrantCredentials.new(
         code,
-        oauth_authorization.id
+        oauth_grant.id
       ).to_s
 
       response = ApiClient.exec(
@@ -44,7 +44,7 @@ describe Shield::Api::Oauth::Token::Create do
     end
   end
 
-  context "Client Credentials grant" do
+  context "Client Credentials Grant" do
     it "creates OAuth access token" do
       client_secret = "def456"
 
@@ -68,7 +68,7 @@ describe Shield::Api::Oauth::Token::Create do
     end
   end
 
-  context "Refresh Token grant" do
+  context "Refresh Token Grant" do
     it "creates OAuth access token" do
       refresh_token = "a1b2c3"
       client_secret = "def456"
@@ -80,14 +80,14 @@ describe Shield::Api::Oauth::Token::Create do
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
         .secret(client_secret)
 
-      oauth_authorization =
-        OauthAuthorizationFactory.create &.user_id(resource_owner.id)
-          .oauth_client_id(oauth_client.id)
-          .code(refresh_token)
+      oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+        .oauth_client_id(oauth_client.id)
+        .code(refresh_token)
+        .type(OauthGrantType::REFRESH_TOKEN)
 
-      refresh_token_final = OauthAuthorizationCredentials.new(
+      refresh_token_final = OauthGrantCredentials.new(
         refresh_token,
-        oauth_authorization.id
+        oauth_grant.id
       ).to_s
 
       response = ApiClient.exec(
