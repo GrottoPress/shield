@@ -12,7 +12,7 @@ private class SaveOauthAuthorization < OauthAuthorization::SaveOperation
 end
 
 describe Shield::ValidateOauthAuthorization do
-  it "enusres scopes are unique" do
+  it "ensures scopes are unique" do
     developer = UserFactory.create
     resource_owner = UserFactory.create &.email("resource@owner.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)

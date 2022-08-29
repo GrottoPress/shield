@@ -7,7 +7,7 @@ private class SaveBearerLogin < BearerLogin::SaveOperation
 end
 
 describe Shield::ValidateBearerLogin do
-  it "enusres scopes are unique" do
+  it "ensures scopes are unique" do
     user = UserFactory.create
 
     SaveBearerLogin.create(
