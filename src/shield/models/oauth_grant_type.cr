@@ -70,12 +70,11 @@ module Shield::OauthGrantType
 
       def parse(values : Array)
         casts = values.map { |value| parse(value) }
+        return FailedCast.new unless casts.all?(SuccessfulCast)
 
-        if casts.any?(&.is_a? FailedCast)
-          FailedCast.new
-        else
-          SuccessfulCast(Array(OauthGrantType)).new(casts.map &.value.not_nil!)
-        end
+        SuccessfulCast(Array(OauthGrantType)).new(
+          casts.map &.as(SuccessfulCast).value
+        )
       end
 
       def to_db(value : OauthGrantType)
