@@ -29,5 +29,13 @@ module Shield::OauthAuthorizationPkce
         Shield.settings.oauth_code_challenge_methods_allowed
       )
     end
+
+    def verify?(code_verifier : String) : Bool
+      return false unless method_valid?
+      return code_verifier == code_challenge if method_plain?
+
+      digest = Base64.urlsafe_encode Digest::SHA256.digest(code_verifier), false
+      Crypto::Subtle.constant_time_compare(digest, code_challenge)
+    end
   end
 end
