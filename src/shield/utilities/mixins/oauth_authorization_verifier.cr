@@ -42,12 +42,12 @@ module Shield::OauthAuthorizationVerifier
 
     def verify_pkce?(code_verifier : String?) : Bool
       confidential = oauth_authorization?.try(&.oauth_client.confidential?)
-      challenge = oauth_authorization?.try(&.pkce.try &.code_challenge)
-      method = oauth_authorization?.try(&.pkce.try &.code_challenge_method)
+      pkce = oauth_authorization?.try(&.pkce)
+      challenge = pkce.try(&.code_challenge)
 
       return true if !challenge && confidential
       return false unless challenge && code_verifier
-      return code_verifier == challenge if method == "plain"
+      return code_verifier == challenge if pkce.try(&.method_plain?)
 
       digest = Base64.urlsafe_encode Digest::SHA256.digest(code_verifier), false
       Crypto::Subtle.constant_time_compare(digest, challenge)

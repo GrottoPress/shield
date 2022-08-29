@@ -15,7 +15,7 @@ module Shield::Oauth::Authorization::New
 
     param client_id : String?
     param code_challenge : String?
-    param code_challenge_method : String = "plain"
+    param code_challenge_method : String = OauthAuthorizationPkce::METHOD_PLAIN
     param redirect_uri : String?
     param response_type : String?
     param scope : String?

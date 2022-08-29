@@ -50,8 +50,13 @@ PKCE is required for public clients using the Authorization Code Grant flow.
      #settings.oauth_client_name_filter = /^grotto.*$/i
 
      # Allowed code challenge methods
-     # Valid values: "plain", "S256"
-     #settings.oauth_code_challenge_methods_allowed = ["S256"]
+     #
+     # Valid values:
+     #   OauthAuthorizationPkce::METHOD_PLAIN,
+     #   OauthAuthorizationPkce::METHOD_S256
+     #settings.oauth_code_challenge_methods_allowed = [
+     #  OauthAuthorizationPkce::METHOD_S256,
+     #]
      # ...
    end
    ```

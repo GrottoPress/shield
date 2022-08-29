@@ -63,7 +63,8 @@ module Shield::Api::Oauth::Authorization::Create
     end
 
     def code_challenge_method : String
-      nested_param?(:code_challenge_method) || "plain"
+      nested_param?(:code_challenge_method) ||
+        OauthAuthorizationPkce::METHOD_PLAIN
     end
 
     def redirect_uri : String?

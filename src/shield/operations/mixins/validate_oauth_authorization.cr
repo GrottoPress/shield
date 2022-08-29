@@ -26,8 +26,7 @@ module Shield::ValidateOauthAuthorization
 
     private def validate_code_challenge_method_allowed
       pkce.value.try do |value|
-        allowed_methods = Shield.settings.oauth_code_challenge_methods_allowed
-        return if value.code_challenge_method.in?(allowed_methods)
+        return if value.method_allowed?
 
         pkce.add_error Rex.t(
           :"operation.error.code_challenge_method_invalid",
