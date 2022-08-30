@@ -17,12 +17,13 @@ module Shield::OauthGrantPkce
     def verify?(verifier : String) : Bool
       return false unless challenge_method.valid?
 
-      if challenge_method.plain?
-        return Sha256Hash.new(verifier).verify?(challenge)
-      end
+      base64_digest = self.class.hash(verifier)
+      Crypto::Subtle.constant_time_compare(base64_digest, challenge)
+    end
 
-      digest = Base64.urlsafe_encode(Digest::SHA256.digest(verifier), false)
-      Crypto::Subtle.constant_time_compare(digest, challenge)
+    def self.hash(plaintext : String) : String
+      digest = Digest::SHA256.digest(plaintext)
+      Base64.urlsafe_encode(digest, false)
     end
 
     private struct ChallengeMethod

@@ -99,8 +99,9 @@ module Shield::StartOauthGrant
     # Hash code challenge if method is "plain"
     private def hash_challenge(challenge)
       metadata.value.try do |meta|
-        return challenge unless OauthGrantPkce.new(meta).challenge_method.plain?
-        Sha256Hash.new(challenge).hash
+        OauthGrantPkce.new(meta).challenge_method.plain? ?
+          OauthGrantPkce.hash(challenge) :
+          challenge
       end
     end
   end

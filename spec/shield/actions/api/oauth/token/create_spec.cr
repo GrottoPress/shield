@@ -7,11 +7,6 @@ describe Shield::Api::Oauth::Token::Create do
       client_secret = "def456"
       code_challenge = "abc123"
 
-      metadata = OauthGrantMetadata.from_json({
-        code_challenge: Sha256Hash.new(code_challenge).hash,
-        code_challenge_method: "plain"
-      }.to_json)
-
       developer = UserFactory.create
       resource_owner = UserFactory.create &.email("resource@owner.com")
       UserOptionsFactory.create &.user_id(resource_owner.id)
@@ -23,7 +18,7 @@ describe Shield::Api::Oauth::Token::Create do
         OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
           .code(code)
-          .metadata(metadata)
+          .pkce(code_challenge, "plain")
 
       code_final = OauthGrantCredentials.new(
         code,

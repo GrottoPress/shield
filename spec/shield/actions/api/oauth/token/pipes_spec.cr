@@ -60,11 +60,6 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
         client_secret = "def456"
 
-        metadata = OauthGrantMetadata.from_json({
-          code_challenge: Sha256Hash.new(code_challenge).hash,
-          code_challenge_method: "plain"
-        }.to_json)
-
         developer = UserFactory.create
         resource_owner = UserFactory.create &.email("resource@owner.com")
 
@@ -74,7 +69,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
           .code(code)
-          .metadata(metadata)
+          .pkce(code_challenge, "plain")
 
         code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
@@ -102,11 +97,6 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
         client_secret = "def456"
 
-        metadata = OauthGrantMetadata.from_json({
-          code_challenge: Sha256Hash.new(code_challenge).hash,
-          code_challenge_method: "plain"
-        }.to_json)
-
         developer = UserFactory.create
         resource_owner = UserFactory.create &.email("resource@owner.com")
 
@@ -116,7 +106,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
           .code(code)
-          .metadata(metadata)
+          .pkce(code_challenge, "plain")
 
         code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
@@ -167,11 +157,6 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
         client_secret = "def456"
 
-        metadata = OauthGrantMetadata.from_json({
-          code_challenge: Sha256Hash.new(code_challenge).hash,
-          code_challenge_method: "plain"
-        }.to_json)
-
         developer = UserFactory.create
         resource_owner = UserFactory.create &.email("resource@owner.com")
 
@@ -182,7 +167,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
           .code(code)
-          .metadata(metadata)
+          .pkce(code_challenge, "plain")
 
         code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
@@ -210,11 +195,6 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
         client_secret = "def456"
 
-        metadata = OauthGrantMetadata.from_json({
-          code_challenge: Sha256Hash.new(code_challenge).hash,
-          code_challenge_method: "plain"
-        }.to_json)
-
         developer = UserFactory.create
         resource_owner = UserFactory.create &.email("resource@owner.com")
 
@@ -224,7 +204,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
           .code(code)
-          .metadata(metadata)
+          .pkce(code_challenge, "plain")
 
         code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
@@ -251,11 +231,6 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
         client_secret = "def456"
 
-        metadata = OauthGrantMetadata.from_json({
-          code_challenge: Sha256Hash.new(code_challenge).hash,
-          code_challenge_method: "plain"
-        }.to_json)
-
         developer = UserFactory.create
         resource_owner = UserFactory.create &.email("resource@owner.com")
 
@@ -265,7 +240,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
           .code("a1b2c3")
-          .metadata(metadata)
+          .pkce(code_challenge, "plain")
 
         code_final = OauthGrantCredentials.new("wrong", oauth_grant.id).to_s
 
@@ -291,11 +266,6 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
         client_secret = "def456"
 
-        metadata = OauthGrantMetadata.from_json({
-          code_challenge: Sha256Hash.new(code_challenge).hash,
-          code_challenge_method: "plain"
-        }.to_json)
-
         developer = UserFactory.create
         resource_owner = UserFactory.create &.email("resource@owner.com")
 
@@ -308,7 +278,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
           .code(code)
-          .metadata(metadata)
+          .pkce(code_challenge, "plain")
 
         code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
@@ -335,11 +305,6 @@ describe Shield::Api::Oauth::Token::Pipes do
         code = "a1b2c3"
         code_challenge = "abc123"
 
-        metadata = OauthGrantMetadata.from_json({
-          code_challenge: Sha256Hash.new(code_challenge).hash,
-          code_challenge_method: "plain"
-        }.to_json)
-
         developer = UserFactory.create
         resource_owner = UserFactory.create &.email("resource@owner.com")
 
@@ -348,7 +313,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
           .code(code)
-          .metadata(metadata)
+          .pkce(code_challenge, "plain")
 
         code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
@@ -400,11 +365,6 @@ describe Shield::Api::Oauth::Token::Pipes do
         code = "a1b2c3"
         client_secret = "def456"
 
-        metadata = OauthGrantMetadata.from_json({
-          code_challenge: "abc123",
-          code_challenge_method: "plain"
-        }.to_json)
-
         developer = UserFactory.create
         resource_owner = UserFactory.create &.email("resource@owner.com")
 
@@ -414,7 +374,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
           .code(code)
-          .metadata(metadata)
+          .pkce("abc123", "plain")
 
         code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
@@ -440,11 +400,6 @@ describe Shield::Api::Oauth::Token::Pipes do
         code = "a1b2c3"
         code_challenge = "abc123"
 
-        metadata = OauthGrantMetadata.from_json({
-          code_challenge: Sha256Hash.new(code_challenge).hash,
-          code_challenge_method: "plain"
-        }.to_json)
-
         developer = UserFactory.create
         resource_owner = UserFactory.create &.email("resource@owner.com")
 
@@ -454,7 +409,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
           .code(code)
-          .metadata(metadata)
+          .pkce(code_challenge, "plain")
 
         code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
@@ -481,11 +436,6 @@ describe Shield::Api::Oauth::Token::Pipes do
         code = "a1b2c3"
         code_challenge = "abc123"
 
-        metadata = OauthGrantMetadata.from_json({
-          code_challenge: Sha256Hash.new(code_challenge).hash,
-          code_challenge_method: "plain"
-        }.to_json)
-
         developer = UserFactory.create
         resource_owner = UserFactory.create &.email("resource@owner.com")
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
@@ -493,7 +443,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
           .code(code)
-          .metadata(metadata)
+          .pkce(code_challenge, "plain")
 
         code_final = OauthGrantCredentials.new(code, oauth_grant.id).to_s
 
