@@ -26,6 +26,8 @@ describe Shield::StartOauthGrant do
 
         oauth_grant.try do |_oauth_grant|
           _oauth_grant.pkce.should be_a(OauthGrantPkce)
+          _oauth_grant.metadata.should be_a(OauthGrantMetadata)
+
           _oauth_grant.user_id.should eq(resource_owner.id)
           _oauth_grant.oauth_client_id.should eq(oauth_client.id)
           _oauth_grant.status.active?.should be_true
@@ -37,8 +39,11 @@ describe Shield::StartOauthGrant do
         end
 
         oauth_grant.try &.pkce.try do |pkce|
-          pkce.challenge.should eq(code_challenge)
           pkce.challenge_method.to_s.should eq(code_challenge_method)
+        end
+
+        oauth_grant.try &.metadata.try do |metadata|
+          OauthGrantPkce.new(metadata).verify?(code_challenge).should be_true
         end
 
         operation.code.should_not be_empty

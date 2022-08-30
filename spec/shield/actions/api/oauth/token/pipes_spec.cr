@@ -61,7 +61,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         client_secret = "def456"
 
         metadata = OauthGrantMetadata.from_json({
-          code_challenge: code_challenge,
+          code_challenge: Sha256Hash.new(code_challenge).hash,
           code_challenge_method: "plain"
         }.to_json)
 
@@ -103,7 +103,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         client_secret = "def456"
 
         metadata = OauthGrantMetadata.from_json({
-          code_challenge: code_challenge,
+          code_challenge: Sha256Hash.new(code_challenge).hash,
           code_challenge_method: "plain"
         }.to_json)
 
@@ -168,7 +168,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         client_secret = "def456"
 
         metadata = OauthGrantMetadata.from_json({
-          code_challenge: code_challenge,
+          code_challenge: Sha256Hash.new(code_challenge).hash,
           code_challenge_method: "plain"
         }.to_json)
 
@@ -211,7 +211,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         client_secret = "def456"
 
         metadata = OauthGrantMetadata.from_json({
-          code_challenge: code_challenge,
+          code_challenge: Sha256Hash.new(code_challenge).hash,
           code_challenge_method: "plain"
         }.to_json)
 
@@ -252,7 +252,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         client_secret = "def456"
 
         metadata = OauthGrantMetadata.from_json({
-          code_challenge: code_challenge,
+          code_challenge: Sha256Hash.new(code_challenge).hash,
           code_challenge_method: "plain"
         }.to_json)
 
@@ -292,7 +292,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         client_secret = "def456"
 
         metadata = OauthGrantMetadata.from_json({
-          code_challenge: code_challenge,
+          code_challenge: Sha256Hash.new(code_challenge).hash,
           code_challenge_method: "plain"
         }.to_json)
 
@@ -336,7 +336,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
 
         metadata = OauthGrantMetadata.from_json({
-          code_challenge: code_challenge,
+          code_challenge: Sha256Hash.new(code_challenge).hash,
           code_challenge_method: "plain"
         }.to_json)
 
@@ -441,7 +441,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
 
         metadata = OauthGrantMetadata.from_json({
-          code_challenge: code_challenge,
+          code_challenge: Sha256Hash.new(code_challenge).hash,
           code_challenge_method: "plain"
         }.to_json)
 
@@ -482,7 +482,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         code_challenge = "abc123"
 
         metadata = OauthGrantMetadata.from_json({
-          code_challenge: code_challenge,
+          code_challenge: Sha256Hash.new(code_challenge).hash,
           code_challenge_method: "plain"
         }.to_json)
 

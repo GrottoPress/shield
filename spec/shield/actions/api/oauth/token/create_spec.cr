@@ -8,7 +8,7 @@ describe Shield::Api::Oauth::Token::Create do
       code_challenge = "abc123"
 
       metadata = OauthGrantMetadata.from_json({
-        code_challenge: code_challenge,
+        code_challenge: Sha256Hash.new(code_challenge).hash,
         code_challenge_method: "plain"
       }.to_json)
 

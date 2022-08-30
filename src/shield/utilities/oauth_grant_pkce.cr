@@ -16,7 +16,10 @@ module Shield::OauthGrantPkce
 
     def verify?(verifier : String) : Bool
       return false unless challenge_method.valid?
-      return verifier == challenge if challenge_method.plain?
+
+      if challenge_method.plain?
+        return Sha256Hash.new(verifier).verify?(challenge)
+      end
 
       digest = Base64.urlsafe_encode(Digest::SHA256.digest(verifier), false)
       Crypto::Subtle.constant_time_compare(digest, challenge)

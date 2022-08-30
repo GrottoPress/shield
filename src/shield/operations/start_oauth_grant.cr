@@ -16,8 +16,8 @@ module Shield::StartOauthGrant
     before_save do
       set_inactive_at
       set_success
-      set_code_challenge
       set_code_challenge_method
+      set_code_challenge # Set challenge method before this
 
       validate_authorization_granted
       validate_redirect_uri_matches
@@ -72,7 +72,7 @@ module Shield::StartOauthGrant
       return unless type.value.try(&.authorization_code?)
 
       code_challenge.value.try do |value|
-        values = {code_challenge: value}
+        values = {code_challenge: hash_challenge(value)}
 
         metadata.value.try do |_metadata|
           return metadata.value = _metadata.merge(**values)
@@ -93,6 +93,14 @@ module Shield::StartOauthGrant
         end
 
         metadata.value = OauthGrantMetadata.from_json(values.to_json)
+      end
+    end
+
+    # Hash code challenge if method is "plain"
+    private def hash_challenge(challenge)
+      metadata.value.try do |meta|
+        return challenge unless OauthGrantPkce.new(meta).challenge_method.plain?
+        Sha256Hash.new(challenge).hash
       end
     end
   end
