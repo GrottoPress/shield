@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `PasswordResetCredentials` utility
 - Add support for all database primary key types (not just `Int64`)
 - Set `Pragma: no-cache` response header in `Shield::LoginPipes#disable_cache`
+- Add `UpdateEmailConfirmationUser#credentials` getter
 
 ### Changed
 - Remove showing bearer token from `Shield::BearerLogins::Show` action
@@ -46,6 +47,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove `Shield::VerificationUrl` utility mixin
 - Remove `BearerToken` utility
 - Remove `Shield::Session` utility mixin
+- Remove `UpdateEmailConfirmationUser#email_confirmation` getter
+- Remove `UpdateEmailConfirmationUser#start_email_confirmation` getter
 
 ## [0.15.0] - 2022-06-28
 

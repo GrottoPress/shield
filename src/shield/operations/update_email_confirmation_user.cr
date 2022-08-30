@@ -1,8 +1,7 @@
 module Shield::UpdateEmailConfirmationUser
   macro included
-    getter email_confirmation : EmailConfirmation?
     getter new_email : String?
-    getter start_email_confirmation : StartEmailConfirmation?
+    getter credentials : EmailConfirmationCredentials?
 
     needs remote_ip : Socket::IPAddress?
 
@@ -26,13 +25,16 @@ module Shield::UpdateEmailConfirmationUser
 
     private def start_email_confirmation(user : Shield::User)
       new_email.try do |email|
-        @start_email_confirmation = StartEmailConfirmation.new(
+        operation = StartEmailConfirmation.new(
           user_id: user.id,
           email: email,
           remote_ip: remote_ip
         )
 
-        @email_confirmation = @start_email_confirmation.try(&.save!)
+        @credentials = EmailConfirmationCredentials.new(
+          operation,
+          operation.save!
+        )
       end
     end
   end
