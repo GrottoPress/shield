@@ -34,9 +34,9 @@ module Shield::Api::Oauth::Token::Create
       json({
         access_token: BearerLoginCredentials.new(operation, bearer_login),
         expires_in: bearer_login.status.span?.try(&.total_seconds.to_i64),
+        refresh_token: operation.refresh_token,
         scope: bearer_login.scopes.join(' '),
-        token_type: "Bearer",
-        refresh_token: operation.refresh_token
+        token_type: "Bearer"
       })
     end
 
