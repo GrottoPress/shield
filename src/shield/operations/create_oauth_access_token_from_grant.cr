@@ -64,21 +64,19 @@ module Shield::CreateOauthAccessTokenFromGrant
         .update(inactive_at: Time.utc)
     end
 
-    private def end_oauth_grant(bearer_login : Shield::BearerLogin)
+    private def end_oauth_grant(__ : Shield::BearerLogin)
       return if Shield.settings.oauth_access_token_expiry
 
       EndOauthGrantGracefully.update!(oauth_grant, success: true)
     end
 
-    private def rotate_oauth_grant(bearer_login : Shield::BearerLogin)
+    private def rotate_oauth_grant(__ : Shield::BearerLogin)
       return unless Shield.settings.oauth_access_token_expiry
 
-      operation = RotateOauthGrant.new(oauth_grant: oauth_grant)
+      operation = RotateOauthGrant.new(oauth_grant, success: true)
+      operation.save!
 
-      @refresh_token = OauthGrantCredentials.new(
-        operation,
-        operation.save!
-      ).to_s
+      @refresh_token = operation.refresh_token
     end
   end
 end
