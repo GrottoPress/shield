@@ -13,7 +13,7 @@ describe Shield::RotateOauthGrant do
     RotateOauthGrant.update(
       oauth_grant,
       success: false
-    ) do |operation, updated_oauth_grant|
+    ) do |operation, _|
       operation.saved?.should be_true
       operation.refresh_token.should_not be_nil
     end
