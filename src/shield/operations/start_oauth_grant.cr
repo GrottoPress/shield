@@ -58,6 +58,8 @@ module Shield::StartOauthGrant
     end
 
     private def set_inactive_at
+      return unless type.value.try(&.authorization_code?)
+
       expiry = Shield.settings.oauth_authorization_code_expiry
       active_at.value.try { |value| inactive_at.value = value + expiry }
     end
