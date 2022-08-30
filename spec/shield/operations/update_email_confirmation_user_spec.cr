@@ -19,13 +19,9 @@ describe Shield::UpdateEmailConfirmationUser do
       operation.new_email.should eq(new_email)
       updated_user.email.should eq(email)
 
-      operation.email_confirmation.should be_a(EmailConfirmation)
-      operation.start_email_confirmation.should be_a(StartEmailConfirmation)
+      operation.credentials.should be_a(EmailConfirmationCredentials)
 
-      EmailConfirmationRequestEmail.new(
-        operation.start_email_confirmation.not_nil!,
-        operation.email_confirmation.not_nil!
-      ).should(be_delivered)
+      Carbon.should have_delivered_emails
     end
   end
 
