@@ -14,6 +14,24 @@ When a user changes their password, *Shield* logs out the user on all devices (e
 
 On top of these, *Shield* offers seamless integration with your application. For the most part, `include` a bunch of `module`s in the appropriate `class`es, and you are good to go!
 
+### Design principles
+
+- #### Zero knowledge
+
+  *Shield* maintains no knowledge of any secrets, and stores them such that they are irrecoverable, either by the application or by the user, if the user loses them.
+
+- #### Hashing over encryption
+
+  In line with the *Zero Knowledge* principle, *Shield* prefers hashing to encryption, keeping knowledge of all secrets to the user that generated them.
+
+- #### Handles over assertions
+
+  In *Shield*, the server is the source of truth, ensuring that all secrets can be revoked server-side, and instantly, whenever the need arises.
+
+- #### Deny by default
+
+  *Shield* is locks everything down, by default, and requires explicit action by the developer. This posture makes it difficult for an application to be *insecure by accident*.
+
 ## Quick Start
 
 Get started quickly using [*Penny*](https://github.com/GrottoPress/penny). *Penny* is a *Lucky* application scaffold that gets you up and running with *Shield*.
