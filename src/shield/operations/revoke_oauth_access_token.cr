@@ -4,6 +4,8 @@ module Shield::RevokeOauthAccessToken
 
     getter? client_authorized : Bool = true
 
+    param_key :bearer_login
+
     needs oauth_client : OauthClient?
 
     attribute token : String
