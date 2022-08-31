@@ -28,7 +28,7 @@ module Shield::Api::Users::OauthClients::Index
       OauthClientQuery
     ) do
       paginate OauthClientQuery.new
-        .user_id(user.id)
+        .user_id(user_id)
         .is_active
         .active_at.desc_order
     end
