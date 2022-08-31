@@ -8,11 +8,11 @@ module Shield::OauthPermissions::Delete
 
     def run_operation
       DeleteOauthPermission.update(
-        user,
-        oauth_client: oauth_client
-      ) do |operation, updated_user|
+        oauth_client,
+        user: user
+      ) do |operation, updated_oauth_client|
         if operation.saved?
-          do_run_operation_succeeded(operation, updated_user)
+          do_run_operation_succeeded(operation, updated_oauth_client)
         else
           response.status_code = 400
           do_run_operation_failed(operation)

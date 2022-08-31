@@ -25,8 +25,8 @@ describe Shield::RevokeOauthPermission do
       .should(be_true)
 
     RevokeOauthPermission.update(
-      resource_owner,
-      oauth_client: oauth_client
+      oauth_client,
+      user: resource_owner
     ) do |operation, _|
       operation.saved?.should be_true
     end

@@ -356,7 +356,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
    ```crystal
    # ->>> src/operations/revoke_oauth_permission.cr
 
-   class RevokeOauthPermission < User::SaveOperation
+   class RevokeOauthPermission < OauthClient::SaveOperation
      # ...
      # By default, *Shield* marks all grants as inactive,
      # after permission is revoked, without deleting them.
@@ -373,7 +373,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
    ```crystal
    # ->>> src/operations/delete_oauth_permission.cr
 
-   class DeleteOauthPermission < User::SaveOperation
+   class DeleteOauthPermission < OauthClient::SaveOperation
      # ...
      # By default, *Shield* deletes all grants from the database,
      # after permission is deleted.

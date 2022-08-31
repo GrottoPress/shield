@@ -75,11 +75,11 @@ class DeleteUserOauthAccessTokens < User::SaveOperation
   include Shield::DeleteUserOauthAccessTokens
 end
 
-class RevokeOauthPermission < User::SaveOperation
+class RevokeOauthPermission < OauthClient::SaveOperation
   include Shield::RevokeOauthPermission
 end
 
-class DeleteOauthPermission < User::SaveOperation
+class DeleteOauthPermission < OauthClient::SaveOperation
   include Shield::DeleteOauthPermission
 end
 

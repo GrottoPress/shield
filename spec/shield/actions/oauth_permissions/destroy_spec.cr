@@ -21,7 +21,7 @@ describe Shield::OauthPermissions::Destroy do
       user_id: resource_owner.id,
     ))
 
-    response.headers["X-User-ID"]?.should eq(resource_owner.id.to_s)
+    response.headers["X-OAuth-Client-ID"]?.should eq(oauth_client.id.to_s)
 
     BearerLoginQuery.new
       .oauth_client_id(oauth_client.id)

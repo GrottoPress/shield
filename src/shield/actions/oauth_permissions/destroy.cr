@@ -16,11 +16,11 @@ module Shield::OauthPermissions::Destroy
 
     def run_operation
       RevokeOauthPermission.update(
-        user,
-        oauth_client: oauth_client
-      ) do |operation, updated_user|
+        oauth_client,
+        user: user
+      ) do |operation, updated_oauth_client|
         if operation.saved?
-          do_run_operation_succeeded(operation, updated_user)
+          do_run_operation_succeeded(operation, updated_oauth_client)
         else
           response.status_code = 400
           do_run_operation_failed(operation)
@@ -28,7 +28,7 @@ module Shield::OauthPermissions::Destroy
       end
     end
 
-    def do_run_operation_succeeded(operation, user)
+    def do_run_operation_succeeded(operation, oauth_client)
       flash.success = Rex.t(:"action.oauth_permission.destroy.success")
 
       redirect to: OauthClients::Users::Index.with(

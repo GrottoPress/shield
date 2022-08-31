@@ -15,8 +15,8 @@ describe Shield::DeleteOauthPermission do
       .oauth_client_id(oauth_client.id)
 
     DeleteOauthPermission.update(
-      resource_owner,
-      oauth_client: oauth_client
+      oauth_client,
+      user: resource_owner
     ) do |operation, _|
       operation.saved?.should be_true
     end

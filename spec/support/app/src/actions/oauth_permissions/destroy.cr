@@ -7,8 +7,8 @@ class OauthPermissions::Destroy < BrowserAction
     run_operation
   end
 
-  def do_run_operation_succeeded(operation, user)
-    response.headers["X-User-ID"] = user.id.to_s
+  def do_run_operation_succeeded(operation, oauth_client)
+    response.headers["X-OAuth-Client-ID"] = oauth_client.id.to_s
     previous_def
   end
 end
