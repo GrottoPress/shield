@@ -7,7 +7,7 @@ module Shield::Api::OauthAccessTokens::Index
 
     # param page : Int32 = 1
 
-    # get "/account/oauth/tokens" do
+    # get "/oauth/tokens" do
     #   json BearerLoginSerializer.new(bearer_logins: bearer_logins, pages: pages)
     # end
 
