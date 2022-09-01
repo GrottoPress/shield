@@ -44,8 +44,7 @@ describe Shield::Api::Oauth::Token::Create do
       client_secret = "def456"
 
       developer = UserFactory.create
-      resource_owner = UserFactory.create &.email("resource@owner.com")
-      UserOptionsFactory.create &.user_id(resource_owner.id)
+      UserOptionsFactory.create &.user_id(developer.id)
 
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
         .secret(client_secret)

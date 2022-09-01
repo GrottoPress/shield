@@ -4,6 +4,7 @@ describe Shield::CreateOauthAccessTokenFromClient do
   it "creates OAuth access token" do
     developer = UserFactory.create
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
+    UserOptionsFactory.create &.user_id(developer.id)
 
     CreateOauthAccessTokenFromClient.create(
       oauth_client: OauthClientQuery.preload_user(oauth_client),
