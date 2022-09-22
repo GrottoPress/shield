@@ -50,10 +50,15 @@ module Shield::ValidateBearerLogin
               if BearerLoginQuery.new
                 .user_id(_user_id)
                 .name(_name)
+                .is_active
                 .oauth_client_id.is_nil
                 .any?
             {% else %}
-              if BearerLoginQuery.new.user_id(_user_id).name(_name).any?
+              if BearerLoginQuery.new
+                .user_id(_user_id)
+                .name(_name)
+                .is_active
+                .any?
             {% end %}
 
               name.add_error Rex.t(:"operation.error.name_exists", name: _name)
