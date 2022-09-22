@@ -26,7 +26,7 @@ module Shield::ValidateOauthClient
 
       name.value.try do |_name|
         user_id.value.try do |_user_id|
-          if OauthClientQuery.new.user_id(_user_id).name(_name).any?
+          if OauthClientQuery.new.user_id(_user_id).name(_name).is_active.any?
             name.add_error Rex.t(:"operation.error.name_exists", name: _name)
           end
         end
