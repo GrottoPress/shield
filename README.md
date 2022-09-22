@@ -30,7 +30,7 @@ On top of these, *Shield* offers seamless integration with your application. For
 
 - #### Deny by default
 
-  *Shield* is locks everything down, by default, and requires explicit action by the developer. This posture makes it difficult for an application to be *insecure by accident*.
+  *Shield* locks everything down, by default, and requires explicit action by the developer. This posture makes it difficult for an application to be *insecure by accident*.
 
 ## Quick Start
 
