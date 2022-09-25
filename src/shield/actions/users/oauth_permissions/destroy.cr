@@ -1,12 +1,12 @@
-module Shield::Api::OauthPermissions::Destroy
+module Shield::Users::OauthPermissions::Destroy
   macro included
     skip :require_logged_out
 
-    # delete "/oauth/permissions/:oauth_client_id/:user_id" do
+    # delete "/users/:user_id/oauth/permissions/:oauth_client_id" do
     #   run_operation
     # end
 
-    getter user : User do # Resource owner
+    getter user : User do
       UserQuery.find(user_id)
     end
 
@@ -29,22 +29,17 @@ module Shield::Api::OauthPermissions::Destroy
     end
 
     def do_run_operation_succeeded(operation, oauth_client)
-      json OauthClientSerializer.new(
-        oauth_client: oauth_client,
-        user: user,
-        message: Rex.t(:"action.oauth_permission.destroy.success")
-      )
+      flash.success = Rex.t(:"action.user.oauth_permission.destroy.success")
+      redirect to: Index.with(user_id: user_id)
     end
 
     def do_run_operation_failed(operation)
-      json FailureSerializer.new(
-        errors: operation.errors,
-        message: Rex.t(:"action.oauth_permission.destroy.failure")
-      )
+      flash.failure = Rex.t(:"action.user.oauth_permission.destroy.failure")
+      redirect_back fallback: Index.with(user_id: user_id)
     end
 
     def authorize?(user : Shield::User) : Bool
-      super || user.id.in?({oauth_client.user_id, self.user.id})
+      super || user.id == oauth_client.user_id
     end
   end
 end

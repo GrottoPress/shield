@@ -1,6 +1,6 @@
-require "../../../spec_helper"
+require "../../../../../spec_helper"
 
-describe Shield::OauthPermissions::Destroy do
+describe Shield::Api::CurrentUser::OauthPermissions::Delete do
   it "revokes OAuth permission" do
     password = "password4APASSWORD<"
 
@@ -14,30 +14,28 @@ describe Shield::OauthPermissions::Destroy do
       .oauth_client_id(oauth_client.id)
 
     client = ApiClient.new
-    client.browser_auth(resource_owner, password)
+    client.api_auth(resource_owner, password)
 
-    response = client.exec(OauthPermissions::Destroy.with(
-      oauth_client_id: oauth_client.id,
-      user_id: resource_owner.id,
+    response = client.exec(Api::CurrentUser::OauthPermissions::Delete.with(
+      oauth_client_id: oauth_client.id
     ))
 
-    response.headers["X-OAuth-Client-ID"]?.should eq(oauth_client.id.to_s)
+    response.should send_json(200, {
+      message: "action.current_user.oauth_permission.destroy.success"
+    })
 
     BearerLoginQuery.new
       .oauth_client_id(oauth_client.id)
       .user_id(resource_owner.id)
-      .is_active
       .any? # ameba:disable Performance/AnyInsteadOfEmpty
       .should(be_false)
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(OauthPermissions::Destroy.with(
-      oauth_client_id: 45,
-      user_id: 23
+    response = ApiClient.exec(Api::CurrentUser::OauthPermissions::Delete.with(
+      oauth_client_id: 45
     ))
 
-    response.status.should eq(HTTP::Status::FOUND)
-    response.headers["X-Logged-In"]?.should eq("false")
+    response.should send_json(401, logged_in: false)
   end
 end

@@ -1,6 +1,6 @@
-require "../../../spec_helper"
+require "../../../../spec_helper"
 
-describe Shield::OauthPermissions::Delete do
+describe Shield::Users::OauthPermissions::Delete do
   it "revokes OAuth permission" do
     password = "password4APASSWORD<"
 
@@ -16,7 +16,7 @@ describe Shield::OauthPermissions::Delete do
     client = ApiClient.new
     client.browser_auth(developer, password)
 
-    response = client.exec(OauthPermissions::Delete.with(
+    response = client.exec(Users::OauthPermissions::Delete.with(
       oauth_client_id: oauth_client.id,
       user_id: resource_owner.id,
     ))
@@ -31,7 +31,7 @@ describe Shield::OauthPermissions::Delete do
   end
 
   it "requires logged in" do
-    response = ApiClient.exec(OauthPermissions::Delete.with(
+    response = ApiClient.exec(Users::OauthPermissions::Delete.with(
       oauth_client_id: 45,
       user_id: 23
     ))

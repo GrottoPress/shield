@@ -1,9 +1,9 @@
-class OauthPermissions::Destroy < BrowserAction
-  include Shield::OauthPermissions::Destroy
+class Users::OauthPermissions::Destroy < BrowserAction
+  include Shield::Users::OauthPermissions::Destroy
 
   skip :pin_login_to_ip_address
 
-  delete "/oauth/permissions/:oauth_client_id/:user_id" do
+  delete "/users/:user_id/oauth/permissions/:oauth_client_id" do
     run_operation
   end
 

@@ -610,20 +610,22 @@ PKCE is required for public clients using the Authorization Code Grant flow.
    ```crystal
    # ->>> src/actions/current_user/oauth_permissons/destroy.cr
 
-   class OauthPermissions::Destroy < BrowserAction
+   class CurrentUser::OauthPermissions::Destroy < BrowserAction
      # ...
      # By default, *Shield* marks the access tokens as inactive,
      # without deleting them.
      #
-     # To delete them, use `Shield::OauthPermissions::Delete` instead.
-     include Shield::OauthPermissions::Destroy
+     # To delete them, use `Shield::CurrentUser::OauthPermissions::Delete`
+     # instead.
+     include Shield::CurrentUser::OauthPermissions::Destroy
 
-     delete "/oauth/permissions/:oauth_client_id/:user_id" do
+     delete "/account/oauth/permissions/:oauth_client_id" do
        run_operation
      end
 
      #def do_run_operation_succeeded(operation, user)
-     #  flash.success = Rex.t(:"action.oauth_permission.destroy.success")
+     #  flash.success =
+     #    Rex.t(:"action.current_user.oauth_permission.destroy.success")
      #
      #  redirect to: OauthClients::Users::Index.with(
      #    oauth_client_id: oauth_client_id
@@ -631,7 +633,8 @@ PKCE is required for public clients using the Authorization Code Grant flow.
      #end
 
      #def do_run_operation_failed(operation)
-     #  flash.failure = Rex.t(:"action.oauth_permission.destroy.failure")
+     #  flash.failure =
+     #    Rex.t(:"action.current_user.oauth_permission.destroy.failure")
      #
      #  redirect_back fallback: OauthClients::Users::Index.with(
      #    oauth_client_id: oauth_client_id
@@ -641,7 +644,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
    end
    ```
 
-   This action is reponsible for revoking a single client's access to a single user, by revoking all access tokens issued to the client for that user.
+   This action is reponsible for revoking all access tokens issued to a given client for the current user, and all related grants.
 
    If you would like the current user to revoke all permissions granted to all clients, use the `CurrentUser::OauthAccessTokens::Destroy` action.
 

@@ -1,8 +1,8 @@
-module Shield::Api::OauthPermissions::Delete
+module Shield::Api::CurrentUser::OauthPermissions::Delete
   macro included
-    include Shield::Api::OauthPermissions::Destroy
+    include Shield::Api::CurrentUser::OauthPermissions::Destroy
 
-    # delete "/oauth/permissions/:oauth_client_id/:user_id" do
+    # delete "/account/oauth/permissions/:oauth_client_id" do
     #   run_operation
     # end
 

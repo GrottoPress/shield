@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - 
+
+### Added
+- Add `Shield::Api::CurrentUser::OauthPermissions::Delete` action
+- Add `Shield::Api::CurrentUser::OauthPermissions::Destroy` action
+- Add `Shield::Api::Users::OauthPermissions::Delete` action
+- Add `Shield::Api::Users::OauthPermissions::Destroy` action
+- Add `Shield::CurrentUser::OauthPermissions::Delete` action
+- Add `Shield::CurrentUser::OauthPermissions::Destroy` action
+- Add `Shield::Users::OauthPermissions::Delete` action
+- Add `Shield::Users::OauthPermissions::Destroy` action
+
+### Removed
+- Remove `Shield::Api::OauthPermissions::Delete` action
+- Remove `Shield::Api::OauthPermissions::Destroy` action
+- Remove `Shield::OauthPermissions::Delete` action
+- Remove `Shield::OauthPermissions::Destroy` action
+
 ## [0.16.0] - 2022-09-22
 
 ### Added
