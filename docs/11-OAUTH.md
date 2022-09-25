@@ -618,7 +618,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
      # To delete them, use `Shield::OauthPermissions::Delete` instead.
      include Shield::OauthPermissions::Destroy
 
-     delete "/oauth/clients/:oauth_client_id/users/:user_id" do
+     delete "/oauth/permissions/:oauth_client_id/:user_id" do
        run_operation
      end
 

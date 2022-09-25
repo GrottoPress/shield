@@ -2,7 +2,7 @@ module Shield::OauthPermissions::Delete
   macro included
     include Shield::OauthPermissions::Destroy
 
-    # delete "/oauth/clients/:oauth_client_id/users/:user_id" do
+    # delete "/oauth/permissions/:oauth_client_id/:user_id" do
     #   run_operation
     # end
 

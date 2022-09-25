@@ -3,7 +3,7 @@ class Api::OauthPermissions::Destroy < ApiAction
 
   skip :pin_login_to_ip_address
 
-  delete "/oauth/clients/:oauth_client_id/users/:user_id" do
+  delete "/oauth/permissions/:oauth_client_id/:user_id" do
     run_operation
   end
 end

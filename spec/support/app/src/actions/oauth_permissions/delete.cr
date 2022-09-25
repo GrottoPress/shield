@@ -3,7 +3,7 @@ class OauthPermissions::Delete < BrowserAction
 
   skip :pin_login_to_ip_address
 
-  delete "/oauth/clients/:oauth_client_id/users/:user_id/delete" do
+  delete "/oauth/permissions/:oauth_client_id/:user_id/delete" do
     run_operation
   end
 
