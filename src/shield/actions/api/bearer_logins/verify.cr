@@ -1,6 +1,8 @@
 # Token Introspection endpoint
+# See https://datatracker.ietf.org/doc/html/rfc7662
 #
-# If doing OAuth, use `Shield::Api::Oauth::Token::Verify` instead
+# NOTE: This is for user-generated bearer tokens. If doing OAuth,
+#       use `Shield::Api::Oauth::Token::Verify` instead
 module Shield::Api::BearerLogins::Verify
   macro included
     skip :require_logged_out
@@ -21,14 +23,19 @@ module Shield::Api::BearerLogins::Verify
     end
 
     def do_verify_operation_succeeded(utility, bearer_login)
-      json BearerLoginSerializer.new(
-        bearer_login: bearer_login,
-        message: Rex.t(:"action.bearer_login.verify.success")
-      )
+      json({
+        active: true,
+        exp: bearer_login.inactive_at.try(&.to_unix),
+        iat: bearer_login.active_at.to_unix,
+        jti: bearer_login.id.to_s,
+        scope: bearer_login.scopes.join(' '),
+        sub: bearer_login.user_id.to_s,
+        token_type: "Bearer",
+      })
     end
 
     def do_verify_operation_failed(utility)
-      json FailureSerializer.new(message: Rex.t(:"action.misc.token_invalid"))
+      json({active: false})
     end
 
     private def scope

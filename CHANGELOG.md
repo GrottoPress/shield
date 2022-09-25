@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Require login for `Shield::Api::BearerLogins::Verify` action
+- Change reponse for `Shield::Api::BearerLogins::Verify` to [RFC 7662](https://datatracker.ietf.org/doc/html/rfc7662) format
 
 ### Removed
 - Remove `Shield::Api::OauthPermissions::Delete` action

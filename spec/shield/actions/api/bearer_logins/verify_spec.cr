@@ -16,9 +16,7 @@ describe Shield::Api::BearerLogins::Verify do
 
     response = client.exec(Api::BearerLogins::Verify, token: credentials)
 
-    response.should send_json(200, {
-      message: "action.bearer_login.verify.success"
-    })
+    response.should send_json(200, active: true)
   end
 
   it "rejects invalid bearer login token" do
@@ -32,7 +30,7 @@ describe Shield::Api::BearerLogins::Verify do
     client.api_auth(user, password)
 
     response = client.exec(Api::BearerLogins::Verify, token: credentials)
-    response.should send_json(200, {status: "failure"})
+    response.should send_json(200, active: false)
   end
 
   it "requires logged in" do
