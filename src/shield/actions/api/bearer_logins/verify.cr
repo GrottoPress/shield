@@ -1,6 +1,8 @@
+# Token Introspection endpoint
+#
+# If doing OAuth, use `Shield::Api::Oauth::Token::Verify` instead
 module Shield::Api::BearerLogins::Verify
   macro included
-    skip :require_logged_in
     skip :require_logged_out
     skip :check_authorization
 

@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Users::OauthPermissions::Delete` action
 - Add `Shield::Users::OauthPermissions::Destroy` action
 
+### Changed
+- Require login for `Shield::Api::BearerLogins::Verify` action
+
 ### Removed
 - Remove `Shield::Api::OauthPermissions::Delete` action
 - Remove `Shield::Api::OauthPermissions::Destroy` action
