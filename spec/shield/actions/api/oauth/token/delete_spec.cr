@@ -22,7 +22,7 @@ describe Shield::Api::Oauth::Token::Delete do
       client_id: oauth_client.id
     )
 
-    response.should send_json(200, {success: true})
+    response.should send_json(200, {active: false})
 
     # ameba:disable Performance/AnyInsteadOfEmpty
     BearerLoginQuery.new.id(bearer_login.id).any?.should be_false

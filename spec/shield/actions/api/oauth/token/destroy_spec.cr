@@ -24,7 +24,7 @@ describe Shield::Api::Oauth::Token::Destroy do
       client_id: oauth_client.id
     )
 
-    response.should send_json(200, {success: true})
+    response.should send_json(200, {active: false})
     bearer_login.reload.status.active?.should be_false
   end
 

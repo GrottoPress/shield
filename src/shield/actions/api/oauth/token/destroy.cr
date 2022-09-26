@@ -27,7 +27,7 @@ module Shield::Api::Oauth::Token::Destroy
     end
 
     def do_run_operation_succeeded(operation, token)
-      json({success: true})
+      json({active: false})
     end
 
     def do_run_operation_failed(operation)
