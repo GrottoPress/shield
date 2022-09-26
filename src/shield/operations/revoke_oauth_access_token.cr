@@ -13,7 +13,7 @@ module Shield::RevokeOauthAccessToken
     before_run do
       set_bearer_login
       validate_token_required
-      validate_token_is_access_token
+      validate_client_id_required
       validate_oauth_client_authorized
     end
 
@@ -32,10 +32,10 @@ module Shield::RevokeOauthAccessToken
       validate_required token, message: Rex.t(:"operation.error.token_required")
     end
 
-    private def validate_token_is_access_token
+    private def validate_client_id_required
       @bearer_login.try do |bearer_login|
         return if bearer_login.oauth_client_id
-        token.add_error Rex.t(:"operation.error.token_not_access_token")
+        token.add_error Rex.t(:"operation.error.oauth_client_id_required")
       end
     end
 

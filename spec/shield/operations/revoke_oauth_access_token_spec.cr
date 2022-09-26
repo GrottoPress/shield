@@ -57,7 +57,7 @@ describe Shield::RevokeOauthAccessToken do
       _token.should be_nil
 
       operation.token
-        .should(have_error "operation.error.token_not_access_token")
+        .should(have_error "operation.error.oauth_client_id_required")
     end
   end
 

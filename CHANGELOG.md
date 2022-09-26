@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove `Shield::Api::OauthPermissions::Destroy` action
 - Remove `Shield::OauthPermissions::Delete` action
 - Remove `Shield::OauthPermissions::Destroy` action
+- Remove `operation.error.token_not_access_token` translation key
 
 ## [0.16.0] - 2022-09-22
 
