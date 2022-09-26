@@ -55,9 +55,9 @@ module Shield::RevokeOauthAccessToken
         bearer_login.oauth_client.try do |client|
           RevokeOauthPermission.update!(client, user: bearer_login.user!)
         end
-
-        token.value.not_nil!
       end
+
+      token.value.not_nil!
     end
   end
 end

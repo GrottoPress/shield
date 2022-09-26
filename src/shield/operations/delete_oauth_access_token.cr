@@ -7,9 +7,9 @@ module Shield::DeleteOauthAccessToken
         bearer_login.oauth_client.try do |client|
           DeleteOauthPermission.update!(client, bearer_login.user!)
         end
-
-        token.value.not_nil!
       end
+
+      token.value.not_nil!
     end
   end
 end
