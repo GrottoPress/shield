@@ -1,6 +1,6 @@
-require "../../../../spec_helper"
+require "../../../../../spec_helper"
 
-describe Shield::Api::BearerLogins::Verify do
+describe Shield::Api::BearerLogins::Token::Verify do
   it "verifies bearer login" do
     password = "password4APASSWORD<"
     token = "a1b2c3"
@@ -14,7 +14,7 @@ describe Shield::Api::BearerLogins::Verify do
     client = ApiClient.new
     client.api_auth(user, password)
 
-    response = client.exec(Api::BearerLogins::Verify, token: credentials)
+    response = client.exec(Api::BearerLogins::Token::Verify, token: credentials)
 
     response.should send_json(200, active: true)
   end
@@ -29,14 +29,18 @@ describe Shield::Api::BearerLogins::Verify do
     client = ApiClient.new
     client.api_auth(user, password)
 
-    response = client.exec(Api::BearerLogins::Verify, token: credentials)
+    response = client.exec(Api::BearerLogins::Token::Verify, token: credentials)
     response.should send_json(200, active: false)
   end
 
   it "requires logged in" do
     credentials = BearerLoginCredentials.new("abcdef", 1)
 
-    response = ApiClient.exec(Api::BearerLogins::Verify, token: credentials)
+    response = ApiClient.exec(
+      Api::BearerLogins::Token::Verify,
+      token: credentials
+    )
+
     response.should send_json(401, logged_in: false)
   end
 end

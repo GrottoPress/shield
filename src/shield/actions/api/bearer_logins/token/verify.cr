@@ -3,12 +3,12 @@
 #
 # NOTE: This is for user-generated bearer tokens. If doing OAuth,
 #       use `Shield::Api::Oauth::Token::Verify` instead
-module Shield::Api::BearerLogins::Verify
+module Shield::Api::BearerLogins::Token::Verify
   macro included
     skip :require_logged_out
     skip :check_authorization
 
-    # post "/bearer-logins/verify" do
+    # post "/bearer-logins/token/verify" do
     #   run_operation
     # end
 

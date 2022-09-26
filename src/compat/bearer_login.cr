@@ -1,3 +1,12 @@
+module Shield::Api::BearerLogins::Verify
+  macro included
+    {% puts "Warning: Deprecated `Shield::Api::BearerLogins::Verify`. \
+      Use `Shield::Api::BearerLogins::Token::Verify` instead" %}
+
+    include Shield::Api::BearerLogins::Token::Verify
+  end
+end
+
 module Shield::LoginHelpers
   macro included
     @[Deprecated("Use `#current_user_or_bearer` instead")]
