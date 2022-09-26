@@ -42,15 +42,15 @@ describe Shield::RevokeOauthAccessToken do
   end
 
   it "ensures token is an access token" do
-    raw_token = "a1b2c3"
+    token = "a1b2c3"
 
     user = UserFactory.create
     bearer_login = BearerLoginFactory.create &.user_id(user.id)
 
-    token = BearerLoginCredentials.new(raw_token, bearer_login.id)
+    access_token = BearerLoginCredentials.new(token, bearer_login.id)
 
     RevokeOauthAccessToken.run(
-      params(token: token),
+      params(token: access_token),
       oauth_client: nil
     ) do |operation, _token|
       operation.valid?.should be_false
