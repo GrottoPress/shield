@@ -1,6 +1,6 @@
-require "../../../../spec_helper"
+require "../../../../../spec_helper"
 
-describe Shield::Api::PasswordResets::Verify do
+describe Shield::Api::PasswordResets::Token::Verify do
   it "verifies password reset" do
     email = "user@example.tld"
 
@@ -13,7 +13,11 @@ describe Shield::Api::PasswordResets::Verify do
       password_reset = password_reset.not_nil!
 
       token = PasswordResetCredentials.new(operation, password_reset)
-      response = ApiClient.exec(Api::PasswordResets::Verify, token: token)
+
+      response = ApiClient.exec(
+        Api::PasswordResets::Token::Verify,
+        token: token
+      )
 
       response.should send_json(200, {
         message: "action.password_reset.verify.success"
@@ -24,7 +28,7 @@ describe Shield::Api::PasswordResets::Verify do
   it "rejects invalid password reset token" do
     token = PasswordResetCredentials.new("abcdef", 1)
 
-    response = ApiClient.exec(Api::PasswordResets::Verify, token: token)
+    response = ApiClient.exec(Api::PasswordResets::Token::Verify, token: token)
     response.should send_json(200, {status: "failure"})
   end
 end

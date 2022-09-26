@@ -1,4 +1,4 @@
-module Shield::Api::PasswordResets::Verify
+module Shield::Api::PasswordResets::Token::Verify
   macro included
     skip :require_logged_in
     skip :require_logged_out
@@ -6,7 +6,7 @@ module Shield::Api::PasswordResets::Verify
 
     before :pin_password_reset_to_ip_address
 
-    # post "/password-resets/verify" do
+    # post "/password-resets/token/verify" do
     #   run_operation
     # end
 

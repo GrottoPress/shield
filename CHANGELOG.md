@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Change reponse for `Shield::Api::BearerLogins::Verify` to [RFC 7662](https://datatracker.ietf.org/doc/html/rfc7662) format
 - Change successful token revocation response to `{"active": false}`
 - Rename `Shield::Api::EmailConfirmations::Verify` to `Shield::Api::EmailConfirmations::Token::Verify`
+- Rename `Shield::Api::PasswordResets::Verify` to `Shield::Api::PasswordResets::Token::Verify`
 
 ### Removed
 - Remove `Shield::Api::OauthPermissions::Delete` action

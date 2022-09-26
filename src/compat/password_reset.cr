@@ -1,3 +1,12 @@
+module Shield::Api::PasswordResets::Verify
+  macro included
+    {% puts "Warning: Deprecated `Shield::Api::PasswordResets::Verify`. \
+      Use `Shield::Api::PasswordResets::Token::Verify` instead" %}
+
+    include Shield::Api::PasswordResets::Token::Verify
+  end
+end
+
 module Shield::PasswordResetHelpers
   macro included
     @[Deprecated("Redirect to `PasswordResetCredentials#url` instead")]
