@@ -7,6 +7,15 @@ module Shield::Api::EmailConfirmations::Edit
   end
 end
 
+module Shield::Api::EmailConfirmations::Verify
+  macro included
+    {% puts "Warning: Deprecated `Shield::Api::EmailConfirmations::Verify`. \
+      Use `Shield::Api::EmailConfirmations::Token::Verify` instead" %}
+
+    include Shield::Api::EmailConfirmations::Token::Verify
+  end
+end
+
 module Shield::EmailConfirmations::Edit
   macro included
     {% puts "Warning: Deprecated `Shield::EmailConfirmations::Edit`. \

@@ -1,6 +1,6 @@
-require "../../../../spec_helper"
+require "../../../../../spec_helper"
 
-describe Shield::Api::EmailConfirmations::Verify do
+describe Shield::Api::EmailConfirmations::Token::Verify do
   it "verifies email confirmation" do
     email = "user@example.tld"
     new_email = "user@domain.net"
@@ -17,7 +17,11 @@ describe Shield::Api::EmailConfirmations::Verify do
       email_confirmation = email_confirmation.not_nil!
 
       token = EmailConfirmationCredentials.new(operation, email_confirmation)
-      response = ApiClient.exec(Api::EmailConfirmations::Verify, token: token)
+
+      response = ApiClient.exec(
+        Api::EmailConfirmations::Token::Verify,
+        token: token
+      )
 
       response.should send_json(200, {
         message: "action.email_confirmation.verify.success"
@@ -34,7 +38,7 @@ describe Shield::Api::EmailConfirmations::Verify do
     client = ApiClient.new
     client.api_auth(email, password)
 
-    response = client.exec(Api::EmailConfirmations::Verify, token: token)
+    response = client.exec(Api::EmailConfirmations::Token::Verify, token: token)
 
     response.should send_json(200, {status: "failure"})
   end

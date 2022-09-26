@@ -1,4 +1,4 @@
-module Shield::Api::EmailConfirmations::Verify
+module Shield::Api::EmailConfirmations::Token::Verify
   macro included
     skip :require_logged_in
     skip :require_logged_out
@@ -6,7 +6,7 @@ module Shield::Api::EmailConfirmations::Verify
 
     before :pin_email_confirmation_to_ip_address
 
-    # post "/email-confirmations/verify" do
+    # post "/email-confirmations/token/verify" do
     #   run_operation
     # end
 
