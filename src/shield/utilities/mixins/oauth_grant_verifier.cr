@@ -4,7 +4,7 @@ module Shield::OauthGrantVerifier
 
     def verify!(
       oauth_client : OauthClient,
-      oauth_grant_type : OauthGrantType,
+      oauth_grant_type : OauthGrantType | String,
       code_verifier : String? = nil
     )
       verify(oauth_client, oauth_grant_type, code_verifier).not_nil!
@@ -12,7 +12,7 @@ module Shield::OauthGrantVerifier
 
     def verify(
       oauth_client : OauthClient,
-      oauth_grant_type : OauthGrantType,
+      oauth_grant_type : OauthGrantType | String,
       code_verifier : String? = nil
     )
       yield self, verify(oauth_client, oauth_grant_type, code_verifier)
@@ -20,7 +20,7 @@ module Shield::OauthGrantVerifier
 
     def verify(
       oauth_client : OauthClient,
-      oauth_grant_type : OauthGrantType,
+      oauth_grant_type : OauthGrantType | String,
       code_verifier : String? = nil
     ) : OauthGrant?
       oauth_grant? if verify?(oauth_client, oauth_grant_type, code_verifier)
@@ -28,7 +28,7 @@ module Shield::OauthGrantVerifier
 
     def verify?(
       oauth_client : OauthClient,
-      oauth_grant_type : OauthGrantType,
+      oauth_grant_type : OauthGrantType | String,
       code_verifier : String? = nil
     ) : Bool?
       return unless oauth_grant_id? && oauth_grant_code?
@@ -37,7 +37,7 @@ module Shield::OauthGrantVerifier
       if (!code_verifier || verify_pkce?(code_verifier)) &&
         oauth_grant?.try(&.status.active?) &&
         oauth_grant.oauth_client_id == oauth_client.id &&
-        oauth_grant.type == oauth_grant_type
+        oauth_grant.type.to_s == oauth_grant_type.to_s
 
         sha256.verify?(oauth_grant.code_digest)
       else
