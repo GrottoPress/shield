@@ -53,7 +53,7 @@ module Shield::RevokeOauthAccessToken
     private def revoke_oauth_permission
       @bearer_login.try do |bearer_login|
         bearer_login.oauth_client.try do |client|
-          RevokeOauthPermission.update!(client, user: bearer_login.user!)
+          RevokeOauthPermission.update!(client, user: bearer_login.user)
         end
       end
 
