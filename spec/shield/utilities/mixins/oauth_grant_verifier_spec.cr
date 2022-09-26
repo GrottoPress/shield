@@ -39,6 +39,22 @@ describe Shield::OauthGrantVerifier do
         .should(be_a OauthGrant)
 
       OauthGrantParams.new(code)
+        .verify(oauth_client, code_verifier: code_verifier)
+        .should(be_a OauthGrant)
+
+      OauthGrantParams.new(code)
+        .verify(grant_type, code_verifier)
+        .should(be_a OauthGrant)
+
+      OauthGrantParams.new(code).verify(oauth_client).should(be_a OauthGrant)
+      OauthGrantParams.new(code).verify(grant_type).should(be_a OauthGrant)
+
+      OauthGrantParams.new(code).verify(code_verifier: code_verifier)
+        .should(be_a OauthGrant)
+
+      OauthGrantParams.new(code).verify.should(be_a OauthGrant)
+
+      OauthGrantParams.new(code)
         .verify(oauth_client_2, grant_type, code_verifier)
         .should(be_nil)
 
@@ -47,11 +63,19 @@ describe Shield::OauthGrantVerifier do
         .should(be_nil)
 
       OauthGrantParams.new(code)
+        .verify(oauth_client_2, code_verifier: code_verifier)
+        .should(be_nil)
+
+      OauthGrantParams.new(code)
         .verify(oauth_client, grant_type_2, code_verifier)
         .should(be_nil)
 
       OauthGrantParams.new(code)
         .verify(oauth_client, grant_type_2)
+        .should(be_nil)
+
+      OauthGrantParams.new(code)
+        .verify(grant_type_2, code_verifier)
         .should(be_nil)
 
       OauthGrantParams.new(code)
@@ -65,6 +89,23 @@ describe Shield::OauthGrantVerifier do
       OauthGrantParams.new(code_2)
         .verify(oauth_client, grant_type)
         .should(be_nil)
+
+      OauthGrantParams.new(code_2)
+        .verify(oauth_client, code_verifier: code_verifier)
+        .should(be_nil)
+
+      OauthGrantParams.new(code_2)
+        .verify(grant_type, code_verifier)
+        .should(be_nil)
+
+      OauthGrantParams.new(code_2).verify(oauth_client).should(be_nil)
+      OauthGrantParams.new(code_2).verify(grant_type).should(be_nil)
+
+      OauthGrantParams.new(code_2)
+        .verify(code_verifier: code_verifier)
+        .should(be_nil)
+
+      OauthGrantParams.new(code_2).verify.should(be_nil)
     end
   end
 end
