@@ -10,7 +10,7 @@ module Shield::Api::Oauth::Token::Delete
 
     def run_operation
       DeleteOauthAccessToken.run(
-        token: params.get?(:token).to_s,
+        token: token.to_s,
         oauth_client: oauth_client?
       ) do |operation, token|
         if token

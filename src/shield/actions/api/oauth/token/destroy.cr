@@ -14,7 +14,7 @@ module Shield::Api::Oauth::Token::Destroy
 
     def run_operation
       RevokeOauthAccessToken.run(
-        token: params.get?(:token).to_s,
+        token: token.to_s,
         oauth_client: oauth_client?
       ) do |operation, token|
         if token
@@ -47,6 +47,10 @@ module Shield::Api::Oauth::Token::Destroy
       else
         params.get?(:client_secret)
       end
+    end
+
+    def token : String?
+      params.get?(:token)
     end
   end
 end
