@@ -4,6 +4,7 @@ describe Shield::BearerLoginVerifier do
   describe "#verify" do
     it "verifies bearer login" do
       scope = BearerScope.new(Api::Posts::Index).to_s
+      scope_2 = BearerScope.new(Api::CurrentUser::Show)
       token = "a1b2c3"
 
       developer = UserFactory.create
@@ -34,10 +35,11 @@ describe Shield::BearerLoginVerifier do
       BearerLoginHeaders.new(headers).verify(oauth_client_2, scope)
         .should(be_nil)
 
-      BearerLoginHeaders.new(headers).verify(oauth_client, "api").should(be_nil)
+      BearerLoginHeaders.new(headers).verify(oauth_client, scope_2)
+        .should(be_nil)
 
       BearerLoginHeaders.new(headers).verify(oauth_client_2).should(be_nil)
-      BearerLoginHeaders.new(headers).verify("api").should(be_nil)
+      BearerLoginHeaders.new(headers).verify(scope_2).should(be_nil)
 
       BearerLoginHeaders.new(headers_2).verify(oauth_client, scope)
         .should(be_nil)

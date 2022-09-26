@@ -2,24 +2,24 @@ module Shield::BearerLoginVerifier
   macro included
     include Shield::Verifier
 
-    def verify!(scope : String? = nil)
+    def verify!(scope : Shield::BearerScope | String | Nil = nil)
       verify(scope).not_nil!
     end
 
-    def verify(scope : String? = nil)
+    def verify(scope : Shield::BearerScope | String | Nil = nil)
       yield self, verify(scope)
     end
 
-    def verify(scope : String? = nil) : BearerLogin?
+    def verify(scope : Shield::BearerScope | String | Nil = nil) : BearerLogin?
       bearer_login? if verify?(scope)
     end
 
-    def verify?(scope : String? = nil) : Bool?
+    def verify?(scope : Shield::BearerScope | String | Nil = nil) : Bool?
       return unless bearer_login_id? && bearer_login_token?
       sha256 = Sha256Hash.new(bearer_login_token)
 
       if bearer_login?.try(&.status.active?) &&
-        (!scope || bearer_login.scopes.includes?(scope))
+        (!scope || bearer_login.scopes.includes?(scope.to_s))
 
         sha256.verify?(bearer_login.token_digest)
       else
