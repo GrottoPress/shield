@@ -67,6 +67,14 @@ class CreateOauthAccessTokenFromGrant < BearerLogin::SaveOperation
   include Shield::CreateOauthAccessTokenFromGrant
 end
 
+class RevokeOauthToken < Avram::Operation
+  include Shield::RevokeOauthRefreshToken
+end
+
+class DeleteOauthToken < Avram::Operation
+  include Shield::DeleteOauthRefreshToken
+end
+
 struct OauthStateSession
   include Shield::OauthStateSession
 end

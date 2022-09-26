@@ -28,6 +28,34 @@ describe Shield::Api::Oauth::Token::Delete do
     BearerLoginQuery.new.id(bearer_login.id).any?.should be_false
   end
 
+  it "deletes refresh token" do
+    token = "a1b2c3"
+
+    developer = UserFactory.create
+    resource_owner = UserFactory.create &.email("resource@owner.com")
+    oauth_client = OauthClientFactory.create &.user_id(developer.id)
+
+    oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+      .oauth_client_id(oauth_client.id)
+      .type(OauthGrantType::REFRESH_TOKEN)
+      .code(token)
+
+    refresh_token = OauthGrantCredentials.new(token, oauth_grant.id)
+
+    client = ApiClient.new
+
+    response = client.exec(
+      Api::Oauth::Token::Delete,
+      token: refresh_token,
+      client_id: oauth_client.id
+    )
+
+    response.should send_json(200, {active: false})
+
+    # ameba:disable Performance/AnyInsteadOfEmpty
+    BearerLoginQuery.new.id(oauth_grant.id).any?.should be_false
+  end
+
   it "verifies secret for confidential OAuth clients" do
     token = "a1b2c3"
 

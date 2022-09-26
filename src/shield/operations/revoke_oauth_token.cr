@@ -1,20 +1,21 @@
-module Shield::RevokeOauthAccessToken
+module Shield::RevokeOauthToken
   macro included
     @bearer_login : BearerLogin?
 
     getter? client_authorized : Bool = true
 
-    param_key :bearer_login
+    param_key :oauth
 
-    needs oauth_client : OauthClient?
+    needs oauth_client : OauthClient
 
     attribute token : String
 
     before_run do
       set_bearer_login
+
       validate_token_required
       validate_client_id_required
-      validate_oauth_client_authorized
+      validate_client_authorized
     end
 
     def run
@@ -39,14 +40,12 @@ module Shield::RevokeOauthAccessToken
       end
     end
 
-    private def validate_oauth_client_authorized
+    private def validate_client_authorized
       @bearer_login.try do |bearer_login|
-        oauth_client.try do |client|
-          return if client.id == bearer_login.oauth_client_id
+        return if oauth_client.id == bearer_login.oauth_client_id
 
-          @client_authorized = false
-          token.add_error Rex.t(:"operation.error.oauth_client_not_authorized")
-        end
+        @client_authorized = false
+        token.add_error Rex.t(:"operation.error.oauth_client_not_authorized")
       end
     end
 

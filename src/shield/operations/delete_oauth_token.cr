@@ -1,6 +1,6 @@
-module Shield::DeleteOauthAccessToken
+module Shield::DeleteOauthToken
   macro included
-    include Shield::RevokeOauthAccessToken
+    include Shield::RevokeOauthToken
 
     private def revoke_oauth_permission
       @bearer_login.try do |bearer_login|

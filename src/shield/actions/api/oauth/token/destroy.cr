@@ -13,9 +13,9 @@ module Shield::Api::Oauth::Token::Destroy
     # end
 
     def run_operation
-      RevokeOauthAccessToken.run(
+      RevokeOauthToken.run(
         token: token.to_s,
-        oauth_client: oauth_client?
+        oauth_client: oauth_client
       ) do |operation, token|
         if token
           do_run_operation_succeeded(operation, token.not_nil!)

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - 
 
 ### Added
+- Add support for OAuth refresh token revocation
 - Add `Shield::Api::CurrentUser::OauthPermissions::Delete` action
 - Add `Shield::Api::CurrentUser::OauthPermissions::Destroy` action
 - Add `Shield::Api::Users::OauthPermissions::Delete` action
