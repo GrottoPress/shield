@@ -13,7 +13,7 @@ module Shield::OauthAccessTokenVerifier
     end
 
     def verify?(oauth_client : OauthClient, scope : String? = nil) : Bool?
-      bearer_login.oauth_client_id == oauth_client.id if verify?(scope)
+      verify?(scope) && bearer_login.oauth_client_id == oauth_client.id
     end
   end
 end
