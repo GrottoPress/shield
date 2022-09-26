@@ -3,32 +3,32 @@ module Shield::OauthGrantVerifier
     include Shield::Verifier
 
     def verify!(
-      oauth_client : OauthClient,
-      oauth_grant_type : OauthGrantType | String,
+      oauth_client : Shield::OauthClient,
+      oauth_grant_type : Shield::OauthGrantType | String,
       code_verifier : String? = nil
     )
       verify(oauth_client, oauth_grant_type, code_verifier).not_nil!
     end
 
     def verify(
-      oauth_client : OauthClient,
-      oauth_grant_type : OauthGrantType | String,
+      oauth_client : Shield::OauthClient,
+      oauth_grant_type : Shield::OauthGrantType | String,
       code_verifier : String? = nil
     )
       yield self, verify(oauth_client, oauth_grant_type, code_verifier)
     end
 
     def verify(
-      oauth_client : OauthClient,
-      oauth_grant_type : OauthGrantType | String,
+      oauth_client : Shield::OauthClient,
+      oauth_grant_type : Shield::OauthGrantType | String,
       code_verifier : String? = nil
     ) : OauthGrant?
       oauth_grant? if verify?(oauth_client, oauth_grant_type, code_verifier)
     end
 
     def verify?(
-      oauth_client : OauthClient,
-      oauth_grant_type : OauthGrantType | String,
+      oauth_client : Shield::OauthClient,
+      oauth_grant_type : Shield::OauthGrantType | String,
       code_verifier : String? = nil
     ) : Bool?
       return unless oauth_grant_id? && oauth_grant_code?
