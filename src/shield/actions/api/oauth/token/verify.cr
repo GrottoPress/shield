@@ -1,5 +1,9 @@
 # The Token Introspection endpoint
 # See https://datatracker.ietf.org/doc/html/rfc7662
+#
+# NOTE:
+#  *Shield* does not support refresh token introspection. It may
+#   be added in the future, if a good use case comes up.
 module Shield::Api::Oauth::Token::Verify
   macro included
     include Shield::Api::Oauth::Token::Pipes
