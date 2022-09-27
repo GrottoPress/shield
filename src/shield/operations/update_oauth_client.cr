@@ -1,6 +1,6 @@
 module Shield::UpdateOauthClient
   macro included
-    permit_columns :name
+    permit_columns :name, :redirect_uri
 
     before_save do
       validate_status_active
