@@ -45,8 +45,11 @@ module Shield::Api::Oauth::Authorization::Create
     end
 
     def do_run_operation_failed(operation)
+      error = operation.granted.value ? "invalid_request" : "access_denied"
+
       json({
-        error: operation.granted.value ? "invalid_request" : "access_denied",
+        error: error,
+        redirect_to: oauth_redirect_uri(error: error, state: state).to_s,
         state: state,
       })
     end
