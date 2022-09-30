@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Rename `Shield::Api::EmailConfirmations::Verify` to `Shield::Api::EmailConfirmations::Token::Verify`
 - Rename `Shield::Api::PasswordResets::Verify` to `Shield::Api::PasswordResets::Token::Verify`
 - Allow `OauthClient#redirect_uri` column to be updated
+- Accept unnested params for `Api::Oauth::Authorization::Create`
 
 ### Removed
 - Remove `Shield::Api::OauthPermissions::Delete` action

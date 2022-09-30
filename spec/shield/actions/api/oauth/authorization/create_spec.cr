@@ -17,14 +17,11 @@ describe Shield::Api::Oauth::Authorization::Create do
 
     response = client.exec(
       Api::Oauth::Authorization::Create,
-      oauth_grant: {
-        granted: true,
-        code_challenge: "a1b2c3",
-        code_challenge_method: "plain",
-        scopes: [BearerScope.new(Api::Posts::Index).to_s],
-        oauth_client_id: oauth_client.id,
-        user_id: resource_owner.id,
-      }
+      granted: "true",
+      code_challenge: "a1b2c3",
+      code_challenge_method: "plain",
+      scope: BearerScope.new(Api::Posts::Index).to_s,
+      client_id: oauth_client.id,
     )
 
     response.should send_json(200)
@@ -34,12 +31,11 @@ describe Shield::Api::Oauth::Authorization::Create do
     response = ApiClient.exec(
       Api::Oauth::Authorization::Create,
       oauth_grant: {
-        granted: true,
+        granted: "true",
         code_challenge: "a1b2c3",
         code_challenge_method: "plain",
-        scopes: [BearerScope.new(Api::Posts::Index).to_s],
+        scope: BearerScope.new(Api::Posts::Index).to_s,
         oauth_client_id: 5,
-        user_id: 4,
       }
     )
 

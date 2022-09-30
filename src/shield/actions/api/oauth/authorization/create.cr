@@ -19,7 +19,12 @@ module Shield::Api::Oauth::Authorization::Create
 
     def run_operation
       StartOauthGrant.create(
-        params,
+        code_challenge: code_challenge.to_s,
+        code_challenge_method: code_challenge_method,
+        granted: granted,
+        redirect_uri: redirect_uri.to_s,
+        response_type: response_type.to_s,
+        state: state.to_s,
         scopes: scopes,
         type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE),
         oauth_client: oauth_client?,
@@ -59,39 +64,40 @@ module Shield::Api::Oauth::Authorization::Create
     end
 
     def client_id : String?
-      nested_param?(:oauth_client_id)
+      params.get?(:client_id)
     end
 
     def code_challenge : String?
-      nested_param?(:code_challenge)
+      params.get?(:code_challenge)
     end
 
     def code_challenge_method : String
-      nested_param?(:code_challenge_method) || OauthGrantPkce::METHOD_PLAIN
+      params.get?(:code_challenge_method) || OauthGrantPkce::METHOD_PLAIN
+    end
+
+    def granted : Bool
+      value = Bool.adapter.parse(params.get? :granted).value
+      value.nil? ? false : value
     end
 
     def redirect_uri : String?
-      nested_param?(:redirect_uri)
+      params.get?(:redirect_uri)
     end
 
     def response_type : String?
-      nested_param?(:response_type)
+      params.get?(:response_type)
+    end
+
+    def scope : String?
+      params.get?(:scope)
     end
 
     def scopes : Array(String)
-      array_param(StartOauthGrant.param_key, :scopes)
+      scope.try(&.split) || Array(String).new
     end
 
     def state : String?
-      nested_param?(:state)
-    end
-
-    def scope : String
-      scopes.join(' ')
-    end
-
-    private def nested_param?(param)
-      params.nested?(StartOauthGrant.param_key)[param.to_s]?
+      params.get?(:state)
     end
   end
 end
