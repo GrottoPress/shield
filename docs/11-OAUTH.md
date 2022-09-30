@@ -712,6 +712,60 @@ PKCE is required for public clients using the Authorization Code Grant flow.
    - `scopes : Array(String)`
    - `state : String`
 
+   Example form in Lucky HTML:
+
+   ```crystal
+   # ->>> src/pages/oauth/authorization/new_page.cr
+
+   struct Oauth::Authorization::NewPage < AuthLayout
+     # ...
+
+     def content
+       # ...
+
+       form_for Create do
+         mount Shared::Field, operation.code_challenge do |builder|
+           builder.hidden_input
+         end
+
+         mount Shared::Field, operation.code_challenge_method do |builder|
+           builder.hidden_input
+         end
+
+         mount Shared::Field, operation.redirect_uri do |builder|
+           builder.hidden_input
+         end
+
+         mount Shared::Field, operation.response_type do |builder|
+           builder.hidden_input
+         end
+
+         operation.scopes.value.try do |scopes|
+           scopes.each do |scope|
+             input type: "hidden", name: "oauth_grant:scopes[]" value: "scope"
+           end
+         end
+
+         mount Shared::Field, operation.state do |builder|
+           builder.hidden_input
+         end
+
+         para do
+           button type: "submit", name: "oauth_grant:granted", value: "false" do
+             text "Deny"
+           end
+
+           button type: "submit", name: "oauth_grant:granted", value: "true" do
+             text "Allow"
+           end
+         end
+       end
+     end
+
+     # ...
+   end
+   ```
+
    The page should explain carefully what permissions the client is requesting from the user, to enable the user decide on whether to grant or deny the request.
 
    See <https://www.oauth.com/oauth2-servers/authorization/the-authorization-interface/>.
