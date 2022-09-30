@@ -23,7 +23,6 @@ describe Shield::Oauth::Authorization::Create do
         code_challenge_method: "plain",
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
         oauth_client_id: oauth_client.id,
-        user_id: resource_owner.id,
       }
     )
 
@@ -40,7 +39,6 @@ describe Shield::Oauth::Authorization::Create do
         code_challenge_method: "plain",
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
         oauth_client_id: 5,
-        user_id: 4,
       }
     )
 
