@@ -704,13 +704,12 @@ PKCE is required for public clients using the Authorization Code Grant flow.
 
    The form should be `POST`ed to `Oauth::Authorization::Create`, with the following **nested** parameters, preferrably as hidden input fields with allow/deny button(s):
 
-   - `client_id : String`
    - `code_challenge : String?` (Required for public clients)
    - `code_challenge_method : String?` (Required for public clients)
    - `granted : Bool`
    - `redirect_uri : String`
    - `response_type : String`
-   - `scope : String`
+   - `scopes : Array(String)`
    - `state : String`
 
    The page should explain carefully what permissions the client is requesting from the user, to enable the user decide on whether to grant or deny the request.
