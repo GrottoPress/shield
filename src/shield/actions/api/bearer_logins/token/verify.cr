@@ -27,6 +27,7 @@ module Shield::Api::BearerLogins::Token::Verify
         active: true,
         exp: bearer_login.inactive_at.try(&.to_unix),
         iat: bearer_login.active_at.to_unix,
+        iss: Lucky::RouteHelper.settings.base_uri,
         jti: bearer_login.id.to_s,
         scope: bearer_login.scopes.join(' '),
         sub: bearer_login.user_id.to_s,
