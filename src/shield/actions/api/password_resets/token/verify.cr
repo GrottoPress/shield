@@ -1,6 +1,5 @@
 module Shield::Api::PasswordResets::Token::Verify
   macro included
-    skip :require_logged_in
     skip :require_logged_out
     skip :check_authorization
 

@@ -2,33 +2,53 @@ require "../../../../../spec_helper"
 
 describe Shield::Api::PasswordResets::Token::Verify do
   it "verifies password reset" do
-    email = "user@example.tld"
+    password = "password4APASSWORD<"
+    token = "a1b2c3"
 
-    UserFactory.create &.email(email)
+    user = UserFactory.create &.password(password)
+    UserOptionsFactory.create &.user_id(user.id)
+    password_reset = PasswordResetFactory.create &.user_id(user.id).token(token)
 
-    StartPasswordReset.create(
-      params(email: email),
-      remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
-    ) do |operation, password_reset|
-      password_reset = password_reset.not_nil!
+    credentials = PasswordResetCredentials.new(token, password_reset.id)
 
-      token = PasswordResetCredentials.new(operation, password_reset)
+    client = ApiClient.new
+    client.api_auth(user, password)
 
-      response = ApiClient.exec(
-        Api::PasswordResets::Token::Verify,
-        token: token
-      )
+    response = client.exec(
+      Api::PasswordResets::Token::Verify,
+      token: credentials
+    )
 
-      response.should send_json(200, {
-        message: "action.password_reset.verify.success"
-      })
-    end
+    response.should send_json(200, {
+      message: "action.password_reset.verify.success"
+    })
   end
 
   it "rejects invalid password reset token" do
-    token = PasswordResetCredentials.new("abcdef", 1)
+    email = "user@domain.tld"
+    password = "password4APASSWORD<"
 
-    response = ApiClient.exec(Api::PasswordResets::Token::Verify, token: token)
+    credentials = PasswordResetCredentials.new("abcdef", 1)
+
+    client = ApiClient.new
+    client.api_auth(email, password)
+
+    response = client.exec(
+      Api::PasswordResets::Token::Verify,
+      token: credentials
+    )
+
     response.should send_json(200, {status: "failure"})
+  end
+
+  it "requires logged in" do
+    credentials = PasswordResetCredentials.new("abcdef", 1)
+
+    response = ApiClient.exec(
+      Api::PasswordResets::Token::Verify,
+      token: credentials
+    )
+
+    response.should send_json(401, logged_in: false)
   end
 end
