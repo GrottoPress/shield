@@ -75,6 +75,10 @@ struct LoginHeaders
   include Shield::LoginHeaders
 end
 
+struct LoginParams
+  include Shield::LoginParams
+end
+
 struct LoginIdleTimeoutSession
   include Shield::LoginIdleTimeoutSession
 end
