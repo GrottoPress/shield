@@ -179,6 +179,16 @@
 1. Set up actions:
 
    ```crystal
+   abstract class BrowserAction < Lucky::Action
+     # ...
+     include Shield::LoginHelpers
+     include Shield::LoginPipes
+     # ...
+   end
+   ```
+
+   ---
+   ```crystal
    # ->>> src/actions/browser_action.cr
 
    abstract class BrowserAction < Lucky::Action

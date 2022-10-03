@@ -223,15 +223,31 @@ This token is revoked when the user logs out.
 
    ```crystal
    abstract class ApiAction < Lucky::Action
+     # ...
+     include Shield::ApiAction
+
+     #include Shield::Api::EmailConfirmationHelpers
+     #include Shield::Api::EmailConfirmationPipes
+
+     #include Shield::Api::PasswordResetHelpers
+     #include Shield::Api::PasswordResetPipes
+
+     #include Shield::Api::LoginHelpers
+     #include Shield::Api::LoginPipes
+
+     include Shield::Api::BearerLoginHelpers
+
      # IMPORTANT!:
      #   This module reduces `Shield::Api::LoginPipes` from an authentication
      #   pipe to a delegated authorization pipe. Once included, bearer tokens
      #   retrieved from the `Authorization` header MUST NOT be used as proof
      #   of authentication.
      #include Shield::Api::BearerLoginPipes
+     # ...
    end
    ```
 
+   ---
    ```crystal
    # ->>> src/actions/api_action.cr
 

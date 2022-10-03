@@ -40,3 +40,14 @@
      # ...
    end
    ```
+
+   ---
+   ```crystal
+   # ->>> src/actions/browser_action.cr
+
+   abstract class BrowserAction < Lucky::Action
+     # ...
+     include Shield::BrowserAction
+     # ...
+   end
+   ```
