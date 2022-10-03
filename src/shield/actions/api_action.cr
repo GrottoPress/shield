@@ -3,6 +3,8 @@ module Shield::ApiAction
     include Lucky::Paginator::BackendHelpers
     include Lucille::ActionHelpers
 
+    include Lucille::ActionHelpers
+
     include Shield::ActionHelpers
     include Shield::ActionPipes
   end
