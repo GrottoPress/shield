@@ -124,16 +124,10 @@ module Shield::Api::Oauth::Token::Pipes
     # present client credentials, because the `#oauth_validate_client_secret`
     # pipe skips validation for public clients.
     def oauth_maybe_require_logged_in
-      if !oauth_client?
-        continue
-      elsif oauth_client.public? # <= IMPORTANT!
+      if !oauth_client? || oauth_client.public? # <= IMPORTANT!
         oauth_require_logged_in
-      elsif OauthClientCredentials.from_headers?(request) ||
-        OauthClientCredentials.from_params?(params)
-
-        oauth_validate_client_secret
       else
-        oauth_require_logged_in
+        oauth_validate_client_secret
       end
     end
 

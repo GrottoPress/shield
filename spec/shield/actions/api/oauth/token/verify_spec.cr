@@ -90,6 +90,35 @@ describe Shield::Api::Oauth::Token::Verify do
     response.should send_json(200, {active: false})
   end
 
+  it "requires authentication" do
+    scope_to_check = BearerScope.new(Api::CurrentUser::Show).to_s
+    raw_access_token = "d4e5f6"
+
+    resource_owner = UserFactory.create &.email("resource@owner.com")
+    UserOptionsFactory.create &.user_id(resource_owner.id)
+
+    developer = UserFactory.create &.email("dev@app.com")
+    oauth_client = OauthClientFactory.create &.user_id(developer.id)
+
+    bearer_login = BearerLoginFactory.create &.user_id(resource_owner.id)
+      .token(raw_access_token)
+      .oauth_client_id(oauth_client.id)
+      .scopes([scope_to_check])
+
+    access_token = BearerLoginCredentials.new(
+      raw_access_token,
+      bearer_login.id
+    )
+
+    response = ApiClient.exec(
+      Api::Oauth::Token::Verify,
+      token: access_token,
+      scope: scope_to_check
+    )
+
+    response.should send_json(401, logged_in: false)
+  end
+
   context "public clients" do
     it "rejects client credentials if presented" do
       raw_access_token = "d4e5f6"

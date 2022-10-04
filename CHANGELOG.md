@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Users::OauthPermissions::Destroy` action
 - Add `iss` claim to OAuth token introspection response
 
+### Fixed
+- Fix authentication bypass in `#oauth_maybe_require_logged_in` pipe
+
 ### Changed
 - Change successful token revocation response to `{"active": false}`
 - Rename `Shield::Api::BearerLogins::Verify` to `Shield::Api::BearerLogins::Token::Verify`
