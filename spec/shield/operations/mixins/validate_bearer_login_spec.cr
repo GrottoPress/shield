@@ -178,7 +178,8 @@ describe Shield::ValidateBearerLogin do
     ) do |operation, bearer_login|
       bearer_login.should be_nil
 
-      operation.scopes.should have_error("operation.error.bearer_scopes_empty")
+      operation.scopes
+        .should(have_error "operation.error.bearer_scopes_required")
     end
   end
 

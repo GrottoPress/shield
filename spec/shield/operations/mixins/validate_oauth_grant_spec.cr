@@ -241,7 +241,8 @@ describe Shield::ValidateOauthGrant do
     ) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
-      operation.scopes.should have_error("operation.error.bearer_scopes_empty")
+      operation.scopes
+        .should(have_error "operation.error.bearer_scopes_required")
     end
   end
 

@@ -76,7 +76,7 @@ module Shield::ValidateBearerLogin
     private def validate_scopes_not_empty
       scopes.value.try do |value|
         return unless value.empty?
-        scopes.add_error Rex.t(:"operation.error.bearer_scopes_empty")
+        scopes.add_error Rex.t(:"operation.error.bearer_scopes_required")
       end
     end
 
