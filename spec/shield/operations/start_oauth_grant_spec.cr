@@ -49,78 +49,78 @@ describe Shield::StartOauthGrant do
         operation.code.should_not be_empty
       end
     end
+  end
 
-    context "Client Credentials Grant" do
-      it "starts OAuth grant" do
-        code_challenge = "a1b2c3"
-        code_challenge_method = "plain"
-        grant_type = OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS)
+  context "Client Credentials Grant" do
+    it "starts OAuth grant" do
+      code_challenge = "a1b2c3"
+      code_challenge_method = "plain"
+      grant_type = OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS)
 
-        developer = UserFactory.create
-        resource_owner = UserFactory.create &.email("resource@owner.com")
-        oauth_client = OauthClientFactory.create &.user_id(developer.id)
+      developer = UserFactory.create
+      resource_owner = UserFactory.create &.email("resource@owner.com")
+      oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-        StartOauthGrant.create(
-          params(
-            granted: true,
-            code_challenge: code_challenge,
-            code_challenge_method: code_challenge_method
-          ),
-          scopes: [BearerScope.new(Api::Posts::Index).to_s],
-          type: grant_type,
-          oauth_client: oauth_client,
-          user: resource_owner
-        ) do |operation, oauth_grant|
-          oauth_grant.should be_a(OauthGrant)
+      StartOauthGrant.create(
+        params(
+          granted: true,
+          code_challenge: code_challenge,
+          code_challenge_method: code_challenge_method
+        ),
+        scopes: [BearerScope.new(Api::Posts::Index).to_s],
+        type: grant_type,
+        oauth_client: oauth_client,
+        user: resource_owner
+      ) do |operation, oauth_grant|
+        oauth_grant.should be_a(OauthGrant)
 
-          oauth_grant.try do |_oauth_grant|
-            _oauth_grant.pkce.should be_nil
-            _oauth_grant.user_id.should eq(resource_owner.id)
-            _oauth_grant.oauth_client_id.should eq(oauth_client.id)
-            _oauth_grant.status.active?.should be_true
-            _oauth_grant.inactive_at.should be_nil
-            _oauth_grant.type.should eq(grant_type)
-          end
-
-          operation.code.should_not be_empty
+        oauth_grant.try do |_oauth_grant|
+          _oauth_grant.pkce.should be_nil
+          _oauth_grant.user_id.should eq(resource_owner.id)
+          _oauth_grant.oauth_client_id.should eq(oauth_client.id)
+          _oauth_grant.status.active?.should be_true
+          _oauth_grant.inactive_at.should be_nil
+          _oauth_grant.type.should eq(grant_type)
         end
+
+        operation.code.should_not be_empty
       end
     end
+  end
 
-    context "Refresh Token Grant" do
-      it "starts OAuth grant" do
-        code_challenge = "a1b2c3"
-        code_challenge_method = "plain"
-        grant_type = OauthGrantType.new(OauthGrantType::REFRESH_TOKEN)
+  context "Refresh Token Grant" do
+    it "starts OAuth grant" do
+      code_challenge = "a1b2c3"
+      code_challenge_method = "plain"
+      grant_type = OauthGrantType.new(OauthGrantType::REFRESH_TOKEN)
 
-        developer = UserFactory.create
-        resource_owner = UserFactory.create &.email("resource@owner.com")
-        oauth_client = OauthClientFactory.create &.user_id(developer.id)
+      developer = UserFactory.create
+      resource_owner = UserFactory.create &.email("resource@owner.com")
+      oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-        StartOauthGrant.create(
-          params(
-            granted: true,
-            code_challenge: code_challenge,
-            code_challenge_method: code_challenge_method
-          ),
-          scopes: [BearerScope.new(Api::Posts::Index).to_s],
-          type: grant_type,
-          oauth_client: oauth_client,
-          user: resource_owner
-        ) do |operation, oauth_grant|
-          oauth_grant.should be_a(OauthGrant)
+      StartOauthGrant.create(
+        params(
+          granted: true,
+          code_challenge: code_challenge,
+          code_challenge_method: code_challenge_method
+        ),
+        scopes: [BearerScope.new(Api::Posts::Index).to_s],
+        type: grant_type,
+        oauth_client: oauth_client,
+        user: resource_owner
+      ) do |operation, oauth_grant|
+        oauth_grant.should be_a(OauthGrant)
 
-          oauth_grant.try do |_oauth_grant|
-            _oauth_grant.pkce.should be_nil
-            _oauth_grant.user_id.should eq(resource_owner.id)
-            _oauth_grant.oauth_client_id.should eq(oauth_client.id)
-            _oauth_grant.status.active?.should be_true
-            _oauth_grant.inactive_at.should be_nil
-            _oauth_grant.type.should eq(grant_type)
-          end
-
-          operation.code.should_not be_empty
+        oauth_grant.try do |_oauth_grant|
+          _oauth_grant.pkce.should be_nil
+          _oauth_grant.user_id.should eq(resource_owner.id)
+          _oauth_grant.oauth_client_id.should eq(oauth_client.id)
+          _oauth_grant.status.active?.should be_true
+          _oauth_grant.inactive_at.should be_nil
+          _oauth_grant.type.should eq(grant_type)
         end
+
+        operation.code.should_not be_empty
       end
     end
   end
