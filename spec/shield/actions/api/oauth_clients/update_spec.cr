@@ -25,9 +25,9 @@ describe Shield::Api::OauthClients::Update do
       {message: "action.oauth_client.update.success"}
     )
 
-    oauth_client.reload.tap do |client|
-      client.name.should eq(new_name)
-      client.redirect_uris.should eq([new_redirect_uri])
+    oauth_client.reload.tap do |_oauth_client|
+      _oauth_client.name.should eq(new_name)
+      _oauth_client.redirect_uris.should eq([new_redirect_uri])
     end
   end
 
