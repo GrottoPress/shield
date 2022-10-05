@@ -10,6 +10,6 @@ class OauthClientFactory < Avram::Factory
   private def set_defaults
     active_at Time.utc
     name "Awesome Client"
-    redirect_uri "https://example.com/oauth/callback"
+    redirect_uris ["https://example.com/oauth/callback"]
   end
 end

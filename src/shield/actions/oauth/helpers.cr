@@ -14,11 +14,13 @@ module Shield::Oauth::Helpers
 
     def oauth_redirect_uri?(**params)
       oauth_client?.try do |oauth_client|
-        uri = URI.parse(oauth_client.redirect_uri)
-        query_params = uri.query_params
-        params.each { |name, value| query_params.add(name.to_s, value.to_s) }
-        uri.query_params = query_params
-        uri
+        oauth_client.redirect_uris.find(&.== redirect_uri).try do |_uri|
+          uri = URI.parse(_uri)
+          query_params = uri.query_params
+          params.each { |name, value| query_params.add(name.to_s, value.to_s) }
+          uri.query_params = query_params
+          uri
+        end
       end
     end
 

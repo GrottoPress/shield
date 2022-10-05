@@ -8,14 +8,15 @@ describe Shield::RegisterOauthClient do
     user = UserFactory.create
 
     RegisterOauthClient.create(
-      params(name: name, redirect_uri: redirect_uri, public: false),
+      params(name: name, public: false),
+      redirect_uris: [redirect_uri],
       user: user
     ) do |operation, oauth_client|
       oauth_client.should be_a(OauthClient)
 
       oauth_client.try do |_oauth_client|
         _oauth_client.name.should eq(name)
-        _oauth_client.redirect_uri.should eq(redirect_uri)
+        _oauth_client.redirect_uris.should eq([redirect_uri])
         _oauth_client.status.active?.should be_true
       end
 

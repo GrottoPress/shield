@@ -9,7 +9,8 @@ module Shield::Api::OauthClients::Update
     def run_operation
       UpdateOauthClient.update(
         oauth_client,
-        params
+        params,
+        redirect_uris: redirect_uris_from_params
       ) do |operation, updated_oauth_client|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_oauth_client)
@@ -40,6 +41,10 @@ module Shield::Api::OauthClients::Update
 
     def authorize?(user : Shield::User) : Bool
       super || user.id == oauth_client.user_id
+    end
+
+    private def redirect_uris_from_params
+      array_param(RegisterOauthClient.param_key, :redirect_uris)
     end
   end
 end

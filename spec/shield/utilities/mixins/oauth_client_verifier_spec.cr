@@ -6,11 +6,8 @@ describe Shield::OauthClientVerifier do
       user = UserFactory.create
 
       RegisterOauthClient.create(
-        params(
-          name: "Awesome Client",
-          redirect_uri: "https://example.com/oauth/callback",
-          public: false
-        ),
+        params(name: "Awesome Client", public: false),
+        redirect_uris: ["https://example.com/oauth/callback"],
         user: user
       ) do |operation, oauth_client|
         oauth_client.should be_a(OauthClient)

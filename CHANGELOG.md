@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Allow `OauthClient#redirect_uri` column to be updated
 - Accept unnested params for `Api::Oauth::Authorization::Create`
 - Do not `include Shield::Api::BearerLoginPipes` in `ApiAction` by default
+- Allow setting multiple redirect URIs for OAuth clients
 
 ### Removed
 - Remove `Shield::Api::OauthPermissions::Delete` action

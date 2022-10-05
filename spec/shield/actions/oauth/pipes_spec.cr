@@ -40,7 +40,7 @@ describe Shield::Oauth::Pipes do
         Spec::Oauth::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
-        redirect_uri: oauth_client.redirect_uri,
+        redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "code",
         scope: "api.current_user.show",
         state: "abc123"
@@ -63,7 +63,7 @@ describe Shield::Oauth::Pipes do
         client_id=#{oauth_client.id}&\
         client_id=23&\
         code_challenge=a1b2c3&\
-        redirect_uri=#{oauth_client.redirect_uri}&\
+        redirect_uri=#{oauth_client.redirect_uris.first?}&\
         response_type=code&\
         scope=api.current_user.show&\
         state=abc123"
@@ -105,7 +105,7 @@ describe Shield::Oauth::Pipes do
         Spec::Oauth::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
-        redirect_uri: oauth_client.redirect_uri,
+        redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "code",
         scope: "api.invalid.scope",
         state: "abc123"

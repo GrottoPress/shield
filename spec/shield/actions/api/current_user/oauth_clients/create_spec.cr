@@ -12,7 +12,7 @@ describe Shield::Api::CurrentUser::OauthClients::Create do
       Api::CurrentUser::OauthClients::Create,
       oauth_client: {
         name: "Some Client",
-        redirect_uri: "https://example.co/cb",
+        redirect_uris: ["https://example.co/cb"],
         public: false
       }
     )
@@ -28,7 +28,7 @@ describe Shield::Api::CurrentUser::OauthClients::Create do
       Api::CurrentUser::OauthClients::Create,
       oauth_client: {
         name: "Some Client",
-        redirect_uri: "https://example.co/cb",
+        redirect_uris: ["https://example.co/cb"],
         public: false
       }
     )

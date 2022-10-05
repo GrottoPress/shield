@@ -13,5 +13,10 @@ module Shield::OauthGrant
       return unless type.authorization_code?
       metadata.try { |meta| OauthGrantPkce.new(meta) if meta.code_challenge }
     end
+
+    def redirect_uri : String?
+      return unless type.authorization_code?
+      metadata.try(&.redirect_uri)
+    end
   end
 end

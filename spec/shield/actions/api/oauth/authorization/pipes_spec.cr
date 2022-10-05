@@ -62,7 +62,7 @@ describe Shield::Api::Oauth::Authorization::Pipes do
         Spec::Api::Oauth::Authorization::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
-        redirect_uri: oauth_client.redirect_uri,
+        redirect_uri: oauth_client.redirect_uris.first?,
         scope: "api.current_user.show",
         state: "abc123"
       )
@@ -82,7 +82,7 @@ describe Shield::Api::Oauth::Authorization::Pipes do
         Spec::Api::Oauth::Authorization::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
-        redirect_uri: oauth_client.redirect_uri,
+        redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "code",
         state: "abc123"
       )
@@ -102,7 +102,7 @@ describe Shield::Api::Oauth::Authorization::Pipes do
         Spec::Api::Oauth::Authorization::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
-        redirect_uri: oauth_client.redirect_uri,
+        redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "code",
         scope: "api.current_user.show"
       )
@@ -124,7 +124,7 @@ describe Shield::Api::Oauth::Authorization::Pipes do
         Spec::Api::Oauth::Authorization::Pipes,
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
-        redirect_uri: oauth_client.redirect_uri,
+        redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "token",
         scope: "api.current_user.show",
         state: "abc123"
@@ -146,7 +146,7 @@ describe Shield::Api::Oauth::Authorization::Pipes do
       response = ApiClient.exec(
         Spec::Api::Oauth::Authorization::Pipes,
         client_id: oauth_client.id,
-        redirect_uri: oauth_client.redirect_uri,
+        redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "code",
         scope: "api.current_user.show",
         state: "abc123"
@@ -170,7 +170,7 @@ describe Shield::Api::Oauth::Authorization::Pipes do
         client_id: oauth_client.id,
         code_challenge: "a1b2c3",
         code_challenge_method: "S512",
-        redirect_uri: oauth_client.redirect_uri,
+        redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "code",
         scope: "api.current_user.show",
         state: "abc123"
@@ -185,11 +185,11 @@ describe Shield::Api::Oauth::Authorization::Pipes do
   end
 
   describe "#oauth_validate_redirect_uri" do
-    it "ensures redirect URIs match" do
+    it "requires registered redirect URI" do
       developer = UserFactory.create
 
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
-        .redirect_uri("https://example.com/oauth/callback")
+        .redirect_uris(["https://example.com/oauth/callback"])
 
       response = ApiClient.exec(
         Spec::Api::Oauth::Authorization::Pipes,

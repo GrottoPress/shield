@@ -5,7 +5,7 @@ module Shield::OauthClient
     include Shield::HasManyBearerLogins
 
     column name : String
-    column redirect_uri : String
+    column redirect_uris : Array(String)
     column secret_digest : String?
 
     def confidential? : Bool

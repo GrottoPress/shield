@@ -1,14 +1,17 @@
 module Shield::ValidateOauthClient
   macro included
     before_save do
+      ensure_redirect_uris_unique
+      limit_redirect_uris_count
+
       validate_name_required
       validate_name_unique
       validate_name_valid
       validate_name_allowed
 
-      validate_redirect_uri_required
-      validate_redirect_uri_unique
-      validate_redirect_uri_valid
+      validate_redirect_uris_required
+      validate_redirect_uris_not_empty
+      validate_redirect_uris_valid
 
       validate_user_id_required
       validate_user_exists
@@ -49,38 +52,27 @@ module Shield::ValidateOauthClient
       end
     end
 
-    private def validate_redirect_uri_required
-      validate_required redirect_uri,
-        message: Rex.t(:"operation.error.redirect_uri_required")
+    private def validate_redirect_uris_required
+      validate_required redirect_uris,
+        message: Rex.t(:"operation.error.redirect_uris_required")
     end
 
-    private def validate_redirect_uri_unique
-      return unless redirect_uri.changed? || user_id.changed?
-
-      redirect_uri.value.try do |_redirect_uri|
-        user_id.value.try do |_user_id|
-          if OauthClientQuery.new
-            .user_id(_user_id)
-            .redirect_uri(_redirect_uri)
-            .is_active
-            .any?
-
-            redirect_uri.add_error Rex.t(
-              :"operation.error.redirect_uri_exists",
-              redirect_uri: _redirect_uri
-            )
-          end
-        end
+    private def validate_redirect_uris_not_empty
+      redirect_uris.value.try do |value|
+        return unless value.empty?
+        redirect_uris.add_error Rex.t(:"operation.error.redirect_uris_required")
       end
     end
 
-    private def validate_redirect_uri_valid
-      redirect_uri.value.try do |value|
-        return unless value.includes?('#') || URI.parse(value).scheme.nil?
+    private def validate_redirect_uris_valid
+      redirect_uris.value.try do |value|
+        return unless value.any? do |uri|
+          uri.includes?('#') || URI.parse(uri).scheme.nil?
+        end
 
-        redirect_uri.add_error Rex.t(
-          :"operation.error.redirect_uri_invalid",
-          redirect_uri: value
+        return redirect_uris.add_error Rex.t(
+          :"operation.error.redirect_uris_invalid",
+          redirect_uris: value.join(", ")
         )
       end
     end
@@ -99,6 +91,17 @@ module Shield::ValidateOauthClient
           :"operation.error.user_not_found",
           user_id: user_id.value
         )
+    end
+
+    private def ensure_redirect_uris_unique
+      redirect_uris.value = redirect_uris.value.try(&.uniq)
+    end
+
+    private def limit_redirect_uris_count
+      redirect_uris.value.try do |value|
+        redirect_uris.value =
+          value.first(Shield.settings.oauth_client_redirect_uris_max)
+      end
     end
   end
 end

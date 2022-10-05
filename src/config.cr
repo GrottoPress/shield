@@ -9,6 +9,7 @@ module Shield
     setting oauth_access_token_scopes_allowed : Array(String) = [] of String
     setting oauth_authorization_code_expiry : Time::Span = 1.minute
     setting oauth_client_name_filter : Regex?
+    setting oauth_client_redirect_uris_max : Int32 = 3
     setting oauth_code_challenge_methods_allowed : Array(String) = ["S256"]
     setting oauth_refresh_token_expiry : Time::Span? = 7.days
     setting oauth_refresh_token_grace : Time::Span = 30.seconds

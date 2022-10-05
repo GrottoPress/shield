@@ -105,8 +105,8 @@ module Shield::Api::Oauth::Token::Pipes
     def oauth_validate_redirect_uri
       if !grant_type ||
         !oauth_grant_type.authorization_code? ||
-        !oauth_client? ||
-        oauth_client.redirect_uri == redirect_uri
+        !oauth_grant? ||
+        oauth_grant.redirect_uri == redirect_uri
 
         continue
       else

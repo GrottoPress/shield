@@ -9,6 +9,7 @@ module Shield::CurrentUser::OauthClients::Create
     def run_operation
       RegisterOauthClient.create(
         params,
+        redirect_uris: redirect_uris_from_params,
         user: user
       ) do |operation, oauth_client|
         if operation.saved?
@@ -37,6 +38,10 @@ module Shield::CurrentUser::OauthClients::Create
 
     def authorize?(user : Shield::User) : Bool
       user.id == self.user.id
+    end
+
+    private def redirect_uris_from_params
+      array_param(RegisterOauthClient.param_key, :redirect_uris)
     end
   end
 end

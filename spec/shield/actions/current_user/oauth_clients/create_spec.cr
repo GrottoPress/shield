@@ -10,7 +10,7 @@ describe Shield::CurrentUser::OauthClients::Create do
 
     response = client.exec(CurrentUser::OauthClients::Create, oauth_client: {
       name: "Some Client",
-      redirect_uri: "https://example.co/cb",
+      redirect_uris: ["https://example.co/cb"],
       public: false
     })
 
@@ -21,7 +21,7 @@ describe Shield::CurrentUser::OauthClients::Create do
   it "requires logged in" do
     response = ApiClient.exec(CurrentUser::OauthClients::Create, oauth_client: {
       name: "Some Client",
-      redirect_uri: "https://example.co/cb",
+      redirect_uris: ["https://example.co/cb"],
       public: false
     })
 

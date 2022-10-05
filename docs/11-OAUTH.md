@@ -86,7 +86,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
    - `active_at : Time`
    - `inactive_at : Time?`
    - `name : String`
-   - `redirect_uri : String`
+   - `redirect_uris : Array(String)`
    - `secret_digest : String?`
    - `user_id`
 
@@ -195,7 +195,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
          add active_at : Time
          add inactive_at : Time?
          add name : String
-         add redirect_uri : String
+         add redirect_uris : Array(String)
          add secret_digest : String?
          # ...
        end
@@ -298,7 +298,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
    end
    ```
 
-   `RegisterOauthClient` receives `name : String`, `public : Bool` and `redirect_uri : String` parameters, and creates a database entry with a unique ID and an optional hashed secret for *confidential* clients.
+   `RegisterOauthClient` receives `name : String`, `public : Bool` and `redirect_uris : Array(String)` parameters, and creates a database entry with a unique ID and an optional hashed secret for *confidential* clients.
 
    ---
    ```crystal
@@ -469,7 +469,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
 
    - `name : String`
    - `public : Bool`
-   - `redirect_uri : String`
+   - `redirect_uris : Array(String)`
 
    ---
    ```crystal

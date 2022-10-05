@@ -9,16 +9,17 @@ describe Shield::UpdateOauthClient do
 
     oauth_client = OauthClientFactory.create &.user_id(user.id)
       .name("New Client")
-      .redirect_uri("myapp://cb")
+      .redirect_uris(["myapp://cb"])
 
-    UpdateOauthClient.update(oauth_client, params(
-      name: new_name,
-      redirect_uri: new_redirect_uri
-    )) do |operation, updated_oauth_client|
+    UpdateOauthClient.update(
+      oauth_client,
+      params(name: new_name),
+      redirect_uris: [new_redirect_uri]
+    ) do |operation, updated_oauth_client|
       operation.saved?.should be_true
 
       updated_oauth_client.name.should eq(new_name)
-      updated_oauth_client.redirect_uri.should eq(new_redirect_uri)
+      updated_oauth_client.redirect_uris.should eq([new_redirect_uri])
     end
   end
 

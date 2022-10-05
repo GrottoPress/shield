@@ -6,16 +6,20 @@ describe Shield::StartOauthGrant do
       code_challenge = "a1b2c3"
       code_challenge_method = "plain"
       grant_type = OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
+      redirect_uri = "http://localhost:5000"
 
       developer = UserFactory.create
       resource_owner = UserFactory.create &.email("resource@owner.com")
+
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
+        .redirect_uris([redirect_uri])
 
       StartOauthGrant.create(
         params(
           granted: true,
           code_challenge: code_challenge,
-          code_challenge_method: code_challenge_method
+          code_challenge_method: code_challenge_method,
+          redirect_uri: redirect_uri
         ),
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
         type: grant_type,
@@ -26,6 +30,7 @@ describe Shield::StartOauthGrant do
 
         oauth_grant.try do |_oauth_grant|
           _oauth_grant.pkce.should be_a(OauthGrantPkce)
+          _oauth_grant.redirect_uri.should eq(redirect_uri)
           _oauth_grant.metadata.should be_a(OauthGrantMetadata)
 
           _oauth_grant.user_id.should eq(resource_owner.id)
@@ -49,14 +54,8 @@ describe Shield::StartOauthGrant do
         operation.code.should_not be_empty
       end
     end
-  end
 
-  context "Client Credentials Grant" do
-    it "starts OAuth grant" do
-      code_challenge = "a1b2c3"
-      code_challenge_method = "plain"
-      grant_type = OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS)
-
+    it "requires redirect URI" do
       developer = UserFactory.create
       resource_owner = UserFactory.create &.email("resource@owner.com")
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
@@ -64,8 +63,41 @@ describe Shield::StartOauthGrant do
       StartOauthGrant.create(
         params(
           granted: true,
+          code_challenge: "code_challenge",
+          code_challenge_method: "S256",
+        ),
+        scopes: [BearerScope.new(Api::Posts::Index).to_s],
+        type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE),
+        oauth_client: oauth_client,
+        user: resource_owner
+      ) do |operation, oauth_grant|
+        oauth_grant.should be_nil
+
+        operation.redirect_uri
+          .should(have_error "operation.error.redirect_uri_required")
+      end
+    end
+  end
+
+  context "Client Credentials Grant" do
+    it "starts OAuth grant" do
+      code_challenge = "a1b2c3"
+      code_challenge_method = "plain"
+      grant_type = OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS)
+      redirect_uri = "http://localhost:5000"
+
+      developer = UserFactory.create
+      resource_owner = UserFactory.create &.email("resource@owner.com")
+
+      oauth_client = OauthClientFactory.create &.user_id(developer.id)
+        .redirect_uris([redirect_uri])
+
+      StartOauthGrant.create(
+        params(
+          granted: true,
           code_challenge: code_challenge,
-          code_challenge_method: code_challenge_method
+          code_challenge_method: code_challenge_method,
+          redirect_uri: redirect_uri
         ),
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
         type: grant_type,
@@ -76,6 +108,7 @@ describe Shield::StartOauthGrant do
 
         oauth_grant.try do |_oauth_grant|
           _oauth_grant.pkce.should be_nil
+          _oauth_grant.redirect_uri.should be_nil
           _oauth_grant.user_id.should eq(resource_owner.id)
           _oauth_grant.oauth_client_id.should eq(oauth_client.id)
           _oauth_grant.status.active?.should be_true
@@ -93,16 +126,20 @@ describe Shield::StartOauthGrant do
       code_challenge = "a1b2c3"
       code_challenge_method = "plain"
       grant_type = OauthGrantType.new(OauthGrantType::REFRESH_TOKEN)
+      redirect_uri = "http://localhost:5000"
 
       developer = UserFactory.create
       resource_owner = UserFactory.create &.email("resource@owner.com")
+
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
+        .redirect_uris([redirect_uri])
 
       StartOauthGrant.create(
         params(
           granted: true,
           code_challenge: code_challenge,
-          code_challenge_method: code_challenge_method
+          code_challenge_method: code_challenge_method,
+          redirect_uri: redirect_uri
         ),
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
         type: grant_type,
@@ -113,6 +150,7 @@ describe Shield::StartOauthGrant do
 
         oauth_grant.try do |_oauth_grant|
           _oauth_grant.pkce.should be_nil
+          _oauth_grant.redirect_uri.should be_nil
           _oauth_grant.user_id.should eq(resource_owner.id)
           _oauth_grant.oauth_client_id.should eq(oauth_client.id)
           _oauth_grant.status.active?.should be_true
@@ -148,12 +186,12 @@ describe Shield::StartOauthGrant do
     end
   end
 
-  it "requires correct redirect URI" do
+  it "requires registered redirect URI" do
     developer = UserFactory.create
     resource_owner = UserFactory.create &.email("resource@owner.com")
 
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
-      .redirect_uri("http://localhost:5001")
+      .redirect_uris(["http://localhost:5001"])
 
     StartOauthGrant.create(
       params(

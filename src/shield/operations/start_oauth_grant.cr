@@ -18,9 +18,11 @@ module Shield::StartOauthGrant
       set_success
       set_code_challenge_method
       set_code_challenge # Set challenge method before this
+      set_redirect_uri
 
       validate_authorization_granted
-      validate_redirect_uri_matches
+      validate_redirect_uri_required
+      validate_redirect_uri_valid
       validate_response_type_valid
     end
 
@@ -41,10 +43,17 @@ module Shield::StartOauthGrant
       granted.add_error Rex.t(:"operation.error.authorization_denied")
     end
 
-    private def validate_redirect_uri_matches
+    private def validate_redirect_uri_required
+      return unless type.value.try(&.authorization_code?)
+
+      validate_required redirect_uri,
+        message: Rex.t(:"operation.error.redirect_uri_required")
+    end
+
+    private def validate_redirect_uri_valid
       redirect_uri.value.try do |value|
         oauth_client!.try do |client|
-          return if value == client.redirect_uri
+          return if value.in?(client.redirect_uris)
           redirect_uri.add_error Rex.t(:"operation.error.redirect_uri_invalid")
         end
       end
@@ -87,6 +96,20 @@ module Shield::StartOauthGrant
 
       code_challenge_method.value.try do |value|
         values = {code_challenge_method: value}
+
+        metadata.value.try do |_metadata|
+          return metadata.value = _metadata.merge(**values)
+        end
+
+        metadata.value = OauthGrantMetadata.from_json(values.to_json)
+      end
+    end
+
+    private def set_redirect_uri
+      return unless type.value.try(&.authorization_code?)
+
+      redirect_uri.value.try do |value|
+        values = {redirect_uri: value}
 
         metadata.value.try do |_metadata|
           return metadata.value = _metadata.merge(**values)

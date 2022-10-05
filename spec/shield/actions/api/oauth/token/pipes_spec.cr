@@ -77,7 +77,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           Spec::Api::Oauth::Token::Pipes,
           client_id: 23,
           code: code_final,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           grant_type: "authorization_code",
           code_verifier: code_challenge,
           client_secret: client_secret
@@ -114,7 +114,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           code: code_final,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           code_verifier: code_challenge,
           client_secret: client_secret
         )
@@ -130,14 +130,18 @@ describe Shield::Api::Oauth::Token::Pipes do
         client_secret = "def456"
 
         developer = UserFactory.create
+        resource_owner = UserFactory.create &.email("resource@owner.com")
 
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           grant_type: "authorization_code",
           code_verifier: "abc123",
           client_secret: client_secret
@@ -162,10 +166,10 @@ describe Shield::Api::Oauth::Token::Pipes do
 
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
-          .redirect_uri("https://example.com/oauth/callback")
 
         oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
           .oauth_client_id(oauth_client.id)
+          .redirect_uri("https://example.com/oauth/callback")
           .code(code)
           .pkce(code_challenge, "plain")
 
@@ -212,7 +216,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           code: code_final,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           grant_type: "unsupported",
           code_verifier: code_challenge,
           client_secret: client_secret
@@ -248,7 +252,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           code: code_final,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           grant_type: "authorization_code",
           code_verifier: code_challenge,
           client_secret: client_secret
@@ -286,7 +290,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client_2.id,
           code: code_final,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           grant_type: "authorization_code",
           code_verifier: "2j6k3n",
           client_secret: client_secret
@@ -321,7 +325,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           code: code_final,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           grant_type: "authorization_code",
           code_verifier: "2j6k3n",
         )
@@ -353,7 +357,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           code: code_final,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           grant_type: "authorization_code",
           client_secret: client_secret
         )
@@ -382,7 +386,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           code: code_final,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           grant_type: "authorization_code",
           client_secret: client_secret,
         )
@@ -417,7 +421,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           code: code_final,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           grant_type: "authorization_code",
           code_verifier: code_challenge,
           client_secret: "wrong-secret"
@@ -451,7 +455,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           code: code_final,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           grant_type: "authorization_code",
           code_verifier: code_challenge,
         )
@@ -489,7 +493,7 @@ describe Shield::Api::Oauth::Token::Pipes do
             code,
             oauth_grant.id
           ).to_s,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           grant_type: "authorization_code",
           client_secret: client_secret
         )
@@ -515,10 +519,13 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+
         response = ApiClient.exec(
           Api::Oauth::Token::Create,
           client_id: 23,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           client_secret: client_secret,
           grant_type: "client_credentials",
           scope: "api.current_user.show"
@@ -543,10 +550,13 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+
         response = ApiClient.exec(
           Api::Oauth::Token::Create,
           client_id: oauth_client.id,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           client_secret: client_secret,
           scope: "api.current_user.show"
         )
@@ -570,10 +580,13 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+
         response = ApiClient.exec(
           Api::Oauth::Token::Create,
           client_id: oauth_client.id,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           client_secret: client_secret,
           grant_type: "unsupported",
           scope: "api.current_user.show"
@@ -596,10 +609,13 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret("a1b2c3")
 
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+
         response = ApiClient.exec(
           Api::Oauth::Token::Create,
           client_id: oauth_client.id,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           client_secret: "abcdef",
           grant_type: "client_credentials",
           scope: "api.current_user.show"
@@ -624,6 +640,9 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+
         api_client = ApiClient.new
 
         api_client.basic_auth OauthClientCredentials.new(
@@ -634,7 +653,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         response = api_client.exec(
           Api::Oauth::Token::Create,
           client_id: oauth_client.id,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           client_secret: client_secret,
           grant_type: "client_credentials",
           scope: "api.current_user.show"
@@ -656,10 +675,13 @@ describe Shield::Api::Oauth::Token::Pipes do
         developer = UserFactory.create
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+
         response = ApiClient.exec(
           Api::Oauth::Token::Create,
           client_id: oauth_client.id,
-          redirect_uri: oauth_client.redirect_uri,
+          redirect_uri: oauth_grant.redirect_uri,
           client_secret: "a1b2c3",
           grant_type: "client_credentials",
           scope: "api.current_user.show"
