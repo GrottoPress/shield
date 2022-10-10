@@ -39,7 +39,7 @@ module Shield::Api::BearerLoginHelpers
     end
 
     private getter bearer_login_headers do
-      BearerLoginHeaders.new(request)
+      BearerLoginHeaders.new(context.request)
     end
   end
 end
