@@ -515,17 +515,11 @@ describe Shield::Api::Oauth::Token::Pipes do
         developer = UserFactory.create
         resource_owner = UserFactory.create &.email("resource@owner.com")
         UserOptionsFactory.create &.user_id(resource_owner.id)
-
-        oauth_client = OauthClientFactory.create &.user_id(developer.id)
-          .secret(client_secret)
-
-        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
-          .oauth_client_id(oauth_client.id)
+        OauthClientFactory.create &.user_id(developer.id).secret(client_secret)
 
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
           client_id: 23,
-          redirect_uri: oauth_grant.redirect_uri,
           client_secret: client_secret,
           grant_type: "client_credentials",
           scope: "api.current_user.show"
@@ -550,13 +544,10 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
-        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
-          .oauth_client_id(oauth_client.id)
-
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
-          redirect_uri: oauth_grant.redirect_uri,
+          redirect_uri: "http://my.app/callback",
           client_secret: client_secret,
           scope: "api.current_user.show"
         )
@@ -580,13 +571,10 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
-        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
-          .oauth_client_id(oauth_client.id)
-
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
-          redirect_uri: oauth_grant.redirect_uri,
+          redirect_uri: "http://my.app/callback",
           client_secret: client_secret,
           grant_type: "unsupported",
           scope: "api.current_user.show"
@@ -609,13 +597,10 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret("a1b2c3")
 
-        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
-          .oauth_client_id(oauth_client.id)
-
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
-          redirect_uri: oauth_grant.redirect_uri,
+          redirect_uri: "http://my.app/callback",
           client_secret: "abcdef",
           grant_type: "client_credentials",
           scope: "api.current_user.show"
@@ -640,9 +625,6 @@ describe Shield::Api::Oauth::Token::Pipes do
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
           .secret(client_secret)
 
-        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
-          .oauth_client_id(oauth_client.id)
-
         api_client = ApiClient.new
 
         api_client.basic_auth OauthClientCredentials.new(
@@ -653,7 +635,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         response = api_client.exec(
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
-          redirect_uri: oauth_grant.redirect_uri,
+          redirect_uri: "http://my.app/callback",
           client_secret: client_secret,
           grant_type: "client_credentials",
           scope: "api.current_user.show"
@@ -675,13 +657,10 @@ describe Shield::Api::Oauth::Token::Pipes do
         developer = UserFactory.create
         oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
-          .oauth_client_id(oauth_client.id)
-
         response = ApiClient.exec(
           Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
-          redirect_uri: oauth_grant.redirect_uri,
+          redirect_uri: "http://my.app/callback",
           client_secret: "a1b2c3",
           grant_type: "client_credentials",
           scope: "api.current_user.show"
