@@ -10,8 +10,8 @@ class Spec::Api::Oauth::Token::Pipes < ApiAction
 
   before :oauth_validate_client_id
   before :oauth_require_access_token_params
-  before :oauth_validate_redirect_uri
   before :oauth_validate_grant_type
+  before :oauth_validate_redirect_uri
   before :oauth_validate_code
   before :oauth_validate_refresh_token
   before :oauth_validate_code_verifier

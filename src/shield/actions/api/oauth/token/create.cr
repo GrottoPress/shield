@@ -8,8 +8,8 @@ module Shield::Api::Oauth::Token::Create
     # before :oauth_handle_errors
     before :oauth_check_duplicate_params
     before :oauth_require_access_token_params
-    before :oauth_validate_redirect_uri
     before :oauth_validate_grant_type
+    before :oauth_validate_redirect_uri
     before :oauth_validate_code
     before :oauth_validate_refresh_token
     before :oauth_validate_code_verifier
