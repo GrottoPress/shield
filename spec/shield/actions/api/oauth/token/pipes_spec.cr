@@ -523,7 +523,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           .oauth_client_id(oauth_client.id)
 
         response = ApiClient.exec(
-          Api::Oauth::Token::Create,
+          Spec::Api::Oauth::Token::Pipes,
           client_id: 23,
           redirect_uri: oauth_grant.redirect_uri,
           client_secret: client_secret,
@@ -554,7 +554,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           .oauth_client_id(oauth_client.id)
 
         response = ApiClient.exec(
-          Api::Oauth::Token::Create,
+          Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           redirect_uri: oauth_grant.redirect_uri,
           client_secret: client_secret,
@@ -584,7 +584,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           .oauth_client_id(oauth_client.id)
 
         response = ApiClient.exec(
-          Api::Oauth::Token::Create,
+          Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           redirect_uri: oauth_grant.redirect_uri,
           client_secret: client_secret,
@@ -613,7 +613,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           .oauth_client_id(oauth_client.id)
 
         response = ApiClient.exec(
-          Api::Oauth::Token::Create,
+          Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           redirect_uri: oauth_grant.redirect_uri,
           client_secret: "abcdef",
@@ -651,7 +651,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         )
 
         response = api_client.exec(
-          Api::Oauth::Token::Create,
+          Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           redirect_uri: oauth_grant.redirect_uri,
           client_secret: client_secret,
@@ -679,7 +679,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           .oauth_client_id(oauth_client.id)
 
         response = ApiClient.exec(
-          Api::Oauth::Token::Create,
+          Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           redirect_uri: oauth_grant.redirect_uri,
           client_secret: "a1b2c3",
@@ -718,7 +718,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         ).to_s
 
         response = ApiClient.exec(
-          Api::Oauth::Token::Create,
+          Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           refresh_token: refresh_token_final,
           grant_type: "refresh_token",
@@ -755,7 +755,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         ).to_s
 
         response = ApiClient.exec(
-          Api::Oauth::Token::Create,
+          Spec::Api::Oauth::Token::Pipes,
           client_id: oauth_client.id,
           refresh_token: refresh_token_final,
           grant_type: "refresh_token",
