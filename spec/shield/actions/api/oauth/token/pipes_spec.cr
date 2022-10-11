@@ -50,6 +50,14 @@ class Spec::Api::Oauth::Token::Pipes < ApiAction
   def refresh_token : String?
     params.get?(:refresh_token)
   end
+
+  def scope : String?
+    params.get?(:scope)
+  end
+
+  def scopes : Array(String)
+    scope.try(&.split) || Array(String).new
+  end
 end
 
 describe Shield::Api::Oauth::Token::Pipes do
@@ -550,6 +558,31 @@ describe Shield::Api::Oauth::Token::Pipes do
           redirect_uri: "http://my.app/callback",
           client_secret: client_secret,
           scope: "api.current_user.show"
+        )
+
+        response.should send_json(
+          400,
+          error: "invalid_request",
+          error_description: "action.pipe.oauth.params_missing"
+        )
+      end
+
+      it "requires scope" do
+        client_secret = "def456"
+
+        developer = UserFactory.create
+        resource_owner = UserFactory.create &.email("resource@owner.com")
+        UserOptionsFactory.create &.user_id(resource_owner.id)
+
+        oauth_client = OauthClientFactory.create &.user_id(developer.id)
+          .secret(client_secret)
+
+        response = ApiClient.exec(
+          Spec::Api::Oauth::Token::Pipes,
+          client_id: oauth_client.id,
+          client_secret: client_secret,
+          redirect_uri: "http://my.app/callback",
+          grant_type: "authorization_code"
         )
 
         response.should send_json(

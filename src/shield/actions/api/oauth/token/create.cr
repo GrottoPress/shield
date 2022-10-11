@@ -77,8 +77,12 @@ module Shield::Api::Oauth::Token::Create
       end
     end
 
+    def scope : String?
+      params.get?(:scope)
+    end
+
     def scopes : Array(String)
-      params.get?(:scope).try(&.split) || Array(String).new
+      scope.try(&.split) || Array(String).new
     end
 
     private def create_oauth_access_token_from_client

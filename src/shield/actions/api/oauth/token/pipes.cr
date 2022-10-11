@@ -7,7 +7,8 @@ module Shield::Api::Oauth::Token::Pipes
     def oauth_require_access_token_params
       if !grant_type ||
         (oauth_grant_type.authorization_code? && !code) ||
-        (oauth_grant_type.refresh_token? && !refresh_token)
+        (oauth_grant_type.refresh_token? && !refresh_token) ||
+        (oauth_grant_type.client_credentials? && scopes.empty?)
 
         response.status_code = 400
         do_oauth_require_access_token_params_failed

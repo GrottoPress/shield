@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Users::OauthPermissions::Delete` action
 - Add `Shield::Users::OauthPermissions::Destroy` action
 - Add `iss` claim to OAuth token introspection response
+- Require `scope` at OAuth token endpoint for Client Credentials grants
 
 ### Fixed
 - Fix authentication bypass in `#oauth_maybe_require_logged_in` pipe
