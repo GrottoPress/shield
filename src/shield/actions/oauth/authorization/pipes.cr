@@ -51,6 +51,17 @@ module Shield::Oauth::Authorization::Pipes
       end
     end
 
+    def oauth_validate_scope
+      allowed_scopes = Shield.settings.oauth_access_token_scopes_allowed
+
+      if scopes.all?(&.in? allowed_scopes)
+        continue
+      else
+        response.status_code = 400
+        do_oauth_validate_scope_failed
+      end
+    end
+
     def do_oauth_validate_client_id_failed
       json({
         error: "invalid_request",

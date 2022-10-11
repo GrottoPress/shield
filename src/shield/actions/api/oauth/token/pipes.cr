@@ -132,6 +132,23 @@ module Shield::Api::Oauth::Token::Pipes
       end
     end
 
+    def oauth_validate_scope
+      allowed_scopes = Shield.settings.oauth_access_token_scopes_allowed
+
+      if !grant_type ||
+        oauth_grant_type.authorization_code? ||
+        (oauth_grant_type.client_credentials? &&
+          scopes.all?(&.in? allowed_scopes)) ||
+        (oauth_grant_type.refresh_token? &&
+          (!oauth_grant? || scopes.all?(&.in? oauth_grant.scopes)))
+
+        continue
+      else
+        response.status_code = 400
+        do_oauth_validate_scope_failed
+      end
+    end
+
     def do_oauth_validate_client_id_failed
       json({
         error: "invalid_client",

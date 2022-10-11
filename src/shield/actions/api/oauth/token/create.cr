@@ -10,6 +10,7 @@ module Shield::Api::Oauth::Token::Create
     before :oauth_require_access_token_params
     before :oauth_validate_grant_type
     before :oauth_validate_redirect_uri
+    before :oauth_validate_scope
     before :oauth_validate_code
     before :oauth_validate_refresh_token
     before :oauth_validate_code_verifier
@@ -24,9 +25,11 @@ module Shield::Api::Oauth::Token::Create
     def run_operation
       case oauth_grant_type
       when .client_credentials?
-        create_oauth_access_token_from_client
+        run_client_credentials_grant_operation
+      when .refresh_token?
+        run_refresh_token_grant_operation
       else
-        create_oauth_access_token_from_grant
+        run_authorization_code_grant_operation
       end
     end
 
@@ -85,7 +88,7 @@ module Shield::Api::Oauth::Token::Create
       scope.try(&.split) || Array(String).new
     end
 
-    private def create_oauth_access_token_from_client
+    private def run_client_credentials_grant_operation
       CreateOauthAccessTokenFromClient.create(
         oauth_client: oauth_client,
         scopes: scopes
@@ -99,7 +102,21 @@ module Shield::Api::Oauth::Token::Create
       end
     end
 
-    private def create_oauth_access_token_from_grant
+    private def run_refresh_token_grant_operation
+      CreateOauthAccessTokenFromGrant.create(
+        oauth_grant: oauth_grant,
+        scopes: scopes
+      ) do |operation, bearer_login|
+        if operation.saved?
+          do_run_operation_succeeded(operation, bearer_login.not_nil!)
+        else
+          response.status_code = 400
+          do_run_operation_failed(operation)
+        end
+      end
+    end
+
+    private def run_authorization_code_grant_operation
       CreateOauthAccessTokenFromGrant.create(
         oauth_grant: oauth_grant
       ) do |operation, bearer_login|

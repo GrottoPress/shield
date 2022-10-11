@@ -46,17 +46,6 @@ module Shield::Oauth::Pipes
       end
     end
 
-    def oauth_validate_scope
-      allowed_scopes = Shield.settings.oauth_access_token_scopes_allowed
-
-      if scopes.all?(&.in? allowed_scopes)
-        continue
-      else
-        response.status_code = 400
-        do_oauth_validate_scope_failed
-      end
-    end
-
     private def has_duplicate_params
       params.from_query.any? { |name, _| name.size > 1 }
     end

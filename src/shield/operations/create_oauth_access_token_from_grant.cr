@@ -16,7 +16,8 @@ module Shield::CreateOauthAccessTokenFromGrant
 
       set_inactive_at
       set_name
-      set_scopes
+      set_refresh_token_grant_scopes
+      set_authorization_code_grant_scopes
       set_user_id
       set_oauth_client_id
     end
@@ -39,8 +40,21 @@ module Shield::CreateOauthAccessTokenFromGrant
         Grant (#{oauth_grant.type}) #{oauth_grant.id}"
     end
 
-    private def set_scopes
+    private def set_refresh_token_grant_scopes
+      return unless oauth_grant.type.refresh_token?
       return unless oauth_grant.status.active?
+
+      scopes.value.try do |value|
+        return if !value.empty? && value.all?(&.in? oauth_grant.scopes)
+      end
+
+      scopes.value = oauth_grant.scopes
+    end
+
+    private def set_authorization_code_grant_scopes
+      return unless oauth_grant.type.authorization_code?
+      return unless oauth_grant.status.active?
+
       scopes.value = oauth_grant.scopes
     end
 

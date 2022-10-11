@@ -12,6 +12,7 @@ class Spec::Api::Oauth::Token::Pipes < ApiAction
   before :oauth_require_access_token_params
   before :oauth_validate_grant_type
   before :oauth_validate_redirect_uri
+  before :oauth_validate_scope
   before :oauth_validate_code
   before :oauth_validate_refresh_token
   before :oauth_validate_code_verifier
@@ -706,6 +707,35 @@ describe Shield::Api::Oauth::Token::Pipes do
         )
       end
     end
+
+    describe "#oauth_validate_scope" do
+      it "ensures scopes are valid" do
+        client_secret = "def456"
+
+        resource_owner = UserFactory.create &.email("resource@owner.com")
+
+        developer = UserFactory.create
+        UserOptionsFactory.create &.user_id(developer.id)
+
+        oauth_client = OauthClientFactory.create &.user_id(developer.id)
+          .secret(client_secret)
+
+        response = ApiClient.exec(
+          Spec::Api::Oauth::Token::Pipes,
+          client_id: oauth_client.id,
+          redirect_uri: "http://my.app/callback",
+          grant_type: "client_credentials",
+          client_secret: client_secret,
+          scope: "api.invalid.scope"
+        )
+
+        response.should send_json(
+          400,
+          error: "invalid_scope",
+          error_description: "action.pipe.oauth.scope_invalid"
+        )
+      end
+    end
   end
 
   context "Refresh Token Grant" do
@@ -778,6 +808,46 @@ describe Shield::Api::Oauth::Token::Pipes do
           400,
           error: "invalid_grant",
           error_description: "action.pipe.oauth.refresh_token_invalid"
+        )
+      end
+    end
+
+    describe "#oauth_validate_scope" do
+      it "ensures scopes are valid" do
+        refresh_token = "a1b2c3"
+        client_secret = "def456"
+
+        resource_owner = UserFactory.create &.email("resource@owner.com")
+        UserOptionsFactory.create &.user_id(resource_owner.id)
+
+        developer = UserFactory.create
+        oauth_client = OauthClientFactory.create &.user_id(developer.id)
+          .secret(client_secret)
+
+        oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
+          .oauth_client_id(oauth_client.id)
+          .code(refresh_token)
+          .scopes([BearerScope.new(Api::Posts::Index).to_s])
+          .type(OauthGrantType::REFRESH_TOKEN)
+
+        refresh_token_final = OauthGrantCredentials.new(
+          refresh_token,
+          oauth_grant.id
+        ).to_s
+
+        response = ApiClient.exec(
+          Spec::Api::Oauth::Token::Pipes,
+          client_id: oauth_client.id,
+          client_secret: client_secret,
+          refresh_token: refresh_token_final,
+          grant_type: "refresh_token",
+          scope: "#{BearerScope.new(Api::CurrentUser::Show)}"
+        )
+
+        response.should send_json(
+          400,
+          error: "invalid_scope",
+          error_description: "action.pipe.oauth.scope_invalid"
         )
       end
     end

@@ -11,7 +11,6 @@ class Spec::Oauth::Pipes < ApiAction
   before :oauth_validate_client_id
   # before :oauth_handle_errors
   before :oauth_check_duplicate_params
-  before :oauth_validate_scope
 
   param client_id : String?
   param code_challenge : String?
@@ -92,29 +91,6 @@ describe Shield::Oauth::Pipes do
         400,
         error: "invalid_client",
         error_description: "action.pipe.oauth.client_id_invalid"
-      )
-    end
-  end
-
-  describe "#oauth_validate_scope" do
-    it "ensures scopes are valid" do
-      developer = UserFactory.create
-      oauth_client = OauthClientFactory.create &.user_id(developer.id)
-
-      response = ApiClient.exec(
-        Spec::Oauth::Pipes,
-        client_id: oauth_client.id,
-        code_challenge: "a1b2c3",
-        redirect_uri: oauth_client.redirect_uris.first?,
-        response_type: "code",
-        scope: "api.invalid.scope",
-        state: "abc123"
-      )
-
-      response.should send_json(
-        400,
-        error: "invalid_scope",
-        error_description: "action.pipe.oauth.scope_invalid"
       )
     end
   end
