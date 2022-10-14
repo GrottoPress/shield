@@ -10,7 +10,6 @@ module Shield::CurrentUser::BearerLogins::Create
       CreateBearerLogin.create(
         params,
         user: user,
-        scopes: array_param(CreateBearerLogin.param_key, :scopes)
       ) do |operation, bearer_login|
         if operation.saved?
           BearerTokenSession.new(session).set(operation, bearer_login.not_nil!)

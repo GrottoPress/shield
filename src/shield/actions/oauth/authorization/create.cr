@@ -69,7 +69,7 @@ module Shield::Oauth::Authorization::Create
     end
 
     def scopes : Array(String)
-      array_param(StartOauthGrant.param_key, :scopes)
+      nested_array_param(:scopes)
     end
 
     def state : String?
@@ -82,6 +82,11 @@ module Shield::Oauth::Authorization::Create
 
     private def nested_param?(param)
       params.nested?(StartOauthGrant.param_key)[param.to_s]?
+    end
+
+    private def nested_array_param(param)
+      params.nested_arrays?(StartOauthGrant.param_key)[param.to_s]? ||
+        Array(String).new
     end
   end
 end

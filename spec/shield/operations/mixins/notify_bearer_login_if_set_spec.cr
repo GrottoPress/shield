@@ -14,8 +14,10 @@ describe Shield::NotifyBearerLoginIfSet do
     end
 
     CreateBearerLoginWithSettings.create(
-      params(name: "some token"),
-      scopes: [BearerScope.new(Api::Posts::Index).to_s],
+      params(
+        name: "some token",
+        scopes: [BearerScope.new(Api::Posts::Index).to_s]
+      ),
       user: user
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
@@ -40,8 +42,10 @@ describe Shield::NotifyBearerLoginIfSet do
     end
 
     CreateBearerLoginWithSettings.create(
-      params(name: "some token"),
-      scopes: [BearerScope.new(Api::Posts::Index).to_s],
+      params(
+        name: "some token",
+        scopes: [BearerScope.new(Api::Posts::Index).to_s]
+      ),
       user: user
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)

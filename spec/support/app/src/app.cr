@@ -1,5 +1,6 @@
 require "lucky_env"
 require "lucky"
+require "avram/lucky"
 require "carbon"
 require "../../../../src/shield"
 

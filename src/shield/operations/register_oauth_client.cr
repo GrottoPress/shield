@@ -1,6 +1,6 @@
 module Shield::RegisterOauthClient
   macro included
-    permit_columns :name
+    permit_columns :name, :redirect_uris
 
     attribute public : Bool
 

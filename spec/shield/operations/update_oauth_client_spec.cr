@@ -13,8 +13,7 @@ describe Shield::UpdateOauthClient do
 
     UpdateOauthClient.update(
       oauth_client,
-      params(name: new_name),
-      redirect_uris: [new_redirect_uri]
+      params(name: new_name, redirect_uris: [new_redirect_uri]),
     ) do |operation, updated_oauth_client|
       operation.saved?.should be_true
 

@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.3.2]
+        crystal: [1.4.0]
     runs-on: ubuntu-latest
     continue-on-error: false
     steps:
@@ -34,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest]
+        crystal: [1.4.0, latest]
         experimental: [false]
         include:
           - crystal: nightly

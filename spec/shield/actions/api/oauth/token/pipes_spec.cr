@@ -712,7 +712,7 @@ describe Shield::Api::Oauth::Token::Pipes do
       it "ensures scopes are valid" do
         client_secret = "def456"
 
-        resource_owner = UserFactory.create &.email("resource@owner.com")
+        UserFactory.create &.email("resource@owner.com")
 
         developer = UserFactory.create
         UserOptionsFactory.create &.user_id(developer.id)

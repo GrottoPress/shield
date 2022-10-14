@@ -9,8 +9,7 @@ module Shield::Api::CurrentUser::BearerLogins::Create
     def run_operation
       CreateBearerLogin.create(
         params,
-        user: user,
-        scopes: array_param(CreateBearerLogin.param_key, :scopes)
+        user: user
       ) do |operation, bearer_login|
         if operation.saved?
           do_run_operation_succeeded(operation, bearer_login.not_nil!)

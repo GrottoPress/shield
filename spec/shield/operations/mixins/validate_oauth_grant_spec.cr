@@ -6,6 +6,7 @@ private class SaveOauthGrant < OauthGrant::SaveOperation
     :active_at,
     :code_digest,
     :inactive_at,
+    :scopes,
     :success,
     :type
 
@@ -24,17 +25,17 @@ describe Shield::ValidateOauthGrant do
         user_id: resource_owner.id,
         active_at: Time.utc,
         code_digest: "a1b2c3",
-        success: false
+        success: false,
+        scopes: [
+          BearerScope.new(Api::Posts::Index).to_s,
+          BearerScope.new(Api::Posts::New).to_s,
+          BearerScope.new(Api::Posts::Index).to_s
+        ]
       ),
       metadata: OauthGrantMetadata.from_json({
         code_challenge: "a1b2c3",
         code_challenge_method: "plain"
       }.to_json),
-      scopes: [
-        BearerScope.new(Api::Posts::Index).to_s,
-        BearerScope.new(Api::Posts::New).to_s,
-        BearerScope.new(Api::Posts::Index).to_s
-      ],
       type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
     ) do |_, oauth_grant|
       oauth_grant.should be_a(OauthGrant)
@@ -54,16 +55,14 @@ describe Shield::ValidateOauthGrant do
     resource_owner = UserFactory.create &.email("resource@owner.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-    SaveOauthGrant.create(
-      params(
-        oauth_client_id: oauth_client.id,
-        user_id: resource_owner.id,
-        active_at: Time.utc,
-        code_digest: "a1b2c3",
-        success: false
-      ),
+    SaveOauthGrant.create(params(
+      oauth_client_id: oauth_client.id,
+      user_id: resource_owner.id,
+      active_at: Time.utc,
+      code_digest: "a1b2c3",
+      success: false,
       type: OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS)
-    ) do |operation, oauth_grant|
+    )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
       operation.scopes
@@ -75,16 +74,14 @@ describe Shield::ValidateOauthGrant do
     developer = UserFactory.create
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-    SaveOauthGrant.create(
-      params(
-        oauth_client_id: oauth_client.id,
-        active_at: Time.utc,
-        code_digest: "a1b2c3",
-        success: false
-      ),
+    SaveOauthGrant.create(params(
+      oauth_client_id: oauth_client.id,
+      active_at: Time.utc,
+      code_digest: "a1b2c3",
+      success: false,
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE),
-    ) do |operation, oauth_grant|
+      type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
+    )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
       operation.user_id.should have_error("operation.error.user_id_required")
@@ -96,16 +93,14 @@ describe Shield::ValidateOauthGrant do
     developer = UserFactory.create
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-    SaveOauthGrant.create(
-      params(
-        oauth_client_id: oauth_client.id,
-        user_id: resource_owner.id,
-        active_at: Time.utc,
-        code_digest: "a1b2c3",
-        success: false,
-      ),
-      scopes: [BearerScope.new(Api::Posts::Index).to_s],
-    ) do |operation, oauth_grant|
+    SaveOauthGrant.create(params(
+      oauth_client_id: oauth_client.id,
+      user_id: resource_owner.id,
+      active_at: Time.utc,
+      code_digest: "a1b2c3",
+      success: false,
+      scopes: [BearerScope.new(Api::Posts::Index).to_s]
+    )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
       operation.type.should have_error("operation.error.grant_type_required")
@@ -115,16 +110,14 @@ describe Shield::ValidateOauthGrant do
   it "requires OAuth client ID" do
     resource_owner = UserFactory.create
 
-    SaveOauthGrant.create(
-      params(
-        user_id: resource_owner.id,
-        active_at: Time.utc,
-        code_digest: "a1b2c3",
-        success: false
-      ),
+    SaveOauthGrant.create(params(
+      user_id: resource_owner.id,
+      active_at: Time.utc,
+      code_digest: "a1b2c3",
+      success: false,
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new(OauthGrantType::REFRESH_TOKEN),
-    ) do |operation, oauth_grant|
+      type: OauthGrantType.new(OauthGrantType::REFRESH_TOKEN)
+    )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
       operation.oauth_client_id
@@ -144,13 +137,13 @@ describe Shield::ValidateOauthGrant do
         active_at: Time.utc,
         code_digest: "a1b2c3",
         success: false,
+        scopes: [BearerScope.new(Api::Posts::Index).to_s],
+        type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
       ),
       metadata: OauthGrantMetadata.from_json({
         code_challenge: "a1b2c3",
         code_challenge_method: "S512"
-      }.to_json),
-      scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
+      }.to_json)
     ) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
@@ -163,17 +156,15 @@ describe Shield::ValidateOauthGrant do
     developer = UserFactory.create
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-    SaveOauthGrant.create(
-      params(
-        oauth_client_id: oauth_client.id,
-        user_id: 22,
-        active_at: Time.utc,
-        code_digest: "a1b2c3",
-        success: false
-      ),
+    SaveOauthGrant.create(params(
+      oauth_client_id: oauth_client.id,
+      user_id: 22,
+      active_at: Time.utc,
+      code_digest: "a1b2c3",
+      success: false,
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
       type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
-    ) do |operation, oauth_grant|
+    )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
       operation.user_id.should have_error("operation.error.user_not_found")
@@ -183,17 +174,15 @@ describe Shield::ValidateOauthGrant do
   it "ensures OAuth client exists" do
     resource_owner = UserFactory.create
 
-    SaveOauthGrant.create(
-      params(
-        oauth_client_id: UUID.random.to_s,
-        user_id: resource_owner.id,
-        active_at: Time.utc,
-        code_digest: "a1b2c3",
-        success: false
-      ),
+    SaveOauthGrant.create(params(
+      oauth_client_id: UUID.random.to_s,
+      user_id: resource_owner.id,
+      active_at: Time.utc,
+      code_digest: "a1b2c3",
+      success: false,
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
       type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
-    ) do |operation, oauth_grant|
+    )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
       operation.oauth_client_id
@@ -213,9 +202,9 @@ describe Shield::ValidateOauthGrant do
         active_at: Time.utc,
         code_digest: "a1b2c3",
         success: false,
+        scopes: [BearerScope.new(Api::Posts::Index).to_s]
       ),
-      scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new("invalid_grant"),
+      type: OauthGrantType.new("invalid_grant")
     ) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
@@ -228,17 +217,15 @@ describe Shield::ValidateOauthGrant do
     resource_owner = UserFactory.create &.email("resource@owner.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-    SaveOauthGrant.create(
-      params(
-        oauth_client_id: oauth_client.id,
-        user_id: resource_owner.id,
-        active_at: Time.utc,
-        code_digest: "a1b2c3",
-        success: false
-      ),
+    SaveOauthGrant.create(params(
+      oauth_client_id: oauth_client.id,
+      user_id: resource_owner.id,
+      active_at: Time.utc,
+      code_digest: "a1b2c3",
+      success: false,
       scopes: Array(String).new,
-      type: OauthGrantType.new(OauthGrantType::REFRESH_TOKEN),
-    ) do |operation, oauth_grant|
+      type: OauthGrantType.new(OauthGrantType::REFRESH_TOKEN)
+    )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
       operation.scopes
@@ -255,17 +242,15 @@ describe Shield::ValidateOauthGrant do
       resource_owner = UserFactory.create &.email("resource@owner.com")
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-      SaveOauthGrant.create(
-        params(
-          oauth_client_id: oauth_client.id,
-          user_id: resource_owner.id,
-          active_at: Time.utc,
-          code_digest: "a1b2c3",
-          success: false,
-        ),
+      SaveOauthGrant.create(params(
+        oauth_client_id: oauth_client.id,
+        user_id: resource_owner.id,
+        active_at: Time.utc,
+        code_digest: "a1b2c3",
+        success: false,
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
-        type: OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS),
-      ) do |operation, oauth_grant|
+        type: OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS)
+      )) do |operation, oauth_grant|
         oauth_grant.should be_nil
 
         operation.scopes
@@ -279,16 +264,14 @@ describe Shield::ValidateOauthGrant do
     resource_owner = UserFactory.create &.email("resource@owner.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-    SaveOauthGrant.create(
-      params(
-        oauth_client_id: oauth_client.id,
-        user_id: resource_owner.id,
-        active_at: Time.utc,
-        success: false
-      ),
+    SaveOauthGrant.create(params(
+      oauth_client_id: oauth_client.id,
+      user_id: resource_owner.id,
+      active_at: Time.utc,
+      success: false,
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS),
-    ) do |operation, oauth_grant|
+      type: OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS)
+    )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
       operation.code_digest

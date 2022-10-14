@@ -1,6 +1,6 @@
 module Shield::UpdateBearerLogin
   macro included
-    permit_columns :name
+    permit_columns :name, :scopes
 
     before_save do
       validate_status_active

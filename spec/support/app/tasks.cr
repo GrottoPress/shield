@@ -6,5 +6,6 @@ require "./src/app"
 # require "./tasks/**"
 require "./db/migrations/**"
 require "lucky/tasks/**"
+require "avram/lucky/tasks"
 
 LuckyTask::Runner.run

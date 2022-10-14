@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fix authentication bypass in `#oauth_maybe_require_logged_in` pipe
 
 ### Changed
+- Upgrade to support *Lucky* v1.0.0-rc1
 - Change successful token revocation response to `{"active": false}`
 - Rename `Shield::Api::BearerLogins::Verify` to `Shield::Api::BearerLogins::Token::Verify`
 - Rename `Shield::Api::EmailConfirmations::Verify` to `Shield::Api::EmailConfirmations::Token::Verify`

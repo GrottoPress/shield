@@ -9,8 +9,7 @@ module Shield::Api::BearerLogins::Update
     def run_operation
       UpdateBearerLogin.update(
         bearer_login,
-        params,
-        scopes: array_param(UpdateBearerLogin.param_key, :scopes)
+        params
       ) do |operation, updated_bearer_login|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_bearer_login)
