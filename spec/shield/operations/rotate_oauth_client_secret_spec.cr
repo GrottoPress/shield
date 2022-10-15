@@ -42,7 +42,7 @@ describe Shield::RotateOauthClientSecret do
 
     RotateOauthClientSecret.update(oauth_client) do |operation, _|
       operation.saved?.should be_false
-      operation.name.should have_error("operation.error.oauth_client_inactive")
+      operation.id.should have_error("operation.error.oauth_client_inactive")
     end
   end
 end

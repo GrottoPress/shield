@@ -39,7 +39,7 @@ describe Shield::UpdateBearerLogin do
     ) do |operation, _|
       operation.saved?.should be_false
 
-      operation.name.should have_error("operation.error.bearer_login_inactive")
+      operation.id.should have_error("operation.error.bearer_login_inactive")
     end
   end
 end

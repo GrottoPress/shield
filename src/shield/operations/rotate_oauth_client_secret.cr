@@ -17,7 +17,7 @@ module Shield::RotateOauthClientSecret
     private def validate_status_active
       record.try do |oauth_client|
         return if oauth_client.status.active?
-        name.add_error Rex.t(:"operation.error.oauth_client_inactive")
+        id.add_error Rex.t(:"operation.error.oauth_client_inactive")
       end
     end
   end

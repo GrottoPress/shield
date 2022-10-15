@@ -11,7 +11,7 @@ module Shield::UpdateBearerLogin
     private def validate_status_active
       record.try do |bearer_login|
         return if bearer_login.status.active?
-        name.add_error Rex.t(:"operation.error.bearer_login_inactive")
+        id.add_error Rex.t(:"operation.error.bearer_login_inactive")
       end
     end
   end
