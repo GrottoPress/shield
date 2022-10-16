@@ -8,9 +8,9 @@ This posture makes it difficult for an application to be *insecure by accident*.
 
 ### Requirements
 
-- *Crystal* `~> 1.0`: Learn to install *Crystal* [here &raquo;](https://crystal-lang.org/install/)
-- *Lucky* `~> 0.28.0`: Learn to install *Lucky* [here &raquo;](https://luckyframework.org/guides/getting-started/installing)
-- *Carbon* `~> 0.2.0`: Learn to install *Carbon* [here &raquo;](https://github.com/luckyframework/carbon)
+- *Carbon* `~> 0.3.0`: Learn to install *Carbon* [here &raquo;](https://github.com/luckyframework/carbon)
+- *Crystal* `~> 1.6`: Learn to install *Crystal* [here &raquo;](https://crystal-lang.org/install/)
+- *Lucky* `~> 1.0.0-rc1`: Learn to install *Lucky* [here &raquo;](https://luckyframework.org/guides/getting-started/installing)
 
 ### Generating a new *Lucky* project
 
