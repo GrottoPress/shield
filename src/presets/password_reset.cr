@@ -45,16 +45,6 @@ class DeleteUserPasswordResets < User::SaveOperation
   include Shield::DeleteUserPasswordResets
 end
 
-abstract class BrowserAction < Lucky::Action
-  include Shield::PasswordResetHelpers
-  include Shield::PasswordResetPipes
-end
-
-abstract class ApiAction < Lucky::Action
-  include Shield::Api::PasswordResetHelpers
-  include Shield::Api::PasswordResetPipes
-end
-
 struct PasswordResetSession
   include Shield::PasswordResetSession
 end

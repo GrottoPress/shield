@@ -1,5 +1,15 @@
 abstract class ApiAction < Lucky::Action
+  include Shield::ApiAction
+
+  include Shield::Api::LoginHelpers
+  include Shield::Api::BearerLoginHelpers
+  include Shield::Api::EmailConfirmationHelpers
+  include Shield::Api::PasswordResetHelpers
+
+  include Shield::Api::LoginPipes
   include Shield::Api::BearerLoginPipes
+  include Shield::Api::EmailConfirmationPipes
+  include Shield::Api::PasswordResetPipes
 
   accepted_formats [:html, :json], default: :json
 

@@ -242,6 +242,10 @@ This token is revoked when the user logs out.
      #   pipe to a delegated authorization pipe. Once included, bearer tokens
      #   retrieved from the `Authorization` header MUST NOT be used as proof
      #   of authentication.
+     #
+     #   You may not need this, for instance, if building a private API, such
+     #   as a backend solely for a frontend, where you would be accepting
+     #   only email/password logins from the frontend.
      #include Shield::Api::BearerLoginPipes
      # ...
    end

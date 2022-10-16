@@ -53,16 +53,6 @@ class UpdateCurrentUser < User::SaveOperation
   include Shield::UpdateEmailConfirmationUser
 end
 
-abstract class BrowserAction < Lucky::Action
-  include Shield::EmailConfirmationHelpers
-  include Shield::EmailConfirmationPipes
-end
-
-abstract class ApiAction < Lucky::Action
-  include Shield::Api::EmailConfirmationHelpers
-  include Shield::Api::EmailConfirmationPipes
-end
-
 struct EmailConfirmationSession
   include Shield::EmailConfirmationSession
 end

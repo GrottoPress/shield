@@ -4,14 +4,6 @@ abstract class BaseModel < Avram::Model
   include Shield::Model
 end
 
-abstract class BrowserAction < Lucky::Action
-  include Shield::BrowserAction
-end
-
-abstract class ApiAction < Lucky::Action
-  include Shield::ApiAction
-end
-
 module Lucky::HTMLPage
   include Shield::LoginHelpers
 end

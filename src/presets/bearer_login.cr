@@ -45,15 +45,6 @@ class DeleteUserBearerLogins < User::SaveOperation
   include Shield::DeleteUserBearerLogins
 end
 
-abstract class ApiAction < Lucky::Action
-  include Shield::Api::BearerLoginHelpers
-
-  # This module reduces `Shield::Api::LoginPipes` from an authentication
-  # pipe to a delegated authorization pipe, so we are requiring an
-  # explicit decision on the part of the developer.
-  #include Shield::Api::BearerLoginPipes
-end
-
 struct BearerLoginHeaders
   include Shield::BearerLoginHeaders
 end
