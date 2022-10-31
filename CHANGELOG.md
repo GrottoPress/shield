@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Upgrade to support *Crystal* v1.6
-- Remove Remove `ApiAction` and `BrowserAction` from presets
+- Remove `ApiAction` and `BrowserAction` from presets
 
 ## [0.17.0] - 2022-10-15
 
