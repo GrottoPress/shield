@@ -898,7 +898,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
      #  json({
      #    access_token: BearerLoginCredentials.new(operation, bearer_login),
      #    expires_in: bearer_login.status.span?.try(&.total_seconds.to_i64),
-     #    refresh_token: operation.refresh_token,
+     #    refresh_token: operation.credentials.try(&.to_s),
      #    scope: bearer_login.scopes.join(' '),
      #    token_type: "Bearer"
      #  })

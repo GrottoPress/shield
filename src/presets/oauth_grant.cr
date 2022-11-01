@@ -3,6 +3,8 @@
   .includes?("OauthGrant")
 %}
 
+require "../compat/oauth_grant"
+
 class User < BaseModel
   include Shield::HasManyOauthGrants
 end

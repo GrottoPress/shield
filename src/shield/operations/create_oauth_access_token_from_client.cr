@@ -1,6 +1,6 @@
 module Shield::CreateOauthAccessTokenFromClient
   macro included
-    getter refresh_token : String?
+    getter credentials : OauthGrantCredentials?
 
     needs oauth_client : OauthClient
 

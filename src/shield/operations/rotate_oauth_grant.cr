@@ -1,6 +1,6 @@
 module Shield::RotateOauthGrant
   macro included
-    getter refresh_token : String?
+    getter credentials : OauthGrantCredentials?
 
     include Shield::EndOauthGrantGracefully
 
@@ -29,10 +29,7 @@ module Shield::RotateOauthGrant
         user: oauth_grant.user
       )
 
-      @refresh_token = OauthGrantCredentials.new(
-        operation,
-        operation.save!
-      ).to_s
+      @credentials = OauthGrantCredentials.new(operation, operation.save!)
     end
   end
 end

@@ -4,7 +4,7 @@ module Shield::CreateOauthAccessTokenFromGrant
   # Revoke access tokens if authorization used more than once,
   # to mitigate replay attacks.
   macro included
-    getter refresh_token : String?
+    getter credentials : OauthGrantCredentials?
 
     needs oauth_grant : OauthGrant
 
@@ -90,7 +90,7 @@ module Shield::CreateOauthAccessTokenFromGrant
       operation = RotateOauthGrant.new(oauth_grant, success: true)
       operation.save!
 
-      @refresh_token = operation.refresh_token
+      @credentials = operation.credentials
     end
   end
 end

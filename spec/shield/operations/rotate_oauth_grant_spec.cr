@@ -15,7 +15,7 @@ describe Shield::RotateOauthGrant do
       success: false
     ) do |operation, _|
       operation.saved?.should be_true
-      operation.refresh_token.should_not be_nil
+      operation.credentials.should_not be_nil
     end
 
     oauth_grant.reload.status.failure?.should be_true

@@ -33,7 +33,7 @@ describe Shield::CreateOauthAccessTokenFromGrant do
         end
 
         operation.token.should_not be_empty
-        operation.refresh_token.should_not be_nil
+        operation.credentials.should_not be_nil
       end
 
       oauth_grant.reload.status.success?.should be_true
@@ -72,7 +72,7 @@ describe Shield::CreateOauthAccessTokenFromGrant do
         end
 
         operation.token.should_not be_empty
-        operation.refresh_token.should_not be_nil
+        operation.credentials.should_not be_nil
       end
 
       oauth_grant.reload
