@@ -2,11 +2,12 @@ module Shield::BcryptHash
   macro included
     include Shield::Hash
 
-    def initialize(@plaintext : String)
-      @cost = LuckyEnv.production? ? 12 : 4
+    def initialize(@plaintext : String, @cost : Int32)
     end
 
-    def initialize(@plaintext : String, @cost : Int32)
+    def self.new(plaintext : String)
+      cost = LuckyEnv.production? ? 12 : 4
+      new(plaintext, cost)
     end
 
     def hash : String

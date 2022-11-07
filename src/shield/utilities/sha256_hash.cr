@@ -2,6 +2,9 @@ module Shield::Sha256Hash
   macro included
     include Shield::Hash
 
+    def initialize(@plaintext : String)
+    end
+
     def hash : String
       hash(salt: true)
     end

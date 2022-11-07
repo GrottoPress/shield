@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Rename `CreateOauthAccessTokenFromGrant#refresh_token` to `#credentials`
 - Rename `RotateOauthGrant#refresh_token` to `#credentials`
 
+### Removed
+- Remove `Shield::Hash#initialize`
+
 ## [0.17.0] - 2022-10-15
 
 ### Added
