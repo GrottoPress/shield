@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Add `BearerLoginHeaders.new(HTTP::Server::Context)` overload
+- Add `LoginHeaders.new(HTTP::Server::Context)` overload
 
 ### Changed
 - Upgrade to support *Crystal* v1.6

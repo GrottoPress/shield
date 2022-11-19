@@ -3,7 +3,7 @@ module Shield::Api::LoginHelpers
     include Shield::LoginHelpers
 
     getter? current_login : Login? do
-      LoginHeaders.new(context.request).verify
+      LoginHeaders.new(context).verify
     end
   end
 end

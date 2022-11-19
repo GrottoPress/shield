@@ -3,7 +3,7 @@ module Shield::Api::SkipAuthenticationCache
     include Shield::SkipAuthenticationCache
 
     def current_login? : Login?
-      LoginHeaders.new(context.request).verify
+      LoginHeaders.new(context).verify
     end
 
     {% if Avram::Model.all_subclasses
