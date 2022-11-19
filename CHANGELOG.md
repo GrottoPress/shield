@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased] - 
 
+### Added
+- Add `BearerLoginHeaders.new(HTTP::Server::Context)` overload
+
 ### Changed
 - Upgrade to support *Crystal* v1.6
 - Remove `ApiAction` and `BrowserAction` from presets

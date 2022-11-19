@@ -15,7 +15,7 @@ module Shield::Api::SkipAuthenticationCache
       end
 
       def current_bearer_login? : BearerLogin?
-        BearerLoginHeaders.new(context.request).verify
+        BearerLoginHeaders.new(context).verify
       end
     {% end %}
   end
