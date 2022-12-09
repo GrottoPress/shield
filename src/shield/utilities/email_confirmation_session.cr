@@ -5,6 +5,10 @@ module Shield::EmailConfirmationSession
     def initialize(@session : Lucky::Session)
     end
 
+    def self.new(context : HTTP::Server::Context)
+      new(context.session)
+    end
+
     def email_confirmation_id?
       @session.get?(:email_confirmation_id).try do |id|
         EmailConfirmation::PrimaryKeyType.adapter.parse(id).value

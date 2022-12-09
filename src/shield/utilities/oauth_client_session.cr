@@ -3,6 +3,10 @@ module Shield::OauthClientSession
     def initialize(@session : Lucky::Session)
     end
 
+    def self.new(context : HTTP::Server::Context)
+      new(context.session)
+    end
+
     getter? oauth_client : OauthClient? do
       oauth_client_id?.try do |id|
         OauthClientQuery.new.id(id).preload_user.first?

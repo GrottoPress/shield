@@ -5,6 +5,10 @@ module Shield::PasswordResetSession
     def initialize(@session : Lucky::Session)
     end
 
+    def self.new(context : HTTP::Server::Context)
+      new(context.session)
+    end
+
     def password_reset_id?
       @session.get?(:password_reset_id).try do |id|
         PasswordReset::PrimaryKeyType.adapter.parse(id).value

@@ -3,6 +3,10 @@ module Shield::OauthStateSession
     def initialize(@session : Lucky::Session)
     end
 
+    def self.new(context : HTTP::Server::Context)
+      new(context.session)
+    end
+
     def state : String
       state?.not_nil!
     end

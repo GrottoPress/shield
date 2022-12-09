@@ -3,6 +3,10 @@ module Shield::ReturnUrlSession
     def initialize(@session : Lucky::Session)
     end
 
+    def self.new(context : HTTP::Server::Context)
+      new(context.session)
+    end
+
     def return_url : String
       return_url?.not_nil!
     end

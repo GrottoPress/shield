@@ -3,6 +3,10 @@ module Shield::PageUrlSession
     def initialize(@session : Lucky::Session)
     end
 
+    def self.new(context : HTTP::Server::Context)
+      new(context.session)
+    end
+
     def previous_page_url : String
       previous_page_url?.not_nil!
     end

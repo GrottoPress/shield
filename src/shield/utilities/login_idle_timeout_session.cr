@@ -3,6 +3,10 @@ module Shield::LoginIdleTimeoutSession
     def initialize(@session : Lucky::Session)
     end
 
+    def self.new(context : HTTP::Server::Context)
+      new(context.session)
+    end
+
     def login_expired? : Bool?
       Shield.settings.login_idle_timeout.try do |timeout|
         login_last_active?.try { |time| Time.utc - time >= timeout }

@@ -21,7 +21,7 @@ module Shield::LoginHelpers
     end
 
     getter? current_login : Login? do
-      LoginSession.new(context.session).verify
+      LoginSession.new(context).verify
     end
   end
 end

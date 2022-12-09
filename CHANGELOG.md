@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - 
+
+### Added
+- Add `BearerTokenSession.new(context : HTTP::Server::Context)` overload
+- Add `EmailConfirmationSession.new(context : HTTP::Server::Context)` overload
+- Add `LoginIdleTimeoutSession.new(context : HTTP::Server::Context)` overload
+- Add `LoginSession.new(context : HTTP::Server::Context)` overload
+- Add `OauthClientSession.new(context : HTTP::Server::Context)` overload
+- Add `OauthStateSession.new(context : HTTP::Server::Context)` overload
+- Add `PageUrlSession.new(context : HTTP::Server::Context)` overload
+- Add `PasswordResetSession.new(context : HTTP::Server::Context)` overload
+- Add `ReturnUrlSession.new(context : HTTP::Server::Context)` overload
+
 ## [0.18.0] - 2022-11-21
 
 ### Added

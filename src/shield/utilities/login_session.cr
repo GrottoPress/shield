@@ -5,6 +5,10 @@ module Shield::LoginSession
     def initialize(@session : Lucky::Session)
     end
 
+    def self.new(context : HTTP::Server::Context)
+      new(context.session)
+    end
+
     def login_id?
       @session.get?(:login_id).try do |id|
         Login::PrimaryKeyType.adapter.parse(id).value
