@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `EmailConfirmationSession.new(context : HTTP::Server::Context)` overload
 - Add `LoginIdleTimeoutSession.new(context : HTTP::Server::Context)` overload
 - Add `LoginSession.new(context : HTTP::Server::Context)` overload
+- Add `OauthClientHeaders.new(context : HTTP::Server::Context)` overload
 - Add `OauthClientSession.new(context : HTTP::Server::Context)` overload
 - Add `OauthStateSession.new(context : HTTP::Server::Context)` overload
 - Add `PageUrlSession.new(context : HTTP::Server::Context)` overload
