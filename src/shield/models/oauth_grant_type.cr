@@ -31,7 +31,7 @@ module Shield::OauthGrantType
       io << @grant_type
     end
 
-    def to_json(json)
+    def to_json(json : JSON::Builder)
       json.string(to_s)
     end
 

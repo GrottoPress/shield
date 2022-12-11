@@ -3,7 +3,7 @@ module Shield::Credentials
     getter :id
     getter password : String
 
-    def to_json(json)
+    def to_json(json : JSON::Builder)
       json.string(to_s)
     end
 
