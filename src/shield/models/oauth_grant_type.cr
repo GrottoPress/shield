@@ -27,7 +27,7 @@ module Shield::OauthGrantType
       !valid?
     end
 
-    def to_s(io)
+    def to_s(io : IO)
       io << @grant_type
     end
 

@@ -17,7 +17,7 @@ module Shield::OauthResponseType
       !valid?
     end
 
-    def to_s(io)
+    def to_s(io : IO)
       io << @response_type
     end
 

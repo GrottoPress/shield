@@ -17,7 +17,7 @@ module Shield::BearerScope
       json.string(to_s)
     end
 
-    def to_s(io)
+    def to_s(io : IO)
       io << @name
     end
 

@@ -50,7 +50,7 @@ module Shield::OauthGrantPkce
         @method.in?(Shield.settings.oauth_code_challenge_methods_allowed)
       end
 
-      def to_s(io)
+      def to_s(io : IO)
         io << @method
       end
     end

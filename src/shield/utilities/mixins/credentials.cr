@@ -7,7 +7,7 @@ module Shield::Credentials
       json.string(to_s)
     end
 
-    def to_s(io)
+    def to_s(io : IO)
       io << Base64.urlsafe_encode("#{id}:#{password}", false)
     end
 
