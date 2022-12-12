@@ -3,10 +3,7 @@ require "../../../spec_helper"
 class Spec::Oauth::Pipes < ApiAction
   include Shield::Api::Oauth::Token::Pipes
 
-  skip :require_logged_in
-  skip :require_logged_out
   skip :pin_login_to_ip_address
-  skip :check_authorization
 
   before :oauth_validate_client_id
   # before :oauth_handle_errors
