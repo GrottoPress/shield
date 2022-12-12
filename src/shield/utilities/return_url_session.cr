@@ -11,9 +11,9 @@ module Shield::ReturnUrlSession
       return_url?.not_nil!
     end
 
-    def return_url? : String?
+    def return_url?(*, delete = false) : String?
       @session.get?(:return_url).try do |url|
-        delete
+        self.delete if delete
         url
       end
     end

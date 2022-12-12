@@ -11,9 +11,9 @@ module Shield::BearerTokenSession
       bearer_token?.not_nil!
     end
 
-    def bearer_token? : String?
+    def bearer_token?(*, delete = false) : String?
       @session.get?(:bearer_token).try do |token|
-        delete
+        self.delete if delete
         token
       end
     end

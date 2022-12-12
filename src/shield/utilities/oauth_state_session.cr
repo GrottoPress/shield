@@ -11,9 +11,9 @@ module Shield::OauthStateSession
       state?.not_nil!
     end
 
-    def state? : String?
+    def state?(*, delete = false) : String?
       @session.get?(:oauth_state).try do |value|
-        delete
+        self.delete if delete
         value
       end
     end

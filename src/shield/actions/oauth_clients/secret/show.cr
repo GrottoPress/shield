@@ -30,7 +30,7 @@ module Shield::OauthClients::Secret::Show
     # `secret`, because fetching secret deletes the session
     private getter oauth_client_session : Tuple(OauthClient?, String?) do
       _session = OauthClientSession.new(session)
-      {_session.oauth_client?, _session.oauth_client_secret?}
+      {_session.oauth_client?, _session.oauth_client_secret?(delete: true)}
     end
   end
 end

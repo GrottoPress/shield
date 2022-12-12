@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `PasswordResetSession.new(context : HTTP::Server::Context)` overload
 - Add `ReturnUrlSession.new(context : HTTP::Server::Context)` overload
 
+### Changed
+- Do not delete secrets by default, after fetching from session.
+
 ## [0.18.0] - 2022-11-21
 
 ### Added

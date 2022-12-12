@@ -41,7 +41,7 @@ module Shield::Oauth::Authorization::New
     end
 
     getter state : String? do
-      OauthStateSession.new(session).state?
+      OauthStateSession.new(session).state?(delete: true)
     end
 
     def scopes : Array(String)

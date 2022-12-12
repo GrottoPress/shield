@@ -5,7 +5,7 @@ module Shield::ActionHelpers
     end
 
     getter? previous_page_url : String? do
-      PageUrlSession.new(session).previous_page_url?
+      PageUrlSession.new(session).previous_page_url?(delete: true)
     end
 
     def return_url
@@ -13,7 +13,7 @@ module Shield::ActionHelpers
     end
 
     getter? return_url : String? do
-      ReturnUrlSession.new(session).return_url?
+      ReturnUrlSession.new(session).return_url?(delete: true)
     end
 
     def redirect_back(

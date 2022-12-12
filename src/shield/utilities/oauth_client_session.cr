@@ -25,9 +25,9 @@ module Shield::OauthClientSession
       @session.get?(:oauth_client_id)
     end
 
-    def oauth_client_secret? : String?
+    def oauth_client_secret?(*, delete = false) : String?
       @session.get?(:oauth_client_secret).try do |secret|
-        delete
+        self.delete if delete
         secret
       end
     end
