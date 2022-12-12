@@ -38,9 +38,4 @@ struct UserSerializer < SuccessSerializer
     @token.try { |token| data = data.merge({token: token }) }
     data
   end
-
-  private def add_user(data)
-    @user.try { |user| data = data.merge({user: UserSerializer.item(user)}) }
-    data
-  end
 end
