@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Do not delete secrets by default, after fetching from session.
+- Drop `create_user` parameter from `Shield::HttpClient` auth methods
 
 ## [0.18.0] - 2022-11-21
 

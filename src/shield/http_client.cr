@@ -5,17 +5,15 @@ module Shield::HttpClient
       password : String,
       remote_ip = Socket::IPAddress.new("1.2.3.4", 5),
     )
-      api_auth(user.email, password, remote_ip, create_user: false)
+      api_auth(user.email, password, remote_ip)
     end
 
     def api_auth(
       email : String,
       password : String,
-      remote_ip = Socket::IPAddress.new("1.2.3.4", 5),
-      *,
-      create_user = true
+      remote_ip = Socket::IPAddress.new("1.2.3.4", 5)
     )
-      create_user(email, password) if create_user
+      create_user(email, password)
 
       StartCurrentLogin.create(
         params(email: email, password: password),
@@ -50,18 +48,16 @@ module Shield::HttpClient
       remote_ip = Socket::IPAddress.new("1.2.3.4", 5),
       session = Lucky::Session.new
     )
-      browser_auth(user.email, password, remote_ip, session, create_user: false)
+      browser_auth(user.email, password, remote_ip, session)
     end
 
     def browser_auth(
       email : String,
       password : String,
       remote_ip = Socket::IPAddress.new("1.2.3.4", 5),
-      session = Lucky::Session.new,
-      *,
-      create_user = true
+      session = Lucky::Session.new
     )
-      create_user(email, password) if create_user
+      create_user(email, password)
 
       StartCurrentLogin.create!(
         params(email: email, password: password),
@@ -92,10 +88,19 @@ module Shield::HttpClient
       Lucky::Session.from_cookie_jar(cookies)
     end
 
-    private def create_user(email : String, password : String) : Nil
+    private def create_user(email, password) : Nil
+      # ameba:disable Performance/AnyInsteadOfEmpty
+      return if UserQuery.new.email(email).any?
+
       password_digest = BcryptHash.new(password).hash
       user = UserFactory.create &.email(email).password_digest(password_digest)
-      UserOptionsFactory.create &.user_id(user.id)
+
+      {% if Avram::Model.all_subclasses
+        .map(&.stringify)
+        .includes?("UserOptions") %}
+
+        UserOptionsFactory.create &.user_id(user.id)
+      {% end %}
     end
   end
 end
