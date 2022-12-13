@@ -89,7 +89,6 @@ module Shield::HttpClient
     end
 
     private def create_user(email, password) : Nil
-      # ameba:disable Performance/AnyInsteadOfEmpty
       return if UserQuery.new.email(email).any?
 
       password_digest = BcryptHash.new(password).hash
