@@ -49,14 +49,9 @@ describe Shield::Api::Oauth::Token::Create do
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
         .secret(client_secret)
 
-      resource_owner = UserFactory.create &.email("resource@owner.com")
-      oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
-        .oauth_client_id(oauth_client.id)
-
       response = ApiClient.exec(
         Api::Oauth::Token::Create,
         client_id: oauth_client.id,
-        redirect_uri: oauth_grant.redirect_uri,
         grant_type: "client_credentials",
         client_secret: client_secret,
         scope: "api.current_user.show"
