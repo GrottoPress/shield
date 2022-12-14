@@ -15,6 +15,7 @@ class UserFactory < Avram::Factory
     settings UserSettings.from_json({
       bearer_login_notify: true,
       login_notify: true,
+      oauth_access_token_notify: true,
       password_notify: true
     }.to_json)
   end
