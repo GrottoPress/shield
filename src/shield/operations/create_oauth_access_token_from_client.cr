@@ -39,6 +39,7 @@ module Shield::CreateOauthAccessTokenFromClient
       oauth_client_id.value = oauth_client.id
     end
 
+    # This is not required. Doing it just to have a log of the grant.
     private def create_oauth_grant(bearer_login : BearerLogin)
       now = Time.utc
 
