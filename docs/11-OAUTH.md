@@ -1095,6 +1095,10 @@ PKCE is required for public clients using the Authorization Code Grant flow.
 
    In addition to revoking the token, all other access tokens issued to the same client for the same user are revoked.
 
+### Authentication (SSO)
+
+See [*Samba*](https://github.com/GrottoPress/samba). *Samba* extends *Shield*'s OAuth 2 implementation with authentication capabilities.
+
 ### References:
 
 - [OAuth 2.0 Threat Model and Security Considerations](https://datatracker.ietf.org/doc/html/rfc6819)
