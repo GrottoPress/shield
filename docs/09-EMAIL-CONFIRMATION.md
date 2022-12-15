@@ -195,20 +195,13 @@ This is particularly important, since email addresses are usually the only means
 1. Set up actions:
 
    ```crystal
-   abstract class BrowserAction < Lucky::Action
-     # ...
-     include Shield::EmailConfirmationHelpers
-     include Shield::EmailConfirmationPipes
-     # ...
-   end
-   ```
-
-   ---
-   ```crystal
    # ->>> src/actions/browser_action.cr
 
    abstract class BrowserAction < Lucky::Action
      # ...
+     include Shield::EmailConfirmationHelpers
+     include Shield::EmailConfirmationPipes
+
      # What to do when a user's IP address changes in an email confirmation, if the
      # action requires the user's IP to match the IP with which they started
      # the email confirmation.
