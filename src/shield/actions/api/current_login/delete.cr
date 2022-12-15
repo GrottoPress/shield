@@ -7,7 +7,10 @@ module Shield::Api::CurrentLogin::Delete
     # end
 
     def run_operation
-      DeleteCurrentLogin.delete(login) do |operation, deleted_login|
+      DeleteCurrentLogin.delete(
+        login,
+        session: nil
+      ) do |operation, deleted_login|
         if operation.deleted?
           do_run_operation_succeeded(operation, deleted_login.not_nil!)
         else
