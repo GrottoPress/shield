@@ -40,12 +40,12 @@ module Shield::ValidateOauthGrant
 
     private def validate_code_digest_required
       validate_required code_digest,
-        message: Rex.t(:"operation.error.auth_code_required")
+        message: Rex.t(:"operation.error.oauth.code_required")
     end
 
     private def validate_oauth_client_id_required
       validate_required oauth_client_id,
-        message: Rex.t(:"operation.error.oauth_client_id_required")
+        message: Rex.t(:"operation.error.oauth.client_id_required")
     end
 
     private def validate_scopes_required
@@ -75,7 +75,7 @@ module Shield::ValidateOauthGrant
       validate_foreign_key oauth_client_id,
         query: OauthClientQuery,
         message: Rex.t(
-          :"operation.error.oauth_client_not_found",
+          :"operation.error.oauth.client_not_found",
           oauth_client_id: oauth_client_id.value
         )
     end

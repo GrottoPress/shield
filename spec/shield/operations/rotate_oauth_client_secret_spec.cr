@@ -30,7 +30,7 @@ describe Shield::RotateOauthClientSecret do
       operation.secret.should_not be_empty
 
       operation.secret_digest
-        .should(have_error "operation.error.oauth_client_public")
+        .should(have_error "operation.error.oauth.client_public")
     end
   end
 
@@ -42,7 +42,7 @@ describe Shield::RotateOauthClientSecret do
 
     RotateOauthClientSecret.update(oauth_client) do |operation, _|
       operation.saved?.should be_false
-      operation.id.should have_error("operation.error.oauth_client_inactive")
+      operation.id.should have_error("operation.error.oauth.client_inactive")
     end
   end
 end

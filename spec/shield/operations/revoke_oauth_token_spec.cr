@@ -64,7 +64,7 @@ describe Shield::RevokeOauthToken do
         _token.should be_nil
 
         operation.token
-          .should(have_error "operation.error.oauth_client_id_required")
+          .should(have_error "operation.error.oauth.client_id_required")
       end
     end
 
@@ -90,7 +90,7 @@ describe Shield::RevokeOauthToken do
         _token.should be_nil
 
         operation.token
-          .should(have_error "operation.error.oauth_client_not_authorized")
+          .should(have_error "operation.error.oauth.client_not_authorized")
       end
     end
   end
@@ -152,7 +152,7 @@ context "Refresh Token" do
       _token.should be_nil
 
       operation.token
-        .should(have_error "operation.error.oauth_grant_type_invalid")
+        .should(have_error "operation.error.oauth.grant_type_invalid")
     end
   end
 
@@ -179,7 +179,7 @@ context "Refresh Token" do
       _token.should be_nil
 
       operation.token
-        .should(have_error "operation.error.oauth_client_not_authorized")
+        .should(have_error "operation.error.oauth.client_not_authorized")
     end
   end
 end

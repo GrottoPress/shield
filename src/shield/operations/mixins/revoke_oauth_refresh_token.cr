@@ -25,7 +25,7 @@ module Shield::RevokeOauthRefreshToken
     private def validate_grant_is_refresh_token
       @oauth_grant.try do |oauth_grant|
         return if oauth_grant.type.refresh_token?
-        token.add_error Rex.t(:"operation.error.oauth_grant_type_invalid")
+        token.add_error Rex.t(:"operation.error.oauth.grant_type_invalid")
       end
     end
 
@@ -34,7 +34,7 @@ module Shield::RevokeOauthRefreshToken
         return if oauth_client.id == oauth_grant.oauth_client_id
 
         @client_authorized = false
-        token.add_error Rex.t(:"operation.error.oauth_client_not_authorized")
+        token.add_error Rex.t(:"operation.error.oauth.client_not_authorized")
       end
     end
 

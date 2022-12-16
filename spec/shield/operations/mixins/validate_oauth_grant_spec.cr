@@ -121,7 +121,7 @@ describe Shield::ValidateOauthGrant do
       oauth_grant.should be_nil
 
       operation.oauth_client_id
-        .should(have_error "operation.error.oauth_client_id_required")
+        .should(have_error "operation.error.oauth.client_id_required")
     end
   end
 
@@ -186,7 +186,7 @@ describe Shield::ValidateOauthGrant do
       oauth_grant.should be_nil
 
       operation.oauth_client_id
-        .should(have_error "operation.error.oauth_client_not_found")
+        .should(have_error "operation.error.oauth.client_not_found")
     end
   end
 
@@ -275,7 +275,7 @@ describe Shield::ValidateOauthGrant do
       oauth_grant.should be_nil
 
       operation.code_digest
-        .should(have_error "operation.error.auth_code_required")
+        .should(have_error "operation.error.oauth.code_required")
     end
   end
 end

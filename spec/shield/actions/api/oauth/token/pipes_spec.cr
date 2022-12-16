@@ -267,7 +267,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         response.should send_json(
           400,
           error: "invalid_grant",
-          error_description: "action.pipe.oauth.auth_code_invalid"
+          error_description: "action.pipe.oauth.code_invalid"
         )
       end
 
@@ -305,7 +305,7 @@ describe Shield::Api::Oauth::Token::Pipes do
         response.should send_json(
           400,
           error: "invalid_grant",
-          error_description: "action.pipe.oauth.auth_code_invalid"
+          error_description: "action.pipe.oauth.code_invalid"
         )
       end
     end

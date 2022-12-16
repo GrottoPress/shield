@@ -20,7 +20,7 @@ module Shield::ValidateOauthAccessToken
 
     private def validate_oauth_client_id_required
       validate_required oauth_client_id,
-        message: Rex.t(:"operation.error.oauth_client_id_required")
+        message: Rex.t(:"operation.error.oauth.client_id_required")
     end
   end
 end

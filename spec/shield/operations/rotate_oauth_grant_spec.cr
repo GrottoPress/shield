@@ -36,7 +36,7 @@ describe Shield::RotateOauthGrant do
       operation.saved?.should be_false
 
       operation.inactive_at
-        .should(have_error "operation.error.oauth_grant_inactive")
+        .should(have_error "operation.error.oauth.grant_inactive")
     end
   end
 end

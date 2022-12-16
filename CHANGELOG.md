@@ -25,6 +25,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Delete email confirmation session after delete email confirmation
 - Delete login session after delete login
 - Delete password reset session after delete password reset
+- I18n: Rename `action.pipe.oauth.auth_code_invalid` key to `action.pipe.oauth.code_invalid`
+- I18n: Rename `operation.error.oauth_client_id_required` key to `operation.error.oauth.client_id_required`
+- I18n: Rename `operation.error.oauth_client_inactive` key to `operation.error.oauth.client_inactive`
+- I18n: Rename `operation.error.oauth_client_not_authorized` key to `operation.error.oauth.client_not_authorized`
+- I18n: Rename `operation.error.oauth_client_not_found` key to `operation.error.oauth.client_not_found`
+- I18n: Rename `operation.error.oauth_client_public` key to `operation.error.oauth.client_public`
+- I18n: Rename `operation.error.oauth_code_required` key to `operation.error.oauth.code_required`
+- I18n: Rename `operation.error.oauth_grant_inactive` key to `operation.error.oauth.grant_inactive`
+- I18n: Rename `operation.error.oauth_grant_type_invalid` key to `operation.error.grant_type_invalid`
 
 ## [0.18.0] - 2022-11-21
 

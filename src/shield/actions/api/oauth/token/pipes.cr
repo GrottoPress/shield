@@ -226,7 +226,7 @@ module Shield::Api::Oauth::Token::Pipes
     def do_oauth_validate_code_failed
       json({
         error: "invalid_grant",
-        error_description: Rex.t(:"action.pipe.oauth.auth_code_invalid"),
+        error_description: Rex.t(:"action.pipe.oauth.code_invalid"),
       })
     end
 

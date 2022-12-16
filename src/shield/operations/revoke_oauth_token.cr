@@ -36,7 +36,7 @@ module Shield::RevokeOauthToken
     private def validate_client_id_required
       @bearer_login.try do |bearer_login|
         return if bearer_login.oauth_client_id
-        token.add_error Rex.t(:"operation.error.oauth_client_id_required")
+        token.add_error Rex.t(:"operation.error.oauth.client_id_required")
       end
     end
 
@@ -45,7 +45,7 @@ module Shield::RevokeOauthToken
         return if oauth_client.id == bearer_login.oauth_client_id
 
         @client_authorized = false
-        token.add_error Rex.t(:"operation.error.oauth_client_not_authorized")
+        token.add_error Rex.t(:"operation.error.oauth.client_not_authorized")
       end
     end
 

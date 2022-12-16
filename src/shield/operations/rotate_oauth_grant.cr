@@ -13,7 +13,7 @@ module Shield::RotateOauthGrant
     private def validate_record_active
       record.try do |oauth_grant|
         return if oauth_grant.status.active?
-        inactive_at.add_error Rex.t(:"operation.error.oauth_grant_inactive")
+        inactive_at.add_error Rex.t(:"operation.error.oauth.grant_inactive")
       end
     end
 

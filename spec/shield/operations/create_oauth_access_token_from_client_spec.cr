@@ -39,7 +39,7 @@ describe Shield::CreateOauthAccessTokenFromClient do
       bearer_login.should be_nil
 
       operation.oauth_client_id
-        .should(have_error "operation.error.oauth_client_id_required")
+        .should(have_error "operation.error.oauth.client_id_required")
     end
   end
 end

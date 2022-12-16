@@ -34,7 +34,7 @@ describe Shield::UpdateOauthClient do
     ) do |operation, _|
       operation.saved?.should be_false
 
-      operation.id.should have_error("operation.error.oauth_client_inactive")
+      operation.id.should have_error("operation.error.oauth.client_inactive")
     end
   end
 end
