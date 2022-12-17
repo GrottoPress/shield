@@ -222,6 +222,8 @@ This token is revoked when the user logs out.
 1. Set up actions:
 
    ```crystal
+   # ->>> src/actions/api_action.cr
+
    abstract class ApiAction < Lucky::Action
      # ...
      include Shield::ApiAction
@@ -246,22 +248,17 @@ This token is revoked when the user logs out.
      #   You may not need this, for instance, if building a private API, such
      #   as a backend solely for a frontend, where you would be accepting
      #   only email/password logins from the frontend.
-     #include Shield::Api::BearerLoginPipes
-     # ...
-   end
-   ```
+     include Shield::Api::BearerLoginPipes
 
-   ---
-   ```crystal
-   # ->>> src/actions/api_action.cr
-
-   abstract class ApiAction < Lucky::Action
-     # ...
      route_prefix "/api/v0"
 
      # If you are worried about users on mobile, you may want
      # to disable pinning a login to its IP address
      #skip :pin_login_to_ip_address
+
+     #def bearer_scope : String
+     #  BearerScope.new(self.class).name
+     #end
 
      # What to do if user is **not** logged in
      # but the action requires user to be logged in.
