@@ -293,6 +293,40 @@
 
    This email is sent if you included `Shield::SendWelcomeEmail` in `RegisterCurrentUser`.
 
+### Adding other *user-like* models
+
+*Shield* requires the `User` model for the purpose of authentication. Your app may define other *user-like* models, if needed. They should have a `belongs_to : User` association. This enables determining which record from that model corresponds to the currently logged-in user, for instance:
+
+```crystal
+# ->>> src/models/student.cr
+
+class Student < BaseModel
+  # ...
+  table :students do
+    # ...
+    belongs_to user : User
+    #...
+  end
+  # ...
+end
+```
+
+```crystal
+# ->>> src/actions/current_student/show.cr
+
+class CurrentStudent::Show < BrowserAction
+  # ...
+  get "/student" do
+    html ShowPage, student: student
+  end
+
+  getter student : Student do
+    StudentQuery.new.user_id(current_user.id).first
+  end
+  # ...
+end
+```
+
 ### Other Types
 
 1. Operations:
