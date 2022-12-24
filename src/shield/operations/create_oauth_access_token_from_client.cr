@@ -26,7 +26,13 @@ module Shield::CreateOauthAccessTokenFromClient
 
     private def set_name
       return unless oauth_client.status.active?
-      name.value = "OAuth access token -- Client #{oauth_client.id}"
+
+      name.value = Rex.t(
+        :"operation.misc.oauth.access_token_name",
+        grant_type: OauthGrantType::CLIENT_CREDENTIALS,
+        client_id: oauth_client.id,
+        user_id: oauth_client.user_id
+      )
     end
 
     private def set_user_id

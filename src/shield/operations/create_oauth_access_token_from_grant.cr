@@ -36,8 +36,12 @@ module Shield::CreateOauthAccessTokenFromGrant
     private def set_name
       return unless oauth_grant.status.active?
 
-      name.value = "OAuth access token --
-        Grant (#{oauth_grant.type}) #{oauth_grant.id}"
+      name.value = Rex.t(
+        :"operation.misc.oauth.access_token_name",
+        grant_type: oauth_grant.type,
+        client_id: oauth_grant.oauth_client_id,
+        user_id: oauth_grant.user_id
+      )
     end
 
     private def set_refresh_token_grant_scopes

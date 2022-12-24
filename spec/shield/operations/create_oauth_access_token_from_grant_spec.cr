@@ -30,6 +30,7 @@ describe Shield::CreateOauthAccessTokenFromGrant do
           _bearer_login.status.active?.should be_true
           _bearer_login.inactive_at.should_not be_nil
           _bearer_login.scopes.should eq(scopes)
+          _bearer_login.name.should eq("operation.misc.oauth.access_token_name")
         end
 
         operation.token.should_not be_empty
@@ -69,6 +70,7 @@ describe Shield::CreateOauthAccessTokenFromGrant do
           _bearer_login.status.active?.should be_true
           _bearer_login.inactive_at.should_not be_nil
           _bearer_login.scopes.should eq(scopes)
+          _bearer_login.name.should eq("operation.misc.oauth.access_token_name")
         end
 
         operation.token.should_not be_empty

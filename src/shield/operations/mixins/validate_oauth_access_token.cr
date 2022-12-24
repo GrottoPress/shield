@@ -9,6 +9,9 @@ module Shield::ValidateOauthAccessToken
     private def validate_name_unique
     end
 
+    private def validate_name_valid
+    end
+
     private def validate_scopes_valid
       scopes.value.try do |value|
         allowed_scopes = Shield.settings.oauth_access_token_scopes_allowed
