@@ -1,6 +1,5 @@
 {% skip_file unless Avram::Model.all_subclasses
-  .map(&.stringify)
-  .includes?("PasswordReset")
+  .find(&.name.== :PasswordReset.id)
 %}
 
 require "../compat/password_reset"

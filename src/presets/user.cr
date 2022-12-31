@@ -1,16 +1,10 @@
-{% skip_file unless Avram::Model.all_subclasses
-  .map(&.stringify)
-  .includes?("User")
-%}
+{% skip_file unless Avram::Model.all_subclasses.find(&.name.== :User.id) %}
 
 class UserQuery < User::BaseQuery
   include Shield::UserQuery
 end
 
-{% unless Avram::Model.all_subclasses
-  .map(&.stringify)
-  .includes?("EmailConfirmation") %}
-
+{% unless Avram::Model.all_subclasses.find(&.name.== :EmailConfirmation.id) %}
   class RegisterCurrentUser < User::SaveOperation
     include Shield::RegisterUser
   end

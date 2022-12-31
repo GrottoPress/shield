@@ -1,6 +1,5 @@
 {% skip_file unless Avram::Model.all_subclasses
-  .map(&.stringify)
-  .includes?("OauthGrant")
+  .find(&.name.== :OauthGrant.id)
 %}
 
 require "../compat/oauth_grant"

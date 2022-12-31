@@ -1,6 +1,5 @@
 {% skip_file unless Avram::Model.all_subclasses
-  .map(&.stringify)
-  .includes?("OauthClient")
+  .find(&.name.== :OauthClient.id)
 %}
 
 require "../compat/oauth_client"

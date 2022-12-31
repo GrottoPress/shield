@@ -1,6 +1,5 @@
 {% skip_file unless Avram::Model.all_subclasses
-  .map(&.stringify)
-  .includes?("BearerLogin")
+  .find(&.name.== :BearerLogin.id)
 %}
 
 require "../compat/bearer_login"

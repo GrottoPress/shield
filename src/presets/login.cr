@@ -1,7 +1,4 @@
-{% skip_file unless Avram::Model.all_subclasses
-  .map(&.stringify)
-  .includes?("Login")
-%}
+{% skip_file unless Avram::Model.all_subclasses.find(&.name.== :Login.id) %}
 
 require "../compat/login"
 

@@ -1,6 +1,5 @@
 {% skip_file unless Avram::Model.all_subclasses
-  .map(&.stringify)
-  .includes?("UserOptions")
+  .find(&.name.== :UserOptions.id)
 %}
 
 class User < BaseModel
@@ -32,7 +31,7 @@ class UpdateUser < User::SaveOperation
   include Shield::HasOneSaveUserOptions
 end
 
-{% if Avram::Model.all_subclasses.map(&.stringify).includes?("Login") %}
+{% if Avram::Model.all_subclasses.find(&.name.== :Login.id) %}
   class SaveUserOptions < UserOptions::SaveOperation
     include Shield::SaveLoginUserOptions
   end
@@ -42,7 +41,7 @@ end
   end
 {% end %}
 
-{% if Avram::Model.all_subclasses.map(&.stringify).includes?("BearerLogin") %}
+{% if Avram::Model.all_subclasses.find(&.name.== :BearerLogin.id) %}
   class SaveUserOptions < UserOptions::SaveOperation
     include Shield::SaveBearerLoginUserOptions
   end
@@ -52,16 +51,13 @@ end
   end
 {% end %}
 
-{% if Avram::Model.all_subclasses
-  .map(&.stringify)
-  .includes?("OauthGrant") %}
-
+{% if Avram::Model.all_subclasses.find(&.name.== :OauthGrant.id)  %}
   class CreateOauthAccessTokenFromGrant < BearerLogin::SaveOperation
     include Shield::NotifyOauthAccessToken
   end
 {% end %}
 
-{% if Avram::Model.all_subclasses.map(&.stringify).includes?("OauthClient") %}
+{% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
   class CreateOauthAccessTokenFromClient < BearerLogin::SaveOperation
     include Shield::NotifyOauthAccessToken
   end

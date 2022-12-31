@@ -1,6 +1,5 @@
 {% skip_file unless Avram::Model.all_subclasses
-  .map(&.stringify)
-  .includes?("EmailConfirmation")
+  .find(&.name.== :EmailConfirmation.id)
 %}
 
 require "../compat/email_confirmation"
