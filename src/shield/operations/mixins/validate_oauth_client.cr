@@ -14,10 +14,10 @@ module Shield::ValidateOauthClient
       validate_redirect_uris_valid
 
       validate_user_id_required
-      validate_user_exists
     end
 
     include Lucille::ValidateStatus
+    include Lucille::ValidateUserExists
 
     private def validate_name_required
       validate_required name,
@@ -80,17 +80,6 @@ module Shield::ValidateOauthClient
     private def validate_user_id_required
       validate_required user_id,
         message: Rex.t(:"operation.error.user_id_required")
-    end
-
-    private def validate_user_exists
-      return unless user_id.changed?
-
-      validate_foreign_key user_id,
-        query: UserQuery,
-        message: Rex.t(
-          :"operation.error.user_not_found",
-          user_id: user_id.value
-        )
     end
 
     private def ensure_redirect_uris_unique

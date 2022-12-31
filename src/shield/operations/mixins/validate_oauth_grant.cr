@@ -17,10 +17,10 @@ module Shield::ValidateOauthGrant
       validate_type_valid
 
       validate_user_id_required
-      validate_user_exists
     end
 
     include Lucille::ValidateStatus
+    include Lucille::ValidateUserExists
 
     private def ensure_scopes_unique
       scopes.value = scopes.value.try(&.uniq)
@@ -95,17 +95,6 @@ module Shield::ValidateOauthGrant
     private def validate_user_id_required
       validate_required user_id,
         message: Rex.t(:"operation.error.user_id_required")
-    end
-
-    private def validate_user_exists
-      return unless user_id.changed?
-
-      validate_foreign_key user_id,
-        query: UserQuery,
-        message: Rex.t(
-          :"operation.error.user_not_found",
-          user_id: user_id.value
-        )
     end
   end
 end

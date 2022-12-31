@@ -9,11 +9,6 @@ module Shield::RegisterOauthClient
     include Shield::SetSecret
     include Shield::ValidateOauthClient
 
-    private def validate_user_exists
-      return if user
-      previous_def
-    end
-
     private def set_secret
       return if public.value
       previous_def

@@ -28,11 +28,6 @@ module Shield::StartOauthGrant
 
     include Shield::ValidateOauthGrant
 
-    private def validate_user_exists
-      return if user
-      previous_def
-    end
-
     private def validate_oauth_client_exists
       return if oauth_client
       previous_def

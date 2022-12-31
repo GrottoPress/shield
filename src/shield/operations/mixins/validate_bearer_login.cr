@@ -7,7 +7,6 @@ module Shield::ValidateBearerLogin
       validate_user_id_required
       validate_name_valid
       validate_name_unique
-      validate_user_exists
 
       validate_scopes_required
       validate_scopes_not_empty
@@ -16,6 +15,7 @@ module Shield::ValidateBearerLogin
     end
 
     include Lucille::ValidateStatus
+    include Lucille::ValidateUserExists
 
     private def ensure_scopes_unique
       scopes.value = scopes.value.try(&.uniq)
@@ -87,17 +87,6 @@ module Shield::ValidateBearerLogin
 
         scopes.add_error Rex.t(:"operation.error.bearer_scopes_invalid")
       end
-    end
-
-    private def validate_user_exists
-      return unless user_id.changed?
-
-      validate_foreign_key user_id,
-        query: UserQuery,
-        message: Rex.t(
-          :"operation.error.user_not_found",
-          user_id: user_id.value
-        )
     end
 
     private def validate_token_digest_required
