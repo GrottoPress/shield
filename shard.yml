@@ -13,8 +13,7 @@ crystal: ~> 1.6
 dependencies:
   lucille:
     github: GrottoPress/lucille
-    # version: ~> 0.8.0
-    branch: master
+    version: ~> 0.9.0
 
 development_dependencies:
   ameba:
