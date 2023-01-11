@@ -9,7 +9,7 @@ module Shield::Api::Users::Delete
     def run_operation
       DeleteUser.delete(
         user,
-        current_user: _current_user?
+        current_user: current_user_or_bearer?
       ) do |operation, deleted_user|
         if operation.deleted?
           do_run_operation_succeeded(operation, deleted_user.not_nil!)
@@ -18,14 +18,6 @@ module Shield::Api::Users::Delete
           do_run_operation_failed(operation)
         end
       end
-    end
-
-    def _current_user?
-      {% if Avram::Model.all_subclasses.find(&.name.== :BearerLogin.id) %}
-        current_user_or_bearer?
-      {% else %}
-        current_user?
-      {% end %}
     end
   end
 end

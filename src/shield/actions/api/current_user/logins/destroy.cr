@@ -20,11 +20,7 @@ module Shield::Api::CurrentUser::Logins::Destroy
     end
 
     def user
-      {% if Avram::Model.all_subclasses.find(&.name.== :BearerLogin.id) %}
-        current_user_or_bearer
-      {% else %}
-        current_user
-      {% end %}
+      current_user_or_bearer
     end
 
     def do_run_operation_succeeded(operation, user)

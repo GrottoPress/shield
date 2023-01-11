@@ -7,11 +7,7 @@ module Shield::Api::CurrentUser::Show
     # end
 
     def user
-      {% if Avram::Model.all_subclasses.find(&.name.== :BearerLogin.id) %}
-        current_user_or_bearer
-      {% else %}
-        current_user
-      {% end %}
+      current_user_or_bearer
     end
 
     def authorize?(user : Shield::User) : Bool
