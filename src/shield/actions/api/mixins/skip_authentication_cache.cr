@@ -6,10 +6,7 @@ module Shield::Api::SkipAuthenticationCache
       LoginHeaders.new(context).verify
     end
 
-    {% if Avram::Model.all_subclasses
-      .map(&.stringify)
-      .includes?("BearerLogin") %}
-
+    {% if Avram::Model.all_subclasses.find(&.name.== :BearerLogin.id) %}
       def current_bearer? : User?
         current_bearer_login?.try &.user
       end

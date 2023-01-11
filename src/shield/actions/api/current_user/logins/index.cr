@@ -21,10 +21,7 @@ module Shield::Api::CurrentUser::Logins::Index
     end
 
     def user
-      {% if Avram::Model.all_subclasses
-        .map(&.stringify)
-        .includes?("BearerLogin") %}
-
+      {% if Avram::Model.all_subclasses.find(&.name.== :BearerLogin.id) %}
         current_user_or_bearer
       {% else %}
         current_user

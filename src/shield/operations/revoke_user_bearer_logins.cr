@@ -8,10 +8,7 @@ module Shield::RevokeUserBearerLogins
       query = BearerLoginQuery.new.user_id(user.id).is_active
       current_bearer_login.try { |login| query = query.id.not.eq(login.id) }
 
-      {% if Avram::Model.all_subclasses
-        .map(&.stringify)
-        .includes?("OauthClient") %}
-
+      {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
         query = query.oauth_client_id.is_nil
       {% end %}
 

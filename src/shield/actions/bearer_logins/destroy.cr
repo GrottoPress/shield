@@ -30,10 +30,7 @@ module Shield::BearerLogins::Destroy
     end
 
     getter bearer_login : BearerLogin do
-      {% if Avram::Model.all_subclasses
-        .map(&.stringify)
-        .includes?("OauthClient") %}
-
+      {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
         BearerLoginQuery.new.preload_oauth_client.find(bearer_login_id)
       {% else %}
         BearerLoginQuery.find(bearer_login_id)
@@ -41,10 +38,7 @@ module Shield::BearerLogins::Destroy
     end
 
     def authorize?(user : Shield::User) : Bool
-      {% if Avram::Model.all_subclasses
-        .map(&.stringify)
-        .includes?("OauthClient") %}
-
+      {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
         super ||
           user.id == bearer_login.user_id ||
           user.id == bearer_login.oauth_client.try(&.user_id)
