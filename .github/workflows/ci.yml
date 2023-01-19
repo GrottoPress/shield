@@ -30,7 +30,7 @@ jobs:
         run: shards install
       - name: Lint code
         run: ./bin/ameba
-  specs:
+  specs__postgresql:
     strategy:
       fail-fast: false
       matrix:
@@ -67,5 +67,45 @@ jobs:
       - name: Run tests
         env:
           DATABASE_URL: postgres://postgres:password@localhost:5432/shield_spec
+          SKIP_LOAD_ENV: "true"
+        run: crystal spec --error-on-warnings
+  specs__cockroachdb:
+    strategy:
+      fail-fast: false
+      matrix:
+        cockroachdb: [22.2.2]
+        crystal: [1.6.0]
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    steps:
+      - name: Download source
+        uses: actions/checkout@v3
+      - name: Install Crystal
+        uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: ${{ matrix.crystal }}
+      - name: Cache shards
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/shards
+          key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
+          restore-keys: ${{ runner.os }}-shards-
+      - name: Install shards
+        run: shards update
+      - name: Install CockroachDB
+        run: |
+          sudo apt -y install tar wget
+          sudo mkdir -p /usr/local/lib/cockroach
+          wget https://binaries.cockroachdb.com/cockroach-v${{ matrix.cockroachdb }}.linux-amd64.tgz
+          tar -xzf cockroach-v${{ matrix.cockroachdb }}.linux-amd64.tgz
+          sudo cp -f cockroach-v${{ matrix.cockroachdb }}.linux-amd64/cockroach /usr/local/bin/
+          sudo chmod +x /usr/local/bin/cockroach
+          sudo cp -rf cockroach-v${{ matrix.cockroachdb }}.linux-amd64/lib/* /usr/local/lib/cockroach/
+        working-directory: /tmp
+      - name: Start CockroachDB
+        run: cockroach start-single-node --insecure --listen-addr=localhost:36257 --sql-addr=localhost:26257 --background
+      - name: Run tests
+        env:
+          DATABASE_URL: postgres://root@localhost:26257/shield_spec?sslmode=disable
           SKIP_LOAD_ENV: "true"
         run: crystal spec --error-on-warnings

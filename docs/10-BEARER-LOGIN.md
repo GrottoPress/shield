@@ -171,7 +171,7 @@ This token is revoked when the user logs out.
    class AddBearerLoginUserOptions::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
        alter :user_options do
-         add bearer_login_notify : Bool, fill_existing_with: true
+         add bearer_login_notify : Bool, default: true
        end
      end
 

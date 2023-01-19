@@ -1,11 +1,11 @@
-class AddBearerLoginsOauthClientId::V20220804162948 <
+class AddBearerLoginsOauthClientId::V20230119161548 <
   Avram::Migrator::Migration::V1
 
   def migrate
     alter :bearer_logins do
       add_belongs_to oauth_client : OauthClient?,
-        on_delete: :cascade,
-        foreign_key_type: UUID
+        foreign_key_type: UUID,
+        on_delete: :cascade
     end
   end
 

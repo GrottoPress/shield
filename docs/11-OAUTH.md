@@ -218,7 +218,7 @@ PKCE is required for public clients using the Authorization Code Grant flow.
    class AddOauthClientUserOptions::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
        alter :user_options do
-         add oauth_access_token_notify : Bool, fill_existing_with: true
+         add oauth_access_token_notify : Bool, default: true
        end
      end
 

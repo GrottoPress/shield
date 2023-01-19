@@ -30,15 +30,13 @@
 
    class CreateUsers::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
-       enable_extension "citext"
-
        create :users do
          # ...
          primary_key id : Int64
 
          add_timestamps
 
-         add email : String, unique: true, case_sensitive: false
+         add email : String, unique: true
          add password_digest : String
          # ...
        end

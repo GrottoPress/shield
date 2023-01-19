@@ -126,7 +126,7 @@
    class AddLoginUserOptions::VXXXXXXXXXXXXXX < Avram::Migrator::Migration::V1
      def migrate
        alter :user_options do
-         add login_notify : Bool, fill_existing_with: true
+         add login_notify : Bool, default: true
        end
      end
 

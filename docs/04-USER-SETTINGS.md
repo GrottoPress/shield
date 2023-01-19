@@ -42,7 +42,7 @@ You may use either `UserSettings` or `UserOptions`, but not both, in a single ap
      def migrate
        alter :users do
          # ...
-         add settings : JSON::Any, fill_existing_with: JSON.parse({
+         add settings : JSON::Any, default: JSON.parse({
            password_notify: true,
          }.to_json)
          # ...
