@@ -114,7 +114,7 @@ describe Shield::ValidateBearerLogin do
     BearerLoginFactory.create &.user_id(user.id).name(name)
 
     SaveBearerLogin.create(params(
-      name: name,
+      name: name.upcase,
       user_id: user.id,
       active_at: Time.utc,
       token_digest: "abc",

@@ -50,7 +50,7 @@ describe Shield::ValidateUser do
     UserFactory.create &.email(email)
 
     SaveUser.create(params(
-      email: email,
+      email: email.upcase,
       password: "secret"
     )) do |operation, user|
       user.should be_nil

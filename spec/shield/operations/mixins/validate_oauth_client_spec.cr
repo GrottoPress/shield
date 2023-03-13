@@ -145,7 +145,7 @@ describe Shield::ValidateOauthClient do
     SaveOauthClient.create(
       params(
         active_at: Time.utc,
-        name: name,
+        name: name.upcase,
         secret_digest: "a1b2c3",
         user_id: user.id
       ),

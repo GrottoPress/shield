@@ -8,9 +8,9 @@ module Shield::SetUserEmail
 
     private def set_user_email
       email.value.try do |value|
-        query = UserQuery.new.email(value)
-        record.try { |record| query = query.id.not.eq(record.id) }
-        @user_email = query.any?
+        query = UserQuery.new
+        record.try { |_record| query = query.id.not.eq(_record.id) }
+        @user_email = query.email.lower.eq(value.downcase).any?
       end
     end
   end

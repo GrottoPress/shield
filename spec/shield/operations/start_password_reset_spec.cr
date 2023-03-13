@@ -8,7 +8,7 @@ describe Shield::StartPasswordReset do
     ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
 
     StartPasswordReset.create(
-      params(email: email),
+      params(email: email.upcase),
       remote_ip: ip_address
     ) do |operation, password_reset|
       password_reset.should be_a(PasswordReset)
