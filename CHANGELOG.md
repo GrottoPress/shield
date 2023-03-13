@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Add support for CockroachDB
 
+### Changed
+- Upgrade to support *Lucky* v1.0
+
 ## [0.19.0] - 2023-01-06
 
 ### Added
