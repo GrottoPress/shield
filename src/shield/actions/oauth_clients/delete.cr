@@ -11,7 +11,7 @@ module Shield::OauthClients::Delete
         oauth_client
       ) do |operation, deleted_oauth_client|
         if operation.deleted?
-          do_run_operation_succeeded(operation, deleted_oauth_client.not_nil!)
+          do_run_operation_succeeded(operation, deleted_oauth_client)
         else
           response.status_code = 400
           do_run_operation_failed(operation)

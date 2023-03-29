@@ -12,10 +12,7 @@ module Shield::EmailConfirmations::Delete
         session: session
       ) do |operation, deleted_email_confirmation|
         if operation.deleted?
-          do_run_operation_succeeded(
-            operation,
-            deleted_email_confirmation.not_nil!
-          )
+          do_run_operation_succeeded(operation, deleted_email_confirmation)
         else
           response.status_code = 400
           do_run_operation_failed(operation)

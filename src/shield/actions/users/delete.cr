@@ -12,7 +12,7 @@ module Shield::Users::Delete
         current_user: current_user?
       ) do |operation, deleted_user|
         if operation.deleted?
-          do_run_operation_succeeded(operation, deleted_user.not_nil!)
+          do_run_operation_succeeded(operation, deleted_user)
         else
           do_run_operation_failed(operation)
         end

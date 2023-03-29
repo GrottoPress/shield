@@ -9,7 +9,7 @@ module Shield::Api::Logins::Delete
     def run_operation
       DeleteLogin.delete(login, session: nil) do |operation, deleted_login|
         if operation.deleted?
-          do_run_operation_succeeded(operation, deleted_login.not_nil!)
+          do_run_operation_succeeded(operation, deleted_login)
         else
           response.status_code = 400
           do_run_operation_failed(operation)

@@ -12,7 +12,7 @@ module Shield::Api::CurrentLogin::Delete
         session: nil
       ) do |operation, deleted_login|
         if operation.deleted?
-          do_run_operation_succeeded(operation, deleted_login.not_nil!)
+          do_run_operation_succeeded(operation, deleted_login)
         else
           do_run_operation_failed(operation)
         end
