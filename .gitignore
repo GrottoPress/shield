@@ -1,4 +1,5 @@
 /.shards/
+/.vscode/
 /bin/
 /lib/
 /tmp/
