@@ -4,7 +4,7 @@
 
 *Shield* is secure by default, and exploits defence-in-depth strategies, including the option to pin an authentication session to the IP address that started it -- the session is invalidated if the IP address changes.
 
-User IDs are never saved in session. Instead, each authentication gets a unique ID and token, which is saved in session, and checked against their corresponding salted SHA-256 hashes in the database.
+User IDs are never saved in session. Instead, each authentication gets a unique ID and token, which is saved in session, and checked against their corresponding salted SHA-256 digests in the database.
 
 When a user changes their password, *Shield* logs out the user on all devices (except the current one), to ensure that an attacker no longer has access to a previously compromised account.
 
