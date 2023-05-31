@@ -203,7 +203,7 @@
      #    success_action(operation)
      #  else
      #    flash.success = Rex.t(:"action.misc.dev_mode_skip_email")
-     #    redirect PasswordResetCredentials.new(operation, password_reset).url
+     #    redirect PasswordResetCredentials.url(operation, password_reset)
      #  end
      #end
 
@@ -347,7 +347,7 @@
 
        To proceed with the password reset process, click the link below:
 
-       #{PasswordResetCredentials.new(@operation, @password_reset).url}
+       #{PasswordResetCredentials.url(@operation, @password_reset)}
 
        #{link_expiry_minutes.try do |expiry|
          "This password reset link will expire in #{expiry} minutes."

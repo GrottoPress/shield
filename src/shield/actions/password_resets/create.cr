@@ -33,7 +33,7 @@ module Shield::PasswordResets::Create
         success_action(operation)
       else
         flash.success = Rex.t(:"action.misc.dev_mode_skip_email")
-        redirect to: PasswordResetCredentials.new(operation, password_reset).url
+        redirect to: PasswordResetCredentials.url(operation, password_reset)
       end
     end
 

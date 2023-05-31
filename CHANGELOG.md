@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Add `EmailConfirmationCredentials.url` class method
+- Add `PasswordResetCredentials.url` class method
 
 ### Changed
 - Upgrade `GrottoPress/lucille` shard to v1.0

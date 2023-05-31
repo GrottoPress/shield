@@ -2,10 +2,7 @@ module Shield::PasswordResetCredentials
   macro included
     include Shield::ParamCredentials
 
-    def initialize(
-      @password : String,
-      @id : PasswordReset::PrimaryKeyType
-    )
+    def initialize(@password : String, @id : PasswordReset::PrimaryKeyType)
     end
 
     def self.new(
@@ -25,6 +22,10 @@ module Shield::PasswordResetCredentials
 
     def url : String
       Shield.settings.password_reset_url.call(to_s)
+    end
+
+    def self.url(password, id)
+      new(password, id).url
     end
   end
 end
