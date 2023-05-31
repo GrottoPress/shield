@@ -2,10 +2,7 @@ module Shield::EmailConfirmationCredentials
   macro included
     include Shield::ParamCredentials
 
-    def initialize(
-      @password : String,
-      @id : EmailConfirmation::PrimaryKeyType
-    )
+    def initialize(@password : String, @id : EmailConfirmation::PrimaryKeyType)
     end
 
     def self.new(
@@ -25,6 +22,10 @@ module Shield::EmailConfirmationCredentials
 
     def url : String
       Shield.settings.email_confirmation_url.call(to_s)
+    end
+
+    def self.url(password, id)
+      new(password, id).url
     end
   end
 end

@@ -257,7 +257,7 @@ This is particularly important, since email addresses are usually the only means
      #    success_action(operation)
      #  else
      #    flash.success = Rex.t(:"action.misc.dev_mode_skip_email")
-     #    redirect to: EmailConfirmationCredentials.new(operation, email_confirmation).url
+     #    redirect to: EmailConfirmationCredentials.url(operation, email_confirmation)
      #  end
      #end
 
@@ -540,7 +540,7 @@ This is particularly important, since email addresses are usually the only means
 
        To proceed to confirm your email, click the link below:
 
-       #{EmailConfirmationCredentials.new(@operation, @email_confirmation).url}
+       #{EmailConfirmationCredentials.url(@operation, @email_confirmation)}
 
        #{link_expiry_minutes.try do |expiry|
          "This email confirmation link will expire in #{expiry} minutes."

@@ -30,10 +30,10 @@ module Shield::EmailConfirmations::Create
       else
         flash.success = Rex.t(:"action.misc.dev_mode_skip_email")
 
-        redirect to: EmailConfirmationCredentials.new(
+        redirect to: EmailConfirmationCredentials.url(
           operation,
           email_confirmation
-        ).url
+        )
       end
     end
 
