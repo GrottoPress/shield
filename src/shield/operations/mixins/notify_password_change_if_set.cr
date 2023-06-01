@@ -6,7 +6,7 @@ module Shield::NotifyPasswordChangeIfSet
       return unless password_digest.changed?
       return unless user.settings.password_notify?
 
-      mail_later PasswordChangeNotificationEmail, self, user
+      PasswordChangeNotificationEmail.new(self, user).deliver_later
     end
   end
 end

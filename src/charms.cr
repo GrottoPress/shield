@@ -1,8 +1,4 @@
 module Lucky
-  abstract class Action
-    include MailHelpers
-  end
-
   class MessageEncryptor
     # Set default digest to `:sha256`
     def initialize(
@@ -23,17 +19,7 @@ module Lucky
 end
 
 module Avram
-  abstract class Operation
-    include MailHelpers
-  end
-
-  abstract class DeleteOperation(T)
-    include MailHelpers
-  end
-
   abstract class SaveOperation(T)
-    include MailHelpers
-
     # Getting rid of default validations in Avram
     #
     # See https://github.com/luckyframework/lucky/discussions/1209#discussioncomment-46030

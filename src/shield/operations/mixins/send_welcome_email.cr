@@ -8,11 +8,11 @@ module Shield::SendWelcomeEmail
 
     private def send_user_welcome_email
       return unless user_email?
-      mail_later UserWelcomeEmail, self
+      UserWelcomeEmail.new(self).deliver_later
     end
 
     private def send_welcome_email(user : Shield::User)
-      mail_later WelcomeEmail, self, user
+      WelcomeEmail.new(self, user).deliver_later
     end
   end
 end

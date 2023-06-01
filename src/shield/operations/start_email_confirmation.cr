@@ -31,11 +31,11 @@ module Shield::StartEmailConfirmation
 
     private def send_user_email
       return unless user_email?
-      mail_later UserEmailConfirmationRequestEmail, self
+      UserEmailConfirmationRequestEmail.new(self).deliver_later
     end
 
     private def send_email(email_confirmation : Shield::EmailConfirmation)
-      mail_later EmailConfirmationRequestEmail, self, email_confirmation
+      EmailConfirmationRequestEmail.new(self, email_confirmation).deliver_later
     end
   end
 end

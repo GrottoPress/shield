@@ -12,7 +12,7 @@ module Shield::NotifyOauthAccessToken
 
       return unless bearer_login.user.options.oauth_access_token_notify
 
-      mail_later OauthAccessTokenNotificationEmail, self, bearer_login
+      OauthAccessTokenNotificationEmail.new(self, bearer_login).deliver_later
     end
   end
 end

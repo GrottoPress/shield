@@ -6,7 +6,7 @@ module Shield::NotifyLogin
       login = LoginQuery.preload_user(login, UserQuery.new.preload_options)
       return unless login.user.options.login_notify
 
-      mail_later LoginNotificationEmail, self, login
+      LoginNotificationEmail.new(self, login).deliver_later
     end
   end
 end

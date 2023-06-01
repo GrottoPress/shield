@@ -6,7 +6,7 @@ module Shield::NotifyBearerLoginIfSet
       bearer_login = BearerLoginQuery.preload_user(bearer_login)
       return unless bearer_login.user.settings.bearer_login_notify?
 
-      mail_later BearerLoginNotificationEmail, self, bearer_login
+      BearerLoginNotificationEmail.new(self, bearer_login).deliver_later
     end
   end
 end

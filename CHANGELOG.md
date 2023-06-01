@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Upgrade `GrottoPress/lucille` shard to v1.0
 
+### Removed
+- Remove `include MailHelpers` from actions and operations
+
 ## [0.21.0] - 2023-05-02
 
 ### Changed

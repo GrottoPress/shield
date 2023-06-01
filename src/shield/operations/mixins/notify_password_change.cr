@@ -8,7 +8,7 @@ module Shield::NotifyPasswordChange
       user = UserQuery.preload_options(user)
       return unless user.options.password_notify
 
-      mail_later PasswordChangeNotificationEmail, self, user
+      PasswordChangeNotificationEmail.new(self, user).deliver_later
     end
   end
 end

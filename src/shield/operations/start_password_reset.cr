@@ -43,12 +43,12 @@ module Shield::StartPasswordReset
 
     private def send_guest_email
       return unless guest_email?
-      mail_later GuestPasswordResetRequestEmail, self
+      GuestPasswordResetRequestEmail.new(self).deliver_later
     end
 
     private def send_email(password_reset : Shield::PasswordReset)
       password_reset = PasswordResetQuery.preload_user(password_reset)
-      mail_later PasswordResetRequestEmail, self, password_reset
+      PasswordResetRequestEmail.new(self, password_reset).deliver_later
     end
   end
 end
