@@ -2,8 +2,6 @@
   .find(&.name.== :OauthGrant.id)
 %}
 
-require "../compat/oauth_grant"
-
 class User < BaseModel
   include Shield::HasManyOauthGrants
 end

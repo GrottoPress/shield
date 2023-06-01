@@ -1,7 +1,5 @@
 {% skip_file unless Avram::Model.all_subclasses.find(&.name.== :Login.id) %}
 
-require "../compat/login"
-
 class User < BaseModel
   include Shield::HasManyLogins
 end

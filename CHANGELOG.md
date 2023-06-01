@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 - Remove `include MailHelpers` from actions and operations
+- Remove all deprecated code
 
 ## [0.21.0] - 2023-05-02
 

@@ -2,8 +2,6 @@
   .find(&.name.== :PasswordReset.id)
 %}
 
-require "../compat/password_reset"
-
 class User < BaseModel
   include Shield::HasManyPasswordResets
 end

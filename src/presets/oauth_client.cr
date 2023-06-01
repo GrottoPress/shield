@@ -2,8 +2,6 @@
   .find(&.name.== :OauthClient.id)
 %}
 
-require "../compat/oauth_client"
-
 class User < BaseModel
   include Shield::HasManyOauthClients
 end
