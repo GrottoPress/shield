@@ -22,7 +22,7 @@ module Shield::ActionHelpers
       status : Int32 = 302,
       allow_external : Bool = false
     )
-      if request.method.in?({"GET", "HEAD", "DELETE"})
+      if PageUrlSession.safe_method?(request)
         url = return_url? || previous_page_url? || fallback
       else
         url = return_url? || fallback

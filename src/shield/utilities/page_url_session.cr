@@ -24,7 +24,7 @@ module Shield::PageUrlSession
     end
 
     def set(request : HTTP::Request) : self
-      if request.method.in?({"GET", "HEAD"})
+      if self.class.safe_method?(request)
         set(request.resource)
       else
         delete
@@ -34,6 +34,10 @@ module Shield::PageUrlSession
     def set(url : String) : self
       @session.set(:previous_page_url, url)
       self
+    end
+
+    def self.safe_method?(request : HTTP::Request) : Bool
+      request.method.in?({"GET", "HEAD"})
     end
   end
 end
