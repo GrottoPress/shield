@@ -5,6 +5,8 @@ private class SaveUser < User::SaveOperation
 
   include Shield::SetUserEmail
 
+  skip_default_validations
+
   before_save do
     validate_email_unique
   end

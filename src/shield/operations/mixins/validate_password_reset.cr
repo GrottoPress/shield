@@ -2,6 +2,8 @@ module Shield::ValidatePasswordReset
   macro included
     getter? guest_email = false
 
+    skip_default_validations
+
     before_save do
       set_guest_email
 

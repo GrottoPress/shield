@@ -1,5 +1,7 @@
 module Shield::ValidateOauthClient
   macro included
+    skip_default_validations
+
     before_save do
       ensure_redirect_uris_unique
       limit_redirect_uris_count

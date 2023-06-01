@@ -1,5 +1,7 @@
 module Shield::ValidateLogin
   macro included
+    skip_default_validations
+
     before_save do
       validate_email_required
       validate_ip_address_required

@@ -2,6 +2,8 @@ module Shield::ValidateEmailConfirmation
   macro included
     include Shield::SetUserEmail
 
+    skip_default_validations
+
     before_save do
       validate_email_required
       validate_ip_address_required

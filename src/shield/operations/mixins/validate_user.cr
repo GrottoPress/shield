@@ -2,6 +2,8 @@ module Shield::ValidateUser
   macro included
     include Shield::SetUserEmail
 
+    skip_default_validations
+
     before_save do
       validate_email_required
       validate_password_digest_required

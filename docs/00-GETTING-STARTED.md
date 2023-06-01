@@ -20,8 +20,6 @@ If you would rather start from scratch, generate a new *Lucky* project without a
 
 ### Caveats
 
-*Shield* patches *Lucky* and [*Avram*](https://github.com/luckyframework/avram) in a few places. This may lead to behaviours that are inconsistent with core *Lucky* and *Avram*. Take note of the following:
-
-1. *Shield* disables the default validation performed by *Avram* in save operations. See [#1209 (comment)](https://github.com/luckyframework/lucky/discussions/1209#discussioncomment-46030). You have to **explicitly** define validations for all attributes in save operations.
+Take note of the following:
 
 1. *Shield* throws away the `allow_external` parameter in `Lucky::Action#redirect_back`, so the only way to return to an external URL is to set the external URL, before calling `#redirect_back`, thus: `ReturnUrlSession.new(session).set("http://external.url")`.

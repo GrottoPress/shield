@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Upgrade `GrottoPress/lucille` shard to v1.0
+- Do not skip default validations in operations outside *Shield*
 
 ### Removed
 - Remove `include MailHelpers` from actions and operations

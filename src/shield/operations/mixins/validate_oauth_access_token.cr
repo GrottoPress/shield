@@ -2,6 +2,8 @@ module Shield::ValidateOauthAccessToken
   macro included
     include Shield::ValidateBearerLogin
 
+    skip_default_validations
+
     before_save do
       validate_oauth_client_id_required
     end

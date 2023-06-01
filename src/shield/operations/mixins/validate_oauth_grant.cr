@@ -1,5 +1,7 @@
 module Shield::ValidateOauthGrant
   macro included
+    skip_default_validations
+
     before_save do
       ensure_scopes_unique
 

@@ -3,6 +3,8 @@ module Shield::ValidatePassword
   #
   # - https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
   macro included
+    skip_default_validations
+
     {% if @type < Avram::Operation %}
       before_run do
         require_lowercase
