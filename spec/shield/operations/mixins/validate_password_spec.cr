@@ -4,6 +4,8 @@ private class SaveUser < User::SaveOperation
   permit_columns :email, :level
   attribute password : String
 
+  skip_default_validations
+
   before_save do
     set_password_digest
   end
