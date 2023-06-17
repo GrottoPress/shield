@@ -11,7 +11,7 @@ module Shield::SaveOauthClientUserSettings
       return unless new_record?
 
       validate_required oauth_access_token_notify,
-        message: Rex.t(:"operation.error.oauth_access_token_notify_required")
+        message: Rex.t(:"operation.error.oauth.access_token_notify_required")
     end
 
     private def set_oauth_access_token_notify

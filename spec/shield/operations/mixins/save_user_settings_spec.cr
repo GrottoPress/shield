@@ -101,7 +101,7 @@ describe Shield::SaveUserSettings do
         user.should be_nil
 
         operation.oauth_access_token_notify.should have_error(
-          "operation.error.oauth_access_token_notify_required"
+          "operation.error.oauth.access_token_notify_required"
         )
       end
     end

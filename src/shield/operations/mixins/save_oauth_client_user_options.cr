@@ -8,7 +8,7 @@ module Shield::SaveOauthClientUserOptions
 
     private def validate_oauth_access_token_notify_required
       validate_required oauth_access_token_notify,
-        message: Rex.t(:"operation.error.oauth_access_token_notify_required")
+        message: Rex.t(:"operation.error.oauth.access_token_notify_required")
     end
   end
 end
