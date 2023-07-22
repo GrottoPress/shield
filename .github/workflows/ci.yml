@@ -55,7 +55,7 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --skip-postinstall --skip-executables
       - name: Install Postgresql
         run: sudo apt -y install postgresql
       - name: Start Postgresql
@@ -91,7 +91,7 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --skip-postinstall --skip-executables
       - name: Install CockroachDB
         run: |
           sudo apt -y install tar wget
