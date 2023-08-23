@@ -1,14 +1,14 @@
-name: CI
+name: Test
 on:
   push:
     paths:
       - '**.cr'
-      - '.github/workflows/**'
+      - '.github/workflows/test.yml'
   pull_request:
     branches: [master]
     paths:
       - '**.cr'
-      - '.github/workflows/**'
+      - '.github/workflows/test.yml'
   schedule:
     - cron: '0 6 * * 6'
 jobs:
