@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.6.0]
+        crystal: ['1.6.0']
     runs-on: ubuntu-latest
     continue-on-error: false
     steps:
@@ -34,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.6.0, latest]
+        crystal: ['1.6.0', latest]
         experimental: [false]
         include:
           - crystal: nightly
@@ -73,8 +73,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cockroachdb: [22.2.2]
-        crystal: [1.6.0]
+        cockroachdb: ['22.2.2']
+        crystal: ['1.6.0']
     runs-on: ubuntu-latest
     continue-on-error: false
     steps:
