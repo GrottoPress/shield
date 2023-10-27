@@ -14,7 +14,7 @@ private class SaveUser < User::SaveOperation
   include Shield::SendWelcomeEmail
 
   private def validate_email_unique
-    return unless email.value
+    return if email.value.nil?
     email.add_error("exists") if user_email?
   end
 end
