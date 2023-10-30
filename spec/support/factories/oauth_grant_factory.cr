@@ -8,7 +8,7 @@ class OauthGrantFactory < Avram::Factory
   end
 
   def pkce(challenge : String, challenge_method : String)
-    code_challenge = challenge_method == "plain" ?
+    code_challenge = "plain" == challenge_method ?
       OauthGrantPkce.hash(challenge) :
       challenge
 
