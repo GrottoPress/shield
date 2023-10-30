@@ -20,7 +20,7 @@ class OauthGrantFactory < Avram::Factory
   end
 
   def redirect_uri(uri : String)
-    metadata({redirect_uri: "https://example.com/oauth/callback"}.to_json)
+    metadata({redirect_uri: uri}.to_json)
   end
 
   private def set_defaults
