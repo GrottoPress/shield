@@ -6,7 +6,7 @@ describe Shield::OauthGrantVerifier do
       code = "a1b2c3"
       code_verifier = Random::Secure.urlsafe_base64(32)
       grant_type = OauthGrantType.authorization_code
-      grant_type_2 = OauthGrantType.new(OauthGrantType::REFRESH_TOKEN)
+      grant_type_2 = OauthGrantType.refresh_token
 
       code_challenge = Base64.urlsafe_encode(
         Digest::SHA256.digest(code_verifier),

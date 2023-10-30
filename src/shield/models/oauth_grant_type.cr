@@ -15,6 +15,10 @@ module Shield::OauthGrantType
       new(CLIENT_CREDENTIALS)
     end
 
+    def self.refresh_token : self
+      new(REFRESH_TOKEN)
+    end
+
     def authorization_code? : Bool
       @grant_type == AUTHORIZATION_CODE
     end

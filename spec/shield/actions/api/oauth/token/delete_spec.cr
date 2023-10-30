@@ -37,7 +37,7 @@ describe Shield::Api::Oauth::Token::Delete do
 
     oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
       .oauth_client_id(oauth_client.id)
-      .type(OauthGrantType::REFRESH_TOKEN)
+      .type(OauthGrantType.refresh_token)
       .code(token)
 
     refresh_token = OauthGrantCredentials.new(token, oauth_grant.id)

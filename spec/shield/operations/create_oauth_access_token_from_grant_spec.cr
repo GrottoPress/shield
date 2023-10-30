@@ -52,7 +52,7 @@ describe Shield::CreateOauthAccessTokenFromGrant do
 
       oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
         .oauth_client_id(oauth_client.id)
-        .type(OauthGrantType::REFRESH_TOKEN)
+        .type(OauthGrantType.refresh_token)
         .scopes([
           BearerScope.new(Api::CurrentUser::Show).to_s,
           BearerScope.new(Api::Posts::Index).to_s
@@ -93,7 +93,7 @@ describe Shield::CreateOauthAccessTokenFromGrant do
       OauthGrantFactory.create &.user_id(resource_owner.id)
         .oauth_client_id(oauth_client.id)
         .inactive_at(Time.utc)
-        .type(OauthGrantType::REFRESH_TOKEN)
+        .type(OauthGrantType.refresh_token)
 
     CreateOauthAccessTokenFromGrant.create(
       oauth_grant: oauth_grant
@@ -114,7 +114,7 @@ describe Shield::CreateOauthAccessTokenFromGrant do
       OauthGrantFactory.create &.user_id(resource_owner.id)
         .oauth_client_id(oauth_client.id)
         .inactive_at(Time.utc)
-        .type(OauthGrantType::REFRESH_TOKEN)
+        .type(OauthGrantType.refresh_token)
 
     bearer_login = BearerLoginFactory.create &.user_id(developer.id)
 

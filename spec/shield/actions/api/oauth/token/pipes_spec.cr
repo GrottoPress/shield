@@ -825,7 +825,7 @@ describe Shield::Api::Oauth::Token::Pipes do
           .oauth_client_id(oauth_client.id)
           .code(refresh_token)
           .scopes([BearerScope.new(Api::Posts::Index).to_s])
-          .type(OauthGrantType::REFRESH_TOKEN)
+          .type(OauthGrantType.refresh_token)
 
         refresh_token_final = OauthGrantCredentials.new(
           refresh_token,

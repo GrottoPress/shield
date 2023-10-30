@@ -23,7 +23,7 @@ module Shield::RotateOauthGrant
 
       operation = StartOauthGrant.new(
         granted: true,
-        type: OauthGrantType.new(OauthGrantType::REFRESH_TOKEN),
+        type: OauthGrantType.refresh_token,
         scopes: oauth_grant.scopes,
         oauth_client: oauth_grant.oauth_client,
         user: oauth_grant.user

@@ -76,7 +76,7 @@ describe Shield::Api::Oauth::Token::Create do
       oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
         .oauth_client_id(oauth_client.id)
         .code(refresh_token)
-        .type(OauthGrantType::REFRESH_TOKEN)
+        .type(OauthGrantType.refresh_token)
 
       refresh_token_final = OauthGrantCredentials.new(
         refresh_token,

@@ -116,7 +116,7 @@ describe Shield::ValidateOauthGrant do
       code_digest: "a1b2c3",
       success: false,
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new(OauthGrantType::REFRESH_TOKEN)
+      type: OauthGrantType.refresh_token
     )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
@@ -224,7 +224,7 @@ describe Shield::ValidateOauthGrant do
       code_digest: "a1b2c3",
       success: false,
       scopes: Array(String).new,
-      type: OauthGrantType.new(OauthGrantType::REFRESH_TOKEN)
+      type: OauthGrantType.refresh_token
     )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 

@@ -30,7 +30,7 @@ describe Shield::RotateOauthGrant do
       OauthGrantFactory.create &.user_id(resource_owner.id)
         .oauth_client_id(oauth_client.id)
         .inactive_at(Time.utc)
-        .type(OauthGrantType::REFRESH_TOKEN)
+        .type(OauthGrantType.refresh_token)
 
     RotateOauthGrant.update(oauth_grant) do |operation, _|
       operation.saved?.should be_false

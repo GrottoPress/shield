@@ -125,7 +125,7 @@ describe Shield::StartOauthGrant do
     it "starts OAuth grant" do
       code_challenge = "a1b2c3"
       code_challenge_method = "plain"
-      grant_type = OauthGrantType.new(OauthGrantType::REFRESH_TOKEN)
+      grant_type = OauthGrantType.refresh_token
       redirect_uri = "http://localhost:5000"
 
       developer = UserFactory.create
