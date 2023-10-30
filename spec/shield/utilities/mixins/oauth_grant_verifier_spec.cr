@@ -22,10 +22,10 @@ describe Shield::OauthGrantVerifier do
         .oauth_client_id(oauth_client.id)
         .type(grant_type)
         .code(code)
-        .metadata({
+        .metadata(OauthGrantMetadata.from_json({
           code_challenge: code_challenge,
           code_challenge_method: "S256"
-        }.to_json)
+        }.to_json))
 
       code = OauthGrantCredentials.new(code, oauth_grant.id).to_s
       code_2 = OauthGrantCredentials.new("abcdef", 4).to_s

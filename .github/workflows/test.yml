@@ -36,9 +36,11 @@ jobs:
       matrix:
         crystal: ['1.6.0', latest]
         experimental: [false]
+        shard_file: [shard.yml, shard.latest.yml]
         include:
           - crystal: nightly
             experimental: true
+            shard_file: shard.yml
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental }}
     steps:
@@ -56,6 +58,8 @@ jobs:
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
         run: shards update --skip-postinstall --skip-executables
+        env:
+          SHARDS_OVERRIDE: ${{ matrix.shard_file }}
       - name: Install Postgresql
         run: sudo apt -y install postgresql
       - name: Start Postgresql

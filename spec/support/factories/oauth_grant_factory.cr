@@ -12,15 +12,15 @@ class OauthGrantFactory < Avram::Factory
       OauthGrantPkce.hash(challenge) :
       challenge
 
-    metadata({
+    metadata(OauthGrantMetadata.from_json({
       code_challenge: code_challenge,
       code_challenge_method: challenge_method,
       redirect_uri: "https://example.com/oauth/callback"
-    }.to_json)
+    }.to_json))
   end
 
   def redirect_uri(uri : String)
-    metadata({redirect_uri: uri}.to_json)
+    metadata(OauthGrantMetadata.from_json({redirect_uri: uri}.to_json))
   end
 
   private def set_defaults

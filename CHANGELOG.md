@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - 
 
 ### Added
+- Add support for Lucky v1.1
 - Add `OauthGrantType.authorization_code` constructor
 - Add `OauthGrantType.client_credentials` constructor
 - Add `OauthGrantType.refresh_token` constructor
