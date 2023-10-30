@@ -40,7 +40,7 @@ jobs:
         include:
           - crystal: nightly
             experimental: true
-            shard_file: shard.yml
+            shard_file: shard.edge.yml
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental }}
     steps:
