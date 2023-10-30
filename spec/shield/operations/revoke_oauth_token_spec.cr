@@ -111,7 +111,7 @@ context "Refresh Token" do
 
     oauth_grant_2 = OauthGrantFactory.create &.user_id(resource_owner.id)
       .oauth_client_id(oauth_client.id)
-      .type(OauthGrantType::AUTHORIZATION_CODE)
+      .type(OauthGrantType.authorization_code)
 
     oauth_grant.status.active?.should be_true
     oauth_grant_2.status.active?.should be_true
@@ -139,7 +139,7 @@ context "Refresh Token" do
 
     oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
       .oauth_client_id(oauth_client.id)
-      .type(OauthGrantType::AUTHORIZATION_CODE)
+      .type(OauthGrantType.authorization_code)
       .code(token)
 
     refresh_token = OauthGrantCredentials.new(token, oauth_grant.id)

@@ -26,7 +26,7 @@ module Shield::Api::Oauth::Authorization::Create
         response_type: response_type.to_s,
         state: state.to_s,
         scopes: scopes,
-        type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE),
+        type: OauthGrantType.authorization_code,
         oauth_client: oauth_client?,
         user: user
       ) do |operation, oauth_grant|

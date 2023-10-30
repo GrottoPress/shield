@@ -5,7 +5,7 @@ describe Shield::StartOauthGrant do
     it "starts OAuth grant" do
       code_challenge = "a1b2c3"
       code_challenge_method = "plain"
-      grant_type = OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
+      grant_type = OauthGrantType.authorization_code
       redirect_uri = "http://localhost:5000"
 
       developer = UserFactory.create
@@ -67,7 +67,7 @@ describe Shield::StartOauthGrant do
           code_challenge_method: "S256",
         ),
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
-        type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE),
+        type: OauthGrantType.authorization_code,
         oauth_client: oauth_client,
         user: resource_owner
       ) do |operation, oauth_grant|
@@ -175,7 +175,7 @@ describe Shield::StartOauthGrant do
         code_challenge_method: "S256"
       ),
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE),
+      type: OauthGrantType.authorization_code,
       oauth_client: oauth_client,
       user: resource_owner
     ) do |operation, oauth_grant|
@@ -201,7 +201,7 @@ describe Shield::StartOauthGrant do
         redirect_uri: "myapp://callback"
       ),
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE),
+      type: OauthGrantType.authorization_code,
       oauth_client: oauth_client,
       user: resource_owner
     ) do |operation, oauth_grant|
@@ -225,7 +225,7 @@ describe Shield::StartOauthGrant do
         response_type: "token"
       ),
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE),
+      type: OauthGrantType.authorization_code,
       oauth_client: oauth_client,
       user: resource_owner
     ) do |operation, oauth_grant|

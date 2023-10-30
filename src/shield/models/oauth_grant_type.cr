@@ -7,6 +7,10 @@ module Shield::OauthGrantType
     def initialize(@grant_type : String?)
     end
 
+    def self.authorization_code : self
+      new(AUTHORIZATION_CODE)
+    end
+
     def authorization_code? : Bool
       @grant_type == AUTHORIZATION_CODE
     end

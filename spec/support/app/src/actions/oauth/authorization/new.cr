@@ -20,7 +20,7 @@ class Oauth::Authorization::New < BrowserAction
       code_challenge_method: code_challenge_method,
       state: state.to_s,
       scopes: scopes,
-      type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE),
+      type: OauthGrantType.authorization_code,
       user: user,
       oauth_client: oauth_client?,
     )

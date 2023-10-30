@@ -36,7 +36,7 @@ describe Shield::ValidateOauthGrant do
         code_challenge: "a1b2c3",
         code_challenge_method: "plain"
       }.to_json),
-      type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
+      type: OauthGrantType.authorization_code
     ) do |_, oauth_grant|
       oauth_grant.should be_a(OauthGrant)
 
@@ -80,7 +80,7 @@ describe Shield::ValidateOauthGrant do
       code_digest: "a1b2c3",
       success: false,
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
+      type: OauthGrantType.authorization_code
     )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
@@ -138,7 +138,7 @@ describe Shield::ValidateOauthGrant do
         code_digest: "a1b2c3",
         success: false,
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
-        type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
+        type: OauthGrantType.authorization_code
       ),
       metadata: OauthGrantMetadata.from_json({
         code_challenge: "a1b2c3",
@@ -163,7 +163,7 @@ describe Shield::ValidateOauthGrant do
       code_digest: "a1b2c3",
       success: false,
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
+      type: OauthGrantType.authorization_code
     )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
@@ -181,7 +181,7 @@ describe Shield::ValidateOauthGrant do
       code_digest: "a1b2c3",
       success: false,
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new(OauthGrantType::AUTHORIZATION_CODE)
+      type: OauthGrantType.authorization_code
     )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 

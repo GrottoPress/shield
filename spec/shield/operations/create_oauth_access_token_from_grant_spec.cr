@@ -15,7 +15,7 @@ describe Shield::CreateOauthAccessTokenFromGrant do
 
       oauth_grant = OauthGrantFactory.create &.user_id(resource_owner.id)
         .oauth_client_id(oauth_client.id)
-        .type(OauthGrantType::AUTHORIZATION_CODE)
+        .type(OauthGrantType.authorization_code)
         .scopes(scopes)
 
       oauth_grant.status.active?.should be_true
