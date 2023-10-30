@@ -29,7 +29,7 @@ module Shield::CreateOauthAccessTokenFromClient
 
       name.value = Rex.t(
         :"operation.misc.oauth.access_token_name",
-        grant_type: OauthGrantType::CLIENT_CREDENTIALS,
+        grant_type: OauthGrantType.client_credentials,
         client_id: oauth_client.id,
         user_id: oauth_client.user_id
       )
@@ -51,7 +51,7 @@ module Shield::CreateOauthAccessTokenFromClient
 
       StartOauthGrant.create!(
         granted: true,
-        type: OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS),
+        type: OauthGrantType.client_credentials,
         scopes: bearer_login.scopes,
         oauth_client: oauth_client,
         user: oauth_client.user,

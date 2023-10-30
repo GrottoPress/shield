@@ -83,7 +83,7 @@ describe Shield::StartOauthGrant do
     it "starts OAuth grant" do
       code_challenge = "a1b2c3"
       code_challenge_method = "plain"
-      grant_type = OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS)
+      grant_type = OauthGrantType.client_credentials
       redirect_uri = "http://localhost:5000"
 
       developer = UserFactory.create

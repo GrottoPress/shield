@@ -61,7 +61,7 @@ describe Shield::ValidateOauthGrant do
       active_at: Time.utc,
       code_digest: "a1b2c3",
       success: false,
-      type: OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS)
+      type: OauthGrantType.client_credentials
     )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
@@ -249,7 +249,7 @@ describe Shield::ValidateOauthGrant do
         code_digest: "a1b2c3",
         success: false,
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
-        type: OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS)
+        type: OauthGrantType.client_credentials
       )) do |operation, oauth_grant|
         oauth_grant.should be_nil
 
@@ -270,7 +270,7 @@ describe Shield::ValidateOauthGrant do
       active_at: Time.utc,
       success: false,
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-      type: OauthGrantType.new(OauthGrantType::CLIENT_CREDENTIALS)
+      type: OauthGrantType.client_credentials
     )) do |operation, oauth_grant|
       oauth_grant.should be_nil
 
