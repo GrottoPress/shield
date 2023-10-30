@@ -7,6 +7,7 @@ require "./support/boot"
 require "./setup/**"
 
 require "../src/spec"
+require "lucille/cockroach"
 
 include Carbon::Expectations
 include Lucky::RequestExpectations
