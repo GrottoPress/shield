@@ -79,6 +79,7 @@ jobs:
       matrix:
         cockroachdb: ['22.2.2']
         crystal: ['1.6.0']
+        shard_file: [shard.yml, shard.latest.yml]
     runs-on: ubuntu-latest
     continue-on-error: false
     steps:
@@ -96,6 +97,8 @@ jobs:
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
         run: shards update --skip-postinstall --skip-executables
+        env:
+          SHARDS_OVERRIDE: ${{ matrix.shard_file }}
       - name: Install CockroachDB
         run: |
           sudo apt -y install tar wget
