@@ -7,7 +7,6 @@ require "./support/boot"
 require "./setup/**"
 
 require "../src/spec"
-require "lucille/cockroach"
 
 Habitat.raise_if_missing_settings!
 
