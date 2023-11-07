@@ -13,12 +13,12 @@ end
 
 describe Shield::NotifyOauthAccessTokenIfSet do
   it "sends notification" do
-    resource_owner = UserFactory.create &.settings(UserSettings.from_json({
+    resource_owner = UserFactory.create &.settings({
       bearer_login_notify: true,
       login_notify: false,
       oauth_access_token_notify: true,
       password_notify: false,
-    }.to_json))
+    })
 
     developer = UserFactory.create &.email("dev@app.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
@@ -41,12 +41,12 @@ describe Shield::NotifyOauthAccessTokenIfSet do
   end
 
   it "does not send notification" do
-    resource_owner = UserFactory.create &.settings(UserSettings.from_json({
+    resource_owner = UserFactory.create &.settings({
       bearer_login_notify: false,
       login_notify: false,
       oauth_access_token_notify: false,
       password_notify: false,
-    }.to_json))
+    })
 
     developer = UserFactory.create &.email("dev@app.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
