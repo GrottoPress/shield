@@ -43,7 +43,7 @@ describe Shield::Api::EmailConfirmations::Token::Verify do
       token: credentials
     )
 
-    response.should send_json(200, {status: "failure"})
+    response.should send_json(403, {status: "failure"})
   end
 
   it "requires logged in" do

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - 
 
 ### Changed
+- Send `403` status code if email confirmation token verification failed
 - Send `403` status code if password reset token verification failed
 
 ## [1.1.0] - 2023-12-18
