@@ -14,6 +14,7 @@ module Shield::Api::PasswordResets::Token::Verify
         if password_reset
           do_verify_operation_succeeded(utility, password_reset.not_nil!)
         else
+          response.status_code = 403
           do_verify_operation_failed(utility)
         end
       end
