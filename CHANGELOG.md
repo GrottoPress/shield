@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `OauthGrantType.client_credentials` constructor
 - Add `OauthGrantType.refresh_token` constructor
 - Add `UserQuery#email` method
+- Add `BearerLoginQuery#name(String)` method
 
 ### Fixed
 - Query all email addresses case-insensitively

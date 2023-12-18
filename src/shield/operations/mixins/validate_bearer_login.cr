@@ -48,14 +48,14 @@ module Shield::ValidateBearerLogin
             {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
               if BearerLoginQuery.new
                 .user_id(_user_id)
-                .name.lower.eq(_name.downcase)
+                .name(_name)
                 .is_active
                 .oauth_client_id.is_nil
                 .any?
             {% else %}
               if BearerLoginQuery.new
                 .user_id(_user_id)
-                .name.lower.eq(_name.downcase)
+                .name(_name)
                 .is_active
                 .any?
             {% end %}
