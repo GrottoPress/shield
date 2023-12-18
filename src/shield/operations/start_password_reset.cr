@@ -34,10 +34,7 @@ module Shield::StartPasswordReset
 
     private def set_user_id
       email.value.try do |value|
-        user_id.value = UserQuery.new
-          .email.lower.eq(value.downcase)
-          .first?
-          .try(&.id)
+        user_id.value = UserQuery.new.email(value).first?.try(&.id)
       end
     end
 
