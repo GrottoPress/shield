@@ -9,5 +9,9 @@ module Shield::OauthClientQuery
     def is_confidential
       secret_digest.is_not_nil
     end
+
+    def name(value : String)
+      name.lower.eq(value.downcase)
+    end
   end
 end
