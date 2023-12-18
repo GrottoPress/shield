@@ -1,7 +1,5 @@
 module Shield::StartPasswordReset
   macro included
-    getter? guest_email = false
-
     attribute email : String
 
     include Shield::SetIpAddressFromRemoteAddress
