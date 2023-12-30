@@ -27,7 +27,7 @@ describe Shield::UpdateConfirmedEmail do
       ) do |_operation, updated_email_confirmation|
         _operation.saved?.should be_true
 
-        user.reload.email = new_email
+        user.reload.email.should eq(new_email)
 
         updated_email_confirmation.status.active?.should be_false
         updated_email_confirmation.success?.should be_true
