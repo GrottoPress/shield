@@ -36,8 +36,14 @@ jobs:
       matrix:
         crystal: ['1.6.0', latest]
         experimental: [false]
-        shard_file: [shard.yml, shard.latest.yml]
+        shard_file: [shard.yml]
         include:
+          - crystal: '1.10.0'
+            experimental: false
+            shard_file: shard.latest.yml
+          - crystal: latest
+            experimental: false
+            shard_file: shard.latest.yml
           - crystal: nightly
             experimental: true
             shard_file: shard.edge.yml
@@ -78,7 +84,7 @@ jobs:
       fail-fast: false
       matrix:
         cockroachdb: ['v22.2.0', latest]
-        crystal: ['1.6.0']
+        crystal: ['1.10.0']
         experimental: [false]
         shard_file: [shard.yml, shard.latest.yml]
         include:
