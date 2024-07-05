@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Fix CI issues with Lucky v1.2
 
+### Changed
+- Upgrade GitHub actions
+
 ## [1.1.2] - 2024-02-10
 
 ### Changed
