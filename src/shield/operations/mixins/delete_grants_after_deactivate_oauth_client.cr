@@ -1,6 +1,6 @@
 module Shield::DeleteGrantsAfterDeactivateOauthClient
   macro included
-    after_commit delete_oauth_grants
+    after_save delete_oauth_grants
 
     private def end_oauth_grants(oauth_client : Shield::OauthClient)
     end

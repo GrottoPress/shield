@@ -1,6 +1,6 @@
 module Shield::DeletePasswordResetsAfterResetPassword
   macro included
-    after_commit delete_password_resets
+    after_save delete_password_resets
 
     private def end_password_resets(password_reset : Shield::PasswordReset)
     end

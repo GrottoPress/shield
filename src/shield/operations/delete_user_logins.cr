@@ -2,7 +2,7 @@ module Shield::DeleteUserLogins # User::SaveOperation
   macro included
     needs current_login : Login?
 
-    after_commit delete_logins
+    after_save delete_logins
 
     private def delete_logins(user : Shield::User)
       query = LoginQuery.new.user_id(user.id)

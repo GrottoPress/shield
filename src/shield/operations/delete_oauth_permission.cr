@@ -2,8 +2,8 @@ module Shield::DeleteOauthPermission # OauthClient::SaveOperation
   macro included
     needs user : User
 
-    after_commit delete_permission
-    after_commit delete_oauth_grants
+    after_save delete_permission
+    after_save delete_oauth_grants
 
     private def delete_permission(oauth_client : Shield::OauthClient)
       BearerLoginQuery.new

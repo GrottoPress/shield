@@ -1,6 +1,6 @@
 module Shield::DeleteAccessTokensAfterDeactivateOauthClient
   macro included
-    after_commit delete_access_tokens
+    after_save delete_access_tokens
 
     private def revoke_access_tokens(oauth_client : Shield::OauthClient)
     end

@@ -1,6 +1,6 @@
 module Shield::DeleteEmailConfirmationsAfterRegisterUser
   macro included
-    after_commit delete_email_confirmations
+    after_save delete_email_confirmations
 
     private def end_email_confirmations(user : Shield::User)
     end

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Upgrade GitHub actions
+- Move all `after_commit` database operations to `after_save`
 
 ## [1.1.2] - 2024-02-10
 
