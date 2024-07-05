@@ -1,4 +1,4 @@
-module Shield::DeleteOauthGrant
+module Shield::DeleteOauthGrant # OauthGrant::DeleteOperation
   macro included
   end
 end

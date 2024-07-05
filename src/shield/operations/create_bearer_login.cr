@@ -1,4 +1,4 @@
-module Shield::CreateBearerLogin
+module Shield::CreateBearerLogin # BearerLogin::SaveOperation
   macro included
     permit_columns :name, :scopes
 

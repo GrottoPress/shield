@@ -1,4 +1,4 @@
-module Shield::DeleteUserLogins
+module Shield::DeleteUserLogins # User::SaveOperation
   macro included
     needs current_login : Login?
 

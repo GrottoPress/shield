@@ -1,4 +1,4 @@
-module Shield::EndLogin
+module Shield::EndLogin # Login::SaveOperation
   macro included
     include Lucille::Deactivate
     include Shield::DeleteSession

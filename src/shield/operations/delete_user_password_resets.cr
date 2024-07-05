@@ -1,4 +1,4 @@
-module Shield::DeleteUserPasswordResets
+module Shield::DeleteUserPasswordResets # User::SaveOperation
   macro included
     after_commit delete_password_resets
 

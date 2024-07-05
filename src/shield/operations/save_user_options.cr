@@ -1,4 +1,4 @@
-module Shield::SaveUserOptions
+module Shield::SaveUserOptions # UserOptions::SaveOperation
   macro included
     permit_columns :password_notify
 

@@ -1,4 +1,4 @@
-module Shield::EndOauthGrantGracefully
+module Shield::EndOauthGrantGracefully # OauthGrant::SaveOperation
   macro included
     include Lucille::Deactivate
 

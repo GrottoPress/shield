@@ -1,4 +1,4 @@
-module Shield::UpdatePassword
+module Shield::UpdatePassword # User::SaveOperation
   macro included
     attribute password : String
 

@@ -1,4 +1,4 @@
-module Shield::DeleteEmailConfirmation
+module Shield::DeleteEmailConfirmation # EmailConfirmation::DeleteOperation
   macro included
     include Shield::DeleteSession
 

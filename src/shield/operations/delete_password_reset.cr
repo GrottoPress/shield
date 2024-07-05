@@ -1,4 +1,4 @@
-module Shield::DeletePasswordReset
+module Shield::DeletePasswordReset # PasswordReset::DeleteOperation
   macro included
     include Shield::DeleteSession
 

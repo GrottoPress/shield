@@ -1,4 +1,4 @@
-module Shield::EndUserLogins
+module Shield::EndUserLogins # User::SaveOperation
   macro included
     needs current_login : Login?
 

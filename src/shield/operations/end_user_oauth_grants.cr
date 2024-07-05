@@ -1,4 +1,4 @@
-module Shield::EndUserOauthGrants
+module Shield::EndUserOauthGrants # User::SaveOperation
   macro included
     after_save end_oauth_grants
 

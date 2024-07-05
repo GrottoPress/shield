@@ -1,4 +1,4 @@
-module Shield::DeactivateUserOauthClients
+module Shield::DeactivateUserOauthClients # User::SaveOperation
   macro included
     after_save deactivate_oauth_clients
 

@@ -1,4 +1,4 @@
-module Shield::EndPasswordReset
+module Shield::EndPasswordReset # PasswordReset::SaveOperation
   macro included
     include Lucille::Deactivate
     include Shield::DeleteSession

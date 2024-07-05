@@ -1,4 +1,4 @@
-module Shield::EndEmailConfirmation
+module Shield::EndEmailConfirmation # EmailConfirmation::SaveOperation
   macro included
     include Lucille::Deactivate
     include Shield::DeleteSession

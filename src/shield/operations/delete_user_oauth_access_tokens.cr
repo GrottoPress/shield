@@ -1,4 +1,4 @@
-module Shield::DeleteUserOauthAccessTokens
+module Shield::DeleteUserOauthAccessTokens # User::SaveOperation
   macro included
     after_save delete_access_tokens
 

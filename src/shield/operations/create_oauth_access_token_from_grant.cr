@@ -1,4 +1,4 @@
-module Shield::CreateOauthAccessTokenFromGrant
+module Shield::CreateOauthAccessTokenFromGrant # BearerLogin::SaveOperation
   # IMPORTANT
   #
   # Revoke access tokens if authorization used more than once,

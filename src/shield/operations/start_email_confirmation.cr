@@ -1,4 +1,4 @@
-module Shield::StartEmailConfirmation
+module Shield::StartEmailConfirmation # EmailConfirmation::SaveOperation
   macro included
     permit_columns :email
 

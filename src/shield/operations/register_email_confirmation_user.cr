@@ -1,4 +1,4 @@
-module Shield::RegisterEmailConfirmationUser
+module Shield::RegisterEmailConfirmationUser # User::SaveOperation
   macro included
     needs session : Lucky::Session?
 

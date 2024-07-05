@@ -1,4 +1,4 @@
-module Shield::EndUserEmailConfirmations
+module Shield::EndUserEmailConfirmations # User::SaveOperation
   macro included
     after_save end_email_confirmations
 

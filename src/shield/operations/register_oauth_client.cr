@@ -1,4 +1,4 @@
-module Shield::RegisterOauthClient
+module Shield::RegisterOauthClient # OauthClient::SaveOperation
   macro included
     permit_columns :name, :redirect_uris
 

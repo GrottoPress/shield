@@ -1,4 +1,4 @@
-module Shield::RotateOauthGrant
+module Shield::RotateOauthGrant # OauthGrant::SaveOperation
   macro included
     getter credentials : OauthGrantCredentials?
 

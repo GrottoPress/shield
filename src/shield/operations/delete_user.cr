@@ -1,4 +1,4 @@
-module Shield::DeleteUser
+module Shield::DeleteUser # User::DeleteOperation
   macro included
     needs current_user : User?
 

@@ -1,4 +1,4 @@
-module Shield::StartLogin
+module Shield::StartLogin # Login::SaveOperation
   macro included
     attribute email : String
     attribute password : String

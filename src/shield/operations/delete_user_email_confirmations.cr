@@ -1,4 +1,4 @@
-module Shield::DeleteUserEmailConfirmations
+module Shield::DeleteUserEmailConfirmations # User::SaveOperation
   macro included
     after_commit delete_email_confirmations
 

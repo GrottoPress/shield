@@ -1,4 +1,4 @@
-module Shield::RegisterUser
+module Shield::RegisterUser # User::SaveOperation
   macro included
     permit_columns :email
 

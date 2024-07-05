@@ -1,4 +1,4 @@
-module Shield::DeleteOauthToken
+module Shield::DeleteOauthToken # Avram::Operation
   macro included
     include Shield::RevokeOauthToken
 

@@ -1,4 +1,4 @@
-module Shield::RevokeUserBearerLogins
+module Shield::RevokeUserBearerLogins # User::SaveOperation
   macro included
     needs current_bearer_login : BearerLogin?
 

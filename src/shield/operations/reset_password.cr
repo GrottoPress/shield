@@ -1,4 +1,4 @@
-module Shield::ResetPassword
+module Shield::ResetPassword # PasswordReset::SaveOperation
   macro included
     needs current_login : Login?
 

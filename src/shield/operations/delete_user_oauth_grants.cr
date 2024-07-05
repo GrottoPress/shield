@@ -1,4 +1,4 @@
-module Shield::DeleteUserOauthGrants
+module Shield::DeleteUserOauthGrants # User::SaveOperation
   macro included
     after_commit delete_oauth_grants
 

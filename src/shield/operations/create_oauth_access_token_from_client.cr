@@ -1,4 +1,4 @@
-module Shield::CreateOauthAccessTokenFromClient
+module Shield::CreateOauthAccessTokenFromClient # BearerLogin::SaveOperation
   macro included
     getter credentials : OauthGrantCredentials?
 

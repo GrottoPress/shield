@@ -1,4 +1,4 @@
-module Shield::StartOauthGrant
+module Shield::StartOauthGrant # OauthGrant::SaveOperation
   macro included
     attribute granted : Bool
     attribute code_challenge : String

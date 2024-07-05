@@ -1,4 +1,4 @@
-module Shield::UpdateConfirmedEmail
+module Shield::UpdateConfirmedEmail # EmailConfirmation::SaveOperation
   macro included
     before_save do
       set_success

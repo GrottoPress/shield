@@ -1,4 +1,4 @@
-module Shield::RevokeUserOauthAccessTokens
+module Shield::RevokeUserOauthAccessTokens # User::SaveOperation
   macro included
     after_save revoke_access_tokens
 

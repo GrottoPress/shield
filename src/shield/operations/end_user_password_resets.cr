@@ -1,4 +1,4 @@
-module Shield::EndUserPasswordResets
+module Shield::EndUserPasswordResets # User::SaveOperation
   macro included
     after_save end_password_resets
 

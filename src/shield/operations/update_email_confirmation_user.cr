@@ -1,4 +1,4 @@
-module Shield::UpdateEmailConfirmationUser
+module Shield::UpdateEmailConfirmationUser # User::SaveOperation
   macro included
     getter new_email : String?
     getter credentials : EmailConfirmationCredentials?

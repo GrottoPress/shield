@@ -1,4 +1,4 @@
-module Shield::DeactivateOauthClient
+module Shield::DeactivateOauthClient # OauthClient::SaveOperation
   macro included
     include Lucille::Deactivate
 

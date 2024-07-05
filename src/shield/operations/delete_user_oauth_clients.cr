@@ -1,4 +1,4 @@
-module Shield::DeleteUserOauthClients
+module Shield::DeleteUserOauthClients # User::SaveOperation
   macro included
     after_commit delete_oauth_clients
 

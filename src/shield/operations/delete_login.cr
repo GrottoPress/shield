@@ -1,4 +1,4 @@
-module Shield::DeleteLogin
+module Shield::DeleteLogin # Login::DeleteOperation
   macro included
     include Shield::DeleteSession
 

@@ -1,4 +1,4 @@
-module Shield::StartPasswordReset
+module Shield::StartPasswordReset # PasswordReset::SaveOperation
   macro included
     attribute email : String
 

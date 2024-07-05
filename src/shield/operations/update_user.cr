@@ -1,4 +1,4 @@
-module Shield::UpdateUser
+module Shield::UpdateUser # User::SaveOperation
   macro included
     permit_columns :email
 

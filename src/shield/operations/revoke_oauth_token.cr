@@ -1,4 +1,4 @@
-module Shield::RevokeOauthToken
+module Shield::RevokeOauthToken # Avram::Operation
   macro included
     @bearer_login : BearerLogin?
 

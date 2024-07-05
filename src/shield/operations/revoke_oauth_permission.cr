@@ -1,4 +1,4 @@
-module Shield::RevokeOauthPermission
+module Shield::RevokeOauthPermission # OauthClient::SaveOperation
   macro included
     needs user : User
 
