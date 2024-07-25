@@ -5,8 +5,10 @@ module Shield::ValidateBearerLogin
     before_save do
       ensure_scopes_unique
 
-      validate_name_required
       validate_user_id_required
+
+      validate_name_required
+      validate_name_length
       validate_name_valid
       validate_name_unique
 
@@ -25,6 +27,14 @@ module Shield::ValidateBearerLogin
 
     private def validate_name_required
       validate_required name, message: Rex.t(:"operation.error.name_required")
+    end
+
+    private def validate_name_length
+      max = 255
+
+      validate_size_of name,
+        max: max,
+        message: Rex.t(:"operation.error.name_too_long", max: max)
     end
 
     private def validate_user_id_required

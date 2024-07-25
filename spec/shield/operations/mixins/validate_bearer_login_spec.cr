@@ -91,6 +91,22 @@ describe Shield::ValidateBearerLogin do
     end
   end
 
+  it "rejects long name" do
+    user = UserFactory.create
+
+    SaveBearerLogin.create(params(
+      user_id: user.id,
+      active_at: Time.utc,
+      name: "t" * 300,
+      token_digest: "abc",
+      scopes: [BearerScope.new(Api::Posts::Index).to_s]
+    )) do |operation, bearer_login|
+      bearer_login.should be_nil
+
+      operation.name.should have_error("operation.error.name_too_long")
+    end
+  end
+
   it "requires a valid name format" do
     user = UserFactory.create
 

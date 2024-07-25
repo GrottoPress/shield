@@ -100,6 +100,24 @@ describe Shield::ValidateOauthClient do
     end
   end
 
+  it "rejects long name" do
+    user = UserFactory.create
+
+    SaveOauthClient.create(
+      params(
+        active_at: Time.utc,
+        name: "c" * 300,
+        secret_digest: "a1b2c3",
+        user_id: user.id
+      ),
+      redirect_uris: ["https://example.com/oauth/callback"],
+    ) do |operation, oauth_client|
+      oauth_client.should be_nil
+
+      operation.name.should have_error("operation.error.name_too_long")
+    end
+  end
+
   it "requires a valid name format" do
     user = UserFactory.create
 

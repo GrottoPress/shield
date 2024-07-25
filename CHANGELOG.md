@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Change no-op methods in `Shield::Hash` to `abstract def`s
 
+### Fixed
+- Limit lengths of OAuth client and bearer login names to mitigate potential DoS
+
 ## [1.2.0] - 2024-07-05
 
 ### Fixed
