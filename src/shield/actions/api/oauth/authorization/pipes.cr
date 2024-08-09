@@ -118,5 +118,10 @@ module Shield::Api::Oauth::Authorization::Pipes
         state: state
       })
     end
+
+    # @[Override]
+    private def has_duplicate_params
+      has_duplicate_params(params.from_form_data)
+    end
   end
 end

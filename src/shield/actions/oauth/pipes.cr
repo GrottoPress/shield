@@ -47,7 +47,15 @@ module Shield::Oauth::Pipes
     end
 
     private def has_duplicate_params
-      params.from_query.any? { |name, _| name.size > 1 }
+      has_duplicate_params(params.from_query)
+    end
+
+    private def has_duplicate_params(params)
+      params.each do |name, _|
+        return true if params.fetch_all(name).size > 1
+      end
+
+      false
     end
   end
 end
