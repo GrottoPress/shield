@@ -2,9 +2,7 @@
   .find(&.name.== :OauthClient.id)
 %}
 
-class User < BaseModel
-  include Shield::HasManyOauthClients
-end
+require "./common"
 
 class BearerLogin < BaseModel
   include Shield::OptionalBelongsToOauthClient

@@ -2,9 +2,7 @@
   .find(&.name.== :EmailConfirmation.id)
 %}
 
-class User < BaseModel
-  include Shield::HasManyEmailConfirmations
-end
+require "./common"
 
 class EmailConfirmationQuery < EmailConfirmation::BaseQuery
   include Shield::EmailConfirmationQuery

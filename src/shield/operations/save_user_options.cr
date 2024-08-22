@@ -9,6 +9,18 @@ module Shield::SaveUserOptions # UserOptions::SaveOperation
 
     include Lucille::ValidateUserExists
 
+    {% if Avram::Model.all_subclasses.find(&.name.== :BearerLogin.id) %}
+      include Shield::SaveBearerLoginUserOptions
+    {% end %}
+
+    {% if Avram::Model.all_subclasses.find(&.name.== :Login.id) %}
+      include Shield::SaveLoginUserOptions
+    {% end %}
+
+    {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
+      include Shield::SaveOauthClientUserOptions
+    {% end %}
+
     private def validate_password_notify_required
       validate_required password_notify,
         message: Rex.t(:"operation.error.password_notify_required")

@@ -27,6 +27,12 @@ module Shield::CreateOauthAccessTokenFromGrant # BearerLogin::SaveOperation
 
     include Shield::ValidateOauthAccessToken
 
+    {% if Avram::Model.all_subclasses.find(&.name.== :UserOptions.id) %}
+      include Shield::NotifyOauthAccessToken
+    {% elsif Lucille::JSON.includers.find(&.name.== :UserSettings.id) %}
+      include Shield::NotifyOauthAccessTokenIfSet
+    {% end %}
+
     private def set_inactive_at
       Shield.settings.oauth_access_token_expiry.try do |expiry|
         active_at.value.try { |value| inactive_at.value = value + expiry }

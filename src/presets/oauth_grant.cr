@@ -2,9 +2,7 @@
   .find(&.name.== :OauthGrant.id)
 %}
 
-class User < BaseModel
-  include Shield::HasManyOauthGrants
-end
+require "./common"
 
 class OauthClient < BaseModel
   include Shield::HasManyOauthGrants

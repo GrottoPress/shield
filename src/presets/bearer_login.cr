@@ -2,9 +2,7 @@
   .find(&.name.== :BearerLogin.id)
 %}
 
-class User < BaseModel
-  include Shield::HasManyBearerLogins
-end
+require "./common"
 
 class BearerLoginQuery < BearerLogin::BaseQuery
   include Shield::BearerLoginQuery

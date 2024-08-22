@@ -1,8 +1,6 @@
 {% skip_file unless Avram::Model.all_subclasses.find(&.name.== :Login.id) %}
 
-class User < BaseModel
-  include Shield::HasManyLogins
-end
+require "./common"
 
 class LoginQuery < Login::BaseQuery
   include Shield::LoginQuery

@@ -2,9 +2,7 @@
   .find(&.name.== :PasswordReset.id)
 %}
 
-class User < BaseModel
-  include Shield::HasManyPasswordResets
-end
+require "./common"
 
 class PasswordResetQuery < PasswordReset::BaseQuery
   include Shield::PasswordResetQuery
