@@ -26,7 +26,7 @@ module Shield::User
 
     {% if Avram::Model.all_subclasses.find(&.name.== :UserOptions.id) %}
       include Shield::HasOneUserOptions
-    {% elsif Avram::Model.all_subclasses.find(&.name.== :UserSettings.id) %}
+    {% elsif Lucille::JSON.includers.find(&.name.== :UserSettings.id) %}
       include Shield::UserSettingsColumn
     {% end %}
 
