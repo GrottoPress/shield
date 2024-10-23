@@ -13,13 +13,13 @@ class Spec::Api::Oauth::Authorization::Pipes < ApiAction
   before :oauth_require_code_challenge
   before :oauth_validate_code_challenge_method
 
-  param client_id : String?
-  param code_challenge : String?
+  param client_id : String? = nil
+  param code_challenge : String? = nil
   param code_challenge_method : String = "plain"
-  param redirect_uri : String?
-  param response_type : String?
-  param scope : String?
-  param state : String?
+  param redirect_uri : String? = nil
+  param response_type : String? = nil
+  param scope : String? = nil
+  param state : String? = nil
 
   get "/spec/api/oauth/authorization/pipes" do
     json({success: true})
@@ -33,15 +33,14 @@ end
 describe Shield::Api::Oauth::Authorization::Pipes do
   describe "#oauth_validate_client_id" do
     it "validates client ID" do
-      response = ApiClient.exec(
-        Spec::Api::Oauth::Authorization::Pipes,
-        client_id: 23,
+      response = ApiClient.exec(Spec::Api::Oauth::Authorization::Pipes.with(
+        client_id: "23",
         code_challenge: "a1b2c3",
         redirect_uri: "myapp://callback",
         response_type: "code",
         scope: "api.current_user.show",
         state: "abc123"
-      )
+      ))
 
       response.should send_json(
         400,
@@ -56,14 +55,13 @@ describe Shield::Api::Oauth::Authorization::Pipes do
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-      response = ApiClient.exec(
-        Spec::Api::Oauth::Authorization::Pipes,
-        client_id: oauth_client.id,
+      response = ApiClient.exec(Spec::Api::Oauth::Authorization::Pipes.with(
+        client_id: oauth_client.id.hexstring,
         code_challenge: "a1b2c3",
         redirect_uri: oauth_client.redirect_uris.first?,
         scope: "api.current_user.show",
         state: "abc123"
-      )
+      ))
 
       response.should send_json(
         400,
@@ -76,14 +74,13 @@ describe Shield::Api::Oauth::Authorization::Pipes do
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-      response = ApiClient.exec(
-        Spec::Api::Oauth::Authorization::Pipes,
-        client_id: oauth_client.id,
+      response = ApiClient.exec(Spec::Api::Oauth::Authorization::Pipes.with(
+        client_id: oauth_client.id.hexstring,
         code_challenge: "a1b2c3",
         redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "code",
         state: "abc123"
-      )
+      ))
 
       response.should send_json(
         400,
@@ -96,14 +93,13 @@ describe Shield::Api::Oauth::Authorization::Pipes do
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-      response = ApiClient.exec(
-        Spec::Api::Oauth::Authorization::Pipes,
-        client_id: oauth_client.id,
+      response = ApiClient.exec(Spec::Api::Oauth::Authorization::Pipes.with(
+        client_id: oauth_client.id.hexstring,
         code_challenge: "a1b2c3",
         redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "code",
         scope: "api.current_user.show"
-      )
+      ))
 
       response.should send_json(
         400,
@@ -118,15 +114,14 @@ describe Shield::Api::Oauth::Authorization::Pipes do
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-      response = ApiClient.exec(
-        Spec::Api::Oauth::Authorization::Pipes,
-        client_id: oauth_client.id,
+      response = ApiClient.exec(Spec::Api::Oauth::Authorization::Pipes.with(
+        client_id: oauth_client.id.hexstring,
         code_challenge: "a1b2c3",
         redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "token",
         scope: "api.current_user.show",
         state: "abc123"
-      )
+      ))
 
       response.should send_json(
         400,
@@ -141,14 +136,13 @@ describe Shield::Api::Oauth::Authorization::Pipes do
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-      response = ApiClient.exec(
-        Spec::Api::Oauth::Authorization::Pipes,
-        client_id: oauth_client.id,
+      response = ApiClient.exec(Spec::Api::Oauth::Authorization::Pipes.with(
+        client_id: oauth_client.id.hexstring,
         redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "code",
         scope: "api.current_user.show",
         state: "abc123"
-      )
+      ))
 
       response.should send_json(
         400,
@@ -163,16 +157,15 @@ describe Shield::Api::Oauth::Authorization::Pipes do
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-      response = ApiClient.exec(
-        Spec::Api::Oauth::Authorization::Pipes,
-        client_id: oauth_client.id,
+      response = ApiClient.exec(Spec::Api::Oauth::Authorization::Pipes.with(
+        client_id: oauth_client.id.hexstring,
         code_challenge: "a1b2c3",
         code_challenge_method: "S512",
         redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "code",
         scope: "api.current_user.show",
         state: "abc123"
-      )
+      ))
 
       response.should send_json(
         400,
@@ -189,15 +182,14 @@ describe Shield::Api::Oauth::Authorization::Pipes do
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
         .redirect_uris(["https://example.com/oauth/callback"])
 
-      response = ApiClient.exec(
-        Spec::Api::Oauth::Authorization::Pipes,
-        client_id: oauth_client.id,
+      response = ApiClient.exec(Spec::Api::Oauth::Authorization::Pipes.with(
+        client_id: oauth_client.id.hexstring,
         code_challenge: "a1b2c3",
         redirect_uri: "myapp://callback",
         response_type: "code",
         scope: "api.current_user.show",
         state: "abc123"
-      )
+      ))
 
       response.should send_json(
         400,
@@ -212,15 +204,14 @@ describe Shield::Api::Oauth::Authorization::Pipes do
       developer = UserFactory.create
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-      response = ApiClient.exec(
-        Spec::Api::Oauth::Authorization::Pipes,
-        client_id: oauth_client.id,
+      response = ApiClient.exec(Spec::Api::Oauth::Authorization::Pipes.with(
+        client_id: oauth_client.id.hexstring,
         code_challenge: "a1b2c3",
         redirect_uri: oauth_client.redirect_uris.first?,
         response_type: "code",
         scope: "api.invalid.scope",
         state: "abc123"
-      )
+      ))
 
       response.should send_json(
         400,

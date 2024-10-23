@@ -13,13 +13,13 @@ module Shield::Oauth::Authorize
   macro included
     include Shield::Oauth::Authorization::Pipes
 
-    param client_id : String?
-    param code_challenge : String?
-    param code_challenge_method : String?
-    param redirect_uri : String?
-    param response_type : String?
-    param scope : String?
-    param state : String?
+    param client_id : String? = nil
+    param code_challenge : String? = nil
+    param code_challenge_method : String? = nil
+    param redirect_uri : String? = nil
+    param response_type : String? = nil
+    param scope : String? = nil
+    param state : String? = nil
 
     # get "/oauth/authorize" do
     #   run_operation

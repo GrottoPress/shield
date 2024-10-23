@@ -98,7 +98,7 @@ describe Shield::LoginPipes do
         client = ApiClient.new
         client.browser_auth(user, password, ip_address, session)
 
-        sleep 3
+        sleep 3.seconds
 
         response = client.exec(Users::Show.with(user_id: user.id))
 
@@ -127,27 +127,27 @@ describe Shield::LoginPipes do
 
         response = client.exec(Users::Show.with(user_id: user.id))
 
-        sleep 1
+        sleep 1.second
 
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(Users::Show.with(user_id: user.id))
 
-        sleep 1
+        sleep 1.second
 
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(Users::Show.with(user_id: user.id))
 
-        sleep 1
+        sleep 1.second
 
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(Users::Show.with(user_id: user.id))
 
-        sleep 1
+        sleep 1.second
 
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(Users::Show.with(user_id: user.id))
 
-        sleep 1
+        sleep 1.second
 
         client.headers("Cookie": response.headers["Set-Cookie"])
         response = client.exec(Users::Show.with(user_id: user.id))

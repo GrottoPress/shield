@@ -13,12 +13,12 @@ module Shield::Oauth::Authorization::New
     before :oauth_validate_code_challenge_method
     before :oauth_require_logged_in
 
-    param client_id : String?
-    param code_challenge : String?
+    param client_id : String? = nil
+    param code_challenge : String? = nil
     param code_challenge_method : String = OauthGrantPkce::METHOD_PLAIN
-    param redirect_uri : String?
-    param response_type : String?
-    param scope : String?
+    param redirect_uri : String? = nil
+    param response_type : String? = nil
+    param scope : String? = nil
 
     # get "/oauth/authorization" do
     #   operation = StartOauthGrant.new(
