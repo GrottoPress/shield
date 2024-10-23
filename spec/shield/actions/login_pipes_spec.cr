@@ -81,7 +81,7 @@ describe Shield::LoginPipes do
     end
 
     it "rejects login that has timed out" do
-      Shield.temp_config(login_idle_timeout: 2.seconds) do
+      Shield.temp_config(login_idle_timeout: 1.seconds) do
         email = "user@example.tld"
         password = "password4APASSWORD<"
         ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
