@@ -4,11 +4,13 @@ on:
     paths:
       - '**.cr'
       - '.github/workflows/test.yml'
+      - shard.latest.yml
   pull_request:
     branches: [master]
     paths:
       - '**.cr'
       - '.github/workflows/test.yml'
+      - shard.latest.yml
   schedule:
     - cron: '0 6 * * 6'
 jobs:
