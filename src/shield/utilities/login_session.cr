@@ -25,8 +25,7 @@ module Shield::LoginSession
     end
 
     def delete : self
-      @session.delete(:login_id)
-      @session.delete(:login_token)
+      @session.clear
       self
     end
 
