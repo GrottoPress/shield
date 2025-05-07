@@ -1,15 +1,13 @@
 module Shield::PasswordAuthentication
   macro included
-    @user : User?
-
-    def initialize(@user : Shield::User)
+    def initialize(@user : Shield::User?)
     end
 
-    def initialize(email : String)
-      @user = UserQuery.new.email(email).first?
+    def self.new(email : String)
+      new UserQuery.new.email(email).first?
     end
 
-    def verify(password : String) : User?
+    def verify(password : String)
       bcrypt = BcryptHash.new(password)
 
       if user = @user
