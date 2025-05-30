@@ -34,7 +34,8 @@ module Shield::ValidateBearerLogin
 
       validate_size_of name,
         max: max,
-        message: Rex.t(:"operation.error.name_too_long", max: max)
+        message: Rex.t(:"operation.error.name_too_long", max: max),
+        allow_nil: true
     end
 
     private def validate_user_id_required

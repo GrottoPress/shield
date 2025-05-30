@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Allow `PasswordAuthentication#initialize` to accept a nilable `User`
 
+### Fixed
+- Allow nil in attribute size validations
+
 ## [1.4.1] - 2025-01-04
 
 ### Fixed
