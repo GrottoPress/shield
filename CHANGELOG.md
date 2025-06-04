@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Allow nil in attribute size validations
+- Fix compile error calling `.compare_versions` with `Shield::VERSION`
 
 ## [1.4.1] - 2025-01-04
 
