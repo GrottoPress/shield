@@ -8,10 +8,11 @@ describe Shield::EmailConfirmations::Token::Show do
     ) do |operation, email_confirmation|
       email_confirmation = email_confirmation.not_nil!
 
-      response = ApiClient.get(EmailConfirmationCredentials.url(
-        operation,
-        email_confirmation
-      ))
+      token = EmailConfirmationCredentials.new(operation, email_confirmation)
+
+      response = ApiClient.exec(
+        EmailConfirmations::Token::Show.with(token.to_s)
+      )
 
       response.status.should eq(HTTP::Status::FOUND)
 

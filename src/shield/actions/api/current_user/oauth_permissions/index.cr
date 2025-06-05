@@ -24,12 +24,18 @@ module Shield::Api::CurrentUser::OauthPermissions::Index
       Lucky::Paginator,
       OauthClientQuery
     ) do
-      paginate OauthClientQuery.new
-        .where_bearer_logins(BearerLoginQuery.new
-          .user_id(user.id)
-          .is_active
-          .active_at.desc_order
-        )
+      {% begin %}
+        paginate OauthClientQuery.new
+          {% if compare_versions(Avram::VERSION, "1.4.0") >= 0 %}
+            .join_bearer_logins(BearerLoginQuery.new
+          {% else %}
+            .where_bearer_logins(BearerLoginQuery.new
+          {% end %}
+            .user_id(user.id)
+            .is_active
+            .active_at.desc_order
+          )
+      {% end %}
     end
 
     def authorize?(user : Shield::User) : Bool

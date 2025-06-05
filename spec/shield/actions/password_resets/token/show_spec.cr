@@ -14,10 +14,8 @@ describe Shield::PasswordResets::Token::Show do
     ) do |operation, password_reset|
       password_reset = password_reset.not_nil!
 
-      response = ApiClient.get(PasswordResetCredentials.url(
-        operation,
-        password_reset
-      ))
+      token = PasswordResetCredentials.new(operation, password_reset)
+      response = ApiClient.exec(PasswordResets::Token::Show.with(token.to_s))
 
       response.status.should eq(HTTP::Status::FOUND)
 
@@ -42,7 +40,8 @@ describe Shield::PasswordResets::Token::Show do
     client = ApiClient.new
     client.browser_auth(email, password)
 
-    response = client.get(PasswordResetCredentials.url("abcdef", 1_i64))
+    token = PasswordResetCredentials.new("abcdef", 1_i64)
+    response = client.exec(PasswordResets::Token::Show.with(token.to_s))
 
     response.status.should eq(HTTP::Status::FOUND)
     response.headers["X-Logged-In"]?.should eq("true")

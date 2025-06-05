@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unrelased] - 
 
+### Added
+- Add support for Lucky v1.4
+
 ### Changed
 - Allow `PasswordAuthentication#initialize` to accept a nilable `User`
 
