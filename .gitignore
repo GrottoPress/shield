@@ -4,6 +4,7 @@
 /lib/
 /tmp/
 *.dwarf
-.env*
+/.aider*
+/.env*
 /.*-version*
 /shard.lock
