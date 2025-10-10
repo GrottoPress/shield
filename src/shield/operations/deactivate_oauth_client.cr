@@ -10,5 +10,9 @@ module Shield::DeactivateOauthClient # OauthClient::SaveOperation
         .is_active
         .update(inactive_at: Time.utc)
     end
+
+    {% if Avram::Model.all_subclasses.find(&.name.== :OauthGrant.id) %}
+      include Shield::EndOauthAuthGrantsAfterDeactivateOauthClient
+    {% end %}
   end
 end

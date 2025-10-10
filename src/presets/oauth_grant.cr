@@ -4,10 +4,6 @@
 
 require "./common"
 
-class OauthClient < BaseModel
-  include Shield::HasManyOauthGrants
-end
-
 struct OauthGrantPkce
   include Shield::OauthGrantPkce
 end
@@ -18,10 +14,6 @@ end
 
 class OauthGrantQuery < OauthGrant::BaseQuery
   include Shield::OauthGrantQuery
-end
-
-class DeactivateOauthClient < OauthClient::SaveOperation
-  include Shield::EndOauthAuthGrantsAfterDeactivateOauthClient
 end
 
 class StartOauthGrant < OauthGrant::SaveOperation
@@ -62,14 +54,6 @@ end
 
 class CreateOauthAccessTokenFromGrant < BearerLogin::SaveOperation
   include Shield::CreateOauthAccessTokenFromGrant
-end
-
-class RevokeOauthToken < Avram::Operation
-  include Shield::RevokeOauthRefreshToken
-end
-
-class DeleteOauthToken < Avram::Operation
-  include Shield::DeleteOauthRefreshToken
 end
 
 struct OauthStateSession

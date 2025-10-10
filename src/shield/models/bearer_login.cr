@@ -3,6 +3,10 @@ module Shield::BearerLogin
     include Shield::BelongsToUser
     include Lucille::StatusColumns
 
+    {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
+      include Shield::OptionalBelongsToOauthClient
+    {% end %}
+
     column name : String
     column scopes : Array(String)
     column token_digest : String

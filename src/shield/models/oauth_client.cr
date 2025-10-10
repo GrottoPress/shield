@@ -2,7 +2,14 @@ module Shield::OauthClient
   macro included
     include Lucille::StatusColumns
     include Shield::BelongsToUser # Developer
-    include Shield::HasManyBearerLogins
+
+    {% if Avram::Model.all_subclasses.find(&.name.== :BearerLogin.id) %}
+      include Shield::HasManyBearerLogins
+    {% end %}
+
+    {% if Avram::Model.all_subclasses.find(&.name.== :OauthGrant.id) %}
+      include Shield::HasManyOauthGrants
+    {% end %}
 
     column name : String
     column redirect_uris : Array(String)

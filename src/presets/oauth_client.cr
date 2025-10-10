@@ -4,10 +4,6 @@
 
 require "./common"
 
-class BearerLogin < BaseModel
-  include Shield::OptionalBelongsToOauthClient
-end
-
 class OauthClientQuery < OauthClient::BaseQuery
   include Shield::OauthClientQuery
 end
@@ -82,14 +78,6 @@ end
 
 class CreateOauthAccessTokenFromClient < BearerLogin::SaveOperation
   include Shield::CreateOauthAccessTokenFromClient
-end
-
-module Shield::BearerLoginVerifier
-  include Shield::OauthAccessTokenVerifier
-end
-
-struct BearerLoginCredentials
-  include Shield::OauthAccessTokenCredentials
 end
 
 struct OauthClientSession
