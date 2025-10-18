@@ -69,7 +69,9 @@ jobs:
         env:
           SHARDS_OVERRIDE: ${{ matrix.shard_file }}
       - name: Install Postgresql
-        run: sudo apt -y install postgresql
+        run: |
+          sudo apt update
+          sudo apt -y install postgresql
       - name: Start Postgresql
         run: sudo systemctl start postgresql
       - name: Set Postgres password
@@ -115,6 +117,7 @@ jobs:
           SHARDS_OVERRIDE: ${{ matrix.shard_file }}
       - name: Install CockroachDB
         run: |
+          sudo apt update
           sudo apt -y install tar wget
           sudo mkdir -p /usr/local/lib/cockroach
           wget -O cockroachdb.tgz https://binaries.cockroachdb.com/cockroach-${{ matrix.cockroachdb }}.linux-amd64.tgz
