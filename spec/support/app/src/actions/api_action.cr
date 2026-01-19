@@ -13,6 +13,10 @@ abstract class ApiAction < Lucky::Action
 
   route_prefix "/api/v0"
 
+  authorize do |user|
+    user.level.admin?
+  end
+
   def do_require_logged_in_failed
     json({logged_in: false})
   end
@@ -35,9 +39,5 @@ abstract class ApiAction < Lucky::Action
 
   def do_pin_email_confirmation_to_ip_address_failed
     json({ip_address_changed: true})
-  end
-
-  def authorize?(user : User) : Bool
-    user.level.admin?
   end
 end

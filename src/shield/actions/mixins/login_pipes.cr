@@ -99,8 +99,15 @@ module Shield::LoginPipes
       redirect_back fallback: CurrentUser::Show
     end
 
-    def authorize?(user : Shield::User) : Bool
-      false
+    macro authorize(&block)
+      \{% arg = block.args.first %}
+      \{% arg = arg && arg.stringify != "_" ? arg : :user %}
+
+      def authorize?(\{{ arg.id }} : Shield::User) : Bool?
+        \{{ block.body }}
+      end
     end
+
+    authorize { false }
   end
 end

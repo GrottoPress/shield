@@ -13,6 +13,10 @@ abstract class BrowserAction < Lucky::Action
 
   skip :protect_from_forgery
 
+  authorize do |user|
+    user.level.admin?
+  end
+
   def do_require_logged_in_failed
     response.headers["X-Logged-In"] = "false"
     previous_def
@@ -46,9 +50,5 @@ abstract class BrowserAction < Lucky::Action
   def do_enforce_login_idle_timeout_failed
     response.headers["X-Login-Timed-Out"] = "true"
     previous_def
-  end
-
-  def authorize?(user : User) : Bool
-    user.level.admin?
   end
 end
