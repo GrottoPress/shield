@@ -2,15 +2,15 @@ module Shield::UserSettings
   macro included
     include Lucille::JSON
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :BearerLogin.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :BearerLogin.id) %}
       include Shield::BearerLoginUserSettings
     {% end %}
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :Login.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :Login.id) %}
       include Shield::LoginUserSettings
     {% end %}
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :OauthClient.id) %}
       include Shield::OauthClientUserSettings
     {% end %}
 

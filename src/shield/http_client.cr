@@ -94,7 +94,7 @@ module Shield::HttpClient
       password_digest = BcryptHash.new(password).hash
       user = UserFactory.create &.email(email).password_digest(password_digest)
 
-      {% if Avram::Model.all_subclasses.find(&.name.== :UserOptions.id) %}
+      {% if Avram::Model.all_subclasses.any?(&.name.== :UserOptions.id) %}
         UserOptionsFactory.create &.user_id(user.id)
       {% end %}
     end

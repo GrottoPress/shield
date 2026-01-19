@@ -8,7 +8,7 @@ module Shield::DeleteUserBearerLogins # User::SaveOperation
       query = BearerLoginQuery.new.user_id(user.id)
       current_bearer_login.try { |login| query = query.id.not.eq(login.id) }
 
-      {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
+      {% if Avram::Model.all_subclasses.any?(&.name.== :OauthClient.id) %}
         query = query.oauth_client_id.is_nil
       {% end %}
 

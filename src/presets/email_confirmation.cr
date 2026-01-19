@@ -1,5 +1,5 @@
 {% skip_file unless Avram::Model.all_subclasses
-  .find(&.name.== :EmailConfirmation.id)
+  .any?(&.name.== :EmailConfirmation.id)
 %}
 
 require "./common"

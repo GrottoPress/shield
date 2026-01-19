@@ -14,9 +14,9 @@ module Shield::StartLogin # Login::SaveOperation
 
     include Shield::ValidateLogin
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :UserOptions.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :UserOptions.id) %}
       include Shield::NotifyLogin
-    {% elsif Lucille::JSON.includers.find(&.name.== :UserSettings.id) %}
+    {% elsif Lucille::JSON.includers.any?(&.name.== :UserSettings.id) %}
       include Shield::NotifyLoginIfSet
     {% end %}
 

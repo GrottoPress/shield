@@ -7,22 +7,22 @@ module Shield::UpdateEmailConfirmationUser # User::SaveOperation
 
     after_save start_email_confirmation
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :UserOptions.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :UserOptions.id) %}
       include Shield::HasOneSaveUserOptions
       include Shield::NotifyPasswordChange
-    {% elsif Lucille::JSON.includers.find(&.name.== :UserSettings.id) %}
+    {% elsif Lucille::JSON.includers.any?(&.name.== :UserSettings.id) %}
       include Shield::SaveUserSettings
       include Shield::NotifyPasswordChangeIfSet
 
-      {% if Avram::Model.all_subclasses.find(&.name.== :BearerLogin.id) %}
+      {% if Avram::Model.all_subclasses.any?(&.name.== :BearerLogin.id) %}
         include Shield::SaveBearerLoginUserSettings
       {% end %}
 
-      {% if Avram::Model.all_subclasses.find(&.name.== :Login.id) %}
+      {% if Avram::Model.all_subclasses.any?(&.name.== :Login.id) %}
         include Shield::SaveLoginUserSettings
       {% end %}
 
-      {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
+      {% if Avram::Model.all_subclasses.any?(&.name.== :OauthClient.id) %}
         include Shield::SaveOauthClientUserSettings
       {% end %}
     {% end %}

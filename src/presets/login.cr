@@ -1,4 +1,4 @@
-{% skip_file unless Avram::Model.all_subclasses.find(&.name.== :Login.id) %}
+{% skip_file unless Avram::Model.all_subclasses.any?(&.name.== :Login.id) %}
 
 require "./common"
 

@@ -59,7 +59,7 @@ module Shield::RevokeOauthToken # Avram::Operation
       token.value.not_nil!
     end
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :OauthGrant.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :OauthGrant.id) %}
       include Shield::RevokeOauthRefreshToken
     {% end %}
   end

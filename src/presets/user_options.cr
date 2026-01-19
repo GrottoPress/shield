@@ -1,5 +1,5 @@
 {% skip_file unless Avram::Model.all_subclasses
-  .find(&.name.== :UserOptions.id)
+  .any?(&.name.== :UserOptions.id)
 %}
 
 require "./common"

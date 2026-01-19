@@ -18,9 +18,9 @@ module Shield::CreateOauthAccessTokenFromClient # BearerLogin::SaveOperation
 
     include Shield::ValidateOauthAccessToken
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :UserOptions.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :UserOptions.id) %}
       include Shield::NotifyOauthAccessToken
-    {% elsif Lucille::JSON.includers.find(&.name.== :UserSettings.id) %}
+    {% elsif Lucille::JSON.includers.any?(&.name.== :UserSettings.id) %}
       include Shield::NotifyOauthAccessTokenIfSet
     {% end %}
 

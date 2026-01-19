@@ -1,5 +1,5 @@
 {% skip_file unless Avram::Model.all_subclasses
-  .find(&.name.== :OauthClient.id)
+  .any?(&.name.== :OauthClient.id)
 %}
 
 require "./common"

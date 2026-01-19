@@ -24,7 +24,7 @@ module Shield::BearerLoginCredentials
       BearerLoginQuery.new.id(id).preload_user.first?
     end
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :OauthClient.id) %}
       include Shield::OauthAccessTokenCredentials
     {% end %}
   end

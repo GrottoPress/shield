@@ -23,7 +23,7 @@ module Shield::Users::BearerLogins::Index
       Lucky::Paginator,
       BearerLoginQuery
     ) do
-      {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
+      {% if Avram::Model.all_subclasses.any?(&.name.== :OauthClient.id) %}
         paginate BearerLoginQuery.new
           .oauth_client_id.is_nil
           .user_id(user.id)

@@ -12,9 +12,9 @@ module Shield::CreateBearerLogin # BearerLogin::SaveOperation
 
     include Shield::ValidateBearerLogin
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :UserOptions.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :UserOptions.id) %}
       include Shield::NotifyBearerLogin
-    {% elsif Lucille::JSON.includers.find(&.name.== :UserSettings.id) %}
+    {% elsif Lucille::JSON.includers.any?(&.name.== :UserSettings.id) %}
       include Shield::NotifyBearerLoginIfSet
     {% end %}
 

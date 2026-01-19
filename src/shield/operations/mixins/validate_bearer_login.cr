@@ -56,7 +56,7 @@ module Shield::ValidateBearerLogin
       name.value.try do |_name|
         user_id.value.try do |_user_id|
           {% begin %}
-            {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
+            {% if Avram::Model.all_subclasses.any?(&.name.== :OauthClient.id) %}
               if BearerLoginQuery.new
                 .user_id(_user_id)
                 .name(_name)

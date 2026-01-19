@@ -22,7 +22,7 @@ module Shield
 
     macro finished
       {% if Lucky::Action.all_subclasses
-        .find(&.name.== "EmailConfirmations::Token::Show".id) %}
+        .any?(&.name.== "EmailConfirmations::Token::Show".id) %}
 
         setting email_confirmation_url : String -> String =
           ->(token : String) do
@@ -33,7 +33,7 @@ module Shield
       {% end %}
 
       {% if Lucky::Action.all_subclasses
-        .find(&.name.== "PasswordResets::Token::Show".id) %}
+        .any?(&.name.== "PasswordResets::Token::Show".id) %}
 
         setting password_reset_url : String -> String = ->(token : String) do
           ::PasswordResets::Token::Show.with(token: token).url

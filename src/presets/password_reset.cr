@@ -1,5 +1,5 @@
 {% skip_file unless Avram::Model.all_subclasses
-  .find(&.name.== :PasswordReset.id)
+  .any?(&.name.== :PasswordReset.id)
 %}
 
 require "./common"

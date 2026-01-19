@@ -45,7 +45,7 @@ module Shield::BearerLoginVerifier
       bearer_login_token?.not_nil!
     end
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :OauthClient.id) %}
       include Shield::OauthAccessTokenVerifier
     {% end %}
   end

@@ -3,7 +3,7 @@ module Shield::BearerLogin
     include Shield::BelongsToUser
     include Lucille::StatusColumns
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :OauthClient.id) %}
       include Shield::OptionalBelongsToOauthClient
     {% end %}
 

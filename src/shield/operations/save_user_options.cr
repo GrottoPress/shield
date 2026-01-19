@@ -9,15 +9,15 @@ module Shield::SaveUserOptions # UserOptions::SaveOperation
 
     include Lucille::ValidateUserExists
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :BearerLogin.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :BearerLogin.id) %}
       include Shield::SaveBearerLoginUserOptions
     {% end %}
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :Login.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :Login.id) %}
       include Shield::SaveLoginUserOptions
     {% end %}
 
-    {% if Avram::Model.all_subclasses.find(&.name.== :OauthClient.id) %}
+    {% if Avram::Model.all_subclasses.any?(&.name.== :OauthClient.id) %}
       include Shield::SaveOauthClientUserOptions
     {% end %}
 
