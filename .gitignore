@@ -7,4 +7,5 @@
 /.aider*
 /.env*
 /.*-version*
+/.vfox*
 /shard.lock
