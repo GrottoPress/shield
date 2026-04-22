@@ -20,7 +20,7 @@ module Shield::Api::BearerLoginPipes
     end
 
     def require_logged_out
-      if logged_out? && bearer_logged_out?
+      if all_logged_out?
         continue
       else
         do_require_logged_out_failed
@@ -28,7 +28,7 @@ module Shield::Api::BearerLoginPipes
     end
 
     def check_authorization
-      if logged_out? && bearer_logged_out? ||
+      if all_logged_out? ||
         logged_in? && authorize?(current_user) ||
         bearer_logged_in? && authorize?(current_bearer)
 

@@ -6,6 +6,10 @@ module Shield::Api::LoginHelpers
       LoginHeaders.new(context).verify
     end
 
+    def all_logged_out? : Bool
+      logged_out? && bearer_logged_out?
+    end
+
     def bearer_logged_in? : Bool
       !bearer_logged_out?
     end
