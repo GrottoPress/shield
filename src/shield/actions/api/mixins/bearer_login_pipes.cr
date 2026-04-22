@@ -28,10 +28,7 @@ module Shield::Api::BearerLoginPipes
     end
 
     def check_authorization
-      if all_logged_out? ||
-        logged_in? && authorize?(current_user) ||
-        bearer_logged_in? && authorize?(current_bearer)
-
+      if all_logged_out? || authorize?(any_current_user)
         continue
       else
         response.status_code = 403

@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Add `Shield::Api::LoginHelpers#any_logged_in?`
 - Add `Shield::Api::LoginHelpers#all_logged_out?`
+- Add `Shield::Api::LoginHelpers#any_current_user`
 - Add `Shield::Api::LoginHelpers#any_current_user?`
 
 ### Changed
 - Merge mixin presets into their respective main modules
+- Deprecate `Shield::Api::LoginHelpers#current_user_or_bearer`
 - Deprecate `Shield::Api::LoginHelpers#current_user_or_bearer?`
 
 ## [1.5.0] - 2025-06-05

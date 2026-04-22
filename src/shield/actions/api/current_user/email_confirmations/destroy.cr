@@ -17,7 +17,7 @@ module Shield::Api::CurrentUser::EmailConfirmations::Destroy
     end
 
     def user
-      current_user_or_bearer
+      any_current_user
     end
 
     def do_run_operation_succeeded(operation, user)

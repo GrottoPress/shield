@@ -7,7 +7,7 @@ module Shield::Api::CurrentUser::Show
     # end
 
     def user
-      current_user_or_bearer
+      any_current_user
     end
 
     def authorize?(user : Shield::User) : Bool
