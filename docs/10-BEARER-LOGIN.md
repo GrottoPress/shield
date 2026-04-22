@@ -476,9 +476,9 @@ This token is revoked when the user logs out.
 
 Other helpers are provided as follows:
 
-- `#current_user_or_bearer`:
-
-   Returns `#current_user` if available, otherwise returns `#current_bearer`. This is useful for dealing with the current user in APIs.
+- `#any_current_user?`: Returns `#current_user?` if available, otherwise returns `#current_bearer?`.
+- `#any_logged_in?`: Returns `true` if user is logged in via any means (password or API token).
+- `#all_logged_out?`: Returns `true` if user is logged out via all means (password and API token).
 
 ### Authentication actions via API endpoints
 
