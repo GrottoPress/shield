@@ -37,7 +37,7 @@ abstract class ApiAction < Lucky::Action
     json({ip_address_changed: true})
   end
 
-  def authorize?(user : User) : Bool
-    user.level.admin?
+  def authorize? : Bool?
+    any_current_user.level.admin?
   end
 end

@@ -53,7 +53,7 @@ module Shield::LoginPipes
     end
 
     def check_authorization
-      if logged_out? || authorize?(current_user)
+      if logged_out? || authorize? || authorize?(current_user)
         continue
       else
         response.status_code = 403
@@ -99,7 +99,12 @@ module Shield::LoginPipes
       redirect_back fallback: CurrentUser::Show
     end
 
+    # @[Deprecated("Use #authorize? without user parameter")]
     def authorize?(user : Shield::User) : Bool
+      false
+    end
+
+    def authorize? : Bool?
       false
     end
   end
