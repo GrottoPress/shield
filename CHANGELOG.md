@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - 
 
 ### Added
+- Add `Shield::Api::LoginHelpers#any_logged_in?`
 - Add `Shield::Api::LoginHelpers#all_logged_out?`
 
 ### Changed
