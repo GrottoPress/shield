@@ -22,12 +22,13 @@ module Shield::Api::LoginHelpers
       current_bearer?.nil?
     end
 
-    def current_user_or_bearer : User
-      current_user_or_bearer?.not_nil!
+    def any_current_user? : User?
+      current_user? || current_bearer?
     end
 
+    @[Deprecated("Use #any_current_user? instead")]
     def current_user_or_bearer? : User?
-      current_user? || current_bearer?
+      any_current_user?
     end
 
     def current_bearer : User
