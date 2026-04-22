@@ -2,14 +2,14 @@
 
 *Shield* enforces authorization in actions via the `before :check_authorization` pipe. Authorization is denied, by default, for all actions.
 
-Each action may define an authorization rule by overriding it's `#authorize?(user)` method. If the method returns `true`, authorization is granted, otherwise it is denied:
+Each action may define an authorization rule by calling the `.authorize(&)` macro. If the block evaluates to `true`, authorization is granted, otherwise it is denied:
 
 ```crystal
 # ->>> src/actions/browser_action.cr
 
 abstract class BrowserAction < Lucky::Action
   # ...
-  def authorize? : Bool?
+  authorize do
     current_user.level.admin?
   end
   # ...
@@ -21,7 +21,7 @@ end
 
 class Posts::Update < BrowserAction
   # ...
-  def authorize? : Bool?
+  authorize do
     super || post.user_id == current_user.id
   end
   # ...
@@ -72,7 +72,7 @@ class PostPolicy < LuckyCan::BasePolicy
 end
 ```
 
-In the relevant action, call the relevant authorization shard helper:
+In the action, call the relevant authorization shard helper:
 
 ```crystal
 # ->>> src/actions/posts/update.cr
@@ -80,10 +80,11 @@ In the relevant action, call the relevant authorization shard helper:
 # This example uses *LuckyCan*
 class Posts::Update < BrowserAction
   # ...
-  def authorize? : Bool?
+  authorize do
     # Call the shard's helper here. MUST return `Bool?`
     PostPolicy.update?(post, current_user)
   end
+
   # ...
 end
 ```

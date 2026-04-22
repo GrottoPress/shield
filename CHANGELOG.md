@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `Shield::Api::LoginHelpers#any_current_user`
 - Add `Shield::Api::LoginHelpers#any_current_user?`
 - Add parameterless `Shield::LoginPipes#authorize?`
+- Add `Shield::LoginPipes.authorize(&)` macro
 
 ### Changed
 - Merge mixin presets into their respective main modules
