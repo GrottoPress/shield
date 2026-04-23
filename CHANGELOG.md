@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Merge mixin presets into their respective main modules
+- Redefine `Shield::Api::LoginHelpers#current_user?` to check both password and bearer token
+- Deprecate `Shield::Api::LoginHelpers#current_user_or_bearer?`
 
 ## [1.5.0] - 2025-06-05
 

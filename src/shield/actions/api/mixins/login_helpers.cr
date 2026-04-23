@@ -6,6 +6,10 @@ module Shield::Api::LoginHelpers
       LoginHeaders.new(context).verify
     end
 
+    def current_user? : User?
+      previous_def || current_bearer?
+    end
+
     def bearer_logged_in? : Bool
       !bearer_logged_out?
     end
@@ -14,12 +18,14 @@ module Shield::Api::LoginHelpers
       current_bearer?.nil?
     end
 
+    @[Deprecated("User #current_user instead")]
     def current_user_or_bearer : User
-      current_user_or_bearer?.not_nil!
+      current_user
     end
 
+    @[Deprecated("User #current_user? instead")]
     def current_user_or_bearer? : User?
-      current_user? || current_bearer?
+      current_user?
     end
 
     def current_bearer : User

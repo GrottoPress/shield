@@ -21,7 +21,7 @@ module Shield::Api::CurrentUser::BearerLogins::Create
     end
 
     def user
-      current_user_or_bearer
+      current_user
     end
 
     def do_run_operation_succeeded(operation, bearer_login)

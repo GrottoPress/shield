@@ -465,7 +465,7 @@ This token is revoked when the user logs out.
 
 ### Action helpers
 
-`ApiAction` adds in the following helpers, as counterparts to those provided in `BrowserAction`.
+`ApiAction` adds in the following helpers, in addition to those provided in `BrowserAction`:
 
 - `#bearer_logged_in?`
 - `#bearer_logged_out?`
@@ -474,11 +474,11 @@ This token is revoked when the user logs out.
 - `#current_bearer?`
 - `#current_bearer`
 
-Other helpers are provided as follows:
+The above helpers check bearer token *only* to determine a user's login status. Use the helpers below are to check both password and bearer token:
 
-- `#current_user_or_bearer`:
-
-   Returns `#current_user` if available, otherwise returns `#current_bearer`. This is useful for dealing with the current user in APIs.
+- `#current_user?`
+- `#logged_in?`
+- `#logged_out?`
 
 ### Authentication actions via API endpoints
 

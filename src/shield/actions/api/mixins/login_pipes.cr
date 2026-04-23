@@ -13,6 +13,7 @@ module Shield::Api::LoginPipes
 
     def pin_login_to_ip_address
       if logged_out? ||
+        current_login?.nil? ||
         current_login.ip_address == remote_ip?.try &.address
         continue
       else

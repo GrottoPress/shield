@@ -12,7 +12,7 @@ module Shield::Api::CurrentUser::OauthAccessTokens::Index
     # end
 
     def user
-      current_user_or_bearer
+      current_user
     end
 
     def pages

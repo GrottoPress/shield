@@ -35,7 +35,7 @@ module Shield::Api::CurrentUser::BearerLogins::Destroy
     end
 
     def user
-      current_user_or_bearer
+      current_user
     end
 
     def authorize?(user : Shield::User) : Bool

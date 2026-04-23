@@ -17,7 +17,7 @@ module Shield::Api::CurrentUser::PasswordResets::Destroy
     end
 
     def user
-      current_user_or_bearer
+      current_user
     end
 
     def do_run_operation_succeeded(operation, user)
