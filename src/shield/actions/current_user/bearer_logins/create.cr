@@ -2,6 +2,10 @@ module Shield::CurrentUser::BearerLogins::Create
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # post "/account/bearer-logins" do
     #   run_operation
     # end
@@ -33,10 +37,6 @@ module Shield::CurrentUser::BearerLogins::Create
 
     def user
       current_user
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

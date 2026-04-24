@@ -17,6 +17,10 @@ module Shield::EmailConfirmations::Update
 
     before :pin_email_confirmation_to_ip_address
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # get "/email-confirmations/update" do
     #   run_operation
     # end
@@ -65,10 +69,6 @@ module Shield::EmailConfirmations::Update
     def do_run_operation_failed(operation)
       flash.failure = Rex.t(:"action.email_confirmation.update.failure")
       redirect to: CurrentUser::Edit
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

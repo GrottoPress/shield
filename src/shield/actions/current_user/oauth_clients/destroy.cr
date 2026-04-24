@@ -2,6 +2,10 @@ module Shield::CurrentUser::OauthClients::Destroy
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # delete "/account/oauth/clients" do
     #   run_operation
     # end
@@ -31,10 +35,6 @@ module Shield::CurrentUser::OauthClients::Destroy
 
     def user
       current_user
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

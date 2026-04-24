@@ -2,6 +2,10 @@ module Shield::Api::CurrentUser::EmailConfirmations::Destroy
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # delete "/account/email-confirmations" do
     #   run_operation
     # end
@@ -36,10 +40,6 @@ module Shield::Api::CurrentUser::EmailConfirmations::Destroy
           :"action.current_user.email_confirmation.destroy.failure"
         )
       )
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

@@ -9,7 +9,7 @@ Each action may define an authorization rule by overriding it's `#authorize?(use
 
 abstract class BrowserAction < Lucky::Action
   # ...
-  def authorize?(user : User) : Bool
+  authorize_user do |user|
     user.level.admin?
   end
   # ...
@@ -21,7 +21,7 @@ end
 
 class Posts::Update < BrowserAction
   # ...
-  def authorize?(user : User) : Bool
+  authorize_user do |user|
     super || post.user_id == user.id
   end
   # ...
@@ -80,7 +80,7 @@ In the relevant action, call the relevant authorization shard helper:
 # This example uses *LuckyCan*
 class Posts::Update < BrowserAction
   # ...
-  def authorize?(user : User) : Bool
+  authorize_user do |user|
     # Call the shard's helper here. MUST return `Bool`
     PostPolicy.update?(post, user)
   end

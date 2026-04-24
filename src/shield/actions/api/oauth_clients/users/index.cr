@@ -2,6 +2,10 @@ module Shield::Api::OauthClients::Users::Index
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      super || user.id == oauth_client.user_id
+    end
+
     # param page : Int32 = 1
 
     # get "/oauth/clients/:oauth_client_id/users" do
@@ -40,10 +44,6 @@ module Shield::Api::OauthClients::Users::Index
           .active_at.desc_order
         )
       {% end %}
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      super || user.id == oauth_client.user_id
     end
   end
 end

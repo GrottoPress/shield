@@ -2,6 +2,10 @@ module Shield::CurrentUser::OauthClients::Create
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # post "/account/oauth/clients" do
     #   run_operation
     # end
@@ -33,10 +37,6 @@ module Shield::CurrentUser::OauthClients::Create
 
     def user
       current_user
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

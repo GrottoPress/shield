@@ -2,6 +2,10 @@ module Shield::Api::CurrentUser::OauthClients::Create
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # post "/account/oauth/clients" do
     #   run_operation
     # end
@@ -37,10 +41,6 @@ module Shield::Api::CurrentUser::OauthClients::Create
         errors: operation.errors,
         message: Rex.t(:"action.current_user.oauth_client.create.failure")
       )
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

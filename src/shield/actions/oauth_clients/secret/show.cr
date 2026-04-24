@@ -2,6 +2,10 @@ module Shield::OauthClients::Secret::Show
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == oauth_client?.try(&.user_id)
+    end
+
     # get "/oauth/clients/secret" do
     #   html ShowPage, oauth_client: oauth_client?, secret: secret?
     # end
@@ -20,10 +24,6 @@ module Shield::OauthClients::Secret::Show
 
     def secret? : String?
       oauth_client_session[1]?
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == oauth_client?.try(&.user_id)
     end
 
     # This is to ensure we fetch `oauth_client` first before

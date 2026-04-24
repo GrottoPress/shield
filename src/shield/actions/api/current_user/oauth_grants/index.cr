@@ -2,6 +2,10 @@ module Shield::Api::CurrentUser::OauthGrants::Index
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # param page : Int32 = 1
 
     # get "/account/oauth/grants" do
@@ -31,10 +35,6 @@ module Shield::Api::CurrentUser::OauthGrants::Index
         .user_id(user.id)
         .is_active
         .active_at.desc_order
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

@@ -2,6 +2,10 @@ module Shield::Api::OauthClients::Secret::Update
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == oauth_client.user_id
+    end
+
     # patch "/oauth/clients/:oauth_client_id/secret" do
     #   run_operation
     # end
@@ -36,10 +40,6 @@ module Shield::Api::OauthClients::Secret::Update
 
     getter oauth_client : OauthClient do
       OauthClientQuery.find(oauth_client_id)
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == oauth_client.user_id
     end
   end
 end

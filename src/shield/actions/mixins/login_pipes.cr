@@ -99,8 +99,27 @@ module Shield::LoginPipes
       redirect_back fallback: CurrentUser::Show
     end
 
-    def authorize?(user : Shield::User) : Bool
-      false
+    macro authorize_user(&block)
+      {% verbatim do %}
+        {% arg_count = block.args.size %}
+        {% max_arg_count = 1 %}
+
+        {% if arg_count > max_arg_count %}
+          {% block.raise "too many block parameters (given #{arg_count}, \
+            expected maximum #{max_arg_count})" %}
+        {% end %}
+
+        {% arg = block.args.first %}
+        {% arg = !arg || arg == "_".id ? "__".id : arg %}
+        {% body = block.body.id.gsub(/super\(\)/, "super") %}
+        {% body = body.gsub(/previous_def\(\)/, "previous_def") %}
+
+        def authorize?({{ arg }} : Shield::User) : Bool?
+          {{ body }}
+        end
+      {% end %}
     end
+
+    authorize_user { false }
   end
 end

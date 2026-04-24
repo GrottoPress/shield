@@ -2,6 +2,10 @@ module Shield::OauthGrants::Destroy
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      super || user.id == oauth_grant.user_id
+    end
+
     # delete "/oauth/grants/:oauth_grant_id" do
     #   run_operation
     # end
@@ -29,10 +33,6 @@ module Shield::OauthGrants::Destroy
 
     getter oauth_grant : OauthGrant do
       OauthGrantQuery.find(oauth_grant_id)
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      super || user.id == oauth_grant.user_id
     end
   end
 end

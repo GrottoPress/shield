@@ -2,6 +2,10 @@ module Shield::CurrentLogin::Destroy
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == login.user_id
+    end
+
     # delete "/login" do
     #   run_operation
     # end
@@ -32,10 +36,6 @@ module Shield::CurrentLogin::Destroy
     def do_run_operation_failed(operation)
       flash.failure = Rex.t(:"action.current_login.destroy.failure")
       redirect_back fallback: CurrentUser::Show
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == login.user_id
     end
   end
 end

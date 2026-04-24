@@ -2,6 +2,10 @@ module Shield::Api::Users::OauthPermissions::Destroy
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      super || user.id == oauth_client.user_id
+    end
+
     # delete "/users/:user_id/oauth/permissions/:oauth_client_id" do
     #   run_operation
     # end
@@ -41,10 +45,6 @@ module Shield::Api::Users::OauthPermissions::Destroy
         errors: operation.errors,
         message: Rex.t(:"action.user.oauth_permission.destroy.failure")
       )
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      super || user.id == oauth_client.user_id
     end
   end
 end

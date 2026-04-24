@@ -2,6 +2,10 @@ module Shield::CurrentUser::OauthClients::New
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # get "/account/oauth/clients/new" do
     #   operation = RegisterOauthClient.new(user: user)
     #   html NewPage, operation: operation
@@ -9,10 +13,6 @@ module Shield::CurrentUser::OauthClients::New
 
     def user
       current_user
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

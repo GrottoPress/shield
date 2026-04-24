@@ -2,6 +2,16 @@ module Shield::Api::BearerLogins::Destroy
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      {% if Avram::Model.all_subclasses.any?(&.name.== :OauthClient.id) %}
+        super ||
+          user.id == bearer_login.user_id ||
+          user.id == bearer_login.oauth_client.try(&.user_id)
+      {% else %}
+        super || user.id == bearer_login.user_id
+      {% end %}
+    end
+
     # delete "/bearer-logins/:bearer_login_id" do
     #   run_operation
     # end
@@ -38,16 +48,6 @@ module Shield::Api::BearerLogins::Destroy
         BearerLoginQuery.new.preload_oauth_client.find(bearer_login_id)
       {% else %}
         BearerLoginQuery.find(bearer_login_id)
-      {% end %}
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      {% if Avram::Model.all_subclasses.any?(&.name.== :OauthClient.id) %}
-        super ||
-          user.id == bearer_login.user_id ||
-          user.id == bearer_login.oauth_client.try(&.user_id)
-      {% else %}
-        super || user.id == bearer_login.user_id
       {% end %}
     end
   end

@@ -5,6 +5,10 @@ module Shield::Api::CurrentUser::OauthAccessTokens::Index
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # param page : Int32 = 1
 
     # get "/account/oauth/tokens" do
@@ -32,10 +36,6 @@ module Shield::Api::CurrentUser::OauthAccessTokens::Index
         .oauth_client_id.is_not_nil
         .is_active
         .active_at.desc_order
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

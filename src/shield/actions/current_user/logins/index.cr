@@ -2,6 +2,10 @@ module Shield::CurrentUser::Logins::Index
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # param page : Int32 = 1
 
     # get "/account/logins" do
@@ -22,10 +26,6 @@ module Shield::CurrentUser::Logins::Index
 
     def user
       current_user
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

@@ -17,6 +17,10 @@ module Shield::Api::EmailConfirmations::Update
 
     before :pin_email_confirmation_to_ip_address
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # patch "/email-confirmations" do
     #   run_operation
     # end
@@ -68,10 +72,6 @@ module Shield::Api::EmailConfirmations::Update
         errors: operation.errors,
         message: Rex.t(:"action.email_confirmation.update.failure")
       )
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

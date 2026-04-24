@@ -2,6 +2,10 @@ module Shield::Api::CurrentUser::BearerLogins::Destroy
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # delete "/account/bearer-logins" do
     #   run_operation
     # end
@@ -36,10 +40,6 @@ module Shield::Api::CurrentUser::BearerLogins::Destroy
 
     def user
       current_user
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

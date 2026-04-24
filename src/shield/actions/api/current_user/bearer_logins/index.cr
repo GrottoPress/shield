@@ -5,6 +5,10 @@ module Shield::Api::CurrentUser::BearerLogins::Index
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # param page : Int32 = 1
 
     # get "/account/bearer-logins" do
@@ -39,10 +43,6 @@ module Shield::Api::CurrentUser::BearerLogins::Index
 
     def user
       current_user
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

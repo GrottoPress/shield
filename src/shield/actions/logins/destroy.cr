@@ -2,6 +2,10 @@ module Shield::Logins::Destroy
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      super || user.id == login.user_id
+    end
+
     # delete "/logins/:login_id" do
     #   run_operation
     # end
@@ -29,10 +33,6 @@ module Shield::Logins::Destroy
 
     getter login : Login do
       LoginQuery.find(login_id)
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      super || user.id == login.user_id
     end
   end
 end

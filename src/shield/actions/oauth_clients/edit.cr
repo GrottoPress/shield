@@ -2,6 +2,10 @@ module Shield::OauthClients::Edit
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      super || user.id == oauth_client.user_id
+    end
+
     # get "/oauth/clients/:oauth_client_id/edit" do
     #   operation = UpdateOauthClient.new(oauth_client)
     #   html EditPage, operation: operation
@@ -9,10 +13,6 @@ module Shield::OauthClients::Edit
 
     def oauth_client : OauthClient
       OauthClientQuery.find(oauth_client_id)
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      super || user.id == oauth_client.user_id
     end
   end
 end

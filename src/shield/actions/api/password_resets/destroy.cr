@@ -2,6 +2,10 @@ module Shield::Api::PasswordResets::Destroy
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      super || user.id == password_reset.user_id
+    end
+
     # delete "/password-resets/:password_reset_id" do
     #   run_operation
     # end
@@ -36,10 +40,6 @@ module Shield::Api::PasswordResets::Destroy
 
     getter password_reset : PasswordReset do
       PasswordResetQuery.find(password_reset_id)
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      super || user.id == password_reset.user_id
     end
   end
 end

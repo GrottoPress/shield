@@ -2,6 +2,10 @@ module Shield::CurrentUser::Update
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # patch "/account" do
     #   run_operation
     # end
@@ -33,10 +37,6 @@ module Shield::CurrentUser::Update
     def do_run_operation_failed(operation)
       flash.failure = Rex.t(:"action.current_user.update.failure")
       html EditPage, operation: operation
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

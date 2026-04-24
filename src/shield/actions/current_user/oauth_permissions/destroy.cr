@@ -2,6 +2,10 @@ module Shield::CurrentUser::OauthPermissions::Destroy
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == self.user.id
+    end
+
     # delete "/account/oauth/permissions/:oauth_client_id" do
     #   run_operation
     # end
@@ -40,10 +44,6 @@ module Shield::CurrentUser::OauthPermissions::Destroy
         Rex.t(:"action.current_user.oauth_permission.destroy.failure")
 
       redirect_back fallback: Index
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == self.user.id
     end
   end
 end

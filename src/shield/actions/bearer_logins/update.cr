@@ -2,6 +2,10 @@ module Shield::BearerLogins::Update
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      super || user.id == bearer_login.user_id
+    end
+
     # patch "/bearer-logins/:bearer_login_id" do
     #   run_operation
     # end
@@ -32,10 +36,6 @@ module Shield::BearerLogins::Update
 
     getter bearer_login : BearerLogin do
       BearerLoginQuery.find(bearer_login_id)
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      super || user.id == bearer_login.user_id
     end
   end
 end

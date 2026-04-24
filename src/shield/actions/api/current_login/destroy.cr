@@ -2,6 +2,10 @@ module Shield::Api::CurrentLogin::Destroy
   macro included
     skip :require_logged_out
 
+    authorize_user do |user|
+      user.id == login.user_id
+    end
+
     # delete "/login" do
     #   run_operation
     # end
@@ -33,10 +37,6 @@ module Shield::Api::CurrentLogin::Destroy
         errors: operation.errors,
         message: Rex.t(:"action.current_login.destroy.failure")
       )
-    end
-
-    def authorize?(user : Shield::User) : Bool
-      user.id == login.user_id
     end
   end
 end
