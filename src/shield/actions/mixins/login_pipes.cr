@@ -53,7 +53,9 @@ module Shield::LoginPipes
     end
 
     def check_authorization
-      if logged_out? || authorize?(current_user)
+      if current_user? && authorize?(current_user) ||
+        current_user?.nil? && authorize?
+
         continue
       else
         response.status_code = 403
@@ -99,6 +101,25 @@ module Shield::LoginPipes
       redirect_back fallback: CurrentUser::Show
     end
 
+    macro authorize(&block)
+      {% verbatim do %}
+        {% arg_count = block.args.size %}
+        {% max_arg_count = 0 %}
+
+        {% if arg_count > max_arg_count %}
+          {% block.raise "too many block parameters (given #{arg_count}, \
+            expected maximum #{max_arg_count})" %}
+        {% end %}
+
+        {% body = block.body.id.gsub(/super\(\)/, "super") %}
+        {% body = body.gsub(/previous_def\(\)/, "previous_def") %}
+
+        def authorize? : Bool?
+          {{ body }}
+        end
+      {% end %}
+    end
+
     macro authorize_user(&block)
       {% verbatim do %}
         {% arg_count = block.args.size %}
@@ -121,5 +142,7 @@ module Shield::LoginPipes
     end
 
     authorize_user { false }
+
+    authorize { false }
   end
 end

@@ -1,4 +1,5 @@
 class Home::Edit < BrowserAction
+  skip :check_authorization
   skip :require_logged_in
   skip :require_logged_out
 

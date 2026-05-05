@@ -6,6 +6,8 @@ module Shield::Api::EmailConfirmations::Create
   macro included
     skip :require_logged_in
 
+    authorize { true }
+
     # post "/email-confirmations" do
     #   run_operation
     # end

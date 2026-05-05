@@ -13,6 +13,8 @@ module Shield::PasswordResets::Token::Show
 
     before :set_no_referrer_policy # <= IMPORTANT!
 
+    authorize { true }
+
     # get "/password-resets/token/:token" do
     #   run_operation
     # end

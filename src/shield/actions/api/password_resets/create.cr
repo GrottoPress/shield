@@ -10,6 +10,8 @@ module Shield::Api::PasswordResets::Create
   macro included
     skip :require_logged_in
 
+    authorize { true }
+
     # post "/password-resets" do
     #   run_operation
     # end

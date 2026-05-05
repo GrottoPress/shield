@@ -81,7 +81,7 @@ describe Shield::Api::LoginPipes do
   end
 
   describe "#check_authorization" do
-    it "denies authorization" do
+    it "denies authorization for logged in user" do
       password = "password_1Apassword"
 
       user = UserFactory.create &.password(password)
@@ -95,7 +95,13 @@ describe Shield::Api::LoginPipes do
       response.should send_json(403, authorized: false)
     end
 
-    it "grants authorization" do
+    it "denies authorization for logged out user" do
+      response = ApiClient.exec(Api::Posts::New, allow: false)
+
+      response.should send_json(403, authorized: false)
+    end
+
+    it "grants authorization for logged in user" do
       password = "password_1Apassword"
 
       user = UserFactory.create &.level(:admin).password(password)
@@ -107,6 +113,12 @@ describe Shield::Api::LoginPipes do
       response = client.exec(Api::Posts::Create)
 
       response.should send_json(200, current_user: user.id)
+    end
+
+    it "grants authorization for logged out user" do
+      response = ApiClient.exec(Api::Posts::New)
+
+      response.should send_json(200)
     end
   end
 end

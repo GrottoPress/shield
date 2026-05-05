@@ -4,6 +4,8 @@ module Shield::PasswordResets::Edit
 
     before :pin_password_reset_to_ip_address
 
+    authorize { true }
+
     # get "/password-resets/edit" do
     #   run_operation
     # end

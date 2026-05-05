@@ -8,6 +8,8 @@ module Shield::CurrentUser::Create
   macro included
     skip :require_logged_in
 
+    authorize { true }
+
     # post "/account" do
     #   run_operation
     # end

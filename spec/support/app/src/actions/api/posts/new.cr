@@ -1,7 +1,9 @@
 class Api::Posts::New < ApiAction
   skip :require_logged_in
 
-  authorize_user { true }
+  authorize do
+    params.get?(:allow) != "false"
+  end
 
   get "/posts/new" do
     json({

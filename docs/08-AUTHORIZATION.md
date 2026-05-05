@@ -2,7 +2,7 @@
 
 *Shield* enforces authorization in actions via the `before :check_authorization` pipe. Authorization is denied, by default, for all actions.
 
-Each action may define an authorization rule by overriding it's `#authorize?(user)` method. If the method returns `true`, authorization is granted, otherwise it is denied:
+Each action may define an authorization rule by using the `.authorize_user(&)` macro. If the block passed to the macro returns `true`, authorization is granted, otherwise it is denied:
 
 ```crystal
 # ->>> src/actions/browser_action.cr
@@ -28,13 +28,30 @@ class Posts::Update < BrowserAction
 end
 ```
 
+While the `.authorize_user(&)` macro is used to authorize a logged in user, there's a separate `.authorize(&)` macro for authorizing a logged out user:
+
+```crystal
+# ->>> src/actions/posts/show.cr
+
+class Posts::Show < BrowserAction
+  skip :require_logged_in
+  skip :require_logged_out
+  # ...
+
+  # This is used if the user is logged in
+  authorize_user do |user|
+    super || post.user_id == user.id || post.published?
+  end
+
+  # This is used if the user is logged out
+  authorize do
+    post.published?
+  end
+  # ...
+end
+```
+
 If authorization is denied, `#do_check_authorization_failed` (which you set up in the base actions) is called.
-
-Authorization is always skipped if the current user is not logged in. If you wish to deny access for such a user, there's the `before :require_logged_in` pipe.
-
-The `:check_authorization` pipe is for authorizing a **logged in** user to perform an *action* on the action's resource, based on the user's role and capabilities, relative to the resource.
-
-It should not be used for any other type of authorization. For instance, if you need to restrict access based on IP address, you should define a new pipe for that.
 
 1. Set up actions:
 

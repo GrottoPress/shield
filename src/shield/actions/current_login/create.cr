@@ -2,6 +2,8 @@ module Shield::CurrentLogin::Create
   macro included
     skip :require_logged_in
 
+    authorize { true }
+
     # post "/login" do
     #   run_operation
     # end
