@@ -9,7 +9,7 @@ describe Shield::DeleteUserLogins do
     login_1.status.active?.should be_true
     login_2.status.active?.should be_true
 
-    DeleteLoginsEverywhere.update(
+    DeleteUserLogins.update(
       user,
       current_login: nil
     ) do |operation, _|
@@ -28,7 +28,7 @@ describe Shield::DeleteUserLogins do
     login_1.status.active?.should be_true
     login_2.status.active?.should be_true
 
-    DeleteLoginsEverywhere.update(
+    DeleteUserLogins.update(
       user,
       current_login: login_1
     ) do |operation, _|
@@ -52,7 +52,7 @@ describe Shield::DeleteUserLogins do
     mary_login.status.active?.should be_true
     john_login.status.active?.should be_true
 
-    DeleteLoginsEverywhere.update(
+    DeleteUserLogins.update(
       mary,
       current_login: nil
     ) do |operation, _|

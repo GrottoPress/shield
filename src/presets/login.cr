@@ -23,6 +23,7 @@ class LogOutEverywhere < User::SaveOperation
   include Shield::EndUserLogins
 end
 
+@[Deprecated("User DeleteCurrentUserLogins instead")]
 class DeleteLoginsEverywhere < User::SaveOperation
   include Shield::DeleteUserLogins
 end

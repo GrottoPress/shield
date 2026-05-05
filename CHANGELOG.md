@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Deprecate `LogOutEverywhere` operation
+- Deprecate `DeleteLoginsEverywhere` operation
 
 ## [1.5.0] - 2025-06-05
 
