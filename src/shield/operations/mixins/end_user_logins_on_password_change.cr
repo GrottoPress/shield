@@ -7,7 +7,7 @@ module Shield::EndUserLoginsOnPasswordChange
     private def end_logins(user : Shield::User)
       return unless password_digest.changed?
 
-      LogOutEverywhere.update!(user, current_login: current_login)
+      EndUserLogins.update!(user, current_login: current_login)
     end
   end
 end

@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Redefine `Shield::Api::LoginHelpers#current_user?` to check both password and bearer token
 - Deprecate `Shield::Api::LoginHelpers#current_user_or_bearer?`
 
+## [Unreleased] - 
+
+### Changed
+- Deprecate `LogOutEverywhere` operation
+
 ## [1.5.0] - 2025-06-05
 
 ### Added
