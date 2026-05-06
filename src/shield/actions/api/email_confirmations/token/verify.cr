@@ -1,9 +1,10 @@
 module Shield::Api::EmailConfirmations::Token::Verify
   macro included
     skip :require_logged_out
-    skip :check_authorization
 
     before :pin_email_confirmation_to_ip_address
+
+    authorize_user { true }
 
     # post "/email-confirmations/token/verify" do
     #   run_operation

@@ -1,9 +1,10 @@
 module Shield::Api::PasswordResets::Token::Verify
   macro included
     skip :require_logged_out
-    skip :check_authorization
 
     before :pin_password_reset_to_ip_address
+
+    authorize_user { true }
 
     # post "/password-resets/token/verify" do
     #   run_operation

@@ -6,7 +6,8 @@
 module Shield::Api::Logins::Token::Verify
   macro included
     skip :require_logged_out
-    skip :check_authorization
+
+    authorize_user { true }
 
     # post "/logins/token/verify" do
     #   run_operation
