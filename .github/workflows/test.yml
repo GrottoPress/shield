@@ -23,7 +23,7 @@ jobs:
     continue-on-error: false
     steps:
       - name: Download source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
         with:
@@ -53,13 +53,13 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     steps:
       - name: Download source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
       - name: Cache shards
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
@@ -100,13 +100,13 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     steps:
       - name: Download source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
       - name: Cache shards
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
