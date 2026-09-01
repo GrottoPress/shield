@@ -14,12 +14,12 @@ describe Shield::NotifyLogin do
     user = UserFactory.create &.email(email).password(password)
     UserOptionsFactory.create &.user_id(user.id).login_notify(true)
 
-    SaveLogin.create(params(
+    SaveLogin.create(fake_params(login: {
       user_id: user.id,
       active_at: Time.utc,
       token_digest: "abc",
       ip_address: "1.2.3.4"
-    )) do |operation, login|
+    })) do |operation, login|
       login.should be_a(Login)
 
       login = LoginQuery.preload_user(login.not_nil!)
@@ -34,12 +34,12 @@ describe Shield::NotifyLogin do
     user = UserFactory.create &.email(email).password(password)
     UserOptionsFactory.create &.user_id(user.id).login_notify(false)
 
-    SaveLogin.create(params(
+    SaveLogin.create(fake_params(login: {
       user_id: user.id,
       active_at: Time.utc,
       token_digest: "abc",
       ip_address: "1.2.3.4"
-    )) do |operation, login|
+    })) do |operation, login|
       login.should be_a(Login)
 
       LoginNotificationEmail.new(operation, login.not_nil!)

@@ -13,7 +13,7 @@ describe Shield::UpdateOauthClient do
 
     UpdateOauthClient.update(
       oauth_client,
-      params(name: new_name, redirect_uris: [new_redirect_uri]),
+      fake_params(oauth_client: {name: new_name, redirect_uris: [new_redirect_uri]}),
     ) do |operation, updated_oauth_client|
       operation.saved?.should be_true
 
@@ -30,7 +30,7 @@ describe Shield::UpdateOauthClient do
 
     UpdateOauthClient.update(
       oauth_client,
-      params(name: "super duper secret")
+      fake_params(oauth_client: {name: "super duper secret"})
     ) do |operation, _|
       operation.saved?.should be_false
 

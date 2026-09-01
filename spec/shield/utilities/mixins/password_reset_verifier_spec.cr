@@ -9,7 +9,7 @@ describe Shield::PasswordResetVerifier do
       UserFactory.create &.email(email).password(password)
 
       StartPasswordReset.create(
-        params(email: email),
+        fake_params(password_reset: {email: email}),
         remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
       ) do |operation, password_reset|
         password_reset = password_reset.not_nil!
@@ -17,11 +17,11 @@ describe Shield::PasswordResetVerifier do
         token = PasswordResetCredentials.new(operation, password_reset)
         token_2 = PasswordResetCredentials.new("abcdef", 1)
 
-        PasswordResetParams.new(params(token: token))
+        PasswordResetParams.new(fake_params(token: token))
           .verify
           .should be_a(PasswordReset)
 
-        PasswordResetParams.new(params(token: token_2)).verify.should be_nil
+        PasswordResetParams.new(fake_params(token: token_2)).verify.should be_nil
       end
     end
   end

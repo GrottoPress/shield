@@ -10,7 +10,7 @@ describe Shield::UpdateConfirmedEmail do
     session = Lucky::Session.new
 
     StartEmailConfirmation.create(
-      params(email: new_email),
+      fake_params(email_confirmation: {email: new_email}),
       user_id: user.id,
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     ) do |operation, email_confirmation|

@@ -16,7 +16,7 @@ describe Shield::NotifyPasswordChange do
 
     SaveUser.update(
       user,
-      params(password_digest: new_password),
+      fake_params(user: {password_digest: new_password}),
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
@@ -34,7 +34,7 @@ describe Shield::NotifyPasswordChange do
 
     SaveUser.update(
       user,
-      params(password_digest: new_password)
+      fake_params(user: {password_digest: new_password})
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
@@ -51,7 +51,7 @@ describe Shield::NotifyPasswordChange do
 
     SaveUser.update(
       user,
-      params(email: "user@example.tld", password_digest: password)
+      fake_params(user: {email: "user@example.tld", password_digest: password})
     ) do |operation, updated_user|
       operation.saved?.should be_true
 

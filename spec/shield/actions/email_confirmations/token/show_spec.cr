@@ -3,7 +3,7 @@ require "../../../../spec_helper"
 describe Shield::EmailConfirmations::Token::Show do
   it "sets session" do
     StartEmailConfirmation.create(
-      params(email: "email@domain.tld"),
+      fake_params(email_confirmation: {email: "email@domain.tld"}),
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     ) do |operation, email_confirmation|
       email_confirmation = email_confirmation.not_nil!

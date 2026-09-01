@@ -34,7 +34,7 @@ describe Shield::RevokeOauthToken do
       access_token = BearerLoginCredentials.new(token, bearer_login.id)
 
       RevokeOauthToken.run(
-        params(token: access_token),
+        fake_params(oauth: {token: access_token}),
         oauth_client: oauth_client
       ) do |operation, _token|
         operation.valid?.should be_true
@@ -57,7 +57,7 @@ describe Shield::RevokeOauthToken do
       access_token = BearerLoginCredentials.new(token, bearer_login.id)
 
       RevokeOauthToken.run(
-        params(token: access_token),
+        fake_params(oauth: {token: access_token}),
         oauth_client: oauth_client
       ) do |operation, _token|
         operation.valid?.should be_false
@@ -83,7 +83,7 @@ describe Shield::RevokeOauthToken do
       access_token = BearerLoginCredentials.new(token, bearer_login.id)
 
       RevokeOauthToken.run(
-        params(token: access_token),
+        fake_params(oauth: {token: access_token}),
         oauth_client: oauth_client
       ) do |operation, _token|
         operation.valid?.should be_false
@@ -119,7 +119,7 @@ context "Refresh Token" do
     refresh_token = OauthGrantCredentials.new(token, oauth_grant.id)
 
     RevokeOauthToken.run(
-      params(token: refresh_token),
+      fake_params(oauth: {token: refresh_token}),
       oauth_client: oauth_client
     ) do |operation, _token|
       operation.valid?.should be_true
@@ -145,7 +145,7 @@ context "Refresh Token" do
     refresh_token = OauthGrantCredentials.new(token, oauth_grant.id)
 
     RevokeOauthToken.run(
-      params(token: refresh_token),
+      fake_params(oauth: {token: refresh_token}),
       oauth_client: oauth_client
     ) do |operation, _token|
       operation.valid?.should be_false
@@ -172,7 +172,7 @@ context "Refresh Token" do
     refresh_token = OauthGrantCredentials.new(token, oauth_grant.id)
 
     RevokeOauthToken.run(
-      params(token: refresh_token),
+      fake_params(oauth: {token: refresh_token}),
       oauth_client: oauth_client
     ) do |operation, _token|
       operation.valid?.should be_false

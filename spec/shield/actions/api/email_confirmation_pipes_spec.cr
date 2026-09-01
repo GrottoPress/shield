@@ -6,7 +6,7 @@ describe Shield::Api::EmailConfirmationPipes do
       password = "password4APASSWORD<"
 
       StartEmailConfirmation.create(
-        params(email: "user@example.tld"),
+        fake_params(email_confirmation: {email: "user@example.tld"}),
         remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!
@@ -33,7 +33,7 @@ describe Shield::Api::EmailConfirmationPipes do
       password = "password4APASSWORD<"
 
       StartEmailConfirmation.create(
-        params(email: "user@example.tld"),
+        fake_params(email_confirmation: {email: "user@example.tld"}),
         remote_ip: Socket::IPAddress.new("129.0.0.3", 9000)
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!

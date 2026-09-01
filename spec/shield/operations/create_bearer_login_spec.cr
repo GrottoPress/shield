@@ -6,10 +6,10 @@ describe Shield::CreateBearerLogin do
     UserOptionsFactory.create &.user_id(user.id)
 
     CreateBearerLogin.create(
-      params(
+      fake_params(bearer_login: {
         name: "some token",
         scopes: [BearerScope.new(Api::Posts::Index).to_s]
-      ),
+      }),
       user: user
     ) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)

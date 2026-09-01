@@ -9,7 +9,7 @@ describe Shield::Api::PasswordResets::Update do
     user = UserFactory.create &.email(email).password(password)
 
     StartPasswordReset.create(
-      params(email: email),
+      fake_params(password_reset: {email: email}),
       remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
     ) do |operation, password_reset|
       password_reset = password_reset.not_nil!

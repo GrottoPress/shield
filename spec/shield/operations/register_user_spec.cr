@@ -5,7 +5,7 @@ describe Shield::RegisterUser do
   password = "password12U password"
 
   it "creates user" do
-    params = nested_params(
+    params = fake_params(
       user: {
         email: email,
         password: password,
@@ -30,7 +30,7 @@ describe Shield::RegisterUser do
   end
 
   it "creates user options" do
-    params = nested_params(
+    params = fake_params(
       user: {
         email: "user@example.tld",
         password: "password12U/password",
@@ -52,7 +52,7 @@ describe Shield::RegisterUser do
   end
 
   it "fails when nested operation fails" do
-    params = nested_params(
+    params = fake_params(
       user: {email: "user@example.tld", password: "password12U password"},
       user_options: {
         login_notify: false,

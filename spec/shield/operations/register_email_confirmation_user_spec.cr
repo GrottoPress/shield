@@ -4,7 +4,7 @@ describe Shield::RegisterEmailConfirmationUser do
   it "creates email confirmed user" do
     email_confirmation = EmailConfirmationFactory.create
 
-    params = nested_params(
+    params = fake_params(
       user: {password: "password12U password"},
       user_options: {
         login_notify: true,
@@ -49,7 +49,7 @@ describe Shield::RegisterEmailConfirmationUser do
     email_confirmation_3.user_id.should be_nil
 
     user = RegisterCurrentUser.create!(
-      nested_params(
+      fake_params(
         user: {password: "password12U-password"},
         user_options: {
           login_notify: true,
@@ -77,7 +77,7 @@ describe Shield::RegisterEmailConfirmationUser do
 
   it "creates user options" do
     user = RegisterCurrentUser.create!(
-      nested_params(
+      fake_params(
         user: {password: "password12U-password"},
         user_options: {
           login_notify: true,
@@ -98,7 +98,7 @@ describe Shield::RegisterEmailConfirmationUser do
 
   it "fails when nested operation fails" do
     RegisterCurrentUser2.create(
-      nested_params(
+      fake_params(
         user: {password: "password12U password"},
         user_options: {
           login_notify: false,

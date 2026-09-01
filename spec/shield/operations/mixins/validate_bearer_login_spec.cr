@@ -10,7 +10,7 @@ describe Shield::ValidateBearerLogin do
   it "ensures scopes are unique" do
     user = UserFactory.create
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       name: "some token (number 2)",
       user_id: user.id,
       active_at: Time.utc,
@@ -20,7 +20,7 @@ describe Shield::ValidateBearerLogin do
         BearerScope.new(Api::Posts::New).to_s,
         BearerScope.new(Api::Posts::Index).to_s
       ]
-    )) do |_, bearer_login|
+    })) do |_, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
       # ameba:disable Lint/ShadowingOuterLocalVar
@@ -36,12 +36,12 @@ describe Shield::ValidateBearerLogin do
   it "requires scopes" do
     user = UserFactory.create
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       name: "some token",
       user_id: user.id,
       active_at: Time.utc,
       token_digest: "abc"
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_nil
 
       operation.scopes
@@ -50,12 +50,12 @@ describe Shield::ValidateBearerLogin do
   end
 
   it "requires user id" do
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       name: "some token",
       active_at: Time.utc,
       token_digest: "abc",
       scopes: [BearerScope.new(Api::Posts::Index).to_s]
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_nil
 
       operation.user_id.should have_error("operation.error.user_id_required")
@@ -63,13 +63,13 @@ describe Shield::ValidateBearerLogin do
   end
 
   it "requires valid user id" do
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       name: "some token",
       user_id: 123,
       active_at: Time.utc,
       token_digest: "abc",
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_nil
 
       operation.user_id.should have_error("operation.error.user_not_found")
@@ -79,12 +79,12 @@ describe Shield::ValidateBearerLogin do
   it "requires name" do
     user = UserFactory.create
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       user_id: user.id,
       active_at: Time.utc,
       token_digest: "abc",
       scopes: [BearerScope.new(Api::Posts::Index).to_s]
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_nil
 
       operation.name.should have_error("operation.error.name_required")
@@ -94,13 +94,13 @@ describe Shield::ValidateBearerLogin do
   it "rejects long name" do
     user = UserFactory.create
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       user_id: user.id,
       active_at: Time.utc,
       name: "t" * 300,
       token_digest: "abc",
       scopes: [BearerScope.new(Api::Posts::Index).to_s]
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_nil
 
       operation.name.should have_error("operation.error.name_too_long")
@@ -110,13 +110,13 @@ describe Shield::ValidateBearerLogin do
   it "requires a valid name format" do
     user = UserFactory.create
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       name: "in/valid;",
       user_id: user.id,
       active_at: Time.utc,
       token_digest: "abc",
       scopes: [BearerScope.new(Api::Posts::Index).to_s]
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_nil
 
       operation.name.should have_error("operation.error.name_invalid")
@@ -129,13 +129,13 @@ describe Shield::ValidateBearerLogin do
     user = UserFactory.create
     BearerLoginFactory.create &.user_id(user.id).name(name)
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       name: name.upcase,
       user_id: user.id,
       active_at: Time.utc,
       token_digest: "abc",
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_nil
 
       operation.name.should have_error("operation.error.name_exists")
@@ -153,13 +153,13 @@ describe Shield::ValidateBearerLogin do
 
     BearerLoginFactory.create &.user_id(user_2.id).name(name)
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       name: name,
       user_id: user.id,
       active_at: Time.utc,
       token_digest: "abc",
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
-    )) do |_, bearer_login|
+    })) do |_, bearer_login|
       bearer_login.should be_a(BearerLogin)
     end
   end
@@ -167,13 +167,13 @@ describe Shield::ValidateBearerLogin do
   it "requires scopes not empty" do
     user = UserFactory.create
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       name: "some token",
       user_id: user.id,
       active_at: Time.utc,
       token_digest: "abc",
       scopes: Array(String).new,
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_nil
 
       operation.scopes
@@ -188,13 +188,13 @@ describe Shield::ValidateBearerLogin do
     ]) do
       user = UserFactory.create
 
-      SaveBearerLogin.create(params(
+      SaveBearerLogin.create(fake_params(bearer_login: {
         name: "some token",
         user_id: user.id,
         active_at: Time.utc,
         token_digest: "abc",
         scopes: [BearerScope.new(Api::Posts::Index).to_s]
-      )) do |operation, bearer_login|
+      })) do |operation, bearer_login|
         bearer_login.should be_nil
 
         operation.scopes
@@ -206,12 +206,12 @@ describe Shield::ValidateBearerLogin do
   it "requires token digest" do
     user = UserFactory.create
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       name: "some token",
       user_id: user.id,
       active_at: Time.utc,
       scopes: [BearerScope.new(Api::Posts::Index).to_s]
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_nil
 
       operation.token_digest.should have_error("operation.error.token_required")

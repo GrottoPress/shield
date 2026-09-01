@@ -21,14 +21,14 @@ describe Shield::NotifyOauthAccessToken do
     developer = UserFactory.create &.email("dev@app.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       oauth_client_id: oauth_client.id,
       user_id: resource_owner.id,
       active_at: Time.utc,
       name: "some token",
       token_digest: "abc",
       scopes: ["posts.index"]
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
       bearer_login = BearerLoginQuery.preload_user(bearer_login.not_nil!)
@@ -47,14 +47,14 @@ describe Shield::NotifyOauthAccessToken do
     developer = UserFactory.create &.email("dev@app.com")
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       oauth_client_id: oauth_client.id,
       user_id: resource_owner.id,
       active_at: Time.utc,
       name: "some token",
       token_digest: "abc",
       scopes: ["posts.index"]
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
       OauthAccessTokenNotificationEmail.new(operation, bearer_login.not_nil!)

@@ -11,7 +11,7 @@ describe Shield::EndLogin do
     session = Lucky::Session.new
 
     login = StartCurrentLogin.create!(
-      params(email: email, password: password),
+      fake_params(login: {email: email, password: password}),
       session: session,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     )

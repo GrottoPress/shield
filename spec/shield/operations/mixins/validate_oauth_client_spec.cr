@@ -17,12 +17,12 @@ describe Shield::ValidateOauthClient do
     user = UserFactory.create
 
     SaveOauthClient.create(
-      params(
+      fake_params(oauth_client: {
         active_at: Time.utc,
         name: "My Client",
         secret_digest: "a1b2c3",
         user_id: user.id
-      ),
+      }),
       redirect_uris: [redirect_uri, redirect_uri],
     ) do |_, oauth_client|
       oauth_client.should be_a(OauthClient)
@@ -37,11 +37,11 @@ describe Shield::ValidateOauthClient do
     user = UserFactory.create
 
     SaveOauthClient.create(
-      params(
+      fake_params(oauth_client: {
         active_at: Time.utc,
         secret_digest: "a1b2c3",
         user_id: user.id
-      ),
+      }),
       redirect_uris: ["https://example.com/oauth/callback"],
     ) do |operation, oauth_client|
       oauth_client.should be_nil
@@ -53,12 +53,12 @@ describe Shield::ValidateOauthClient do
   it "requires redirect URIs" do
     user = UserFactory.create
 
-    SaveOauthClient.create(params(
+    SaveOauthClient.create(fake_params(oauth_client: {
       active_at: Time.utc,
       name: "Awesome Client",
       secret_digest: "a1b2c3",
       user_id: user.id
-    )) do |operation, oauth_client|
+    })) do |operation, oauth_client|
       oauth_client.should be_nil
 
       operation.redirect_uris
@@ -68,11 +68,11 @@ describe Shield::ValidateOauthClient do
 
   it "requires user ID" do
     SaveOauthClient.create(
-      params(
+      fake_params(oauth_client: {
         active_at: Time.utc,
         name: "Awesome Client",
         secret_digest: "a1b2c3"
-      ),
+      }),
       redirect_uris: ["https://example.com/oauth/callback"],
     ) do |operation, oauth_client|
       oauth_client.should be_nil
@@ -85,12 +85,12 @@ describe Shield::ValidateOauthClient do
     user = UserFactory.create
 
     SaveOauthClient.create(
-      params(
+      fake_params(oauth_client: {
         active_at: Time.utc,
         name: "Awesome Client",
         secret_digest: "a1b2c3",
         user_id: user.id
-      ),
+      }),
       redirect_uris: Array(String).new,
     ) do |operation, oauth_client|
       oauth_client.should be_nil
@@ -104,12 +104,12 @@ describe Shield::ValidateOauthClient do
     user = UserFactory.create
 
     SaveOauthClient.create(
-      params(
+      fake_params(oauth_client: {
         active_at: Time.utc,
         name: "c" * 300,
         secret_digest: "a1b2c3",
         user_id: user.id
-      ),
+      }),
       redirect_uris: ["https://example.com/oauth/callback"],
     ) do |operation, oauth_client|
       oauth_client.should be_nil
@@ -122,12 +122,12 @@ describe Shield::ValidateOauthClient do
     user = UserFactory.create
 
     SaveOauthClient.create(
-      params(
+      fake_params(oauth_client: {
         active_at: Time.utc,
         name: "Awesome/Client",
         secret_digest: "a1b2c3",
         user_id: user.id
-      ),
+      }),
       redirect_uris: ["https://example.com/oauth/callback"],
     ) do |operation, oauth_client|
       oauth_client.should be_nil
@@ -140,12 +140,12 @@ describe Shield::ValidateOauthClient do
     user = UserFactory.create
 
     SaveOauthClient.create(
-      params(
+      fake_params(oauth_client: {
         active_at: Time.utc,
         name: "GrottoPress Client",
         secret_digest: "a1b2c3",
         user_id: user.id
-      ),
+      }),
       redirect_uris: ["https://example.com/oauth/callback"],
     ) do |operation, oauth_client|
       oauth_client.should be_nil
@@ -161,12 +161,12 @@ describe Shield::ValidateOauthClient do
     OauthClientFactory.create &.user_id(user.id).name(name)
 
     SaveOauthClient.create(
-      params(
+      fake_params(oauth_client: {
         active_at: Time.utc,
         name: name.upcase,
         secret_digest: "a1b2c3",
         user_id: user.id
-      ),
+      }),
       redirect_uris: ["https://example.com/oauth/callback"],
     ) do |operation, oauth_client|
       oauth_client.should be_nil
@@ -184,12 +184,12 @@ describe Shield::ValidateOauthClient do
     OauthClientFactory.create &.user_id(user_2.id).name(name)
 
     SaveOauthClient.create(
-      params(
+      fake_params(oauth_client: {
         active_at: Time.utc,
         name: name,
         secret_digest: "a1b2c3",
         user_id: user.id
-      ),
+      }),
       redirect_uris: ["https://example.com/oauth/callback"],
     ) do |_, oauth_client|
       oauth_client.should be_a(OauthClient)
@@ -200,12 +200,12 @@ describe Shield::ValidateOauthClient do
     user = UserFactory.create
 
     SaveOauthClient.create(
-      params(
+      fake_params(oauth_client: {
         active_at: Time.utc,
         name: "Awesome Client",
         secret_digest: "a1b2c3",
         user_id: user.id
-      ),
+      }),
       redirect_uris: ["https://example.com/oauth/#callback"],
     ) do |operation, oauth_client|
       oauth_client.should be_nil
@@ -217,12 +217,12 @@ describe Shield::ValidateOauthClient do
 
   it "ensures user exists" do
     SaveOauthClient.create(
-      params(
+      fake_params(oauth_client: {
         active_at: Time.utc,
         name: "Awesome Client",
         secret_digest: "a1b2c3",
         user_id: 14
-      ),
+      }),
       redirect_uris: ["https://example.com/oauth/callback"],
     ) do |operation, oauth_client|
       oauth_client.should be_nil
@@ -236,12 +236,12 @@ describe Shield::ValidateOauthClient do
       user = UserFactory.create
 
       SaveOauthClient.create(
-        params(
+        fake_params(oauth_client: {
           active_at: Time.utc,
           name: "Awesome Client",
           secret_digest: "a1b2c3",
           user_id: user.id
-        ),
+        }),
         redirect_uris: [
           "https://example.com/oauth/1",
           "https://example.com/oauth/2",

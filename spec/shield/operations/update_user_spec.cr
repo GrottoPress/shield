@@ -9,7 +9,7 @@ describe Shield::UpdateUser do
 
     UpdateUser.update(
       user,
-      nested_params(user: {email: new_email}),
+      fake_params(user: {email: new_email}),
       current_login: nil
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -30,7 +30,7 @@ describe Shield::UpdateUser do
 
     UpdateUser.update(
       user,
-      nested_params(
+      fake_params(
         user: {email: new_email},
         user_options: {
           login_notify: false,
@@ -65,7 +65,7 @@ describe Shield::UpdateUser do
 
     UpdateRegularCurrentUser2.update(
       user,
-      nested_params(user_options: {
+      fake_params(user_options: {
         login_notify: false,
         password_notify: false,
         bearer_login_notify: false,
@@ -97,7 +97,7 @@ describe Shield::UpdateUser do
 
     UpdateRegularCurrentUser2.update(
       user,
-      nested_params(
+      fake_params(
         user: {email: "user@example.com"},
         user_options: {
           login_notify: false,

@@ -8,7 +8,7 @@ describe Shield::StartPasswordReset do
     ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
 
     StartPasswordReset.create(
-      params(email: email.upcase),
+      fake_params(password_reset: {email: email.upcase}),
       remote_ip: ip_address
     ) do |operation, password_reset|
       password_reset.should be_a(PasswordReset)
@@ -28,7 +28,7 @@ describe Shield::StartPasswordReset do
 
   it "sends guest email" do
     StartPasswordReset.create(
-      params(email: "user@example.tld"),
+      fake_params(password_reset: {email: "user@example.tld"}),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       password_reset.should be_nil
@@ -42,7 +42,7 @@ describe Shield::StartPasswordReset do
     UserFactory.create &.email(email)
 
     StartPasswordReset.create(
-      params(email: email),
+      fake_params(password_reset: {email: email}),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       GuestPasswordResetRequestEmail.new(operation).should_not be_delivered

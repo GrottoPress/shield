@@ -21,11 +21,11 @@ end
 
 describe Shield::SendWelcomeEmail do
   it "sends welcome email" do
-    SaveUser.create(params(
+    SaveUser.create(fake_params(user: {
       email: "abc@def.ghi",
       password_digest: "abc",
       level: "Author"
-    )) do |operation, user|
+    })) do |operation, user|
       user.should be_a(User)
 
       UserWelcomeEmail.new(operation).should_not be_delivered
@@ -38,11 +38,11 @@ describe Shield::SendWelcomeEmail do
 
     UserFactory.create &.email(email)
 
-    SaveUser.create(params(
+    SaveUser.create(fake_params(user: {
       email: email,
       password_digest: "abc",
       level: "Author"
-    )) do |operation, user|
+    })) do |operation, user|
       user.should be_nil
 
       UserWelcomeEmail.new(operation).should be_delivered

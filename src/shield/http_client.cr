@@ -16,7 +16,7 @@ module Shield::HttpClient
       create_user(email, password)
 
       StartCurrentLogin.create(
-        params(email: email, password: password),
+        fake_params(login: {email: email, password: password}),
         remote_ip: remote_ip,
         session: nil
       ) do |operation, login|
@@ -60,7 +60,7 @@ module Shield::HttpClient
       create_user(email, password)
 
       StartCurrentLogin.create!(
-        params(email: email, password: password),
+        fake_params(login: {email: email, password: password}),
         session: session,
         remote_ip: remote_ip
       )

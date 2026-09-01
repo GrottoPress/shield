@@ -3,12 +3,12 @@ require "../../spec_helper"
 describe Shield::SaveUserOptions do
   it "creates user options" do
     SaveUserOptions.create(
-      params(
+      fake_params(user_options: {
         login_notify: false,
         oauth_access_token_notify: false,
         password_notify: true,
         bearer_login_notify: false
-      ),
+      }),
       user_id: UserFactory.create.id
     ) do |_, user_options|
       user_options.should be_a(UserOptions)
@@ -27,7 +27,7 @@ describe Shield::SaveUserOptions do
 
     SaveUserOptions.update(
       user_options,
-      params(login_notify: false, password_notify: true)
+      fake_params(user_options: {login_notify: false, password_notify: true})
     ) do |_, updated_user_options|
       updated_user_options.login_notify.should be_false
       updated_user_options.password_notify.should be_true
@@ -35,12 +35,12 @@ describe Shield::SaveUserOptions do
   end
 
   it "requires user id" do
-    SaveUserOptions.create(params(
+    SaveUserOptions.create(fake_params(user_options: {
       bearer_login_notify: false,
       login_notify: true,
       oauth_access_token_notify: false,
       password_notify: true
-    )) do |operation, user_options|
+    })) do |operation, user_options|
       user_options.should be_nil
 
       operation.user_id.should have_error("operation.error.user_id_required")
@@ -49,12 +49,12 @@ describe Shield::SaveUserOptions do
 
   it "requires valid user id" do
     SaveUserOptions.create(
-      params(
+      fake_params(user_options: {
         bearer_login_notify: false,
         login_notify: true,
         oauth_access_token_notify: false,
         password_notify: true
-      ),
+      }),
       user_id: 111
     ) do |operation, user_options|
       user_options.should be_nil
@@ -64,11 +64,11 @@ describe Shield::SaveUserOptions do
   end
 
   it "requires password notification option" do
-    SaveUserOptions.create(params(
+    SaveUserOptions.create(fake_params(user_options: {
       bearer_login_notify: false,
       login_notify: true,
       oauth_access_token_notify: false
-    )) do |operation, user_options|
+    })) do |operation, user_options|
       user_options.should be_nil
 
       operation.password_notify
@@ -77,11 +77,11 @@ describe Shield::SaveUserOptions do
   end
 
   it "requires login notification option" do
-    SaveUserOptions.create(params(
+    SaveUserOptions.create(fake_params(user_options: {
       bearer_login_notify: false,
       oauth_access_token_notify: false,
       password_notify: true
-    )) do |operation, user_options|
+    })) do |operation, user_options|
       user_options.should be_nil
 
       operation.login_notify
@@ -90,11 +90,11 @@ describe Shield::SaveUserOptions do
   end
 
   it "requires bearer login notification option" do
-    SaveUserOptions.create(params(
+    SaveUserOptions.create(fake_params(user_options: {
       login_notify: true,
       oauth_access_token_notify: false,
       password_notify: true
-    )) do |operation, user_options|
+    })) do |operation, user_options|
       user_options.should be_nil
 
       operation.bearer_login_notify
@@ -103,11 +103,11 @@ describe Shield::SaveUserOptions do
   end
 
   it "requires OAuth access token notification option" do
-    SaveUserOptions.create(params(
+    SaveUserOptions.create(fake_params(user_options: {
       bearer_login_notify: false,
       login_notify: true,
       password_notify: true
-    )) do |operation, user_options|
+    })) do |operation, user_options|
       user_options.should be_nil
 
       operation.oauth_access_token_notify

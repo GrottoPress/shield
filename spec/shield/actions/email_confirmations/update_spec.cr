@@ -11,7 +11,7 @@ describe Shield::EmailConfirmations::Update do
     UserOptionsFactory.create &.user_id(user.id)
 
     StartEmailConfirmation.create(
-      params(email: new_email),
+      fake_params(email_confirmation: {email: new_email}),
       user_id: user.id,
       remote_ip: ip_address
     ) do |operation, email_confirmation|

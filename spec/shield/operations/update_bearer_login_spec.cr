@@ -14,7 +14,7 @@ describe Shield::UpdateBearerLogin do
 
     UpdateBearerLogin.update(
       bearer_login,
-      params(name: new_name, scopes: new_scopes),
+      fake_params(bearer_login: {name: new_name, scopes: new_scopes}),
     ) do |operation, updated_bearer_login|
       operation.saved?.should be_true
 
@@ -32,10 +32,10 @@ describe Shield::UpdateBearerLogin do
 
     UpdateBearerLogin.update(
       bearer_login,
-      params(
+      fake_params(bearer_login: {
         name: "super duper secret",
         scopes: [BearerScope.new(Api::CurrentUser::Show).to_s]
-      ),
+      }),
     ) do |operation, _|
       operation.saved?.should be_false
 

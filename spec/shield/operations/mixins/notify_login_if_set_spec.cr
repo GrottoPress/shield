@@ -17,7 +17,7 @@ describe Shield::NotifyLoginIfSet do
     end
 
     LogUserInWithSettings.create(
-      params(email: email, password: password),
+      fake_params(login: {email: email, password: password}),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, login|
@@ -44,7 +44,7 @@ describe Shield::NotifyLoginIfSet do
     end
 
     LogUserInWithSettings.create(
-      params(email: email, password: password),
+      fake_params(login: {email: email, password: password}),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, login|

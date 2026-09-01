@@ -11,12 +11,12 @@ end
 
 describe Shield::ValidateLogin do
   it "requires email" do
-    SaveLogin.create(params(
+    SaveLogin.create(fake_params(login: {
       active_at: Time.utc,
       ip_address: "1.2.3.4",
       password: "secret",
       token_digest: "abc"
-    )) do |operation, login|
+    })) do |operation, login|
       login.should be_nil
 
       operation.email.should have_error("operation.error.email_required")
@@ -24,12 +24,12 @@ describe Shield::ValidateLogin do
   end
 
   it "requires password" do
-    SaveLogin.create(params(
+    SaveLogin.create(fake_params(login: {
       active_at: Time.utc,
       email: "user@example.tld",
       ip_address: "1.2.3.4",
       token_digest: "abc"
-    )) do |operation, login|
+    })) do |operation, login|
       login.should be_nil
 
       operation.password.should have_error("operation.error.password_required")
@@ -37,12 +37,12 @@ describe Shield::ValidateLogin do
   end
 
   it "requires IP address" do
-    SaveLogin.create(params(
+    SaveLogin.create(fake_params(login: {
       active_at: Time.utc,
       email: "user@example.tld",
       password: "secret",
       token_digest: "abc"
-    )) do |operation, login|
+    })) do |operation, login|
       login.should be_nil
 
       operation.ip_address
@@ -51,13 +51,13 @@ describe Shield::ValidateLogin do
   end
 
   it "requires valid email format" do
-    SaveLogin.create(params(
+    SaveLogin.create(fake_params(login: {
       active_at: Time.utc,
       email: "user",
       ip_address: "1.2.3.4",
       password: "secret",
       token_digest: "abc"
-    )) do |operation, login|
+    })) do |operation, login|
       login.should be_nil
 
       operation.email.should have_error("operation.error.email_invalid")

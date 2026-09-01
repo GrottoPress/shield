@@ -17,7 +17,7 @@ end
 
 describe Shield::ValidateUser do
   it "requires email" do
-    SaveUser.create(params(password: "secret")) do |operation, user|
+    SaveUser.create(fake_params(user: {password: "secret"})) do |operation, user|
       user.should be_nil
 
       operation.email.should have_error("operation.error.email_required")
@@ -25,7 +25,7 @@ describe Shield::ValidateUser do
   end
 
   it "requires password" do
-    SaveUser.create(params(email: "user@example.tld")) do |operation, user|
+    SaveUser.create(fake_params(user: {email: "user@example.tld"})) do |operation, user|
       user.should be_nil
 
       operation.password_digest
@@ -34,10 +34,10 @@ describe Shield::ValidateUser do
   end
 
   it "requires valid email format" do
-    SaveUser.create(params(
+    SaveUser.create(fake_params(user: {
       email: "user",
       password: "secret"
-    )) do |operation, user|
+    })) do |operation, user|
       user.should be_nil
 
       operation.email.should have_error("operation.error.email_invalid")
@@ -49,10 +49,10 @@ describe Shield::ValidateUser do
 
     UserFactory.create &.email(email)
 
-    SaveUser.create(params(
+    SaveUser.create(fake_params(user: {
       email: email.upcase,
       password: "secret"
-    )) do |operation, user|
+    })) do |operation, user|
       user.should be_nil
 
       operation.email.should have_error("operation.error.email_exists")

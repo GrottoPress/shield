@@ -12,7 +12,7 @@ describe Shield::StartLogin do
     ip_address = Socket::IPAddress.new("129.0.0.5", 5555)
 
     login = StartCurrentLogin.create!(
-      params(email: email, password: password),
+      fake_params(login: {email: email, password: password}),
       session: session,
       remote_ip: ip_address
     )
@@ -32,7 +32,7 @@ describe Shield::StartLogin do
     UserOptionsFactory.create &.user_id(user.id)
 
     StartCurrentLogin.create(
-      params(email: "incorrect@example.tld", password: password),
+      fake_params(login: {email: "incorrect@example.tld", password: password}),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, _|
@@ -51,7 +51,7 @@ describe Shield::StartLogin do
     UserOptionsFactory.create &.user_id(user.id)
 
     StartCurrentLogin.create(
-      params(email: email, password: "assword12U~passwor"),
+      fake_params(login: {email: email, password: "assword12U~passwor"}),
       session: Lucky::Session.new,
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, _|

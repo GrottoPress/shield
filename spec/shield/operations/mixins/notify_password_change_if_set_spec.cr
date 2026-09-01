@@ -4,7 +4,7 @@ describe Shield::NotifyPasswordChangeIfSet do
   it "sends password change notification" do
     user = UserFactory.create &.password("password12U.password")
 
-    params = nested_params(
+    params = fake_params(
       user: {
         password: "assword12U.passwor",
         password_notify: true,
@@ -27,7 +27,7 @@ describe Shield::NotifyPasswordChangeIfSet do
   it "does not send password change notification" do
     user = UserFactory.create &.password("password12U.password")
 
-    params = nested_params(
+    params = fake_params(
       user: {
         password: "assword12U.passwor",
         password_notify: false,

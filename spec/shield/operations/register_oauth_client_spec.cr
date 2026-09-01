@@ -8,7 +8,11 @@ describe Shield::RegisterOauthClient do
     user = UserFactory.create
 
     RegisterOauthClient.create(
-      params(name: name, public: false, redirect_uris: [redirect_uri]),
+      fake_params(oauth_client: {
+        name: name,
+        public: false,
+        redirect_uris: [redirect_uri]
+      }),
       user: user
     ) do |operation, oauth_client|
       oauth_client.should be_a(OauthClient)

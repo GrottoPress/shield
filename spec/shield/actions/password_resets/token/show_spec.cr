@@ -9,7 +9,7 @@ describe Shield::PasswordResets::Token::Show do
     UserOptionsFactory.create &.user_id(user.id)
 
     StartPasswordReset.create(
-      params(email: email),
+      fake_params(password_reset: {email: email}),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       password_reset = password_reset.not_nil!

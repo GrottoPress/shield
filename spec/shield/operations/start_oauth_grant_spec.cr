@@ -15,12 +15,12 @@ describe Shield::StartOauthGrant do
         .redirect_uris([redirect_uri])
 
       StartOauthGrant.create(
-        params(
+        fake_params(oauth_grant: {
           granted: true,
           code_challenge: code_challenge,
           code_challenge_method: code_challenge_method,
           redirect_uri: redirect_uri
-        ),
+        }),
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
         type: grant_type,
         oauth_client: oauth_client,
@@ -61,11 +61,11 @@ describe Shield::StartOauthGrant do
       oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
       StartOauthGrant.create(
-        params(
+        fake_params(oauth_grant: {
           granted: true,
           code_challenge: "code_challenge",
           code_challenge_method: "S256",
-        ),
+        }),
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
         type: OauthGrantType.authorization_code,
         oauth_client: oauth_client,
@@ -93,12 +93,12 @@ describe Shield::StartOauthGrant do
         .redirect_uris([redirect_uri])
 
       StartOauthGrant.create(
-        params(
+        fake_params(oauth_grant: {
           granted: true,
           code_challenge: code_challenge,
           code_challenge_method: code_challenge_method,
           redirect_uri: redirect_uri
-        ),
+        }),
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
         type: grant_type,
         oauth_client: oauth_client,
@@ -135,12 +135,12 @@ describe Shield::StartOauthGrant do
         .redirect_uris([redirect_uri])
 
       StartOauthGrant.create(
-        params(
+        fake_params(oauth_grant: {
           granted: true,
           code_challenge: code_challenge,
           code_challenge_method: code_challenge_method,
           redirect_uri: redirect_uri
-        ),
+        }),
         scopes: [BearerScope.new(Api::Posts::Index).to_s],
         type: grant_type,
         oauth_client: oauth_client,
@@ -169,11 +169,11 @@ describe Shield::StartOauthGrant do
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
     StartOauthGrant.create(
-      params(
+      fake_params(oauth_grant: {
         granted: false,
         code_challenge: "code_challenge",
         code_challenge_method: "S256"
-      ),
+      }),
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
       type: OauthGrantType.authorization_code,
       oauth_client: oauth_client,
@@ -194,12 +194,12 @@ describe Shield::StartOauthGrant do
       .redirect_uris(["http://localhost:5001"])
 
     StartOauthGrant.create(
-      params(
+      fake_params(oauth_grant: {
         granted: true,
         code_challenge: "code_challenge",
         code_challenge_method: "S256",
         redirect_uri: "myapp://callback"
-      ),
+      }),
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
       type: OauthGrantType.authorization_code,
       oauth_client: oauth_client,
@@ -218,12 +218,12 @@ describe Shield::StartOauthGrant do
     oauth_client = OauthClientFactory.create &.user_id(developer.id)
 
     StartOauthGrant.create(
-      params(
+      fake_params(oauth_grant: {
         granted: false,
         code_challenge: "code_challenge",
         code_challenge_method: "S256",
         response_type: "token"
-      ),
+      }),
       scopes: [BearerScope.new(Api::Posts::Index).to_s],
       type: OauthGrantType.authorization_code,
       oauth_client: oauth_client,

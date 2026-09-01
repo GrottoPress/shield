@@ -10,10 +10,10 @@ describe Shield::Api::BearerLoginPipes do
       UserOptionsFactory.create &.user_id(user.id)
 
       CreateBearerLogin.create(
-        params(
+        fake_params(bearer_login: {
           name: "secret token",
           scopes: [BearerScope.new(Api::Posts::Index).to_s]
-        ),
+        }),
         user: user
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
@@ -40,10 +40,10 @@ describe Shield::Api::BearerLoginPipes do
       UserOptionsFactory.create &.user_id(user.id)
 
       CreateBearerLogin.create(
-        params(
+        fake_params(bearer_login: {
           name: "secret token",
           scopes: [BearerScope.new(Api::Posts::Index).to_s]
-        ),
+        }),
         user: user
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
@@ -69,10 +69,10 @@ describe Shield::Api::BearerLoginPipes do
       UserOptionsFactory.create &.user_id(user.id)
 
       CreateBearerLogin.create(
-        params(
+        fake_params(bearer_login: {
           name: "secret token",
           scopes: [BearerScope.new(Api::Posts::New).to_s]
-        ),
+        }),
         user: user
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
@@ -94,10 +94,10 @@ describe Shield::Api::BearerLoginPipes do
       UserOptionsFactory.create &.user_id(user.id)
 
       CreateBearerLogin.create(
-        params(
+        fake_params(bearer_login: {
           name: "secret token",
           scopes: [BearerScope.new(Api::Posts::Create).to_s]
-        ),
+        }),
         user: user
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!
@@ -118,10 +118,10 @@ describe Shield::Api::BearerLoginPipes do
       UserOptionsFactory.create &.user_id(user.id)
 
       CreateBearerLogin.create(
-        params(
+        fake_params(bearer_login: {
           name: "secret token",
           scopes: [BearerScope.new(Api::Posts::Create).to_s]
-        ),
+        }),
         user: user
       ) do |operation, bearer_login|
         bearer_login = bearer_login.not_nil!

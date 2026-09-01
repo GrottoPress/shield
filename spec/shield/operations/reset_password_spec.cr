@@ -11,7 +11,7 @@ describe Shield::ResetPassword do
     session = Lucky::Session.new
 
     StartPasswordReset.create(
-      params(email: email),
+      fake_params(password_reset: {email: email}),
       remote_ip: Socket::IPAddress.new("0.0.0.0", 0)
     ) do |operation, password_reset|
       password_reset = password_reset.not_nil!
@@ -20,7 +20,7 @@ describe Shield::ResetPassword do
 
       ResetPassword.update(
         PasswordResetSession.new(session).verify!,
-        params(password: new_password),
+        fake_params(password_reset: {password: new_password}),
         session: session,
         current_login: nil
       ) do |_operation, updated_password_reset|
@@ -49,7 +49,7 @@ describe Shield::ResetPassword do
 
     ResetPassword.update(
       password_reset,
-      params(password: new_password),
+      fake_params(password_reset: {password: new_password}),
       session: Lucky::Session.new,
       current_login: nil
     ) do |operation, _|
@@ -69,7 +69,7 @@ describe Shield::ResetPassword do
 
     ResetPassword.update(
       password_reset,
-      params(password: new_password),
+      fake_params(password_reset: {password: new_password}),
       session: Lucky::Session.new,
       current_login: nil
     ) do |operation, _|
@@ -96,7 +96,7 @@ describe Shield::ResetPassword do
 
     ResetPassword.update(
       password_reset_1,
-      params(password: new_password),
+      fake_params(password_reset: {password: new_password}),
       session: Lucky::Session.new,
       current_login: nil
     ) do |operation, updated_password_reset|

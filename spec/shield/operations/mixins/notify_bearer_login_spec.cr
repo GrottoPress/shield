@@ -11,13 +11,13 @@ describe Shield::NotifyBearerLogin do
     user = UserFactory.create
     UserOptionsFactory.create &.user_id(user.id).bearer_login_notify(true)
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       name: "some token",
       user_id: user.id,
       token_digest: "abc",
       active_at: Time.utc,
       scopes: ["posts.index"]
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
       bearer_login = BearerLoginQuery.preload_user(bearer_login.not_nil!)
@@ -31,13 +31,13 @@ describe Shield::NotifyBearerLogin do
     user = UserFactory.create
     UserOptionsFactory.create &.user_id(user.id).bearer_login_notify(false)
 
-    SaveBearerLogin.create(params(
+    SaveBearerLogin.create(fake_params(bearer_login: {
       name: "some token",
       user_id: user.id,
       token_digest: "abc",
       active_at: Time.utc,
       scopes: ["posts.index"]
-    )) do |operation, bearer_login|
+    })) do |operation, bearer_login|
       bearer_login.should be_a(BearerLogin)
 
       BearerLoginNotificationEmail.new(operation, bearer_login.not_nil!)

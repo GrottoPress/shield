@@ -5,7 +5,7 @@ describe Shield::StartEmailConfirmation do
     ip_address = Socket::IPAddress.new("1.2.3.4", 5)
 
     StartEmailConfirmation.create(
-      params(email: "uSer@ex4mple.tld"),
+      fake_params(email_confirmation: {email: "uSer@ex4mple.tld"}),
       remote_ip: ip_address
     ) do |operation, email_confirmation|
       email_confirmation.should be_a(EmailConfirmation)
@@ -26,7 +26,7 @@ describe Shield::StartEmailConfirmation do
     user = UserFactory.create &.email("useR@examplE.tLd")
 
     StartEmailConfirmation.create(
-      params(email: "user@domain.Tld"),
+      fake_params(email_confirmation: {email: "user@domain.Tld"}),
       user_id: user.id,
       remote_ip: ip_address
     ) do |operation, email_confirmation|
@@ -46,7 +46,7 @@ describe Shield::StartEmailConfirmation do
 
   it "sends email confirmation email" do
     StartEmailConfirmation.create(
-      params(email: "user@example.tld"),
+      fake_params(email_confirmation: {email: "user@example.tld"}),
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     ) do |operation, email_confirmation|
       UserEmailConfirmationRequestEmail.new(operation).should_not be_delivered
@@ -63,7 +63,7 @@ describe Shield::StartEmailConfirmation do
     UserFactory.create &.email(email)
 
     StartEmailConfirmation.create(
-      params(email: email),
+      fake_params(email_confirmation: {email: email}),
       remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
     ) do |operation, email_confirmation|
       email_confirmation.should be_nil

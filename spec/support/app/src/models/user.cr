@@ -12,7 +12,7 @@ class User < BaseModel
 
   include Carbon::Emailable
 
-  __enum Level do
+  string_enum Level do
     Admin
     Editor
     Author

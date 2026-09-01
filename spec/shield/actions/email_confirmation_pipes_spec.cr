@@ -4,7 +4,7 @@ describe Shield::EmailConfirmationPipes do
   describe "#pin_email_confirmation_to_ip_address" do
     it "accepts email confirmation from same IP" do
       StartEmailConfirmation.create(
-        params(email: "user@example.tld"),
+        fake_params(email_confirmation: {email: "user@example.tld"}),
         remote_ip: Socket::IPAddress.new("128.0.0.2", 5000)
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!
@@ -23,7 +23,7 @@ describe Shield::EmailConfirmationPipes do
 
     it "rejects email confirmation from different IP" do
       StartEmailConfirmation.create(
-        params(email: "user@example.tld"),
+        fake_params(email_confirmation: {email: "user@example.tld"}),
         remote_ip: Socket::IPAddress.new("129.0.0.3", 9000)
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!

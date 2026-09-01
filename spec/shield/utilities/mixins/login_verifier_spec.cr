@@ -13,7 +13,7 @@ describe Shield::LoginVerifier do
       session_2 = Lucky::Session.new
 
       StartCurrentLogin.create!(
-        params(email: email, password: password),
+        fake_params(login: {email: email, password: password}),
         session: session,
         remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
       )

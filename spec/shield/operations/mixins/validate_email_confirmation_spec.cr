@@ -10,12 +10,12 @@ describe Shield::ValidateEmailConfirmation do
   it "requires email" do
     user = UserFactory.create
 
-    SaveEmailConfirmation.create(params(
+    SaveEmailConfirmation.create(fake_params(email_confirmation: {
       user_id: user.id,
       active_at: Time.utc,
       ip_address: "1.2.3.4",
       token_digest: "abc"
-    )) do |operation, email_confirmation|
+    })) do |operation, email_confirmation|
       email_confirmation.should be_nil
 
       operation.email.should have_error("operation.error.email_required")
@@ -25,13 +25,13 @@ describe Shield::ValidateEmailConfirmation do
   it "rejects invalid email" do
     user = UserFactory.create
 
-    SaveEmailConfirmation.create(params(
+    SaveEmailConfirmation.create(fake_params(email_confirmation: {
       user_id: user.id,
       email: "user",
       active_at: Time.utc,
       ip_address: "1.2.3.4",
       token_digest: "abc"
-    )) do |operation, email_confirmation|
+    })) do |operation, email_confirmation|
       email_confirmation.should be_nil
 
       operation.email.should have_error("operation.error.email_invalid")
@@ -44,12 +44,12 @@ describe Shield::ValidateEmailConfirmation do
     user = UserFactory.create
     UserFactory.create &.email(email)
 
-    SaveEmailConfirmation.create(params(
+    SaveEmailConfirmation.create(fake_params(email_confirmation: {
       user_id: user.id,
       email: email,
       active_at: Time.utc,
       token_digest: "abc"
-    )) do |operation, email_confirmation|
+    })) do |operation, email_confirmation|
       email_confirmation.should be_nil
 
       operation.user_email?.should be_true
@@ -60,12 +60,12 @@ describe Shield::ValidateEmailConfirmation do
   it "requires IP address" do
     user = UserFactory.create
 
-    SaveEmailConfirmation.create(params(
+    SaveEmailConfirmation.create(fake_params(email_confirmation: {
       user_id: user.id,
       email: "user@example.tld",
       active_at: Time.utc,
       token_digest: "abc"
-    )) do |operation, email_confirmation|
+    })) do |operation, email_confirmation|
       email_confirmation.should be_nil
 
       operation.ip_address

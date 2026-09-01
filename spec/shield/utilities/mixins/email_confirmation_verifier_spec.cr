@@ -4,7 +4,7 @@ describe Shield::EmailConfirmationVerifier do
   describe "#verify" do
     it "verifies email confirmation" do
       StartEmailConfirmation.create(
-        params(email: "user@example.tld"),
+        fake_params(email_confirmation: {email: "user@example.tld"}),
         remote_ip: Socket::IPAddress.new("1.2.3.4", 5)
       ) do |operation, email_confirmation|
         email_confirmation = email_confirmation.not_nil!

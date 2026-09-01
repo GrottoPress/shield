@@ -6,7 +6,7 @@ describe Shield::EmailConfirmationCurrentUser::New do
     ip_address = Socket::IPAddress.new("128.0.0.2", 5000)
 
     StartEmailConfirmation.create(
-      params(email: email),
+      fake_params(email_confirmation: {email: email}),
       remote_ip: ip_address
     ) do |operation, email_confirmation|
       email_confirmation = email_confirmation.not_nil!
