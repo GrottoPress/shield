@@ -20,11 +20,9 @@ describe Shield::DeleteUserLoginsOnPasswordChange do
     login_1.status.active?.should be_true
     login_2.status.active?.should be_true
 
-    SaveUser.update(
-      user,
-      fake_params(user: {password_digest: new_password}),
-      current_login: nil
-    ) do |operation, _|
+    SaveUser.update(user, fake_params(user: {
+      password_digest: new_password
+    })) do |operation, _|
       operation.saved?.should be_true
     end
 
@@ -76,11 +74,9 @@ describe Shield::DeleteUserLoginsOnPasswordChange do
     mary_login.status.active?.should be_true
     john_login.status.active?.should be_true
 
-    SaveUser.update(
-      mary,
-      fake_params(user: {password_digest: mary_new_password}),
-      current_login: nil
-    ) do |operation, _|
+    SaveUser.update(mary, fake_params(user: {
+      password_digest: mary_new_password
+    })) do |operation, _|
       operation.saved?.should be_true
     end
 

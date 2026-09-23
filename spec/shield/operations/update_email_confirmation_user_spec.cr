@@ -11,7 +11,6 @@ describe Shield::UpdateEmailConfirmationUser do
     UpdateCurrentUser.update(
       user,
       fake_params(user: {email: new_email}),
-      current_login: nil,
       remote_ip: Socket::IPAddress.new("129.0.0.3", 5555)
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -42,7 +41,6 @@ describe Shield::UpdateEmailConfirmationUser do
         bearer_login_notify: false,
         oauth_access_token_notify: true
       }),
-      current_login: nil,
       remote_ip: Socket::IPAddress.new("129.0.0.3", 5555)
     ) do |operation, updated_user|
       operation.saved?.should be_true
@@ -73,7 +71,6 @@ describe Shield::UpdateEmailConfirmationUser do
         bearer_login_notify: false,
         oauth_access_token_notify: false
       }),
-      current_login: nil,
       remote_ip: Socket::IPAddress.new("129.0.0.3", 5555)
     ) do |operation, updated_user|
       operation.saved?.should be_false
@@ -107,7 +104,6 @@ describe Shield::UpdateEmailConfirmationUser do
           oauth_access_token_notify: false
         }
       ),
-      current_login: nil,
       remote_ip: Socket::IPAddress.new("129.0.0.3", 5555)
     ) do |operation, updated_user|
       operation.saved?.should be_false

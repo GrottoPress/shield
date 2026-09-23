@@ -1,6 +1,6 @@
 module Shield::SetOauthClientIdFromOauthClient
   macro included
-    needs oauth_client : OauthClient?
+    needs oauth_client : OauthClient? = nil
 
     before_save do
       set_oauth_client_id

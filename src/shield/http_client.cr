@@ -17,8 +17,7 @@ module Shield::HttpClient
 
       StartCurrentLogin.create(
         fake_params(login: {email: email, password: password}),
-        remote_ip: remote_ip,
-        session: nil
+        remote_ip: remote_ip
       ) do |operation, login|
         login.try do |login|
           api_auth LoginCredentials.new(operation, login)

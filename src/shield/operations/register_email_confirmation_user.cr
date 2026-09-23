@@ -1,6 +1,6 @@
 module Shield::RegisterEmailConfirmationUser # User::SaveOperation
   macro included
-    needs session : Lucky::Session?
+    needs session : Lucky::Session? = nil
 
     attribute password : String
 

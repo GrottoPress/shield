@@ -1,6 +1,6 @@
 module Shield::RevokeUserBearerLogins # User::SaveOperation
   macro included
-    needs current_bearer_login : BearerLogin?
+    needs current_bearer_login : BearerLogin? = nil
 
     after_save end_bearer_logins
 

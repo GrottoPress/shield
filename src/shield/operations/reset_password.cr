@@ -1,6 +1,6 @@
 module Shield::ResetPassword # PasswordReset::SaveOperation
   macro included
-    needs current_login : Login?
+    needs current_login : Login? = nil
 
     attribute password : String
 

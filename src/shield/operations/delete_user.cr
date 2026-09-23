@@ -1,6 +1,6 @@
 module Shield::DeleteUser # User::DeleteOperation
   macro included
-    needs current_user : User?
+    needs current_user : User? = nil
 
     before_delete do
       validate_not_current_user

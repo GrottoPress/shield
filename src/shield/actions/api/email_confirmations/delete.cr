@@ -8,8 +8,7 @@ module Shield::Api::EmailConfirmations::Delete
 
     def run_operation
       DeleteEmailConfirmation.delete(
-        email_confirmation,
-        session: nil
+        email_confirmation
       ) do |operation, deleted_email_confirmation|
         if operation.deleted?
           do_run_operation_succeeded(operation, deleted_email_confirmation)

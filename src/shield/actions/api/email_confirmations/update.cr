@@ -48,8 +48,7 @@ module Shield::Api::EmailConfirmations::Update
 
     private def update_email(email_confirmation)
       UpdateConfirmedEmail.update(
-        email_confirmation,
-        session: nil
+        email_confirmation
       ) do |operation, updated_email_confirmation|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_email_confirmation)

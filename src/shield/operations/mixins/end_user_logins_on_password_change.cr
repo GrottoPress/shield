@@ -1,6 +1,6 @@
 module Shield::EndUserLoginsOnPasswordChange
   macro included
-    needs current_login : Login?
+    needs current_login : Login? = nil
 
     after_save end_logins
 

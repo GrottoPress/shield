@@ -7,10 +7,7 @@ module Shield::CurrentUser::BearerLogins::Delete
     # end
 
     def run_operation
-      DeleteCurrentUserBearerLogins.update(
-        user,
-        current_bearer_login: nil
-      ) do |operation, updated_user|
+      DeleteCurrentUserBearerLogins.update(user) do |operation, updated_user|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)
         else

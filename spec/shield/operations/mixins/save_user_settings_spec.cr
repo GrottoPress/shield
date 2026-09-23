@@ -111,15 +111,11 @@ describe Shield::SaveUserSettings do
     it "does not require password_notify" do
       user = UserFactory.create
 
-      UpdateUserWithSettings.update(
-        user,
-        fake_params(user: {
-          bearer_login_notify: false,
-          login_notify: false,
-          oauth_access_token_notify: false
-        }),
-        current_login: nil
-      ) do |_, updated_user|
+      UpdateUserWithSettings.update(user, fake_params(user: {
+        bearer_login_notify: false,
+        login_notify: false,
+        oauth_access_token_notify: false
+      })) do |_, updated_user|
         updated_user.should be_a(User)
       end
     end
@@ -127,15 +123,11 @@ describe Shield::SaveUserSettings do
     it "does not require bearer_login_notify" do
       user = UserFactory.create
 
-      UpdateUserWithSettings.update(
-        user,
-        fake_params(user: {
-          password_notify: false,
-          login_notify: false,
-          oauth_access_token_notify: false
-        }),
-        current_login: nil
-      ) do |_, updated_user|
+      UpdateUserWithSettings.update(user, fake_params(user: {
+        password_notify: false,
+        login_notify: false,
+        oauth_access_token_notify: false
+      })) do |_, updated_user|
         updated_user.should be_a(User)
       end
     end
@@ -143,15 +135,11 @@ describe Shield::SaveUserSettings do
     it "does not require login_notify" do
       user = UserFactory.create
 
-      UpdateUserWithSettings.update(
-        user,
-        fake_params(user: {
-          bearer_login_notify: false,
-          password_notify: false,
-          oauth_access_token_notify: false
-        }),
-        current_login: nil
-      ) do |_, updated_user|
+      UpdateUserWithSettings.update(user, fake_params(user: {
+        bearer_login_notify: false,
+        password_notify: false,
+        oauth_access_token_notify: false
+      })) do |_, updated_user|
         updated_user.should be_a(User)
       end
     end
@@ -159,15 +147,11 @@ describe Shield::SaveUserSettings do
     it "does not require oauth_access_token_notify" do
       user = UserFactory.create
 
-      UpdateUserWithSettings.update(
-        user,
-        fake_params(user: {
-          bearer_login_notify: false,
-          login_notify: false,
-          password_notify: false
-        }),
-        current_login: nil
-      ) do |_, updated_user|
+      UpdateUserWithSettings.update(user, fake_params(user: {
+        bearer_login_notify: false,
+        login_notify: false,
+        password_notify: false
+      })) do |_, updated_user|
         updated_user.should be_a(User)
       end
     end

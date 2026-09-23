@@ -9,10 +9,7 @@ describe Shield::EndUserLogins do
     login_1.status.active?.should be_true
     login_2.status.active?.should be_true
 
-    EndUserLogins.update(
-      user,
-      current_login: nil
-    ) do |operation, _|
+    EndUserLogins.update(user) do |operation, _|
       operation.saved?.should be_true
 
       login_1.reload.status.active?.should be_false
@@ -52,10 +49,7 @@ describe Shield::EndUserLogins do
     mary_login.status.active?.should be_true
     john_login.status.active?.should be_true
 
-    EndUserLogins.update(
-      mary,
-      current_login: nil
-    ) do |operation, _|
+    EndUserLogins.update(mary) do |operation, _|
       operation.saved?.should be_true
 
       mary_login.reload.status.active?.should be_false

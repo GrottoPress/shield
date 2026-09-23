@@ -1,6 +1,6 @@
 module Shield::DeleteUserBearerLogins # User::SaveOperation
   macro included
-    needs current_bearer_login : BearerLogin?
+    needs current_bearer_login : BearerLogin? = nil
 
     after_save delete_bearer_logins
 

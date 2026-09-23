@@ -17,7 +17,7 @@ module Shield::Api::LoginPipes
         current_login.ip_address == remote_ip?.try &.address
         continue
       else
-        EndCurrentLogin.update!(current_login, session: nil)
+        EndCurrentLogin.update!(current_login)
         response.status_code = 403
         do_pin_login_to_ip_address_failed
       end

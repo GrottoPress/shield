@@ -11,7 +11,7 @@ module Shield::Api::Logins::Destroy
     # end
 
     def run_operation
-      EndLogin.update(login, session: nil) do |operation, updated_login|
+      EndLogin.update(login) do |operation, updated_login|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_login)
         else

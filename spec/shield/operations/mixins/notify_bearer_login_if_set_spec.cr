@@ -6,8 +6,7 @@ describe Shield::NotifyBearerLoginIfSet do
 
     UpdateUserWithSettings.update(
       user,
-      bearer_login_notify: true,
-      current_login: nil
+      bearer_login_notify: true
     ) do |operation, updated_user|
       operation.saved?.should be_true
       updated_user.settings.login_notify.should be_true
@@ -34,8 +33,7 @@ describe Shield::NotifyBearerLoginIfSet do
 
     UpdateUserWithSettings.update(
       user,
-      bearer_login_notify: false,
-      current_login: nil
+      bearer_login_notify: false
     ) do |operation, updated_user|
       operation.saved?.should be_true
       updated_user.settings.login_notify.should be_true

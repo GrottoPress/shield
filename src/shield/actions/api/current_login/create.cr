@@ -11,8 +11,7 @@ module Shield::Api::CurrentLogin::Create
     def run_operation
       StartCurrentLogin.create(
         params,
-        remote_ip: remote_ip?,
-        session: nil
+        remote_ip: remote_ip?
       ) do |operation, login|
         if operation.saved?
           do_run_operation_succeeded(operation, login.not_nil!)

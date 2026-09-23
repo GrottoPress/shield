@@ -12,8 +12,7 @@ module Shield::Api::EmailConfirmations::Destroy
 
     def run_operation
       EndEmailConfirmation.update(
-        email_confirmation,
-        session: nil
+        email_confirmation
       ) do |operation, updated_email_confirmation|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_email_confirmation)

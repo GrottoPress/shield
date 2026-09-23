@@ -7,10 +7,7 @@ module Shield::Users::BearerLogins::Destroy
     # end
 
     def run_operation
-      RevokeUserBearerLogins.update(
-        user,
-        current_bearer_login: nil
-      ) do |operation, updated_user|
+      RevokeUserBearerLogins.update(user) do |operation, updated_user|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_user)
         else

@@ -29,7 +29,6 @@ module Shield::Api::PasswordResets::Update
       ResetPassword.update(
         password_reset,
         params,
-        session: nil,
         current_login: current_login?
       ) do |operation, updated_password_reset|
         if operation.saved?

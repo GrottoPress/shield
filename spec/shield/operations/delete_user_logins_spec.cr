@@ -9,10 +9,7 @@ describe Shield::DeleteUserLogins do
     login_1.status.active?.should be_true
     login_2.status.active?.should be_true
 
-    DeleteUserLogins.update(
-      user,
-      current_login: nil
-    ) do |operation, _|
+    DeleteUserLogins.update(user) do |operation, _|
       operation.saved?.should be_true
 
       LoginQuery.new.id(login_1.id).first?.should be_nil
@@ -52,10 +49,7 @@ describe Shield::DeleteUserLogins do
     mary_login.status.active?.should be_true
     john_login.status.active?.should be_true
 
-    DeleteUserLogins.update(
-      mary,
-      current_login: nil
-    ) do |operation, _|
+    DeleteUserLogins.update(mary) do |operation, _|
       operation.saved?.should be_true
 
       LoginQuery.new.id(mary_login.id).first?.should be_nil

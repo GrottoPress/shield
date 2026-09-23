@@ -3,7 +3,7 @@ module Shield::UpdateEmailConfirmationUser # User::SaveOperation
     getter new_email : String?
     getter credentials : EmailConfirmationCredentials?
 
-    needs remote_ip : Socket::IPAddress?
+    needs remote_ip : Socket::IPAddress? = nil
 
     after_save start_email_confirmation
 

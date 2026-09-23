@@ -41,10 +41,7 @@ describe Shield::UpdateConfirmedEmail do
   it "requires user ID" do
     email_confirmation = EmailConfirmationFactory.create
 
-    UpdateConfirmedEmail.update(
-      email_confirmation,
-      session: nil
-    ) do |operation, _|
+    UpdateConfirmedEmail.update(email_confirmation) do |operation, _|
       operation.saved?.should be_false
       operation.user_id.should have_error("operation.error.user_id_required")
     end
@@ -81,8 +78,7 @@ describe Shield::UpdateConfirmedEmail do
     email_confirmation_5.status.active?.should be_true
 
     UpdateConfirmedEmail.update(
-      email_confirmation,
-      session: nil
+      email_confirmation
     ) do |operation, updated_email_confirmation|
       operation.saved?.should be_true
 

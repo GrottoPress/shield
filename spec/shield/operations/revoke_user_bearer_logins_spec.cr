@@ -9,10 +9,7 @@ describe Shield::RevokeUserBearerLogins do
     bearer_login_1.status.active?.should be_true
     bearer_login_2.status.active?.should be_true
 
-    RevokeCurrentUserBearerLogins.update(
-      user,
-      current_bearer_login: nil
-    ) do |operation, _|
+    RevokeCurrentUserBearerLogins.update(user) do |operation, _|
       operation.saved?.should be_true
 
       bearer_login_1.reload.status.active?.should be_false
@@ -52,10 +49,7 @@ describe Shield::RevokeUserBearerLogins do
     mary_bearer_login.status.active?.should be_true
     john_bearer_login.status.active?.should be_true
 
-    RevokeCurrentUserBearerLogins.update(
-      mary,
-      current_bearer_login: nil
-    ) do |operation, _|
+    RevokeCurrentUserBearerLogins.update(mary) do |operation, _|
       operation.saved?.should be_true
 
       mary_bearer_login.reload.status.active?.should be_false

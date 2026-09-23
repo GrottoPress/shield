@@ -7,11 +7,9 @@ describe Shield::UpdateUser do
     user = UserFactory.create &.email("user@example.tld")
     UserOptionsFactory.create &.user_id(user.id)
 
-    UpdateUser.update(
-      user,
-      fake_params(user: {email: new_email}),
-      current_login: nil
-    ) do |operation, updated_user|
+    UpdateUser.update(user, fake_params(user: {
+      email: new_email
+    })) do |operation, updated_user|
       operation.saved?.should be_true
       updated_user.email.should eq(new_email)
     end
@@ -28,19 +26,15 @@ describe Shield::UpdateUser do
       .bearer_login_notify(true)
       .oauth_access_token_notify(false)
 
-    UpdateUser.update(
-      user,
-      fake_params(
-        user: {email: new_email},
-        user_options: {
-          login_notify: false,
-          password_notify: true,
-          bearer_login_notify: false,
-          oauth_access_token_notify: true
-        }
-      ),
-      current_login: nil
-    ) do |operation, updated_user|
+    UpdateUser.update(user, fake_params(
+      user: {email: new_email},
+      user_options: {
+        login_notify: false,
+        password_notify: true,
+        bearer_login_notify: false,
+        oauth_access_token_notify: true
+      }
+    )) do |operation, updated_user|
       operation.saved?.should be_true
 
       updated_user.email.should eq(new_email)
@@ -63,16 +57,12 @@ describe Shield::UpdateUser do
       .bearer_login_notify(true)
       .oauth_access_token_notify(true)
 
-    UpdateRegularCurrentUser2.update(
-      user,
-      fake_params(user_options: {
-        login_notify: false,
-        password_notify: false,
-        bearer_login_notify: false,
-        oauth_access_token_notify: false
-      }),
-      current_login: nil
-    ) do |operation, updated_user|
+    UpdateRegularCurrentUser2.update(user, fake_params(user_options: {
+      login_notify: false,
+      password_notify: false,
+      bearer_login_notify: false,
+      oauth_access_token_notify: false
+    })) do |operation, updated_user|
       operation.saved?.should be_false
 
       user_options = updated_user.options!
@@ -95,19 +85,15 @@ describe Shield::UpdateUser do
       .bearer_login_notify(true)
       .oauth_access_token_notify(true)
 
-    UpdateRegularCurrentUser2.update(
-      user,
-      fake_params(
-        user: {email: "user@example.com"},
-        user_options: {
-          login_notify: false,
-          password_notify: false,
-          bearer_login_notify: false,
-          oauth_access_token_notify: false
-        }
-      ),
-      current_login: nil
-    ) do |operation, updated_user|
+    UpdateRegularCurrentUser2.update(user, fake_params(
+      user: {email: "user@example.com"},
+      user_options: {
+        login_notify: false,
+        password_notify: false,
+        bearer_login_notify: false,
+        oauth_access_token_notify: false
+      }
+    )) do |operation, updated_user|
       operation.saved?.should be_false
 
       user_options = updated_user.options!

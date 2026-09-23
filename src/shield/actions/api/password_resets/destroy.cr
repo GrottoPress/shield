@@ -12,8 +12,7 @@ module Shield::Api::PasswordResets::Destroy
 
     def run_operation
       EndPasswordReset.update(
-        password_reset,
-        session: nil
+        password_reset
       ) do |operation, updated_password_reset|
         if operation.saved?
           do_run_operation_succeeded(operation, updated_password_reset)

@@ -1,6 +1,6 @@
 module Shield::SetSession
   macro included
-    needs session : Lucky::Session?
+    needs session : Lucky::Session? = nil
 
     {% if @type < Avram::SaveOperation %}
       after_commit set_session

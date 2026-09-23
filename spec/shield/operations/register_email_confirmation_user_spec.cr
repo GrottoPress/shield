@@ -58,8 +58,7 @@ describe Shield::RegisterEmailConfirmationUser do
           oauth_access_token_notify: true
         }
       ),
-      email_confirmation: email_confirmation,
-      session: nil
+      email_confirmation: email_confirmation
     )
 
     email_confirmation = email_confirmation.reload

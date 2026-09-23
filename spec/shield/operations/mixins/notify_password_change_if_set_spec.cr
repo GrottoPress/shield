@@ -13,8 +13,7 @@ describe Shield::NotifyPasswordChangeIfSet do
 
     UpdateCurrentUserWithSettings.update(
       user,
-      params,
-      current_login: nil
+      params
     ) do |operation, updated_user|
       operation.saved?.should be_true
 
@@ -36,8 +35,7 @@ describe Shield::NotifyPasswordChangeIfSet do
 
     UpdateCurrentUserWithSettings.update(
       user,
-      params,
-      current_login: nil
+      params
     ) do |operation, updated_user|
       operation.saved?.should be_true
 

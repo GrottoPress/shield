@@ -21,11 +21,7 @@ module Shield::UpdateConfirmedEmail # EmailConfirmation::SaveOperation
 
     private def update_email(email_confirmation : Shield::EmailConfirmation)
       email_confirmation.user!.try do |user|
-        UpdateUser.update!(
-          user,
-          email: email_confirmation.email,
-          current_login: nil
-        )
+        UpdateUser.update!(user, email: email_confirmation.email)
       end
     end
 

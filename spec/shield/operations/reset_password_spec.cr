@@ -21,8 +21,7 @@ describe Shield::ResetPassword do
       ResetPassword.update(
         PasswordResetSession.new(session).verify!,
         fake_params(password_reset: {password: new_password}),
-        session: session,
-        current_login: nil
+        session: session
       ) do |_operation, updated_password_reset|
         _operation.saved?.should be_true
 
@@ -50,8 +49,7 @@ describe Shield::ResetPassword do
     ResetPassword.update(
       password_reset,
       fake_params(password_reset: {password: new_password}),
-      session: Lucky::Session.new,
-      current_login: nil
+      session: Lucky::Session.new
     ) do |operation, _|
       operation.saved?.should be_false
 
@@ -70,8 +68,7 @@ describe Shield::ResetPassword do
     ResetPassword.update(
       password_reset,
       fake_params(password_reset: {password: new_password}),
-      session: Lucky::Session.new,
-      current_login: nil
+      session: Lucky::Session.new
     ) do |operation, _|
       operation.saved?.should be_true
 
@@ -97,8 +94,7 @@ describe Shield::ResetPassword do
     ResetPassword.update(
       password_reset_1,
       fake_params(password_reset: {password: new_password}),
-      session: Lucky::Session.new,
-      current_login: nil
+      session: Lucky::Session.new
     ) do |operation, updated_password_reset|
       operation.saved?.should be_true
 

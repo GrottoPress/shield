@@ -9,10 +9,7 @@ describe Shield::DeleteUserBearerLogins do
     bearer_login_1.status.active?.should be_true
     bearer_login_2.status.active?.should be_true
 
-    DeleteCurrentUserBearerLogins.update(
-      user,
-      current_bearer_login: nil
-    ) do |operation, _|
+    DeleteCurrentUserBearerLogins.update(user) do |operation, _|
       operation.saved?.should be_true
 
       BearerLoginQuery.new.id(bearer_login_1.id).first?.should be_nil
@@ -52,10 +49,7 @@ describe Shield::DeleteUserBearerLogins do
     mary_bearer_login.status.active?.should be_true
     john_bearer_login.status.active?.should be_true
 
-    DeleteCurrentUserBearerLogins.update(
-      mary,
-      current_bearer_login: nil
-    ) do |operation, _|
+    DeleteCurrentUserBearerLogins.update(mary) do |operation, _|
       operation.saved?.should be_true
 
       BearerLoginQuery.new.id(mary_bearer_login.id).first?.should be_nil

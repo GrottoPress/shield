@@ -1,6 +1,6 @@
 module Shield::DeleteSession
   macro included
-    needs session : Lucky::Session?
+    needs session : Lucky::Session? = nil
 
     {% if @type < Avram::SaveOperation %}
       after_commit delete_session

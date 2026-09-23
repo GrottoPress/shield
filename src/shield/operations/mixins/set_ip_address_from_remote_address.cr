@@ -1,6 +1,6 @@
 module Shield::SetIpAddressFromRemoteAddress
   macro included
-    needs remote_ip : Socket::IPAddress?
+    needs remote_ip : Socket::IPAddress? = nil
 
     before_save do
       set_ip_address
