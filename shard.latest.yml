@@ -1,13 +1,13 @@
 dependencies:
   avram:
     github: luckyframework/avram
-    version: ~> 1.4
+    version: ~> 1.5
   carbon:
     github: luckyframework/carbon
     version: ~> 0.6.0
   lucky:
     github: luckyframework/lucky
-    version: ~> 1.4
+    version: ~> 1.5
   lucky_env:
     github: luckyframework/lucky_env
     version: ~> 0.3.0
